@@ -1,0 +1,1368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProfileEditor</class>
+ <widget class="QMainWindow" name="ProfileEditor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>716</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ProfileEditor</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="GraphicArea" name="graphicsView">
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAsNeeded</enum>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustToContents</enum>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignHCenter|Qt::AlignTop</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>ファイル</string>
+    </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionOverWriteSave"/>
+    <addaction name="separator"/>
+    <addaction name="actionExport"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>編集</string>
+    </property>
+    <addaction name="actionAddItem"/>
+    <addaction name="actionDeleteItem"/>
+    <addaction name="actionUpItem"/>
+    <addaction name="actionDownItem"/>
+   </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>情報</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>ウィンドウ</string>
+    </property>
+    <widget class="QMenu" name="menuShow">
+     <property name="title">
+      <string>表示</string>
+     </property>
+     <addaction name="actionToolBar"/>
+     <addaction name="separator"/>
+     <addaction name="actionProcessTree"/>
+     <addaction name="actionLocalVariant"/>
+     <addaction name="actionGlobalVariant"/>
+     <addaction name="actionEditor"/>
+     <addaction name="actionRunTest"/>
+     <addaction name="actionTestSetting"/>
+     <addaction name="separator"/>
+     <addaction name="actionAutohide"/>
+    </widget>
+    <addaction name="menuShow"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>ツール</string>
+    </property>
+    <addaction name="actionRun"/>
+    <addaction name="actionPause"/>
+    <addaction name="actionStop"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_3"/>
+   <addaction name="menu_2"/>
+   <addaction name="menuWindow"/>
+   <addaction name="menu_4"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="windowTitle">
+    <string>ToolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionNew"/>
+   <addaction name="actionOpen"/>
+   <addaction name="actionOverWriteSave"/>
+   <addaction name="actionExport"/>
+   <addaction name="separator"/>
+   <addaction name="actionAddItem"/>
+   <addaction name="actionDeleteItem"/>
+   <addaction name="actionUpItem"/>
+   <addaction name="actionDownItem"/>
+   <addaction name="separator"/>
+   <addaction name="actionRun"/>
+   <addaction name="actionPause"/>
+   <addaction name="actionStop"/>
+   <addaction name="separator"/>
+   <addaction name="actionSettings"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="BaseDockWidget" name="processDockWidget">
+   <property name="windowTitle">
+    <string>Process</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="ProfileTreeWidget" name="runTreeWidget">
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <column>
+        <property name="text">
+         <string>リソース</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>タイプ</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="BaseDockWidget" name="localVariantDockWidget">
+   <property name="windowTitle">
+    <string>Local</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <layout class="QVBoxLayout" name="verticalLayout_7">
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
+     <item>
+      <widget class="VariantTable" name="variantTableWidget">
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="BaseDockWidget" name="globalVariantDockWidget">
+   <property name="features">
+    <set>QDockWidget::AllDockWidgetFeatures</set>
+   </property>
+   <property name="windowTitle">
+    <string>Global</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <property name="leftMargin">
+      <number>2</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
+     <item>
+      <widget class="StringTable" name="stringTableWidget">
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="BaseDockWidget" name="editorDockWidget">
+   <property name="windowTitle">
+    <string>Editor</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_4">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="InnerStackedWidget" name="innerStackedWidget">
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="info">
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="leftMargin">
+          <number>6</number>
+         </property>
+         <property name="topMargin">
+          <number>6</number>
+         </property>
+         <property name="rightMargin">
+          <number>6</number>
+         </property>
+         <property name="bottomMargin">
+          <number>6</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_1">
+           <property name="text">
+            <string>プロファイル名</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="nameLineEdit"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>バージョン</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="verLineEdit"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>作成者</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="authorLineEdit"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>説明</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPlainTextEdit" name="descTextEdit"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>最終更新日</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="refreshDateLabel">
+           <property name="text">
+            <string>-</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="others">
+        <layout class="QVBoxLayout" name="verticalLayout_10">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="EditorTab" name="editorTab">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="tabPosition">
+            <enum>QTabWidget::East</enum>
+           </property>
+           <property name="currentIndex">
+            <number>2</number>
+           </property>
+           <widget class="QWidget" name="exec">
+            <attribute name="title">
+             <string>実行</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <property name="leftMargin">
+              <number>6</number>
+             </property>
+             <property name="topMargin">
+              <number>6</number>
+             </property>
+             <property name="rightMargin">
+              <number>6</number>
+             </property>
+             <property name="bottomMargin">
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="CommandTable" name="cmdTableWidget"/>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="noWaitCheckBox">
+               <property name="text">
+                <string>実行終了を待たない</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="autoOnlyCheckBox">
+               <property name="text">
+                <string>自動実行時のみ処理有効</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="search">
+            <attribute name="title">
+             <string>検索</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_11">
+             <property name="leftMargin">
+              <number>6</number>
+             </property>
+             <property name="topMargin">
+              <number>6</number>
+             </property>
+             <property name="rightMargin">
+              <number>6</number>
+             </property>
+             <property name="bottomMargin">
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_26">
+               <property name="text">
+                <string>使用する設定</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="SearchComboBox" name="searchComboBox"/>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_2">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="searchAddButton">
+                  <property name="text">
+                   <string>追加</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="searchDeleteButton">
+                  <property name="text">
+                   <string>削除</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="searchEditButton">
+                  <property name="text">
+                   <string>編集</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_29">
+               <property name="text">
+                <string>区切り文字</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="separatorLineEdit"/>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox_3">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="title">
+                <string>出力</string>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_4">
+                <item>
+                 <widget class="QRadioButton" name="variRadioButton">
+                  <property name="text">
+                   <string>検索結果を変数に格納</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
+                  </property>
+                  <attribute name="buttonGroup">
+                   <string notr="true">searchButtonGroup</string>
+                  </attribute>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frame_5">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_9">
+                   <property name="leftMargin">
+                    <number>18</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label_27">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="text">
+                      <string>格納される変数</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="VariantComboBox" name="localVariantComboBox">
+                     <property name="editable">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QRadioButton" name="fileRadioButton">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>検索結果をファイルに出力</string>
+                  </property>
+                  <attribute name="buttonGroup">
+                   <string notr="true">searchButtonGroup</string>
+                  </attribute>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QFrame" name="frame_6">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_10">
+                   <property name="leftMargin">
+                    <number>18</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="label_28">
+                     <property name="text">
+                      <string>出力ファイル名</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="outputLineEdit"/>
+                   </item>
+                   <item>
+                    <widget class="QToolButton" name="openToolButton">
+                     <property name="text">
+                      <string>...</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="autoOnlyCheckBox_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>自動実行時のみ処理有効</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="script">
+            <attribute name="title">
+             <string>スクリプト</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_13">
+             <property name="leftMargin">
+              <number>6</number>
+             </property>
+             <property name="topMargin">
+              <number>6</number>
+             </property>
+             <property name="rightMargin">
+              <number>6</number>
+             </property>
+             <property name="bottomMargin">
+              <number>6</number>
+             </property>
+             <item>
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_30">
+                 <property name="text">
+                  <string>使用するスクリプト</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="3">
+                <widget class="QToolButton" name="extrafuncDeleteButton">
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../res/resources.qrc">
+                   <normaloff>:/icons/Denided.png</normaloff>:/icons/Denided.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <widget class="QToolButton" name="extrafuncAddButton">
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../res/resources.qrc">
+                   <normaloff>:/icons/Add.png</normaloff>:/icons/Add.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" colspan="2">
+                <widget class="ExtraFunctionsComboBox" name="extrafuncComboBox"/>
+               </item>
+               <item row="2" column="0" colspan="4">
+                <widget class="CommandTable" name="extrafuncTableWidget"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame_2">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="autoOnlyCheckBox_3">
+                  <property name="text">
+                   <string>自動実行時のみ処理有効</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pluginSettingButton">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>プラグイン設定</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="otherprof">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <attribute name="title">
+             <string>別プロファイル</string>
+            </attribute>
+            <layout class="QVBoxLayout" name="verticalLayout_12">
+             <property name="leftMargin">
+              <number>6</number>
+             </property>
+             <property name="topMargin">
+              <number>6</number>
+             </property>
+             <property name="rightMargin">
+              <number>6</number>
+             </property>
+             <property name="bottomMargin">
+              <number>6</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_45">
+               <property name="text">
+                <string>使用プロファイル</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="ProfileComboBox" name="profileComboBox"/>
+             </item>
+             <item>
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>217</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="autoOnlyCheckBox_4">
+               <property name="text">
+                <string>自動実行時のみ処理有効</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="BaseDockWidget" name="setTestDockWidget">
+   <property name="acceptDrops">
+    <bool>true</bool>
+   </property>
+   <property name="windowTitle">
+    <string>TestSetting</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_5">
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
+     <property name="horizontalSpacing">
+      <number>0</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>3</number>
+     </property>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="toolTip">
+        <string>It can use: 0-7 0,1,2,3</string>
+       </property>
+       <property name="text">
+        <string>実行範囲</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="margin">
+        <number>2</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="rangeLineEdit">
+       <property name="maxLength">
+        <number>40</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QToolButton" name="runToolButton">
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/resources.qrc">
+         <normaloff>:/icons/run.png</normaloff>:/icons/run.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QToolButton" name="pauseToolButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/resources.qrc">
+         <normaloff>:/icons/pause.png</normaloff>:/icons/pause.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QToolButton" name="stopToolButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/resources.qrc">
+         <normaloff>:/icons/stop_flat.png</normaloff>:/icons/stop_flat.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0" colspan="5">
+      <widget class="FileQueueTable" name="fileTableWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
+       </property>
+       <property name="dragEnabled">
+        <bool>false</bool>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::DragDrop</enum>
+       </property>
+       <property name="defaultDropAction">
+        <enum>Qt::LinkAction</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="BaseDockWidget" name="runTestDockWidget">
+   <property name="windowTitle">
+    <string>RunTest</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_6">
+    <layout class="QVBoxLayout" name="verticalLayout_9">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>1</number>
+     </property>
+     <property name="rightMargin">
+      <number>1</number>
+     </property>
+     <property name="bottomMargin">
+      <number>1</number>
+     </property>
+     <item>
+      <widget class="ConsoleView" name="console">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(204, 204, 204);</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="undoRedoEnabled">
+        <bool>true</bool>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="actionSave">
+   <property name="text">
+    <string>名前を付けて保存</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>終了</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/Folder.png</normaloff>:/icons/Folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>開く</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/File_Add.png</normaloff>:/icons/File_Add.png</iconset>
+   </property>
+   <property name="text">
+    <string>新規ファイル</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+  </action>
+  <action name="actionOverWriteSave">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/file_save_as.png</normaloff>:/icons/file_save_as.png</iconset>
+   </property>
+   <property name="text">
+    <string>上書き保存</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionCurrentSave">
+   <property name="text">
+    <string>編集中のデータを保存</string>
+   </property>
+  </action>
+  <action name="actionOverWriteCurrentSave">
+   <property name="text">
+    <string>編集中のデータを上書き保存</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/xml_exports.png</normaloff>:/icons/xml_exports.png</iconset>
+   </property>
+   <property name="text">
+    <string>xmlへエクスポート</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionProcessTree">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>ProcessTree</string>
+   </property>
+  </action>
+  <action name="actionLocalVariant">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>LocalVariant</string>
+   </property>
+  </action>
+  <action name="actionGlobalVariant">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>GlobalVariant</string>
+   </property>
+  </action>
+  <action name="actionEditor">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Editor</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/Gear.png</normaloff>:/icons/Gear.png</iconset>
+   </property>
+   <property name="text">
+    <string>設定</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+O</string>
+   </property>
+  </action>
+  <action name="actionToolBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>ToolBar</string>
+   </property>
+  </action>
+  <action name="actionAddItem">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/Add.png</normaloff>:/icons/Add.png</iconset>
+   </property>
+   <property name="text">
+    <string>AddItem</string>
+   </property>
+  </action>
+  <action name="actionDeleteItem">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/Denided.png</normaloff>:/icons/Denided.png</iconset>
+   </property>
+   <property name="text">
+    <string>deleteItem</string>
+   </property>
+  </action>
+  <action name="actionUpItem">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/Button_Up.png</normaloff>:/icons/Button_Up.png</iconset>
+   </property>
+   <property name="text">
+    <string>UpItem</string>
+   </property>
+  </action>
+  <action name="actionDownItem">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/Button_Down.png</normaloff>:/icons/Button_Down.png</iconset>
+   </property>
+   <property name="text">
+    <string>DownItem</string>
+   </property>
+  </action>
+  <action name="actionRun">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/run.png</normaloff>:/icons/run.png</iconset>
+   </property>
+   <property name="text">
+    <string>実行</string>
+   </property>
+  </action>
+  <action name="actionRunTest">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>RunTest</string>
+   </property>
+  </action>
+  <action name="actionTestSetting">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>TestSetting</string>
+   </property>
+  </action>
+  <action name="actionAutohide">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>タイトルバーを自動的に隠す</string>
+   </property>
+  </action>
+  <action name="actionPause">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/pause.png</normaloff>:/icons/pause.png</iconset>
+   </property>
+   <property name="text">
+    <string>一時停止</string>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/stop_flat.png</normaloff>:/icons/stop_flat.png</iconset>
+   </property>
+   <property name="text">
+    <string>停止</string>
+   </property>
+  </action>
+  <zorder>globalVariantDockWidget</zorder>
+  <zorder>localVariantDockWidget</zorder>
+  <zorder>editorDockWidget</zorder>
+  <zorder>setTestDockWidget</zorder>
+  <zorder>runTestDockWidget</zorder>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>StringTable</class>
+   <extends>QTableWidget</extends>
+   <header>../stringtable/stringtable.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ProfileComboBox</class>
+   <extends>QComboBox</extends>
+   <header>profilecombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ProfileTreeWidget</class>
+   <extends>QTreeWidget</extends>
+   <header>profiletreewidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CommandTable</class>
+   <extends>QTableWidget</extends>
+   <header>commandtable.h</header>
+  </customwidget>
+  <customwidget>
+   <class>SearchComboBox</class>
+   <extends>QComboBox</extends>
+   <header>searchcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>VariantTable</class>
+   <extends>QTableWidget</extends>
+   <header>varianttable.h</header>
+  </customwidget>
+  <customwidget>
+   <class>VariantComboBox</class>
+   <extends>QComboBox</extends>
+   <header>variantcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>GraphicArea</class>
+   <extends>QGraphicsView</extends>
+   <header>graphicarea.h</header>
+  </customwidget>
+  <customwidget>
+   <class>InnerStackedWidget</class>
+   <extends>QStackedWidget</extends>
+   <header>innerstackedwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EditorTab</class>
+   <extends>QTabWidget</extends>
+   <header>editortab.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ExtraFunctionsComboBox</class>
+   <extends>QComboBox</extends>
+   <header>extrafunctionscombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ConsoleView</class>
+   <extends>QTextEdit</extends>
+   <header>consoleview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>BaseDockWidget</class>
+   <extends>QDockWidget</extends>
+   <header>basedockwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FileQueueTable</class>
+   <extends>QTableWidget</extends>
+   <header>../filequeuetable/filequeuetable.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>runTreeWidget</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+ </resources>
+ <connections/>
+ <buttongroups>
+  <buttongroup name="searchButtonGroup"/>
+ </buttongroups>
+</ui>

@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FileSearchDialog</class>
+ <widget class="QDialog" name="FileSearchDialog">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>440</width>
+    <height>550</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../autobatchrunner.qrc">
+    <normaloff>:/icons/Pen.png</normaloff>:/icons/Pen.png</iconset>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>3</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>設定名</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>検索語句</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>検索ディレクトリ</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="directoryLineEdit"/>
+      </item>
+      <item row="0" column="1" colspan="2">
+       <widget class="QLineEdit" name="nameLineEdit"/>
+      </item>
+      <item row="1" column="1" colspan="2">
+       <widget class="QLineEdit" name="keywordLineEdit"/>
+      </item>
+      <item row="2" column="2">
+       <widget class="QToolButton" name="openToolButton">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>追加条件</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QFrame" name="frame_5">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="verticalSpacing">
+          <number>3</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="secondsCheckBox">
+           <property name="text">
+            <string>現在からの作成日時</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="createCheckBox">
+           <property name="text">
+            <string>作成日時</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" colspan="3">
+          <widget class="QDateTimeEdit" name="createDateTimeEdit">
+           <property name="displayFormat">
+            <string>yyyy/MM/dd HH:mm:ss</string>
+           </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1" colspan="3">
+          <widget class="QDateTimeEdit" name="modifiedDateTimeEdit">
+           <property name="displayFormat">
+            <string>yyyy/MM/dd HH:mm:ss</string>
+           </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QCheckBox" name="fsizeCheckBox">
+           <property name="text">
+            <string>ファイルサイズ</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="1" colspan="2">
+          <widget class="QLineEdit" name="fsizeLineEdit1"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QCheckBox" name="modifiedCheckBox">
+           <property name="text">
+            <string>更新日時</string>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="1" colspan="2">
+          <widget class="QLineEdit" name="fsizeLineEdit2"/>
+         </item>
+         <item row="8" column="4" colspan="3">
+          <widget class="QComboBox" name="fsizeComboBox2">
+           <property name="currentIndex">
+            <number>5</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>より大きい</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>以上</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>と等しい</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>以下</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>より小さい</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>選択しない</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="7" column="4" colspan="3">
+          <widget class="QComboBox" name="fsizeComboBox1">
+           <item>
+            <property name="text">
+             <string>より大きい</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>以上</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>と等しい</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>以下</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>より小さい</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="7" column="3">
+          <widget class="QComboBox" name="bytesComboBox1">
+           <item>
+            <property name="text">
+             <string>Bytes</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>KB</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MB</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>GB</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>TB</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="8" column="3">
+          <widget class="QComboBox" name="bytesComboBox2">
+           <item>
+            <property name="text">
+             <string>Bytes</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>KB</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MB</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>GB</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>TB</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="2" column="4" colspan="3">
+          <widget class="QComboBox" name="modifiedComboBox">
+           <item>
+            <property name="text">
+             <string>以降</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>と等しい</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>以前</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="4" colspan="3">
+          <widget class="QComboBox" name="createComboBox">
+           <item>
+            <property name="text">
+             <string>以降</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>と等しい</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>以前</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="4" colspan="3">
+          <widget class="QComboBox" name="secondsComboBox">
+           <item>
+            <property name="text">
+             <string>秒前</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>分前</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>時間前</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="1" colspan="3">
+          <widget class="QLineEdit" name="secondsLineEdit"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="recursiveCheckBox">
+        <property name="text">
+         <string>フォルダ内を再帰的に検索する</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>テストツール</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QFrame" name="testframe">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="horizontalSpacing">
+          <number>6</number>
+         </property>
+         <property name="verticalSpacing">
+          <number>3</number>
+         </property>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="directoryTestLineEdit">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="testSearchButton">
+           <property name="text">
+            <string>テスト検索</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>検索ディレクトリ</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="3">
+          <widget class="SearchDialogTable" name="resultTableWidget"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SearchDialogTable</class>
+   <extends>QTableWidget</extends>
+   <header>searchdialogtable.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>nameLineEdit</tabstop>
+  <tabstop>keywordLineEdit</tabstop>
+  <tabstop>directoryLineEdit</tabstop>
+  <tabstop>openToolButton</tabstop>
+  <tabstop>secondsCheckBox</tabstop>
+  <tabstop>secondsLineEdit</tabstop>
+  <tabstop>secondsComboBox</tabstop>
+  <tabstop>createCheckBox</tabstop>
+  <tabstop>createDateTimeEdit</tabstop>
+  <tabstop>createComboBox</tabstop>
+  <tabstop>modifiedCheckBox</tabstop>
+  <tabstop>modifiedDateTimeEdit</tabstop>
+  <tabstop>modifiedComboBox</tabstop>
+  <tabstop>fsizeCheckBox</tabstop>
+  <tabstop>fsizeLineEdit1</tabstop>
+  <tabstop>bytesComboBox1</tabstop>
+  <tabstop>fsizeComboBox1</tabstop>
+  <tabstop>fsizeLineEdit2</tabstop>
+  <tabstop>bytesComboBox2</tabstop>
+  <tabstop>fsizeComboBox2</tabstop>
+  <tabstop>recursiveCheckBox</tabstop>
+  <tabstop>directoryTestLineEdit</tabstop>
+  <tabstop>testSearchButton</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../autobatchrunner.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>FileSearchDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>475</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>FileSearchDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>325</x>
+     <y>475</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
