@@ -62,7 +62,9 @@ void SearchComboBox::deleteAction()
 
     // show delete warning
     QMessageBox::StandardButton res = QMessageBox::warning(
-      this, tr("Alert"), tr("Do you want to delete selected item ?"), QMessageBox::Yes | QMessageBox::No );
+      this, tr("Alert")
+                , tr("Do you want to delete selected item ?\r\n(File is not delete)")
+                , QMessageBox::Yes | QMessageBox::No );
 
     if(res == QMessageBox::Yes){
         //delete file item

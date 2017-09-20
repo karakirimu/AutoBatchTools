@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QSettings>
-#include <systemtray.h>
+//#include <systemtray.h>
 #include <optiondialog.h>
 //#include <mainprocessloader.h>
 //#include <profileeditor.h>
@@ -40,7 +40,7 @@ private:
 
     Ui::MainWindow *ui;
     OptionDialog *opdialog;
-    SystemTray *sysTray;
+//    SystemTray *sysTray;
 };
 
 #endif // MAINWINDOW_H

@@ -212,6 +212,11 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
                  editAction();
              break;
 
+           case Qt::Key_V:
+             if (keyEvent->modifiers() & Qt::ControlModifier)
+                 pasteAction();
+             break;
+
            default:
              //qDebug("Ate key press %d", keyEvent->key());
              break;

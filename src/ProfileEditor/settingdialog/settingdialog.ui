@@ -127,7 +127,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="page">
              <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -148,7 +148,7 @@
               <item>
                <widget class="QTabWidget" name="tabWidget">
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>1</number>
                 </property>
                 <widget class="QWidget" name="baseSettingTab">
                  <attribute name="title">
@@ -244,6 +244,9 @@
                      </item>
                      <item>
                       <widget class="QFrame" name="frame_3">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
                        <property name="frameShape">
                         <enum>QFrame::StyledPanel</enum>
                        </property>
@@ -839,6 +842,7 @@
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../../../res/resources.qrc"/>
   <include location="../../../res/resources.qrc"/>
   <include location="../../../res/resources.qrc"/>
   <include location="../../../res/resources.qrc"/>

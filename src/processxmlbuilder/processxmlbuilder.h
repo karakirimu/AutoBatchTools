@@ -122,7 +122,7 @@
  * 7    :file     :text   :
  *
  * -    :type     :normal :
- * 8    :nowait   :data   :
+ * 8    :timeout  :data   :dur    :timedata:
  * 9    :cmdc     :counts :
  * -    :cmd      :text   :id     :data   :
  * -                    *
@@ -139,6 +139,46 @@
  * -                    *
  * -                    *
  * -         it follows to the end.
+ *
+ * * data structure <order> type=temp(saved all current data)(except info)(2017/9/18 revised)
+ * \    :        0:      1:      2:                3:
+ * 0    :type     :temp   :only   :currentseldata   :
+ * 1    :istack   :data   ://inner stack
+ *
+ * 2    :type     :search :only   :yes/no           :
+ * 3    :sname    :text   :id     :data             :
+ * 4    :sep      :text   :
+ * 5    :var      :text   :
+ * 6    :output   :text   :radio  :data             :
+ *
+ * 7    :type     :other  :only   :yes/no           :
+ * 8    :name     :text   :
+ * 9    :file     :text   :
+ *
+ * 10   :type     :normal :only   :yes/no           :
+ * 11   :timeout  :data   :dur    :timedata         :
+ * 12   :cmdc     :counts :
+ * -    :cmd      :text   :id     :data             :
+ * -                    *
+ * -                    *
+ * -                    *
+ * -         it follows to the end.
+ *
+ * 13   :type     :script :only   :yes/no           :
+ * 14+  :name     :text   :
+ * 15+  :var      :text   :
+ * 16+  :cmdc     :counts :
+ * -    :cmd      :text   :id     :data             :
+ * -                    *
+ * -                    *
+ * -                    *
+ * -         it follows to the end.
+ *
+ * stacked structure
+ * id
+ * 0:info(fixed)
+ * 1:local(fixed)
+ * 2:proces(dynamic)(normal, search, script, other)
  */
 
 class PROCESSXMLBUILDERSHARED_EXPORT ProcessXmlBuilder : public Xmlbuilder

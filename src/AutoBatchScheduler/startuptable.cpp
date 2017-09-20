@@ -1,6 +1,7 @@
 ﻿#include "startuptable.h"
 
-StartupTable::StartupTable(QWidget *)
+StartupTable::StartupTable(QWidget *parent)
+    : BasicTable(parent)
 {
     //disable edit
     setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -34,6 +35,13 @@ StartupTable::StartupTable(QWidget *)
 StartupTable::~StartupTable()
 {
     delete builder;
+}
+
+void StartupTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
+{
+    connect(task, &TaskSchedulerConnector::xmlStateChanged, this, &StartupTable::updateItemEnabled);
+    connect(this, &StartupTable::actionDeleted, task, &TaskSchedulerConnector::actionDeleted);
+    connect(this, &StartupTable::actionAdded, task, &TaskSchedulerConnector::actionAdded);
 }
 
 void StartupTable::setPopupActionTop()
@@ -129,6 +137,28 @@ bool StartupTable::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 
+int StartupTable::getStartupXmlIndex(QString objectname)
+{
+    //copy of systemtray
+    QList<QStringList> *list = new QList<QStringList>();
+
+    //search valid data
+    int itemid = -1;
+    int count = builder->count();
+
+    for(int i = 0; i < count; i++){
+        list->clear();
+        if(builder->readItem(i, list)
+                && objectname == list->at(StartupXmlBuilder::UNIQUE).at(1)){
+            itemid = i;
+            break;
+        }
+    }
+
+    delete list;
+    return itemid;
+}
+
 void StartupTable::setTableItem(int row)
 {
     //qDebug () << "setTableItem";
@@ -159,6 +189,8 @@ void StartupTable::addAction()
         int index = this->rowCount();
         setRowCount(index + 1);
         setTableItem(index);
+
+        emit actionAdded(index);
     }
 }
 
@@ -187,6 +219,11 @@ void StartupTable::deleteAction()
     //check delete warning message
     if(deleteCheckMessage())
     {
+        QList<QStringList> list;
+        if(builder->readItem(currentRow(), &list)){
+            emit actionDeleted(list.at(StartupXmlBuilder::UNIQUE).at(1));
+        }
+
         //delete file item
         builder->deleteItem(currentRow());
 
@@ -283,4 +320,10 @@ void StartupTable::disableAction(){
             reloadAction();
         }
     }
+}
+
+void StartupTable::updateItemEnabled(QString objectname)
+{
+    int itemid = getStartupXmlIndex(objectname);
+    if(itemid > -1) setTableItem(itemid);
 }

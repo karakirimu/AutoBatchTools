@@ -74,7 +74,7 @@ void SettingDialog::setSettings()
     settings.setValue("DETACH", ui->detachCheckBox->isChecked());
     settings.setValue("FAKERES", ui->fakeresidentCheckBox->isChecked());
     settings.setValue("FSUPDATE", ui->fsupdateCheckBox->isChecked());
-    settings.setValue("TIMEOUT", ui->timeoutSpinBox->value());
+//    settings.setValue("TIMEOUT", ui->timeoutSpinBox->value());
     settings.setValue("FILELOADMAX", ui->fileloadSpinBox->value());
     settings.endGroup();
 
@@ -101,7 +101,7 @@ void SettingDialog::loadSettings()
     ui->detachCheckBox->setChecked(settings.value("DETACH", false).toBool());
     ui->fakeresidentCheckBox->setChecked(settings.value("FAKERES", false).toBool());
     ui->fsupdateCheckBox->setChecked(settings.value("FSUPDATE", true).toBool());
-    ui->timeoutSpinBox->setValue(settings.value("TIMEOUT", 30000).toInt());
+//    ui->timeoutSpinBox->setValue(settings.value("TIMEOUT", 30000).toInt());
     ui->fileloadSpinBox->setValue(settings.value("FILELOADMAX", 1).toInt());
     settings.endGroup();
 

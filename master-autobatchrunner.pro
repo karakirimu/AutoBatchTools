@@ -10,10 +10,12 @@ SUBDIRS += \
           $$PWD/src/processxmlbuilder \
           $$PWD/src/stringxmlbuilder \
           $$PWD/src/extrafunctionsxmlbuilder \
+          $$PWD/src/profilexmlbuilder \
 #2
           $$PWD/src/filesearchloader \
           $$PWD/src/executor \
 #3
+          $$PWD/src/profilecombobox \
           $$PWD/src/basictable \
 #4
           $$PWD/src/fileinfodialog \
@@ -27,3 +29,8 @@ SUBDIRS += \
           $$PWD/src/AutoBatchRunner \
           $$PWD/src/ProfileEditor \
           $$PWD/src/AutoBatchScheduler
+
+RESOURCES += \
+    src/res/resources.qrc \
+    src/res/resources.qrc
+

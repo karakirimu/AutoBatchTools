@@ -33,10 +33,11 @@
  * - They follow to the end by turns.
  *
  * QStringList structure createNormalList
- * 0    :only_bool  :
- * 1    :nowait_bool:
- * 2    :cmdc_counts:
- * 3    :cmd_text   :
+ * 0    :only_bool   :
+ * 1    :timeout_bool:
+ * 2    :timeout_ms  :
+ * 3    :cmdc_counts :
+ * 4    :cmd_text    :
  * -          *
  * -          *
  * -          *
@@ -97,12 +98,12 @@ public:
     int itemCount();
 
     //list create function
-    void createInfoList(QList<QStringList> *newlist, QStringList *list, bool withtype);
-    void createLocalList(QList<QStringList> *newlist, QStringList *list, bool withtype);
-    void createNormalList(QList<QStringList> *newlist, QStringList *list, bool withtype);
-    void createSearchList(QList<QStringList> *newlist, QStringList *list, bool withtype);
-    void createScriptList(QList<QStringList> *newlist, QStringList *list, bool withtype);
-    void createOtherList(QList<QStringList> *newlist, QStringList *list, bool withtype);
+    void createInfoList(QList<QStringList> *newlist, QStringList *list);
+    void createLocalList(QList<QStringList> *newlist, QStringList *list);
+    void createNormalList(QList<QStringList> *newlist, QStringList *list);
+    void createSearchList(QList<QStringList> *newlist, QStringList *list);
+    void createScriptList(QList<QStringList> *newlist, QStringList *list);
+    void createOtherList(QList<QStringList> *newlist, QStringList *list);
 
     //change "Temp" structure to loadable xml structure
     void convertToDefaultList(QList<QStringList> *temp);

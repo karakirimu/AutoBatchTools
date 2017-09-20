@@ -48,15 +48,15 @@ void Executor::setEndnum(int end)
         endnum = end;
 }
 
-int Executor::getForcequittime() const
-{
-    return forcequittime;
-}
+//int Executor::getForcequittime() const
+//{
+//    return forcequittime;
+//}
 
-void Executor::setForcequittime(int ms)
-{
-    forcequittime = ms;
-}
+//void Executor::setForcequittime(int ms)
+//{
+//    forcequittime = ms;
+//}
 
 bool Executor::getPaused() const
 {
@@ -213,19 +213,19 @@ bool Executor::runProcess()
                 break;
 
             case NORMAL:
-                checker = loadNormal(list, 1);
+                checker = loadNormal(list, 0);
                 break;
 
             case SEARCH:
-                checker = loadSearch(list, 1);
+                checker = loadSearch(list, 0);
                 break;
 
             case SCRIPT:
-                checker = loadScript(list, 1);
+                checker = loadScript(list, 0);
                 break;
 
             case OTHER:
-                checker = loadOther(list, 1);
+                checker = loadOther(list, 0);
                 break;
 
             case TEMP:
@@ -250,6 +250,7 @@ bool Executor::runProcess()
     delete process;
     delete list;
 
+    //load file etc force reset.
     resetdata();
 
     emit processEnded(MAINPROCESS);
@@ -315,7 +316,7 @@ bool Executor::loadInfo(QList<QStringList> *list, int firstpos)
 
 bool Executor::loadNormal(QList<QStringList> *list, int firstpos)
 {
-    int cmdc = VariantConverter::stringToInt(list->at(firstpos + 1).at(1));
+    int cmdc = VariantConverter::stringToInt(list->at(firstpos + 2).at(1));
 
     if(cmdc == 0){
         emit processMessage(tr("No executable file. Skip."), ERROR);
@@ -326,10 +327,10 @@ bool Executor::loadNormal(QList<QStringList> *list, int firstpos)
     QString app;
     QStringList arguments;
 
-    app = macroConvert(list->at(firstpos + 2).at(1));
+    app = macroConvert(list->at(firstpos + 3).at(1));
 
     for(int i = 1; i < cmdc; i++){
-        arguments.append(macroConvert(list->at(firstpos + 2 + i).at(1)));
+        arguments.append(macroConvert(list->at(firstpos + 3 + i).at(1)));
     }
 
     //show cmd lists
@@ -357,8 +358,8 @@ bool Executor::loadNormal(QList<QStringList> *list, int firstpos)
     }
 
     //wait commands
-    if(VariantConverter::stringToBool(list->at(firstpos).at(1))){
-        process->waitForStarted();
+    if(VariantConverter::stringToBool(list->at(firstpos + 1).at(1))){
+        process->waitForFinished(((QString)list->at(firstpos + 1).at(3)).toInt());
     }else{
         process->waitForFinished(-1);
     }
@@ -369,14 +370,14 @@ bool Executor::loadNormal(QList<QStringList> *list, int firstpos)
 bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
 {
     FileSearchLoader *loader = new FileSearchLoader();
-    QStringList result = loader->searchFromXml(VariantConverter::stringToInt(list->at(firstpos).at(3)));
+    QStringList result = loader->searchFromXml(VariantConverter::stringToInt(list->at(firstpos + 1).at(3)));
 
     emit processMessage(tr("Search : ") + QString::number(result.count()) + tr(" files found.\r\n"), SEARCH);
 
     //TODO : separation data detection ?
     //combine search result
     QString combineresult;
-    QString sepdata = list->at(firstpos + 1).at(1);
+    QString sepdata = list->at(firstpos + 2).at(1);
     int cre = result.count();
     for(int i = 0; i < cre; i++){
         combineresult.append(result.at(i));
@@ -400,17 +401,17 @@ bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
         }
     }
 
-    int radiodata = VariantConverter::stringToInt(list->at(firstpos + 3).at(3));
+    int radiodata = VariantConverter::stringToInt(list->at(firstpos + 4).at(3));
 
     //save to variant
     if(radiodata == 0){
-        QString selectvar = list->at(firstpos + 2).at(1);
+        QString selectvar = list->at(firstpos + 3).at(1);
         //set data to variant
         overwriteLocalMacro(selectvar, combineresult);
 
     }else{
         //TODO: create data to File
-        QString outputfile = list->at(firstpos + 3).at(1);
+        QString outputfile = list->at(firstpos + 4).at(1);
 
         if(outputfile != ""){
             QFile file(outputfile);
@@ -437,7 +438,7 @@ bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
 
 bool Executor::loadScript(QList<QStringList> *list, int firstpos)
 {
-    QString file = list->at(firstpos + 1).at(1);
+    QString file = list->at(firstpos + 2).at(1);
     QFileInfo info(file);
     bool result = true;
 
@@ -451,11 +452,11 @@ bool Executor::loadScript(QList<QStringList> *list, int firstpos)
 
 //            connect(plugin, SIGNAL(sendMessage()), this, &Executor::extrafuncInternalMessage);
 
-            int cmdc = ((QString)list->at(firstpos + 2).at(1)).toInt();
+            int cmdc = ((QString)list->at(firstpos + 3).at(1)).toInt();
 
             QStringList tmp;
             for(int i = 0; i < cmdc; i++){
-                tmp.append(macroConvert(list->at(firstpos + 3 + i).at(1)));
+                tmp.append(macroConvert(list->at(firstpos + 4 + i).at(1)));
             }
 
             ext->setInputFileData(fileHash);
@@ -498,7 +499,7 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
 
     //alternate data
     pbuilder = new ProcessXmlBuilder();
-    pbuilder->setLoadPath(list->at(firstpos + 1).at(1));
+    pbuilder->setLoadPath(list->at(firstpos + 2).at(1));
 
     localHash = new QHash<QString, QString>();
     setLocalList();
@@ -524,19 +525,19 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
                 break;
 
             case NORMAL:
-                checker = loadNormal(ilist, 1);
+                checker = loadNormal(ilist, 0);
                 break;
 
             case SEARCH:
-                checker = loadSearch(ilist, 1);
+                checker = loadSearch(ilist, 0);
                 break;
 
             case SCRIPT:
-                checker = loadScript(ilist, 1);
+                checker = loadScript(ilist, 0);
                 break;
 
             case OTHER:
-                checker = neststop ? false : loadOther(ilist, 1);
+                checker = neststop ? false : loadOther(ilist, 0);
                 break;
 
             case TEMP:

@@ -33,8 +33,8 @@ public:
     EXECUTORSHARED_EXPORT int getEndnum() const;
     EXECUTORSHARED_EXPORT void setEndnum(int end); /*preset func*/
 
-    EXECUTORSHARED_EXPORT int getForcequittime() const;
-    EXECUTORSHARED_EXPORT void setForcequittime(int ms); /*preset func*/
+//    EXECUTORSHARED_EXPORT int getForcequittime() const;
+//    EXECUTORSHARED_EXPORT void setForcequittime(int ms); /*preset func*/
 
     EXECUTORSHARED_EXPORT bool getPaused() const;
     EXECUTORSHARED_EXPORT void setPaused(bool pause);
@@ -137,7 +137,7 @@ private:
     int startnum = 0;
     int endnum = -1;
     QList<int> execlist;
-    int forcequittime = -1;
+//    int forcequittime = -1;
     int launchedfrom = DEFAULT;
     bool autoaddexec = false;
 

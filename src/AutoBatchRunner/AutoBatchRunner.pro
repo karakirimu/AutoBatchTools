@@ -39,8 +39,8 @@ RESOURCES += \
 include(xml/xml.pri)
 include(combobox/combobox.pri)
 include(table/table.pri)
-include(timemanager/timemanager.pri)
-include(systemtray/systemtray.pri)
+#include(timemanager/timemanager.pri)
+#include(systemtray/systemtray.pri)
 include(textedit/textedit.pri)
 include(dialog/dialog.pri)
 
@@ -52,6 +52,8 @@ unix|win32:CONFIG(debug, debug|release) LIBS += \
             -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder \
             -L$$PWD/../../build/debug/libs/ -lextrafunctionsxmlbuilder \
             -L$$PWD/../../build/debug/libs/ -lprocessxmlbuilder \
+            -L$$PWD/../../build/debug/libs/ -lprofilexmlbuilder \
+            -L$$PWD/../../build/debug/libs/ -lprofilecombobox \
             -L$$PWD/../../build/debug/libs/ -lbasictable \
             -L$$PWD/../../build/debug/libs/ -lFileQueueTable \
             -L$$PWD/../../build/debug/libs/ -lsearchtable \

@@ -395,7 +395,7 @@
             <enum>QTabWidget::East</enum>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="exec">
             <attribute name="title">
@@ -418,10 +418,53 @@
               <widget class="CommandTable" name="cmdTableWidget"/>
              </item>
              <item>
-              <widget class="QCheckBox" name="noWaitCheckBox">
-               <property name="text">
-                <string>実行終了を待たない</string>
+              <widget class="QFrame" name="frame_3">
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
                </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="timeoutCheckBox">
+                  <property name="text">
+                   <string>実行時タイムアウト</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QSpinBox" name="timeoutSpinBox">
+                  <property name="suffix">
+                   <string>ms</string>
+                  </property>
+                  <property name="minimum">
+                   <number>-1</number>
+                  </property>
+                  <property name="maximum">
+                   <number>2147483647</number>
+                  </property>
+                  <property name="singleStep">
+                   <number>1000</number>
+                  </property>
+                  <property name="value">
+                   <number>30000</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
              <item>
@@ -858,7 +901,7 @@
     <string>TestSetting</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>8</number>
+    <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_5">
     <layout class="QGridLayout" name="gridLayout">
@@ -1277,14 +1320,14 @@ color: rgb(204, 204, 204);</string>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
+   <class>ProfileComboBox</class>
+   <extends>QComboBox</extends>
+   <header>../profilecombobox/profilecombobox.h</header>
+  </customwidget>
+  <customwidget>
    <class>StringTable</class>
    <extends>QTableWidget</extends>
    <header>../stringtable/stringtable.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ProfileComboBox</class>
-   <extends>QComboBox</extends>
-   <header>profilecombobox.h</header>
   </customwidget>
   <customwidget>
    <class>ProfileTreeWidget</class>
@@ -1354,6 +1397,7 @@ color: rgb(204, 204, 204);</string>
   <tabstop>runTreeWidget</tabstop>
  </tabstops>
  <resources>
+  <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>

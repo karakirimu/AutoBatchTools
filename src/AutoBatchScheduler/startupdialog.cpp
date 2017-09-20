@@ -27,6 +27,8 @@ StartupDialog::StartupDialog(QWidget *parent) :
     connect( ui->buttonBox, SIGNAL(accepted()), this, SLOT(onAccept()));
     connect( ui->buttonBox, SIGNAL(rejected()), this, SLOT(onReject()));
     connect(ui->everyDayCheckBox, SIGNAL(clicked(bool)), this, SLOT(everyDaySelected(bool)));
+    connect(ui->profileAddButton, &QToolButton::clicked, ui->profileComboBox, &ProfileComboBox::addItemAction);
+    connect(ui->profileDeleteButton, &QToolButton::clicked, ui->profileComboBox, &ProfileComboBox::deleteItemAction);
 
     //set new xml builder
     builder = new StartupXmlBuilder();
@@ -161,7 +163,7 @@ void StartupDialog::createList(QList<QStringList> *newlist)
     newlist->append((QStringList() << "name" << ui->nameLineEdit->text()));
 
     //add profilename
-    newlist->append((QStringList() << "prof" << ui->profileComboBox->currentText()));
+    newlist->append((QStringList() << "prof" << ui->profileComboBox->getCurrentFileName()));
 
     //add setting is valid
     newlist->append((QStringList() << "valid" << VariantConverter::boolToString(ui->validCheckBox->isChecked())));
@@ -182,7 +184,7 @@ void StartupDialog::createList(QList<QStringList> *newlist)
     newlist->append((QStringList() << "schday" << daySelectToString()));
 
     //add unique token (for manage)
-    QString token = editflag ? uniquecode : getRandomString(24);
+    QString token = editflag ? uniquecode : getRandomString(32);
     newlist->append((QStringList() << "unique" << token));
 
 }
@@ -208,7 +210,8 @@ QString StartupDialog::getRandomString(int size)
     const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
 
     QString randomString;
-    qsrand(QTime::currentTime().msec());
+    QDateTime time;
+    qsrand(time.toMSecsSinceEpoch());
     for(int i=0; i < size; ++i)
     {
         int index = qrand() % possibleCharacters.length();

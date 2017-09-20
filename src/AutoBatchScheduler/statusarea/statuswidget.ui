@@ -18,16 +18,16 @@
     <number>2</number>
    </property>
    <property name="leftMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>2</number>
    </property>
    <property name="rightMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>2</number>
+    <number>0</number>
    </property>
    <item>
     <widget class="QFrame" name="frame">
@@ -72,7 +72,7 @@
          <string>...</string>
         </property>
         <property name="icon">
-         <iconset resource="../../res/resources.qrc">
+         <iconset resource="../../../res/resources.qrc">
           <normaloff>:/icons/Gear.png</normaloff>:/icons/Gear.png</iconset>
         </property>
        </widget>
@@ -81,18 +81,29 @@
     </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="listWidget"/>
+    <widget class="ProcessShowTable" name="enabledTableWidget">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ProcessShowTable</class>
+   <extends>QTableWidget</extends>
+   <header>processshowtable.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
+  <include location="../../../res/resources.qrc"/>
+  <include location="../../../res/resources.qrc"/>
+  <include location="../../../res/resources.qrc"/>
+  <include location="../../../res/resources.qrc"/>
+  <include location="../../../res/resources.qrc"/>
+  <include location="../../../res/resources.qrc"/>
+  <include location="../../../res/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

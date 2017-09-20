@@ -47,21 +47,25 @@ void EditorTab::moveTabFromXml(int num)
     if(num < 4 && num > 0) setCurrentIndex(num);
 }
 
+//DEPENDS_XML
 void EditorTab::setNormalDataList(QList<QStringList> *list, int firstpos)
 {
     QWidget *widget = this->widget(NORMAL);
-    QCheckBox *chb = widget->findChild<QCheckBox *>("noWaitCheckBox");
+    QCheckBox *timechb = widget->findChild<QCheckBox *>("timeoutCheckBox");
+    QSpinBox *tospin = widget->findChild<QSpinBox *>("timeoutSpinBox");
     QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox");
     CommandTable *table = widget->findChild<CommandTable *>("cmdTableWidget");
-    int counter = VariantConverter::stringToInt(list->at(firstpos + 1).at(1));
-    chb->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(1)));
+    int counter = VariantConverter::stringToInt(list->at(firstpos + 2).at(1));
+    timechb->setChecked(VariantConverter::stringToBool(list->at(firstpos + 1).at(1)));
+    tospin->setValue(((QString)list->at(firstpos + 1).at(3)).toInt());
     table->setRowCount(counter);
     for(int i = 0; i < counter; i++){
-        table->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 2 + i).at(1)));
+        table->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 3 + i).at(1)));
     }
-    autoonly->setChecked(VariantConverter::stringToBool(list->at(0).at(3)));
+    autoonly->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
 }
 
+//DEPENDS_XML
 void EditorTab::setSearchDataList(QList<QStringList> *list, int firstpos)
 {
     QWidget *widget = this->widget(SEARCH);
@@ -73,20 +77,21 @@ void EditorTab::setSearchDataList(QList<QStringList> *list, int firstpos)
     QRadioButton *vari = widget->findChild<QRadioButton *>("variRadioButton");
     QRadioButton *file = widget->findChild<QRadioButton *>("fileRadioButton");
 
-    scb->setCurrentText(list->at(firstpos).at(1));
-    sle->setText(list->at(firstpos + 1).at(1));
-    vcb->insertItem(0,list->at(firstpos + 2).at(1));
-    ole->setText(list->at(firstpos + 3).at(1));
+    scb->setCurrentText(list->at(firstpos + 1).at(1));
+    sle->setText(list->at(firstpos + 2).at(1));
+    vcb->insertItem(0,list->at(firstpos + 3).at(1));
+    ole->setText(list->at(firstpos + 4).at(1));
 
-    if(list->at(firstpos + 3).at(3) == "0"){
+    if(list->at(firstpos + 4).at(3) == "0"){
         vari->setChecked(true);
     }else{
         file->setChecked(true);
     }
 
-    autoonly->setChecked(VariantConverter::stringToBool(list->at(0).at(3)));
+    autoonly->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
 }
 
+//DEPENDS_XML
 void EditorTab::setScriptDataList(QList<QStringList> *list, int firstpos)
 {
     QWidget *widget = this->widget(EXTRAFUNC);
@@ -95,17 +100,18 @@ void EditorTab::setScriptDataList(QList<QStringList> *list, int firstpos)
     QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox_3");
     CommandTable *table = widget->findChild<CommandTable *>("extrafuncTableWidget");
 
-    scb->setCurrentText(list->at(firstpos).at(1));
+    scb->setCurrentText(list->at(firstpos + 1).at(1));
 //    vcb->insertItem(0,list->at(firstpos + 1).at(1));
-    int counter = VariantConverter::stringToInt(list->at(firstpos + 2).at(1));
+    int counter = VariantConverter::stringToInt(list->at(firstpos + 3).at(1));
     table->setRowCount(counter);
     for(int i = 0; i < counter; i++){
-        table->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 3 + i).at(1)));
+        table->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 4 + i).at(1)));
     }
 
-    autoonly->setChecked(VariantConverter::stringToBool(list->at(0).at(3)));
+    autoonly->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
 }
 
+//DEPENDS_XML
 void EditorTab::setOtherDataList(QList<QStringList> *list, int firstpos)
 {
     QWidget *widget = this->widget(OTHER);
@@ -113,7 +119,7 @@ void EditorTab::setOtherDataList(QList<QStringList> *list, int firstpos)
     QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox_4");
 
     pcb->setCurrentText(list->at(firstpos + 1).at(1));
-    autoonly->setChecked(VariantConverter::stringToBool(list->at(0).at(3)));
+    autoonly->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
 }
 
 void EditorTab::setTempDataList(QList<QStringList> *list, PESharedFunction *sfunction)
@@ -139,16 +145,19 @@ void EditorTab::setTempDataList(QList<QStringList> *list, PESharedFunction *sfun
     setOtherDataList(list, sfunction->firstPosOther());
 }
 
+//DEPENDS_XML
 void EditorTab::getNormalDataList(QStringList *list)
 {
     QWidget *widget = this->widget(NORMAL);
-    QCheckBox *noWaitCheckBox = widget->findChild<QCheckBox *>("noWaitCheckBox");
+    QCheckBox *timeoutCheckBox = widget->findChild<QCheckBox *>("timeoutCheckBox");
+    QSpinBox *tospin = widget->findChild<QSpinBox *>("timeoutSpinBox");
     QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox");
     CommandTable *table = widget->findChild<CommandTable *>("cmdTableWidget");
 
     int rcount = table->rowCount();
     list->append(VariantConverter::boolToString(autoonly->isChecked()));
-    list->append(VariantConverter::boolToString(noWaitCheckBox->isChecked()));
+    list->append(VariantConverter::boolToString(timeoutCheckBox->isChecked()));
+    list->append(QString::number(tospin->value()));
     list->append(QString::number(rcount));
     for(int i = 0; i < rcount; i++){
         list->append(table->getText(i));
@@ -156,6 +165,7 @@ void EditorTab::getNormalDataList(QStringList *list)
 
 }
 
+//DEPENDS_XML
 void EditorTab::getSearchDataList(QStringList *list)
 {
     QWidget *widget = this->widget(SEARCH);
@@ -180,6 +190,7 @@ void EditorTab::getSearchDataList(QStringList *list)
     }
 }
 
+//DEPENDS_XML
 void EditorTab::getScriptDataList(QStringList *list)
 {
     QWidget *widget = this->widget(EXTRAFUNC);
@@ -198,6 +209,7 @@ void EditorTab::getScriptDataList(QStringList *list)
     }
 }
 
+//DEPENDS_XML
 void EditorTab::getOtherDataList(QStringList *list)
 {
     QWidget *widget = this->widget(OTHER);
@@ -207,6 +219,29 @@ void EditorTab::getOtherDataList(QStringList *list)
     list->append(VariantConverter::boolToString(autoonly->isChecked()));
     list->append(pcb->currentText());
     list->append(pcb->getCurrentFileName());
+}
+
+bool EditorTab::getCurrentIndexOnlyChecked()
+{
+    QCheckBox *autoonly;
+    switch (this->currentIndex()) {
+    case NORMAL:
+        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox");
+        break;
+    case SEARCH:
+        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_2");
+        break;
+    case EXTRAFUNC:
+        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_3");
+        break;
+    case OTHER:
+        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_4");
+        break;
+    default:
+        return false;
+    }
+
+    return autoonly->isChecked();
 }
 
 void EditorTab::openSavefile()

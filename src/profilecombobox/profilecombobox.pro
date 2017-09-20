@@ -22,6 +22,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+Release:DESTDIR = $$PWD/../../build/release/libs
+Release:OBJECTS_DIR = $$PWD/../../build/release/.obj
+Release:MOC_DIR = $$PWD/../../build/release/.moc
+Release:RCC_DIR = $$PWD/../../build/release/.rcc
+Release:UI_DIR = $$PWD/../../build/release/.ui
+
+Debug:DESTDIR = $$PWD/../../build/debug/libs
+Debug:OBJECTS_DIR = $$PWD/../../build/debug/.obj
+Debug:MOC_DIR = $$PWD/../../build/debug/.moc
+Debug:RCC_DIR = $$PWD/../../build/debug/.rcc
+Debug:UI_DIR = $$PWD/../../build/debug/.ui
+
 SOURCES += \
         profilecombobox.cpp
 
@@ -33,3 +45,19 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
+unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
+
+INCLUDEPATH += $$PWD/../../build/debug/libs
+DEPENDPATH += $$PWD/../../build/debug/libs
+
+
+unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lprofilexmlbuilder
+
+INCLUDEPATH += $$PWD/../../build/debug/libs
+DEPENDPATH += $$PWD/../../build/debug/libs
+
+unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lprocessxmlbuilder
+
+INCLUDEPATH += $$PWD/../../build/debug/libs
+DEPENDPATH += $$PWD/../../build/debug/libs

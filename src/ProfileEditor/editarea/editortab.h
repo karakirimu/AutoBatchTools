@@ -11,6 +11,7 @@
 #include <QObject>
 #include <QLineEdit>
 #include <QCheckBox>
+#include <QSpinBox>
 #include <QPushButton>
 #include <QToolButton>
 #include <QTableWidget>
@@ -33,7 +34,7 @@ public slots:
     //function depends function
     void moveTabFromXml(int num);
 
-    //xml depends functions
+    //xml depends functions DEPENDS_XML
     void setNormalDataList(QList<QStringList> *list, int firstpos);
     void setSearchDataList(QList<QStringList> *list, int firstpos);
     void setScriptDataList(QList<QStringList> *list, int firstpos);
@@ -44,6 +45,8 @@ public slots:
     void getSearchDataList(QStringList *list);
     void getScriptDataList(QStringList *list);
     void getOtherDataList(QStringList *list);
+
+    bool getCurrentIndexOnlyChecked();
 
 private:
     void openSavefile();

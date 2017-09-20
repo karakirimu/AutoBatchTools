@@ -4,6 +4,7 @@
 #include <QMouseEvent>
 #include <QWidget>
 #include <QDesktopWidget>
+#include <taskschedulerconnector.h>
 
 namespace Ui {
 class StatusWidget;
@@ -17,12 +18,18 @@ public:
     explicit StatusWidget(QWidget *parent = 0);
     ~StatusWidget();
 
+    void setTaskSchedulerConnector(TaskSchedulerConnector *task);
+signals:
+    void launchSettings();
+
 public slots:
+    void settingsClicked(){emit launchSettings();}
 
 private:
     void closeEvent(QCloseEvent *event);
 
     Ui::StatusWidget *ui;
+    TaskSchedulerConnector *taskc;
 };
 
 #endif // STATUSWIDGET_H

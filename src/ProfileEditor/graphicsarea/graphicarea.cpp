@@ -386,19 +386,19 @@ void GraphicArea::setTreeItem(int itemid)
     }
     if(type == "normal"){
 //        node->setPath(QColor(44,70,94), 2, QColor(222,235,247));
-        setNormalTree(node, list, 1);
+        setNormalTree(node, list, 0);
     }
     if(type == "search"){
 //        node->setPath(QColor(56,87,35), 2, QColor(226,240,217));
-        setSearchTree(node, list, 1);
+        setSearchTree(node, list, 0);
     }
     if(type == "script"){
 //        node->setPath(QColor(132,12,12), 2, QColor(251,215,214));
-        setScriptTree(node, list, 1);
+        setScriptTree(node, list, 0);
     }
     if(type == "other"){
 //        node->setPath(QColor(132,60,12), 2, QColor(255,242,204));
-        setOtherTree(node, list, 1);
+        setOtherTree(node, list, 0);
     }
     if(type == "temp"){
         setTempTreeItem(node, list);
@@ -450,13 +450,13 @@ void GraphicArea::setInfoTree(BaseNode *node, QList<QStringList> *list, int firs
 
 void GraphicArea::setNormalTree(BaseNode *node, QList<QStringList> *list, int firstpos)
 {
-    int cmdskip = VariantConverter::stringToInt(list->at(firstpos + 1).at(1));
+    int cmdskip = VariantConverter::stringToInt(list->at(firstpos + 2).at(1));
 
     QStringList shlist;
     QString curdata;
 
     shlist.append("Execution");
-    curdata = (cmdskip == 0)? "NewCommand" : list->at(firstpos + 2).at(1);
+    curdata = (cmdskip == 0)? "NewCommand" : list->at(firstpos + 3).at(1);
     shlist.append("-----");
 
     QFileInfo info(curdata);
@@ -469,7 +469,7 @@ void GraphicArea::setNormalTree(BaseNode *node, QList<QStringList> *list, int fi
     for(int i = 1; i < cmdskip; i++){
         shlist.append(/*list->at(firstpos + 2 + i).at(3)
                       + ": "
-                      + */list->at(firstpos + 2 + i).at(1));
+                      + */list->at(firstpos + 3 + i).at(1));
     }
 
     node->addLines(shlist);
@@ -479,13 +479,13 @@ void GraphicArea::setNormalTree(BaseNode *node, QList<QStringList> *list, int fi
 void GraphicArea::setSearchTree(BaseNode *node, QList<QStringList> *list, int firstpos)
 {
     QString curdata;
-    curdata = list->at(firstpos).at(1);
+    curdata = list->at(firstpos + 1).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
     node->addLines(QStringList() << "Search"
                    << "-----"
                    << curdata
-                   << list->at(firstpos + 1).at(1)
-                   << list->at(firstpos + 2).at(1));
+                   << list->at(firstpos + 2).at(1)
+                   << list->at(firstpos + 3).at(1));
     node->setPath(QColor(56,87,35), 2, QColor(226,240,217));
 }
 
@@ -493,12 +493,12 @@ void GraphicArea::setScriptTree(BaseNode *node, QList<QStringList> *list, int fi
 {
     QString curdata;
     QStringList shlist;
-    int scrskip = VariantConverter::stringToInt(list->at(firstpos + 2).at(1));
+    int scrskip = VariantConverter::stringToInt(list->at(firstpos + 3).at(1));
 
     shlist.append("Script");
     shlist.append("-----");
 
-    curdata = list->at(firstpos).at(1);
+    curdata = list->at(firstpos + 1).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
 
     QFileInfo info(curdata);
@@ -508,7 +508,7 @@ void GraphicArea::setScriptTree(BaseNode *node, QList<QStringList> *list, int fi
         shlist.append(curdata);
     }
     for(int i = 0; i < scrskip; i++){
-        shlist.append(list->at(firstpos + 3 + i).at(1));
+        shlist.append(list->at(firstpos + 4 + i).at(1));
 //        shlist.append(list->at(firstpos + 3 + i).at(3));
     }
 
@@ -519,7 +519,7 @@ void GraphicArea::setScriptTree(BaseNode *node, QList<QStringList> *list, int fi
 void GraphicArea::setOtherTree(BaseNode *node, QList<QStringList> *list, int firstpos)
 {
     QString curdata;
-    curdata = list->at(firstpos).at(1);
+    curdata = list->at(firstpos + 1).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
     node->addLines(QStringList() << "Other"
                    << "-----"

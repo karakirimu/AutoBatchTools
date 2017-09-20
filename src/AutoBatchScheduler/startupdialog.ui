@@ -6,64 +6,137 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>512</width>
-    <height>271</height>
+    <width>509</width>
+    <height>292</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="nameLineEdit"/>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>プロファイル</string>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
      </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>設定名</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="nameLineEdit"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>プロファイル</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QFrame" name="frame_2">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="ProfileComboBox" name="profileComboBox"/>
+         </item>
+         <item>
+          <widget class="QToolButton" name="profileAddButton">
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../res/resources.qrc">
+             <normaloff>:/icons/Add.png</normaloff>:/icons/Add.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="profileDeleteButton">
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../res/resources.qrc">
+             <normaloff>:/icons/Denided.png</normaloff>:/icons/Denided.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>タスクの有効化</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="validCheckBox">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+     <zorder>label_2</zorder>
+     <zorder>label</zorder>
+     <zorder>nameLineEdit</zorder>
+     <zorder>frame_2</zorder>
+     <zorder>label_6</zorder>
+     <zorder>validCheckBox</zorder>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="ProfileComboBox" name="profileComboBox"/>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>設定名</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>有効化</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QCheckBox" name="validCheckBox">
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="2">
+   <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>日時</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
+      <item row="2" column="10">
+       <widget class="QSpinBox" name="weeksSpinBox">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>9999</number>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="7" colspan="5">
        <widget class="QDateTimeEdit" name="scheduleDateTimeEdit">
         <property name="displayFormat">
@@ -78,13 +151,10 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="10">
-       <widget class="QSpinBox" name="weeksSpinBox">
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <number>9999</number>
+      <item row="2" column="3">
+       <widget class="QCheckBox" name="TueCheckBox">
+        <property name="text">
+         <string>火</string>
         </property>
        </widget>
       </item>
@@ -94,6 +164,9 @@
          <string>金</string>
         </property>
        </widget>
+      </item>
+      <item row="3" column="3" colspan="6">
+       <widget class="QLineEdit" name="secondsLineEdit"/>
       </item>
       <item row="1" column="7" colspan="2">
        <widget class="QLabel" name="label_3">
@@ -118,8 +191,19 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="3" colspan="6">
-       <widget class="QLineEdit" name="secondsLineEdit"/>
+      <item row="2" column="8" colspan="2">
+       <widget class="QCheckBox" name="SunCheckBox">
+        <property name="text">
+         <string>日</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="7">
+       <widget class="QCheckBox" name="SatCheckBox">
+        <property name="text">
+         <string>土</string>
+        </property>
+       </widget>
       </item>
       <item row="3" column="9" colspan="3">
        <widget class="QComboBox" name="secondsComboBox">
@@ -140,17 +224,10 @@
         </item>
        </widget>
       </item>
-      <item row="2" column="8" colspan="2">
-       <widget class="QCheckBox" name="SunCheckBox">
+      <item row="2" column="2">
+       <widget class="QCheckBox" name="MonCheckBox">
         <property name="text">
-         <string>日</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="3">
-       <widget class="QCheckBox" name="TueCheckBox">
-        <property name="text">
-         <string>火</string>
+         <string>月</string>
         </property>
        </widget>
       </item>
@@ -168,30 +245,6 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="7">
-       <widget class="QCheckBox" name="SatCheckBox">
-        <property name="text">
-         <string>土</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QCheckBox" name="MonCheckBox">
-        <property name="text">
-         <string>月</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="3">
-       <widget class="QRadioButton" name="secondsRadioButton">
-        <property name="text">
-         <string>秒間スケジュール</string>
-        </property>
-        <attribute name="buttonGroup">
-         <string notr="true">radioButtonGroup</string>
-        </attribute>
-       </widget>
-      </item>
       <item row="1" column="0" colspan="3">
        <widget class="QRadioButton" name="weeksRadioButton">
         <property name="text">
@@ -206,6 +259,16 @@
        <widget class="QRadioButton" name="oneshotRadioButton">
         <property name="text">
          <string>1回のみの実行</string>
+        </property>
+        <attribute name="buttonGroup">
+         <string notr="true">radioButtonGroup</string>
+        </attribute>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="3">
+       <widget class="QRadioButton" name="secondsRadioButton">
+        <property name="text">
+         <string>秒間スケジュール</string>
         </property>
         <attribute name="buttonGroup">
          <string notr="true">radioButtonGroup</string>
@@ -240,19 +303,27 @@
      <zorder>everyDayCheckBox</zorder>
     </widget>
    </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
    <class>ProfileComboBox</class>
    <extends>QComboBox</extends>
-   <header>profilecombobox.h</header>
+   <header>../profilecombobox/profilecombobox.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>nameLineEdit</tabstop>
-  <tabstop>profileComboBox</tabstop>
-  <tabstop>validCheckBox</tabstop>
   <tabstop>oneshotRadioButton</tabstop>
   <tabstop>scheduleDateTimeEdit</tabstop>
   <tabstop>weeksRadioButton</tabstop>
@@ -269,7 +340,15 @@
   <tabstop>secondsLineEdit</tabstop>
   <tabstop>secondsComboBox</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

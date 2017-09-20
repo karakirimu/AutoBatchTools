@@ -24,6 +24,9 @@ FileQueueTable::FileQueueTable(QWidget *parent)
     //set header label
     setHorizontalHeaderLabels((QStringList() << tr("FilePath")));
 
+    //adjust column
+    horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+
     //set header sort settings
     connect(horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(horizontalHeaderClicked(int)));
 

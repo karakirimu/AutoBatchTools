@@ -1,7 +1,7 @@
 #include "cellinfowidget.h"
 #include "ui_cellinfowidget.h"
 
-cellInfoWidget::cellInfoWidget(QWidget *parent) :
+CellInfoWidget::CellInfoWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::cellInfoWidget)
 {
@@ -9,22 +9,22 @@ cellInfoWidget::cellInfoWidget(QWidget *parent) :
 
     //init
     ui->progressBar->setValue(0);
-    connect(ui->consoleToolButton, &QToolButton::clicked, this, &cellInfoWidget::onConsoleButtonClicked);
-    connect(ui->pauseToolButton, &QToolButton::clicked, this, &cellInfoWidget::onPauseButtonClicked);
-    connect(ui->stopToolButton, &QToolButton::clicked, this, &cellInfoWidget::onStopButtonClicked);
+    connect(ui->consoleToolButton, &QToolButton::clicked, this, &CellInfoWidget::onConsoleButtonClicked);
+    connect(ui->pauseToolButton, &QToolButton::clicked, this, &CellInfoWidget::onPauseButtonClicked);
+    connect(ui->stopToolButton, &QToolButton::clicked, this, &CellInfoWidget::onStopButtonClicked);
 }
 
-cellInfoWidget::~cellInfoWidget()
+CellInfoWidget::~CellInfoWidget()
 {
     delete ui;
 }
 
-void cellInfoWidget::setProfileName(QString name)
+void CellInfoWidget::setProfileName(QString name)
 {
     ui->profileNameLabel->setText(name);
 }
 
-void cellInfoWidget::started()
+void CellInfoWidget::started()
 {
     ui->progressBar->setEnabled(true);
     ui->consoleToolButton->setEnabled(true);
@@ -32,7 +32,7 @@ void cellInfoWidget::started()
     ui->stopToolButton->setEnabled(true);
 }
 
-void cellInfoWidget::scheduled()
+void CellInfoWidget::scheduled()
 {
     ui->progressBar->setEnabled(false);
     ui->consoleToolButton->setEnabled(false);
@@ -40,33 +40,52 @@ void cellInfoWidget::scheduled()
     ui->stopToolButton->setEnabled(false);
 }
 
-void cellInfoWidget::updateProcess(QString data, int type)
+void CellInfoWidget::updateProcess(QString data, int type)
 {
     Q_UNUSED(type);
     ui->processLabel->setText(data);
 }
 
-void cellInfoWidget::updateProgress(int num)
+void CellInfoWidget::updateProgress(int num)
 {
     ui->progressBar->setValue(num);
 }
 
-void cellInfoWidget::setProgressminmax(int start, int end)
+void CellInfoWidget::updateErrorProgress(int num)
+{
+    QPalette p = ui->progressBar->palette();
+    p.setColor(QPalette::Highlight, Qt::darkRed);
+    ui->progressBar->setPalette(p);
+    ui->progressBar->repaint();
+    ui->progressBar->setValue(num);
+}
+
+void CellInfoWidget::updateErrorText(QString message)
+{
+    ui->processLabel->setText(message);
+}
+
+void CellInfoWidget::setTimerEnd(QString date)
+{
+    ui->processLabel->setText(date);
+}
+
+void CellInfoWidget::setProgressminmax(int start, int end)
 {
     ui->progressBar->setRange(start, end);
 }
 
-void cellInfoWidget::onConsoleButtonClicked()
+void CellInfoWidget::onConsoleButtonClicked()
 {
     consoleButtonClicked(this->objectName());
 }
 
-void cellInfoWidget::onPauseButtonClicked()
+void CellInfoWidget::onPauseButtonClicked()
 {
     pauseButtonClicked(this->objectName());
 }
 
-void cellInfoWidget::onStopButtonClicked()
+void CellInfoWidget::onStopButtonClicked()
 {
     stopButtonClicked(this->objectName());
 }

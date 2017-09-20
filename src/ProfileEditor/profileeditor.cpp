@@ -9,9 +9,13 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //dock position
+    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+
     //set docktab
     tabifyDockWidget(ui->localVariantDockWidget, ui->globalVariantDockWidget);
-    setTabPosition(Qt::DockWidgetArea::RightDockWidgetArea, QTabWidget::TabPosition::East);
+    setTabPosition(Qt::RightDockWidgetArea, QTabWidget::TabPosition::East);
+    ui->localVariantDockWidget->show();
 
     //Window data restore
     QSettings settings( "./psettings.ini", QSettings::IniFormat );
@@ -420,7 +424,8 @@ void ProfileEditor::connectEdit()
     connect(ui->autoOnlyCheckBox_4, SIGNAL(clicked()), this, SLOT(editAction()));
 
     //type=normal
-    connect(ui->noWaitCheckBox, SIGNAL(clicked()), this, SLOT(editAction()));
+    connect(ui->timeoutCheckBox, SIGNAL(clicked()), this, SLOT(editAction()));
+    connect(ui->timeoutSpinBox, SIGNAL(valueChanged(int)), this, SLOT(editAction()));
     connect(ui->cmdTableWidget, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
 
     //type=search
@@ -453,7 +458,8 @@ void ProfileEditor::disconnectEdit()
     disconnect(ui->autoOnlyCheckBox_4, SIGNAL(clicked()), this, SLOT(editAction()));
 
     //type=normal
-    disconnect(ui->noWaitCheckBox, SIGNAL(clicked()), this, SLOT(editAction()));
+    disconnect(ui->timeoutCheckBox, SIGNAL(clicked()), this, SLOT(editAction()));
+    disconnect(ui->timeoutSpinBox, SIGNAL(valueChanged(int)), this, SLOT(editAction()));
     disconnect(ui->cmdTableWidget, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
 
     //type=search
@@ -506,17 +512,17 @@ void ProfileEditor::setSettingList(QList<QStringList> *itemlist)
         break;
     case 1: /*setNormalList(itemlist, 1);*/
 //        ui->autoOnlyCheckBox->setChecked(VariantConverter::stringToBool(itemlist->at(0).at(3)));
-        ui->editorTab->setNormalDataList(itemlist, 1);
+        ui->editorTab->setNormalDataList(itemlist, 0);
         ui->editorTab->setCurrentIndex(0);
         break;
     case 2: /*setSearchList(itemlist, 1);*/
 //        ui->autoOnlyCheckBox_2->setChecked(VariantConverter::stringToBool(itemlist->at(0).at(3)));
-        ui->editorTab->setSearchDataList(itemlist, 1);
+        ui->editorTab->setSearchDataList(itemlist, 0);
         ui->editorTab->setCurrentIndex(1);
         break;
     case 3: /*setScriptList(itemlist, 1);*/
 //        ui->autoOnlyCheckBox_3->setChecked(VariantConverter::stringToBool(itemlist->at(0).at(3)));
-        ui->editorTab->setScriptDataList(itemlist, 1);
+        ui->editorTab->setScriptDataList(itemlist, 0);
         ui->editorTab->setCurrentIndex(2);
         break;
     case 4: /*ui->profileComboBox->setCurrentText(itemlist->at(1).at(1));*/
@@ -585,11 +591,11 @@ void ProfileEditor::setSettingList(QList<QStringList> *itemlist)
 void ProfileEditor::createList(int type, QList<QStringList> *newlist)
 {
     switch(type){
-    case 0: getInfoList(newlist, true);  break;
-    case 1: getNormalList(newlist, true);break;
-    case 2: getSearchList(newlist, true);break;
-    case 3: getScriptList(newlist, true);break;
-    case 4: getOtherList(newlist, true); break;
+    case 0: getInfoList(newlist);  break;
+    case 1: getNormalList(newlist);break;
+    case 2: getSearchList(newlist);break;
+    case 3: getScriptList(newlist);break;
+    case 4: getOtherList(newlist); break;
     case 5: createTempList(newlist);     break;
     default:                             break;
     }
@@ -599,61 +605,62 @@ void ProfileEditor::createList(int type, QList<QStringList> *newlist)
 void ProfileEditor::createTempList(QList<QStringList> *newlist)
 {
     // basic infomation
-    newlist->append((QStringList() << "type" << "temp"/* << "only" << VariantConverter::boolToString(ui->autoOnlyCheckBox->isChecked())*/));
+    newlist->append((QStringList() << "type" << "temp" << "only"
+                     << VariantConverter::boolToString(ui->editorTab->getCurrentIndexOnlyChecked())));
     newlist->append((QStringList() << "istack" << QString::number(ui->editorTab->currentIndex())));
 
     // "type" << "search";
-    getSearchList(newlist, false);
+    getSearchList(newlist);
 
     // "type" << "other";
-    getOtherList(newlist, false);
+    getOtherList(newlist);
 
     // "type" << "normal";
-    getNormalList(newlist, false);
+    getNormalList(newlist);
 
     // "type" << "script";
-    getScriptList(newlist, false);
+    getScriptList(newlist);
 
 }
 
 ///DEPENDS_XML
-void ProfileEditor::getInfoList(QList<QStringList> *newlist, bool withtype)
+void ProfileEditor::getInfoList(QList<QStringList> *newlist)
 {
     QStringList list;
     ui->innerStackedWidget->getInfoDataList(&list);
-    sfunction->createInfoList(newlist, &list, withtype);
+    sfunction->createInfoList(newlist, &list);
 }
 
 ///DEPENDS_XML
-void ProfileEditor::getNormalList(QList<QStringList> *newlist, bool withtype)
+void ProfileEditor::getNormalList(QList<QStringList> *newlist)
 {
     QStringList list;
     ui->editorTab->getNormalDataList(&list);
-    sfunction->createNormalList(newlist, &list, withtype);
+    sfunction->createNormalList(newlist, &list);
 }
 
 ///DEPENDS_XML
-void ProfileEditor::getSearchList(QList<QStringList> *newlist, bool withtype)
+void ProfileEditor::getSearchList(QList<QStringList> *newlist)
 {
     QStringList list;
     ui->editorTab->getSearchDataList(&list);
-    sfunction->createSearchList(newlist, &list, withtype);
+    sfunction->createSearchList(newlist, &list);
 }
 
 ///DEPENDS_XML
-void ProfileEditor::getScriptList(QList<QStringList> *newlist, bool withtype)
+void ProfileEditor::getScriptList(QList<QStringList> *newlist)
 {
     QStringList list;
     ui->editorTab->getScriptDataList(&list);
-    sfunction->createScriptList(newlist, &list, withtype);
+    sfunction->createScriptList(newlist, &list);
 }
 
 ///DEPENDS_XML
-void ProfileEditor::getOtherList(QList<QStringList> *newlist, bool withtype)
+void ProfileEditor::getOtherList(QList<QStringList> *newlist)
 {
     QStringList list;
     ui->editorTab->getOtherDataList(&list);
-    sfunction->createOtherList(newlist, &list, withtype);
+    sfunction->createOtherList(newlist, &list);
 }
 
 //when opening new file

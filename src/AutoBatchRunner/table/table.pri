@@ -7,7 +7,7 @@ HEADERS += \
     $$PWD/profiletable.h \
 #    $$PWD/scripttable.h \
 #    $$PWD/searchtable.h \
-    $$PWD/startuptable.h \
+#    $$PWD/startuptable.h \
 #    $$PWD/stringtable.h \
 #    $$PWD/searchdialogtable.h
 
@@ -18,6 +18,6 @@ SOURCES += \
     $$PWD/profiletable.cpp \
 #    $$PWD/scripttable.cpp \
 #    $$PWD/searchtable.cpp \
-    $$PWD/startuptable.cpp \
+#    $$PWD/startuptable.cpp \
 #    $$PWD/stringtable.cpp \
 #    $$PWD/searchdialogtable.cpp

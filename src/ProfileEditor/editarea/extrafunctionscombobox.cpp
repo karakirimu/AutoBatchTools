@@ -31,6 +31,7 @@ void ExtraFunctionsComboBox::reloadComboBoxItem()
         this->setCurrentIndex(tmp);
 }
 
+//DEPENDS_XML
 void ExtraFunctionsComboBox::addItemAction()
 {
     //add empty item

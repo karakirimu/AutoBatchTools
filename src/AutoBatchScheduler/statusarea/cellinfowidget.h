@@ -2,18 +2,19 @@
 #define CELLINFOWIDGET_H
 
 #include <QWidget>
+#include <QDateTime>
 
 namespace Ui {
 class cellInfoWidget;
 }
 
-class cellInfoWidget : public QWidget
+class CellInfoWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit cellInfoWidget(QWidget *parent = 0);
-    ~cellInfoWidget();
+    explicit CellInfoWidget(QWidget *parent = 0);
+    ~CellInfoWidget();
 
 signals:
     //send own objectname
@@ -34,8 +35,10 @@ public slots:
     void updateProcess(QString data, int type);
     void updateProgress(int num);
 
+    void setTimerEnd(QString date);
 
-
+    void updateErrorProgress(int num);
+    void updateErrorText(QString message);
 private slots:
     void onConsoleButtonClicked();
     void onPauseButtonClicked();

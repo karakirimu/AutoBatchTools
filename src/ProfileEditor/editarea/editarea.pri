@@ -1,7 +1,7 @@
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    $$PWD/profilecombobox.h \
+#    $$PWD/profilecombobox.h \
     $$PWD/searchcombobox.h \
     $$PWD/variantcombobox.h \
     $$PWD/commandtable.h \
@@ -10,7 +10,7 @@ HEADERS += \
     $$PWD/extrafunctionscombobox.h \
 
 SOURCES += \
-    $$PWD/profilecombobox.cpp \
+#    $$PWD/profilecombobox.cpp \
     $$PWD/searchcombobox.cpp \
     $$PWD/variantcombobox.cpp \
     $$PWD/commandtable.cpp \

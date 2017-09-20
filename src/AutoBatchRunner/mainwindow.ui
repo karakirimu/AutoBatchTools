@@ -133,7 +133,7 @@ selection-color: rgb(0, 0, 0);</string>
     <string>プロファイル選択</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>8</number>
+    <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_3">
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -220,7 +220,7 @@ selection-color: rgb(0, 0, 0);</string>
            <string>実行開始</string>
           </property>
           <property name="icon">
-           <iconset resource="autobatchrunner.qrc">
+           <iconset resource="../../res/resources.qrc">
             <normaloff>:/icons/run.png</normaloff>:/icons/run.png</iconset>
           </property>
          </widget>
@@ -231,7 +231,7 @@ selection-color: rgb(0, 0, 0);</string>
            <string>一時停止</string>
           </property>
           <property name="icon">
-           <iconset resource="autobatchrunner.qrc">
+           <iconset resource="../../res/resources.qrc">
             <normaloff>:/icons/pause.png</normaloff>:/icons/pause.png</iconset>
           </property>
          </widget>
@@ -242,7 +242,7 @@ selection-color: rgb(0, 0, 0);</string>
            <string>停止</string>
           </property>
           <property name="icon">
-           <iconset resource="autobatchrunner.qrc">
+           <iconset resource="../../res/resources.qrc">
             <normaloff>:/icons/stop_flat.png</normaloff>:/icons/stop_flat.png</iconset>
           </property>
          </widget>
@@ -266,7 +266,7 @@ selection-color: rgb(0, 0, 0);</string>
      <item>
       <widget class="QProgressBar" name="progressBar">
        <property name="value">
-        <number>24</number>
+        <number>0</number>
        </property>
       </widget>
      </item>
@@ -313,7 +313,7 @@ color: rgb(204, 204, 204);</string>
   </widget>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="autobatchrunner.qrc">
+    <iconset resource="../../res/resources.qrc">
      <normaloff>:/icons/File_Add.png</normaloff>:/icons/File_Add.png</iconset>
    </property>
    <property name="text">
@@ -349,7 +349,7 @@ color: rgb(204, 204, 204);</string>
   </action>
   <action name="actionSettings">
    <property name="icon">
-    <iconset resource="autobatchrunner.qrc">
+    <iconset resource="../../res/resources.qrc">
      <normaloff>:/icons/Gear.png</normaloff>:/icons/Gear.png</iconset>
    </property>
    <property name="text">
@@ -358,7 +358,7 @@ color: rgb(204, 204, 204);</string>
   </action>
   <action name="actionRun">
    <property name="icon">
-    <iconset resource="autobatchrunner.qrc">
+    <iconset resource="../../res/resources.qrc">
      <normaloff>:/icons/run.png</normaloff>:/icons/run.png</iconset>
    </property>
    <property name="text">
@@ -370,7 +370,7 @@ color: rgb(204, 204, 204);</string>
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="autobatchrunner.qrc">
+    <iconset resource="../../res/resources.qrc">
      <normaloff>:/icons/pause.png</normaloff>:/icons/pause.png</iconset>
    </property>
    <property name="text">
@@ -382,7 +382,7 @@ color: rgb(204, 204, 204);</string>
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="autobatchrunner.qrc">
+    <iconset resource="../../res/resources.qrc">
      <normaloff>:/icons/stop_flat.png</normaloff>:/icons/stop_flat.png</iconset>
    </property>
    <property name="text">
@@ -406,17 +406,7 @@ color: rgb(204, 204, 204);</string>
   <customwidget>
    <class>ProfileComboBox</class>
    <extends>QComboBox</extends>
-   <header>profilecombobox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>CommandLineTextEdit</class>
-   <extends>QTextEdit</extends>
-   <header>commandlinetextedit.h</header>
-  </customwidget>
-  <customwidget>
-   <class>FileQueueTable</class>
-   <extends>QTableWidget</extends>
-   <header>../filequeuetable/filequeuetable.h</header>
+   <header>../profilecombobox/profilecombobox.h</header>
   </customwidget>
   <customwidget>
    <class>BaseDockWidget</class>
@@ -424,9 +414,25 @@ color: rgb(204, 204, 204);</string>
    <header>basedockwidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>FileQueueTable</class>
+   <extends>QTableWidget</extends>
+   <header>../filequeuetable/filequeuetable.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CommandLineTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>commandlinetextedit.h</header>
+  </customwidget>
  </customwidgets>
  <resources>
-  <include location="autobatchrunner.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -254,5 +254,5 @@ void VariantTable::getLocalList(QList<QStringList> *newlist)
         list.append(this->model()->index(i, 1).data().toString());
     }
 
-    sfunction->createLocalList(newlist, &list, true);
+    sfunction->createLocalList(newlist, &list);
 }

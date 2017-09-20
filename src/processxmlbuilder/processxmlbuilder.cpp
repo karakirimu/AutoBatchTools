@@ -112,7 +112,7 @@ int ProcessXmlBuilder::count()
 
 int ProcessXmlBuilder::firstPosTempNormal() const
 {
-    return 8;
+    return 10;
 }
 
 int ProcessXmlBuilder::firstPosTempSearch() const
@@ -122,12 +122,12 @@ int ProcessXmlBuilder::firstPosTempSearch() const
 
 int ProcessXmlBuilder::firstPosTempScript() const
 {
-    return 10;
+    return 13;
 }
 
 int ProcessXmlBuilder::firstPosTempOther() const
 {
-    return 6;
+    return 7;
 }
 
 void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
@@ -138,7 +138,7 @@ void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *l
             || element == "author"
             || element == "desc"
             || element == "uptime"
-            || element == "nowait"
+//            || element == "nowait"
             || element == "cmdc"
             || element == "localc"
             || element == "sep"
@@ -164,6 +164,21 @@ void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *l
         //add attributes and data
         data.append("only");
         data.append(only);
+
+        //add to QList
+        list->append(data);
+    }
+
+    if(element == "timeout")
+    {
+        QString during = rxml->attributes().value("dur").toString();
+        QStringList data;
+        //add element and text
+        data.append(element);
+        data.append(rxml->readElementText());
+        //add attributes and data
+        data.append("dur");
+        data.append(during);
 
         //add to QList
         list->append(data);

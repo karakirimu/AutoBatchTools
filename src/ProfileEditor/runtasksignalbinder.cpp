@@ -55,7 +55,7 @@ void RunTaskSignalBinder::start()
         executor->setDetached(settings.value("DETACH", false).toBool());
         executor->setLaunchedfrom(settings.value("FAKERES", false).toInt());
         executor->setSearchfileoverwrite(settings.value("FSUPDATE", true).toBool());
-        executor->setForcequittime(settings.value("TIMEOUT", 30000).toInt());
+//        executor->setForcequittime(settings.value("TIMEOUT", 30000).toInt());
         settings.endGroup();
 
         executor->setProcessFile(editingfile);

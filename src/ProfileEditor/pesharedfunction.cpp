@@ -73,12 +73,13 @@ bool PESharedFunction::readItem(int itemid, QList<QStringList> *itemlist)
     return false;
 }
 
+//DEPENDS_XML
 void PESharedFunction::addItem()
 {
     //initiate data
     QList<QStringList> newlist;
     newlist.append((QStringList() << "type" << "normal" << "only" << "no"));
-    newlist.append((QStringList() << "nowait" << "no"));
+    newlist.append((QStringList() << "timeout" << "no" << "dur" << "30000"));
     newlist.append((QStringList() << "cmdc" << "0"));
     builder->addItem(&newlist);
 }
@@ -215,9 +216,9 @@ int PESharedFunction::itemCount()
 }
 
 ///DEPENDS_XML
-void PESharedFunction::createInfoList(QList<QStringList> *newlist, QStringList *list, bool withtype)
+void PESharedFunction::createInfoList(QList<QStringList> *newlist, QStringList *list)
 {
-    if(withtype) newlist->append((QStringList() << "type" << "info"));
+    newlist->append((QStringList() << "type" << "info"));
     newlist->append((QStringList() << "name" << list->at(0)));
     newlist->append((QStringList() << "ver" << list->at(1)));
     newlist->append((QStringList() << "author" << list->at(2)));
@@ -226,10 +227,10 @@ void PESharedFunction::createInfoList(QList<QStringList> *newlist, QStringList *
 }
 
 ///DEPENDS_XML
-void PESharedFunction::createLocalList(QList<QStringList> *newlist, QStringList *list, bool withtype)
+void PESharedFunction::createLocalList(QList<QStringList> *newlist, QStringList *list)
 {
     int rcount = VariantConverter::stringToInt(list->at(0)) * 2;
-    if(withtype) newlist->append((QStringList() << "type" << "local"));
+    newlist->append((QStringList() << "type" << "local"));
     newlist->append((QStringList() << "localc" << list->at(0)));
     for(int i = 0; i < rcount; i+=2){
         newlist->append((QStringList() << "lvar"
@@ -238,22 +239,22 @@ void PESharedFunction::createLocalList(QList<QStringList> *newlist, QStringList 
 }
 
 ///DEPENDS_XML
-void PESharedFunction::createNormalList(QList<QStringList> *newlist, QStringList *list, bool withtype)
+void PESharedFunction::createNormalList(QList<QStringList> *newlist, QStringList *list)
 {
-    int rcount = VariantConverter::stringToInt(list->at(2));
-    if(withtype) newlist->append((QStringList() << "type" << "normal" << "only" << list->at(0)));
-    newlist->append((QStringList() << "nowait" << list->at(1)));
-    newlist->append((QStringList() << "cmdc" << list->at(2)));
+    int rcount = VariantConverter::stringToInt(list->at(3));
+    newlist->append((QStringList() << "type" << "normal" << "only" << list->at(0)));
+    newlist->append((QStringList() << "timeout" << list->at(1) << "dur" << list->at(2)));
+    newlist->append((QStringList() << "cmdc" << list->at(3)));
     for(int i = 0; i < rcount; i++){
         newlist->append((QStringList() << "cmd"
-                         << list->at(i + 3) << "id" << QString::number(i)));
+                         << list->at(i + 4) << "id" << QString::number(i)));
     }
 }
 
 ///DEPENDS_XML
-void PESharedFunction::createSearchList(QList<QStringList> *newlist, QStringList *list, bool withtype)
+void PESharedFunction::createSearchList(QList<QStringList> *newlist, QStringList *list)
 {
-    if(withtype) newlist->append((QStringList() << "type" << "search" << "only" << list->at(0)));
+    newlist->append((QStringList() << "type" << "search" << "only" << list->at(0)));
     newlist->append((QStringList() << "sname" << list->at(1) << "id" << list->at(2)));
     newlist->append((QStringList() << "sep" << list->at(3)));
     newlist->append((QStringList() << "var" << list->at(4)));
@@ -261,10 +262,10 @@ void PESharedFunction::createSearchList(QList<QStringList> *newlist, QStringList
 }
 
 ///DEPENDS_XML
-void PESharedFunction::createScriptList(QList<QStringList> *newlist, QStringList *list, bool withtype)
+void PESharedFunction::createScriptList(QList<QStringList> *newlist, QStringList *list)
 {
     int rcount = VariantConverter::stringToInt(list->at(3));
-    if(withtype) newlist->append((QStringList() << "type" << "script" << "only" << list->at(0)));
+    newlist->append((QStringList() << "type" << "script" << "only" << list->at(0)));
     newlist->append((QStringList() << "name" << list->at(1)));
     newlist->append((QStringList() << "file" << list->at(2)));
     newlist->append((QStringList() << "cmdc" << list->at(3)));
@@ -275,9 +276,9 @@ void PESharedFunction::createScriptList(QList<QStringList> *newlist, QStringList
 }
 
 ///DEPENDS_XML
-void PESharedFunction::createOtherList(QList<QStringList> *newlist, QStringList *list, bool withtype)
+void PESharedFunction::createOtherList(QList<QStringList> *newlist, QStringList *list)
 {
-    if(withtype) newlist->append((QStringList() << "type" << "other" << "only" << list->at(0)));
+    newlist->append((QStringList() << "type" << "other" << "only" << list->at(0)));
     newlist->append((QStringList() << "name" << list->at(1)));
     newlist->append((QStringList() << "file" << list->at(2)));
 }
@@ -323,7 +324,7 @@ void PESharedFunction::convertToDefaultList(QList<QStringList> *temp)
             list.append(temp->at(firstpos + 2 + i).at(1));
         }
         temp->clear();
-        createNormalList(temp, &list, true);
+        createNormalList(temp, &list);
         break;
     case 1:
         //Search
@@ -334,7 +335,7 @@ void PESharedFunction::convertToDefaultList(QList<QStringList> *temp)
         list.append(temp->at(firstpos + 3).at(1));
         list.append(temp->at(firstpos + 3).at(3));
         temp->clear();
-        createSearchList(temp, &list, true);
+        createSearchList(temp, &list);
         break;
     case 2:
         //Script
@@ -346,14 +347,14 @@ void PESharedFunction::convertToDefaultList(QList<QStringList> *temp)
             list.append(temp->at(firstpos + 3 + i).at(1));
         }
         temp->clear();
-        createScriptList(temp, &list, true);
+        createScriptList(temp, &list);
         break;
     case 3:
         //Other
         list.append(temp->at(firstpos).at(1));
         list.append(temp->at(firstpos + 1).at(1));
         temp->clear();
-        createOtherList(temp, &list, true);
+        createOtherList(temp, &list);
         break;
     default:
         break;

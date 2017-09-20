@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     //set dockwidget occupied area
 //    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
-//    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
+    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 
     //setup ui
     ui->setupUi(this);
@@ -37,13 +37,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //init system tray
     //test function
-    sysTray = new SystemTray();
-    sysTray->show();
+//    sysTray = new SystemTray();
+//    sysTray->show();
 
     //connect systray actions
-    connect(sysTray, &SystemTray::launchMain, this, &MainWindow::showThisWindow);
-    connect(sysTray, &SystemTray::launchSetting, this, &MainWindow::on_actionSettings_triggered);
-    connect(sysTray, &SystemTray::launchclose, this, &MainWindow::closedFromSystemTray);
+//    connect(sysTray, &SystemTray::launchMain, this, &MainWindow::showThisWindow);
+//    connect(sysTray, &SystemTray::launchSetting, this, &MainWindow::on_actionSettings_triggered);
+//    connect(sysTray, &SystemTray::launchclose, this, &MainWindow::closedFromSystemTray);
 
     //TODO: error occured
 //    ui->comboBox->reloadComboBoxItem();
@@ -78,7 +78,7 @@ MainWindow::~MainWindow()
 
     //delete object
     delete opdialog;
-    delete sysTray;
+//    delete sysTray;
     delete ui;
 }
 
@@ -136,7 +136,7 @@ void MainWindow::closedFromSystemTray()
     if(allclose){
         QCoreApplication::quit();
     }else{
-        sysTray->hide();
+//        sysTray->hide();
         this->showNormal();
     }
 }

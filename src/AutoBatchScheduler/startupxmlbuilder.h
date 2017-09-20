@@ -49,6 +49,9 @@ public:
     bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
     void createDocument();
     int count();
+
+    enum{NAME,PROF,VALID,SELECTEDTYPE,SC_DATETIME,SC_SECONDS,SC_TIME,SC_DAY,UNIQUE};
+
 private:
     void setSearchItemData(QString element, QList<QStringList> *list);
 

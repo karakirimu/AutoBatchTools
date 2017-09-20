@@ -549,7 +549,7 @@
                </widget>
               </item>
               <item>
-               <widget class="StartupTable" name="startupTableWidget">
+               <widget class="QTableWidget" name="startupTableWidget">
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
                 </property>
@@ -582,7 +582,7 @@
               <item>
                <widget class="QTabWidget" name="profileTabWidget_2">
                 <property name="currentIndex">
-                 <number>2</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="string">
                  <attribute name="title">
@@ -1007,17 +1007,13 @@
    <header>profiletable.h</header>
   </customwidget>
   <customwidget>
-   <class>StartupTable</class>
-   <extends>QTableWidget</extends>
-   <header>startuptable.h</header>
-  </customwidget>
-  <customwidget>
    <class>ExtraFunctionsTable</class>
    <extends>QTableWidget</extends>
    <header>../extrafunctionstable/extrafunctionstable.h</header>
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../../../res/resources.qrc"/>
   <include location="../../../res/resources.qrc"/>
   <include location="../../../res/resources.qrc"/>
   <include location="../../../res/resources.qrc"/>

@@ -78,11 +78,11 @@ private:
     //gather list information from ui
     void createList(int type, QList<QStringList> *newlist);
     void createTempList(QList<QStringList> *newlist);
-    void getInfoList(QList<QStringList> *newlist, bool withtype);
-    void getNormalList(QList<QStringList> *newlist, bool withtype);
-    void getSearchList(QList<QStringList> *newlist, bool withtype);
-    void getScriptList(QList<QStringList> *newlist, bool withtype);
-    void getOtherList(QList<QStringList> *newlist, bool withtype);
+    void getInfoList(QList<QStringList> *newlist);
+    void getNormalList(QList<QStringList> *newlist);
+    void getSearchList(QList<QStringList> *newlist);
+    void getScriptList(QList<QStringList> *newlist);
+    void getOtherList(QList<QStringList> *newlist);
 
     //reset ui
     void resetUi();
