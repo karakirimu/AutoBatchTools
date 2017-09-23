@@ -51,6 +51,8 @@ include(editarea/editarea.pri)
 include(variantarea/variantarea.pri)
 include(settingdialog/settingdialog.pri)
 include(testarea/testarea.pri)
+include(test/test.pri)
+include(undocommand/undocommand.pri)
 
 unix|win32: LIBS += \
             -L$$PWD/../../build/debug/libs/ -lVariantConverter \

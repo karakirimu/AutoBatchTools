@@ -68,6 +68,9 @@
     <property name="title">
      <string>編集</string>
     </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="separator"/>
     <addaction name="actionAddItem"/>
     <addaction name="actionDeleteItem"/>
     <addaction name="actionUpItem"/>
@@ -1309,6 +1312,16 @@ color: rgb(204, 204, 204);</string>
    </property>
    <property name="text">
     <string>停止</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="text">
+    <string>Undo</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="text">
+    <string>Redo</string>
    </property>
   </action>
   <zorder>globalVariantDockWidget</zorder>

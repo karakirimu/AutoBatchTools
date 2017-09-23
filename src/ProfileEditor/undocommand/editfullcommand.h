@@ -1,11 +1,25 @@
 #ifndef EDITFULLCOMMAND_H
 #define EDITFULLCOMMAND_H
 
+#include <QHash>
+#include <QUndoCommand>
 
 class EditFullCommand : public QUndoCommand
 {
 public:
-    EditFullCommand();
+    EditFullCommand(const int &targetindex
+                    , const QList<QStringList> &changed
+                    , QList<QList<QStringList>> *cache
+                    , QUndoCommand *parent = nullptr);
+
+    void undo() Q_DECL_OVERRIDE;
+    void redo() Q_DECL_OVERRIDE;
+
+private:
+    int m_targetindex;
+    QList<QStringList> m_changed;
+    QList<QStringList> m_before;
+    QList<QList<QStringList>> *m_cache;
 };
 
 #endif // EDITFULLCOMMAND_H

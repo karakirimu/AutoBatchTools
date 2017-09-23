@@ -588,80 +588,80 @@ void ProfileEditor::setSettingList(QList<QStringList> *itemlist)
  * 3:script
  * 4:other
  */
-void ProfileEditor::createList(int type, QList<QStringList> *newlist)
-{
-    switch(type){
-    case 0: getInfoList(newlist);  break;
-    case 1: getNormalList(newlist);break;
-    case 2: getSearchList(newlist);break;
-    case 3: getScriptList(newlist);break;
-    case 4: getOtherList(newlist); break;
-    case 5: createTempList(newlist);     break;
-    default:                             break;
-    }
-}
+//void ProfileEditor::createList(int type, QList<QStringList> *newlist)
+//{
+//    switch(type){
+//    case 0: getInfoList(newlist);  break;
+//    case 1: getNormalList(newlist);break;
+//    case 2: getSearchList(newlist);break;
+//    case 3: getScriptList(newlist);break;
+//    case 4: getOtherList(newlist); break;
+//    case 5: createTempList(newlist);     break;
+//    default:                             break;
+//    }
+//}
 
 ///DEPENDS_XML
-void ProfileEditor::createTempList(QList<QStringList> *newlist)
-{
-    // basic infomation
-    newlist->append((QStringList() << "type" << "temp" << "only"
-                     << VariantConverter::boolToString(ui->editorTab->getCurrentIndexOnlyChecked())));
-    newlist->append((QStringList() << "istack" << QString::number(ui->editorTab->currentIndex())));
+//void ProfileEditor::createTempList(QList<QStringList> *newlist)
+//{
+//    // basic infomation
+//    newlist->append((QStringList() << "type" << "temp" << "only"
+//                     << VariantConverter::boolToString(ui->editorTab->getCurrentIndexOnlyChecked())));
+//    newlist->append((QStringList() << "istack" << QString::number(ui->editorTab->currentIndex())));
 
-    // "type" << "search";
-    getSearchList(newlist);
+//    // "type" << "search";
+//    getSearchList(newlist);
 
-    // "type" << "other";
-    getOtherList(newlist);
+//    // "type" << "other";
+//    getOtherList(newlist);
 
-    // "type" << "normal";
-    getNormalList(newlist);
+//    // "type" << "normal";
+//    getNormalList(newlist);
 
-    // "type" << "script";
-    getScriptList(newlist);
+//    // "type" << "script";
+//    getScriptList(newlist);
 
-}
+//}
 
-///DEPENDS_XML
-void ProfileEditor::getInfoList(QList<QStringList> *newlist)
-{
-    QStringList list;
-    ui->innerStackedWidget->getInfoDataList(&list);
-    sfunction->createInfoList(newlist, &list);
-}
+/////DEPENDS_XML
+//void ProfileEditor::getInfoList(QList<QStringList> *newlist)
+//{
+//    QStringList list;
+//    ui->innerStackedWidget->getInfoDataList(&list);
+//    sfunction->createInfoList(newlist, &list);
+//}
 
-///DEPENDS_XML
-void ProfileEditor::getNormalList(QList<QStringList> *newlist)
-{
-    QStringList list;
-    ui->editorTab->getNormalDataList(&list);
-    sfunction->createNormalList(newlist, &list);
-}
+/////DEPENDS_XML
+//void ProfileEditor::getNormalList(QList<QStringList> *newlist)
+//{
+//    QStringList list;
+//    ui->editorTab->getNormalDataList(&list);
+//    sfunction->createNormalList(newlist, &list);
+//}
 
-///DEPENDS_XML
-void ProfileEditor::getSearchList(QList<QStringList> *newlist)
-{
-    QStringList list;
-    ui->editorTab->getSearchDataList(&list);
-    sfunction->createSearchList(newlist, &list);
-}
+/////DEPENDS_XML
+//void ProfileEditor::getSearchList(QList<QStringList> *newlist)
+//{
+//    QStringList list;
+//    ui->editorTab->getSearchDataList(&list);
+//    sfunction->createSearchList(newlist, &list);
+//}
 
-///DEPENDS_XML
-void ProfileEditor::getScriptList(QList<QStringList> *newlist)
-{
-    QStringList list;
-    ui->editorTab->getScriptDataList(&list);
-    sfunction->createScriptList(newlist, &list);
-}
+/////DEPENDS_XML
+//void ProfileEditor::getScriptList(QList<QStringList> *newlist)
+//{
+//    QStringList list;
+//    ui->editorTab->getScriptDataList(&list);
+//    sfunction->createScriptList(newlist, &list);
+//}
 
-///DEPENDS_XML
-void ProfileEditor::getOtherList(QList<QStringList> *newlist)
-{
-    QStringList list;
-    ui->editorTab->getOtherDataList(&list);
-    sfunction->createOtherList(newlist, &list);
-}
+/////DEPENDS_XML
+//void ProfileEditor::getOtherList(QList<QStringList> *newlist)
+//{
+//    QStringList list;
+//    ui->editorTab->getOtherDataList(&list);
+//    sfunction->createOtherList(newlist, &list);
+//}
 
 //when opening new file
 void ProfileEditor::resetUi()

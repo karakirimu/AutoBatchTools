@@ -58,9 +58,9 @@ private:
     SettingDialog *settingdialog;
     int treerowpos;
 
-    PESharedFunction *sfunction;
+//    PESharedFunction *sfunction;
     FileOperationSignalBinder *binder;
-    RunTaskSignalBinder *rbinder;
+//    RunTaskSignalBinder *rbinder;
     //connect / disconnect signals data
     void connectEdit();
     void disconnectEdit();
@@ -76,13 +76,13 @@ private:
 //    void setScriptList(QList<QStringList> *list, int firstpos);
 
     //gather list information from ui
-    void createList(int type, QList<QStringList> *newlist);
-    void createTempList(QList<QStringList> *newlist);
-    void getInfoList(QList<QStringList> *newlist);
-    void getNormalList(QList<QStringList> *newlist);
-    void getSearchList(QList<QStringList> *newlist);
-    void getScriptList(QList<QStringList> *newlist);
-    void getOtherList(QList<QStringList> *newlist);
+//    void createList(int type, QList<QStringList> *newlist);
+//    void createTempList(QList<QStringList> *newlist);
+//    void getInfoList(QList<QStringList> *newlist);
+//    void getNormalList(QList<QStringList> *newlist);
+//    void getSearchList(QList<QStringList> *newlist);
+//    void getScriptList(QList<QStringList> *newlist);
+//    void getOtherList(QList<QStringList> *newlist);
 
     //reset ui
     void resetUi();
