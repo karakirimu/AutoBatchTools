@@ -6,7 +6,7 @@ BaseNode::BaseNode(GraphicArea *graphicarea)
     setFlags(ItemSendsGeometryChanges | ItemIsMovable | ItemIsSelectable);
     setCacheMode(DeviceCoordinateCache);
     setZValue(-1);
-    setWidth(300);
+    setWidth(400);
     setHeight(100);
 }
 
@@ -36,7 +36,8 @@ void BaseNode::setPath(Qt::GlobalColor pencolor, int framesize, Qt::GlobalColor 
     QPen dpen(pencolor, framesize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     pen = dpen;
     int adjust = framesize * 2;
-    path.addRoundedRect(-(width/2) - framesize -0.5, -framesize -0.5, width + adjust, height + adjust, 10, 10);
+    path.addRect(-width - framesize -0.5, -framesize -0.5, width + adjust, height + adjust);
+//    path.addRoundedRect(-(width/2) - framesize -0.5, -framesize -0.5, width + adjust, height + adjust, 10, 10);
     this->fillcolor = QColor(fillcolor);
 }
 
@@ -45,7 +46,8 @@ void BaseNode::setPath(QColor pencolor, int framesize, QColor fillcolor)
     QPen dpen(pencolor, framesize, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     pen = dpen;
     int adjust = framesize * 2;
-    path.addRoundedRect(-(width/2) - framesize -0.5, -framesize -0.5, width + adjust, height + adjust, 10, 10);
+    path.addRect(-width - framesize -0.5, -framesize -0.5, width + adjust, height + adjust);
+//    path.addRoundedRect(-(width/2) - framesize -0.5, -framesize -0.5, width + adjust, height + adjust, 10, 10);
     this->fillcolor = fillcolor;
 }
 
@@ -166,7 +168,7 @@ void BaseNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     }
 
     //add abstract text
-    QFont font("Times", 10);
+    QFont font("Times", 12);
     font.setStyleStrategy(QFont::ForceOutline);
     painter->setPen(Qt::black);
     painter->setFont(font);
@@ -174,7 +176,7 @@ void BaseNode::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     painter->scale(1, 1);
     int i = 20;
     foreach (QString line, textlines) {
-        painter->drawText(-(width/2) + 10, i, line);
+        painter->drawText(-width + 10, i, line);
         i+=10;
     }
 

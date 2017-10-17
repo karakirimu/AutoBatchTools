@@ -31,7 +31,7 @@ void NodeArrowList::addNode(BaseNode *node)
 void NodeArrowList::insertNode(BaseNode *node, int index)
 {
     int count = nodearrow.count();
-    if(count - 1 == index) addNode(node);
+    if(count - 1 == index || count == 0) addNode(node);
 
     //replace previous arrow
     NodeArrow previous = nodearrow.at(index);
@@ -123,10 +123,11 @@ int NodeArrowList::nodecount()
 
 void NodeArrowList::clearlist()
 {
-    foreach(NodeArrow arr , nodearrow){
-        delete arr.node;
-        delete arr.arrow;
-    }
+    //memory leak ?
+//    foreach(NodeArrow arr , nodearrow){
+//        delete arr.node;
+//        delete arr.arrow;
+//    }
     nodearrow.clear();
 }
 

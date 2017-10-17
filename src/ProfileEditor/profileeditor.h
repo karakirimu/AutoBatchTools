@@ -7,9 +7,10 @@
 #include <QDateTime>
 #include <QSettings>
 #include <QFileDialog>
-#include <pesharedfunction.h>
-#include <fileoperationsignalbinder.h>
+//#include <pesharedfunction.h>
+//#include <fileoperationsignalbinder.h>
 #include <SettingDialog.h>
+#include <editoperator.h>
 
 namespace Ui {
 class ProfileEditor;
@@ -30,45 +31,64 @@ signals:
     void rowPosChanged(QString);
 
 private slots:
+    //file
     void newfileAction();
     void openAction();
     void saveAction();
-//  void addAction();
-    void editAction();
-    void editAction(int);
-//    void copyAction();
     void overWriteSaveAction();
     void exportAction();
 
+    //Edit
+    void undoAction();
+    void redoAction();
+    void addAction();
+//    void editAction();
+//    void editAction(int);
     void deleteAction();
+    void cutAction();
+    void copyAction();
+    void pasteAction();
     void upAction();
     void downAction();
 
     void launchSettingAction();
 
-    void onWindowTitleChanged(QString newtitle, QString newtemp);
+//    void onWindowTitleChanged(QString newtitle, QString newtemp);
 //    void itemChangedAction();
+    void onTitleChanged(QString newload);
     void itemChangedAction(int index);
-    void editorTabChanged(int index);
+//    void editorTabChanged(int index);
+
+    //tree acesss
+    void setTreerowpos(int value, int from);
 
     void about();
 
 private:
-    Ui::ProfileEditor *ui;
-    SettingDialog *settingdialog;
-    int treerowpos;
 
-//    PESharedFunction *sfunction;
-    FileOperationSignalBinder *binder;
-//    RunTaskSignalBinder *rbinder;
+    void setLoadfile(const QString &value);
+
     //connect / disconnect signals data
-    void connectEdit();
-    void disconnectEdit();
-
+//    void connectEdit();
+//    void disconnectEdit();
     void initStatusBar();
 
     //set list infomation to ui
-    void setSettingList(QList<QStringList> *itemlist);
+//    void setSettingList(QList<QStringList> *itemlist);
+
+    //reset ui
+    void resetUi();
+
+    Ui::ProfileEditor *ui;
+    SettingDialog *settingdialog;
+    int treerowpos;
+    QString loadfile;
+
+//    PESharedFunction *sfunction;
+//    FileOperationSignalBinder *binder;
+    EditOperator *editop;
+    RunTaskSignalBinder *rbinder;
+
 //    void setSettingTempList(QList<QStringList> *list);
 //    void setInfoList(QList<QStringList> *list, int firstpos);
 //    void setNormalList(QList<QStringList> *list, int firstpos);
@@ -83,9 +103,6 @@ private:
 //    void getSearchList(QList<QStringList> *newlist);
 //    void getScriptList(QList<QStringList> *newlist);
 //    void getOtherList(QList<QStringList> *newlist);
-
-    //reset ui
-    void resetUi();
 };
 
 #endif // PROFILEEDITOR_H

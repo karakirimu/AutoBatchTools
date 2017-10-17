@@ -3,9 +3,11 @@
 
 #include <QObject>
 #include <QWidget>
+#include <editoperator.h>
+#include <xmllistgenerator.h>
 //#include <optiontable.h>
 #include <../basictable/basictable.h>
-#include <pesharedfunction.h>
+//#include <pesharedfunction.h>
 
 class VariantTable : public BasicTable
 {
@@ -14,7 +16,8 @@ public:
     explicit VariantTable(QWidget *parent = Q_NULLPTR);
     ~VariantTable();
 
-    void setSharedFunction(PESharedFunction *func);
+//    void setSharedFunction(PESharedFunction *func);
+    void setEditOperator(EditOperator *op);
 public slots:
     void addAction();
     void editAction();
@@ -33,7 +36,9 @@ private:
 
     void getLocalList(QList<QStringList> *newlist);
 
-    PESharedFunction *sfunction;
+//    PESharedFunction *sfunction;
+    EditOperator *editop;
+    XmlListGenerator xgen;
 
     QAction *m_new;
     QAction *m_add;

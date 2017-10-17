@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QHash>
+#include <QDateTime>
 
 /**
  * @brief The XmlListGenerator class
@@ -69,7 +70,18 @@ public:
     explicit XmlListGenerator(QObject *parent = nullptr);
     ~XmlListGenerator();
 
+    //tab and list connection map
     enum{NORMAL, SEARCH, EXTRAFUNC, OTHER};
+
+    //inner temp list connection map // "_" means "and"
+    enum{CURRENTONLY,INNERSTACK,
+         SEARCHONLY,SEARCHNAME_ID,SEPARATOR,VARIANT,OUTPUT_RADIO,
+         OTHERONLY,OTHERNAME,OTHERFILEPATH,
+         NORMALONLY,TIMEOUT_DURITION,NCMDCOUNT,
+         EXTRAFUNCONLY,EXTRANAME,EXTRAFILE,ECMDCOUNT};
+
+    //inner table operation
+    enum{TABLE_ADD,TABLE_EDIT,TABLE_INSERT,TABLE_DELETE,TABLE_UP,TABLE_DOWN,TABLE_SWAP};
 
     //list add structure
     void createNewList(QList<QStringList> *newlist);
@@ -77,23 +89,29 @@ public:
     //list create function
     void createInfoList(QList<QStringList> *newlist, QStringList *list);
     void createLocalList(QList<QStringList> *newlist, QStringList *list);
+
+    //combined above list
+    void createCombineList(QList<QStringList> *newlist, int index, QHash<int, QStringList *> *combine);
+
+    //change combined structure to separated structure
+    void createSeparateList(QList<QStringList> *ctos);
+
+    //get structure firstpos info
+    void getListStructure(QList<QStringList> *ctos, QHash<int, int> *posinfo);
+
+    //check info
+    int getType(QString type);
+
+    //for change inner table structures
+    static QStringList createCmdElement(QString value, int index);
+
+private:
+    //separated list create function
     void createNormalList(QList<QStringList> *newlist, QStringList *list);
     void createSearchList(QList<QStringList> *newlist, QStringList *list);
     void createExtraFuncList(QList<QStringList> *newlist, QStringList *list);
     void createOtherList(QList<QStringList> *newlist, QStringList *list);
 
-    //combined above list
-    void createCombineList(QList<QStringList> *newlist, int index, QHash<int, QStringList> *combine);
-
-    //change combined structure to separated structure
-    void createSeparateList(QList<QStringList> *ctos);
-
-    //check info
-    int getType(QString type);
-
-signals:
-
-public slots:
 };
 
 #endif // XMLLISTGENERATOR_H

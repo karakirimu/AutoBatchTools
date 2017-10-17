@@ -68,6 +68,7 @@ void SettingDialog::setSettings()
 
     settings.beginGroup("BASICSETTING");
     settings.setValue("TEMPDIR", ui->tempEdit->text());
+    settings.setValue("AUTOSAVEPERIOD", ui->autosaveSpinBox->value());
     settings.endGroup();
 
     settings.beginGroup("TESTEXEC");
@@ -95,6 +96,7 @@ void SettingDialog::loadSettings()
 
     settings.beginGroup("BASICSETTING");
     ui->tempEdit->setText(settings.value("TEMPDIR", "./").toString());
+    ui->autosaveSpinBox->setValue(settings.value("AUTOSAVEPERIOD", 1).toInt());
     settings.endGroup();
 
     settings.beginGroup("TESTEXEC");

@@ -32,25 +32,32 @@ VariantTable::~VariantTable()
 
 }
 
-void VariantTable::setSharedFunction(PESharedFunction *func)
+//void VariantTable::setSharedFunction(PESharedFunction *func)
+//{
+//    sfunction = func;
+//}
+
+void VariantTable::setEditOperator(EditOperator *op)
 {
-    sfunction = func;
+    editop = op;
 }
 
+//ALLOC MEMORY
 void VariantTable::addAction()
 {
-    QList<QStringList> newlist;
+    QList<QStringList> *newlist = new QList<QStringList>;
     int row = this->rowCount();
     setRowCount(row + 1);
-    getLocalList(&newlist);
-    sfunction->editItem(MAGIC, &newlist);
+    getLocalList(newlist);
+    editop->editFullAction(MAGIC, newlist);
 }
 
+//ALLOC MEMORY
 void VariantTable::editAction()
 {
-    QList<QStringList> newlist;
-    getLocalList(&newlist);
-    sfunction->editItem(MAGIC, &newlist);
+    QList<QStringList> *newlist = new QList<QStringList>;
+    getLocalList(newlist);
+    editop->editFullAction(MAGIC, newlist);
 }
 
 void VariantTable::deleteAction()
@@ -204,7 +211,7 @@ bool VariantTable::setLocalListItem(int itemid)
 {
     QList<QStringList> *list = new QList<QStringList>();
 
-    if(!sfunction->readItem(itemid, list)){
+    if(!editop->read(itemid, list)){
         delete list;
         return false;
     }
@@ -254,5 +261,5 @@ void VariantTable::getLocalList(QList<QStringList> *newlist)
         list.append(this->model()->index(i, 1).data().toString());
     }
 
-    sfunction->createLocalList(newlist, &list);
+    xgen.createLocalList(newlist, &list);
 }

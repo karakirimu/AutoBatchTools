@@ -8,8 +8,8 @@ class InsertCommand : public QUndoCommand
 {
 public:
     InsertCommand(const int &targetindex
-                  , const QList<QStringList> &inserted
-                  , QList<QList<QStringList>> *cache
+                  , QList<QStringList> *inserted
+                  , QList<QList<QStringList> *> *cache
                   , QUndoCommand *parent = nullptr);
 
     void undo() Q_DECL_OVERRIDE;
@@ -17,8 +17,9 @@ public:
 
 private:
     int m_targetindex;
-    QList<QStringList> m_inserted;
-    QList<QList<QStringList>> *m_cache;
+    QList<QStringList> *m_inserted;
+    QList<QStringList> m_inscopy;
+    QList<QList<QStringList> *> *m_cache;
 };
 
 #endif // INSERTCOMMAND_H

@@ -8,8 +8,8 @@ class AddCommand : public QUndoCommand
 {
 public:
     AddCommand(const int &targetindex
-               , const QList<QStringList> &added
-               , QList<QList<QStringList>> *cache
+               , QList<QStringList> *added
+               , QList<QList<QStringList> *> *cache
                , QUndoCommand *parent = nullptr);
 
     void undo() Q_DECL_OVERRIDE;
@@ -17,8 +17,9 @@ public:
 
 private:
     int m_targetindex;
-    QList<QStringList> m_added;
-    QList<QList<QStringList>> *m_cache;
+    QList<QStringList> *m_added;
+    QList<QStringList> m_addcopy;
+    QList<QList<QStringList> *> *m_cache;
 };
 
 #endif // ADDCOMMAND_H

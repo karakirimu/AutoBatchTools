@@ -18,6 +18,8 @@ CommandTable::CommandTable(QWidget *)
 
     //set header label
     setHorizontalHeaderLabels((QStringList() << tr("Runnable file / Arguments")));
+
+    connect(this,&CommandTable::cellChanged, this, &CommandTable::editedAction);
 }
 
 CommandTable::~CommandTable()
@@ -34,10 +36,18 @@ void CommandTable::addAction()
 {
     int row = this->rowCount();
     setRowCount(row + 1);
+    emit updateTable(row, "", XmlListGenerator::TABLE_ADD);
+
+    //for useability
+    this->setCurrentItem(itemAt(row,0));
+    this->selectRow(row);
+
+    editAction();
 }
 
 void CommandTable::editAction()
 {
+    this->clearSelection();
     this->edit(currentIndex());
 }
 
@@ -47,8 +57,42 @@ void CommandTable::deleteAction()
     if(this->rowCount() == 0) return;
 
     //check delete warning message
-    if(deleteCheckMessage())
-        this->deleteTableRecursive();
+    if(deleteCheckMessage()){
+        //copy of BaseTable::deleteTableRecursive()
+        //すべての条件で消える
+        QModelIndexList lists = this->selectedIndexes();
+        int row;
+        while(!lists.empty()){
+            row = lists.at(0).row();
+            this->removeRow(row);
+            emit updateTable(row, "", XmlListGenerator::TABLE_DELETE);
+
+            //delete column index
+            for(int i = 0; i < lists.at(0).column(); i++){
+                lists.removeAt(0);
+            }
+            lists = this->selectedIndexes();
+        }
+    }
+}
+
+//TODO : multiple select
+void CommandTable::cutAction()
+{
+    //if rowcount is zero.
+    if(this->rowCount() == 0) return;
+    QString tmp;
+    QModelIndexList mlist = this->selectedIndexes();
+    QMutableListIterator<QModelIndex> it(mlist);
+    while(it.hasNext()){
+        tmp.append(it.next().data().toString());
+        if(!it.hasNext()) tmp.append(" ");
+    }
+
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setText(tmp);
+
+    deleteAction();
 }
 
 void CommandTable::copyAction()
@@ -56,12 +100,39 @@ void CommandTable::copyAction()
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
 
+//    int current = this->currentRow();
+//    QString tmp = this->model()->index(current, 0).data().toString();
+//    this->insertRow(current);
+//    this->setRowCount(this->rowCount() + 1);
+//    this->setItem(current, 0, new QTableWidgetItem(tmp));
+//    selectRow(current + 1);
+//    QClipboard *clipboard = QApplication::clipboard();
+//    clipboard->setText(tmp);
+
+    QString tmp;
+    QModelIndexList mlist = this->selectedIndexes();
+    QMutableListIterator<QModelIndex> it(mlist);
+    while(it.hasNext()){
+        tmp.append(it.next().data().toString());
+        if(!it.hasNext()) tmp.append(" ");
+    }
+
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setText(tmp);
+
+}
+
+void CommandTable::plainpasteAction()
+{
+    QClipboard *clipboard = QApplication::clipboard();
+    QString text = clipboard->text();
+
     int current = this->currentRow();
-    QString tmp = this->model()->index(current, 0).data().toString();
     this->insertRow(current);
     this->setRowCount(this->rowCount() + 1);
-    this->setItem(current, 0, new QTableWidgetItem(tmp));
-    selectRow(current + 1);
+    this->setItem(current, 0, new QTableWidgetItem(text));
+    emit updateTable(current, text, XmlListGenerator::TABLE_INSERT);
+
 }
 
 void CommandTable::pasteAction()
@@ -74,6 +145,7 @@ void CommandTable::pasteAction()
 
     for(int i = 0; i < txcount; i++){
         this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
+        emit updateTable(row + i, text.at(i), XmlListGenerator::TABLE_INSERT);
     }
 }
 
@@ -87,6 +159,8 @@ void CommandTable::upAction()
     this->setItem(current - 1, 0, new QTableWidgetItem(this->model()->index(current, 0).data().toString()));
     this->setItem(current, 0, new QTableWidgetItem(tmp));
 
+    emit swapTable(current, current - 1);
+    this->clearSelection();
     selectRow(current - 1);
 }
 
@@ -102,6 +176,8 @@ void CommandTable::downAction()
     this->setItem(current + 1, 0, new QTableWidgetItem(this->model()->index(current, 0).data().toString()));
     this->setItem(current, 0, new QTableWidgetItem(tmp));
 
+    emit swapTable(current, current + 1);
+    this->clearSelection();
     selectRow(current + 1);
 }
 
@@ -120,6 +196,12 @@ void CommandTable::openDirectoryAction()
     if(rowCount() == 0 || current < 0) return;
     QString str = selectFolder("./");
     this->setItem(current, 0, new QTableWidgetItem(str));
+}
+
+void CommandTable::editedAction(int row, int column)
+{
+    qDebug() << "CommandTable : editedAction";
+     emit updateTable(row, this->item(row, column)->text(), XmlListGenerator::TABLE_EDIT);
 }
 
 void CommandTable::setPopupActionTop()

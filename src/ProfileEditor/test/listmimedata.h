@@ -9,8 +9,8 @@ class ListMimeData : public QMimeData
 public:
     ListMimeData();
 
-    void setList(const QList<QStringList> &list);
-    QList<QStringList> list() const;
+    void setList(const QList<QStringList> *list);
+//    QList<QStringList> list() const;
 
     QStringList formats();
     bool hasFormat(const QString &mimetype) const Q_DECL_OVERRIDE;
@@ -18,6 +18,8 @@ public:
 protected:
     QVariant retrieveData(const QString &mimetype, QVariant::Type preferredType) const Q_DECL_OVERRIDE;
 
+private:
+    QString toCsv(QString plainText);
 };
 
 #endif // LISTMIMEDATA_H

@@ -1,8 +1,8 @@
 #include "editfullcommand.h"
 
 EditFullCommand::EditFullCommand(const int &targetindex
-                                 , const QList<QStringList> &changed
-                                 , QList<QList<QStringList> > *cache
+                                 , QList<QStringList> *changed
+                                 , QList<QList<QStringList> *> *cache
                                  , QUndoCommand *parent)
     :QUndoCommand(parent)
 {
@@ -17,11 +17,22 @@ void EditFullCommand::undo()
     if(m_cache->isEmpty()) return;
     m_cache->replace(m_targetindex, m_before);
 
-    setText(QString("Change table text at %1").arg(m_targetindex));
+    //locallist
+    if(m_targetindex == MAGIC){
+        setText(QString("Change table text in Local Variant"));
+    }else{
+        setText(QString("Change table text at %1").arg(m_targetindex));
+    }
 }
 
 void EditFullCommand::redo()
 {
     m_cache->replace(m_targetindex, m_changed);
-    setText(QString("Change table text at %1").arg(m_targetindex));
+
+    //locallist
+    if(m_targetindex == MAGIC){
+        setText(QString("Change table text in Local Variant"));
+    }else{
+        setText(QString("Change table text at %1").arg(m_targetindex));
+    }
 }

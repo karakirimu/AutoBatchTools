@@ -4,14 +4,14 @@ EditCommand::EditCommand(const int &targetindex
                                      , const int &xmllistnum
                                      , const int &editid
                                      , const QStringList &after
-                                     , QList<QList<QStringList>> *cache
+                                     , QList<QList<QStringList> *> *cache
                                      , QUndoCommand *parent)
     :QUndoCommand(parent)
 {
     m_targetindex = targetindex;
     m_xmllistnum = xmllistnum;
     m_editid = editid;
-    m_before = cache->at(targetindex).at(xmllistnum);
+    m_before = cache->at(targetindex)->at(xmllistnum);
     m_after = after;
     m_cache = cache;
 }
@@ -21,8 +21,8 @@ void EditCommand::undo()
     if(m_cache->isEmpty()) return;
 
     //replace inserted num
-    QList<QStringList> inner = m_cache->at(m_targetindex);
-    inner.replace(m_xmllistnum, m_before);
+    QList<QStringList> *inner = m_cache->at(m_targetindex);
+    inner->replace(m_xmllistnum, m_before);
 
     //replace parent Qhash
     m_cache->replace(m_targetindex, inner);
@@ -34,8 +34,8 @@ void EditCommand::undo()
 void EditCommand::redo()
 {
     //replace inserted num
-    QList<QStringList> inner = m_cache->at(m_targetindex);
-    inner.replace(m_xmllistnum, m_after);
+    QList<QStringList> *inner = m_cache->at(m_targetindex);
+    inner->replace(m_xmllistnum, m_after);
 
     //replace parent Qhash
     m_cache->replace(m_targetindex, inner);

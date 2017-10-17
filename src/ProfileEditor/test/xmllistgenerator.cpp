@@ -15,9 +15,28 @@ XmlListGenerator::~XmlListGenerator()
 void XmlListGenerator::createNewList(QList<QStringList> *newlist)
 {
     //initial data
+    newlist->append((QStringList() << "type" << "temp" << "only" << "no"));
+    newlist->append((QStringList() << "istack" << "0"));
+    //search
+    newlist->append((QStringList() << "type" << "search" << "only" << "no"));
+    newlist->append((QStringList() << "sname" << "" << "id" << "-1"));
+    newlist->append((QStringList() << "sep" << ""));
+    newlist->append((QStringList() << "var" << ""));
+    newlist->append((QStringList() << "output" << "" << "radio" << "0"));
+    //other
+    newlist->append((QStringList() << "type" << "other" << "only" << "no"));
+    newlist->append((QStringList() << "name" << ""));
+    newlist->append((QStringList() << "file" << ""));
+    //normal
     newlist->append((QStringList() << "type" << "normal" << "only" << "no"));
     newlist->append((QStringList() << "timeout" << "no" << "dur" << "30000"));
     newlist->append((QStringList() << "cmdc" << "0"));
+    //extrafunc
+    newlist->append((QStringList() << "type" << "script" << "only" << "no"));
+    newlist->append((QStringList() << "name" << ""));
+    newlist->append((QStringList() << "file" << ""));
+    newlist->append((QStringList() << "cmdc" << "0"));
+
 }
 
 ///DEPENDS_XML
@@ -35,7 +54,7 @@ void XmlListGenerator::createInfoList(QList<QStringList> *newlist, QStringList *
 ///DEPENDS_XML
 void XmlListGenerator::createLocalList(QList<QStringList> *newlist, QStringList *list)
 {
-    int rcount = VariantConverter::stringToInt(list->at(0)) * 2;
+    int rcount = ((QString)list->at(0)).toInt() * 2;
     newlist->append((QStringList() << "type" << "local"));
     newlist->append((QStringList() << "localc" << list->at(0)));
     for(int i = 0; i < rcount; i+=2){
@@ -47,7 +66,7 @@ void XmlListGenerator::createLocalList(QList<QStringList> *newlist, QStringList 
 ///DEPENDS_XML
 void XmlListGenerator::createNormalList(QList<QStringList> *newlist, QStringList *list)
 {
-    int rcount = VariantConverter::stringToInt(list->at(3));
+    int rcount = ((QString)list->at(3)).toInt();
     newlist->append((QStringList() << "type" << "normal" << "only" << list->at(0)));
     newlist->append((QStringList() << "timeout" << list->at(1) << "dur" << list->at(2)));
     newlist->append((QStringList() << "cmdc" << list->at(3)));
@@ -70,7 +89,7 @@ void XmlListGenerator::createSearchList(QList<QStringList> *newlist, QStringList
 ///DEPENDS_XML
 void XmlListGenerator::createExtraFuncList(QList<QStringList> *newlist, QStringList *list)
 {
-    int rcount = VariantConverter::stringToInt(list->at(3));
+    int rcount = ((QString)list->at(3)).toInt();
     newlist->append((QStringList() << "type" << "script" << "only" << list->at(0)));
     newlist->append((QStringList() << "name" << list->at(1)));
     newlist->append((QStringList() << "file" << list->at(2)));
@@ -90,10 +109,10 @@ void XmlListGenerator::createOtherList(QList<QStringList> *newlist, QStringList 
 }
 
 ///DEPENDS_XML
-void XmlListGenerator::createCombineList(QList<QStringList> *newlist, int index, QHash<int, QStringList> *combine)
+void XmlListGenerator::createCombineList(QList<QStringList> *newlist, int index, QHash<int, QStringList *> *combine)
 {
     // basic infomation
-    newlist->append((QStringList() << "type" << "temp" << "only" << combine->value(index).at(0)));
+    newlist->append((QStringList() << "type" << "temp" << "only" << combine->value(index)->at(0)));
     newlist->append((QStringList() << "istack" << QString::number(index)));
 
     // "type" << "search";
@@ -136,6 +155,22 @@ void XmlListGenerator::createSeparateList(QList<QStringList> *ctos)
     }
 }
 
+void XmlListGenerator::getListStructure(QList<QStringList> *ctos, QHash<int, int> *posinfo)
+{
+    //dynamic first index generator
+    QMutableListIterator<QStringList> i(*ctos);
+
+    int c = 0;
+    int cur = -1;
+    while(i.hasNext()){
+        cur = getType(i.next().at(1));
+        if(cur > -1){
+            posinfo->insert(cur, c);
+        }
+        c++;
+    }
+}
+
 ///DEPENDS_XML
 int XmlListGenerator::getType(QString type)
 {
@@ -144,4 +179,9 @@ int XmlListGenerator::getType(QString type)
     if(type == "script") return EXTRAFUNC;
     if(type == "other") return OTHER;
     return -1;
+}
+
+QStringList XmlListGenerator::createCmdElement(QString value, int index)
+{
+    return QStringList() << "cmd" << value << "id" << QString::number(index);
 }

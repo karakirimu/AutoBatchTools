@@ -1,19 +1,27 @@
 #include "addcommand.h"
 
 AddCommand::AddCommand(const int &targetindex
-                       , const QList<QStringList> &added
-                       , QList<QList<QStringList>> *cache
+                       , QList<QStringList> *added
+                       , QList<QList<QStringList> *> *cache
                        , QUndoCommand *parent)
     :QUndoCommand(parent)
 {
     m_targetindex = targetindex;
     m_added = added;
     m_cache = cache;
+    m_addcopy.append(*m_added);
+
+    //copy data
+//    QMutableListIterator<QStringList> i(*m_added);
+//    while(i.hasNext()){
+//        m_addcopy.append(i.next());
+//    }
 }
 
 void AddCommand::undo()
 {
     if(m_cache->isEmpty()) return;
+    delete m_added;
     m_cache->removeLast();
 
     setText(QString("Add newitem at %1").arg(m_targetindex));
@@ -21,6 +29,7 @@ void AddCommand::undo()
 
 void AddCommand::redo()
 {
+    m_added = new QList<QStringList>(m_addcopy);
     m_cache->append(m_added);
 
     setText(QString("Add newitem at %1").arg(m_targetindex));

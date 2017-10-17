@@ -8,10 +8,20 @@
 #include <QUndoCommand>
 #include <QApplication>
 #include <editfullcommand.h>
+#include <edittabcommand.h>
+#include <editvaluecommand.h>
+#include <edittextcommand.h>
+#include <editcheckcommand.h>
+#include <editcomboboxcommand.h>
+#include <editscomboboxcommand.h>
+#include <editfcomboboxcommand.h>
+#include <edittablecommand.h>
 #include <addcommand.h>
 #include <deletecommand.h>
 #include <editcommand.h>
 #include <insertcommand.h>
+#include <swapcommand.h>
+#include <swaptablecommand.h>
 #include <QClipboard>
 #include <../processxmlbuilder/processxmlbuilder.h>
 #include "listmimedata.h"
@@ -27,28 +37,52 @@ public:
 
     //data edited or not
     bool isEdited();
-    QList<QStringList> read(int id);
 
+    bool read(int id, QList<QStringList> *list);
     //editor editindex code (not contain tables)
     enum {
+        TABCHANGED,
         NORMAL_TCHECK,NORMAL_TIMEOUT,NORMAL_ONLY
     };
+
+    QUndoStack *getUndostack() const;
+    int getCacheSize() const;
+
+
+    //detect called item
+    enum{TREE, GRAPHICAREA};
 
 signals:
     void loadfileChanged(QString);
     void edited(bool);
-    void editindexUpdate(int);
+    void editUpdate(int);
+    void selectindexUpdate(int, int);
 
 public slots:
+    //selected index signal
+    void selectChange(int index, int from){emit selectindexUpdate(index, from);}
+
     //operate functions
-    void addAction(QList<QStringList> xmlstruct);
-    void insertAction(int id, QList<QStringList> xmlstruct);
+    void addAction();
+    void insertAction(int id, QList<QStringList> *xmlstruct);
     void deleteAction(int id);
+
     void editAction(int id, int innerid, int editcode, QList<QStringList> xmlstruct);
-    void editFullAction(int id, QList<QStringList> xmlstruct);
+    void editTabAction(int id, int newindex);
+    void editTextAction(int id, QString mnew, QString obj);
+    void editComboBoxAction(int id, QString mnew);
+    void editFileComboAction(int id, QString newstr, QString newfile, QString obj);
+    void editSearchComboAction(int id, QString newstr, int newval);
+    void editValueAction(int id, int newval, QString obj);
+    void editCheckAction(int id, bool newcheck, QString obj);
+    void editFullAction(int id, QList<QStringList> *xmlstruct);
+    void editTableAction(int id, int tableid, QString newstr, int operation, QString objname);
+
     void cutAction(int id);
     void copyAction(int id);
     void pasteAction(int id);
+    void swapAction(int before, int after);
+    void swapTableAction(int id, int beforeid, int afterid, QString objname);
 
     //not relation undo stack
     void newAction();
@@ -67,7 +101,7 @@ private:
     void reset();
 
     //cache data
-    QList<QList<QStringList>> *cache;
+    QList<QList<QStringList> *> *cache;
 
     //undo stack
     QUndoStack *undostack;

@@ -12,7 +12,7 @@ public:
                       , const int &xmllistnum
                       , const int &editid
                       , const QStringList &after
-                      , QList<QList<QStringList>> *cache
+                      , QList<QList<QStringList> *> *cache
                       , QUndoCommand *parent = nullptr);
 
     void undo() Q_DECL_OVERRIDE;
@@ -28,7 +28,7 @@ private:
     QStringList m_before;
     QStringList m_after;
     int m_editid;
-    QList<QList<QStringList>> *m_cache;
+    QList<QList<QStringList> *> *m_cache;
 
 };
 

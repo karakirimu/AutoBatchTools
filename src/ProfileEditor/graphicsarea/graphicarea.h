@@ -7,12 +7,14 @@
 #include <QGraphicsView>
 #include <QMenu>
 #include <QMouseEvent>
-#include <fileoperationsignalbinder.h>
+#include <editoperator.h>
+//#include <fileoperationsignalbinder.h>
+#include <xmllistgenerator.h>
 
 #define MINWIDTH 400
 
 class BaseNode;
-class FileOperationSignalBinder;
+//class FileOperationSignalBinder;
 class NodeArrowList;
 
 class GraphicArea : public QGraphicsView
@@ -25,14 +27,15 @@ public:
     void itemMoved();
     void itemSelectChanged(int index);
 
-    void setWidgetsSignalBinder(FileOperationSignalBinder *bind);
+//    void setWidgetsSignalBinder(FileOperationSignalBinder *bind);
+    void setEditOperator(EditOperator *op);
 signals:
-    void data_add();
-    void data_insert(int index);
-    void data_delete(int index);
-    void data_replace(int index, bool isup);
-    void data_editread(int index, QList<QStringList> *indexlist);
-    void data_editwrite(int index, QList<QStringList> *itemlist);
+//    void data_add();
+//    void data_insert(int index);
+//    void data_delete(int index);
+//    void data_replace(int index, bool isup);
+//    void data_editread(int index, QList<QStringList> *indexlist);
+//    void data_editwrite(int index, QList<QStringList> *itemlist);
 
     void selectChangedAction(int index);
 
@@ -43,7 +46,9 @@ public slots:
     void addAction();
 //    void editAction(int itemid, QList<QStringList> *itemlist);
     void deleteAction();
+    void cutAction();
     void copyAction();
+    void pasteAction();
     void upAction();
     void downAction();
     void reloadAction();
@@ -62,31 +67,43 @@ private slots:
     void onCustomContextMenu(const QPoint &point);
     bool eventFilter(QObject *obj, QEvent *event);
 
+    //syncronize with Item
+    void addItem(int id);
+    void deleteItem(int id);
+    void insertItem(int id);
+    void swapItem(int before, int after);
+    void replaceItem(int id);
+
 private:
     void popupAction();
     int currentRow();
 
-    void setTreeItem(int itemid);
-    void setTempTreeItem(BaseNode *node, QList<QStringList> *list);
-    void setInfoTree(BaseNode *node, QList<QStringList> *list, int firstpos);
-    void setNormalTree(BaseNode *node, QList<QStringList> *list, int firstpos);
-    void setSearchTree(BaseNode *node, QList<QStringList> *list, int firstpos);
-    void setScriptTree(BaseNode *node, QList<QStringList> *list, int firstpos);
-    void setOtherTree(BaseNode *node, QList<QStringList> *list, int firstpos);
+    void setItem(int itemid);
+    void setTempItem(BaseNode *node, QList<QStringList> *list);
+    void setInfoItem(BaseNode *node, QList<QStringList> *list, int firstpos);
+    void setNormalItem(BaseNode *node, QList<QStringList> *list, int firstpos);
+    void setSearchItem(BaseNode *node, QList<QStringList> *list, int firstpos);
+    void setExtraFuncItem(BaseNode *node, QList<QStringList> *list, int firstpos);
+    void setOtherItem(BaseNode *node, QList<QStringList> *list, int firstpos);
 
     int timerId;
     QMenu *contextMenu;
     QAction *m_add;
 //    QAction *m_edit;
     QAction *m_delete;
+    QAction *m_cut;
     QAction *m_copy;
+    QAction *m_paste;
     QAction *m_up;
     QAction *m_down;
     QAction *m_ref;
 
     BaseNode *centerNode;
-    FileOperationSignalBinder *binder;
     NodeArrowList *nodelist;
+
+//    FileOperationSignalBinder *binder;
+    EditOperator *editop;
+    XmlListGenerator xgen;
 
     int selectedIndex;
 };

@@ -8,8 +8,8 @@ class EditFullCommand : public QUndoCommand
 {
 public:
     EditFullCommand(const int &targetindex
-                    , const QList<QStringList> &changed
-                    , QList<QList<QStringList>> *cache
+                    , QList<QStringList> *changed
+                    , QList<QList<QStringList> *> *cache
                     , QUndoCommand *parent = nullptr);
 
     void undo() Q_DECL_OVERRIDE;
@@ -17,9 +17,10 @@ public:
 
 private:
     int m_targetindex;
-    QList<QStringList> m_changed;
-    QList<QStringList> m_before;
-    QList<QList<QStringList>> *m_cache;
+    QList<QStringList> *m_changed;
+    QList<QStringList> *m_before;
+    QList<QList<QStringList> *> *m_cache;
+    static const int MAGIC = 1;
 };
 
 #endif // EDITFULLCOMMAND_H

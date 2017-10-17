@@ -148,7 +148,7 @@
               <item>
                <widget class="QTabWidget" name="tabWidget">
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="baseSettingTab">
                  <attribute name="title">
@@ -156,7 +156,7 @@
                  </attribute>
                  <layout class="QVBoxLayout" name="verticalLayout_6">
                   <property name="spacing">
-                   <number>0</number>
+                   <number>2</number>
                   </property>
                   <item>
                    <widget class="QFrame" name="frame">
@@ -185,7 +185,7 @@
                      <item>
                       <widget class="QLabel" name="label_2">
                        <property name="text">
-                        <string>一時ファイル保存先</string>
+                        <string>一時ファイルの保存先</string>
                        </property>
                       </widget>
                      </item>
@@ -200,6 +200,50 @@
                       <widget class="QToolButton" name="openButton">
                        <property name="text">
                         <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QFrame" name="frame_7">
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <layout class="QHBoxLayout" name="horizontalLayout_4">
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QLabel" name="label_7">
+                       <property name="text">
+                        <string>自動保存間隔</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QSpinBox" name="autosaveSpinBox">
+                       <property name="suffix">
+                        <string>min</string>
+                       </property>
+                       <property name="maximum">
+                        <number>1000</number>
+                       </property>
+                       <property name="value">
+                        <number>10</number>
                        </property>
                       </widget>
                      </item>

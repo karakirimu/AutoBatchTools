@@ -73,6 +73,11 @@
     <addaction name="separator"/>
     <addaction name="actionAddItem"/>
     <addaction name="actionDeleteItem"/>
+    <addaction name="separator"/>
+    <addaction name="actionCut"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
+    <addaction name="separator"/>
     <addaction name="actionUpItem"/>
     <addaction name="actionDownItem"/>
    </widget>
@@ -837,7 +842,7 @@
            </widget>
            <widget class="QWidget" name="otherprof">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <attribute name="title">
              <string>別プロファイル</string>
@@ -1322,6 +1327,29 @@ color: rgb(204, 204, 204);</string>
   <action name="actionRedo">
    <property name="text">
     <string>Redo</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="text">
+    <string>Cut</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/Files_Copy.png</normaloff>:/icons/Files_Copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>Copy</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/icons/Clipboard_Full.png</normaloff>:/icons/Clipboard_Full.png</iconset>
+   </property>
+   <property name="text">
+    <string>Paste</string>
    </property>
   </action>
   <zorder>globalVariantDockWidget</zorder>
