@@ -98,7 +98,7 @@ void GraphicArea::itemSelectChanged(int index)
 {
     selectedIndex = index;
 //    emit selectChangedAction(index);
-    emit editop->selectindexUpdate(index, EditOperator::GRAPHICAREA);
+    emit editop->ui_selectindexUpdate(index, EditOperator::GRAPHICAREA);
 }
 
 //void GraphicArea::setWidgetsSignalBinder(FileOperationSignalBinder *bind)
@@ -142,7 +142,7 @@ void GraphicArea::addAction()
     count = (count >= 0) ? count : 0;
     addItem(count);
 
-    emit editop->selectindexUpdate(count, EditOperator::GRAPHICAREA);
+    emit editop->ui_selectindexUpdate(count, EditOperator::GRAPHICAREA);
 }
 
 //void GraphicArea::editAction(int itemid, QList<QStringList> *itemlist)
@@ -157,13 +157,13 @@ void GraphicArea::deleteAction()
 //    binder->deleteItem(this->scene()->selectedItems() );
 //    binder->deleteItem(selectedIndex);
     editop->deleteAction(selectedIndex);
-    emit editop->selectindexUpdate(selectedIndex, EditOperator::GRAPHICAREA);
+    emit editop->ui_selectindexUpdate(selectedIndex, EditOperator::GRAPHICAREA);
 }
 
 void GraphicArea::cutAction()
 {
     editop->cutAction(selectedIndex);
-    emit editop->selectindexUpdate(selectedIndex, EditOperator::GRAPHICAREA);
+    emit editop->ui_selectindexUpdate(selectedIndex, EditOperator::GRAPHICAREA);
 }
 
 void GraphicArea::copyAction()
@@ -175,21 +175,21 @@ void GraphicArea::copyAction()
 void GraphicArea::pasteAction()
 {
     editop->pasteAction(selectedIndex);
-    emit editop->selectindexUpdate(selectedIndex, EditOperator::GRAPHICAREA);
+    emit editop->ui_selectindexUpdate(selectedIndex, EditOperator::GRAPHICAREA);
 }
 
 void GraphicArea::upAction()
 {
 //    binder->upItem(selectedIndex);
     editop->swapAction(selectedIndex, selectedIndex - 1);
-    emit editop->selectindexUpdate(selectedIndex, EditOperator::GRAPHICAREA);
+    emit editop->ui_selectindexUpdate(selectedIndex, EditOperator::GRAPHICAREA);
 }
 
 void GraphicArea::downAction()
 {
 //    binder->downItem(selectedIndex);
     editop->swapAction(selectedIndex, selectedIndex + 1);
-    emit editop->selectindexUpdate(selectedIndex, EditOperator::GRAPHICAREA);
+    emit editop->ui_selectindexUpdate(selectedIndex, EditOperator::GRAPHICAREA);
 }
 
 void GraphicArea::reloadAction()

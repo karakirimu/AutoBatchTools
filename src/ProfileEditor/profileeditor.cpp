@@ -49,13 +49,17 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //provide operator
     ui->runTreeWidget->setEditOperator(editop);
-    ui->graphicsView->setEditOperator(editop);
+//    ui->graphicsView->setEditOperator(editop);
+    ui->flowTableWidget->setEditOperator(editop);
     ui->variantTableWidget->setEditOperator(editop);
     ui->editorTab->setEditOperator(editop);
 
-    //update tree position
-    connect(editop, &EditOperator::selectindexUpdate, this, &ProfileEditor::setTreerowpos);
+    //test
+//    ui->graphicsView->hide();
 
+    //update tree position
+    connect(editop, &EditOperator::ui_selectindexUpdate, this, &ProfileEditor::setTreerowpos_select);
+    connect(editop, &EditOperator::ui_funcindexUpdate, this, &ProfileEditor::setTreerowpos_update);
     //provide function object
 //    ui->variantTableWidget->setSharedFunction(sfunction);
 
@@ -171,8 +175,8 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //end-----------------------------------------------------------------------------------------------
 
-    connect(editop, &EditOperator::selectindexUpdate, this, &ProfileEditor::itemChangedAction);
-    connect(ui->graphicsView, &GraphicArea::selectChangedAction, this, &ProfileEditor::itemChangedAction);
+    connect(editop, &EditOperator::ui_selectindexUpdate, this, &ProfileEditor::itemChangedAction);
+//    connect(ui->graphicsView, &GraphicArea::selectChangedAction, this, &ProfileEditor::itemChangedAction);
 //    connect(ui->editorTab, SIGNAL(currentChanged(int)), this, SLOT(editorTabChanged(int)));
 
     //connect editor function (not need)
@@ -262,6 +266,10 @@ void ProfileEditor::addAction()
 //    ui->runTreeWidget->addAction();
 //    binder->addItem();
     editop->addAction();
+
+    emit editop->ui_selectindexUpdate(editop->getCacheSize() - 1, EditOperator::MAINEDITOR);
+    emit editop->ui_funcindexUpdate(editop->getCacheSize() - 1, -1, EditOperator::ADD, EditOperator::MAINEDITOR);
+
 }
 
 //void ProfileEditor::editAction()
@@ -292,36 +300,60 @@ void ProfileEditor::addAction()
 
 void ProfileEditor::deleteAction()
 {
-//    binder->deleteItem(treerowpos);
-    editop->deleteAction(treerowpos);
+    if(treerowpos > 1){
+    //    binder->deleteItem(treerowpos);
+        editop->deleteAction(treerowpos);
+        //emit editop->ui_selectindexUpdate(, EditOperator::MAINEDITOR);
+
+        emit editop->ui_selectindexUpdate(treerowpos, EditOperator::MAINEDITOR);
+        emit editop->ui_funcindexUpdate(treerowpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
+    }
 }
 
 void ProfileEditor::cutAction()
 {
-    editop->cutAction(treerowpos);
+    if(treerowpos > 1){
+        editop->cutAction(treerowpos);
+        emit editop->ui_selectindexUpdate(treerowpos, EditOperator::MAINEDITOR);
+        emit editop->ui_funcindexUpdate(treerowpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
+    }
 }
 
 void ProfileEditor::copyAction()
 {
 //    ui->runTreeWidget->copyAction();
-    editop->copyAction(treerowpos);
+    if(treerowpos > 1){
+        editop->copyAction(treerowpos);
+    }
 }
 
 void ProfileEditor::pasteAction()
 {
-    editop->pasteAction(treerowpos);
+    if(treerowpos > 1){
+        editop->pasteAction(treerowpos);
+        emit editop->ui_selectindexUpdate(treerowpos, EditOperator::MAINEDITOR);
+        emit editop->ui_funcindexUpdate(treerowpos, -1, EditOperator::INSERT, EditOperator::MAINEDITOR);
+    }
 }
 
 void ProfileEditor::upAction()
 {
 //    binder->upItem(treerowpos);
-    editop->swapAction(treerowpos, treerowpos - 1);
+    if(treerowpos > 2){
+        editop->swapAction(treerowpos, treerowpos - 1);
+        emit editop->ui_selectindexUpdate(treerowpos - 1, EditOperator::MAINEDITOR);
+        emit editop->ui_funcindexUpdate(treerowpos - 1, treerowpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
+    }
 }
 
 void ProfileEditor::downAction()
 {
 //    binder->downItem(treerowpos);
-    editop->swapAction(treerowpos, treerowpos + 1);
+    if(treerowpos < (editop->getCacheSize() - 1)){
+        editop->swapAction(treerowpos, treerowpos + 1);
+        emit editop->ui_selectindexUpdate(treerowpos + 1, EditOperator::MAINEDITOR);
+        emit editop->ui_funcindexUpdate(treerowpos + 1, treerowpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
+    }
 }
 
 void ProfileEditor::launchSettingAction()
@@ -470,10 +502,18 @@ void ProfileEditor::about()
                        , tr("This is an editor of autobatchrunner."));
 }
 
-void ProfileEditor::setTreerowpos(int value, int from)
+void ProfileEditor::setTreerowpos_select(int value, int from)
 {
-    Q_UNUSED(from)
+    if(from == EditOperator::MAINEDITOR) return;
     treerowpos = value;
+}
+
+void ProfileEditor::setTreerowpos_update(int after, int before, int function, int sendfrom)
+{
+    Q_UNUSED(before);
+    Q_UNUSED(function);
+    Q_UNUSED(sendfrom);
+    treerowpos = after;
 }
 
 void ProfileEditor::closeEvent(QCloseEvent *event)
@@ -794,8 +834,9 @@ void ProfileEditor::resetUi()
 
     //reload file
     ui->runTreeWidget->reloadAction();
-    ui->graphicsView->reloadAction();
+//    ui->graphicsView->reloadAction();
     ui->variantTableWidget->reloadAction();
+    ui->flowTableWidget->reloadAction();
 
     //connect slot
 //    connectEdit();

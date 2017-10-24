@@ -60,7 +60,8 @@ private slots:
 //    void editorTabChanged(int index);
 
     //tree acesss
-    void setTreerowpos(int value, int from);
+    void setTreerowpos_select(int value, int from);
+    void setTreerowpos_update(int after, int before, int function, int sendfrom);
 
     void about();
 

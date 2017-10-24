@@ -62,6 +62,7 @@ signals:
 private slots:
     void rowSelected();
     void onCustomContextMenu(const QPoint &point);
+    void onItemStatusChanged(int after, int before, int function, int sendfrom);
     bool eventFilter(QObject *obj, QEvent *event);
 
     //tree data synchronize

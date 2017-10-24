@@ -46,6 +46,28 @@ void ProfileTreeWidget::onCustomContextMenu(const QPoint &point)
     contextMenu->popup(mapToGlobal(point));
 }
 
+void ProfileTreeWidget::onItemStatusChanged(int after, int before, int function, int sendfrom)
+{
+    if(sendfrom == EditOperator::TREE) return;
+
+    switch (function) {
+    case EditOperator::ADD:
+        replaceTree(after);
+        break;
+    case EditOperator::DELETE:
+        deleteTree(after);
+        break;
+    case EditOperator::INSERT:
+        insertTree(after);
+        break;
+    case EditOperator::SWAP:
+        swapTree(fixedRowFromId(before), fixedRowFromId(after));
+        break;
+    default:
+        break;
+    }
+}
+
 bool ProfileTreeWidget::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
@@ -140,7 +162,9 @@ void ProfileTreeWidget::addAction()
     int count = editop->getCacheSize() - 1;
     count = (count >= 0) ? count : 0;
     addTree(count);
-    emit editop->selectindexUpdate(count, EditOperator::TREE);
+    emit editop->ui_selectindexUpdate(count, EditOperator::TREE);
+    emit editop->ui_funcindexUpdate(count, -1, EditOperator::ADD, EditOperator::TREE);
+
 }
 
 void ProfileTreeWidget::deleteAction()
@@ -150,7 +174,9 @@ void ProfileTreeWidget::deleteAction()
     if(cur > 1){
         editop->deleteAction(cur);
         deleteTree(cur);
-        emit editop->selectindexUpdate(cur, EditOperator::TREE);
+        emit editop->ui_selectindexUpdate(cur, EditOperator::TREE);
+        emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::TREE);
+
     }
 }
 
@@ -160,7 +186,8 @@ void ProfileTreeWidget::cutAction()
     if(cur > 1){
         editop->cutAction(cur);
         deleteTree(cur);
-        emit editop->selectindexUpdate(cur, EditOperator::TREE);
+        emit editop->ui_selectindexUpdate(cur, EditOperator::TREE);
+        emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::TREE);
     }
 }
 
@@ -180,7 +207,9 @@ void ProfileTreeWidget::pasteAction()
     if(cur > 1){
         editop->pasteAction(cur);
         insertTree(cur);
-        emit editop->selectindexUpdate(cur, EditOperator::TREE);
+        emit editop->ui_selectindexUpdate(cur, EditOperator::TREE);
+        emit editop->ui_funcindexUpdate(cur, -1, EditOperator::INSERT, EditOperator::TREE);
+
     }
 }
 
@@ -192,7 +221,9 @@ void ProfileTreeWidget::upAction()
     if(uicur > 1){
         editop->swapAction(cur, cur - 1);
         swapTree(uicur, uicur - 1);
-        emit editop->selectindexUpdate(cur - 1, EditOperator::TREE);
+        emit editop->ui_selectindexUpdate(cur - 1, EditOperator::TREE);
+        emit editop->ui_funcindexUpdate(cur - 1, cur, EditOperator::SWAP, EditOperator::TREE);
+
     }
 }
 
@@ -204,7 +235,9 @@ void ProfileTreeWidget::downAction()
     if(uicur < topLevelItemCount() - 1){
         editop->swapAction(cur, cur + 1);
         swapTree(uicur, uicur + 1);
-        emit editop->selectindexUpdate(cur + 1, EditOperator::TREE);
+        emit editop->ui_selectindexUpdate(cur + 1, EditOperator::TREE);
+        emit editop->ui_funcindexUpdate(cur + 1, cur, EditOperator::SWAP, EditOperator::TREE);
+
     }
 }
 
@@ -240,7 +273,7 @@ void ProfileTreeWidget::insertTree(int id)
     this->insertTopLevelItem(fixedRowFromId(id), item);
 
     //reselect
-    emit editop->selectindexUpdate(id - 1, EditOperator::TREE);
+    emit editop->ui_selectindexUpdate(id - 1, EditOperator::TREE);
 }
 
 void ProfileTreeWidget::swapTree(int before, int after)
@@ -302,7 +335,7 @@ void ProfileTreeWidget::replaceTree(int id)
 
 void ProfileTreeWidget::rowSelected()
 {
-    emit editop->selectindexUpdate(fixedCurrentRow(), EditOperator::TREE);
+    emit editop->ui_selectindexUpdate(fixedCurrentRow(), EditOperator::TREE);
 //    emit indexChanged(currentRow());
 }
 
@@ -574,6 +607,7 @@ void ProfileTreeWidget::setEditOperator(EditOperator *op)
     editop = op;
 
     connect(editop, &EditOperator::editUpdate, this, &ProfileTreeWidget::replaceTree);
+    connect(editop, &EditOperator::ui_funcindexUpdate, this, &ProfileTreeWidget::onItemStatusChanged);
 
     //set right click action
     popupAction();

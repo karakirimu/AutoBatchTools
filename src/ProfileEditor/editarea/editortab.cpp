@@ -72,7 +72,7 @@ void EditorTab::setEditOperator(EditOperator *op)
     autoonly_4 = otherwidget->findChild<QCheckBox *>("autoOnlyCheckBox_4");
 
     //index update
-    connect(editop, &EditOperator::selectindexUpdate, this, &EditorTab::setCombinedDataList);
+    connect(editop, &EditOperator::ui_selectindexUpdate, this, &EditorTab::setCombinedDataList);
 
     //index edit (table is ignored)
     connect(timeoutCheckBox, &QCheckBox::toggled, this, &EditorTab::editCheckAction);

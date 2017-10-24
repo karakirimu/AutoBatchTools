@@ -15,6 +15,9 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -28,15 +31,24 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="GraphicArea" name="graphicsView">
-      <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAsNeeded</enum>
+     <widget class="FlowTable" name="flowTableWidget">
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
-      <property name="sizeAdjustPolicy">
-       <enum>QAbstractScrollArea::AdjustToContents</enum>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignHCenter|Qt::AlignTop</set>
+      <property name="editTriggers">
+       <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::CurrentChanged|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+      </property>
+      <property name="selectionMode">
+       <enum>QAbstractItemView::ExtendedSelection</enum>
+      </property>
+      <property name="selectionBehavior">
+       <enum>QAbstractItemView::SelectRows</enum>
+      </property>
+      <property name="showGrid">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -403,7 +415,7 @@
             <enum>QTabWidget::East</enum>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="exec">
             <attribute name="title">
@@ -1223,7 +1235,10 @@ color: rgb(204, 204, 204);</string>
      <normaloff>:/icons/Add.png</normaloff>:/icons/Add.png</iconset>
    </property>
    <property name="text">
-    <string>AddItem</string>
+    <string>Add</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Return</string>
    </property>
   </action>
   <action name="actionDeleteItem">
@@ -1232,7 +1247,10 @@ color: rgb(204, 204, 204);</string>
      <normaloff>:/icons/Denided.png</normaloff>:/icons/Denided.png</iconset>
    </property>
    <property name="text">
-    <string>deleteItem</string>
+    <string>Delete</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
    </property>
   </action>
   <action name="actionUpItem">
@@ -1241,7 +1259,10 @@ color: rgb(204, 204, 204);</string>
      <normaloff>:/icons/Button_Up.png</normaloff>:/icons/Button_Up.png</iconset>
    </property>
    <property name="text">
-    <string>UpItem</string>
+    <string>Up</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Up</string>
    </property>
   </action>
   <action name="actionDownItem">
@@ -1250,7 +1271,10 @@ color: rgb(204, 204, 204);</string>
      <normaloff>:/icons/Button_Down.png</normaloff>:/icons/Button_Down.png</iconset>
    </property>
    <property name="text">
-    <string>DownItem</string>
+    <string>Down</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Down</string>
    </property>
   </action>
   <action name="actionRun">
@@ -1333,6 +1357,9 @@ color: rgb(204, 204, 204);</string>
    <property name="text">
     <string>Cut</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
   </action>
   <action name="actionCopy">
    <property name="icon">
@@ -1342,6 +1369,9 @@ color: rgb(204, 204, 204);</string>
    <property name="text">
     <string>Copy</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
   </action>
   <action name="actionPaste">
    <property name="icon">
@@ -1350,6 +1380,9 @@ color: rgb(204, 204, 204);</string>
    </property>
    <property name="text">
     <string>Paste</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
    </property>
   </action>
   <zorder>globalVariantDockWidget</zorder>
@@ -1396,11 +1429,6 @@ color: rgb(204, 204, 204);</string>
    <header>variantcombobox.h</header>
   </customwidget>
   <customwidget>
-   <class>GraphicArea</class>
-   <extends>QGraphicsView</extends>
-   <header>graphicarea.h</header>
-  </customwidget>
-  <customwidget>
    <class>InnerStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header>innerstackedwidget.h</header>
@@ -1432,6 +1460,11 @@ color: rgb(204, 204, 204);</string>
    <class>FileQueueTable</class>
    <extends>QTableWidget</extends>
    <header>../filequeuetable/filequeuetable.h</header>
+  </customwidget>
+  <customwidget>
+   <class>FlowTable</class>
+   <extends>QTableWidget</extends>
+   <header>flowtable.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
