@@ -40,18 +40,19 @@ public:
 
     bool read(int id, QList<QStringList> *list);
     //editor editindex code (not contain tables)
-    enum {
-        TABCHANGED,
-        NORMAL_TCHECK,NORMAL_TIMEOUT,NORMAL_ONLY
-    };
 
     QUndoStack *getUndostack() const;
     int getCacheSize() const;
 
+    int getCurrentCommandType();
+
 
     //detect called item
     enum{TREE, GRAPHICAREA, MAINEDITOR};
-    enum{ADD,DELETE,INSERT,SWAP};
+    enum{ADD,DELETE,INSERT,SWAP
+         /*,EDITCHECK,EDITFCOMBO,EDITSCOMBO,EDITCOMBO,EDITFULL
+         ,EDITTEXT,EDITVALUE,EDITTAB
+         ,EDITTABLE,EDITEXTABLE,SWAPTABLE*/};
 
 signals:
     void loadfileChanged(QString);
@@ -69,7 +70,7 @@ public slots:
     void insertAction(int id, QList<QStringList> *xmlstruct);
     void deleteAction(int id);
 
-    void editAction(int id, int innerid, int editcode, QList<QStringList> xmlstruct);
+//    void editAction(int id, int innerid, int editcode, QList<QStringList> xmlstruct);
     void editTabAction(int id, int newindex);
     void editTextAction(int id, QString mnew, QString obj);
     void editComboBoxAction(int id, QString mnew);
@@ -77,7 +78,7 @@ public slots:
     void editSearchComboAction(int id, QString newstr, int newval);
     void editValueAction(int id, int newval, QString obj);
     void editCheckAction(int id, bool newcheck, QString obj);
-    void editFullAction(int id, QList<QStringList> *xmlstruct);
+    void editVariantAction(int id, QList<QStringList> *xmlstruct);
     void editTableAction(int id, int tableid, QString newstr, int operation, QString objname);
 
     void cutAction(int id);

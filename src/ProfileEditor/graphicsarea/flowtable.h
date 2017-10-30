@@ -60,6 +60,9 @@ private:
 
     void updateLastIndexItem(int lastindex);
 
+    QString getHtmlHeader(QString headcssstr);
+    QString getHtmlFooter();
+
     QAction *m_add;
     QAction *m_delete;
     QAction *m_cut;

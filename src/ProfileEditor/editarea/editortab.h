@@ -45,10 +45,10 @@ public slots:
     void setOtherDataList(QList<QStringList> *list, int firstpos);
     void setCombinedDataList(int index, int selectfrom);
 
-    void getNormalDataList(QStringList *list);
-    void getSearchDataList(QStringList *list);
-    void getExtraFuncDataList(QStringList *list);
-    void getOtherDataList(QStringList *list);
+//    void getNormalDataList(QStringList *list);
+//    void getSearchDataList(QStringList *list);
+//    void getExtraFuncDataList(QStringList *list);
+//    void getOtherDataList(QStringList *list);
 
     bool getCurrentIndexOnlyChecked();
 
@@ -69,6 +69,9 @@ private:
     XmlListGenerator xgen;
     //current xml id
     int currentid = -1;
+
+    //set only flag (not edit flag)
+//    bool edited = false;
 
     //ui objects
 

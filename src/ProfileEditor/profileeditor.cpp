@@ -30,6 +30,9 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 //    setAttribute(Qt::WA_DeleteOnClose);
     settingdialog = new SettingDialog();
 
+    //theme settings
+    themeChangeAction();
+
     //set dock autohide TODO: not saved menu
     ui->processDockWidget->setAutohide(ui->actionAutohide->isChecked());
     ui->setTestDockWidget->setAutohide(ui->actionAutohide->isChecked());
@@ -53,6 +56,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     ui->flowTableWidget->setEditOperator(editop);
     ui->variantTableWidget->setEditOperator(editop);
     ui->editorTab->setEditOperator(editop);
+    ui->innerStackedWidget->setEditOperator(editop);
 
     //test
 //    ui->graphicsView->hide();
@@ -107,6 +111,11 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->actionUpItem, SIGNAL(triggered()), this, SLOT(upAction()));
     connect(ui->actionDownItem, SIGNAL(triggered()), this, SLOT(downAction()));
 
+    //Edit (Undo,Redo)
+    connect(editop->getUndostack(), &QUndoStack::canUndoChanged, ui->actionUndo, &QAction::setEnabled);
+    connect(editop->getUndostack(), &QUndoStack::canRedoChanged, ui->actionRedo, &QAction::setEnabled);
+    connect(editop->getUndostack(), &QUndoStack::undoTextChanged, this, &ProfileEditor::onUndoTextChanged);
+    connect(editop->getUndostack(), &QUndoStack::redoTextChanged, this, &ProfileEditor::onRedoTextChanged);
 
     //Tools
     connect(ui->actionRun, &QAction::triggered, rbinder, &RunTaskSignalBinder::start);
@@ -172,6 +181,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //Infomation
     connect(ui->actionAbout, &QAction::triggered, this, &ProfileEditor::about);
+    connect(ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
 
     //end-----------------------------------------------------------------------------------------------
 
@@ -196,8 +206,8 @@ ProfileEditor::ProfileEditor(QString loadfile, QWidget *parent)
 //    ui->runTreeWidget->reloadAction();
 //    ui->graphicsView->reloadAction();
 //    ui->variantTableWidget->reloadAction();
-
     editop->openAction(loadfile);
+    setLoadfile(loadfile);
     resetUi();
 }
 
@@ -251,14 +261,26 @@ void ProfileEditor::saveAction()
 
 void ProfileEditor::undoAction()
 {
-    if(editop->getUndostack()->canUndo())
-    editop->getUndostack()->undo();
+    if(editop->getUndostack()->canUndo()){
+        QUndoStack *stack = editop->getUndostack();
+        stack->undo();
+        //TODO: not efficient
+        ui->runTreeWidget->reloadAction();
+        ui->variantTableWidget->reloadAction();
+        ui->flowTableWidget->reloadAction();
+
+    }
 }
 
 void ProfileEditor::redoAction()
 {
-    if(editop->getUndostack()->canRedo())
-    editop->getUndostack()->redo();
+    if(editop->getUndostack()->canRedo()){
+        editop->getUndostack()->redo();
+        //TODO: not efficient
+        ui->runTreeWidget->reloadAction();
+        ui->variantTableWidget->reloadAction();
+        ui->flowTableWidget->reloadAction();
+    }
 }
 
 void ProfileEditor::addAction()
@@ -300,59 +322,59 @@ void ProfileEditor::addAction()
 
 void ProfileEditor::deleteAction()
 {
-    if(treerowpos > 1){
+    if(rowpos > 1){
     //    binder->deleteItem(treerowpos);
-        editop->deleteAction(treerowpos);
+        editop->deleteAction(rowpos);
         //emit editop->ui_selectindexUpdate(, EditOperator::MAINEDITOR);
 
-        emit editop->ui_selectindexUpdate(treerowpos, EditOperator::MAINEDITOR);
-        emit editop->ui_funcindexUpdate(treerowpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
+        emit editop->ui_selectindexUpdate(rowpos, EditOperator::MAINEDITOR);
+        emit editop->ui_funcindexUpdate(rowpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
     }
 }
 
 void ProfileEditor::cutAction()
 {
-    if(treerowpos > 1){
-        editop->cutAction(treerowpos);
-        emit editop->ui_selectindexUpdate(treerowpos, EditOperator::MAINEDITOR);
-        emit editop->ui_funcindexUpdate(treerowpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
+    if(rowpos > 1){
+        editop->cutAction(rowpos);
+        emit editop->ui_selectindexUpdate(rowpos, EditOperator::MAINEDITOR);
+        emit editop->ui_funcindexUpdate(rowpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
     }
 }
 
 void ProfileEditor::copyAction()
 {
 //    ui->runTreeWidget->copyAction();
-    if(treerowpos > 1){
-        editop->copyAction(treerowpos);
+    if(rowpos > 1){
+        editop->copyAction(rowpos);
     }
 }
 
 void ProfileEditor::pasteAction()
 {
-    if(treerowpos > 1){
-        editop->pasteAction(treerowpos);
-        emit editop->ui_selectindexUpdate(treerowpos, EditOperator::MAINEDITOR);
-        emit editop->ui_funcindexUpdate(treerowpos, -1, EditOperator::INSERT, EditOperator::MAINEDITOR);
+    if(rowpos > 1){
+        editop->pasteAction(rowpos);
+        emit editop->ui_selectindexUpdate(rowpos, EditOperator::MAINEDITOR);
+        emit editop->ui_funcindexUpdate(rowpos, -1, EditOperator::INSERT, EditOperator::MAINEDITOR);
     }
 }
 
 void ProfileEditor::upAction()
 {
 //    binder->upItem(treerowpos);
-    if(treerowpos > 2){
-        editop->swapAction(treerowpos, treerowpos - 1);
-        emit editop->ui_selectindexUpdate(treerowpos - 1, EditOperator::MAINEDITOR);
-        emit editop->ui_funcindexUpdate(treerowpos - 1, treerowpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
+    if(rowpos > 2){
+        editop->swapAction(rowpos, rowpos - 1);
+        emit editop->ui_selectindexUpdate(rowpos - 1, EditOperator::MAINEDITOR);
+        emit editop->ui_funcindexUpdate(rowpos - 1, rowpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
     }
 }
 
 void ProfileEditor::downAction()
 {
 //    binder->downItem(treerowpos);
-    if(treerowpos < (editop->getCacheSize() - 1)){
-        editop->swapAction(treerowpos, treerowpos + 1);
-        emit editop->ui_selectindexUpdate(treerowpos + 1, EditOperator::MAINEDITOR);
-        emit editop->ui_funcindexUpdate(treerowpos + 1, treerowpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
+    if(rowpos < (editop->getCacheSize() - 1)){
+        editop->swapAction(rowpos, rowpos + 1);
+        emit editop->ui_selectindexUpdate(rowpos + 1, EditOperator::MAINEDITOR);
+        emit editop->ui_funcindexUpdate(rowpos + 1, rowpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
     }
 }
 
@@ -363,11 +385,55 @@ void ProfileEditor::launchSettingAction()
     settingdialog->show();
 }
 
+void ProfileEditor::themeChangeAction()
+{
+    QSettings settings( "./psettings.ini", QSettings::IniFormat );
+
+    //theme settings
+    settings.beginGroup("BASICSETTING");
+    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
+    settings.endGroup();
+
+    if(stylecolor == "Light"){
+#ifdef QT_DEBUG
+        QFile file("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/Light.qss");
+#else
+        QFile file(":/themes/Light.qss");
+#endif
+        if(file.open( QFile::ReadOnly | QFile::Text )){
+            QString data(QLatin1String(file.readAll()));
+//            data = data.replace(QRegularExpression("(\r\n|\r|\n)"), "");
+            this->setStyleSheet(data);
+        }
+    }
+
+    if(stylecolor == "Dark"){
+#ifdef QT_DEBUG
+        QFile file("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/Dark.qss");
+#else
+        QFile file(":/themes/Dark.qss");
+#endif
+        if(file.open( QFile::ReadOnly | QFile::Text )){
+            QString data(QLatin1String(file.readAll()));
+            this->setStyleSheet(data);
+        }
+    }
+}
+
 
 void ProfileEditor::overWriteSaveAction()
 {
 //     sfunction->saveEditOverWriteAction(this);
-    if(loadfile == "") return;
+    if(loadfile == "") {
+        QString fileName =
+                QFileDialog::getSaveFileName(this,\
+                                             tr("Save Edit file"),\
+                                             QDir::currentPath(),\
+                                             tr("APRO Files (*.apro)"));
+
+        editop->saveAction(fileName);
+        loadfile = fileName;
+    }
     editop->saveAction(loadfile);
 }
 
@@ -450,11 +516,11 @@ void ProfileEditor::itemChangedAction(int index)
     //set new string
 //    binder->readItem(treerowpos, &item);
 //    setSettingList(&item);
-    if(index > 0){
-        ui->innerStackedWidget->setCurrentIndex(1);
-    }else{
-        ui->innerStackedWidget->setCurrentIndex(0);
-    }
+//    if(index > 0){
+//        ui->innerStackedWidget->setCurrentIndex(1);
+//    }else{
+//        ui->innerStackedWidget->setCurrentIndex(0);
+//    }
 
 
     qDebug() << "itemChangedAction::treerowpos" << index;
@@ -499,13 +565,18 @@ void ProfileEditor::itemChangedAction(int index)
 void ProfileEditor::about()
 {
     QMessageBox::about(this, tr("About ProfileEditor")
-                       , tr("This is an editor of autobatchrunner."));
+                       , tr("AutoBatchRunner - ProfileEditor ver.beta\r\n\r\n"
+                            "This is an editor of AutoBatchRunner.\r\n"
+                            "ProfileEditor can create execution list of other projects.\r\n\r\n"
+                            "Currently, this program runs only windows systems.\r\n"
+                            "These programs licensed under GNU LGPL version 3 for now.\r\n\r\n"
+                            "Made by mr_elphis in 2017/10/31"));
 }
 
 void ProfileEditor::setTreerowpos_select(int value, int from)
 {
     if(from == EditOperator::MAINEDITOR) return;
-    treerowpos = value;
+    rowpos = value;
 }
 
 void ProfileEditor::setTreerowpos_update(int after, int before, int function, int sendfrom)
@@ -513,7 +584,17 @@ void ProfileEditor::setTreerowpos_update(int after, int before, int function, in
     Q_UNUSED(before);
     Q_UNUSED(function);
     Q_UNUSED(sendfrom);
-    treerowpos = after;
+    rowpos = after;
+}
+
+void ProfileEditor::onUndoTextChanged(QString text)
+{
+    ui->actionUndo->setText(tr("Undo %1").arg(text));
+}
+
+void ProfileEditor::onRedoTextChanged(QString text)
+{
+    ui->actionRedo->setText(tr("Redo %1").arg(text));
 }
 
 void ProfileEditor::closeEvent(QCloseEvent *event)
@@ -842,7 +923,7 @@ void ProfileEditor::resetUi()
 //    connectEdit();
 
     //reset tree row position
-    treerowpos = 0;
+    rowpos = 0;
 
     //load first item
 //    QList<QStringList> item;

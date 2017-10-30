@@ -31,6 +31,4 @@ SUBDIRS += \
           $$PWD/src/AutoBatchScheduler
 
 RESOURCES += \
-    src/res/resources.qrc \
     src/res/resources.qrc
-

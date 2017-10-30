@@ -32,6 +32,19 @@ void ProcessXmlBuilder::setLoadPath(QString filepath)
     }
 }
 
+void ProcessXmlBuilder::setLoadBlankPath(QString filepath)
+{
+    if(filepath != ""){
+        //set new file
+        setFileName(filepath);
+
+        if(count() == 0){
+            createXmlBaseDocument(ROOTELEMENT);
+        }
+
+    }
+}
+
 //void ProcessXmlBuilder::delLoadPath()
 //{
 //    if(file->exists()){

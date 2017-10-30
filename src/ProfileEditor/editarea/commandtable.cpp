@@ -1,6 +1,7 @@
 ﻿#include "commandtable.h"
 
-CommandTable::CommandTable(QWidget *)
+CommandTable::CommandTable(QWidget *parent)
+    : BasicTable(parent)
 {
     //popupAction
     setPopupActionTop();
@@ -208,12 +209,12 @@ void CommandTable::setPopupActionTop()
 {
     //set basic items
     m_add = contextMenu->addAction(QIcon(":/icons/Add.png"),tr("Add"));
-    m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
+    m_add->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Enter));
     m_delete = contextMenu->addAction(QIcon(":/icons/Denided.png"), tr("Delete"));
     m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
     contextMenu->addSeparator();
     m_edit = contextMenu->addAction(QIcon(":/icons/Pen.png"), tr("Edit"));
-    m_edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
+    m_edit->setShortcut(QKeySequence(Qt::ALT + Qt::Key_E));
     contextMenu->addSeparator();
     m_file = contextMenu->addAction(QIcon(":/icons/File.png"), tr("Select file..."));
     m_dir = contextMenu->addAction(QIcon(":/icons/Folder.png"), tr("Select Dir..."));
@@ -232,16 +233,16 @@ void CommandTable::setPopupActionDefault()
 {
     //set basic items
     m_copy = contextMenu->addAction(QIcon(":/icons/Files_Copy.png"), tr("Copy"));
-    m_copy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
+    m_copy->setShortcut(QKeySequence(Qt::ALT + Qt::Key_C));
 
     m_paste = contextMenu->addAction(QIcon(":/icons/Clipboard_Full.png"), tr("Paste"));
-    m_paste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
+    m_paste->setShortcut(QKeySequence(Qt::ALT + Qt::Key_V));
 
     m_up = contextMenu->addAction(QIcon(":/icons/Button_Up.png"), tr("Up"));
-    m_up->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Up));
+    m_up->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Up));
 
     m_down = contextMenu->addAction(QIcon(":/icons/Button_Down.png"), tr("Down"));
-    m_down->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
+    m_down->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Down));
 
     //connect signals
     connect(m_copy, SIGNAL(triggered()), this, SLOT(copyAction()));
@@ -258,7 +259,7 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
          {
            case Qt::Key_Return:
            case Qt::Key_Enter:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
+             if (keyEvent->modifiers() & Qt::AltModifier)
                addAction();
              break;
 
@@ -267,7 +268,7 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
              break;
 
            case Qt::Key_Up:
-             if (keyEvent->modifiers() & Qt::ControlModifier){
+             if (keyEvent->modifiers() & Qt::AltModifier){
                  upAction();
              }else{
                  if(this->currentRow() != 0)
@@ -276,7 +277,7 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
              break;
 
            case Qt::Key_Down:
-             if (keyEvent->modifiers() & Qt::ControlModifier){
+             if (keyEvent->modifiers() & Qt::AltModifier){
                  downAction();
              }else{
                  if(this->rowCount() - 1 != this->currentRow())
@@ -285,17 +286,17 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
             break;
 
            case Qt::Key_C:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
+             if (keyEvent->modifiers() & Qt::AltModifier)
                  copyAction();
              break;
 
            case Qt::Key_E:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
+             if (keyEvent->modifiers() & Qt::AltModifier)
                  editAction();
              break;
 
            case Qt::Key_V:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
+             if (keyEvent->modifiers() & Qt::AltModifier)
                  pasteAction();
              break;
 

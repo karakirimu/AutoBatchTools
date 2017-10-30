@@ -49,7 +49,7 @@ void VariantTable::addAction()
     int row = this->rowCount();
     setRowCount(row + 1);
     getLocalList(newlist);
-    editop->editFullAction(MAGIC, newlist);
+    editop->editVariantAction(MAGIC, newlist);
 }
 
 //ALLOC MEMORY
@@ -57,7 +57,7 @@ void VariantTable::editAction()
 {
     QList<QStringList> *newlist = new QList<QStringList>;
     getLocalList(newlist);
-    editop->editFullAction(MAGIC, newlist);
+    editop->editVariantAction(MAGIC, newlist);
 }
 
 void VariantTable::deleteAction()

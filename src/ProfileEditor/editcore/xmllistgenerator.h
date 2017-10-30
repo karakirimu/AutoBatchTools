@@ -73,8 +73,8 @@ public:
     //tab and list connection map
     enum{NORMAL, SEARCH, EXTRAFUNC, OTHER};
 
-    //inner temp list connection map // "_" means "and"
-    enum{CURRENTONLY,INNERSTACK,
+    //inner list connection map // "_" means "and"
+    enum{INFO_NAME,INFO_VER,INFO_AUTHOR,INFO_DESCRIPT,LOCALVARIANT,CURRENTONLY,INNERSTACK,
          SEARCHONLY,SEARCHNAME_ID,SEPARATOR,VARIANT,OUTPUT_RADIO,
          OTHERONLY,OTHERNAME,OTHERFILEPATH,
          NORMALONLY,TIMEOUT_DURITION,NCMDCOUNT,

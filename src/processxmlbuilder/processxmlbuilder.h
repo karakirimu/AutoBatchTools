@@ -189,6 +189,7 @@ public:
     PROCESSXMLBUILDERSHARED_EXPORT ~ProcessXmlBuilder();
 
     PROCESSXMLBUILDERSHARED_EXPORT void setLoadPath(QString filepath);
+    PROCESSXMLBUILDERSHARED_EXPORT void setLoadBlankPath(QString filepath);
 //    PROCESSXMLBUILDERSHARED_EXPORT void delLoadPath();
 
     PROCESSXMLBUILDERSHARED_EXPORT bool readItem(int itemid, QList<QStringList> *itemlist);
@@ -198,7 +199,6 @@ public:
     PROCESSXMLBUILDERSHARED_EXPORT void swapItem(int beforeitemid, int afteritemid);
     PROCESSXMLBUILDERSHARED_EXPORT void copyItem(int itemid);
     PROCESSXMLBUILDERSHARED_EXPORT bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
-    PROCESSXMLBUILDERSHARED_EXPORT void createDocument();
     PROCESSXMLBUILDERSHARED_EXPORT int count();
 
     PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempNormal() const;
@@ -208,6 +208,7 @@ public:
 
 private:
     void setSearchItemData(QString element, QList<QStringList> *list);
+    void createDocument();
     const QString ROOTELEMENT = "profile";
     const QString FIRSTLAYER = "order";
     const QString ATTR = "id";

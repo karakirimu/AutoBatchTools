@@ -1,0 +1,296 @@
+QMainWindow::separator {
+    background: #c2c2c2;
+    width: 1px; /* when vertical */
+    height: 1px; /* when horizontal */
+}
+
+QMainWindow {
+    background: #f5f5f5;
+}
+
+QFrame {
+    border: none;
+    background-color: #c2c2c2;
+    color: black;
+}
+
+QMenuBar
+{
+    background-color : #f5f5f5;
+    border-bottom-color: #f5f5f5;
+    color: black;
+}
+
+QMenuBar::item
+{
+    background-color: #f5f5f5;
+    color: black;
+}
+
+/*defblack*/
+QMenuBar::item:hover
+{
+    background-color: #c2c2c2;
+    color: black;
+}
+
+QMenuBar::item:selected
+{
+    background-color: #ffffff;
+}
+
+QMenu {
+    background-color: #c2c2c2;
+    margin: 2px; /* some spacing around the menu */
+    color: black;
+}
+
+QMenu::item {
+    padding: 2px 25px 2px 20px;
+    border: 1px solid transparent; /* reserve space for selection border */
+}
+
+QMenu::item:selected {
+    background-color: #ffffff;
+    border: none;
+}
+
+QToolBar
+{
+    background-color: #f5f5f5;
+    spacing: 2px;
+    padding: 6px;
+    border: none;
+}
+
+/* all types of tool button */
+QToolButton
+{
+    background-color: transparent;
+    padding: 2px;
+}
+
+QToolButton:hover
+{
+    background-color: #ffffff;
+    border: none;
+}
+
+QToolButton[popupMode="1"] { /* only for MenuButtonPopup */
+    padding-right: 20px; /* make way for the popup button */
+    background-color: #c2c2c2;
+    border: none;
+    color: black;
+}
+
+QToolButton:pressed {
+    background-color: #8e8e8e;
+    border: none;
+}
+
+QHeaderView::section {
+    background-color: #c2c2c2;
+    border: none;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    color: black;
+}
+
+QTreeView {
+    background-color: #f5f5f5;
+}
+
+QTreeView::item {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    color: black;
+}
+
+QTreeView::item:hover {
+    background-color: #ffffff;
+    border: none;
+}
+
+/*defblack*/
+QTreeView::item:selected {
+    border: 1px solid #ffffff;
+    background-color: #ffffff;
+    color: black;
+}
+
+QTreeView::item:selected:active{
+    background: #f5f5f5;
+    color: black;
+}
+
+/*defblack*/
+QTreeView::item:selected:!active {
+    background: #efefef;
+    color: black;
+}
+
+QTableWidget {
+    background-color: #f5f5f5;
+/*    border: 1px solid #c2c2c2;*/
+}
+
+QLabel {
+    border: none;
+    background-color: transparent;
+    color: black;
+}
+
+QToolTip {
+    border: none;
+    background-color: #f5f5f5;
+    color: black;
+}
+
+QLineEdit, QPlainTextEdit
+{
+    background-color: #f5f5f5;
+    border: 1px solid #ffffff;
+    color: black;
+}
+
+QDockWidget {
+    border: none;
+    background: #f5f5f5;
+    color: black;
+}
+
+QDockWidget::title {
+    text-align: left; /* align the text to the left */
+    background: #f5f5f5;
+    padding: 5px;
+    color: black;
+}
+
+QDockWidget::close-button, QDockWidget::float-button {
+    border: 1px solid transparent;
+    background: transparent;
+    color: black;
+    padding: 2px;
+}
+
+QDockWidget::close-button:hover, QDockWidget::float-button:hover {
+    background: #ffffff;
+}
+
+QDockWidget::close-button:pressed, QDockWidget::float-button:pressed {
+    padding: 1px 1px 1px 1px;
+}
+
+QDialog {
+    background-color: #c2c2c2;
+}
+
+QTabWidget::pane { /* The tab widget frame */
+/*    border-top: 2px solid #C2C7CB;*/
+    background-color: #f5f5f5;
+}
+
+/*QTabWidget::tab-bar {
+    background-color: #f5f5f5;
+}*/
+
+/* Style the tab using the tab sub-control. Note that
+    it reads QTabBar _not_ QTabWidget */
+QTabBar::tab {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ffffff;
+/*    border-top: 1px solid #ffffff;*/
+/*    border-right: 1px solid #ffffff;*/
+    min-width: 8ex;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    color: black;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover {
+    background-color: #ffffff;
+}
+
+QTabBar::tab:selected {
+    border-color: #ffffff;
+/*    border-bottom-color: #C2C7CB; /* same as pane color **/
+    background-color: #c2c2c2;
+}
+
+QTabBar::tab:!selected {
+    background-color: #f5f5f5;
+    margin-top: 1px; /* make non-selected tabs look smaller */
+}
+
+QStatusBar {
+    background: #f5f5f5;
+}
+
+QPushButton {
+    background-color: #c2c2c2;
+    border: 1px solid #ffffff;
+    min-width: 8ex;
+    padding: 4px;
+    color: black;
+}
+
+QPushButton:flat {
+    border: none; /* no border for a flat push button */
+}
+
+QPushButton:hover {
+    background-color: #ffffff;
+}
+
+QPushButton:pressed {
+    background-color: #f5f5f5;
+}
+
+QCheckBox
+{
+    background-color: #c2c2c2;
+    color: black;
+}
+
+QSpinBox
+{
+    background-color: #f5f5f5;
+    color: black;
+    border: 1px solid #ffffff;
+}
+
+QRadioButton
+{
+    background-color: transparent;
+    color: black;
+}
+
+QComboBox
+{
+    background-color: #f5f5f5;
+    color: black;
+    border: 1px solid #ffffff;
+}
+
+QComboBox:hover, QComboBox::drop-down
+{
+    background-color: #ffffff;
+}
+
+QGroupBox
+{
+    background-color: transparent;
+    color: black;
+}
+
+QComboBox:pressed
+{
+    background-color: #8e8e8e;
+}
+
+QProgressBar {
+    border: none;
+    background-color: #8e8e8e;
+    color: black;
+}

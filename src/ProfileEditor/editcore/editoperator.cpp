@@ -83,16 +83,16 @@ void EditOperator::deleteAction(int id)
 }
 
 //only temp data accepted
-void EditOperator::editAction(int id, int innerid, int editcode, QList<QStringList> xmlstruct)
-{
-     EditCommand *com = new EditCommand(id, innerid, editcode, xmlstruct.at(innerid), cache);
-//    cache->replace(id, xmlstruct);
+//void EditOperator::editAction(int id, int innerid, int editcode, QList<QStringList> xmlstruct)
+//{
+//     EditCommand *com = new EditCommand(id, innerid, editcode, xmlstruct.at(innerid), cache);
+////    cache->replace(id, xmlstruct);
 
-    undostack->push(com);
-    emit edited(isEdited());
-    //    emit editindexUpdate(id);
-    emit editUpdate(id);
-}
+//    undostack->push(com);
+//    emit edited(isEdited());
+//    //    emit editindexUpdate(id);
+//    emit editUpdate(id);
+//}
 
 void EditOperator::editTabAction(int id, int newindex)
 {
@@ -160,7 +160,7 @@ void EditOperator::editCheckAction(int id, bool newcheck, QString obj)
 }
 
 //only temp data accepted
-void EditOperator::editFullAction(int id, QList<QStringList> *xmlstruct)
+void EditOperator::editVariantAction(int id, QList<QStringList> *xmlstruct)
 {
     //record all changes (not merge)
     EditFullCommand *com = new EditFullCommand(id, xmlstruct, cache);
@@ -168,7 +168,7 @@ void EditOperator::editFullAction(int id, QList<QStringList> *xmlstruct)
 
     undostack->push(com);
     emit edited(isEdited());
-    emit editUpdate(id);
+//    emit editUpdate(id);
     //    emit editindexUpdate(id);
 }
 
@@ -374,7 +374,16 @@ void EditOperator::exportAction(QString filepath)
         tempcache->append(list);
     }
 
+    //full update file
+    ProcessXmlBuilder *mexport = new ProcessXmlBuilder();
+    mexport->setLoadBlankPath(filepath);
+
+    for(int i = 0; i < count; i++){
+        mexport->addItem(&(tempcache->at(i)));
+    }
+
     delete updater;
+    delete mexport;
     delete xgen;
     delete tempcache;
 }
@@ -393,7 +402,7 @@ void EditOperator::save()
 
     //full update file
     ProcessXmlBuilder *updater = new ProcessXmlBuilder();
-    updater->setLoadPath(autosavefile);
+    updater->setLoadBlankPath(autosavefile);
 
     int count = cache->count();
     for(int i = 0; i < count; i++){
@@ -461,6 +470,12 @@ void EditOperator::reset()
 int EditOperator::getCacheSize() const
 {
     return cache->count();
+}
+
+int EditOperator::getCurrentCommandType()
+{
+    qDebug() << "stack : " << undostack->index();
+    return undostack->command(undostack->index())->id();
 }
 
 QUndoStack *EditOperator::getUndostack() const

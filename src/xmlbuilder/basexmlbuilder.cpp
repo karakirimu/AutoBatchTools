@@ -32,7 +32,7 @@ void BaseXmlBuilder::setFileName(QString filename){
         file->close();
 //        qDebug() << "file opened.";
     }else{
-        qDebug() << "file can not read or create.";
+        qDebug() << "BaseXmlBuilder::makenewfile";
         //create new file
         QFile tmpfilemake(filename);
         if(tmpfilemake.open(QIODevice::WriteOnly)){

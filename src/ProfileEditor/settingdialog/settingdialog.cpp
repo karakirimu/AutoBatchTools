@@ -50,7 +50,7 @@ void SettingDialog::setupItem(){
     ui->listWidget->addItem(tr("String"));
     ui->listWidget->addItem(tr("Search"));
     ui->listWidget->addItem(tr("Extra Function"));
-    ui->listWidget->addItem(tr("Theme"));
+//    ui->listWidget->addItem(tr("Theme"));
 
     ui->listWidget->item(0)->setSelected(true);
     ui->listWidget->setIconSize(QSize(32,32));
@@ -59,7 +59,7 @@ void SettingDialog::setupItem(){
     ui->listWidget->item(1)->setIcon(QIcon(":/icons/File_Text.png"));
     ui->listWidget->item(2)->setIcon(QIcon(":/icons/Search.png"));
     ui->listWidget->item(3)->setIcon(QIcon(":/icons/extension.png"));
-    ui->listWidget->item(4)->setIcon(QIcon(":/icons/Colors.png"));
+//    ui->listWidget->item(4)->setIcon(QIcon(":/icons/Colors.png"));
 }
 
 void SettingDialog::setSettings()
@@ -69,6 +69,7 @@ void SettingDialog::setSettings()
     settings.beginGroup("BASICSETTING");
     settings.setValue("TEMPDIR", ui->tempEdit->text());
     settings.setValue("AUTOSAVEPERIOD", ui->autosaveSpinBox->value());
+    settings.setValue("THEMECOLOR", ui->themeComboBox->currentText());
     settings.endGroup();
 
     settings.beginGroup("TESTEXEC");
@@ -97,6 +98,7 @@ void SettingDialog::loadSettings()
     settings.beginGroup("BASICSETTING");
     ui->tempEdit->setText(settings.value("TEMPDIR", "./").toString());
     ui->autosaveSpinBox->setValue(settings.value("AUTOSAVEPERIOD", 1).toInt());
+    ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Light").toString());
     settings.endGroup();
 
     settings.beginGroup("TESTEXEC");

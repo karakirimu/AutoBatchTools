@@ -1,7 +1,9 @@
 #include "basictable.h"
 
 
-BasicTable::BasicTable(QWidget *){
+BasicTable::BasicTable(QWidget *parent)
+    : BaseTable(parent)
+{
 
     //set header sort settings
     connect(horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(horizontalHeaderClicked(int)));

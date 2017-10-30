@@ -52,6 +52,7 @@ private slots:
     void downAction();
 
     void launchSettingAction();
+    void themeChangeAction();
 
 //    void onWindowTitleChanged(QString newtitle, QString newtemp);
 //    void itemChangedAction();
@@ -62,6 +63,10 @@ private slots:
     //tree acesss
     void setTreerowpos_select(int value, int from);
     void setTreerowpos_update(int after, int before, int function, int sendfrom);
+
+    //undo,redo command
+    void onUndoTextChanged(QString text);
+    void onRedoTextChanged(QString text);
 
     void about();
 
@@ -82,7 +87,7 @@ private:
 
     Ui::ProfileEditor *ui;
     SettingDialog *settingdialog;
-    int treerowpos;
+    int rowpos;
     QString loadfile;
 
 //    PESharedFunction *sfunction;

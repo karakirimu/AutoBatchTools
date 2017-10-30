@@ -36,3 +36,16 @@ void EditFullCommand::redo()
         setText(QString("Change table text at %1").arg(m_targetindex));
     }
 }
+
+int EditFullCommand::id() const
+{
+    return XmlListGenerator::LOCALVARIANT;
+}
+
+bool EditFullCommand::mergeWith(const QUndoCommand *other)
+{
+    if (other->id() != id()) return false;
+    const EditFullCommand *com = static_cast<const EditFullCommand *>(other);
+    m_changed = com->m_changed;
+    return true;
+}

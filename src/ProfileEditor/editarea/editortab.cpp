@@ -179,6 +179,7 @@ void EditorTab::setCombinedDataList(int index, int selectfrom)
         //set current id
         qDebug() << ((QString)("EditorTab : currentid update to %1")).arg(index);
         currentid = index;
+//        edited = false;
         xgen.getListStructure(list, &hlist);
 
         //no file showing module
@@ -186,7 +187,9 @@ void EditorTab::setCombinedDataList(int index, int selectfrom)
 
         //set widget selection
         if(hlist.count() > 1){
+            disconnect(this, &EditorTab::currentChanged, this, &EditorTab::tabChanged);
             setCurrentIndex(VariantConverter::stringToInt(list->at(1).at(1)));
+            connect(this, &EditorTab::currentChanged, this, &EditorTab::tabChanged);
         }
 
         //load type=normal
@@ -210,76 +213,76 @@ void EditorTab::setCombinedDataList(int index, int selectfrom)
 }
 
 //DEPENDS_XML
-void EditorTab::getNormalDataList(QStringList *list)
-{
-//    QWidget *widget = this->widget(XmlListGenerator::NORMAL);
-//    QCheckBox *timeoutCheckBox = widget->findChild<QCheckBox *>("timeoutCheckBox");
-//    QSpinBox *tospin = widget->findChild<QSpinBox *>("timeoutSpinBox");
-//    QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox");
-//    CommandTable *table = widget->findChild<CommandTable *>("cmdTableWidget");
+//void EditorTab::getNormalDataList(QStringList *list)
+//{
+////    QWidget *widget = this->widget(XmlListGenerator::NORMAL);
+////    QCheckBox *timeoutCheckBox = widget->findChild<QCheckBox *>("timeoutCheckBox");
+////    QSpinBox *tospin = widget->findChild<QSpinBox *>("timeoutSpinBox");
+////    QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox");
+////    CommandTable *table = widget->findChild<CommandTable *>("cmdTableWidget");
 
-    int rcount = ctablenormal->rowCount();
-    list->append(VariantConverter::boolToString(autoonly->isChecked()));
-    list->append(VariantConverter::boolToString(timeoutCheckBox->isChecked()));
-    list->append(QString::number(tospin->value()));
-    list->append(QString::number(rcount));
-    for(int i = 0; i < rcount; i++){
-        list->append(ctablenormal->getText(i));
-    }
+//    int rcount = ctablenormal->rowCount();
+//    list->append(VariantConverter::boolToString(autoonly->isChecked()));
+//    list->append(VariantConverter::boolToString(timeoutCheckBox->isChecked()));
+//    list->append(QString::number(tospin->value()));
+//    list->append(QString::number(rcount));
+//    for(int i = 0; i < rcount; i++){
+//        list->append(ctablenormal->getText(i));
+//    }
 
-}
+//}
 
 //DEPENDS_XML
-void EditorTab::getSearchDataList(QStringList *list)
-{
-//    QWidget *widget = this->widget(XmlListGenerator::SEARCH);
-//    SearchComboBox *searchComboBox = widget->findChild<SearchComboBox *>("searchComboBox");
-//    QLineEdit *separatorLineEdit = widget->findChild<QLineEdit *>("separatorLineEdit");
-//    VariantComboBox *localVariantComboBox = widget->findChild<VariantComboBox *>("localVariantComboBox");
-//    QLineEdit *outputLineEdit = widget->findChild<QLineEdit *>("outputLineEdit");
-//    QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox_2");
-//    QRadioButton *vari = widget->findChild<QRadioButton *>("variRadioButton");
-//    QRadioButton *file = widget->findChild<QRadioButton *>("fileRadioButton");
+//void EditorTab::getSearchDataList(QStringList *list)
+//{
+////    QWidget *widget = this->widget(XmlListGenerator::SEARCH);
+////    SearchComboBox *searchComboBox = widget->findChild<SearchComboBox *>("searchComboBox");
+////    QLineEdit *separatorLineEdit = widget->findChild<QLineEdit *>("separatorLineEdit");
+////    VariantComboBox *localVariantComboBox = widget->findChild<VariantComboBox *>("localVariantComboBox");
+////    QLineEdit *outputLineEdit = widget->findChild<QLineEdit *>("outputLineEdit");
+////    QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox_2");
+////    QRadioButton *vari = widget->findChild<QRadioButton *>("variRadioButton");
+////    QRadioButton *file = widget->findChild<QRadioButton *>("fileRadioButton");
 
-    list->append(VariantConverter::boolToString(autoonly_2->isChecked()));
-    list->append(searchcombobox->currentText());
-    list->append(QString::number(searchcombobox->currentIndex()));
-    list->append(separatorLineEdit->text());
-    list->append(localVariantComboBox->currentText());
-    list->append(outputLineEdit->text());
-    if(vari->isChecked()){
-        list->append("0");
-    }else{
-        list->append("1");
-    }
-}
+//    list->append(VariantConverter::boolToString(autoonly_2->isChecked()));
+//    list->append(searchcombobox->currentText());
+//    list->append(QString::number(searchcombobox->currentIndex()));
+//    list->append(separatorLineEdit->text());
+//    list->append(localVariantComboBox->currentText());
+//    list->append(outputLineEdit->text());
+//    if(vari->isChecked()){
+//        list->append("0");
+//    }else{
+//        list->append("1");
+//    }
+//}
 
 //DEPENDS_XML//TODO:
-void EditorTab::getExtraFuncDataList(QStringList *list)
-{
-//    QWidget *widget = this->widget(XmlListGenerator::EXTRAFUNC);
-//    ExtraFunctionsComboBox *scb = widget->findChild<ExtraFunctionsComboBox *>("extrafuncComboBox");
-//    VariantComboBox *vcb = widget->findChild<VariantComboBox *>("varComboBox");
-//    QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox_3");
-//    CommandTable *extrafuncTableWidget = widget->findChild<CommandTable *>("extrafuncTableWidget");
+//void EditorTab::getExtraFuncDataList(QStringList *list)
+//{
+////    QWidget *widget = this->widget(XmlListGenerator::EXTRAFUNC);
+////    ExtraFunctionsComboBox *scb = widget->findChild<ExtraFunctionsComboBox *>("extrafuncComboBox");
+////    VariantComboBox *vcb = widget->findChild<VariantComboBox *>("varComboBox");
+////    QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox_3");
+////    CommandTable *extrafuncTableWidget = widget->findChild<CommandTable *>("extrafuncTableWidget");
 
-    int rcount = extrafuncTableWidget->rowCount();
-    list->append(VariantConverter::boolToString(autoonly_3->isChecked()));
-    list->append(extrafunccombobox->currentText());
-    list->append(extrafunccombobox->getCurrentExtraFile());
-    list->append(QString::number(rcount));
-    for(int i = 0; i < rcount; i++){
-        list->append(extrafuncTableWidget->getText(i));
-    }
-}
+//    int rcount = extrafuncTableWidget->rowCount();
+//    list->append(VariantConverter::boolToString(autoonly_3->isChecked()));
+//    list->append(extrafunccombobox->currentText());
+//    list->append(extrafunccombobox->getCurrentExtraFile());
+//    list->append(QString::number(rcount));
+//    for(int i = 0; i < rcount; i++){
+//        list->append(extrafuncTableWidget->getText(i));
+//    }
+//}
 
 //DEPENDS_XML
-void EditorTab::getOtherDataList(QStringList *list)
-{
-    list->append(VariantConverter::boolToString(autoonly_4->isChecked()));
-    list->append(profilecombobox->currentText());
-    list->append(profilecombobox->getCurrentFileName());
-}
+//void EditorTab::getOtherDataList(QStringList *list)
+//{
+//    list->append(VariantConverter::boolToString(autoonly_4->isChecked()));
+//    list->append(profilecombobox->currentText());
+//    list->append(profilecombobox->getCurrentFileName());
+//}
 
 bool EditorTab::getCurrentIndexOnlyChecked()
 {
@@ -306,6 +309,12 @@ bool EditorTab::getCurrentIndexOnlyChecked()
 
 void EditorTab::tabChanged(int index)
 {
+//    if(edited == false){
+//        // for first load of item
+//        edited = true;
+//        return;
+//    }
+
     switch(index){
     case XmlListGenerator::NORMAL:
         editop->editTabAction(currentid, index);

@@ -37,6 +37,8 @@ void EditTabCommand::undo()
         list.replace(1, QString::number(m_oldid));
         m_cache->at(m_targetindex)->replace(1, list);
     }
+
+    setText(QString("Edit type change at %1").arg(m_targetindex));
 }
 
 void EditTabCommand::redo()
@@ -51,6 +53,8 @@ void EditTabCommand::redo()
         list.replace(1, QString::number(m_newid));
         m_cache->at(m_targetindex)->replace(1, list);
     }
+
+    setText(QString("Edit type change at %1").arg(m_targetindex));
 }
 
 void EditTabCommand::selectIndex(int index)
