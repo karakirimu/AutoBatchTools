@@ -66,7 +66,7 @@ public slots:
     void updateRange(QString str);
     void updateFileList(QHash<QString, int> *data); /*int indicates status*/
 
-    void updateEditFile(QString filename, QString editfile);
+    void updateEditFile(QString editfile);
 
     //for test
     void testMessage();

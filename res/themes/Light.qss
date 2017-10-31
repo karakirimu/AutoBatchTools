@@ -34,6 +34,11 @@ QMenuBar::item:hover
     color: black;
 }
 
+QMenu::item:disabled {
+    color: #616161;
+    border: none;
+}
+
 QMenuBar::item:selected
 {
     background-color: #ffffff;

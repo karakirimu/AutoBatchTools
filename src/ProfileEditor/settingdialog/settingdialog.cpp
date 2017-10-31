@@ -97,7 +97,7 @@ void SettingDialog::loadSettings()
 
     settings.beginGroup("BASICSETTING");
     ui->tempEdit->setText(settings.value("TEMPDIR", "./").toString());
-    ui->autosaveSpinBox->setValue(settings.value("AUTOSAVEPERIOD", 1).toInt());
+    ui->autosaveSpinBox->setValue(settings.value("AUTOSAVEPERIOD", 5).toInt());
     ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Light").toString());
     settings.endGroup();
 

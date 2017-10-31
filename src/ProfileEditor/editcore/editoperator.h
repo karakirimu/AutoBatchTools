@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <QFileInfo>
 #include <QObject>
+#include <QSettings>
 #include <QUndoCommand>
 #include <QApplication>
 #include <editfullcommand.h>
@@ -60,6 +61,7 @@ signals:
     void editUpdate(int);
     void ui_selectindexUpdate(int, int);
     void ui_funcindexUpdate(int after, int before, int function, int semder);
+//    void ui_scrollReachBottom();
 
 public slots:
     //selected index signal
@@ -98,6 +100,9 @@ public slots:
 
 protected:
     void timerEvent(QTimerEvent *event);
+
+//private slots:
+//    void appendcache();
 
 private:
     void save();

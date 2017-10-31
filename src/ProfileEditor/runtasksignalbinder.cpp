@@ -120,9 +120,8 @@ void RunTaskSignalBinder::updateFileList(QHash<QString, int> *data)
     settings.endGroup();
 }
 
-void RunTaskSignalBinder::updateEditFile(QString filename, QString editfile)
+void RunTaskSignalBinder::updateEditFile(QString editfile)
 {
-    Q_UNUSED(filename)
     editingfile = editfile;
 }
 

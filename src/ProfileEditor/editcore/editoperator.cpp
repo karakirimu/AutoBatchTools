@@ -7,8 +7,11 @@ EditOperator::EditOperator(QObject *parent)
     undostack = new QUndoStack();
     cache = new QList<QList<QStringList>*>();
 
+    QSettings settings( "./psettings.ini", QSettings::IniFormat );
     //init timer (ms)
-    timerid = startTimer(600000);
+    settings.beginGroup("BASICSETTING");
+    timerid = startTimer(settings.value("AUTOSAVEPERIOD", 5).toInt() * 60000);
+    settings.endGroup();
 }
 
 EditOperator::~EditOperator()
@@ -301,6 +304,9 @@ void EditOperator::newAction()
 
     emit loadfileChanged(autosavefile);
     emit edited(false);
+
+    //reset undo action
+    undostack->clear();
 }
 
 void EditOperator::openAction(QString filepath)
@@ -320,10 +326,14 @@ void EditOperator::openAction(QString filepath)
     QFile::copy(filepath, autosavefile);
 
     //load action TODO:init loading num
-    loadcache(50);
+    loadcache(0);
 
     emit loadfileChanged(loadfile);
     emit edited(false);
+
+    //reset undo action
+    undostack->clear();
+
 }
 
 void EditOperator::saveAction(QString filepath)
@@ -436,6 +446,9 @@ void EditOperator::loadcache(int amount)
     updater->setLoadPath(loadfile);
 
     int count = updater->count();
+
+    //load all data (TODO:not efficient)
+    if(amount == 0) amount = count;
     int i;
     QList<QStringList> *list;
     for(i = loadedxmlid; i < count; i++){
@@ -443,6 +456,8 @@ void EditOperator::loadcache(int amount)
         if(i < amount){
             updater->readItem(i, list);
             cache->append(list);
+        }else{
+            break;
         }
     }
 
@@ -491,3 +506,32 @@ void EditOperator::timerEvent(QTimerEvent *event)
         save();
     }
 }
+
+//void EditOperator::appendcache()
+//{
+//    if(loadfile == "") return;
+
+//    //appending index
+//    int amount = 50;
+
+//    //append new index along with "amount" number.
+//    ProcessXmlBuilder *updater = new ProcessXmlBuilder();
+//    updater->setLoadPath(loadfile);
+
+//    int count = updater->count();
+//    int i;
+//    QList<QStringList> *list;
+//    for(i = loadedxmlid; i < count; i++){
+//        list = new QList<QStringList>();
+//        if(i < (loadedxmlid + amount)){
+//            updater->readItem(i, list);
+//            cache->append(list);
+//        }else{
+//            break;
+//        }
+//    }
+
+//    loadedxmlid = i - 1;
+
+//    delete updater;
+//}

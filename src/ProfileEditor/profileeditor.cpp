@@ -241,9 +241,10 @@ void ProfileEditor::openAction()
                                          tr("Open file"),\
                                          QDir::currentPath(),\
                                          tr("Profile (*.xml *.apro)"));
-
-    editop->openAction(fileName);
-    resetUi();
+    if(fileName != ""){
+        editop->openAction(fileName);
+        resetUi();
+    }
 }
 
 void ProfileEditor::saveAction()
@@ -256,7 +257,9 @@ void ProfileEditor::saveAction()
                                          QDir::currentPath(),\
                                          tr("APRO Files (*.apro)"));
 
-    editop->saveAction(fileName);
+    if(fileName != ""){
+        editop->saveAction(fileName);
+    }
 }
 
 void ProfileEditor::undoAction()
@@ -424,7 +427,7 @@ void ProfileEditor::themeChangeAction()
 void ProfileEditor::overWriteSaveAction()
 {
 //     sfunction->saveEditOverWriteAction(this);
-    if(loadfile == "") {
+    if(loadfile.contains(".autosave")) {
         QString fileName =
                 QFileDialog::getSaveFileName(this,\
                                              tr("Save Edit file"),\
@@ -465,6 +468,7 @@ void ProfileEditor::onTitleChanged(QString newload)
 
     //update filepath
     setLoadfile(newload);
+    rbinder->updateEditFile(newload);
 }
 
 //void ProfileEditor::onWindowTitleChanged(QString newtitle, QString newtemp)
