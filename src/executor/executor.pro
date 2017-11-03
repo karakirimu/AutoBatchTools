@@ -47,30 +47,11 @@ unix {
 }
 
 unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
-
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
-
 unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lstringxmlbuilder
-
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
-
 unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lfilesearchloader
-
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
-
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lprocessxmlbuilder
-
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
-
+unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lprocessxmlbuilder \
+                    -L$$PWD/../../build/debug/libs/ -lprocessxmllistgenerator
 unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lVariantConverter
-
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
-
 unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lfilesearchloader
 
 INCLUDEPATH += $$PWD/../../build/debug/libs

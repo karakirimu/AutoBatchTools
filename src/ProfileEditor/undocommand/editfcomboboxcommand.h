@@ -2,7 +2,7 @@
 #define EDITFCOMBOBOXCOMMAND_H
 
 #include <QUndoCommand>
-#include <xmllistgenerator.h>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class EditFComboBoxCommand : public QUndoCommand
 {

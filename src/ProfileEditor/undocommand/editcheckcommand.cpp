@@ -13,7 +13,7 @@ EditCheckCommand::EditCheckCommand(const int &targetindex
     m_cache = cache;
 
     //init generator
-    XmlListGenerator x;
+    ProcessXmlListGenerator x;
     x.getListStructure(m_cache->at(m_targetindex), &xmlpos);
 
     if(m_objname == "timeoutCheckBox"){
@@ -60,19 +60,19 @@ void EditCheckCommand::redo()
 int EditCheckCommand::getxmlpos()
 {
     if(m_objname == "timeoutCheckBox"){
-        return xmlpos.value(XmlListGenerator::NORMAL) + 1;
+        return xmlpos.value(ProcessXmlListGenerator::NORMAL) + 1;
 
     }else if(m_objname == "autoOnlyCheckBox"){
-        return xmlpos.value(XmlListGenerator::NORMAL);
+        return xmlpos.value(ProcessXmlListGenerator::NORMAL);
 
     }else if(m_objname == "autoOnlyCheckBox_2"){
-        return xmlpos.value(XmlListGenerator::SEARCH);
+        return xmlpos.value(ProcessXmlListGenerator::SEARCH);
 
     }else if(m_objname == "autoOnlyCheckBox_3"){
-        return xmlpos.value(XmlListGenerator::EXTRAFUNC);
+        return xmlpos.value(ProcessXmlListGenerator::EXTRAFUNC);
 
     }else if(m_objname == "autoOnlyCheckBox_4"){
-        return xmlpos.value(XmlListGenerator::OTHER);
+        return xmlpos.value(ProcessXmlListGenerator::OTHER);
 
     }else{
         return -1;

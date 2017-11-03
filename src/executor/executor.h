@@ -4,6 +4,7 @@
 #include "executor_global.h"
 #include "../stringxmlbuilder/stringxmlbuilder.h"
 #include "../processxmlbuilder/processxmlbuilder.h"
+#include "../processxmllistgenerator/processxmllistgenerator.h"
 #include "../variantconverter/variantconverter.h"
 #include "../filesearchloader/filesearchloader.h"
 #include "../plugins/RunnerExtraPluginInterface/runnerextraplugininterface.h"
@@ -33,6 +34,9 @@ public:
     EXECUTORSHARED_EXPORT int getEndnum() const;
     EXECUTORSHARED_EXPORT void setEndnum(int end); /*preset func*/
 
+    //run input
+    EXECUTORSHARED_EXPORT void processWrite(QString code);
+
 //    EXECUTORSHARED_EXPORT int getForcequittime() const;
 //    EXECUTORSHARED_EXPORT void setForcequittime(int ms); /*preset func*/
 
@@ -58,7 +62,7 @@ public:
     EXECUTORSHARED_EXPORT int getOthernestmax() const;
     EXECUTORSHARED_EXPORT void setOthernestmax(int nest = 10);
 
-    enum {INFO, NORMAL, SEARCH, SCRIPT, OTHER, TEMP, LOCAL, ERROR};
+    enum {INFO, NORMAL, SEARCH, SCRIPT, OTHER, TEMP, LOCAL, ERROR, INPUT};
     enum {DEFAULT, SCHEDULER};
     enum {MAINPROCESS, OTHERPROCESS};
 signals:
@@ -153,6 +157,7 @@ private:
 
     //xml part
     ProcessXmlBuilder *pbuilder;
+    ProcessXmlListGenerator xgen;
     bool processfileloaded = false;
 
     //execute part

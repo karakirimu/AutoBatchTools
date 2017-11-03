@@ -37,7 +37,7 @@ void CommandTable::addAction()
 {
     int row = this->rowCount();
     setRowCount(row + 1);
-    emit updateTable(row, "", XmlListGenerator::TABLE_ADD);
+    emit updateTable(row, "", ProcessXmlListGenerator::TABLE_ADD);
 
     //for useability
     this->setCurrentItem(itemAt(row,0));
@@ -66,7 +66,7 @@ void CommandTable::deleteAction()
         while(!lists.empty()){
             row = lists.at(0).row();
             this->removeRow(row);
-            emit updateTable(row, "", XmlListGenerator::TABLE_DELETE);
+            emit updateTable(row, "", ProcessXmlListGenerator::TABLE_DELETE);
 
             //delete column index
             for(int i = 0; i < lists.at(0).column(); i++){
@@ -132,7 +132,7 @@ void CommandTable::plainpasteAction()
     this->insertRow(current);
     this->setRowCount(this->rowCount() + 1);
     this->setItem(current, 0, new QTableWidgetItem(text));
-    emit updateTable(current, text, XmlListGenerator::TABLE_INSERT);
+    emit updateTable(current, text, ProcessXmlListGenerator::TABLE_INSERT);
 
 }
 
@@ -146,7 +146,7 @@ void CommandTable::pasteAction()
 
     for(int i = 0; i < txcount; i++){
         this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
-        emit updateTable(row + i, text.at(i), XmlListGenerator::TABLE_INSERT);
+        emit updateTable(row + i, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
     }
 }
 
@@ -202,7 +202,7 @@ void CommandTable::openDirectoryAction()
 void CommandTable::editedAction(int row, int column)
 {
     qDebug() << "CommandTable : editedAction";
-     emit updateTable(row, this->item(row, column)->text(), XmlListGenerator::TABLE_EDIT);
+     emit updateTable(row, this->item(row, column)->text(), ProcessXmlListGenerator::TABLE_EDIT);
 }
 
 void CommandTable::setPopupActionTop()
@@ -211,7 +211,7 @@ void CommandTable::setPopupActionTop()
     m_add = contextMenu->addAction(QIcon(":/icons/Add.png"),tr("Add"));
     m_add->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Enter));
     m_delete = contextMenu->addAction(QIcon(":/icons/Denided.png"), tr("Delete"));
-    m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
+    m_delete->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Delete));
     contextMenu->addSeparator();
     m_edit = contextMenu->addAction(QIcon(":/icons/Pen.png"), tr("Edit"));
     m_edit->setShortcut(QKeySequence(Qt::ALT + Qt::Key_E));
@@ -264,7 +264,8 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
              break;
 
            case Qt::Key_Delete:
-             deleteAction();
+             if (keyEvent->modifiers() & Qt::AltModifier)
+               deleteAction();
              break;
 
            case Qt::Key_Up:

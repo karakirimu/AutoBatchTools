@@ -39,7 +39,7 @@ void EditFullCommand::redo()
 
 int EditFullCommand::id() const
 {
-    return XmlListGenerator::LOCALVARIANT;
+    return ProcessXmlListGenerator::LOCALVARIANT;
 }
 
 bool EditFullCommand::mergeWith(const QUndoCommand *other)

@@ -50,6 +50,7 @@ public slots:
     //for textedit
     void receiveErrorText(QString str){emit processErrorText(str); }
     void receiveMessage(QString message, int type){emit processMessage(message, type); }
+    void sendInput(QString message);
 
     //for all ui
     void receiveStarted(int runfrom){emit processStarted(runfrom); emit processStarted_action(true);}

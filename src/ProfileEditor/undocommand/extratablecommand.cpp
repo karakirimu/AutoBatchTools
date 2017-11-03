@@ -15,18 +15,18 @@ ExtraTableCommand::ExtraTableCommand(const int &targetindex
     m_cache = cache;
 
     //init generator
-    XmlListGenerator x;
+    ProcessXmlListGenerator x;
     x.getListStructure(m_cache->at(m_targetindex), &posinfo);
 
     //get old value
 //    int rcount = 0;
 
-    if(m_operation != XmlListGenerator::TABLE_ADD
-            || m_operation != XmlListGenerator::TABLE_INSERT){
+    if(m_operation != ProcessXmlListGenerator::TABLE_ADD
+            || m_operation != ProcessXmlListGenerator::TABLE_INSERT){
     //        rcount = ((QString)m_cache->at(m_targetindex)
     //                      ->at(posinfo.value(XmlListGenerator::EXTRAFUNC) + 3)).toInt();
         m_oldstr = ((QString)m_cache->at(m_targetindex)
-                    ->at(posinfo.value(XmlListGenerator::EXTRAFUNC) + m_tableindex + 4).at(1));
+                    ->at(posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + m_tableindex + 4).at(1));
     }
 }
 
@@ -34,22 +34,22 @@ void ExtraTableCommand::undo()
 {
     QStringList alist;
     switch (m_operation) {
-    case XmlListGenerator::TABLE_ADD:
+    case ProcessXmlListGenerator::TABLE_ADD:
         //delete
-        m_cache->at(m_targetindex)->removeAt(posinfo.value(XmlListGenerator::NORMAL)+ m_tableindex + 4);
+        m_cache->at(m_targetindex)->removeAt(posinfo.value(ProcessXmlListGenerator::NORMAL)+ m_tableindex + 4);
 
         break;
-    case XmlListGenerator::TABLE_EDIT:
-        alist = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::NORMAL)+ m_tableindex + 4);
+    case ProcessXmlListGenerator::TABLE_EDIT:
+        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::NORMAL)+ m_tableindex + 4);
         alist.replace(1, m_oldstr);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::NORMAL)+ m_tableindex + 4, alist);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::NORMAL)+ m_tableindex + 4, alist);
 
         setText(QObject::tr("Set table value \'%1\' at %2").arg(m_oldstr).arg(QString::number(m_tableindex)));
         break;
-    case XmlListGenerator::TABLE_INSERT:
+    case ProcessXmlListGenerator::TABLE_INSERT:
 
         break;
-    case XmlListGenerator::TABLE_DELETE:
+    case ProcessXmlListGenerator::TABLE_DELETE:
 
         break;
     default:
@@ -61,20 +61,20 @@ void ExtraTableCommand::redo()
 {
     QStringList alist;
     switch (m_operation) {
-    case XmlListGenerator::TABLE_ADD:
+    case ProcessXmlListGenerator::TABLE_ADD:
 
         break;
-    case XmlListGenerator::TABLE_EDIT:
-        alist = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::NORMAL)+ m_tableindex + 4);
+    case ProcessXmlListGenerator::TABLE_EDIT:
+        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::NORMAL)+ m_tableindex + 4);
         alist.replace(1, m_newstr);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::NORMAL)+ m_tableindex + 4, alist);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::NORMAL)+ m_tableindex + 4, alist);
 
         setText(QObject::tr("Set table value \'%1\' at %2").arg(m_newstr).arg(QString::number(m_tableindex)));
         break;
-    case XmlListGenerator::TABLE_INSERT:
+    case ProcessXmlListGenerator::TABLE_INSERT:
 
         break;
-    case XmlListGenerator::TABLE_DELETE:
+    case ProcessXmlListGenerator::TABLE_DELETE:
         //add
 
         break;
@@ -85,7 +85,7 @@ void ExtraTableCommand::redo()
 
 int ExtraTableCommand::id() const
 {
-    return XmlListGenerator::ECMDCOUNT;
+    return ProcessXmlListGenerator::ECMDCOUNT;
 }
 
 bool ExtraTableCommand::mergeWith(const QUndoCommand *other)

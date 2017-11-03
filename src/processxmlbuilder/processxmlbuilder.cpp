@@ -123,25 +123,25 @@ int ProcessXmlBuilder::count()
     return getSpecifiedElementItemsCount(FIRSTLAYER);
 }
 
-int ProcessXmlBuilder::firstPosTempNormal() const
-{
-    return 10;
-}
+//int ProcessXmlBuilder::firstPosTempNormal() const
+//{
+//    return 10;
+//}
 
-int ProcessXmlBuilder::firstPosTempSearch() const
-{
-    return 2;
-}
+//int ProcessXmlBuilder::firstPosTempSearch() const
+//{
+//    return 2;
+//}
 
-int ProcessXmlBuilder::firstPosTempScript() const
-{
-    return 13;
-}
+//int ProcessXmlBuilder::firstPosTempScript() const
+//{
+//    return 13;
+//}
 
-int ProcessXmlBuilder::firstPosTempOther() const
-{
-    return 7;
-}
+//int ProcessXmlBuilder::firstPosTempOther() const
+//{
+//    return 7;
+//}
 
 void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {

@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -26,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //set dock autohide TODO: not saved menu
     ui->runDock->setAutohide(ui->actionAutohide->isChecked());
+    ui->runDock->hide();
     ui->consoleDock->setAutohide(ui->actionAutohide->isChecked());
 
     //set menu show
@@ -66,6 +68,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //connect combobox and tree widget
 //    ui->profileTreeWidget->init_LoadCombobox(ui->comboBox);
+
+    initStatusBar();
 }
 
 MainWindow::~MainWindow()
@@ -163,6 +167,20 @@ bool MainWindow::systemTraySelect()
     if(isstartup) this->hide();
 
     return isstartup;
+}
+
+void MainWindow::initStatusBar()
+{
+    QLabel *label = new QLabel();
+    label->setAlignment(Qt::AlignLeft);
+    ui->statusBar->addPermanentWidget(label, 3);
+//    connect(this, SIGNAL(rowPosChanged(QString)), label, SLOT(setText(QString)));
+
+    QProgressBar *progressbar = new QProgressBar();
+    progressbar->setAlignment(Qt::AlignCenter);
+    ui->statusBar->addPermanentWidget(progressbar, 1);
+//    connect(rbinder, &RunTaskSignalBinder::processInitCount, progressbar, &QProgressBar::setRange);
+//    connect(rbinder, &RunTaskSignalBinder::processCurrent, progressbar, &QProgressBar::setValue);
 }
 
 void MainWindow::on_runButton_clicked()

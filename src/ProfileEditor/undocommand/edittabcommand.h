@@ -2,7 +2,7 @@
 #define EDITTABCOMMAND_H
 
 #include <QUndoCommand>
-#include <xmllistgenerator.h>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class EditTabCommand : public QUndoCommand
 {

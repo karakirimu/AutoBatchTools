@@ -1263,20 +1263,75 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="ConsoleView" name="console">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(204, 204, 204);</string>
-       </property>
+      <widget class="QFrame" name="frame_11">
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
-       <property name="undoRedoEnabled">
-        <bool>true</bool>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
        </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_18">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="ConsoleView" name="console">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(204, 204, 204);
+border: none;</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="autoFormatting">
+           <set>QTextEdit::AutoAll</set>
+          </property>
+          <property name="undoRedoEnabled">
+           <bool>false</bool>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+          <property name="textInteractionFlags">
+           <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="ConsoleEdit" name="consolemessage">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(204, 204, 204);
+border: none;</string>
+          </property>
+          <property name="inputMask">
+           <string/>
+          </property>
+          <property name="frame">
+           <bool>false</bool>
+          </property>
+          <property name="placeholderText">
+           <string>&gt; Press Enter to send command ...</string>
+          </property>
+          <property name="clearButtonEnabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>
@@ -1675,6 +1730,11 @@ color: rgb(204, 204, 204);</string>
    <class>FlowTable</class>
    <extends>QTableWidget</extends>
    <header>flowtable.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ConsoleEdit</class>
+   <extends>QLineEdit</extends>
+   <header>consoleedit.h</header>
   </customwidget>
  </customwidgets>
  <resources>

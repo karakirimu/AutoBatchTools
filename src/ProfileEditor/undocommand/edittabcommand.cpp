@@ -15,7 +15,7 @@ EditTabCommand::EditTabCommand(const int &targetindex
         m_oldid = ((QString)m_cache->at(m_targetindex)->at(1).at(1)).toInt();
     }else{
         //no istack
-        XmlListGenerator x;
+        ProcessXmlListGenerator x;
         m_oldid = x.getType(m_cache->at(m_targetindex)->at(0).at(1));
     }
 
@@ -59,21 +59,21 @@ void EditTabCommand::redo()
 
 void EditTabCommand::selectIndex(int index)
 {
-    XmlListGenerator x;
+    ProcessXmlListGenerator x;
     QHash<int, int> data;
     x.getListStructure(m_cache->at(m_targetindex), &data);
     switch (index) {
-    case XmlListGenerator::NORMAL:
-        m_newauto = m_cache->at(m_targetindex)->at(data.value(XmlListGenerator::NORMAL)).at(3);
+    case ProcessXmlListGenerator::NORMAL:
+        m_newauto = m_cache->at(m_targetindex)->at(data.value(ProcessXmlListGenerator::NORMAL)).at(3);
         break;
-    case XmlListGenerator::SEARCH:
-        m_newauto = m_cache->at(m_targetindex)->at(data.value(XmlListGenerator::SEARCH)).at(3);
+    case ProcessXmlListGenerator::SEARCH:
+        m_newauto = m_cache->at(m_targetindex)->at(data.value(ProcessXmlListGenerator::SEARCH)).at(3);
         break;
-    case XmlListGenerator::EXTRAFUNC:
-        m_newauto = m_cache->at(m_targetindex)->at(data.value(XmlListGenerator::EXTRAFUNC)).at(3);
+    case ProcessXmlListGenerator::EXTRAFUNC:
+        m_newauto = m_cache->at(m_targetindex)->at(data.value(ProcessXmlListGenerator::EXTRAFUNC)).at(3);
         break;
-    case XmlListGenerator::OTHER:
-        m_newauto = m_cache->at(m_targetindex)->at(data.value(XmlListGenerator::OTHER)).at(3);
+    case ProcessXmlListGenerator::OTHER:
+        m_newauto = m_cache->at(m_targetindex)->at(data.value(ProcessXmlListGenerator::OTHER)).at(3);
         break;
     default:
         break;

@@ -73,7 +73,7 @@ private:
     QAction *m_ref;
 
     EditOperator *editop;
-    XmlListGenerator xgen;
+    ProcessXmlListGenerator xgen;
 };
 
 #endif // FLOWTABLE_H

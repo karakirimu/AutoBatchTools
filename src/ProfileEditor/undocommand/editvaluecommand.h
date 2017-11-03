@@ -2,7 +2,7 @@
 #define EDITVALUECOMMAND_H
 
 #include <QUndoCommand>
-#include <xmllistgenerator.h>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class EditValueCommand : public QUndoCommand
 {

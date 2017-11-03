@@ -3,7 +3,7 @@
 
 //for localvariant combobox
 #include <QUndoCommand>
-#include <xmllistgenerator.h>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class EditComboBoxCommand : public QUndoCommand
 {

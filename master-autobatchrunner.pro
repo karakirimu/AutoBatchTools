@@ -8,6 +8,7 @@ SUBDIRS += \
           $$PWD/src/xmlbuilder \
           $$PWD/src/searchxmlbuilder \
           $$PWD/src/processxmlbuilder \
+          $$PWD/src/processxmllistgenerator \
           $$PWD/src/stringxmlbuilder \
           $$PWD/src/extrafunctionsxmlbuilder \
           $$PWD/src/profilexmlbuilder \

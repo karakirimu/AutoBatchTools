@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QMenu>
 #include <editoperator.h>
-#include <xmllistgenerator.h>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 //#include <../xmlbuilder/localloader/profileeditorxmlbuilder.h>
 //#include <pesharedfunction.h>
 #include <../variantconverter/variantconverter.h>
@@ -97,7 +97,7 @@ private:
     QAction *m_ref;
 
     EditOperator *editop;
-    XmlListGenerator xgen;
+    ProcessXmlListGenerator xgen;
 //    ProfileEditorXmlBuilder *builder;
 //    PESharedFunction *sfunction;
 //    FileOperationSignalBinder *binder;

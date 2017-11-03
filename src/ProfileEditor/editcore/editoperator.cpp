@@ -53,7 +53,7 @@ void EditOperator::addAction()
 {
     //create xml inner
     QList<QStringList> xmlstruct;
-    XmlListGenerator *xgen = new XmlListGenerator();
+    ProcessXmlListGenerator *xgen = new ProcessXmlListGenerator();
     xgen->createNewList(&xmlstruct);
     delete xgen;
 
@@ -368,7 +368,7 @@ void EditOperator::exportAction(QString filepath)
     //fetch all cache data
     //full update file
     QList<QList<QStringList>> *tempcache = new QList<QList<QStringList>>;
-    XmlListGenerator *xgen = new XmlListGenerator();
+    ProcessXmlListGenerator *xgen = new ProcessXmlListGenerator();
     ProcessXmlBuilder *updater = new ProcessXmlBuilder();
     updater->setLoadPath(autosavefile);
 

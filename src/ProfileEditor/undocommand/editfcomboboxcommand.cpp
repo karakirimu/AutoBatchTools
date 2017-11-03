@@ -18,24 +18,24 @@ EditFComboBoxCommand::EditFComboBoxCommand(const int &targetindex
 
     m_newfile = newfile;
 
-    XmlListGenerator x;
+    ProcessXmlListGenerator x;
     x.getListStructure(cache->at(m_targetindex), &posinfo);
 
     switch (id()) {
-    case XmlListGenerator::EXTRANAME:
+    case ProcessXmlListGenerator::EXTRANAME:
         m_oldstring = m_cache->at(m_targetindex)
-                    ->at(posinfo.value(XmlListGenerator::EXTRAFUNC) + 1)
+                    ->at(posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 1)
                     .at(1);
         m_oldfile = m_cache->at(m_targetindex)
-                    ->at(posinfo.value(XmlListGenerator::EXTRAFUNC) + 2)
+                    ->at(posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 2)
                     .at(1);
         break;
-    case XmlListGenerator::OTHERNAME:
+    case ProcessXmlListGenerator::OTHERNAME:
         m_oldstring = m_cache->at(m_targetindex)
-                    ->at(posinfo.value(XmlListGenerator::OTHER) + 1)
+                    ->at(posinfo.value(ProcessXmlListGenerator::OTHER) + 1)
                     .at(1);
         m_oldfile = m_cache->at(m_targetindex)
-                    ->at(posinfo.value(XmlListGenerator::OTHER) + 2)
+                    ->at(posinfo.value(ProcessXmlListGenerator::OTHER) + 2)
                     .at(1);
         break;
     default:
@@ -50,25 +50,25 @@ void EditFComboBoxCommand::undo()
     QStringList list2;
 
     switch (id()) {
-    case XmlListGenerator::EXTRANAME:
-        list1 = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::EXTRAFUNC) + 1);
+    case ProcessXmlListGenerator::EXTRANAME:
+        list1 = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 1);
         list1.replace(1, m_oldstring);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::EXTRAFUNC) + 1, list1);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 1, list1);
 
-        list2 = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::EXTRAFUNC) + 2);
+        list2 = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 2);
         list2.replace(1, m_oldfile);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::EXTRAFUNC) + 2, list2);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 2, list2);
 
         setText(QObject::tr("Change Extra to %1").arg(m_oldstring));
         break;
-    case XmlListGenerator::OTHERNAME:
-        list1 = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::OTHER) + 1);
+    case ProcessXmlListGenerator::OTHERNAME:
+        list1 = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::OTHER) + 1);
         list1.replace(1, m_oldstring);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::OTHER) + 1, list1);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::OTHER) + 1, list1);
 
-        list2 = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::OTHER) + 2);
+        list2 = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::OTHER) + 2);
         list2.replace(1, m_oldfile);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::OTHER) + 2, list2);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::OTHER) + 2, list2);
 
         setText(QObject::tr("Change other profile to %1").arg(m_oldstring));
         break;
@@ -83,25 +83,25 @@ void EditFComboBoxCommand::redo()
     QStringList list2;
 
     switch (id()) {
-    case XmlListGenerator::EXTRANAME:
-        list1 = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::EXTRAFUNC) + 1);
+    case ProcessXmlListGenerator::EXTRANAME:
+        list1 = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 1);
         list1.replace(1, m_newstring);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::EXTRAFUNC) + 1, list1);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 1, list1);
 
-        list2 = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::EXTRAFUNC) + 2);
+        list2 = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 2);
         list2.replace(1, m_newfile);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::EXTRAFUNC) + 2, list2);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 2, list2);
 
         setText(QObject::tr("Change Extra to %1").arg(m_newstring));
         break;
-    case XmlListGenerator::OTHERNAME:
-        list1 = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::OTHER) + 1);
+    case ProcessXmlListGenerator::OTHERNAME:
+        list1 = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::OTHER) + 1);
         list1.replace(1, m_newstring);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::OTHER) + 1, list1);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::OTHER) + 1, list1);
 
-        list2 = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::OTHER) + 2);
+        list2 = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::OTHER) + 2);
         list2.replace(1, m_newfile);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::OTHER) + 2, list2);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::OTHER) + 2, list2);
 
         setText(QObject::tr("Change other profile to %1").arg(m_newstring));
         break;
@@ -114,9 +114,9 @@ void EditFComboBoxCommand::redo()
 int EditFComboBoxCommand::id() const
 {
     if(m_objname == "extrafuncComboBox"){
-        return XmlListGenerator::EXTRANAME;
+        return ProcessXmlListGenerator::EXTRANAME;
     }else if(m_objname == "profileComboBox"){
-        return XmlListGenerator::OTHERNAME;
+        return ProcessXmlListGenerator::OTHERNAME;
     }else{
         return -1;
     }

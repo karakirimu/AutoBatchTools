@@ -17,10 +17,10 @@
 #include <QToolButton>
 #include <QTableWidget>
 #include <QRadioButton>
-#include <xmllistgenerator.h>
 #include <editoperator.h>
 //#include <pesharedfunction.h>
 #include <../variantconverter/variantconverter.h>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class EditorTab : public QTabWidget
 {
@@ -66,7 +66,7 @@ private:
     void openSavefile();
 
     EditOperator *editop;
-    XmlListGenerator xgen;
+    ProcessXmlListGenerator xgen;
     //current xml id
     int currentid = -1;
 

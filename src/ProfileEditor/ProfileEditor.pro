@@ -25,16 +25,16 @@ Debug:UI_DIR = $$PWD/../../build/debug/ProfileEditor/.ui
 
 HEADERS  += $$PWD/profileeditor.h \
     $$PWD/profiletreewidget.h \
-    $$PWD/pesharedfunction.h \
-    $$PWD/fileoperationsignalbinder.h \
+#    $$PWD/pesharedfunction.h \
+#    $$PWD/fileoperationsignalbinder.h \
 #    $$PWD/profilexmlbuilder.h \
     basedockwidget.h \
     runtasksignalbinder.h
 
 SOURCES += $$PWD/profileeditor.cpp \
     $$PWD/profiletreewidget.cpp \
-    $$PWD/pesharedfunction.cpp \
-    $$PWD/fileoperationsignalbinder.cpp \
+#    $$PWD/pesharedfunction.cpp \
+#    $$PWD/fileoperationsignalbinder.cpp \
 #    $$PWD/profilexmlbuilder.cpp \
     basedockwidget.cpp \
     runtasksignalbinder.cpp
@@ -62,6 +62,7 @@ unix|win32: LIBS += \
             -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder \
             -L$$PWD/../../build/debug/libs/ -lextrafunctionsxmlbuilder \
             -L$$PWD/../../build/debug/libs/ -lprocessxmlbuilder \
+            -L$$PWD/../../build/debug/libs/ -lprocessxmllistgenerator \
             -L$$PWD/../../build/debug/libs/ -lprofilexmlbuilder \
             -L$$PWD/../../build/debug/libs/ -lprofilecombobox \
             -L$$PWD/../../build/debug/libs/ -lbasictable \

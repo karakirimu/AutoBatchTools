@@ -2,7 +2,7 @@
 #define EDITSCOMBOBOXCOMMAND_H
 
 #include <QUndoCommand>
-#include <xmllistgenerator.h>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 //for search combobox
 class EditScomboBoxCommand : public QUndoCommand

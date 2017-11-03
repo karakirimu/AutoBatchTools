@@ -518,20 +518,20 @@ void FlowTable::setTempItem(FlowCellWidget *cell, QList<QStringList> *list)
     xgen.getListStructure(list, &hlist);
 
     switch (istack) {
-    case XmlListGenerator::NORMAL:
-        setNormalItem(cell, list, hlist.value(XmlListGenerator::NORMAL) + 1);
+    case ProcessXmlListGenerator::NORMAL:
+        setNormalItem(cell, list, hlist.value(ProcessXmlListGenerator::NORMAL) + 1);
         break;
 
-    case XmlListGenerator::SEARCH:
-        setSearchItem(cell, list, hlist.value(XmlListGenerator::SEARCH) + 1);
+    case ProcessXmlListGenerator::SEARCH:
+        setSearchItem(cell, list, hlist.value(ProcessXmlListGenerator::SEARCH) + 1);
         break;
 
-    case XmlListGenerator::EXTRAFUNC:
-        setExtraFuncItem(cell, list, hlist.value(XmlListGenerator::EXTRAFUNC) + 1);
+    case ProcessXmlListGenerator::EXTRAFUNC:
+        setExtraFuncItem(cell, list, hlist.value(ProcessXmlListGenerator::EXTRAFUNC) + 1);
         break;
 
-    case XmlListGenerator::OTHER:
-        setOtherItem(cell, list, hlist.value(XmlListGenerator::OTHER) + 1);
+    case ProcessXmlListGenerator::OTHER:
+        setOtherItem(cell, list, hlist.value(ProcessXmlListGenerator::OTHER) + 1);
         break;
 
     default:

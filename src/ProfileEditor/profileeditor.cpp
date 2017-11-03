@@ -74,6 +74,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 //    ui->graphicsView->setWidgetsSignalBinder(binder);
 
     ui->console->setRunTaskSignalBinder(rbinder);
+    ui->consolemessage->setRunTaskSignalBinder(rbinder);
 
     //function signal bind
     connect(ui->rangeLineEdit, &QLineEdit::textChanged, rbinder, &RunTaskSignalBinder::updateRange);
@@ -528,7 +529,7 @@ void ProfileEditor::itemChangedAction(int index)
 
 
     qDebug() << "itemChangedAction::treerowpos" << index;
-    emit rowPosChanged("Selected: " + QString::number(index));
+    emit rowPosChanged("Selected: " + QString::number((index > 0)? index : 1));
 }
 
 //this function detects value "-1". it shows "xml local data"
@@ -574,7 +575,7 @@ void ProfileEditor::about()
                             "ProfileEditor can create execution list of other projects.\r\n\r\n"
                             "Currently, this program runs only windows systems.\r\n"
                             "These programs licensed under GNU LGPL version 3 for now.\r\n\r\n"
-                            "Made by mr_elphis in 2017/10/31"));
+                            "Made by mr_elphis in 2017/11/03"));
 }
 
 void ProfileEditor::setTreerowpos_select(int value, int from)

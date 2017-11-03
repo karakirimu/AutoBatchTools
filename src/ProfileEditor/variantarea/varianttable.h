@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QWidget>
 #include <editoperator.h>
-#include <xmllistgenerator.h>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 //#include <optiontable.h>
 #include <../basictable/basictable.h>
 //#include <pesharedfunction.h>
@@ -38,7 +38,7 @@ private:
 
 //    PESharedFunction *sfunction;
     EditOperator *editop;
-    XmlListGenerator xgen;
+    ProcessXmlListGenerator xgen;
 
     QAction *m_new;
     QAction *m_add;

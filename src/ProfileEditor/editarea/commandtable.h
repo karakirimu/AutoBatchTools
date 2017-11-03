@@ -4,7 +4,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <../basictable/basictable.h>
-#include <xmllistgenerator.h>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class CommandTable : public BasicTable
 {

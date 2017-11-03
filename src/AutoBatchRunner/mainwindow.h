@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QSettings>
 //#include <systemtray.h>
+#include <QProgressBar>
+#include <QLabel>
 #include <optiondialog.h>
 //#include <mainprocessloader.h>
 //#include <profileeditor.h>
@@ -37,6 +39,8 @@ private slots:
 private:
     void closeEvent(QCloseEvent *event);
     bool systemTraySelect();
+
+    void initStatusBar();
 
     Ui::MainWindow *ui;
     OptionDialog *opdialog;

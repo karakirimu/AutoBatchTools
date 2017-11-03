@@ -18,18 +18,18 @@ SwapTableCommand::SwapTableCommand(const int &targetindex
     m_cache = cache;
 
     //init generator
-    XmlListGenerator x;
+    ProcessXmlListGenerator x;
     QHash<int, int> posinfo;
     x.getListStructure(m_cache->at(m_targetindex), &posinfo);
 
     switch (id()) {
-    case XmlListGenerator::NCMDCOUNT:
+    case ProcessXmlListGenerator::NCMDCOUNT:
         //define SKIP
-        SKIP = posinfo.value(XmlListGenerator::NORMAL) + 3;
+        SKIP = posinfo.value(ProcessXmlListGenerator::NORMAL) + 3;
         break;
-    case XmlListGenerator::ECMDCOUNT:
+    case ProcessXmlListGenerator::ECMDCOUNT:
         //define SKIP
-        SKIP = posinfo.value(XmlListGenerator::EXTRAFUNC) + 4;
+        SKIP = posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 4;
         break;
     default:
         break;
@@ -95,9 +95,9 @@ void SwapTableCommand::redo()
 int SwapTableCommand::id() const
 {
     if(m_objname == "cmdTableWidget"){
-        return XmlListGenerator::NCMDCOUNT;
+        return ProcessXmlListGenerator::NCMDCOUNT;
     }else if(m_objname == "extrafuncTableWidget"){
-        return XmlListGenerator::ECMDCOUNT;
+        return ProcessXmlListGenerator::ECMDCOUNT;
     }else{
         return -1;
     }

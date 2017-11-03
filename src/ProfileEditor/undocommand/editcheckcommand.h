@@ -3,7 +3,7 @@
 
 #include <QHash>
 #include <QUndoCommand>
-#include <xmllistgenerator.h>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <../variantconverter/variantconverter.h>
 
 class EditCheckCommand : public QUndoCommand

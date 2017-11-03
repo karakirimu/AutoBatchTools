@@ -5,10 +5,18 @@ ConsoleView::ConsoleView(QWidget *parent)
 {
     //install custom context
     setContextMenuPolicy(Qt::CustomContextMenu);
+    installEventFilter(this);
     connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
 
     //init menu context
     setPopupAction();
+
+    connect(this, &ConsoleView::cursorPositionChanged, this, &ConsoleView::moveCursorToEnd);
+
+    //hide vertical scrollbar
+    this->verticalScrollBar()->hide();
+    this->horizontalScrollBar()->hide();
+
 }
 
 ConsoleView::~ConsoleView()
@@ -107,6 +115,10 @@ void ConsoleView::updateText(QString data, int type)
         setTextColor(QColor(Qt::red));
         append(data);
         break;
+    case Executor::INPUT:
+        setTextColor(QColor(Qt::darkYellow));
+        append(data);
+        break;
     case Executor::TEMP:
     case Executor::LOCAL:
     default:
@@ -141,4 +153,47 @@ void ConsoleView::setPopupAction()
     connect(m_selectall, &QAction::triggered, this, &QTextEdit::selectAll);
     connect(m_copy, &QAction::triggered, this, &QTextEdit::copy);
     connect(m_clear, &QAction::triggered, this, &QTextEdit::clear);
+}
+
+void ConsoleView::moveCursorToEnd()
+{
+    this->textCursor().movePosition(QTextCursor::End,QTextCursor::MoveAnchor);
+}
+
+bool ConsoleView::eventFilter(QObject *obj, QEvent *event)
+{
+//    if (event->type() == QEvent::KeyPress) {
+//        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+//        switch (keyEvent->key())
+//         {
+//           case Qt::Key_Return:
+//           case Qt::Key_Enter:
+//#ifdef Q_OS_WIN
+//                binder->sendInput("\n");
+//#else
+//                binder->sendInput("\r\n");
+//#endif
+//             break;
+//           default:
+//             //qDebug("Ate key press %d", keyEvent->key());
+//             break;
+//         }
+//    }
+
+    if(event->type() == QEvent::Leave){
+        this->horizontalScrollBar()->hide();
+        this->verticalScrollBar()->hide();
+    }
+
+    if(event->type() == QEvent::ToolTip){
+        if(this->mapFromGlobal(QCursor::pos()).y() > (this->height() - RANGE)){
+            this->horizontalScrollBar()->show();
+        }
+        if(this->mapFromGlobal(QCursor::pos()).x() > (this->width() - RANGE)){
+            this->verticalScrollBar()->show();
+        }
+    }
+
+    // standard event processing
+    return QObject::eventFilter(obj, event);
 }

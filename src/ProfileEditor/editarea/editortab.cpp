@@ -15,14 +15,14 @@ EditorTab::~EditorTab()
 // Constructor can not initialize connection.
 void EditorTab::setConnection()
 {
-    widgetsearch = this->widget(XmlListGenerator::SEARCH);
+    widgetsearch = this->widget(ProcessXmlListGenerator::SEARCH);
     addbutton = widgetsearch->findChild<QPushButton *>("searchAddButton");
     editbutton = widgetsearch->findChild<QPushButton *>("searchEditButton");
     deletebutton = widgetsearch->findChild<QPushButton *>("searchDeleteButton");
     searchcombobox = widgetsearch->findChild<SearchComboBox *>("searchComboBox");
     openButton = widgetsearch->findChild<QToolButton *>("openToolButton");
 
-    widgetextra = this->widget(XmlListGenerator::EXTRAFUNC);
+    widgetextra = this->widget(ProcessXmlListGenerator::EXTRAFUNC);
     extrafunccombobox = widgetextra->findChild<ExtraFunctionsComboBox *>("extrafuncComboBox");
     addbutton_e = widgetextra->findChild<QToolButton *>("extrafuncAddButton");
     deletebutton_e = widgetextra->findChild<QToolButton *>("extrafuncDeleteButton");
@@ -48,7 +48,7 @@ void EditorTab::setEditOperator(EditOperator *op)
     editop = op;
 
     // load normal widget ui objects
-    widgetnormal = this->widget(XmlListGenerator::NORMAL);
+    widgetnormal = this->widget(ProcessXmlListGenerator::NORMAL);
     timeoutCheckBox = widgetnormal->findChild<QCheckBox *>("timeoutCheckBox");
     tospin = widgetnormal->findChild<QSpinBox *>("timeoutSpinBox");
     autoonly = widgetnormal->findChild<QCheckBox *>("autoOnlyCheckBox");
@@ -67,7 +67,7 @@ void EditorTab::setEditOperator(EditOperator *op)
     extrafuncTableWidget = widgetextra->findChild<CommandTable *>("extrafuncTableWidget");
 
     // load other widget ui objects
-    otherwidget = this->widget(XmlListGenerator::OTHER);
+    otherwidget = this->widget(ProcessXmlListGenerator::OTHER);
     profilecombobox = otherwidget->findChild<ProfileComboBox *>("profileComboBox");
     autoonly_4 = otherwidget->findChild<QCheckBox *>("autoOnlyCheckBox_4");
 
@@ -193,20 +193,20 @@ void EditorTab::setCombinedDataList(int index, int selectfrom)
         }
 
         //load type=normal
-        if(hlist.contains(XmlListGenerator::NORMAL))
-            setNormalDataList(list, hlist.value(XmlListGenerator::NORMAL));
+        if(hlist.contains(ProcessXmlListGenerator::NORMAL))
+            setNormalDataList(list, hlist.value(ProcessXmlListGenerator::NORMAL));
 
         //load type=search
-        if(hlist.contains(XmlListGenerator::SEARCH))
-            setSearchDataList(list, hlist.value(XmlListGenerator::SEARCH));
+        if(hlist.contains(ProcessXmlListGenerator::SEARCH))
+            setSearchDataList(list, hlist.value(ProcessXmlListGenerator::SEARCH));
 
         //load type=extrafunc
-        if(hlist.contains(XmlListGenerator::EXTRAFUNC))
-            setExtraFuncDataList(list, hlist.value(XmlListGenerator::EXTRAFUNC));
+        if(hlist.contains(ProcessXmlListGenerator::EXTRAFUNC))
+            setExtraFuncDataList(list, hlist.value(ProcessXmlListGenerator::EXTRAFUNC));
 
         //load type=other
-        if(hlist.contains(XmlListGenerator::OTHER))
-            setOtherDataList(list, hlist.value(XmlListGenerator::OTHER));
+        if(hlist.contains(ProcessXmlListGenerator::OTHER))
+            setOtherDataList(list, hlist.value(ProcessXmlListGenerator::OTHER));
     }
 
     delete list;
@@ -288,16 +288,16 @@ bool EditorTab::getCurrentIndexOnlyChecked()
 {
     QCheckBox *autoonly;
     switch (this->currentIndex()) {
-    case XmlListGenerator::NORMAL:
+    case ProcessXmlListGenerator::NORMAL:
         autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox");
         break;
-    case XmlListGenerator::SEARCH:
+    case ProcessXmlListGenerator::SEARCH:
         autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_2");
         break;
-    case XmlListGenerator::EXTRAFUNC:
+    case ProcessXmlListGenerator::EXTRAFUNC:
         autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_3");
         break;
-    case XmlListGenerator::OTHER:
+    case ProcessXmlListGenerator::OTHER:
         autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_4");
 //        break;
     default:
@@ -316,20 +316,20 @@ void EditorTab::tabChanged(int index)
 //    }
 
     switch(index){
-    case XmlListGenerator::NORMAL:
+    case ProcessXmlListGenerator::NORMAL:
         editop->editTabAction(currentid, index);
         break;
-    case XmlListGenerator::SEARCH:
+    case ProcessXmlListGenerator::SEARCH:
         searchcombobox->reloadComboBoxItem();
         editop->editTabAction(currentid, index);
         break;
 
-    case XmlListGenerator::EXTRAFUNC:
+    case ProcessXmlListGenerator::EXTRAFUNC:
         extrafunccombobox->reloadComboBoxItem();
         editop->editTabAction(currentid, index);
         break;
 
-    case XmlListGenerator::OTHER:
+    case ProcessXmlListGenerator::OTHER:
         profilecombobox->reloadComboBoxItem();
         editop->editTabAction(currentid, index);
         break;
@@ -412,7 +412,7 @@ void EditorTab::editSwapTableAction(int indexbefore, int indexafter)
 
 void EditorTab::openSavefile()
 {
-    QLineEdit *outputLineEdit = this->widget(XmlListGenerator::SEARCH)->findChild<QLineEdit *>("outputLineEdit");
+    QLineEdit *outputLineEdit = this->widget(ProcessXmlListGenerator::SEARCH)->findChild<QLineEdit *>("outputLineEdit");
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Search file"),\
                                          QDir::currentPath(), tr("File (*.*)"));
 

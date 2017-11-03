@@ -48,6 +48,12 @@ void Executor::setEndnum(int end)
         endnum = end;
 }
 
+void Executor::processWrite(QString code)
+{
+    process->write(code.toLocal8Bit());
+    emit processMessage(code, INPUT);
+}
+
 //int Executor::getForcequittime() const
 //{
 //    return forcequittime;
@@ -176,6 +182,7 @@ bool Executor::runProcess()
 
     //init process
     process = new QProcess();
+    process->setProcessChannelMode(QProcess::MergedChannels);
     connect(process, SIGNAL(readyRead()), this, SLOT(loadNormalStandardOutput()));
 
     //set working
@@ -269,8 +276,9 @@ void Executor::stopProcess()
 
 void Executor::loadNormalStandardOutput()
 {
-    if(process->isTransactionStarted())
-        emit processMessage(QString::fromStdString(process->readAll().toStdString()), NORMAL);
+    QByteArray read = process->readAll();
+    QString encode = QTextCodec::codecForLocale()->toUnicode(read);
+    emit processMessage(encode, NORMAL);
 }
 
 void Executor::processEndLastStatus()
@@ -576,20 +584,24 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
 
 bool Executor::loadTemp(QList<QStringList> *list)
 {
+    //TODO: dynamic index update
     int selected = VariantConverter::stringToInt(list->at(1).at(1));
 
+    QHash<int, int> hlist;
+    xgen.getListStructure(list, &hlist);
+
     switch (selected) {
-    case 0/*normal*/: return loadNormal(list, pbuilder->firstPosTempNormal());
+    case ProcessXmlListGenerator::NORMAL/*normal*/: return loadNormal(list, hlist.value(ProcessXmlListGenerator::NORMAL));
 
-    case 1/*search*/: return loadSearch(list, pbuilder->firstPosTempSearch());
+    case ProcessXmlListGenerator::SEARCH/*search*/: return loadSearch(list, hlist.value(ProcessXmlListGenerator::SEARCH));
 
-    case 2/*script*/: return loadScript(list, pbuilder->firstPosTempScript());
+    case ProcessXmlListGenerator::EXTRAFUNC/*script*/: return loadScript(list, hlist.value(ProcessXmlListGenerator::EXTRAFUNC));
 
-    case 3/*other*/:
+    case ProcessXmlListGenerator::OTHER/*other*/:
         if(neststop){
             return false;
         }else{
-            return loadOther(list, pbuilder->firstPosTempOther());
+            return loadOther(list, hlist.value(ProcessXmlListGenerator::OTHER));
         }
     default:          return true;
     }

@@ -13,19 +13,19 @@ EditValueCommand::EditValueCommand(const int &targetindex
     m_cache = cache;
 
     //init generator
-    XmlListGenerator x;
+    ProcessXmlListGenerator x;
     x.getListStructure(m_cache->at(m_targetindex), &posinfo);
 
     //get old value
     switch (id()) {
-    case XmlListGenerator::TIMEOUT_DURITION:
+    case ProcessXmlListGenerator::TIMEOUT_DURITION:
         m_oldvalue = ((QString)m_cache->at(m_targetindex)
-                ->at(posinfo.value(XmlListGenerator::NORMAL) + 1)
+                ->at(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1)
                 .at(3)).toInt();
         break;
-    case XmlListGenerator::OUTPUT_RADIO:
+    case ProcessXmlListGenerator::OUTPUT_RADIO:
         m_oldvalue = ((QString)m_cache->at(m_targetindex)
-                ->at(posinfo.value(XmlListGenerator::SEARCH) + 4)
+                ->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4)
                 .at(3)).toInt();
         break;
     default:
@@ -37,17 +37,17 @@ void EditValueCommand::undo()
 {
     QStringList alist;
     switch (id()) {
-    case XmlListGenerator::TIMEOUT_DURITION:
-        alist = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::NORMAL) + 1);
+    case ProcessXmlListGenerator::TIMEOUT_DURITION:
+        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1);
         alist.replace(3, QString::number(m_oldvalue));
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::NORMAL) + 1, alist);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1, alist);
 
         setText(QObject::tr("Change timeout value %1").arg(m_oldvalue));
         break;
-    case XmlListGenerator::OUTPUT_RADIO:
-        alist = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::SEARCH) + 4);
+    case ProcessXmlListGenerator::OUTPUT_RADIO:
+        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4);
         alist.replace(3, QString::number(m_oldvalue));
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::SEARCH) + 4, alist);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4, alist);
 
         setText(QObject::tr("Change output method"));
         break;
@@ -60,17 +60,17 @@ void EditValueCommand::redo()
 {
     QStringList alist;
     switch (id()) {
-    case XmlListGenerator::TIMEOUT_DURITION:
-        alist = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::NORMAL) + 1);
+    case ProcessXmlListGenerator::TIMEOUT_DURITION:
+        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1);
         alist.replace(3, QString::number(m_newvalue));
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::NORMAL) + 1, alist);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1, alist);
 
         setText(QObject::tr("Change timeout value %1").arg(m_newvalue));
         break;
-    case XmlListGenerator::OUTPUT_RADIO:
-        alist = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::SEARCH) + 4);
+    case ProcessXmlListGenerator::OUTPUT_RADIO:
+        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4);
         alist.replace(3, QString::number(m_newvalue));
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::SEARCH) + 4, alist);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4, alist);
 
         setText(QObject::tr("Change output method"));
         break;
@@ -83,10 +83,10 @@ void EditValueCommand::redo()
 int EditValueCommand::id() const
 {
     if(m_objname == "timeoutSpinBox"){
-        return XmlListGenerator::TIMEOUT_DURITION;
+        return ProcessXmlListGenerator::TIMEOUT_DURITION;
     }else if(m_objname == "variRadioButton"
              || m_objname == "fileRadioButton"){
-        return XmlListGenerator::OUTPUT_RADIO;
+        return ProcessXmlListGenerator::OUTPUT_RADIO;
     }else{
         return -1;
     }

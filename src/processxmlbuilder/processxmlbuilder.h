@@ -201,10 +201,10 @@ public:
     PROCESSXMLBUILDERSHARED_EXPORT bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
     PROCESSXMLBUILDERSHARED_EXPORT int count();
 
-    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempNormal() const;
-    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempSearch() const;
-    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempScript() const;
-    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempOther() const;
+//    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempNormal() const;
+//    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempSearch() const;
+//    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempScript() const;
+//    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempOther() const;
 
 private:
     void setSearchItemData(QString element, QList<QStringList> *list);

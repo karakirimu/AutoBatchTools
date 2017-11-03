@@ -42,6 +42,11 @@ RunTaskSignalBinder::~RunTaskSignalBinder()
     delete executor;
 }
 
+void RunTaskSignalBinder::sendInput(QString message)
+{
+    if(executor->getWorking()) executor->processWrite(message);
+}
+
 void RunTaskSignalBinder::start()
 {
     if(executor->getPaused()){

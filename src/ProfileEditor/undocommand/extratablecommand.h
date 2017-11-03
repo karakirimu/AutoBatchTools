@@ -2,7 +2,7 @@
 #define EXTRATABLECOMMAND_H
 
 #include <QUndoCommand>
-#include <xmllistgenerator.h>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class ExtraTableCommand : public QUndoCommand
 {

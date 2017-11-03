@@ -623,20 +623,20 @@ void ProfileTreeWidget::setTempTree(QTreeWidgetItem *root, QList<QStringList> *l
     xgen.getListStructure(list, &hlist);
 
     switch (istack) {
-    case XmlListGenerator::NORMAL:
-        setNormalTree(root, list, hlist.value(XmlListGenerator::NORMAL) + 1);
+    case ProcessXmlListGenerator::NORMAL:
+        setNormalTree(root, list, hlist.value(ProcessXmlListGenerator::NORMAL) + 1);
         break;
 
-    case XmlListGenerator::SEARCH:
-        setSearchTree(root, list, hlist.value(XmlListGenerator::SEARCH) + 1);
+    case ProcessXmlListGenerator::SEARCH:
+        setSearchTree(root, list, hlist.value(ProcessXmlListGenerator::SEARCH) + 1);
         break;
 
-    case XmlListGenerator::EXTRAFUNC:
-        setExtraFuncTree(root, list, hlist.value(XmlListGenerator::EXTRAFUNC) + 1);
+    case ProcessXmlListGenerator::EXTRAFUNC:
+        setExtraFuncTree(root, list, hlist.value(ProcessXmlListGenerator::EXTRAFUNC) + 1);
         break;
 
-    case XmlListGenerator::OTHER:
-        setOtherTree(root, list, hlist.value(XmlListGenerator::OTHER) + 1);
+    case ProcessXmlListGenerator::OTHER:
+        setOtherTree(root, list, hlist.value(ProcessXmlListGenerator::OTHER) + 1);
         break;
 
     default:

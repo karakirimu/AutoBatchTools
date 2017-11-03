@@ -13,30 +13,30 @@ EditTextCommand::EditTextCommand(const int &targetindex
     m_objname = objname;
     m_cache = cache;
 
-    XmlListGenerator x;
+    ProcessXmlListGenerator x;
     x.getListStructure(cache->at(m_targetindex), &posinfo);
 
     switch (id()) {
-    case XmlListGenerator::SEPARATOR:
+    case ProcessXmlListGenerator::SEPARATOR:
         m_oldstring = m_cache->at(m_targetindex)
-                ->at(posinfo.value(XmlListGenerator::SEARCH) + 2)
+                ->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 2)
                 .at(1);
         break;
-    case XmlListGenerator::OUTPUT_RADIO:
+    case ProcessXmlListGenerator::OUTPUT_RADIO:
         m_oldstring = m_cache->at(m_targetindex)
-                ->at(posinfo.value(XmlListGenerator::SEARCH) + 3)
+                ->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 3)
                 .at(1);
         break;
-    case XmlListGenerator::INFO_NAME:
+    case ProcessXmlListGenerator::INFO_NAME:
         m_oldstring = m_cache->at(m_targetindex)->at(1).at(1);
         break;
-    case XmlListGenerator::INFO_VER:
+    case ProcessXmlListGenerator::INFO_VER:
          m_oldstring = m_cache->at(m_targetindex)->at(2).at(1);
         break;
-    case XmlListGenerator::INFO_AUTHOR:
+    case ProcessXmlListGenerator::INFO_AUTHOR:
          m_oldstring = m_cache->at(m_targetindex)->at(3).at(1);
         break;
-    case XmlListGenerator::INFO_DESCRIPT:
+    case ProcessXmlListGenerator::INFO_DESCRIPT:
          m_oldstring = m_cache->at(m_targetindex)->at(4).at(1);
         break;
     default:
@@ -51,37 +51,37 @@ void EditTextCommand::undo()
     QStringList alist;
 
     switch (id()) {
-    case XmlListGenerator::SEPARATOR:
-        alist = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::SEARCH) + 2);
+    case ProcessXmlListGenerator::SEPARATOR:
+        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 2);
         alist.replace(1, m_oldstring);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::SEARCH) + 2, alist);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 2, alist);
         setText(QObject::tr("Change text at Search Separator"));
         break;
-    case XmlListGenerator::OUTPUT_RADIO:
-        alist = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::SEARCH) + 3);
+    case ProcessXmlListGenerator::OUTPUT_RADIO:
+        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 3);
         alist.replace(1, m_oldstring);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::SEARCH) + 3, alist);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 3, alist);
         setText(QObject::tr("Change text at Search Output file"));
         break;
-    case XmlListGenerator::INFO_NAME:
+    case ProcessXmlListGenerator::INFO_NAME:
         alist = m_cache->at(m_targetindex)->at(1);
         alist.replace(1, m_oldstring);
         m_cache->at(m_targetindex)->replace(1, alist);
         setText(QObject::tr("Change name"));
         break;
-    case XmlListGenerator::INFO_VER:
+    case ProcessXmlListGenerator::INFO_VER:
         alist = m_cache->at(m_targetindex)->at(2);
         alist.replace(1, m_oldstring);
         m_cache->at(m_targetindex)->replace(2, alist);
         setText(QObject::tr("Change version"));
         break;
-    case XmlListGenerator::INFO_AUTHOR:
+    case ProcessXmlListGenerator::INFO_AUTHOR:
         alist = m_cache->at(m_targetindex)->at(3);
         alist.replace(1, m_oldstring);
         m_cache->at(m_targetindex)->replace(3, alist);
         setText(QObject::tr("Change author"));
         break;
-    case XmlListGenerator::INFO_DESCRIPT:
+    case ProcessXmlListGenerator::INFO_DESCRIPT:
         alist = m_cache->at(m_targetindex)->at(4);
         alist.replace(1, m_oldstring);
         m_cache->at(m_targetindex)->replace(4, alist);
@@ -97,37 +97,37 @@ void EditTextCommand::redo()
     QStringList alist;
 
     switch (id()) {
-    case XmlListGenerator::SEPARATOR:
-        alist = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::SEARCH) + 2);
+    case ProcessXmlListGenerator::SEPARATOR:
+        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 2);
         alist.replace(1, m_newstring);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::SEARCH) + 2, alist);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 2, alist);
         setText(QObject::tr("Change text at Search Separator"));
         break;
-    case XmlListGenerator::OUTPUT_RADIO:
-        alist = m_cache->at(m_targetindex)->at(posinfo.value(XmlListGenerator::SEARCH) + 3);
+    case ProcessXmlListGenerator::OUTPUT_RADIO:
+        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 3);
         alist.replace(1, m_newstring);
-        m_cache->at(m_targetindex)->replace(posinfo.value(XmlListGenerator::SEARCH) + 3, alist);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 3, alist);
         setText(QObject::tr("Change text at Search Output file"));
         break;
-    case XmlListGenerator::INFO_NAME:
+    case ProcessXmlListGenerator::INFO_NAME:
         alist = m_cache->at(m_targetindex)->at(1);
         alist.replace(1, m_newstring);
         m_cache->at(m_targetindex)->replace(1, alist);
         setText(QObject::tr("Change name"));
         break;
-    case XmlListGenerator::INFO_VER:
+    case ProcessXmlListGenerator::INFO_VER:
         alist = m_cache->at(m_targetindex)->at(2);
         alist.replace(1, m_newstring);
         m_cache->at(m_targetindex)->replace(2, alist);
         setText(QObject::tr("Change version"));
         break;
-    case XmlListGenerator::INFO_AUTHOR:
+    case ProcessXmlListGenerator::INFO_AUTHOR:
         alist = m_cache->at(m_targetindex)->at(3);
         alist.replace(1, m_newstring);
         m_cache->at(m_targetindex)->replace(3, alist);
         setText(QObject::tr("Change author"));
         break;
-    case XmlListGenerator::INFO_DESCRIPT:
+    case ProcessXmlListGenerator::INFO_DESCRIPT:
         alist = m_cache->at(m_targetindex)->at(4);
         alist.replace(1, m_newstring);
         m_cache->at(m_targetindex)->replace(4, alist);
@@ -142,17 +142,17 @@ void EditTextCommand::redo()
 int EditTextCommand::id() const
 {
     if(m_objname == "separatorLineEdit"){
-        return XmlListGenerator::SEPARATOR;
+        return ProcessXmlListGenerator::SEPARATOR;
     }else if(m_objname == "outputLineEdit"){
-        return XmlListGenerator::OUTPUT_RADIO;
+        return ProcessXmlListGenerator::OUTPUT_RADIO;
     }else if(m_objname == "nameLineEdit"){
-        return XmlListGenerator::INFO_NAME;
+        return ProcessXmlListGenerator::INFO_NAME;
     }else if(m_objname == "verLineEdit"){
-        return XmlListGenerator::INFO_VER;
+        return ProcessXmlListGenerator::INFO_VER;
     }else if(m_objname == "authorLineEdit"){
-        return XmlListGenerator::INFO_AUTHOR;
+        return ProcessXmlListGenerator::INFO_AUTHOR;
     }else if(m_objname == "descTextEdit"){
-        return XmlListGenerator::INFO_DESCRIPT;
+        return ProcessXmlListGenerator::INFO_DESCRIPT;
     }else {
         return -1;
     }
