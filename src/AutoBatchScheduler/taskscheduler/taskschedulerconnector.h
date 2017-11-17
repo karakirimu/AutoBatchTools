@@ -15,7 +15,7 @@ signals:
     void taskEnabled(QString);
 
     //to table to systemtray signals
-    void xmlStateChanged(QString);
+//    void xmlStateChanged(QString);
     void addListAction(int);
     void deleteListAction(QString);
 

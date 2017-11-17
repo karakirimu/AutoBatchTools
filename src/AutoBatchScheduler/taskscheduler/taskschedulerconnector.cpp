@@ -14,8 +14,8 @@ TaskSchedulerConnector::~TaskSchedulerConnector()
 void TaskSchedulerConnector::enableTask(QString objectname, QString filepath)
 {
     addTask(objectname, filepath);
-    emit taskEnabled(objectname);
     schedulerStart(objectname);
+    emit taskEnabled(objectname);
 }
 
 void TaskSchedulerConnector::disableTask(QString objectname)
