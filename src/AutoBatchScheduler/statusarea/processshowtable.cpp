@@ -23,7 +23,7 @@ ProcessShowTable::~ProcessShowTable()
 void ProcessShowTable::addItem(QString objname)
 {
     int count = this->rowCount();
-    setRowCount(count + 1);
+    insertRow(count);
     CellInfoWidget *widget = new CellInfoWidget();
     widget->setObjectName(objname);
 
@@ -73,7 +73,8 @@ void ProcessShowTable::removeItem(QString objectname)
         //set action
 //        disconnect(this, &ProcessShowTable::setProgress, ciw, &CellInfoWidget::setProgressminmax);
 
-        delete ciw;
+        this->takeItem(row, 0);
+        this->removeCellWidget(row, 0);
         this->removeRow(row);
         setRowCount(count - 1);
     }
@@ -152,12 +153,12 @@ CellInfoWidget* ProcessShowTable::getCellWidget(QString objname)
         if(wid->objectName() == objname) break;
     }
 
-    CellInfoWidget *widget;
-    if(wid == nullptr){
-        widget = nullptr;
-    }else{
-        widget = qobject_cast<CellInfoWidget *>(wid);
-    }
+    CellInfoWidget *widget = (wid == nullptr)? nullptr : qobject_cast<CellInfoWidget *>(wid);
+//    if(wid == nullptr){
+//        widget = nullptr;
+//    }else{
+//        widget = qobject_cast<CellInfoWidget *>(wid);
+//    }
 
     return widget;
 }

@@ -79,6 +79,7 @@ void RunTaskSignalBinder::pause()
 void RunTaskSignalBinder::stop()
 {
     executor->stopProcess();
+    executor->processKill();
 }
 
 void RunTaskSignalBinder::updateRange(QString str)

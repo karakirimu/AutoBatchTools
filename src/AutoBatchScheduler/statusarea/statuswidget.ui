@@ -18,13 +18,13 @@
     <number>2</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="topMargin">
     <number>2</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
@@ -82,8 +82,14 @@
    </item>
    <item>
     <widget class="ProcessShowTable" name="enabledTableWidget">
+     <property name="styleSheet">
+      <string notr="true">selection-background-color: rgb(186, 186, 186);</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
      </property>
     </widget>
    </item>

@@ -58,6 +58,10 @@ void SystemTray::setTaskSchedulerConnector(TaskSchedulerConnector *task)
 
     connect(taskc, &TaskSchedulerConnector::addListAction, this, &SystemTray::addlistAction);
     connect(taskc, &TaskSchedulerConnector::deleteListAction, this, &SystemTray::deletelistAction);
+
+    //Menu Checkable
+//    connect(taskc, &TaskSchedulerConnector::xmlStateChanged, this, &SystemTray::updateCheckStateChanged);
+
     //set trayicon actions (task function is need for this.)
     initTrayIcon();
 }
@@ -102,6 +106,21 @@ void SystemTray::onCheckStateChanged(bool checked)
          //change xml data
          changeXmlValidState(itemid);
      }
+}
+
+void SystemTray::updateCheckStateChanged(QString objname)
+{
+    QList<QAction *> actlist = trayIconMenu->actions();
+    QAction *act;
+    int count = actlist.count();
+
+    for(int i = 0; i < count; i++) {
+        act = actlist.at(i);
+        if(objname == act->objectName()){
+            act->setChecked(!act->isChecked());
+            break;
+        }
+    }
 }
 
 void SystemTray::launchSettingsAction(){emit launchSetting();}
@@ -197,7 +216,7 @@ void SystemTray::showTimerStopped(QString objectname, int type)
     qDebug() << "(timer stopped)";
 
     switch (type) {
-    case SchedulerCalc::FINISHED:
+    case SchedulerWait::FINISHED:
     {
         //show message
         trayIcon->showMessage(tr("タイマーは終了しました"),\
@@ -206,7 +225,7 @@ void SystemTray::showTimerStopped(QString objectname, int type)
                               3500);
         break;
     }
-    case SchedulerCalc::EXPIRED:
+    case SchedulerWait::EXPIRED:
     {
         //show message
         trayIcon->showMessage(tr("設定した時刻は既に過ぎています"),\
@@ -216,6 +235,8 @@ void SystemTray::showTimerStopped(QString objectname, int type)
         //change action checkstate
         int itemid = getStartupXmlIndex(objectname);
         if(itemid >= 0) changeXmlValidState(itemid);
+        updateCheckStateChanged(objectname);
+        taskc->disableTask(objectname);
         break;
     }
     default:
@@ -343,7 +364,7 @@ void SystemTray::changeXmlValidState(int itemid)
 
         builder->editItem(itemid, list);
 
-        emit taskc->xmlStateChanged(list->at(StartupXmlBuilder::UNIQUE).at(1));
+//        emit taskc->xmlStateChanged(list->at(StartupXmlBuilder::UNIQUE).at(1));
     }
 
     delete list;

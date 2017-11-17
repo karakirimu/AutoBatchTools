@@ -46,6 +46,7 @@ private:
     QAction *m_disable;
 
     StartupXmlBuilder *builder;
+    TaskSchedulerConnector *taskc;
     void setTableItem(int row);
 };
 

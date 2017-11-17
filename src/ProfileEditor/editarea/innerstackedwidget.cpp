@@ -25,12 +25,12 @@ void InnerStackedWidget::setEditOperator(EditOperator *op)
 
     connect(editop, &EditOperator::ui_selectindexUpdate, this, &InnerStackedWidget::setInfoDataList);
     connect(editop, &EditOperator::ui_selectindexUpdate, this, &InnerStackedWidget::moveStacked);
+//    connect(editop, &EditOperator::editUpdate, this, &InnerStackedWidget::updateInfoDataList);
 
     connect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
     connect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
     connect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
     connect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
-
 }
 
 void InnerStackedWidget::moveStacked(int index, int sendfrom)
@@ -53,24 +53,69 @@ void InnerStackedWidget::setInfoDataList(int index, int sendfrom)
     QList<QStringList> *list = new QList<QStringList>();
 
     if(editop->read(index, list)){
+
+        //discon
+        disconnect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+        disconnect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+        disconnect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+        disconnect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
+
         name->setText(list->at(1).at(1));
         ver->setText(list->at(2).at(1));
         author->setText(list->at(3).at(1));
         desc->setPlainText(list->at(4).at(1));
         rlabel->setText(list->at(5).at(1));
-    }
-}
 
-void InnerStackedWidget::clearInfoDataListForm()
-{
-    QList<QLineEdit *> menber = currentWidget()->findChildren<QLineEdit *>();
-    foreach(QLineEdit *edit, menber){
-        edit->setText("");
+        //recon
+        connect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+        connect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+        connect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+        connect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
     }
 
-    QLabel *rlabel = currentWidget()->findChild<QLabel *>("refreshDateLabel");
-    rlabel->setText("-");
+    delete list;
 }
+
+//void InnerStackedWidget::updateInfoDataList(int index)
+//{
+//    if(index != 0) return;
+
+//    QList<QStringList> *list = new QList<QStringList>();
+
+//    if(editop->read(index, list)){
+
+//        //discon
+//        disconnect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+//        disconnect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+//        disconnect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+//        disconnect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
+
+//        name->setText(list->at(1).at(1));
+//        ver->setText(list->at(2).at(1));
+//        author->setText(list->at(3).at(1));
+//        desc->setPlainText(list->at(4).at(1));
+//        rlabel->setText(list->at(5).at(1));
+
+//        //recon
+//        connect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+//        connect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+//        connect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+//        connect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
+//    }
+
+//    delete list;
+//}
+
+//void InnerStackedWidget::clearInfoDataListForm()
+//{
+//    QList<QLineEdit *> menber = currentWidget()->findChildren<QLineEdit *>();
+//    foreach(QLineEdit *edit, menber){
+//        edit->clear();
+//    }
+
+//    QLabel *rlabel = currentWidget()->findChild<QLabel *>("refreshDateLabel");
+//    rlabel->setText("-");
+//}
 
 void InnerStackedWidget::editTextAction(QString text)
 {

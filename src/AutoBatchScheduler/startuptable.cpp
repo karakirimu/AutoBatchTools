@@ -39,7 +39,10 @@ StartupTable::~StartupTable()
 
 void StartupTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
 {
-    connect(task, &TaskSchedulerConnector::xmlStateChanged, this, &StartupTable::updateItemEnabled);
+    taskc = task;
+//    connect(taskc, &TaskSchedulerConnector::xmlStateChanged, this, &StartupTable::updateItemEnabled);
+    connect(taskc, &TaskSchedulerConnector::taskEnabled, this, &StartupTable::updateItemEnabled);
+    connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &StartupTable::updateItemEnabled);
     connect(this, &StartupTable::actionDeleted, task, &TaskSchedulerConnector::actionDeleted);
     connect(this, &StartupTable::actionAdded, task, &TaskSchedulerConnector::actionAdded);
 }
@@ -286,7 +289,7 @@ void StartupTable::enableAction(){
     int row = this->currentRow();
 
     if(builder->readItem(row, list)){
-        if(list->at(2).at(1) == "no"){
+        if(list->at(StartupXmlBuilder::VALID).at(1) == "no"){
 
             //change validation
             QStringList tmp;
@@ -296,7 +299,13 @@ void StartupTable::enableAction(){
 
             builder->editItem(row, list);
 
+//            emit taskc->xmlStateChanged(list->at(StartupXmlBuilder::UNIQUE).at(1));
             reloadAction();
+
+            QFileInfo info(list->at(StartupXmlBuilder::PROF).at(1));
+            if(info.exists()){
+                taskc->enableTask(list->at(StartupXmlBuilder::UNIQUE).at(1), info.canonicalFilePath());
+            }
         }
     }
 }
@@ -307,7 +316,7 @@ void StartupTable::disableAction(){
     int row = this->currentRow();
 
     if(builder->readItem(row, list)){
-        if(list->at(2).at(1) == "yes"){
+        if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"){
 
             //change validation
             QStringList tmp;
@@ -317,7 +326,9 @@ void StartupTable::disableAction(){
 
             builder->editItem(row, list);
 
+//            emit taskc->xmlStateChanged(list->at(StartupXmlBuilder::UNIQUE).at(1));
             reloadAction();
+            taskc->disableTask(list->at(StartupXmlBuilder::UNIQUE).at(1));
         }
     }
 }

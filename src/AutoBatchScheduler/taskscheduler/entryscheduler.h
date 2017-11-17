@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QThread>
 #include <QMutex>
-#include <schedulercalc.h>
+#include <schedulerwait.h>
 #include <startupxmlbuilder.h>
 
 class EntryScheduler : public QObject
@@ -36,7 +36,7 @@ public slots:
     void setXmlItemId(QString objname);
 
 private:
-    SchedulerCalc *scalc;
+    SchedulerWait *swait;
     QThread *worker;
 };
 

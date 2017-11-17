@@ -189,6 +189,9 @@ void CommandTable::openFileAction()
     QString str = selectFile("./");
     //this->in
     this->setItem(current, 0, new QTableWidgetItem(str));
+    if(str != ""){
+        editedAction(current, 0);
+    }
 }
 
 void CommandTable::openDirectoryAction()
@@ -197,6 +200,9 @@ void CommandTable::openDirectoryAction()
     if(rowCount() == 0 || current < 0) return;
     QString str = selectFolder("./");
     this->setItem(current, 0, new QTableWidgetItem(str));
+    if(str != ""){
+        editedAction(current, 0);
+    }
 }
 
 void CommandTable::editedAction(int row, int column)

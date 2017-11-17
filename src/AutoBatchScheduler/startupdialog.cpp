@@ -211,10 +211,10 @@ QString StartupDialog::getRandomString(int size)
 
     QString randomString;
     QDateTime time;
-    qsrand(time.toMSecsSinceEpoch());
+    qsrand(time.currentDateTime().toMSecsSinceEpoch());
     for(int i=0; i < size; ++i)
     {
-        int index = qrand() % possibleCharacters.length();
+        int index = (qrand() * (i + 1)) % possibleCharacters.length();
         QChar nextChar = possibleCharacters.at(index);
         randomString.append(nextChar);
     }

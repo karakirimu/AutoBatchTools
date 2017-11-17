@@ -157,7 +157,8 @@ void FlowTable::copyAction()
 void FlowTable::pasteAction()
 {
     int cur = fixedCurrentRow();
-    if(cur > 1){
+    if(cur > 0){
+        cur++;
         editop->pasteAction(cur);
         insertItem(cur);
         emit editop->ui_selectindexUpdate(cur, EditOperator::GRAPHICAREA);
@@ -262,9 +263,11 @@ void FlowTable::insertItem(int id)
         this->insertRow(uid);
         replaceItem(id);
 
-        this->takeItem(uid + 1, 0);
-        this->removeCellWidget(uid + 1, 0);
-        setFlowItem(id + 1, false);
+//        this->takeItem(uid + 1, 0);
+//        this->removeCellWidget(uid + 1, 0);
+//        setFlowItem(id + 1, false);
+
+//        replaceItem(id);
     }
 }
 

@@ -19,7 +19,8 @@ public:
     void moveStacked(int index, int sendfrom);
 public slots:
     void setInfoDataList(int index, int sendfrom);
-    void clearInfoDataListForm();
+//    void updateInfoDataList(int index);
+//    void clearInfoDataListForm();
 //    void getInfoDataList(QStringList *list);
 
 private slots:

@@ -204,7 +204,8 @@ void ProfileTreeWidget::pasteAction()
 {
     int cur = fixedCurrentRow();
 //    int uicur = currentRow();
-    if(cur > 1){
+    if(cur > 0){
+        cur++;
         editop->pasteAction(cur);
         insertTree(cur);
         emit editop->ui_selectindexUpdate(cur, EditOperator::TREE);
@@ -273,7 +274,7 @@ void ProfileTreeWidget::insertTree(int id)
     this->insertTopLevelItem(fixedRowFromId(id), item);
 
     //reselect
-    emit editop->ui_selectindexUpdate(id - 1, EditOperator::TREE);
+//    emit editop->ui_selectindexUpdate(id - 1, EditOperator::TREE);
 }
 
 void ProfileTreeWidget::swapTree(int before, int after)

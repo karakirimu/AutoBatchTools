@@ -36,6 +36,7 @@ public:
 
     //run input
     EXECUTORSHARED_EXPORT void processWrite(QString code);
+    EXECUTORSHARED_EXPORT void processKill();
 
 //    EXECUTORSHARED_EXPORT int getForcequittime() const;
 //    EXECUTORSHARED_EXPORT void setForcequittime(int ms); /*preset func*/

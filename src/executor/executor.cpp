@@ -54,6 +54,13 @@ void Executor::processWrite(QString code)
     emit processMessage(code, INPUT);
 }
 
+void Executor::processKill()
+{
+    process->kill();
+    emit processMessage(QObject::tr("Process killed."), INPUT);
+//    emit processStopped();
+}
+
 //int Executor::getForcequittime() const
 //{
 //    return forcequittime;

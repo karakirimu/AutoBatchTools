@@ -1,30 +1,63 @@
-#include "schedulercalc.h"
+#include "schedulerwait.h"
 
-SchedulerCalc::SchedulerCalc(QObject *parent) : QObject(parent)
+SchedulerWait::SchedulerWait(QObject *parent) : QObject(parent)
 {
     builder = new StartupXmlBuilder();
-    connect(this, &SchedulerCalc::loop, this, &SchedulerCalc::start);
+    connect(this, &SchedulerWait::loop, this, &SchedulerWait::start);
 }
 
-SchedulerCalc::~SchedulerCalc()
+SchedulerWait::~SchedulerWait()
 {
     delete builder;
 }
 
-qint64 SchedulerCalc::getLestSeconds(QString scheduledDateTime)
+int SchedulerWait::getSelectedxmlindex() const
 {
-    QDateTime current = QDateTime::currentDateTime();
+    return selectedxmlindex;
+}
+
+void SchedulerWait::setSelectedxmlindex(QString objectname)
+{
+    selectedxmlindex = getStartupXmlIndex(objectname);
+}
+
+QDateTime SchedulerWait::getSchedate() const
+{
+    return schedate;
+}
+
+bool SchedulerWait::getRunning() const
+{
+    return running;
+}
+
+qint64 SchedulerWait::getRefreshms() const
+{
+    return refreshms;
+}
+
+void SchedulerWait::setRefreshms(const qint64 &value)
+{
+    refreshms = value;
+}
+
+void SchedulerWait::setMutex(QMutex *value)
+{
+    mutex = value;
+}
+
+qint64 SchedulerWait::getLestSeconds(QString scheduledDateTime)
+{
     QDateTime scheduled = QDateTime::fromString(scheduledDateTime, "yyyy/MM/dd HH:mm:ss");
-    return current.secsTo(scheduled);
+    return QDateTime::currentDateTime().secsTo(scheduled);
 }
 
-qint64 SchedulerCalc::getLestSeconds(QDateTime scheduledDateTime)
+qint64 SchedulerWait::getLestSeconds(QDateTime scheduledDateTime)
 {
-    QDateTime current = QDateTime::currentDateTime();
-    return current.secsTo(scheduledDateTime);
+    return QDateTime::currentDateTime().secsTo(scheduledDateTime);
 }
 
-QDateTime SchedulerCalc::getNextDateTime(qint64 adddays, QString scheduledTime)
+QDateTime SchedulerWait::getNextDateTime(qint64 adddays, QString scheduledTime)
 {
     QDate cdate = QDate::currentDate().addDays(adddays);
     QTime ctime = QTime::fromString(scheduledTime, "HH:mm:ss");
@@ -36,7 +69,78 @@ QDateTime SchedulerCalc::getNextDateTime(qint64 adddays, QString scheduledTime)
     return result;
 }
 
-int SchedulerCalc::getStartupXmlIndex(QString objectname)
+QDateTime SchedulerWait::getNextDateTime(qint64 addseconds)
+{
+    QDateTime result = QDateTime::currentDateTime().addSecs(addseconds);
+    qDebug() << "SchedulerCalc::getNextDateTime(qint64 adddays, QString scheduledTime) :" << result;
+    return result;
+}
+
+//DEPENDS_XML
+QDateTime SchedulerWait::init_GetScheduledTimeFromXml(int itemid)
+{
+    QList<QStringList> *list = new QList<QStringList>();
+    QDateTime time;
+
+    if(builder->readItem(itemid, list)){
+        if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"){
+            switch(VariantConverter::stringToInt(list->at(StartupXmlBuilder::SELECTEDTYPE).at(1))){
+            case StartupXmlBuilder::ONESHOT:
+                time = QDateTime::fromString(list->at(StartupXmlBuilder::SC_DATETIME).at(1)
+                                            , "yyyy/MM/dd HH:mm:ss");
+                loopschedule = false;
+                break;
+
+            case StartupXmlBuilder::WEEKLOOP:
+                time = getNextDateTime(getNextDaysCount(list->at(StartupXmlBuilder::SC_DAY).at(1)
+                                                        , list->at(StartupXmlBuilder::SC_TIME).at(1))
+                                                        , list->at(StartupXmlBuilder::SC_TIME).at(1));
+                loopschedule = true;
+                break;
+
+            case StartupXmlBuilder::TIMELOOP:
+                time = QDateTime::currentDateTime().addSecs(VariantConverter::VariantConverter::stringToInt(list->at(5).at(1)));
+                loopschedule = true;
+                break;
+
+            default:
+                break;
+            }
+        }
+    }
+    qDebug() << "select num" << list->at(StartupXmlBuilder::SELECTEDTYPE).at(1);
+    qDebug() << "SchedulerCalc::init_GetScheduledTimeFromXml(int itemid) : " << time;
+    return time;
+}
+
+QDateTime SchedulerWait::getNextTimeFromXml(int itemid, QDateTime current)
+{
+    QList<QStringList> *list = new QList<QStringList>();
+    QDateTime time;
+
+    if(builder->readItem(itemid, list)){
+        if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"
+                && VariantConverter::stringToInt(list->at(3).at(1)) == 2){
+            time = current.addSecs(VariantConverter::stringToInt(list->at(5).at(1)));
+        }
+        if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"
+                && VariantConverter::stringToInt(list->at(3).at(1)) == 1){
+            time = getNextDateTime(getNextDaysCount(list->at(7).at(1), list->at(6).at(1))
+                                   , list->at(6).at(1));
+        }
+    }
+
+    delete list;
+    qDebug() << "SchedulerCalc::getNextTimeFromXml(int itemid) : " << time;
+    return time;
+}
+
+int SchedulerWait::currentDayOfTheWeek()
+{
+    return QDate::currentDate().dayOfWeek();
+}
+
+int SchedulerWait::getStartupXmlIndex(QString objectname)
 {
     //Copy function. from SystemTray
     QList<QStringList> *list = new QList<QStringList>();
@@ -58,106 +162,7 @@ int SchedulerCalc::getStartupXmlIndex(QString objectname)
     return itemid;
 }
 
-int SchedulerCalc::getSelectedxmlindex() const
-{
-    return selectedxmlindex;
-}
-
-void SchedulerCalc::setSelectedxmlindex(QString objectname)
-{
-    selectedxmlindex = getStartupXmlIndex(objectname);
-}
-
-QDateTime SchedulerCalc::getSchedate() const
-{
-    return schedate;
-}
-
-bool SchedulerCalc::getRunning() const
-{
-    return running;
-}
-
-qint64 SchedulerCalc::getRefreshms() const
-{
-    return refreshms;
-}
-
-void SchedulerCalc::setRefreshms(const qint64 &value)
-{
-    refreshms = value;
-}
-
-void SchedulerCalc::setMutex(QMutex *value)
-{
-    mutex = value;
-}
-
-QDateTime SchedulerCalc::getNextDateTime(qint64 addseconds)
-{
-    QDateTime result = QDateTime::currentDateTime().addSecs(addseconds);
-    qDebug() << "SchedulerCalc::getNextDateTime(qint64 adddays, QString scheduledTime) :" << result;
-    return result;
-}
-
-//DEPENDS_XML
-QDateTime SchedulerCalc::init_GetScheduledTimeFromXml(int itemid)
-{
-    QList<QStringList> *list = new QList<QStringList>();
-    QDateTime time;
-
-    if(builder->readItem(itemid, list)){
-        if(list->at(2).at(1) == "yes"){
-            switch(VariantConverter::stringToInt(list->at(3).at(1))){
-            case 0:
-                time = QDateTime::fromString(list->at(4).at(1), "yyyy/MM/dd HH:mm:ss");
-                loopschedule = false;
-                break;
-            case 1:
-                time = getNextDateTime(getNextDaysCount(list->at(7).at(1), list->at(6).at(1))
-                                       , list->at(6).at(1));
-                loopschedule = true;
-                break;
-            case 2:
-                time = QDateTime::currentDateTime().addSecs(VariantConverter::VariantConverter::stringToInt(list->at(5).at(1)));
-                loopschedule = true;
-                break;
-            default:
-                break;
-            }
-        }
-    }
-    qDebug() << "select num" << list->at(3).at(1);
-    qDebug() << "SchedulerCalc::init_GetScheduledTimeFromXml(int itemid) : " << time;
-    return time;
-}
-
-QDateTime SchedulerCalc::getNextTimeFromXml(int itemid, QDateTime current)
-{
-    QList<QStringList> *list = new QList<QStringList>();
-    QDateTime time;
-
-    if(builder->readItem(itemid, list)){
-        if(list->at(2).at(1) == "yes" && VariantConverter::stringToInt(list->at(3).at(1)) == 2){
-            time = current.addSecs(VariantConverter::stringToInt(list->at(5).at(1)));
-        }
-        if(list->at(2).at(1) == "yes" && VariantConverter::stringToInt(list->at(3).at(1)) == 1){
-            time = getNextDateTime(getNextDaysCount(list->at(7).at(1), list->at(6).at(1))
-                                   , list->at(6).at(1));
-        }
-    }
-
-    delete list;
-    qDebug() << "SchedulerCalc::getNextTimeFromXml(int itemid) : " << time;
-    return time;
-}
-
-int SchedulerCalc::currentDayOfTheWeek()
-{
-    return QDate::currentDate().dayOfWeek();
-}
-
-void SchedulerCalc::start()
+void SchedulerWait::start()
 {
     qint64 lesttime;
     //check null
@@ -211,68 +216,58 @@ void SchedulerCalc::start()
     }
 }
 
-void SchedulerCalc::stop()
+void SchedulerWait::stop()
 {
     running = false;
 }
 
-void SchedulerCalc::loopstop()
+void SchedulerWait::loopstop()
 {
     loopschedule = false;
 }
 
-int SchedulerCalc::getNextDaysCount(QString datecode, QString timedata)
+int SchedulerWait::getNextDaysCount(QString datecode, QString timedata)
 {
     int result = 0;
     int dayofweek = currentDayOfTheWeek();
-    bool throughmax = false;
+    int i = dayofweek;
+    int loop = 0;
+    bool next = true;
     QString charcode;
 
-    //check current day of the week is on
+    while(next){
+        loop = i - ((i-1)/7)*7;
+        charcode = datecode.at(loop);
+        if(charcode.toInt() == 1){
+            if(i == dayofweek){
+                //current day scheduled
+                //this daycount is 7 or 0
+                QDateTime rtime;
+                rtime.setDate(QDate::currentDate());
+                rtime.setTime(QTime::fromString(timedata, "HH:mm:ss"));
 
-    //other day scheduled (start from next day)
-    for(int i = dayofweek + 1; i < WEEKDATA; i++){
-        result++;
-        //breakcode
-        charcode = datecode.at(i);
-        if(charcode.toInt() == 1) break;
-
-        //reset i (if maximum number)
-        if(i == (WEEKDATA - 1)){
-            throughmax = true;
-            i = 1;
+                //if not expired today
+                if(getLestSeconds(rtime) > 0) next = false;
+            }else{
+                //other day scheduled
+                result = i - dayofweek;
+                next = false;
+            }
         }
+        i++;
     }
 
     //add weeks
-    if(throughmax){
-        result += (VariantConverter::stringToInt(datecode.at(0)) - 1) * 7;
-    }
-
-    //current day scheduled (first)
-    if(result % 7 == 0){
-        //this daycount is 7 or 0
-        QDate cdate = QDate::currentDate();
-        QTime ctime = QTime::fromString(timedata, "HH:mm:ss");
-        QDateTime rtime;
-        rtime.setDate(cdate);
-        rtime.setTime(ctime);
-
-        //if expired today
-        if(getLestSeconds(rtime) > 0){
-            // 0 days
-            result = 0;
-        }
-    }
+    result += (VariantConverter::stringToInt(datecode.at(0)) - 1) * 7;
 
     return result;
 }
 
-int SchedulerCalc::dateCheckedCounter(QString datecode)
-{
-    int count = 0;
-    for(int i = 1; i < WEEKDATA; i++){
-        if(VariantConverter::stringToInt(datecode.at(i)) == 1) count++;
-    }
-    return count;
-}
+//int SchedulerCalc::dateCheckedCounter(QString datecode)
+//{
+//    int count = 0;
+//    for(int i = 1; i < WEEKDATA; i++){
+//        if(VariantConverter::stringToInt(datecode.at(i)) == 1) count++;
+//    }
+//    return count;
+//}

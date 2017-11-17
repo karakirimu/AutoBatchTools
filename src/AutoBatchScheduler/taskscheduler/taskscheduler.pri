@@ -1,11 +1,17 @@
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    $$PWD/schedulercalc.h \
 #    $$PWD/timemanager.h \
-    $$PWD/entryscheduler.h
+    $$PWD/entryscheduler.h \
+    $$PWD/schedulerwait.h \
+    $$PWD/taskscheduler.h \
+    $$PWD/entrytask.h \
+    $$PWD/taskschedulerconnector.h
 
 SOURCES += \
-    $$PWD/schedulercalc.cpp \
 #    $$PWD/timemanager.cpp \
-    $$PWD/entryscheduler.cpp
+    $$PWD/entryscheduler.cpp \
+    $$PWD/schedulerwait.cpp \
+    $$PWD/entrytask.cpp \
+    $$PWD/taskscheduler.cpp \
+    $$PWD/taskschedulerconnector.cpp

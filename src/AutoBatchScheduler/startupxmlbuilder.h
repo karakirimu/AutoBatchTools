@@ -50,6 +50,7 @@ public:
     void createDocument();
     int count();
 
+    enum{ONESHOT,WEEKLOOP,TIMELOOP};
     enum{NAME,PROF,VALID,SELECTEDTYPE,SC_DATETIME,SC_SECONDS,SC_TIME,SC_DAY,UNIQUE};
 
 private:

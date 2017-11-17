@@ -120,7 +120,11 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //Tools
     connect(ui->actionRun, &QAction::triggered, rbinder, &RunTaskSignalBinder::start);
+
     connect(ui->actionPause, &QAction::triggered, rbinder, &RunTaskSignalBinder::pause);
+    connect(ui->actionPause, &QAction::triggered, ui->actionPause, &QAction::setDisabled);
+    connect(ui->actionPause, &QAction::triggered, ui->pauseToolButton, &QToolButton::setDisabled);
+
     connect(ui->actionStop, &QAction::triggered, rbinder, &RunTaskSignalBinder::stop);
 
     connect(rbinder, &RunTaskSignalBinder::processStarted_action, ui->actionRun, &QAction::setDisabled);
@@ -140,7 +144,11 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(rbinder, &RunTaskSignalBinder::processEnd_action, ui->actionPause, &QAction::setDisabled);
 
     connect(ui->runToolButton, &QToolButton::clicked, rbinder, &RunTaskSignalBinder::start);
+
     connect(ui->pauseToolButton, &QToolButton::clicked, rbinder, &RunTaskSignalBinder::pause);
+    connect(ui->pauseToolButton, &QToolButton::clicked, ui->pauseToolButton, &QToolButton::setDisabled);
+    connect(ui->pauseToolButton, &QToolButton::clicked, ui->actionPause, &QAction::setDisabled);
+
     connect(ui->stopToolButton, &QToolButton::clicked, rbinder, &RunTaskSignalBinder::stop);
 
     connect(rbinder, &RunTaskSignalBinder::processStarted_action, ui->runToolButton, &QToolButton::setDisabled);
@@ -207,9 +215,10 @@ ProfileEditor::ProfileEditor(QString loadfile, QWidget *parent)
 //    ui->runTreeWidget->reloadAction();
 //    ui->graphicsView->reloadAction();
 //    ui->variantTableWidget->reloadAction();
+    preResetUi();
     editop->openAction(loadfile);
     setLoadfile(loadfile);
-    resetUi();
+    postResetUi();
 }
 
 ProfileEditor::~ProfileEditor()
@@ -230,8 +239,9 @@ ProfileEditor::~ProfileEditor()
 void ProfileEditor::newfileAction()
 {
 //    sfunction->generateNewFile();
+    preResetUi();
     editop->newAction();
-    resetUi();
+    postResetUi();
 }
 
 void ProfileEditor::openAction()
@@ -243,8 +253,9 @@ void ProfileEditor::openAction()
                                          QDir::currentPath(),\
                                          tr("Profile (*.xml *.apro)"));
     if(fileName != ""){
+        preResetUi();
         editop->openAction(fileName);
-        resetUi();
+        postResetUi();
     }
 }
 
@@ -575,7 +586,7 @@ void ProfileEditor::about()
                             "ProfileEditor can create execution list of other projects.\r\n\r\n"
                             "Currently, this program runs only windows systems.\r\n"
                             "These programs licensed under GNU LGPL version 3 for now.\r\n\r\n"
-                            "Made by mr_elphis in 2017/11/03"));
+                            "Made by mr_elphis in 2017/11/17"));
 }
 
 void ProfileEditor::setTreerowpos_select(int value, int from)
@@ -720,6 +731,18 @@ void ProfileEditor::initStatusBar()
     ui->statusBar->addPermanentWidget(progressbar, 1);
     connect(rbinder, &RunTaskSignalBinder::processInitCount, progressbar, &QProgressBar::setRange);
     connect(rbinder, &RunTaskSignalBinder::processCurrent, progressbar, &QProgressBar::setValue);
+}
+
+void ProfileEditor::preResetUi()
+{
+    //set current info ui
+//    ui->innerStackedWidget->setCurrentIndex(0);
+
+    //temp disconnect slot
+//    disconnectEdit();
+
+    //set firststacked to empty
+//    ui->innerStackedWidget->clearInfoDataListForm();
 }
 
 
@@ -900,17 +923,8 @@ void ProfileEditor::setLoadfile(const QString &value)
 }
 
 //when opening new file
-void ProfileEditor::resetUi()
+void ProfileEditor::postResetUi()
 {
-    //set current info ui
-    ui->innerStackedWidget->setCurrentIndex(0);
-
-    //temp disconnect slot
-//    disconnectEdit();
-
-    //set firststacked to empty
-    ui->innerStackedWidget->clearInfoDataListForm();
-
     //reload all combobox
 //    ui->searchComboBox->reloadComboBoxItem();
 //    ui->extrafuncComboBox->reloadComboBoxItem();
@@ -921,8 +935,8 @@ void ProfileEditor::resetUi()
     //reload file
     ui->runTreeWidget->reloadAction();
 //    ui->graphicsView->reloadAction();
-    ui->variantTableWidget->reloadAction();
     ui->flowTableWidget->reloadAction();
+    ui->variantTableWidget->reloadAction();
 
     //connect slot
 //    connectEdit();

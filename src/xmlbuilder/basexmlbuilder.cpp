@@ -57,7 +57,11 @@ void BaseXmlBuilder::createXmlBaseDocument(QString rootelement)
     //set 1 tabs
     wxml->setAutoFormattingIndent(-1);
     wxml->writeStartDocument();
+#ifdef Q_OS_WIN
     wxml->writeTextElement(rootelement, "\n");
+#else
+    wxml->writeTextElement(rootelement, "\r\n");
+#endif
     wxml->writeEndDocument();
 
     closeFile();
@@ -114,13 +118,21 @@ bool BaseXmlBuilder::deleteSpecifiedElementGroup(QString element, QString attr, 
         if(withparent && (linecount < firstline || linecount > endline)){
             deletedText.append(tmp);
             //WARNING:hard coding
+#ifdef Q_OS_WIN
             deletedText.append("\n");
+#else
+            deletedText.append("\r\n");
+#endif
         }
         //以上以下にすると外のタグだけは残る
         if(!withparent && (linecount <= firstline || linecount >= endline)){
             deletedText.append(tmp);
             //WARNING:hard coding
+#ifdef Q_OS_WIN
             deletedText.append("\n");
+#else
+            deletedText.append("\r\n");
+#endif
         }
     }
 
@@ -314,9 +326,13 @@ QString BaseXmlBuilder::getAdjustedXmlDataString(QTemporaryFile *tmp, int indent
 
         //TODO: probably running in windows only.
         //Windows
+#ifdef Q_OS_WIN
         re.setPattern("\n");
         appenddata.replace( re, "\n" + appendTabIndent(indent));
-
+#else
+        re.setPattern("\r\n");
+        appenddata.replace( re, "\r\n" + appendTabIndent(indent));
+#endif
         //qDebug() << appenddata;
 
         tmp->close();
@@ -325,8 +341,11 @@ QString BaseXmlBuilder::getAdjustedXmlDataString(QTemporaryFile *tmp, int indent
         appenddata.remove(0,1);
 
         //append to last character
+#ifdef Q_OS_WIN
         appenddata.append("\n");
-
+#else
+        appenddata.append("\r\n");
+#endif
         return appenddata;
     }
 

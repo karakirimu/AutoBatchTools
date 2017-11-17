@@ -2,19 +2,19 @@
 
 EntryScheduler::EntryScheduler(QObject *parent) : QObject(parent)
 {
-    scalc = new SchedulerCalc();
+    swait = new SchedulerWait();
 
     //set internal thread
     worker = new QThread();
 
     //connect thread
-    connect(worker, &QThread::started, scalc, &SchedulerCalc::start);
+    connect(worker, &QThread::started, swait, &SchedulerWait::start);
 
-    connect(scalc, &SchedulerCalc::timerStarted, this, &EntryScheduler::receiveStarted);
-    connect(scalc, &SchedulerCalc::timerFinished, this, &EntryScheduler::receiveFinished);
-    connect(scalc, &SchedulerCalc::encounterScheduledTime, this, &EntryScheduler::receiveEncounter);
+    connect(swait, &SchedulerWait::timerStarted, this, &EntryScheduler::receiveStarted);
+    connect(swait, &SchedulerWait::timerFinished, this, &EntryScheduler::receiveFinished);
+    connect(swait, &SchedulerWait::encounterScheduledTime, this, &EntryScheduler::receiveEncounter);
 
-    scalc->moveToThread(worker);
+    swait->moveToThread(worker);
 
     connect(this, &EntryScheduler::objectNameChanged, this, &EntryScheduler::setXmlItemId);
 }
@@ -26,17 +26,17 @@ EntryScheduler::~EntryScheduler()
         worker->wait();
     }
     delete worker;
-    delete scalc;
+    delete swait;
 }
 
 bool EntryScheduler::isStarted()
 {
-    return scalc->getRunning();
+    return swait->getRunning();
 }
 
 void EntryScheduler::setRefreshTime(int sec)
 {
-    scalc->setRefreshms(sec);
+    swait->setRefreshms(sec);
 }
 
 //void EntryScheduler::setXmlItemId(int itemid)
@@ -46,7 +46,7 @@ void EntryScheduler::setRefreshTime(int sec)
 
 void EntryScheduler::setMutex(QMutex *mutex)
 {
-    scalc->setMutex(mutex);
+    swait->setMutex(mutex);
 }
 
 void EntryScheduler::start()
@@ -56,8 +56,8 @@ void EntryScheduler::start()
 
 void EntryScheduler::stop()
 {
-    scalc->loopstop();
-    scalc->stop();
+    swait->loopstop();
+    swait->stop();
 //    if(worker->isRunning()){
 //        worker->quit();
 //        worker->wait();
@@ -66,5 +66,5 @@ void EntryScheduler::stop()
 
 void EntryScheduler::setXmlItemId(QString objname)
 {
-    scalc->setSelectedxmlindex(objname);
+    swait->setSelectedxmlindex(objname);
 }

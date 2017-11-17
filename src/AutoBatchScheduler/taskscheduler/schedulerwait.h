@@ -10,12 +10,12 @@
 
 #define WEEKDATA 8
 
-class SchedulerCalc : public QObject
+class SchedulerWait : public QObject
 {
     Q_OBJECT
 public:
-    explicit SchedulerCalc(QObject *parent = nullptr);
-    ~SchedulerCalc();
+    explicit SchedulerWait(QObject *parent = nullptr);
+    ~SchedulerWait();
 
     void setMutex(QMutex *value); //preset
 
@@ -48,6 +48,7 @@ public slots:
     void loopstop();
 
 private:
+    //inner calc functions
     qint64 getLestSeconds(QString scheduledDateTime);
     qint64 getLestSeconds(QDateTime scheduledDateTime);
     QDateTime getNextDateTime(qint64 addseconds);
@@ -55,9 +56,8 @@ private:
     QDateTime getNextTimeFromXml(int itemid, QDateTime current);
     int currentDayOfTheWeek();
 
-    //inner calc functions
     int getNextDaysCount(QString datecode, QString timedata);
-    int dateCheckedCounter(QString datecode);
+//    int dateCheckedCounter(QString datecode);
     QDateTime getNextDateTime(qint64 adddays, QString scheduledTime);
 
     int getStartupXmlIndex(QString objectname);

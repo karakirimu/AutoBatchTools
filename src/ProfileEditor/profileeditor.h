@@ -83,7 +83,8 @@ private:
 //    void setSettingList(QList<QStringList> *itemlist);
 
     //reset ui
-    void resetUi();
+    void preResetUi();
+    void postResetUi();
 
     Ui::ProfileEditor *ui;
     SettingDialog *settingdialog;

@@ -225,7 +225,7 @@ void EditOperator::pasteAction(int id)
 
         //encode
         QByteArray dat = lmime->data(QLatin1String("application/x-qt-profilerlist"));
-        QString dats(dat);
+        QString dats = QString::fromLocal8Bit(dat);
         QStringList ilist = dats.split("\n");
 
         QList<QStringList> _list;
