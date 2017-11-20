@@ -140,6 +140,10 @@ QTableWidget {
 /*    border: 1px solid #c2c2c2;*/
 }
 
+QTableWidget QTableCornerButton::section {
+    background-color: #c2c2c2;
+}
+
 QLabel {
     border: none;
     background-color: transparent;
@@ -298,4 +302,27 @@ QProgressBar {
     border: none;
     background-color: #8e8e8e;
     color: black;
+}
+
+QScrollBar {
+     border: 4px;
+     background: #f5f5f5;
+     height: 8px;
+     width: 8px;
+     margin: 0px;
+}
+
+QScrollBar::handle {
+     background: #8e8e8e;
+     min-width: 20px;
+     min-height: 20px;
+}
+
+ QScrollBar::add-line,  QScrollBar::sub-line {
+     background: none;
+     border: none;
+}
+
+ QScrollBar::add-page, QScrollBar::sub-page {
+     background: none;
 }

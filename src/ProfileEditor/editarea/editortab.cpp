@@ -62,6 +62,9 @@ void EditorTab::setEditOperator(EditOperator *op)
     vari = widgetsearch->findChild<QRadioButton *>("variRadioButton");
     file = widgetsearch->findChild<QRadioButton *>("fileRadioButton");
 
+    //set editop
+    localVariantComboBox->setEditOperator(op);
+
     // load extrafunc widget ui objects
     autoonly_3 = widgetextra->findChild<QCheckBox *>("autoOnlyCheckBox_3");
     extrafuncTableWidget = widgetextra->findChild<CommandTable *>("extrafuncTableWidget");
@@ -109,6 +112,12 @@ void EditorTab::setEditOperator(EditOperator *op)
 //DEPENDS_XML
 void EditorTab::setNormalDataList(QList<QStringList> *list, int firstpos)
 {
+    disconnect(timeoutCheckBox, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+    disconnect(tospin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged)
+            , this, &EditorTab::editValueAction);
+    disconnect(autoonly, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+    disconnect(ctablenormal, &CommandTable::updateTable, this, &EditorTab::editTableAction);
+
     int counter = VariantConverter::stringToInt(list->at(firstpos + 2).at(1));
     timeoutCheckBox->setChecked(VariantConverter::stringToBool(list->at(firstpos + 1).at(1)));
     tospin->setValue(((QString)list->at(firstpos + 1).at(3)).toInt());
@@ -116,13 +125,31 @@ void EditorTab::setNormalDataList(QList<QStringList> *list, int firstpos)
     for(int i = 0; i < counter; i++){
         ctablenormal->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 3 + i).at(1)));
     }
+
     autoonly->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
+
+    connect(timeoutCheckBox, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+    connect(tospin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged)
+            , this, &EditorTab::editValueAction);
+    connect(autoonly, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+    connect(ctablenormal, &CommandTable::updateTable, this, &EditorTab::editTableAction);
 }
 
 //DEPENDS_XML
 void EditorTab::setSearchDataList(QList<QStringList> *list, int firstpos)
 {
+    //reload combobox
+    disconnect(searchcombobox, &SearchComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    disconnect(separatorLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
+    disconnect(localVariantComboBox, &VariantComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    disconnect(outputLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
+    disconnect(autoonly_2, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+    disconnect(vari, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
+    disconnect(file, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
+
+    searchcombobox->reloadComboBoxItem();
     searchcombobox->setCurrentText(list->at(firstpos + 1).at(1));
+
     separatorLineEdit->setText(list->at(firstpos + 2).at(1));
     localVariantComboBox->insertItem(0,list->at(firstpos + 3).at(1));
     outputLineEdit->setText(list->at(firstpos + 4).at(1));
@@ -133,38 +160,52 @@ void EditorTab::setSearchDataList(QList<QStringList> *list, int firstpos)
         file->setChecked(true);
     }
 
-    autoonly->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
+    autoonly_2->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
+
+    connect(searchcombobox, &SearchComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    connect(separatorLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
+    connect(localVariantComboBox, &VariantComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    connect(outputLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
+    connect(autoonly_2, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+    connect(vari, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
+    connect(file, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
+
 }
 
 //DEPENDS_XML
 void EditorTab::setExtraFuncDataList(QList<QStringList> *list, int firstpos)
 {
-//    QWidget *widget = this->widget(XmlListGenerator::EXTRAFUNC);
-//    ExtraFunctionsComboBox *scb = widget->findChild<ExtraFunctionsComboBox *>("extrafuncComboBox");
-////    VariantComboBox *vcb = widget->findChild<VariantComboBox *>("varComboBox");
-//    QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox_3");
-//    CommandTable *table = widget->findChild<CommandTable *>("extrafuncTableWidget");
-
+    //reset combobox
+    disconnect(extrafunccombobox, &ExtraFunctionsComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    extrafunccombobox->reloadComboBoxItem();
     extrafunccombobox->setCurrentText(list->at(firstpos + 1).at(1));
+    connect(extrafunccombobox, &ExtraFunctionsComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+
 //    vcb->insertItem(0,list->at(firstpos + 1).at(1));
     int counter = VariantConverter::stringToInt(list->at(firstpos + 3).at(1));
+    disconnect(extrafuncTableWidget, &CommandTable::updateTable, this, &EditorTab::editTableAction);
     extrafuncTableWidget->setRowCount(counter);
     for(int i = 0; i < counter; i++){
         extrafuncTableWidget->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 4 + i).at(1)));
     }
+    connect(extrafuncTableWidget, &CommandTable::updateTable, this, &EditorTab::editTableAction);
 
+    disconnect(autoonly_3, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
     autoonly_3->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
+    connect(autoonly_3, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
 }
 
 //DEPENDS_XML
 void EditorTab::setOtherDataList(QList<QStringList> *list, int firstpos)
 {
-//    QWidget *widget = this->widget(XmlListGenerator::OTHER);
-//    ProfileComboBox *pcb = widget->findChild<ProfileComboBox *>("profileComboBox");
-//    QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox_4");
-
+    disconnect(profilecombobox, &ProfileComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    profilecombobox->reloadComboBoxItem();
     profilecombobox->setCurrentText(list->at(firstpos + 1).at(1));
+    connect(profilecombobox, &ProfileComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+
+    disconnect(autoonly_4, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
     autoonly_4->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
+    connect(autoonly_4, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
 }
 
 void EditorTab::setCombinedDataList(int index, int selectfrom)
@@ -321,6 +362,7 @@ void EditorTab::tabChanged(int index)
         break;
     case ProcessXmlListGenerator::SEARCH:
         searchcombobox->reloadComboBoxItem();
+        localVariantComboBox->reloadComboBoxItem();
         editop->editTabAction(currentid, index);
         break;
 

@@ -3,13 +3,14 @@
 VariantComboBox::VariantComboBox(QObject *)
 {
 // sbuilder = new StringXmlBuilder();
- pbuilder = new ProcessXmlBuilder();
+// pbuilder = new ProcessXmlBuilder();
+    editop = nullptr;
 }
 
 VariantComboBox::~VariantComboBox()
 {
 //    delete sbuilder;
-    delete pbuilder;
+//    delete pbuilder;
 }
 
 void VariantComboBox::reloadComboBoxItem()
@@ -19,7 +20,7 @@ void VariantComboBox::reloadComboBoxItem()
     int counter;
 
     //Processxmlbuilder update (local)
-    if(pbuilder->readItem(PEMAGIC, &item)){
+    if(editop->read(PEMAGIC, &item)){
         counter = VariantConverter::stringToInt(item.at(1).at(1));
         for(int i = 0; i < counter; i++){
             this->addItem(item.at(2 + i).at(1));
@@ -34,10 +35,15 @@ void VariantComboBox::reloadComboBoxItem()
 //            this->addItem(item.at(0).at(1));
 //            item.clear();
 //        }
-//    }
+    //    }
 }
 
-void VariantComboBox::setProfileFileName(QString filename)
+void VariantComboBox::setEditOperator(EditOperator *op)
 {
-    pbuilder->setLoadPath(filename);
+    editop = op;
 }
+
+//void VariantComboBox::setProfileFileName(QString filename)
+//{
+//    pbuilder->setLoadPath(filename);
+//}

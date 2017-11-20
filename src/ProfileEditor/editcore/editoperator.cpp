@@ -304,9 +304,6 @@ void EditOperator::newAction()
 
     emit loadfileChanged(autosavefile);
     emit edited(false);
-
-    //reset undo action
-    undostack->clear();
 }
 
 void EditOperator::openAction(QString filepath)
@@ -330,10 +327,6 @@ void EditOperator::openAction(QString filepath)
 
     emit loadfileChanged(loadfile);
     emit edited(false);
-
-    //reset undo action
-    undostack->clear();
-
 }
 
 void EditOperator::saveAction(QString filepath)
@@ -396,6 +389,8 @@ void EditOperator::exportAction(QString filepath)
     delete mexport;
     delete xgen;
     delete tempcache;
+
+    emit edited(false);
 }
 
 void EditOperator::abortAction()
@@ -407,7 +402,14 @@ void EditOperator::save()
 {
     //overwrite all items
     if(QFile::exists(autosavefile)){
-        QFile::remove(autosavefile);
+        //condition of currently file used
+        QFile file(autosavefile);
+        if(file.open(QIODevice::ReadOnly | QIODevice::Text)){
+            file.close();
+            QFile::remove(autosavefile);
+        }else{
+            return;
+        }
     }
 
     //full update file
@@ -480,6 +482,10 @@ void EditOperator::reset()
     //delete all "new cache"
     qDeleteAll(*cache);
     cache->clear();
+
+    //reset undo action
+    undostack->clear();
+
 }
 
 int EditOperator::getCacheSize() const

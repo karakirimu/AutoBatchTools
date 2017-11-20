@@ -27,7 +27,6 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     }
 
     //set Attrs
-//    setAttribute(Qt::WA_DeleteOnClose);
     settingdialog = new SettingDialog();
 
     //theme settings
@@ -42,8 +41,6 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     ui->localVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
 
     //init sharedfunction
-//    sfunction = new PESharedFunction();
-//    binder = new FileOperationSignalBinder(sfunction, this);
     editop = new EditOperator(this);
     rbinder = new RunTaskSignalBinder(this);
 
@@ -65,13 +62,6 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(editop, &EditOperator::ui_selectindexUpdate, this, &ProfileEditor::setTreerowpos_select);
     connect(editop, &EditOperator::ui_funcindexUpdate, this, &ProfileEditor::setTreerowpos_update);
     //provide function object
-//    ui->variantTableWidget->setSharedFunction(sfunction);
-
-//    ui->runTreeWidget->setSharedFunction(sfunction);
-
-    //provide signal and slot
-//    ui->runTreeWidget->setWidgetsSignalBinder(binder);
-//    ui->graphicsView->setWidgetsSignalBinder(binder);
 
     ui->console->setRunTaskSignalBinder(rbinder);
     ui->consolemessage->setRunTaskSignalBinder(rbinder);
@@ -81,9 +71,6 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //update window title
     connect(editop, &EditOperator::loadfileChanged, this, &ProfileEditor::onTitleChanged);
-//    connect(sfunction, SIGNAL(fileNameChanged(QString,QString)), this, SLOT(onWindowTitleChanged(QString, QString)));
-    //update temp run file
-//    connect(sfunction, &PESharedFunction::fileNameChanged, rbinder, &RunTaskSignalBinder::updateEditFile);
 
     //set radiobutton group id
     ui->searchButtonGroup->setId(ui->variRadioButton, 0);
@@ -196,10 +183,9 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     connect(editop, &EditOperator::ui_selectindexUpdate, this, &ProfileEditor::itemChangedAction);
 //    connect(ui->graphicsView, &GraphicArea::selectChangedAction, this, &ProfileEditor::itemChangedAction);
-//    connect(ui->editorTab, SIGNAL(currentChanged(int)), this, SLOT(editorTabChanged(int)));
 
-    //connect editor function (not need)
-//    connectEdit();
+    //Title * flag
+    connect(editop, &EditOperator::edited, this, &ProfileEditor::onFileEdited);
 
     initStatusBar();
 
@@ -215,9 +201,9 @@ ProfileEditor::ProfileEditor(QString loadfile, QWidget *parent)
 //    ui->runTreeWidget->reloadAction();
 //    ui->graphicsView->reloadAction();
 //    ui->variantTableWidget->reloadAction();
-    preResetUi();
+//    preResetUi();
     editop->openAction(loadfile);
-    setLoadfile(loadfile);
+//    setLoadfile(loadfile); /*int title changed*/
     postResetUi();
 }
 
@@ -230,39 +216,72 @@ ProfileEditor::~ProfileEditor()
 
     delete ui;
     delete settingdialog;
-//    delete binder;
     delete editop;
     delete rbinder;
-//    delete sfunction;
 }
 
 void ProfileEditor::newfileAction()
 {
-//    sfunction->generateNewFile();
-    preResetUi();
+    if(lastedited){
+        // ドキュメントが変更されている場合の警告
+        QMessageBox::StandardButton res
+                = QMessageBox::question(this,\
+                                        tr("Alert"),\
+                                        tr("File was edited.\nDo you want to save this file ?"),\
+                                        QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
+
+
+        if(res == QMessageBox::Cancel) return;
+        if(res == QMessageBox::Yes){
+            // save and generate new file
+            overWriteSaveAction();
+        }
+    }
+
+    // not save and newfile generate
     editop->newAction();
     postResetUi();
+
 }
 
 void ProfileEditor::openAction()
 {
-//    sfunction->openEditAction(this);
+    if(lastedited){
+        // Warning if document is edited by user.
+        QMessageBox::StandardButton res
+                = QMessageBox::question(this,\
+                                        tr("Alert"),\
+                                        tr("File was edited.\nDo you want to save this file ?"),\
+                                        QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
+
+
+
+        if(res == QMessageBox::Cancel) return;
+
+
+        if(res == QMessageBox::Yes){
+            // save file
+            overWriteSaveAction();
+        }
+    }
+
+    // open file
     QString fileName =
             QFileDialog::getOpenFileName(this,\
                                          tr("Open file"),\
                                          QDir::currentPath(),\
                                          tr("Profile (*.xml *.apro)"));
     if(fileName != ""){
-        preResetUi();
+//          preResetUi();
         editop->openAction(fileName);
         postResetUi();
     }
+
 }
 
 void ProfileEditor::saveAction()
 {
     // copy only in save action
-//    sfunction->saveEditAction(this);
     QString fileName =
             QFileDialog::getSaveFileName(this,\
                                          tr("Save Edit file"),\
@@ -300,40 +319,12 @@ void ProfileEditor::redoAction()
 
 void ProfileEditor::addAction()
 {
-//    ui->runTreeWidget->addAction();
-//    binder->addItem();
     editop->addAction();
 
     emit editop->ui_selectindexUpdate(editop->getCacheSize() - 1, EditOperator::MAINEDITOR);
     emit editop->ui_funcindexUpdate(editop->getCacheSize() - 1, -1, EditOperator::ADD, EditOperator::MAINEDITOR);
 
 }
-
-//void ProfileEditor::editAction()
-//{
-//    //index 1 is local function.
-//    qDebug() << "editor::editaction";
-//    QList<QStringList> list;
-//    if(treerowpos == 0){
-////        createList(0, &list);
-//    }
-//    if(treerowpos > 1){
-//        //temp list
-////        createList(5, &list);
-//    }
-//    //TODO:
-////    ui->runTreeWidget->editAction(treerowpos, &list);
-////    binder->editWrite(treerowpos, &list);
-
-//    //TODO:
-////    QString data = windowTitle().split(" ").at(0);
-////    setWindowTitle(data + "*");
-//}
-
-//void ProfileEditor::editAction(int)
-//{
-//    editAction();
-//}
 
 void ProfileEditor::deleteAction()
 {
@@ -400,6 +391,7 @@ void ProfileEditor::launchSettingAction()
     settingdialog->show();
 }
 
+//QSS_THEME
 void ProfileEditor::themeChangeAction()
 {
     QSettings settings( "./psettings.ini", QSettings::IniFormat );
@@ -409,28 +401,16 @@ void ProfileEditor::themeChangeAction()
     QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
     settings.endGroup();
 
-    if(stylecolor == "Light"){
+    if(stylecolor != "Default"){
 #ifdef QT_DEBUG
-        QFile file("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/Light.qss");
+        QFile file(QString("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/%1.qss").arg(stylecolor));
 #else
-        QFile file(":/themes/Light.qss");
-#endif
-        if(file.open( QFile::ReadOnly | QFile::Text )){
-            QString data(QLatin1String(file.readAll()));
-//            data = data.replace(QRegularExpression("(\r\n|\r|\n)"), "");
-            this->setStyleSheet(data);
-        }
-    }
-
-    if(stylecolor == "Dark"){
-#ifdef QT_DEBUG
-        QFile file("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/Dark.qss");
-#else
-        QFile file(":/themes/Dark.qss");
+        QFile file(QString(":/themes/%1.qss").arg(stylecolor));
 #endif
         if(file.open( QFile::ReadOnly | QFile::Text )){
             QString data(QLatin1String(file.readAll()));
             this->setStyleSheet(data);
+//            settingdialog->setStyleSheet(data);
         }
     }
 }
@@ -476,107 +456,34 @@ void ProfileEditor::onTitleChanged(QString newload)
     setWindowTitle(newtitle + tr(" - ProfileEditor"));
 
     //set new update file (search, script)
-    ui->localVariantComboBox->setProfileFileName(newload);
+//    ui->localVariantComboBox->setProfileFileName(newload);
 
     //update filepath
     setLoadfile(newload);
     rbinder->updateEditFile(newload);
 }
 
-//void ProfileEditor::onWindowTitleChanged(QString newtitle, QString newtemp)
-//{
-//    ///HARD CODING
-//    if(newtitle != "New_File"){
-//        QFileInfo info(newtitle);
-//        newtitle = info.fileName();
-//    }
+void ProfileEditor::onFileEdited(bool edited)
+{
+    QString title = this->windowTitle();
+    lastedited = edited;
+    if(editop->isEdited() && edited){
+        //add * first
+        if(title.at(0) != "*") setWindowTitle("*" + title);
 
-//    setWindowTitle(newtitle + tr(" - ProfileEditor"));
-
-//    //set new update file (search, script)
-//    ui->localVariantComboBox->setProfileFileName(newtemp);
-////    ui->varComboBox->setProfileFileName(newtemp);
-//}
-
-//void ProfileEditor::itemChangedAction()
-//{
-//    qDebug() << "itemChangedAction::called";
-//    //create list item
-//    QList<QStringList> item;
-
-//    //TODO:
-//    if(!ui->runTreeWidget->currentItem()->parent()){
-
-//        treerowpos = ui->runTreeWidget->fixedCurrentRow();
-
-//        qDebug() << "itemChangedAction::treerowpos" << treerowpos;
-
-//        //set new string
-//        binder->readItem(treerowpos, &item);
-//        setSettingList(&item);
-
-////        ui->runTreeWidget->expandItem(ui->runTreeWidget->currentItem());
-
-//        int index = (treerowpos > 0) ? treerowpos - 1 : 0;
-//        emit rowPosChanged("Selected: " + QString::number(index));
-//    }
-//    //TODO:do collapse
-//}
+    }else{
+        //remove first *
+        if(title.at(0) == "*"){
+            setWindowTitle(title.remove(0,1));
+        }
+    }
+}
 
 void ProfileEditor::itemChangedAction(int index)
 {
-    //create list item
-//    QList<QStringList> item;
-//    treerowpos = (index > 0)? index + 1 : 0;
-
-    //set new string
-//    binder->readItem(treerowpos, &item);
-//    setSettingList(&item);
-//    if(index > 0){
-//        ui->innerStackedWidget->setCurrentIndex(1);
-//    }else{
-//        ui->innerStackedWidget->setCurrentIndex(0);
-//    }
-
-
     qDebug() << "itemChangedAction::treerowpos" << index;
     emit rowPosChanged("Selected: " + QString::number((index > 0)? index : 1));
 }
-
-//this function detects value "-1". it shows "xml local data"
-//void ProfileEditor::editorTabChanged(int index)
-//{
-//    qDebug() << "runtypeComboBoxChanged::index" << index;
-
-//    //set new index
-//    if(index > -1) ui->innerStackedWidget->setCurrentIndex(1);
-
-////    //disconnect
-////    disconnectEdit();
-
-////    switch(index){
-////    case 1:
-////        ui->searchComboBox->reloadComboBoxItem();
-////        ui->localVariantComboBox->reloadComboBoxItem();
-////        break;
-////    case 2:
-////        ui->extrafuncComboBox->reloadComboBoxItem();
-//////        ui->varComboBox->reloadComboBoxItem();
-////        break;
-////    case 3:
-////        ui->profileComboBox->reloadComboBoxItem();
-////        break;
-////    default:
-////        break;
-////    }
-
-//////    if(index > -1) this->editAction();
-
-//////    ui->graphicsView->reloadAction();
-
-////    //re-connect
-////    connectEdit();
-//}
 
 void ProfileEditor::about()
 {
@@ -619,7 +526,7 @@ void ProfileEditor::closeEvent(QCloseEvent *event)
 //    int fileedit = sfunction->checkFileEdited();
 //    qDebug() << "closeEvent::checkdiff" << fileedit;
 
-    if(!editop->isEdited()){
+    if(!lastedited){
         return;
     }
 
@@ -651,74 +558,6 @@ void ProfileEditor::closeEvent(QCloseEvent *event)
     }
 }
 
-//void ProfileEditor::connectEdit()
-//{
-//    //type=info
-//    connect(ui->nameLineEdit, SIGNAL(editingFinished()), this, SLOT(editAction()));
-//    connect(ui->verLineEdit, SIGNAL(editingFinished()), this, SLOT(editAction()));
-//    connect(ui->authorLineEdit, SIGNAL(editingFinished()), this, SLOT(editAction()));
-//    connect(ui->descTextEdit, SIGNAL(textChanged()), this, SLOT(editAction()));
-
-//    //common in innerstack
-//    connect(ui->autoOnlyCheckBox, SIGNAL(clicked()), this, SLOT(editAction()));
-//    connect(ui->autoOnlyCheckBox_2, SIGNAL(clicked()), this, SLOT(editAction()));
-//    connect(ui->autoOnlyCheckBox_3, SIGNAL(clicked()), this, SLOT(editAction()));
-//    connect(ui->autoOnlyCheckBox_4, SIGNAL(clicked()), this, SLOT(editAction()));
-
-//    //type=normal
-//    connect(ui->timeoutCheckBox, SIGNAL(clicked()), this, SLOT(editAction()));
-//    connect(ui->timeoutSpinBox, SIGNAL(valueChanged(int)), this, SLOT(editAction()));
-//    connect(ui->cmdTableWidget, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
-
-//    //type=search
-//    connect(ui->searchComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(editAction(int)));
-//    connect(ui->separatorLineEdit, SIGNAL(editingFinished()), this, SLOT(editAction()));
-//    connect(ui->localVariantComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(editAction(int)));
-//    connect(ui->outputLineEdit, SIGNAL(textChanged(QString)), this, SLOT(editAction()));
-
-//    //type=extrafunc
-//    connect(ui->extrafuncComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(editAction(int)));
-////    connect(ui->varComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(editAction(int)));
-//    connect(ui->extrafuncTableWidget, SIGNAL(cellChanged(int, int)), this, SLOT(editAction()));
-
-//    //type=other
-//    connect(ui->profileComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(editAction(int)));
-//}
-
-//void ProfileEditor::disconnectEdit()
-//{
-//    //type=info
-//    disconnect(ui->nameLineEdit, SIGNAL(editingFinished()), this, SLOT(editAction()));
-//    disconnect(ui->verLineEdit, SIGNAL(editingFinished()), this, SLOT(editAction()));
-//    disconnect(ui->authorLineEdit, SIGNAL(editingFinished()), this, SLOT(editAction()));
-//    disconnect(ui->descTextEdit, SIGNAL(textChanged()), this, SLOT(editAction()));
-
-//    //common in innerstack
-//    disconnect(ui->autoOnlyCheckBox, SIGNAL(clicked()), this, SLOT(editAction()));
-//    disconnect(ui->autoOnlyCheckBox_2, SIGNAL(clicked()), this, SLOT(editAction()));
-//    disconnect(ui->autoOnlyCheckBox_3, SIGNAL(clicked()), this, SLOT(editAction()));
-//    disconnect(ui->autoOnlyCheckBox_4, SIGNAL(clicked()), this, SLOT(editAction()));
-
-//    //type=normal
-//    disconnect(ui->timeoutCheckBox, SIGNAL(clicked()), this, SLOT(editAction()));
-//    disconnect(ui->timeoutSpinBox, SIGNAL(valueChanged(int)), this, SLOT(editAction()));
-//    disconnect(ui->cmdTableWidget, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
-
-//    //type=search
-//    disconnect(ui->searchComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(editAction(int)));
-//    disconnect(ui->separatorLineEdit, SIGNAL(textChanged(QString)), this, SLOT(editAction()));
-//    disconnect(ui->localVariantComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(editAction(int)));
-//    disconnect(ui->outputLineEdit, SIGNAL(textChanged(QString)), this, SLOT(editAction()));
-
-//    //type=extrafunc
-//    disconnect(ui->extrafuncComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(editAction(int)));
-////    disconnect(ui->varComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(editAction(int)));
-//    disconnect(ui->extrafuncTableWidget, SIGNAL(cellChanged(int, int)), this, SLOT(editAction()));
-
-//    //type=other
-//    disconnect(ui->profileComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(editAction(int)));
-//}
-
 void ProfileEditor::initStatusBar()
 {
     QLabel *label = new QLabel();
@@ -733,204 +572,28 @@ void ProfileEditor::initStatusBar()
     connect(rbinder, &RunTaskSignalBinder::processCurrent, progressbar, &QProgressBar::setValue);
 }
 
-void ProfileEditor::preResetUi()
-{
-    //set current info ui
-//    ui->innerStackedWidget->setCurrentIndex(0);
-
-    //temp disconnect slot
-//    disconnectEdit();
-
-    //set firststacked to empty
-//    ui->innerStackedWidget->clearInfoDataListForm();
-}
-
-
-//void ProfileEditor::setSettingList(QList<QStringList> *itemlist)
-//{
-//    //edit disconnect
-//    disconnectEdit();
-
-//    if(itemlist->empty()) return;
-
-//    int runtype = sfunction->setInformationType(itemlist->at(0).at(1));
-
-//    ui->innerStackedWidget->moveStacked(runtype);
-//    ui->editorTab->moveTabFromXml(runtype);
-
-//    qDebug() << "setSettingList :: runtype : " << runtype;
-
-//    switch(runtype){
-//    case 0: /*setInfoList(itemlist, 1);*/
-//        ui->innerStackedWidget->setInfoDataList(itemlist, 1);
-//        break;
-//    case 1: /*setNormalList(itemlist, 1);*/
-////        ui->autoOnlyCheckBox->setChecked(VariantConverter::stringToBool(itemlist->at(0).at(3)));
-//        ui->editorTab->setNormalDataList(itemlist, 0);
-//        ui->editorTab->setCurrentIndex(0);
-//        break;
-//    case 2: /*setSearchList(itemlist, 1);*/
-////        ui->autoOnlyCheckBox_2->setChecked(VariantConverter::stringToBool(itemlist->at(0).at(3)));
-//        ui->editorTab->setSearchDataList(itemlist, 0);
-//        ui->editorTab->setCurrentIndex(1);
-//        break;
-//    case 3: /*setScriptList(itemlist, 1);*/
-////        ui->autoOnlyCheckBox_3->setChecked(VariantConverter::stringToBool(itemlist->at(0).at(3)));
-//        ui->editorTab->setScriptDataList(itemlist, 0);
-//        ui->editorTab->setCurrentIndex(2);
-//        break;
-//    case 4: /*ui->profileComboBox->setCurrentText(itemlist->at(1).at(1));*/
-////        ui->autoOnlyCheckBox_4->setChecked(VariantConverter::stringToBool(itemlist->at(0).at(3)));
-//        ui->editorTab->setOtherDataList(itemlist, 0);
-//        ui->editorTab->setCurrentIndex(3);
-//        break;
-//    case 5: /*setSettingTempList(itemlist);*/
-//        //tab index is determined inner of this function.
-////        ui->editorTab->setTempDataList(itemlist, sfunction);
-//        break;
-//    default:
-//        break;
-//    }
-
-//    connectEdit();
-//}
-
-///DEPENDS_XML
-//void ProfileEditor::setSettingTempList(QList<QStringList> *list)
-//{
-//    if(list->empty()) return;
-
-//    //no file showing module
-//    int cmdskip = VariantConverter::stringToInt(list->at(sfunction->firstPosNormal() + 1).at(1));
-////    int scrskip = VariantConverter::stringToInt(list->at(8 + cmdskip).at(1));
-//    //set autoonly checkbox
-//    //TODO: DO NOT ALL DATA CHANGED (lest _2, _3, _4)
-////    ui->autoOnlyCheckBox->setChecked(VariantConverter::stringToBool(list->at(0).at(3)));
-
-//    //set widget selection
-////    ui->innerStackedWidget->setCurrentIndex(1);
-//    //set runtype combobox selection from innerstackedwidget
-////    ui->runTypeComboBox->setCurrentIndex(VariantConverter::stringToInt(list->at(1).at(1)));
-//    ui->editorTab->setCurrentIndex(VariantConverter::stringToInt(list->at(1).at(1)));
-
-//    //load type=normal
-//    ui->editorTab->setNormalDataList(list, sfunction->firstPosNormal());
-
-//    //load type=search
-//    ui->editorTab->setSearchDataList(list, sfunction->firstPosSearch());
-
-//    //load type=script
-//    ui->editorTab->setScriptDataList(list, sfunction->firstPosScript() + cmdskip);
-
-//    //load type=other
-//    ui->editorTab->setOtherDataList(list, sfunction->firstPosOther());
-
-//    //no file showing module
-//}
-
-/**
- * @brief ProfileEditor::createList
- * @param itemid
- * @param type
- * @param newlist
- *
- * @details
- * int type
- * 0:info
- * 1:normal
- * 2:search
- * 3:script
- * 4:other
- */
-//void ProfileEditor::createList(int type, QList<QStringList> *newlist)
-//{
-//    switch(type){
-//    case 0: getInfoList(newlist);  break;
-//    case 1: getNormalList(newlist);break;
-//    case 2: getSearchList(newlist);break;
-//    case 3: getScriptList(newlist);break;
-//    case 4: getOtherList(newlist); break;
-//    case 5: createTempList(newlist);     break;
-//    default:                             break;
-//    }
-//}
-
-///DEPENDS_XML
-//void ProfileEditor::createTempList(QList<QStringList> *newlist)
-//{
-//    // basic infomation
-//    newlist->append((QStringList() << "type" << "temp" << "only"
-//                     << VariantConverter::boolToString(ui->editorTab->getCurrentIndexOnlyChecked())));
-//    newlist->append((QStringList() << "istack" << QString::number(ui->editorTab->currentIndex())));
-
-//    // "type" << "search";
-//    getSearchList(newlist);
-
-//    // "type" << "other";
-//    getOtherList(newlist);
-
-//    // "type" << "normal";
-//    getNormalList(newlist);
-
-//    // "type" << "script";
-//    getScriptList(newlist);
-
-//}
-
-/////DEPENDS_XML
-//void ProfileEditor::getInfoList(QList<QStringList> *newlist)
-//{
-//    QStringList list;
-//    ui->innerStackedWidget->getInfoDataList(&list);
-//    sfunction->createInfoList(newlist, &list);
-//}
-
-/////DEPENDS_XML
-//void ProfileEditor::getNormalList(QList<QStringList> *newlist)
-//{
-//    QStringList list;
-//    ui->editorTab->getNormalDataList(&list);
-//    sfunction->createNormalList(newlist, &list);
-//}
-
-/////DEPENDS_XML
-//void ProfileEditor::getSearchList(QList<QStringList> *newlist)
-//{
-//    QStringList list;
-//    ui->editorTab->getSearchDataList(&list);
-//    sfunction->createSearchList(newlist, &list);
-//}
-
-/////DEPENDS_XML
-//void ProfileEditor::getScriptList(QList<QStringList> *newlist)
-//{
-//    QStringList list;
-//    ui->editorTab->getScriptDataList(&list);
-//    sfunction->createScriptList(newlist, &list);
-//}
-
-/////DEPENDS_XML
-//void ProfileEditor::getOtherList(QList<QStringList> *newlist)
-//{
-//    QStringList list;
-//    ui->editorTab->getOtherDataList(&list);
-//    sfunction->createOtherList(newlist, &list);
-//}
-
 void ProfileEditor::setLoadfile(const QString &value)
 {
     loadfile = value;
 }
 
+//void ProfileEditor::preResetUi()
+//{
+//    //set current info ui
+////    ui->innerStackedWidget->setCurrentIndex(0);
+
+//    //temp disconnect slot
+////    disconnectEdit();
+
+//    //set firststacked to empty
+////    ui->innerStackedWidget->clearInfoDataListForm();
+//}
+
 //when opening new file
 void ProfileEditor::postResetUi()
 {
-    //reload all combobox
-//    ui->searchComboBox->reloadComboBoxItem();
-//    ui->extrafuncComboBox->reloadComboBoxItem();
-    ui->localVariantComboBox->reloadComboBoxItem();
-//  ui->varComboBox->reloadComboBoxItem();
-//    ui->profileComboBox->reloadComboBoxItem();
+    //reload variant combobox
+//    ui->localVariantComboBox->reloadComboBoxItem();
 
     //reload file
     ui->runTreeWidget->reloadAction();
@@ -938,14 +601,6 @@ void ProfileEditor::postResetUi()
     ui->flowTableWidget->reloadAction();
     ui->variantTableWidget->reloadAction();
 
-    //connect slot
-//    connectEdit();
-
     //reset tree row position
     rowpos = 0;
-
-    //load first item
-//    QList<QStringList> item;
-//    sfunction->readItem(treerowpos, &item);
-//    setSettingList(&item);
 }

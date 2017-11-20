@@ -9,7 +9,22 @@ FlowCellWidget::FlowCellWidget(QWidget *parent) :
 
     //set default color
     framecolor = "background-color: transparent;";
-    arrowpixmap = QIcon(":/icons/downtriangle.png").pixmap(32,32);
+
+
+    QSettings settings( "./psettings.ini", QSettings::IniFormat );
+
+    //theme settings
+    settings.beginGroup("BASICSETTING");
+    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
+    settings.endGroup();
+
+    if(stylecolor == "Light"){
+        arrowpixmap = QIcon(":/icons/downtriangle.png").pixmap(32,32);
+    }
+
+    if(stylecolor == "Dark"){
+        arrowpixmap = QIcon(":/icons/downtriangle_light.png").pixmap(32,32);
+    }
 }
 
 FlowCellWidget::~FlowCellWidget()
@@ -19,7 +34,7 @@ FlowCellWidget::~FlowCellWidget()
 
 void FlowCellWidget::setType(QString type)
 {
-    ui->typelabel->setText(type);
+    ui->typelabel->setText("<b>" + type + "</b>");
 }
 
 void FlowCellWidget::setTypepixmap(QPixmap pixmap)

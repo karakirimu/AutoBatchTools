@@ -439,7 +439,7 @@ void ProfileTreeWidget::setTree(int itemid)
 void ProfileTreeWidget::setInfoTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
 {
     QString curdata;
-    root->setText(1,"info");
+    root->setText(1,"Info");
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "(no name)" : curdata;
     root->setText(0, curdata);
@@ -453,7 +453,7 @@ void ProfileTreeWidget::setNormalTree(QTreeWidgetItem *root, QList<QStringList> 
 
     QString curdata;
     QTreeWidgetItem *childitem;
-    root->setText(1,"normal");
+    root->setText(1,"Exec");
     root->setIcon(1, QIcon(":/icons/Terminal.png"));
     curdata = (cmdskip == 0)? "NewCommand" : list->at(firstpos + 2).at(1);
 
@@ -490,7 +490,7 @@ void ProfileTreeWidget::setSearchTree(QTreeWidgetItem *root, QList<QStringList> 
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
     root->setText(0, curdata);
-    root->setText(1,"search");
+    root->setText(1,"Search");
     root->setIcon(1, QIcon(":/icons/Search.png"));
     childitem = new QTreeWidgetItem(root);
     childitem->setText(0, list->at(firstpos + 1).at(1));
@@ -514,7 +514,7 @@ void ProfileTreeWidget::setExtraFuncTree(QTreeWidgetItem *root, QList<QStringLis
     QString curdata;
     QTreeWidgetItem *childitem;
 
-    root->setText(1,"script");
+    root->setText(1,"External");
     root->setIcon(1, QIcon(":/icons/File_Text.png"));
     int scrskip = VariantConverter::stringToInt(list->at(firstpos + 2).at(1));
     curdata = list->at(firstpos).at(1);
@@ -542,7 +542,7 @@ void ProfileTreeWidget::setExtraFuncTree(QTreeWidgetItem *root, QList<QStringLis
 void ProfileTreeWidget::setOtherTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
 {
     QString curdata;
-    root->setText(1,"other");
+    root->setText(1,"Profile");
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
     root->setText(0, curdata);

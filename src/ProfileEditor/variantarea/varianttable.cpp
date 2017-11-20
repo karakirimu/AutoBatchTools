@@ -117,9 +117,11 @@ void VariantTable::downAction()
 
 void VariantTable::reloadAction()
 {
-    qDebug() << "reloadaction";
+    qDebug() << "VariantTable::reloadaction";
+    disconnect(this, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
     setRowCount(0);
     setLocalListItem(MAGIC);
+    connect(this, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
 }
 
 void VariantTable::setPopupActionTop()
@@ -229,7 +231,7 @@ bool VariantTable::setLocalListItem(int itemid)
             this->setItem(i - 2, 1, new QTableWidgetItem(list->at(i).at(3)));
         }
 
-        qDebug()<< "setTreeItem";
+        qDebug()<< "VariantTable::setTreeItem";
         delete list;
         return true;
     }

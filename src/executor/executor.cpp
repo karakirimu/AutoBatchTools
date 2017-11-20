@@ -395,6 +395,8 @@ bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
     QString sepdata = list->at(firstpos + 2).at(1);
     int cre = result.count();
     for(int i = 0; i < cre; i++){
+        emit processMessage(tr("%1").arg(result.at(i)), SEARCH);
+
         combineresult.append(result.at(i));
         if(i < (cre-1)){
             if(sepdata.contains("\\r\\n")){
@@ -421,8 +423,13 @@ bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
     //save to variant
     if(radiodata == 0){
         QString selectvar = list->at(firstpos + 3).at(1);
-        //set data to variant
-        overwriteLocalMacro(selectvar, combineresult);
+
+        if(selectvar != ""){
+            //set data to variant
+            overwriteLocalMacro(selectvar, combineresult);
+        }else{
+            emit processMessage(tr("Search : No variant is defined."), ERROR);
+        }
 
     }else{
         //TODO: create data to File
@@ -435,7 +442,6 @@ bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
             if(file.exists() && searchfileoverwrite){
                 //clear file string
                 file.resize(0);
-
             }
 
             //create new file
@@ -634,8 +640,10 @@ QString Executor::replaceMacro(QString original, QHash<QString, QString> *list)
 {
     QString result = original;
     QHash<QString, QString>::iterator i = list->find(original);
-    while (i != list->end() && i.key() == original) {
-        result = result.replace(original, i.value());
+    while (i != list->end()) {
+        if(i.key() == original){
+            result = result.replace(original, i.value());
+        }
         ++i;
     }
     return result;

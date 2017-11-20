@@ -3,6 +3,7 @@
 
 #include <QComboBox>
 #include <QWidget>
+#include <QSettings>
 #include <../searchxmlbuilder/searchxmlbuilder.h>
 #include <../filesearchdialog/filesearchdialog.h>
 
@@ -21,6 +22,8 @@ public slots:
     void deleteAction();
 
 private:
+    void setTheme(FileSearchDialog *fs);
+
     SearchXmlBuilder *builder;
 };
 

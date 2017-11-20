@@ -131,6 +131,10 @@ QTreeView::item:selected:!active {
     color: black;
 }
 
+QTableWidget QTableCornerButton::section {
+    background-color: #616161;
+}
+
 QTableWidget {
     background-color: #373737;
 /*    border: 1px solid #616161;*/
@@ -157,7 +161,7 @@ QLineEdit, QPlainTextEdit
 
 QDockWidget {
     border: none;
-    background: #373737;
+    background-color: #373737;
     color: #c6c6c6;
 }
 
@@ -294,4 +298,27 @@ QProgressBar {
     border: none;
     background-color: #171717;
     color: #c6c6c6;
+}
+
+QScrollBar {
+     border: 4px;
+     background: #373737;
+     height: 8px;
+     width: 8px;
+     margin: 0px;
+}
+
+QScrollBar::handle {
+     background: #eeeeee;
+     min-width: 20px;
+     min-height: 20px;
+}
+
+ QScrollBar::add-line,  QScrollBar::sub-line {
+     background: none;
+     border: none;
+}
+
+ QScrollBar::add-page, QScrollBar::sub-page {
+     background: none;
 }

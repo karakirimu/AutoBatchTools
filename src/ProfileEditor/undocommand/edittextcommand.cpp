@@ -22,9 +22,9 @@ EditTextCommand::EditTextCommand(const int &targetindex
                 ->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 2)
                 .at(1);
         break;
-    case ProcessXmlListGenerator::OUTPUT_RADIO:
+    case ProcessXmlListGenerator::OUTPUTFILE:
         m_oldstring = m_cache->at(m_targetindex)
-                ->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 3)
+                ->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4)
                 .at(1);
         break;
     case ProcessXmlListGenerator::INFO_NAME:
@@ -57,10 +57,10 @@ void EditTextCommand::undo()
         m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 2, alist);
         setText(QObject::tr("Change text at Search Separator"));
         break;
-    case ProcessXmlListGenerator::OUTPUT_RADIO:
-        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 3);
+    case ProcessXmlListGenerator::OUTPUTFILE:
+        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4);
         alist.replace(1, m_oldstring);
-        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 3, alist);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4, alist);
         setText(QObject::tr("Change text at Search Output file"));
         break;
     case ProcessXmlListGenerator::INFO_NAME:
@@ -103,10 +103,10 @@ void EditTextCommand::redo()
         m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 2, alist);
         setText(QObject::tr("Change text at Search Separator"));
         break;
-    case ProcessXmlListGenerator::OUTPUT_RADIO:
-        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 3);
+    case ProcessXmlListGenerator::OUTPUTFILE:
+        alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4);
         alist.replace(1, m_newstring);
-        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 3, alist);
+        m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4, alist);
         setText(QObject::tr("Change text at Search Output file"));
         break;
     case ProcessXmlListGenerator::INFO_NAME:
@@ -144,7 +144,7 @@ int EditTextCommand::id() const
     if(m_objname == "separatorLineEdit"){
         return ProcessXmlListGenerator::SEPARATOR;
     }else if(m_objname == "outputLineEdit"){
-        return ProcessXmlListGenerator::OUTPUT_RADIO;
+        return ProcessXmlListGenerator::OUTPUTFILE;
     }else if(m_objname == "nameLineEdit"){
         return ProcessXmlListGenerator::INFO_NAME;
     }else if(m_objname == "verLineEdit"){
@@ -161,6 +161,7 @@ int EditTextCommand::id() const
 bool EditTextCommand::mergeWith(const QUndoCommand *other)
 {
     if (other->id() != id()) return false;
-    m_newstring = static_cast<const EditTextCommand*>(other)->m_newstring;
+    const EditTextCommand *com = static_cast<const EditTextCommand*>(other);
+    m_newstring = com->m_newstring;
     return true;
 }

@@ -548,7 +548,7 @@ void FlowTable::setInfoItem(FlowCellWidget *cell, QList<QStringList> *list, int 
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "(no name)" : curdata;
 //    cell->setType("info", QPixmap(":/icons/Info_Light.png"));
-    cell->setType("info");
+    cell->setType("Information");
     cell->setTypepixmap(QIcon(":/icons/Info_Light.png").pixmap(16,16));
     cell->setTypecolor("color: black; background-color: rgb(230, 230, 230);");
     cell->setFramecolor("background-color: rgb(120, 120, 120);");
@@ -574,7 +574,7 @@ void FlowTable::setNormalItem(FlowCellWidget *cell, QList<QStringList> *list, in
 
     QString curdata;
 //    cell->setType("normal", QPixmap(":/icons/Terminal.png"));
-    cell->setType("normal");
+    cell->setType("Executable");
     cell->setTypepixmap(QIcon(":/icons/Terminal.png").pixmap(16,16));
     cell->setTypecolor("color: black; background-color: rgb(222, 235, 247);");
     cell->setFramecolor("background-color: rgb(44, 70, 94);");
@@ -608,7 +608,7 @@ void FlowTable::setSearchItem(FlowCellWidget *cell, QList<QStringList> *list, in
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
 //    cell->setType("search", QPixmap(":/icons/Search.png"));
-    cell->setType("search");
+    cell->setType("File Search");
     cell->setTypepixmap(QIcon(":/icons/Search.png").pixmap(16,16));
     cell->setTypecolor("color: black; background-color: rgb(226, 240, 217);");
     cell->setFramecolor("background-color: rgb(56, 87, 35);");
@@ -632,7 +632,7 @@ void FlowTable::setExtraFuncItem(FlowCellWidget *cell, QList<QStringList> *list,
 {
     QString curdata;
 //    cell->setType("script", QPixmap(":/icons/File_Text.png"));
-    cell->setType("script");
+    cell->setType("External Function");
     cell->setTypepixmap(QIcon(":/icons/File_Text.png").pixmap(16,16));
     cell->setTypecolor("color: black; background-color: rgb(251, 215, 214);");
     cell->setFramecolor("background-color: rgb(132, 12, 12);");
@@ -664,7 +664,7 @@ void FlowTable::setOtherItem(FlowCellWidget *cell, QList<QStringList> *list, int
 {
     QString curdata;
 //    cell->setType("other", QPixmap(":/icons/Project.png"));
-    cell->setType("other");
+    cell->setType("Run Other Profile");
     cell->setTypepixmap(QIcon(":/icons/Project.png").pixmap(16,16));
     cell->setTypecolor("color: black; background-color: rgb(255, 242, 204);");
     cell->setFramecolor("background-color: rgb(132, 60, 12);");

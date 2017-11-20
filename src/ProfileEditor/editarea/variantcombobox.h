@@ -4,6 +4,7 @@
 
 #include <QComboBox>
 #include <QWidget>
+#include <editoperator.h>
 #include <../processxmlbuilder/processxmlbuilder.h>
 //#include <../stringxmlbuilder.h>
 #include <../variantconverter/variantconverter.h>
@@ -16,12 +17,14 @@ public:
     ~VariantComboBox();
     void reloadComboBoxItem();
 
-public slots:
-    void setProfileFileName(QString filename);
+    void setEditOperator(EditOperator *op);
+//public slots:
+//    void setProfileFileName(QString filename);
 
 private:
+    EditOperator *editop;
 //    StringXmlBuilder *sbuilder;
-    ProcessXmlBuilder *pbuilder;
+//    ProcessXmlBuilder *pbuilder;
     static const int PEMAGIC = 1;
 };
 

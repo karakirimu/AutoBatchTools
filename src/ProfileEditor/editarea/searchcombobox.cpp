@@ -30,6 +30,7 @@ void SearchComboBox::reloadComboBoxItem()
 void SearchComboBox::addAction()
 {
     FileSearchDialog *fs = new FileSearchDialog();
+    setTheme(fs);
     fs->setWindowTitle(tr("編集-新規*"));
     if(fs->exec() == QDialog::Accepted){
         reloadComboBoxItem();
@@ -43,6 +44,7 @@ void SearchComboBox::editAction()
     if(this->count() == 0) return;
 
     FileSearchDialog *fs = new FileSearchDialog();
+    setTheme(fs);
     QList<QStringList> list;
 
     int index = this->currentIndex();
@@ -89,4 +91,27 @@ QString SearchComboBox::getCurrentVariant()
     }
 
     return "";
+}
+
+//QSS_THEME
+void SearchComboBox::setTheme(FileSearchDialog *fs)
+{
+    QSettings settings( "./psettings.ini", QSettings::IniFormat );
+
+    //theme settings
+    settings.beginGroup("BASICSETTING");
+    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
+    settings.endGroup();
+
+    if(stylecolor != "Default"){
+#ifdef QT_DEBUG
+        QFile file(QString("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/%1.qss").arg(stylecolor));
+#else
+        QFile file(QString(":/themes/%1.qss").arg(stylecolor));
+#endif
+        if(file.open( QFile::ReadOnly | QFile::Text )){
+            QString data(QLatin1String(file.readAll()));
+            fs->setStyleSheet(data);
+        }
+    }
 }

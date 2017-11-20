@@ -5,6 +5,7 @@
 
 #include <QMouseEvent>
 #include <QWidget>
+#include <QSettings>
 
 namespace Ui {
 class FlowCellWidget;

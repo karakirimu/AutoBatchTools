@@ -7,8 +7,6 @@
 #include <QDateTime>
 #include <QSettings>
 #include <QFileDialog>
-//#include <pesharedfunction.h>
-//#include <fileoperationsignalbinder.h>
 #include <SettingDialog.h>
 #include <editoperator.h>
 
@@ -42,8 +40,6 @@ private slots:
     void undoAction();
     void redoAction();
     void addAction();
-//    void editAction();
-//    void editAction(int);
     void deleteAction();
     void cutAction();
     void copyAction();
@@ -54,11 +50,9 @@ private slots:
     void launchSettingAction();
     void themeChangeAction();
 
-//    void onWindowTitleChanged(QString newtitle, QString newtemp);
-//    void itemChangedAction();
     void onTitleChanged(QString newload);
+    void onFileEdited(bool edited);
     void itemChangedAction(int index);
-//    void editorTabChanged(int index);
 
     //tree acesss
     void setTreerowpos_select(int value, int from);
@@ -73,43 +67,21 @@ private slots:
 private:
 
     void setLoadfile(const QString &value);
-
-    //connect / disconnect signals data
-//    void connectEdit();
-//    void disconnectEdit();
     void initStatusBar();
 
-    //set list infomation to ui
-//    void setSettingList(QList<QStringList> *itemlist);
-
     //reset ui
-    void preResetUi();
+//    void preResetUi();
     void postResetUi();
 
     Ui::ProfileEditor *ui;
     SettingDialog *settingdialog;
     int rowpos;
     QString loadfile;
+    bool lastedited = false;
 
-//    PESharedFunction *sfunction;
-//    FileOperationSignalBinder *binder;
     EditOperator *editop;
     RunTaskSignalBinder *rbinder;
 
-//    void setSettingTempList(QList<QStringList> *list);
-//    void setInfoList(QList<QStringList> *list, int firstpos);
-//    void setNormalList(QList<QStringList> *list, int firstpos);
-//    void setSearchList(QList<QStringList> *list, int firstpos);
-//    void setScriptList(QList<QStringList> *list, int firstpos);
-
-    //gather list information from ui
-//    void createList(int type, QList<QStringList> *newlist);
-//    void createTempList(QList<QStringList> *newlist);
-//    void getInfoList(QList<QStringList> *newlist);
-//    void getNormalList(QList<QStringList> *newlist);
-//    void getSearchList(QList<QStringList> *newlist);
-//    void getScriptList(QList<QStringList> *newlist);
-//    void getOtherList(QList<QStringList> *newlist);
 };
 
 #endif // PROFILEEDITOR_H
