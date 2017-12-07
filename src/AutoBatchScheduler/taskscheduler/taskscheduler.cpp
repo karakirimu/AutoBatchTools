@@ -119,6 +119,8 @@ void TaskScheduler::processPause(QString objectname)
         EntryTask *et = task->value(objectname);
         if(et->getStarted() && !et->getPause()){
             et->pause(true);
+        }else{
+            et->pause(false);
         }
     }
 }
@@ -129,6 +131,16 @@ void TaskScheduler::processStop(QString objectname)
         EntryTask *et = task->value(objectname);
         if(et->getStarted()){
             et->stop();
+        }
+    }
+}
+
+void TaskScheduler::sendInput(QString objectname, QString text)
+{
+    if(task->contains(objectname) && scheduler->contains(objectname)){
+        EntryTask *et = task->value(objectname);
+        if(et->getStarted()){
+            et->sendInput(text);
         }
     }
 }
@@ -167,6 +179,7 @@ void TaskScheduler::receiveEncounter()
     QString objname = sender()->objectName();
     if(task->contains(objname)){
         task->value(objname)->start();
+        emit encounteredScheduledTime(objname);
     }
 }
 

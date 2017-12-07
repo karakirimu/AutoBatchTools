@@ -25,8 +25,8 @@ public slots:
     void disableTask(QString objectname);
 
     //from startuptable
-    void actionAdded(int itemid){emit addListAction(itemid);}
-    void actionDeleted(QString objectname){emit deleteListAction(objectname);}
+//    void actionAdded(int itemid){emit addListAction(itemid);}
+//    void actionDeleted(QString objectname){emit deleteListAction(objectname);}
 
 };
 

@@ -185,7 +185,8 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 //    connect(ui->graphicsView, &GraphicArea::selectChangedAction, this, &ProfileEditor::itemChangedAction);
 
     //Title * flag
-    connect(editop, &EditOperator::edited, this, &ProfileEditor::onFileEdited);
+//    connect(editop, &EditOperator::edited, this, &ProfileEditor::onFileEdited);
+    connect(editop->getUndostack(), &QUndoStack::canUndoChanged, this, &ProfileEditor::onFileEdited);
 
     initStatusBar();
 
@@ -298,6 +299,7 @@ void ProfileEditor::undoAction()
     if(editop->getUndostack()->canUndo()){
         QUndoStack *stack = editop->getUndostack();
         stack->undo();
+
         //TODO: not efficient
         ui->runTreeWidget->reloadAction();
         ui->variantTableWidget->reloadAction();
@@ -467,7 +469,7 @@ void ProfileEditor::onFileEdited(bool edited)
 {
     QString title = this->windowTitle();
     lastedited = edited;
-    if(editop->isEdited() && edited){
+    if(edited){
         //add * first
         if(title.at(0) != "*") setWindowTitle("*" + title);
 

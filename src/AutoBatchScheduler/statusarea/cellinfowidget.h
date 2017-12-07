@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QDateTime>
+#include <taskschedulerconnector.h>
 
 namespace Ui {
 class cellInfoWidget;
@@ -16,11 +17,21 @@ public:
     explicit CellInfoWidget(QWidget *parent = 0);
     ~CellInfoWidget();
 
+    int indicateHeight();
+
+    //set latter of setobjectname
+    void setConsoleTarget(TaskSchedulerConnector *taskc);
+
+    //confirm console status
+    bool isConsoleVisible();
+    void setConsoleVisible(bool show);
+
 signals:
     //send own objectname
     void consoleButtonClicked(QString);
     void pauseButtonClicked(QString);
     void stopButtonClicked(QString);
+    void changeRunStatus(bool);
 
 public slots:
     //init set
@@ -39,6 +50,11 @@ public slots:
 
     void updateErrorProgress(int num);
     void updateErrorText(QString message);
+
+    //toggle enabled or disabled
+    void setRunStatus(bool enabled);
+    void onRunStatusChange(bool enabled);
+
 private slots:
     void onConsoleButtonClicked();
     void onPauseButtonClicked();

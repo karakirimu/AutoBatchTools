@@ -8,6 +8,7 @@
 #include <startupxmlbuilder.h>
 #include <statuswidget.h>
 #include <taskschedulerconnector.h>
+#include "processshowtable.h"
 
 class SystemTray : public QWidget
 {
@@ -21,17 +22,19 @@ public:
 
     void show();
     void hide();
+
 signals:
     void launchSetting();
     void launchclose();
 
 private slots:
     //check state change from user
-    void onCheckStateChanged(bool checked);
+//    void onCheckStateChanged(bool checked);
     //check state change received from xml state
-    void updateCheckStateChanged(QString objname);
+//    void updateCheckStateChanged(QString objname);
 
     void trayActivated(QSystemTrayIcon::ActivationReason reason);
+
     void showTimerStart(QString objectname, QDateTime time);
     void showTimerStopped(QString objectname, int type);
     void showProcessStart(QString objectname, int runfrom);
@@ -39,22 +42,24 @@ private slots:
     void showProcessStopped(QString objectname);
     void showProcessEnded(QString objectname, int type);
     void showTaskDisabled(QString objectname);
+    void showProcessFileEmpty(QString profilename);
+
     void launchSettingsAction();
     void trayCloseAction();
 
     //from table
-    void addlistAction(int xmlitemid);
-    void deletelistAction(QString objectname);
+//    void addlistAction(int xmlitemid);
+//    void deletelistAction(QString objectname);
 
 private:
     void initTrayIcon();
-    void initDynamicActionList();
-    void initDynamicAction(int itemid);
+//    void initDynamicActionList();
+//    void initDynamicAction(int itemid);
     void changeXmlValidState(int itemid);
     int getStartupXmlIndex(QString objectname);
     QString getNameByActions(QString objectname);
     QString encodeDayOfWeek(int dayofweek);
-    QAction *generateAction(int itemid);
+//    QAction *generateAction(int itemid);
 
 
     QMenu *trayIconMenu;
@@ -62,6 +67,7 @@ private:
     QAction *settingsAction;
     QAction *quitAction;
     QSystemTrayIcon *trayIcon;
+    ProcessShowTable *psw;
     StatusWidget *strw;
 
     StartupXmlBuilder *builder;

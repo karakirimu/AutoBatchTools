@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>240</width>
-    <height>320</height>
+    <width>320</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -83,7 +83,7 @@
    <item>
     <widget class="ProcessShowTable" name="enabledTableWidget">
      <property name="styleSheet">
-      <string notr="true">selection-background-color: rgb(186, 186, 186);</string>
+      <string notr="true">selection-background-color: rgb(200,200,200);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>

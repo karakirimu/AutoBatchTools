@@ -54,7 +54,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QTextEdit" name="console">
+       <widget class="SchedulerConsoleView" name="console">
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
         </property>
@@ -68,6 +68,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SchedulerConsoleView</class>
+   <extends>QTextEdit</extends>
+   <header>schedulerconsoleview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

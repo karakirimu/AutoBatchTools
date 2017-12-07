@@ -22,6 +22,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+Release:DESTDIR = $$PWD/../../build/release
+Release:OBJECTS_DIR = $$PWD/../../build/release/AutoBatchScheduler/.obj
+Release:MOC_DIR = $$PWD/../../build/release/AutoBatchScheduler/.moc
+Release:RCC_DIR = $$PWD/../../build/release/AutoBatchScheduler/.rcc
+Release:UI_DIR = $$PWD/../../build/release/AutoBatchScheduler/.ui
+
+Debug:DESTDIR = $$PWD/../../build/debug
+Debug:OBJECTS_DIR = $$PWD/../../build/debug/AutoBatchScheduler/.obj
+Debug:MOC_DIR = $$PWD/../../build/debug/AutoBatchScheduler/.moc
+Debug:RCC_DIR = $$PWD/../../build/debug/AutoBatchScheduler/.rcc
+Debug:UI_DIR = $$PWD/../../build/debug/AutoBatchScheduler/.ui
+
 SOURCES += \
         main.cpp \
         mainscheduler.cpp \
@@ -46,22 +58,11 @@ include(taskscheduler/taskscheduler.pri)
 include(systemtray/systemtray.pri)
 include(statusarea/statusarea.pri)
 
-Release:DESTDIR = $$PWD/../../build/release
-Release:OBJECTS_DIR = $$PWD/../../build/release/AutoBatchScheduler/.obj
-Release:MOC_DIR = $$PWD/../../build/release/AutoBatchScheduler/.moc
-Release:RCC_DIR = $$PWD/../../build/release/AutoBatchScheduler/.rcc
-Release:UI_DIR = $$PWD/../../build/release/AutoBatchScheduler/.ui
-
-Debug:DESTDIR = $$PWD/../../build/debug
-Debug:OBJECTS_DIR = $$PWD/../../build/debug/AutoBatchScheduler/.obj
-Debug:MOC_DIR = $$PWD/../../build/debug/AutoBatchScheduler/.moc
-Debug:RCC_DIR = $$PWD/../../build/debug/AutoBatchScheduler/.rcc
-Debug:UI_DIR = $$PWD/../../build/debug/AutoBatchScheduler/.ui
-
 unix|win32:CONFIG(debug, debug|release) LIBS += \
             -L$$PWD/../../build/debug/libs/ -lVariantConverter \
             -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
             -L$$PWD/../../build/debug/libs/ -lbasictable \
             -L$$PWD/../../build/debug/libs/ -lprofilexmlbuilder \
             -L$$PWD/../../build/debug/libs/ -lprofilecombobox \
-            -L$$PWD/../../build/debug/libs/ -lexecutor
+            -L$$PWD/../../build/debug/libs/ -lexecutor \
+            -L$$PWD/../../build/debug/libs/ -lconsolebase

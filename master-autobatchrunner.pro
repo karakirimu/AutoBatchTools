@@ -18,6 +18,7 @@ SUBDIRS += \
 #3
           $$PWD/src/profilecombobox \
           $$PWD/src/basictable \
+          $$PWD/src/consolebase \
 #4
           $$PWD/src/fileinfodialog \
           $$PWD/src/filesearchdialog \

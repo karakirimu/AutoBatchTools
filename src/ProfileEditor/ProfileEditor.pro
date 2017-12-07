@@ -73,6 +73,7 @@ unix|win32: LIBS += \
             -L$$PWD/../../build/debug/libs/ -lfilesearchdialog \
             -L$$PWD/../../build/debug/libs/ -lextrafunctionstable \
             -L$$PWD/../../build/debug/libs/ -lexecutor \
+            -L$$PWD/../../build/debug/libs/ -lconsolebase \
 
 
 INCLUDEPATH += $$PWD/../../build/debug/libs

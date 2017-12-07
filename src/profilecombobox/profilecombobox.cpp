@@ -39,9 +39,11 @@ void ProfileComboBox::reloadComboBoxItem()
         builder->readItem(i, &item);
         info.setFile(item.at(2).at(1));
         if(info.exists()){
-            this->addItem(item.at(0).at(1) + " - " + info.fileName());
+            QString name = item.at(0).at(1);
+            name = name == "" ? tr("(no name)") : name;
+            this->addItem(tr("%1 - %2").arg(name).arg(info.fileName()));
         }else{
-            this->addItem(item.at(0).at(1) + " - Invalid");
+            this->addItem(tr("Unknown"));
         }
         item.clear();
     }
@@ -63,7 +65,7 @@ void ProfileComboBox::addItemAction()
     pbuilder->setLoadPath(file);
 
     //load info
-    if(pbuilder->readItem(0, &item) && item.count() == 6){
+    if(pbuilder->readItem(0, &item)){
         list.append(QStringList() << "name" << item.at(1).at(1));
         list.append(QStringList() << "desc" << item.at(4).at(1));
         list.append(QStringList() << "file" << file);

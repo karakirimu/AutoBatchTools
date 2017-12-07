@@ -7,6 +7,7 @@
 #include <QHeaderView>
 #include <taskschedulerconnector.h>
 #include "cellinfowidget.h"
+#include "consolewidget.h"
 
 class ProcessShowTable : public QTableWidget
 {
@@ -27,10 +28,16 @@ signals:
     void updateProgress(QString, int);
     void updateProcess(QString, QString, int);
 
+    //to systemtray
+    void infoNofile(QString);
+
 public slots:
     //create ui
-    void addItem(QString objname);
-    void removeItem(QString objectname);
+//    void addItem(QString objname);
+//    void removeItem(QString objectname);
+    void insertItem(int itemid);
+    void enableItem(QString objname);
+    void disableItem(QString objname);
 
     //send command to parent
     void pauseClicked(QString objname){emit pause(objname);}
@@ -51,9 +58,17 @@ public slots:
     //launch in this class
     void launchConsole(QString objname);
 
+private slots:
+    void onCheckStateChanged(bool checked);
+
 private:
+    void initCellWidgets();
+    void changeXmlValidState(int itemid);
+    int getStartupXmlIndex(QString objectname);
+
     CellInfoWidget *getCellWidget(QString objname);
 
+    StartupXmlBuilder *builder;
     TaskSchedulerConnector *taskc;
 
 };

@@ -48,9 +48,11 @@ signals:
     void processEnd(QString objectname, int);
 
 public slots:
+
     //from ui class
     void processPause(QString objectname);
     void processStop(QString objectname);
+    void sendInput(QString objectname, QString text);
 
     //from EntryScheduler------------------------------------------------------
     void receiveTimerStarted(QDateTime datetime){emit timerStarted(sender()->objectName(), datetime);}

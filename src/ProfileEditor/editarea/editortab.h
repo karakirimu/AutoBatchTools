@@ -3,7 +3,7 @@
 
 #include "commandtable.h"
 #include "extrafunctionscombobox.h"
-#include "profilecombobox.h"
+#include "../profilecombobox/profilecombobox.h"
 #include "searchcombobox.h"
 #include "variantcombobox.h"
 
@@ -32,23 +32,13 @@ public:
     void setConnection();
     void setEditOperator(EditOperator *op);
 
-//    enum{NORMAL, SEARCH, EXTRAFUNC, OTHER};
-
 public slots:
-    //function depends function
-//    void moveTabFromXml(int num);
-
     //xml depends functions DEPENDS_XML
     void setNormalDataList(QList<QStringList> *list, int firstpos);
     void setSearchDataList(QList<QStringList> *list, int firstpos);
     void setExtraFuncDataList(QList<QStringList> *list, int firstpos);
     void setOtherDataList(QList<QStringList> *list, int firstpos);
     void setCombinedDataList(int index, int selectfrom);
-
-//    void getNormalDataList(QStringList *list);
-//    void getSearchDataList(QStringList *list);
-//    void getExtraFuncDataList(QStringList *list);
-//    void getOtherDataList(QStringList *list);
 
     bool getCurrentIndexOnlyChecked();
 
@@ -70,11 +60,7 @@ private:
     //current xml id
     int currentid = -1;
 
-    //set only flag (not edit flag)
-//    bool edited = false;
-
     //ui objects
-
     //normal
     QWidget *widgetnormal;
     QCheckBox *timeoutCheckBox;
@@ -108,6 +94,8 @@ private:
     //other
     QWidget *otherwidget;
     ProfileComboBox *profilecombobox;
+    QToolButton *addbutton_o;
+    QToolButton *deletebutton_o;
     QCheckBox *autoonly_4;
 
 };

@@ -57,7 +57,7 @@ public:
 
 signals:
     void loadfileChanged(QString);
-    void edited(bool);
+//    void edited(bool);
     void editUpdate(int);
     void ui_selectindexUpdate(int, int);
     void ui_funcindexUpdate(int after, int before, int function, int semder);

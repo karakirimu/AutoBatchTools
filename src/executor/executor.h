@@ -63,7 +63,7 @@ public:
     EXECUTORSHARED_EXPORT int getOthernestmax() const;
     EXECUTORSHARED_EXPORT void setOthernestmax(int nest = 10);
 
-    enum {INFO, NORMAL, SEARCH, SCRIPT, OTHER, TEMP, LOCAL, ERROR, INPUT};
+    enum {INFO, NORMAL, SEARCH, SCRIPT, OTHER, TEMP, LOCAL, WARNING, ERROR, INPUT};
     enum {DEFAULT, SCHEDULER};
     enum {MAINPROCESS, OTHERPROCESS};
 signals:
@@ -148,7 +148,8 @@ private:
 
     bool searchfileoverwrite = true;
 
-    int othernestmax;
+    //nest init
+    int othernestmax = 10;
     bool neststop = false;
 
     //macro part

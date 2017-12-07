@@ -43,8 +43,8 @@ void StartupTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
 //    connect(taskc, &TaskSchedulerConnector::xmlStateChanged, this, &StartupTable::updateItemEnabled);
     connect(taskc, &TaskSchedulerConnector::taskEnabled, this, &StartupTable::updateItemEnabled);
     connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &StartupTable::updateItemEnabled);
-    connect(this, &StartupTable::actionDeleted, task, &TaskSchedulerConnector::actionDeleted);
-    connect(this, &StartupTable::actionAdded, task, &TaskSchedulerConnector::actionAdded);
+//    connect(this, &StartupTable::actionDeleted, task, &TaskSchedulerConnector::actionDeleted);
+//    connect(this, &StartupTable::actionAdded, task, &TaskSchedulerConnector::actionAdded);
 }
 
 void StartupTable::setPopupActionTop()
@@ -193,7 +193,12 @@ void StartupTable::addAction()
         setRowCount(index + 1);
         setTableItem(index);
 
-        emit actionAdded(index);
+        QList<QStringList> list;
+        if(builder->readItem(currentRow(), &list)
+                && list.at(StartupXmlBuilder::VALID).at(1) == "yes"){
+            QFileInfo info(list.at(StartupXmlBuilder::PROF).at(1));
+            if(info.exists()) taskc->enableTask(list.at(StartupXmlBuilder::UNIQUE).at(1), info.canonicalFilePath());
+        }
     }
 }
 
@@ -202,15 +207,35 @@ void StartupTable::editAction()
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
 
+    QString yesno = "";
     StartupDialog *sd = new StartupDialog();
     QList<QStringList> list;
     int row = currentRow();
     if(builder->readItem(row, &list)){
         //set title
         sd->loadSettingList(row, &list);
+        yesno = list.at(StartupXmlBuilder::VALID).at(1);
     }
     if(sd->exec() == QDialog::Accepted){
         setTableItem(row);
+
+        if(yesno == "yes"){
+            //disable
+            if(builder->readItem(row, &list)){
+                if(list.at(StartupXmlBuilder::VALID).at(1) == "no"){
+                    taskc->disableTask(list.at(StartupXmlBuilder::UNIQUE).at(1));
+                }
+            }
+        }else{
+            //enable
+            if(builder->readItem(row, &list)){
+                if(list.at(StartupXmlBuilder::VALID).at(1) == "yes"){
+                    QFileInfo info(list.at(StartupXmlBuilder::PROF).at(1));
+                    if(info.exists()) taskc->enableTask(list.at(StartupXmlBuilder::UNIQUE).at(1), info.canonicalFilePath());
+
+                }
+            }
+        }
     }
 }
 
@@ -223,8 +248,9 @@ void StartupTable::deleteAction()
     if(deleteCheckMessage())
     {
         QList<QStringList> list;
-        if(builder->readItem(currentRow(), &list)){
-            emit actionDeleted(list.at(StartupXmlBuilder::UNIQUE).at(1));
+        if(builder->readItem(currentRow(), &list)
+                && list.at(StartupXmlBuilder::VALID).at(1) == "yes"){
+            taskc->disableTask(list.at(StartupXmlBuilder::UNIQUE).at(1));
         }
 
         //delete file item

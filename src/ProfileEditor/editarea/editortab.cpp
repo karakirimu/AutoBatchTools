@@ -28,6 +28,11 @@ void EditorTab::setConnection()
     deletebutton_e = widgetextra->findChild<QToolButton *>("extrafuncDeleteButton");
     pluginsetting = widgetextra->findChild<QPushButton *>("pluginSettingButton");
 
+    otherwidget = this->widget(ProcessXmlListGenerator::OTHER);
+    profilecombobox = otherwidget->findChild<ProfileComboBox *>("profileComboBox");
+    addbutton_o = otherwidget->findChild<QToolButton *>("otherAddButton");
+    deletebutton_o = otherwidget->findChild<QToolButton *>("otherDeleteButton");
+
     //connect action in search widget
     connect(addbutton, &QAbstractButton::clicked, searchcombobox, &SearchComboBox::addAction);
     connect(editbutton, &QAbstractButton::clicked, searchcombobox, &SearchComboBox::editAction);
@@ -38,6 +43,10 @@ void EditorTab::setConnection()
     connect(addbutton_e, &QAbstractButton::clicked, extrafunccombobox, &ExtraFunctionsComboBox::addItemAction);
     connect(deletebutton_e, &QAbstractButton::clicked, extrafunccombobox, &ExtraFunctionsComboBox::deleteAction);
     connect(extrafunccombobox, &ExtraFunctionsComboBox::pluginChanged, pluginsetting, &QPushButton::setEnabled);
+
+    //connect action in profile widget
+    connect(addbutton_o, &QToolButton::clicked, profilecombobox, &ProfileComboBox::addItemAction);
+    connect(deletebutton_o, &QToolButton::clicked, profilecombobox, &ProfileComboBox::deleteItemAction);
 
     //this tab change
     connect(this, &EditorTab::currentChanged, this, &EditorTab::tabChanged);
@@ -70,7 +79,6 @@ void EditorTab::setEditOperator(EditOperator *op)
     extrafuncTableWidget = widgetextra->findChild<CommandTable *>("extrafuncTableWidget");
 
     // load other widget ui objects
-    otherwidget = this->widget(ProcessXmlListGenerator::OTHER);
     profilecombobox = otherwidget->findChild<ProfileComboBox *>("profileComboBox");
     autoonly_4 = otherwidget->findChild<QCheckBox *>("autoOnlyCheckBox_4");
 
@@ -103,11 +111,6 @@ void EditorTab::setEditOperator(EditOperator *op)
     connect(extrafuncTableWidget, &CommandTable::updateTable, this, &EditorTab::editTableAction);
     connect(extrafuncTableWidget, &CommandTable::swapTable, this, &EditorTab::editSwapTableAction);
 }
-
-//void EditorTab::moveTabFromXml(int num)
-//{
-//    if(num < 4 && num > 0) setCurrentIndex(num);
-//}
 
 //DEPENDS_XML
 void EditorTab::setNormalDataList(QList<QStringList> *list, int firstpos)
@@ -253,78 +256,6 @@ void EditorTab::setCombinedDataList(int index, int selectfrom)
     delete list;
 }
 
-//DEPENDS_XML
-//void EditorTab::getNormalDataList(QStringList *list)
-//{
-////    QWidget *widget = this->widget(XmlListGenerator::NORMAL);
-////    QCheckBox *timeoutCheckBox = widget->findChild<QCheckBox *>("timeoutCheckBox");
-////    QSpinBox *tospin = widget->findChild<QSpinBox *>("timeoutSpinBox");
-////    QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox");
-////    CommandTable *table = widget->findChild<CommandTable *>("cmdTableWidget");
-
-//    int rcount = ctablenormal->rowCount();
-//    list->append(VariantConverter::boolToString(autoonly->isChecked()));
-//    list->append(VariantConverter::boolToString(timeoutCheckBox->isChecked()));
-//    list->append(QString::number(tospin->value()));
-//    list->append(QString::number(rcount));
-//    for(int i = 0; i < rcount; i++){
-//        list->append(ctablenormal->getText(i));
-//    }
-
-//}
-
-//DEPENDS_XML
-//void EditorTab::getSearchDataList(QStringList *list)
-//{
-////    QWidget *widget = this->widget(XmlListGenerator::SEARCH);
-////    SearchComboBox *searchComboBox = widget->findChild<SearchComboBox *>("searchComboBox");
-////    QLineEdit *separatorLineEdit = widget->findChild<QLineEdit *>("separatorLineEdit");
-////    VariantComboBox *localVariantComboBox = widget->findChild<VariantComboBox *>("localVariantComboBox");
-////    QLineEdit *outputLineEdit = widget->findChild<QLineEdit *>("outputLineEdit");
-////    QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox_2");
-////    QRadioButton *vari = widget->findChild<QRadioButton *>("variRadioButton");
-////    QRadioButton *file = widget->findChild<QRadioButton *>("fileRadioButton");
-
-//    list->append(VariantConverter::boolToString(autoonly_2->isChecked()));
-//    list->append(searchcombobox->currentText());
-//    list->append(QString::number(searchcombobox->currentIndex()));
-//    list->append(separatorLineEdit->text());
-//    list->append(localVariantComboBox->currentText());
-//    list->append(outputLineEdit->text());
-//    if(vari->isChecked()){
-//        list->append("0");
-//    }else{
-//        list->append("1");
-//    }
-//}
-
-//DEPENDS_XML//TODO:
-//void EditorTab::getExtraFuncDataList(QStringList *list)
-//{
-////    QWidget *widget = this->widget(XmlListGenerator::EXTRAFUNC);
-////    ExtraFunctionsComboBox *scb = widget->findChild<ExtraFunctionsComboBox *>("extrafuncComboBox");
-////    VariantComboBox *vcb = widget->findChild<VariantComboBox *>("varComboBox");
-////    QCheckBox *autoonly = widget->findChild<QCheckBox *>("autoOnlyCheckBox_3");
-////    CommandTable *extrafuncTableWidget = widget->findChild<CommandTable *>("extrafuncTableWidget");
-
-//    int rcount = extrafuncTableWidget->rowCount();
-//    list->append(VariantConverter::boolToString(autoonly_3->isChecked()));
-//    list->append(extrafunccombobox->currentText());
-//    list->append(extrafunccombobox->getCurrentExtraFile());
-//    list->append(QString::number(rcount));
-//    for(int i = 0; i < rcount; i++){
-//        list->append(extrafuncTableWidget->getText(i));
-//    }
-//}
-
-//DEPENDS_XML
-//void EditorTab::getOtherDataList(QStringList *list)
-//{
-//    list->append(VariantConverter::boolToString(autoonly_4->isChecked()));
-//    list->append(profilecombobox->currentText());
-//    list->append(profilecombobox->getCurrentFileName());
-//}
-
 bool EditorTab::getCurrentIndexOnlyChecked()
 {
     QCheckBox *autoonly;
@@ -340,7 +271,7 @@ bool EditorTab::getCurrentIndexOnlyChecked()
         break;
     case ProcessXmlListGenerator::OTHER:
         autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_4");
-//        break;
+        break;
     default:
         return false;
     }
@@ -350,12 +281,6 @@ bool EditorTab::getCurrentIndexOnlyChecked()
 
 void EditorTab::tabChanged(int index)
 {
-//    if(edited == false){
-//        // for first load of item
-//        edited = true;
-//        return;
-//    }
-
     switch(index){
     case ProcessXmlListGenerator::NORMAL:
         editop->editTabAction(currentid, index);

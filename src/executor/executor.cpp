@@ -509,7 +509,13 @@ bool Executor::loadScript(QList<QStringList> *list, int firstpos)
 
 bool Executor::loadOther(QList<QStringList> *list, int firstpos)
 {
-    emit processStarted(OTHERPROCESS);
+//    emit processStarted(OTHERPROCESS);
+    QFileInfo info(list->at(firstpos + 2).at(1));
+    if(!info.exists()){
+        emit processMessage(tr("Other Process : %1 is not existed.")
+                            .arg(info.fileName()), ERROR);
+        return false;
+    }
 
     //stack currentdata
     builderstack.push(pbuilder);
@@ -528,11 +534,17 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
     //set counter
     int counter = pbuilder->count();
 
+    emit processMessage(tr("Other Process : %1 (loop %2)")
+                        .arg(list->at(firstpos + 1).at(1))
+                        .arg(QString::number(builderstack.count()))
+                        , OTHER);
+
     //init data
     QList<QStringList> *ilist = new QList<QStringList>();
     bool checker = true;
 
     for(int i = 0; i < counter; i++){
+        ilist->clear();
 
         //read each list
         if(pbuilder->readItem(i, ilist)){
@@ -590,7 +602,7 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
     //check nest
     if(builderstack.count() == 0) neststop = false;
 
-    emit processEnded(OTHERPROCESS);
+//    emit processEnded(OTHERPROCESS);
 
     return true;
 }

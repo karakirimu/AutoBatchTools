@@ -9,9 +9,16 @@ CellInfoWidget::CellInfoWidget(QWidget *parent) :
 
     //init
     ui->progressBar->setValue(0);
+    ui->progressBar->setAlignment(Qt::AlignCenter);
     connect(ui->consoleToolButton, &QToolButton::clicked, this, &CellInfoWidget::onConsoleButtonClicked);
     connect(ui->pauseToolButton, &QToolButton::clicked, this, &CellInfoWidget::onPauseButtonClicked);
     connect(ui->stopToolButton, &QToolButton::clicked, this, &CellInfoWidget::onStopButtonClicked);
+
+    connect(ui->profileCheckBox, &QCheckBox::toggled, this, &CellInfoWidget::onRunStatusChange);
+
+    //hide console
+    ui->consolearea->hide();
+
 }
 
 CellInfoWidget::~CellInfoWidget()
@@ -19,15 +26,37 @@ CellInfoWidget::~CellInfoWidget()
     delete ui;
 }
 
+int CellInfoWidget::indicateHeight()
+{
+    return ui->indicatearea->baseSize().height();
+}
+
+void CellInfoWidget::setConsoleTarget(TaskSchedulerConnector *taskc)
+{
+    ui->console->setTaskSchedulerConnector(taskc);
+    ui->consolesender->setTaskSchedulerConnector(taskc);
+    ui->console->setReadObjectName(this->objectName());
+    ui->consolesender->setObjectName(this->objectName());
+}
+
+bool CellInfoWidget::isConsoleVisible()
+{
+    return ui->consolearea->isVisible();
+}
+
+void CellInfoWidget::setConsoleVisible(bool show)
+{
+    ui->consolearea->setVisible(show);
+}
+
 void CellInfoWidget::setProfileName(QString name)
 {
-    ui->profileNameLabel->setText(name);
+    ui->profileCheckBox->setText(name);
 }
 
 void CellInfoWidget::started()
 {
     ui->progressBar->setEnabled(true);
-    ui->consoleToolButton->setEnabled(true);
     ui->pauseToolButton->setEnabled(true);
     ui->stopToolButton->setEnabled(true);
 }
@@ -35,7 +64,6 @@ void CellInfoWidget::started()
 void CellInfoWidget::scheduled()
 {
     ui->progressBar->setEnabled(false);
-    ui->consoleToolButton->setEnabled(false);
     ui->pauseToolButton->setEnabled(false);
     ui->stopToolButton->setEnabled(false);
 }
@@ -65,6 +93,17 @@ void CellInfoWidget::updateErrorText(QString message)
     ui->processLabel->setText(message);
 }
 
+void CellInfoWidget::setRunStatus(bool enabled)
+{
+    ui->profileCheckBox->setChecked(enabled);
+}
+
+void CellInfoWidget::onRunStatusChange(bool enabled)
+{
+    setRunStatus(enabled);
+    emit changeRunStatus(enabled);
+}
+
 void CellInfoWidget::setTimerEnd(QString date)
 {
     ui->processLabel->setText(date);
@@ -77,15 +116,15 @@ void CellInfoWidget::setProgressminmax(int start, int end)
 
 void CellInfoWidget::onConsoleButtonClicked()
 {
-    consoleButtonClicked(this->objectName());
+    emit consoleButtonClicked(this->objectName());
 }
 
 void CellInfoWidget::onPauseButtonClicked()
 {
-    pauseButtonClicked(this->objectName());
+    emit pauseButtonClicked(this->objectName());
 }
 
 void CellInfoWidget::onStopButtonClicked()
 {
-    stopButtonClicked(this->objectName());
+    emit stopButtonClicked(this->objectName());
 }
