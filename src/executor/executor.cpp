@@ -7,6 +7,8 @@ Executor::Executor(QObject *parent)
 {
     pbuilder = new ProcessXmlBuilder();
     localHash = new QHash<QString, QString>();
+//    execlist = new QList<int>();
+    userexeclist.clear();
 
     connect(this, &Executor::processEnded, this, &Executor::processEndLastStatus);
 }
@@ -15,6 +17,7 @@ Executor::~Executor()
 {
     delete pbuilder;
     delete localHash;
+//    delete execlist;
 }
 
 bool Executor::getDetached() const
@@ -97,7 +100,11 @@ QString Executor::macroConvert(QString part)
 
 void Executor::setExecList(QList<int> data)
 {
-    execlist = data;
+    if(data.count() == 0){
+        userexeclist.clear();
+    }else{
+        userexeclist = data;
+    }
 }
 
 bool Executor::getWorking() const
@@ -178,10 +185,12 @@ bool Executor::runProcess()
     //TODO:
 //    if(endnum < 0 || endnum > pbuilder->count()) endnum = pbuilder->count();
     //emit maximum count number
-    checkExecList();
+    execlist = new QList<int>();
+    if(userexeclist.count() > 0) execlist->append(userexeclist);
+    checkExecList(execlist);
 
 //    emit processStateCount(startnum, endnum);
-    emit processStateCount(0, execlist.count());
+    emit processStateCount(0, execlist->count());
 
     //init data
     QList<QStringList> *list = new QList<QStringList>();
@@ -196,8 +205,9 @@ bool Executor::runProcess()
     working = true;
 
 
-//    for(int i = startnum; i < endnum; i++){
-    foreach(int i, execlist){
+    int execlistcounter = execlist->count();
+
+    for(int i = 0; i < execlistcounter; i++){
 
         if(paused) emit processPaused();
 
@@ -214,9 +224,10 @@ bool Executor::runProcess()
 
         emit processStateUpdate(i);
 
+        qDebug() << "Executor:: execlist count" << execlistcounter;
 
         //read each list
-        if(pbuilder->readItem(i, list)){
+        if(pbuilder->readItem(execlist->at(i), list)){
 
             //scheduler only or not
             if(VariantConverter::stringToBool(list->at(0).at(3)) && launchedfrom == DEFAULT) break;
@@ -262,6 +273,7 @@ bool Executor::runProcess()
     //reset process
     disconnect(process, SIGNAL(readyRead()), this, SLOT(loadNormalStandardOutput()));
     delete process;
+    delete execlist;
     delete list;
 
     //load file etc force reset.
@@ -290,7 +302,7 @@ void Executor::loadNormalStandardOutput()
 
 void Executor::processEndLastStatus()
 {
-    emit processStateUpdate(execlist.count());
+    emit processStateUpdate(execlist->count());
 }
 
 //Think kinds of text
@@ -520,6 +532,7 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
     //stack currentdata
     builderstack.push(pbuilder);
     localstack.push(localHash);
+    execliststack.push(execlist);
 
     //check nest
     if(builderstack.count() >= othernestmax) neststop = true;
@@ -528,11 +541,14 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
     pbuilder = new ProcessXmlBuilder();
     pbuilder->setLoadPath(list->at(firstpos + 2).at(1));
 
+    execlist = new QList<int>();
+    checkExecList(execlist);
+
     localHash = new QHash<QString, QString>();
     setLocalList();
 
     //set counter
-    int counter = pbuilder->count();
+    int counter = execlist->count();
 
     emit processMessage(tr("Other Process : %1 (loop %2)")
                         .arg(list->at(firstpos + 1).at(1))
@@ -546,8 +562,10 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
     for(int i = 0; i < counter; i++){
         ilist->clear();
 
+        qDebug() << "Executor:: otherexeclist count" << counter;
+
         //read each list
-        if(pbuilder->readItem(i, ilist)){
+        if(pbuilder->readItem(execlist->at(i), ilist)){
 
             //scheduler only or not
             if(VariantConverter::stringToBool(ilist->at(0).at(3)) && launchedfrom == DEFAULT) break;
@@ -593,10 +611,12 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
     //delete data
     delete ilist;
     delete pbuilder;
+    delete execlist;
     delete localHash;
 
     //pop data
     pbuilder = builderstack.pop();
+    execlist = execliststack.pop();
     localHash = localstack.pop();
 
     //check nest
@@ -666,24 +686,24 @@ void Executor::overwriteLocalMacro(QString key, QString value)
     if(localHash->contains(key)) localHash->insert(key, value);
 }
 
-void Executor::checkExecList()
+void Executor::checkExecList(QList<int> *elist)
 {
-    int excount = execlist.count();
+    int excount = elist->count();
     int buildermax = pbuilder->count();
 
     if(excount == 0){
         for(int i = 0; i < buildermax; i++){
-            execlist.append(i);
+            elist->append(i);
         }
         autoaddexec = true;
 
     }else{
         for(int i = 0; i < excount; i++){
-            if(!(execlist.at(i) < buildermax)){
+            if(!(elist->at(i) < buildermax)){
                 emit processMessage(tr("Index ")
-                                    + QString::number(execlist.at(i))
+                                    + QString::number(elist->at(i))
                                     + tr(" is not exist. \r\n"), ERROR);
-                execlist.removeAt(i);
+                elist->removeAt(i);
             }
         }
     }
@@ -708,7 +728,7 @@ void Executor::resetdata()
     processfileloaded = false;
     pbuilder->setLoadPath("");
     if(autoaddexec){
-        execlist.clear();
+        execlist->clear();
         autoaddexec = false;
     }
 }

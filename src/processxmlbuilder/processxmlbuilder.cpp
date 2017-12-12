@@ -12,6 +12,7 @@ ProcessXmlBuilder::~ProcessXmlBuilder()
 
 void ProcessXmlBuilder::setLoadPath(QString filepath)
 {
+    qDebug() << "ProcessXmlBuilder: setLoadPath: " << filepath;
     if(filepath != ""){
         //set new file
         setFileName(filepath);
@@ -57,6 +58,7 @@ void ProcessXmlBuilder::setLoadBlankPath(QString filepath)
 
 bool ProcessXmlBuilder::readItem(int itemid, QList<QStringList> *itemlist)
 {
+    qDebug() << "ProcessXmlBuilder: readItem :" << itemid;
     return Xmlbuilder::readItem(itemid, FIRSTLAYER, ATTR, itemlist);
 }
 

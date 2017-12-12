@@ -29,6 +29,21 @@ QString ProfileComboBox::getCurrentFileName(int index)
     return "";
 }
 
+int ProfileComboBox::getIndexFromFileName(QString filepath)
+{
+    QList<QStringList> item;
+    int count = builder->count();
+    for(int i = 0; i < count; i++){
+        item.clear();
+        if(builder->readItem(i, &item)
+                && item.at(2).at(1) == filepath){
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 void ProfileComboBox::reloadComboBoxItem()
 {
     this->clear();

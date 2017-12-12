@@ -101,6 +101,7 @@ bool BaseXmlBuilder::deleteSpecifiedElementGroup(QString element, QString attr, 
     }
 
     //xml error check
+    qDebug() << "BaseXmlBuilder: " << this->sender();
     checkXmlError();
 
     //reset file
@@ -166,6 +167,7 @@ int BaseXmlBuilder::getSpecifiedElementLineFirst(QString element)
         }
     }
 
+    qDebug() << "BaseXmlBuilder: " << element;
     checkXmlError();
 //    qDebug() << line << ":linefirst";
     closeFile();
@@ -192,6 +194,7 @@ int BaseXmlBuilder::getSpecifiedElementLineFirst(QString element, QString attr, 
         }
     }
 
+    qDebug() << "BaseXmlBuilder: " << element << attr << attrvalue;
     checkXmlError();
     //qDebug() << line << ":line";
     closeFile();
@@ -222,9 +225,9 @@ int BaseXmlBuilder::getSpecifiedElementLineEnd(QString element, QString attr, in
         }
     }
 
+    qDebug() << "BaseXmlBuilder: " << line << attr << value;
     checkXmlError();
     closeFile();
-//    qDebug() << line;
     return line;
 }
 
@@ -244,6 +247,7 @@ int BaseXmlBuilder::getSpecifiedElementItemsCount(QString element)
         }
     }
 
+    qDebug() << "BaseXmlBuilder: " << element;
     checkXmlError();
     closeFile();
 //    qDebug() << count << " :count";

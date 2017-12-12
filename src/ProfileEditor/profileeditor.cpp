@@ -28,6 +28,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //set Attrs
     settingdialog = new SettingDialog();
+    fdialog = new QFileDialog();
 
     //theme settings
     themeChangeAction();
@@ -217,6 +218,7 @@ ProfileEditor::~ProfileEditor()
 
     delete ui;
     delete settingdialog;
+    delete fdialog;
     delete editop;
     delete rbinder;
 }
@@ -268,10 +270,10 @@ void ProfileEditor::openAction()
 
     // open file
     QString fileName =
-            QFileDialog::getOpenFileName(this,\
-                                         tr("Open file"),\
-                                         QDir::currentPath(),\
-                                         tr("Profile (*.xml *.apro)"));
+            fdialog->getOpenFileName(this,\
+                                     tr("Open file"),\
+                                     QDir::currentPath(),\
+                                     tr("Profile (*.xml *.apro)"));
     if(fileName != ""){
 //          preResetUi();
         editop->openAction(fileName);
@@ -284,10 +286,10 @@ void ProfileEditor::saveAction()
 {
     // copy only in save action
     QString fileName =
-            QFileDialog::getSaveFileName(this,\
-                                         tr("Save Edit file"),\
-                                         QDir::currentPath(),\
-                                         tr("APRO Files (*.apro)"));
+            fdialog->getSaveFileName(this,\
+                                     tr("Save Edit file"),\
+                                     QDir::currentPath(),\
+                                     tr("APRO Files (*.apro)"));
 
     if(fileName != ""){
         editop->saveAction(fileName);
@@ -423,10 +425,10 @@ void ProfileEditor::overWriteSaveAction()
 //     sfunction->saveEditOverWriteAction(this);
     if(loadfile.contains(".autosave")) {
         QString fileName =
-                QFileDialog::getSaveFileName(this,\
-                                             tr("Save Edit file"),\
-                                             QDir::currentPath(),\
-                                             tr("APRO Files (*.apro)"));
+                fdialog->getSaveFileName(this,\
+                                         tr("Save Edit file"),\
+                                         QDir::currentPath(),\
+                                         tr("APRO Files (*.apro)"));
 
         editop->saveAction(fileName);
         loadfile = fileName;
@@ -438,10 +440,10 @@ void ProfileEditor::exportAction()
 {
 //    sfunction->exportData(this);
     QString fileName =
-            QFileDialog::getSaveFileName(this,\
-                                         tr("Export XML file"),\
-                                         QDir::currentPath(),\
-                                         tr("XML Files (*.xml)"));
+            fdialog->getSaveFileName(this,\
+                                     tr("Export XML file"),\
+                                     QDir::currentPath(),\
+                                     tr("XML Files (*.xml)"));
     editop->exportAction(fileName);
 }
 

@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QDateTime>
+#include <QFileInfo>
 #include <QDebug>
 
 namespace Ui {

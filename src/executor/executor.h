@@ -122,7 +122,7 @@ private:
     void overwriteLocalMacro(QString key, QString value);
 
     //check execlist state
-    void checkExecList();
+    void checkExecList(QList<int> *elist);
 
     //common selector
     int getReadType(QString type);
@@ -141,7 +141,8 @@ private:
     bool detached = false;
     int startnum = 0;
     int endnum = -1;
-    QList<int> execlist;
+    QList<int> userexeclist;
+    QList<int> *execlist;
 //    int forcequittime = -1;
     int launchedfrom = DEFAULT;
     bool autoaddexec = false;
@@ -161,6 +162,7 @@ private:
     ProcessXmlBuilder *pbuilder;
     ProcessXmlListGenerator xgen;
     bool processfileloaded = false;
+//    QString basefilename = "";
 
     //execute part
     QProcess *process;
@@ -171,6 +173,7 @@ private:
     //otherprocess part
     QStack<ProcessXmlBuilder *> builderstack;
     QStack<QHash<QString, QString> *> localstack;
+    QStack<QList<int> *> execliststack;
 };
 
 #endif // EXECUTOR_H

@@ -71,7 +71,12 @@ void StartupDialog::loadSettingList(int index, const QList<QStringList> *data)
     ui->nameLineEdit->setText(data->at(0).at(1));
 
     //setting prof
-    ui->profileComboBox->setCurrentText(data->at(1).at(1));
+    int cindex = ui->profileComboBox->getIndexFromFileName(data->at(1).at(1));
+    if(cindex > -1){
+        ui->profileComboBox->setCurrentIndex(cindex);
+    }else{
+        ui->profileComboBox->setCurrentText(tr("Unknown"));
+    }
 
     //setting valid
     ui->validCheckBox->setChecked(VariantConverter::stringToBool(data->at(2).at(1)));

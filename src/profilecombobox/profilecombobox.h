@@ -19,6 +19,7 @@ public:
 
     PROFILECOMBOBOXSHARED_EXPORT QString getCurrentFileName();
     PROFILECOMBOBOXSHARED_EXPORT QString getCurrentFileName(int index);
+    PROFILECOMBOBOXSHARED_EXPORT int getIndexFromFileName(QString filepath);
 public slots:
     void reloadComboBoxItem();
     void addItemAction();

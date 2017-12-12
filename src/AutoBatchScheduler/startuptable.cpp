@@ -211,11 +211,13 @@ void StartupTable::editAction()
     StartupDialog *sd = new StartupDialog();
     QList<QStringList> list;
     int row = currentRow();
+
     if(builder->readItem(row, &list)){
         //set title
         sd->loadSettingList(row, &list);
         yesno = list.at(StartupXmlBuilder::VALID).at(1);
     }
+
     if(sd->exec() == QDialog::Accepted){
         setTableItem(row);
 

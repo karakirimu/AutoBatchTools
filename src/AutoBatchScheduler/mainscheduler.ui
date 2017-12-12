@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>303</height>
+    <height>379</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainScheduler</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_4">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -113,14 +113,63 @@
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
-             <widget class="QCheckBox" name="timerStartShowCheckBox">
-              <property name="text">
-               <string>タイマー開始時の表示を隠す</string>
+             <widget class="QFrame" name="frame_2">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
               </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_8">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="minimizeShowCheckBox">
+                 <property name="text">
+                  <string>最小化時</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="minimizeSpinBox">
+                 <property name="suffix">
+                  <string> ms</string>
+                 </property>
+                 <property name="minimum">
+                  <number>500</number>
+                 </property>
+                 <property name="maximum">
+                  <number>1000000</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>100</number>
+                 </property>
+                 <property name="value">
+                  <number>2500</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame">
+             <widget class="QFrame" name="timerstartframe">
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -132,7 +181,7 @@
                 <number>0</number>
                </property>
                <property name="leftMargin">
-                <number>20</number>
+                <number>0</number>
                </property>
                <property name="topMargin">
                 <number>0</number>
@@ -144,14 +193,20 @@
                 <number>0</number>
                </property>
                <item>
-                <widget class="QLabel" name="label">
+                <widget class="QCheckBox" name="timerStartShowCheckBox">
                  <property name="text">
-                  <string>開始時の表示時間 (ms)</string>
+                  <string>タイマー開始時</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QSpinBox" name="timerStartSpinBox">
+                 <property name="suffix">
+                  <string> ms</string>
+                 </property>
                  <property name="minimum">
                   <number>500</number>
                  </property>
@@ -170,14 +225,63 @@
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="taskStartShowCheckBox">
-              <property name="text">
-               <string>タスク開始時の表示を隠す</string>
+             <widget class="QFrame" name="timerendframe">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
               </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="timerStopShowCheckBox">
+                 <property name="text">
+                  <string>タイマー終了時</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="timerStopSpinBox">
+                 <property name="suffix">
+                  <string> ms</string>
+                 </property>
+                 <property name="minimum">
+                  <number>500</number>
+                 </property>
+                 <property name="maximum">
+                  <number>1000000</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>100</number>
+                 </property>
+                 <property name="value">
+                  <number>2500</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QFrame" name="frame_2">
+             <widget class="QFrame" name="taskstartframe">
               <property name="frameShape">
                <enum>QFrame::StyledPanel</enum>
               </property>
@@ -189,7 +293,7 @@
                 <number>0</number>
                </property>
                <property name="leftMargin">
-                <number>20</number>
+                <number>0</number>
                </property>
                <property name="topMargin">
                 <number>0</number>
@@ -201,14 +305,20 @@
                 <number>0</number>
                </property>
                <item>
-                <widget class="QLabel" name="label_2">
+                <widget class="QCheckBox" name="taskStartShowCheckBox">
                  <property name="text">
-                  <string>開始時の表示時間 (ms)</string>
+                  <string>タスク開始時</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QSpinBox" name="taskStartSpinBox">
+                 <property name="suffix">
+                  <string> ms</string>
+                 </property>
                  <property name="minimum">
                   <number>500</number>
                  </property>
@@ -227,10 +337,115 @@
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="taskEndShowCheckBox">
-              <property name="text">
-               <string>タスク終了時の表示を隠す</string>
+             <widget class="QFrame" name="taskendframe">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
               </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_5">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="taskEndShowCheckBox">
+                 <property name="text">
+                  <string>タスク終了時</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="taskEndSpinBox">
+                 <property name="suffix">
+                  <string> ms</string>
+                 </property>
+                 <property name="minimum">
+                  <number>500</number>
+                 </property>
+                 <property name="maximum">
+                  <number>1000000</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>100</number>
+                 </property>
+                 <property name="value">
+                  <number>2500</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QFrame" name="taskunsekectframe">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_7">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="taskUnselectShowCheckBox">
+                 <property name="text">
+                  <string>タスク解除時</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="taskUnselectSpinBox">
+                 <property name="suffix">
+                  <string> ms</string>
+                 </property>
+                 <property name="minimum">
+                  <number>500</number>
+                 </property>
+                 <property name="maximum">
+                  <number>1000000</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>100</number>
+                 </property>
+                 <property name="value">
+                  <number>2500</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>

@@ -137,6 +137,7 @@ void ProcessShowTable::insertItem(int itemid)
 
 void ProcessShowTable::enableItem(QString objname)
 {
+    //TODO: case of no cellwidget (when Item add newly)
     CellInfoWidget *ciw = getCellWidget(objname);
 
     if(ciw != nullptr){

@@ -8,6 +8,7 @@
 #include <startupxmlbuilder.h>
 #include <statuswidget.h>
 #include <taskschedulerconnector.h>
+#include <QSettings>
 #include "processshowtable.h"
 
 class SystemTray : public QWidget
@@ -60,7 +61,7 @@ private:
     QString getNameByActions(QString objectname);
     QString encodeDayOfWeek(int dayofweek);
 //    QAction *generateAction(int itemid);
-
+    QSettings settings;
 
     QMenu *trayIconMenu;
     QAction *launchAction;

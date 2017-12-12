@@ -75,6 +75,7 @@ private:
 
     Ui::ProfileEditor *ui;
     SettingDialog *settingdialog;
+    QFileDialog *fdialog;
     int rowpos;
     QString loadfile;
     bool lastedited = false;
