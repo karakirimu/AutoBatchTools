@@ -1,8 +1,8 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "autobatchrunner.h"
+#include "ui_autobatchrunner.h"
 
 
-MainWindow::MainWindow(QWidget *parent) :
+AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
@@ -26,14 +26,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionExit, &QAction::triggered, qApp, &QCoreApplication::quit);
 
     //set dock autohide TODO: not saved menu
-    ui->runDock->setAutohide(ui->actionAutohide->isChecked());
-    ui->runDock->hide();
+//    ui->runDock->setAutohide(ui->actionAutohide->isChecked());
+//    ui->runDock->hide();
     ui->consoleDock->setAutohide(ui->actionAutohide->isChecked());
 
     //set menu show
-    connect(ui->actionAutohide, &QAction::triggered, ui->runDock, &BaseDockWidget::setAutohide);
+//    connect(ui->actionAutohide, &QAction::triggered, ui->runDock, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->consoleDock, &BaseDockWidget::setAutohide);
-    connect(ui->runDock, &BaseDockWidget::visibilityChanged, ui->actionAutohide, &QAction::setChecked);
+//    connect(ui->runDock, &BaseDockWidget::visibilityChanged, ui->actionAutohide, &QAction::setChecked);
     connect(ui->consoleDock, &BaseDockWidget::visibilityChanged, ui->actionAutohide, &QAction::setChecked);
 
 
@@ -72,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     initStatusBar();
 }
 
-MainWindow::~MainWindow()
+AutoBatchRunner::~AutoBatchRunner()
 {
     //save window state
     QSettings settings( "./settings.ini", QSettings::IniFormat );
@@ -109,7 +109,7 @@ MainWindow::~MainWindow()
 //}
 //----------------------------------------------------------------
 
-void MainWindow::on_actionSettings_triggered()
+void AutoBatchRunner::on_actionSettings_triggered()
 {
     if(!this->isVisible()){
         if(this->isMinimized()){
@@ -122,54 +122,54 @@ void MainWindow::on_actionSettings_triggered()
     opdialog->show();
 }
 
-void MainWindow::showThisWindow()
-{
-    if(this->isMinimized()){
-        this->showNormal();
-    }else{
-        this->show();
-    }
-}
+//void MainWindow::showThisWindow()
+//{
+//    if(this->isMinimized()){
+//        this->showNormal();
+//    }else{
+//        this->show();
+//    }
+//}
 
-void MainWindow::closedFromSystemTray()
-{
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("STARTUP");
-    bool allclose = settings.value("ALLCLOSE", true).toBool();
-    settings.endGroup();
-    if(allclose){
-        QCoreApplication::quit();
-    }else{
-//        sysTray->hide();
-        this->showNormal();
-    }
-}
+//void MainWindow::closedFromSystemTray()
+//{
+//    QSettings settings( "./settings.ini", QSettings::IniFormat );
+//    settings.beginGroup("STARTUP");
+//    bool allclose = settings.value("ALLCLOSE", true).toBool();
+//    settings.endGroup();
+//    if(allclose){
+//        QCoreApplication::quit();
+//    }else{
+////        sysTray->hide();
+//        this->showNormal();
+//    }
+//}
 
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-    //TODO:
-    systemTraySelect() ? event->ignore() : event->accept();
-}
+//void MainWindow::closeEvent(QCloseEvent *event)
+//{
+//    //TODO:
+////    systemTraySelect() ? event->ignore() : event->accept();
+//}
 
-bool MainWindow::systemTraySelect()
-{
-#ifdef Q_OS_OSX
-    if (!event->spontaneous() || !isVisible()) {
-        return;
-    }
-#endif
-    //when startup action selected, hide window.
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("STARTUP");
-    bool isstartup = settings.value("ENABLED", false).toBool();
-    settings.endGroup();
+//bool MainWindow::systemTraySelect()
+//{
+//#ifdef Q_OS_OSX
+//    if (!event->spontaneous() || !isVisible()) {
+//        return;
+//    }
+//#endif
+//    //when startup action selected, hide window.
+//    QSettings settings( "./settings.ini", QSettings::IniFormat );
+//    settings.beginGroup("STARTUP");
+//    bool isstartup = settings.value("ENABLED", false).toBool();
+//    settings.endGroup();
 
-    if(isstartup) this->hide();
+//    if(isstartup) this->hide();
 
-    return isstartup;
-}
+//    return isstartup;
+//}
 
-void MainWindow::initStatusBar()
+void AutoBatchRunner::initStatusBar()
 {
     QLabel *label = new QLabel();
     label->setAlignment(Qt::AlignLeft);
@@ -183,7 +183,7 @@ void MainWindow::initStatusBar()
 //    connect(rbinder, &RunTaskSignalBinder::processCurrent, progressbar, &QProgressBar::setValue);
 }
 
-void MainWindow::on_runButton_clicked()
+void AutoBatchRunner::on_runButton_clicked()
 {
 //    MainProcessLoader *loader = new MainProcessLoader();
 //    loader->setCounterMin(ui->rCountMinSpinBox->value());
@@ -203,7 +203,7 @@ void MainWindow::on_runButton_clicked()
 //    }
 //}
 
-void MainWindow::comboBoxItemChanged(int index)
+void AutoBatchRunner::comboBoxItemChanged(int index)
 {
 //    ui->profileTreeWidget->loadFile(ui->comboBox->getCurrentFileName(index));
 //    ui->rCountMinSpinBox->setValue(1);

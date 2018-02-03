@@ -14,13 +14,13 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class AutoBatchRunner : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit AutoBatchRunner(QWidget *parent = 0);
+    ~AutoBatchRunner();
 
 private slots:
 //    void on_actionConsole_triggered(bool checked);
@@ -29,16 +29,16 @@ private slots:
 //    void on_runDock_visibilityChanged(bool visible);
     void on_actionSettings_triggered();
 
-    void showThisWindow();
-    void closedFromSystemTray();
+//    void showThisWindow();
+//    void closedFromSystemTray();
     void on_runButton_clicked();
 
 //    void on_editButton_clicked();
 
     void comboBoxItemChanged(int index);
 private:
-    void closeEvent(QCloseEvent *event);
-    bool systemTraySelect();
+//    void closeEvent(QCloseEvent *event);
+//    bool systemTraySelect();
 
     void initStatusBar();
 

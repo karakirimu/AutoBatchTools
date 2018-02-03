@@ -19,12 +19,12 @@ public:
 private slots:
     void on_listWidget_currentRowChanged(int currentRow);
     void onAccept();
-    void onReject();
+//    void onReject();
 
 private:
     Ui::OptionDialog *ui;
-    void closeEvent(QCloseEvent *event);
-    bool systemTraySelect();
+//    void closeEvent(QCloseEvent *event);
+//    bool systemTraySelect();
 
     void setupItem();
     void setSettings();

@@ -24,19 +24,21 @@ Debug:RCC_DIR = $$PWD/../../build/debug/AutoBatchRunner/.rcc
 Debug:UI_DIR = $$PWD/../../build/debug/AutoBatchRunner/.ui
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    basedockwidget.cpp
+    basedockwidget.cpp \
+    autobatchrunner.cpp
 
-HEADERS  += mainwindow.h \
-    basedockwidget.h
+HEADERS  += \
+    basedockwidget.h \
+    autobatchrunner.h
 
-FORMS    += mainwindow.ui
+FORMS    += \
+    autobatchrunner.ui
 
 RESOURCES += \
     ../../res/resources.qrc
 
 #include path
-include(xml/xml.pri)
+#include(xml/xml.pri)
 include(combobox/combobox.pri)
 include(table/table.pri)
 #include(timemanager/timemanager.pri)

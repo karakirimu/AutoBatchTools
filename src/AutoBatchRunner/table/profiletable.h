@@ -4,7 +4,7 @@
 //#include "optiontable.h"
 #include <../basictable/basictable.h>
 //#include "profileeditor.h"
-#include <profilexmlbuilder.h>
+#include <../profilexmlbuilder/profilexmlbuilder.h>
 #include <../processxmlbuilder/processxmlbuilder.h>
 
 class ProfileTable : public BasicTable

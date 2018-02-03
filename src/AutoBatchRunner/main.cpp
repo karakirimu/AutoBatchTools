@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "autobatchrunner.h"
 #include <QApplication>
 #include <QTextCodec>
 
@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale(QTextCodec::codecForLocale());
 #endif
 
-    MainWindow w;
+    AutoBatchRunner w;
     w.show();
 
     return a.exec();
