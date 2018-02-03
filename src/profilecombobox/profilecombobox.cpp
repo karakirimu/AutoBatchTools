@@ -77,6 +77,8 @@ void ProfileComboBox::addItemAction()
     QString file = dialog.getOpenFileName(this, tr("Select Profile")
                                           , "./", tr("Profile (*.apro *.xml)"));
 
+    if(file == "") return;
+
     pbuilder->setLoadPath(file);
 
     //load info
