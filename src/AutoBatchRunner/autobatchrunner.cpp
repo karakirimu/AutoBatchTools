@@ -26,49 +26,14 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     connect(ui->actionExit, &QAction::triggered, qApp, &QCoreApplication::quit);
 
     //set dock autohide TODO: not saved menu
-//    ui->runDock->setAutohide(ui->actionAutohide->isChecked());
-//    ui->runDock->hide();
     ui->consoleDock->setAutohide(ui->actionAutohide->isChecked());
 
     //set menu show
-//    connect(ui->actionAutohide, &QAction::triggered, ui->runDock, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->consoleDock, &BaseDockWidget::setAutohide);
-//    connect(ui->runDock, &BaseDockWidget::visibilityChanged, ui->actionAutohide, &QAction::setChecked);
     connect(ui->consoleDock, &BaseDockWidget::visibilityChanged, ui->actionAutohide, &QAction::setChecked);
-
-
-    //init system tray
-    //test function
-//    sysTray = new SystemTray();
-//    sysTray->show();
-
-    //connect systray actions
-//    connect(sysTray, &SystemTray::launchMain, this, &MainWindow::showThisWindow);
-//    connect(sysTray, &SystemTray::launchSetting, this, &MainWindow::on_actionSettings_triggered);
-//    connect(sysTray, &SystemTray::launchclose, this, &MainWindow::closedFromSystemTray);
-
-    //TODO: error occured
-//    ui->comboBox->reloadComboBoxItem();
-    //init combobox
-//    connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(comboBoxItemChanged(int)));
-
-    //select combobox first
-//    if(ui->comboBox->count() > 0) comboBoxItemChanged(0);
 
     //init optiondialog object
     opdialog = new OptionDialog();
-//    connect(opdialog, SIGNAL(accepted()), ui->comboBox, SLOT(reloadComboBoxItem()));
-
-    //spinbox min set
-//    ui->rCountMinSpinBox->setMinimum(1);
-//    ui->rCountMaxSpinBox->setMinimum(1);
-
-
-//    if(ui->comboBox->currentText() != "") ui->comboBox->currentIndexChanged(0);
-
-    //connect combobox and tree widget
-//    ui->profileTreeWidget->init_LoadCombobox(ui->comboBox);
-
 
     //init ui add delete edit button
     connect(ui->addButton, &QToolButton::clicked, ui->comboBox, &ProfileComboBox::addItemAction);
@@ -93,29 +58,6 @@ AutoBatchRunner::~AutoBatchRunner()
     delete ui;
 }
 
-//----------------------------------------------------------------
-//menu action slot (docksettings)
-//void MainWindow::on_actionConsole_triggered(bool checked)
-//{
-////    checked ? ui->consoleDock->show() : ui->consoleDock->hide();
-//}
-
-//void MainWindow::on_actionRun_triggered(bool checked)
-//{
-////    checked ? ui->runDock->show() : ui->runDock->hide();
-//}
-
-//void MainWindow::on_consoleDock_visibilityChanged(bool visible)
-//{
-//    ui->actionConsole->setChecked(visible);
-//}
-
-//void MainWindow::on_runDock_visibilityChanged(bool visible)
-//{
-//    ui->actionRun->setChecked(visible);
-//}
-//----------------------------------------------------------------
-
 void AutoBatchRunner::on_actionOpen_triggered()
 {
     ui->fileTable->addAction();
@@ -134,53 +76,6 @@ void AutoBatchRunner::on_actionSettings_triggered()
     opdialog->show();
 }
 
-//void MainWindow::showThisWindow()
-//{
-//    if(this->isMinimized()){
-//        this->showNormal();
-//    }else{
-//        this->show();
-//    }
-//}
-
-//void MainWindow::closedFromSystemTray()
-//{
-//    QSettings settings( "./settings.ini", QSettings::IniFormat );
-//    settings.beginGroup("STARTUP");
-//    bool allclose = settings.value("ALLCLOSE", true).toBool();
-//    settings.endGroup();
-//    if(allclose){
-//        QCoreApplication::quit();
-//    }else{
-////        sysTray->hide();
-//        this->showNormal();
-//    }
-//}
-
-//void MainWindow::closeEvent(QCloseEvent *event)
-//{
-//    //TODO:
-////    systemTraySelect() ? event->ignore() : event->accept();
-//}
-
-//bool MainWindow::systemTraySelect()
-//{
-//#ifdef Q_OS_OSX
-//    if (!event->spontaneous() || !isVisible()) {
-//        return;
-//    }
-//#endif
-//    //when startup action selected, hide window.
-//    QSettings settings( "./settings.ini", QSettings::IniFormat );
-//    settings.beginGroup("STARTUP");
-//    bool isstartup = settings.value("ENABLED", false).toBool();
-//    settings.endGroup();
-
-//    if(isstartup) this->hide();
-
-//    return isstartup;
-//}
-
 void AutoBatchRunner::initStatusBar()
 {
     QLabel *label = new QLabel();
@@ -193,35 +88,4 @@ void AutoBatchRunner::initStatusBar()
     ui->statusBar->addPermanentWidget(progressbar, 1);
 //    connect(rbinder, &RunTaskSignalBinder::processInitCount, progressbar, &QProgressBar::setRange);
 //    connect(rbinder, &RunTaskSignalBinder::processCurrent, progressbar, &QProgressBar::setValue);
-}
-
-void AutoBatchRunner::on_runButton_clicked()
-{
-//    MainProcessLoader *loader = new MainProcessLoader();
-//    loader->setCounterMin(ui->rCountMinSpinBox->value());
-//    loader->setCounterMax(ui->rCountMaxSpinBox->value());
-//    loader->setFileName(ui->comboBox->getCurrentFileName());
-//    loader->setUpdateTextEdit(ui->commandLineText);
-//    loader->start();
-}
-
-//void MainWindow::on_editButton_clicked()
-//{
-//    QString filename = ui->comboBox->getCurrentFileName();
-//    if(filename != ""){
-//        ProfileEditor *pe = new ProfileEditor(filename);
-//        connect(pe, SIGNAL(destroyed(QObject*)), ui->profileTreeWidget, SLOT(reloadAction()));
-//        pe->show();
-//    }
-//}
-
-void AutoBatchRunner::comboBoxItemChanged(int index)
-{
-//    ui->profileTreeWidget->loadFile(ui->comboBox->getCurrentFileName(index));
-//    ui->rCountMinSpinBox->setValue(1);
-//    int maxc = ui->profileTreeWidget->topLevelItemCount() - 1;
-//    ui->rCountMaxSpinBox->setValue(maxc);
-
-//    ui->rCountMinSpinBox->setMaximum(maxc);
-//    ui->rCountMaxSpinBox->setMaximum(maxc);
 }
