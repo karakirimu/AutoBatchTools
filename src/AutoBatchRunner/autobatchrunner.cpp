@@ -69,6 +69,14 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     //connect combobox and tree widget
 //    ui->profileTreeWidget->init_LoadCombobox(ui->comboBox);
 
+
+    //init ui add delete edit button
+    connect(ui->addButton, &QToolButton::clicked, ui->comboBox, &ProfileComboBox::addItemAction);
+    connect(ui->deleteButton, &QToolButton::clicked, ui->comboBox, &ProfileComboBox::deleteItemAction);
+
+    //init profilelist
+    ui->comboBox->reloadComboBoxItem();
+
     initStatusBar();
 }
 
@@ -78,7 +86,6 @@ AutoBatchRunner::~AutoBatchRunner()
     QSettings settings( "./settings.ini", QSettings::IniFormat );
     settings.setValue( "main/geometry", saveGeometry() );
     settings.setValue( "main/windowState", saveState() );
-
 
     //delete object
     delete opdialog;
@@ -108,6 +115,11 @@ AutoBatchRunner::~AutoBatchRunner()
 //    ui->actionRun->setChecked(visible);
 //}
 //----------------------------------------------------------------
+
+void AutoBatchRunner::on_actionOpen_triggered()
+{
+    ui->fileTable->addAction();
+}
 
 void AutoBatchRunner::on_actionSettings_triggered()
 {

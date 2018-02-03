@@ -34,7 +34,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QFrame" name="frame">
+     <widget class="QFrame" name="profileframe">
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
@@ -97,7 +97,7 @@
      </widget>
     </item>
     <item>
-     <widget class="FileQueueTable" name="tableWidget">
+     <widget class="FileQueueTable" name="fileTable">
       <property name="styleSheet">
        <string notr="true"/>
       </property>
@@ -160,7 +160,6 @@ selection-color: rgb(0, 0, 0);</string>
      <string>表示</string>
     </property>
     <addaction name="actionConsole"/>
-    <addaction name="actionProfile"/>
     <addaction name="separator"/>
     <addaction name="actionAutohide"/>
    </widget>

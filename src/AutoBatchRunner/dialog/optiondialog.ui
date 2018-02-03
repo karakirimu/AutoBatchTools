@@ -127,7 +127,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="general">
              <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -177,6 +177,9 @@
               </item>
               <item>
                <widget class="QFrame" name="frame">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
                 </property>
@@ -272,7 +275,7 @@
               <item>
                <widget class="QTabWidget" name="profileTabWidget_2">
                 <property name="currentIndex">
-                 <number>2</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="string">
                  <attribute name="title">
@@ -297,7 +300,7 @@
                   <item>
                    <widget class="QFrame" name="frame_5">
                     <property name="enabled">
-                     <bool>true</bool>
+                     <bool>false</bool>
                     </property>
                     <property name="frameShape">
                      <enum>QFrame::StyledPanel</enum>
@@ -423,6 +426,9 @@
                   </property>
                   <item>
                    <widget class="QFrame" name="frame_4">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
                     <property name="frameShape">
                      <enum>QFrame::StyledPanel</enum>
                     </property>
@@ -547,6 +553,9 @@
                   </property>
                   <item>
                    <widget class="QFrame" name="frame_6">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
                     <property name="frameShape">
                      <enum>QFrame::StyledPanel</enum>
                     </property>

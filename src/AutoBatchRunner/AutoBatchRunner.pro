@@ -25,11 +25,13 @@ Debug:UI_DIR = $$PWD/../../build/debug/AutoBatchRunner/.ui
 
 SOURCES += main.cpp\
     basedockwidget.cpp \
-    autobatchrunner.cpp
+    autobatchrunner.cpp \
+    entrytask.cpp
 
 HEADERS  += \
     basedockwidget.h \
-    autobatchrunner.h
+    autobatchrunner.h \
+    entrytask.h
 
 FORMS    += \
     autobatchrunner.ui

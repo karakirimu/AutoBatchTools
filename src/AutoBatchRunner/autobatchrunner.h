@@ -36,6 +36,8 @@ private slots:
 //    void on_editButton_clicked();
 
     void comboBoxItemChanged(int index);
+    void on_actionOpen_triggered();
+
 private:
 //    void closeEvent(QCloseEvent *event);
 //    bool systemTraySelect();

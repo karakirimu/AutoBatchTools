@@ -14,6 +14,8 @@ public:
 
     FILEQUEUETABLESHARED_EXPORT void addFiles(const QStringList &filenames);
 
+    void addAction();
+
 protected slots:
     void dragEnterEvent(QDragEnterEvent *event);
     void dragMoveEvent(QDragMoveEvent *event);
@@ -24,7 +26,6 @@ private slots:
     void setPopupActionDefault();
     void setPopupActionBottom();
 
-    void addAction();
     void horizontalHeaderClicked(int column);
     void deleteAciton();
     void clearAction();
