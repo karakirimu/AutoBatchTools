@@ -100,8 +100,19 @@ void CellInfoWidget::setRunStatus(bool enabled)
 
 void CellInfoWidget::onRunStatusChange(bool enabled)
 {
-    setRunStatus(enabled);
-    emit changeRunStatus(enabled);
+    if(ui->stopToolButton->isEnabled()){
+        //task is running
+        disconnect(ui->profileCheckBox, &QCheckBox::toggled, this, &CellInfoWidget::onRunStatusChange);
+        ui->profileCheckBox->setChecked(true);
+        connect(ui->profileCheckBox, &QCheckBox::toggled, this, &CellInfoWidget::onRunStatusChange);
+
+        //TEXT
+        updateErrorText(tr("To turn off task, need to stop current task."));
+    }else{
+        //task is not running
+        setRunStatus(enabled);
+        emit changeRunStatus(enabled);
+    }
 }
 
 void CellInfoWidget::setTimerEnd(QString date)

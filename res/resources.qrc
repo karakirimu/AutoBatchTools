@@ -1,0 +1,38 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/Apps.png</file>
+        <file>icons/Clock.png</file>
+        <file>icons/Colors.png</file>
+        <file>icons/extension.png</file>
+        <file>icons/Button_Down.png</file>
+        <file>icons/Button_Up.png</file>
+        <file>icons/Files_Copy.png</file>
+        <file>icons/Gear.png</file>
+        <file>icons/File.png</file>
+        <file>icons/Folder.png</file>
+        <file>icons/Add.png</file>
+        <file>icons/Denided.png</file>
+        <file>icons/Pen.png</file>
+        <file>icons/Error.png</file>
+        <file>icons/Valid.png</file>
+        <file>icons/arrow_refresh.png</file>
+        <file>icons/Info_Light.png</file>
+        <file>icons/Terminal.png</file>
+        <file>icons/Search.png</file>
+        <file>icons/File_Text.png</file>
+        <file>icons/Project.png</file>
+        <file>icons/app_systray.png</file>
+        <file>icons/setting_tools.png</file>
+        <file>icons/file_save_as.png</file>
+        <file>icons/File_Add.png</file>
+        <file>icons/xml_exports.png</file>
+        <file>icons/Clipboard_Full.png</file>
+        <file>icons/run.png</file>
+        <file>icons/pause.png</file>
+        <file>icons/stop_flat.png</file>
+        <file>icons/downtriangle.png</file>
+        <file>themes/Dark.qss</file>
+        <file>themes/Light.qss</file>
+        <file>icons/downtriangle_light.png</file>
+    </qresource>
+</RCC>

@@ -14,12 +14,13 @@ TaskSchedulerConnector::~TaskSchedulerConnector()
 void TaskSchedulerConnector::enableTask(QString objectname, QString filepath)
 {
     addTask(objectname, filepath);
-    schedulerStart(objectname);
+//    schedulerStart(objectname);
     emit taskEnabled(objectname);
 }
 
 void TaskSchedulerConnector::disableTask(QString objectname)
 {
-    schedulerStop(objectname);
+//    schedulerStop(objectname);
+    removeTask(objectname);
     emit taskDisabled(objectname);
 }

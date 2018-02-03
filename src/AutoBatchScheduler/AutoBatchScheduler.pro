@@ -58,11 +58,30 @@ include(taskscheduler/taskscheduler.pri)
 include(systemtray/systemtray.pri)
 include(statusarea/statusarea.pri)
 
-unix|win32:CONFIG(debug, debug|release) LIBS += \
-            -L$$PWD/../../build/debug/libs/ -lVariantConverter \
-            -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
-            -L$$PWD/../../build/debug/libs/ -lbasictable \
-            -L$$PWD/../../build/debug/libs/ -lprofilexmlbuilder \
-            -L$$PWD/../../build/debug/libs/ -lprofilecombobox \
-            -L$$PWD/../../build/debug/libs/ -lexecutor \
-            -L$$PWD/../../build/debug/libs/ -lconsolebase
+unix|win32:CONFIG(debug, debug|release) {
+    LIBS += \
+        -L$$PWD/../../build/debug/libs/ -lVariantConverter \
+        -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
+        -L$$PWD/../../build/debug/libs/ -lbasictable \
+        -L$$PWD/../../build/debug/libs/ -lprofilexmlbuilder \
+        -L$$PWD/../../build/debug/libs/ -lprofilecombobox \
+        -L$$PWD/../../build/debug/libs/ -lexecutor \
+        -L$$PWD/../../build/debug/libs/ -lconsolebase
+
+    INCLUDEPATH += $$PWD/../../build/debug/libs
+    DEPENDPATH += $$PWD/../../build/debug/libs
+}
+
+unix|win32:CONFIG(release, debug|release) {
+    LIBS += \
+        -L$$PWD/../../build/release/libs/ -lVariantConverter \
+        -L$$PWD/../../build/release/libs/ -lxmlbuilder \
+        -L$$PWD/../../build/release/libs/ -lbasictable \
+        -L$$PWD/../../build/release/libs/ -lprofilexmlbuilder \
+        -L$$PWD/../../build/release/libs/ -lprofilecombobox \
+        -L$$PWD/../../build/release/libs/ -lexecutor \
+        -L$$PWD/../../build/release/libs/ -lconsolebase
+
+    INCLUDEPATH += $$PWD/../../build/release/libs
+    DEPENDPATH += $$PWD/../../build/release/libs
+}

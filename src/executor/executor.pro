@@ -46,13 +46,30 @@ unix {
     INSTALLS += target
 }
 
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lstringxmlbuilder
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lfilesearchloader
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lprocessxmlbuilder \
-                    -L$$PWD/../../build/debug/libs/ -lprocessxmllistgenerator
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lVariantConverter
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lfilesearchloader
+unix|win32:CONFIG(debug, debug|release) {
+    LIBS += \
+        -L$$PWD/../../build/debug/libs/ -lVariantConverter \
+        -L$$PWD/../../build/debug/libs/ -lfilesearchloader \
+        -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
+        -L$$PWD/../../build/debug/libs/ -lstringxmlbuilder \
+        -L$$PWD/../../build/debug/libs/ -lfilesearchloader \
+        -L$$PWD/../../build/debug/libs/ -lprocessxmlbuilder \
+        -L$$PWD/../../build/debug/libs/ -lprocessxmllistgenerator
 
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
+    INCLUDEPATH += $$PWD/../../build/debug/libs
+    DEPENDPATH += $$PWD/../../build/debug/libs
+}
+
+unix|win32:CONFIG(release, debug|release) {
+    LIBS += \
+        -L$$PWD/../../build/release/libs/ -lVariantConverter \
+        -L$$PWD/../../build/release/libs/ -lfilesearchloader \
+        -L$$PWD/../../build/release/libs/ -lxmlbuilder \
+        -L$$PWD/../../build/release/libs/ -lstringxmlbuilder \
+        -L$$PWD/../../build/release/libs/ -lfilesearchloader \
+        -L$$PWD/../../build/release/libs/ -lprocessxmlbuilder \
+        -L$$PWD/../../build/release/libs/ -lprocessxmllistgenerator
+
+    INCLUDEPATH += $$PWD/../../build/release/libs
+    DEPENDPATH += $$PWD/../../build/release/libs
+}

@@ -32,16 +32,16 @@ signals:
 
     //for all ui
     void processStarted(int runfrom);
-    void processStarted_action(bool);
+//    void processStarted_action(bool);
 
     void processPaused();
-    void processPaused_action(bool);
+//    void processPaused_action(bool);
 
     void processStopped();
-    void processStopped_action(bool);
+//    void processStopped_action(bool);
 
     void processEnd(int);
-    void processEnd_action(bool);
+//    void processEnd_action(bool);
 
 public slots:
     //for progress
@@ -57,10 +57,10 @@ public slots:
     void sendInput(QString message);
 
     //for all ui
-    void receiveStarted(int runfrom){emit processStarted(runfrom); emit processStarted_action(true);}
-    void receivePaused(){emit processPaused(); emit processPaused_action(true);}
-    void receiveStopped(){emit processStopped(); emit processStopped_action(true);}
-    void receiveEnd(int type){emit processEnd(type); emit processEnd_action(true);}
+    void receiveStarted(int runfrom){emit processStarted(runfrom); /*emit processStarted_action(true);*/}
+    void receivePaused(){emit processPaused(); /*emit processPaused_action(true);*/}
+    void receiveStopped(){emit processStopped(); /*emit processStopped_action(true);*/}
+    void receiveEnd(int type){emit processEnd(type); /*emit processEnd_action(true);*/}
 
     //from menu
     void start();
@@ -77,7 +77,7 @@ private:
     QMutex *mutex;
     Executor *executor;
     QThread *worker;
-    QString loadfilepath = "";
+//    QString loadfilepath = "";
 };
 
 #endif // ENTRYTASK_H

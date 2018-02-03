@@ -46,9 +46,14 @@ unix {
     INSTALLS += target
 }
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
-else:unix: LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
+unix|win32:CONFIG(debug, debug|release) {
+    LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
+    INCLUDEPATH += $$PWD/../../build/debug/libs
+    DEPENDPATH += $$PWD/../../build/debug/libs
+}
 
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
+unix|win32:CONFIG(release, debug|release) {
+    LIBS += -L$$PWD/../../build/release/libs/ -lxmlbuilder
+    INCLUDEPATH += $$PWD/../../build/release/libs
+    DEPENDPATH += $$PWD/../../build/release/libs
+}

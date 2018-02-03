@@ -26,8 +26,8 @@ SystemTray::SystemTray(QWidget *parent) : QWidget(parent)
     //set new xml builder
     builder = new StartupXmlBuilder();
 
-    settings.setUserIniPath("./settings.ini");
-    settings.setDefaultFormat(QSettings::IniFormat);
+//    settings.setDefaultFormat(QSettings::IniFormat);
+//    settings.setUserIniPath("./settings.ini");
 }
 
 SystemTray::~SystemTray()
@@ -86,6 +86,7 @@ void SystemTray::trayActivated(QSystemTrayIcon::ActivationReason reason)
 
 void SystemTray::showNotCloseMessage()
 {
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
     settings.beginGroup("STARTUP");
     if(settings.value("MINIMIZESHOW", true).toBool()){
         trayIcon->showMessage(tr("AutoBatchSchedulerは起動しています")
@@ -102,6 +103,7 @@ void SystemTray::showTimerStart(QString objectname, QDateTime time)
     int itemid = getStartupXmlIndex(objectname);
 
     // load setting datas
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
     settings.beginGroup("STARTUP");
     bool started = settings.value("TIMERSTART", true).toBool();
     int timerms = settings.value("TIMERSTARTMS", 2500).toInt();
@@ -142,6 +144,7 @@ void SystemTray::showTimerStopped(QString objectname, int type)
     case SchedulerWait::FINISHED:
     {
         //show message
+        QSettings settings( "./settings.ini", QSettings::IniFormat );
         settings.beginGroup("STARTUP");
         if(settings.value("TIMERSTOP", true).toBool()){
             trayIcon->showMessage(tr("タイマーは終了しました"),\
@@ -173,11 +176,29 @@ void SystemTray::showTimerStopped(QString objectname, int type)
 
 void SystemTray::showProcessStart(QString objectname, int runfrom)
 {
-    switch (runfrom) {
-    case Executor::DEFAULT:
-        break;
-    case Executor::SCHEDULER:
+//    switch (runfrom) {
+//    case Executor::DEFAULT:
+//        break;
+//    case Executor::SCHEDULER:
+//        //show message
+//        QSettings settings( "./settings.ini", QSettings::IniFormat );
+//        settings.beginGroup("STARTUP");
+//        if(settings.value("TASKSTART", true).toBool()){
+//            trayIcon->showMessage(tr("タスクを開始しました"),\
+//                                  getNameByActions(objectname),\
+//                                  QSystemTrayIcon::Information,\
+//                                  settings.value("TASKSTOPMS", 2500).toInt());
+//        }
+//        settings.endGroup();
+
+//        break;
+//    default:
+//        break;
+//    }
+
+    if(runfrom == Executor::SCHEDULER){
         //show message
+        QSettings settings( "./settings.ini", QSettings::IniFormat );
         settings.beginGroup("STARTUP");
         if(settings.value("TASKSTART", true).toBool()){
             trayIcon->showMessage(tr("タスクを開始しました"),\
@@ -186,9 +207,6 @@ void SystemTray::showProcessStart(QString objectname, int runfrom)
                                   settings.value("TASKSTOPMS", 2500).toInt());
         }
         settings.endGroup();
-        break;
-    default:
-        break;
     }
 }
 
@@ -212,9 +230,29 @@ void SystemTray::showProcessStopped(QString objectname)
 
 void SystemTray::showProcessEnded(QString objectname, int type)
 {
-    switch (type) {
-    case Executor::MAINPROCESS:
+//    switch (type) {
+//    case Executor::MAINPROCESS:
+//        //show message
+//        QSettings settings( "./settings.ini", QSettings::IniFormat );
+//        settings.beginGroup("STARTUP");
+//        if(settings.value("TASKEND", true).toBool()){
+//            trayIcon->showMessage(tr("タスクは正常終了しました"),\
+//                                  getNameByActions(objectname),\
+//                                  QSystemTrayIcon::Information,\
+//                                  settings.value("TASKENDMS", 2500).toInt());
+//        }
+//        settings.endGroup();
+//        break;
+//// obsolete
+////    case Executor::OTHERPROCESS:
+////        break;
+//    default:
+//        break;
+//    }
+
+    if(type == Executor::MAINPROCESS){
         //show message
+        QSettings settings( "./settings.ini", QSettings::IniFormat );
         settings.beginGroup("STARTUP");
         if(settings.value("TASKEND", true).toBool()){
             trayIcon->showMessage(tr("タスクは正常終了しました"),\
@@ -223,17 +261,14 @@ void SystemTray::showProcessEnded(QString objectname, int type)
                                   settings.value("TASKENDMS", 2500).toInt());
         }
         settings.endGroup();
-        break;
-    case Executor::OTHERPROCESS:
-        break;
-    default:
-        break;
+
     }
 }
 
 void SystemTray::showTaskDisabled(QString objectname)
 {
     //show message
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
     settings.beginGroup("STARTUP");
     if(settings.value("TASKUNSELECT", true).toBool()){
         trayIcon->showMessage(tr("タスクを解除しました"),\

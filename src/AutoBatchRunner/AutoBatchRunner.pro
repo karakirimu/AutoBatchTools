@@ -44,7 +44,8 @@ include(table/table.pri)
 include(textedit/textedit.pri)
 include(dialog/dialog.pri)
 
-unix|win32:CONFIG(debug, debug|release) LIBS += \
+unix|win32:CONFIG(debug, debug|release) {
+        LIBS += \
             -L$$PWD/../../build/debug/libs/ -lVariantConverter \
             -L$$PWD/../../build/debug/libs/ -lconvertchecker \
             -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
@@ -64,8 +65,31 @@ unix|win32:CONFIG(debug, debug|release) LIBS += \
             -L$$PWD/../../build/debug/libs/ -lfilesearchloader \
             -L$$PWD/../../build/debug/libs/ -lexecutor \
 
-INCLUDEPATH += \
-        $$PWD/../../build/debug/libs \
+        INCLUDEPATH += $$PWD/../../build/debug/libs
+        DEPENDPATH += $$PWD/../../build/debug/libs
+}
 
-DEPENDPATH += \
-        $$PWD/../../build/debug/libs \
+unix|win32:CONFIG(release, debug|release) {
+        LIBS += \
+            -L$$PWD/../../build/release/libs/ -lVariantConverter \
+            -L$$PWD/../../build/release/libs/ -lconvertchecker \
+            -L$$PWD/../../build/release/libs/ -lxmlbuilder \
+            -L$$PWD/../../build/release/libs/ -lstringxmlbuilder \
+            -L$$PWD/../../build/release/libs/ -lsearchxmlbuilder \
+            -L$$PWD/../../build/release/libs/ -lextrafunctionsxmlbuilder \
+            -L$$PWD/../../build/release/libs/ -lprocessxmlbuilder \
+            -L$$PWD/../../build/release/libs/ -lprofilexmlbuilder \
+            -L$$PWD/../../build/release/libs/ -lprofilecombobox \
+            -L$$PWD/../../build/release/libs/ -lbasictable \
+            -L$$PWD/../../build/release/libs/ -lFileQueueTable \
+            -L$$PWD/../../build/release/libs/ -lsearchtable \
+            -L$$PWD/../../build/release/libs/ -lstringtable \
+            -L$$PWD/../../build/release/libs/ -lextrafunctionstable \
+            -L$$PWD/../../build/release/libs/ -lfileinfodialog \
+            -L$$PWD/../../build/release/libs/ -lfilesearchdialog \
+            -L$$PWD/../../build/release/libs/ -lfilesearchloader \
+            -L$$PWD/../../build/release/libs/ -lexecutor \
+
+        INCLUDEPATH += $$PWD/../../build/release/libs
+        DEPENDPATH += $$PWD/../../build/release/libs
+}

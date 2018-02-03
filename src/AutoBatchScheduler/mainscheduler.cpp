@@ -80,6 +80,9 @@ void MainScheduler::onOptionButtonClicked()
 
 void MainScheduler::showWindow()
 {
+    //reflection startuptable
+    ui->startupTableWidget->reloadAction();
+
     this->isMinimized() ? this->showNormal() : this->show();
 }
 

@@ -50,11 +50,20 @@ unix {
 RESOURCES += \
     ../../res/resources.qrc
 
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
+unix|win32:CONFIG(debug, debug|release) {
+    LIBS += \
+        -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
+        -L$$PWD/../../build/debug/libs/ -lstringxmlbuilder \
+        -L$$PWD/../../build/debug/libs/ -lbasictable
+    INCLUDEPATH += $$PWD/../../build/debug/libs
+    DEPENDPATH += $$PWD/../../build/debug/libs
+}
 
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lstringxmlbuilder
-
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lbasictable
-
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
+unix|win32:CONFIG(release, debug|release) {
+    LIBS += \
+        -L$$PWD/../../build/release/libs/ -lxmlbuilder \
+        -L$$PWD/../../build/release/libs/ -lstringxmlbuilder \
+        -L$$PWD/../../build/release/libs/ -lbasictable
+    INCLUDEPATH += $$PWD/../../build/release/libs
+    DEPENDPATH += $$PWD/../../build/release/libs
+}

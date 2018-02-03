@@ -17,6 +17,8 @@ public:
     explicit TaskScheduler(QObject *parent = nullptr);
     ~TaskScheduler();
 
+    bool taskRunningCheck(QString objectname);
+
 protected:
     //to child class
 //    QString generateObjectName();
@@ -25,8 +27,8 @@ protected:
     void addTask(QString objectname, QString processfile);
     void removeTask(QString objectname);
 
-    void schedulerStart(QString objectname);
-    void schedulerStop(QString objectname);
+//    void schedulerStart(QString objectname);
+//    void schedulerStop(QString objectname);
 
 signals:
     //from EntryScheduler to Binder--------------------------------------------
@@ -73,6 +75,7 @@ public slots:
 
 private:
 //    QString generateRandomName(int length);
+    bool processAliveCheck(QString objectname);
 
     QHash<QString, EntryTask *> *task;
     QHash<QString, EntryScheduler *> *scheduler;

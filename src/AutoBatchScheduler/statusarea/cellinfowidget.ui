@@ -213,20 +213,6 @@
           </widget>
          </item>
          <item>
-          <widget class="QToolButton" name="stopToolButton">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string>...</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../../../res/resources.qrc">
-             <normaloff>:/icons/stop_flat.png</normaloff>:/icons/stop_flat.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QToolButton" name="pauseToolButton">
            <property name="enabled">
             <bool>false</bool>
@@ -237,6 +223,20 @@
            <property name="icon">
             <iconset resource="../../../res/resources.qrc">
              <normaloff>:/icons/pause.png</normaloff>:/icons/pause.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="stopToolButton">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../../res/resources.qrc">
+             <normaloff>:/icons/stop_flat.png</normaloff>:/icons/stop_flat.png</iconset>
            </property>
           </widget>
          </item>

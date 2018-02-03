@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 
     QSettings settings( "./settings.ini", QSettings::IniFormat );
     settings.beginGroup("STARTUP");
-    if(settings.value("HIDEINWDOW", false).toBool()){
+    if(!settings.value("HIDEWINDOW", false).toBool()){
         w.show();
     }
     settings.endGroup();

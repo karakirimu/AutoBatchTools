@@ -184,6 +184,24 @@ void StartupTable::setTableItem(int row)
     delete list;
 }
 
+void StartupTable::replaceItem(int row)
+{
+    qDebug() << "StartupTable :: column count start: " << this->rowCount();
+//    this->removeRow(row);
+    //FIXME: quick fix column
+    for(int i = 0; i < 3; i++){
+        this->takeItem(row, i);
+//        this->removeCellWidget(row, i);
+    }
+    qDebug() << "StartupTable :: column count proc later: " << this->rowCount();
+
+    setTableItem(row);
+
+
+    qDebug() << "StartupTable :: column count end: " << this->rowCount();
+//    this->insertRow(row);
+}
+
 void StartupTable::addAction()
 {
     StartupDialog *sd = new StartupDialog();
@@ -191,13 +209,16 @@ void StartupTable::addAction()
     if(sd->exec() == QDialog::Accepted){
         int index = this->rowCount();
         setRowCount(index + 1);
-        setTableItem(index);
+
+        emit taskc->tableInserted(index);
 
         QList<QStringList> list;
         if(builder->readItem(currentRow(), &list)
                 && list.at(StartupXmlBuilder::VALID).at(1) == "yes"){
             QFileInfo info(list.at(StartupXmlBuilder::PROF).at(1));
             if(info.exists()) taskc->enableTask(list.at(StartupXmlBuilder::UNIQUE).at(1), info.canonicalFilePath());
+        }else{
+            setTableItem(index);
         }
     }
 }
@@ -239,6 +260,9 @@ void StartupTable::editAction()
             }
         }
     }
+
+
+    emit taskc->tableReplaced(row);
 }
 
 void StartupTable::deleteAction()
@@ -257,6 +281,8 @@ void StartupTable::deleteAction()
 
         //delete file item
         builder->deleteItem(currentRow());
+
+        emit taskc->tableDeleted(currentRow());
 
         //reload
         reloadAction();
@@ -318,45 +344,57 @@ void StartupTable::enableAction(){
 
     if(builder->readItem(row, list)){
         if(list->at(StartupXmlBuilder::VALID).at(1) == "no"){
-
-            //change validation
-            QStringList tmp;
-            tmp << "valid" << "yes";
-            list->removeAt(2);
-            list->insert(2, tmp);
-
-            builder->editItem(row, list);
-
-//            emit taskc->xmlStateChanged(list->at(StartupXmlBuilder::UNIQUE).at(1));
-            reloadAction();
-
             QFileInfo info(list->at(StartupXmlBuilder::PROF).at(1));
             if(info.exists()){
-                taskc->enableTask(list->at(StartupXmlBuilder::UNIQUE).at(1), info.canonicalFilePath());
+
+                //change validation
+//                QStringList tmp;
+//                tmp << "valid" << "yes";
+//                list->removeAt(StartupXmlBuilder::VALID);
+//                list->insert(StartupXmlBuilder::VALID, tmp);
+
+//                builder->editItem(row, list);
+
+//                replaceItem(row);
+    //            emit taskc->xmlStateChanged(list->at(StartupXmlBuilder::UNIQUE).at(1));
+    //            reloadAction();
+
+//                taskc->enableTask(list->at(StartupXmlBuilder::UNIQUE).at(1), info.canonicalFilePath());
+                emit taskc->tableEnabled(list->at(StartupXmlBuilder::UNIQUE).at(1));
+
+                replaceItem(row);
             }
         }
     }
 }
 
 void StartupTable::disableAction(){
+    //FIXME: NO CONDITION APPLYED IN ...
 
     QList<QStringList> *list = new QList<QStringList>();
     int row = this->currentRow();
 
     if(builder->readItem(row, list)){
+
+//        if(taskc->taskRunningCheck(list->at(StartupXmlBuilder::UNIQUE).at(1))) return;
+
         if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"){
 
             //change validation
-            QStringList tmp;
-            tmp << "valid" << "no";
-            list->removeAt(2);
-            list->insert(2, tmp);
+//            QStringList tmp;
+//            tmp << "valid" << "no";
+//            list->removeAt(StartupXmlBuilder::VALID);
+//            list->insert(StartupXmlBuilder::VALID, tmp);
 
-            builder->editItem(row, list);
+//            builder->editItem(row, list);
 
+//            emit this->itemChanged();
+//            replaceItem(row);
 //            emit taskc->xmlStateChanged(list->at(StartupXmlBuilder::UNIQUE).at(1));
-            reloadAction();
-            taskc->disableTask(list->at(StartupXmlBuilder::UNIQUE).at(1));
+//            reloadAction();
+            emit taskc->tableDisabled(list->at(StartupXmlBuilder::UNIQUE).at(1));
+//            taskc->disableTask(list->at(StartupXmlBuilder::UNIQUE).at(1));
+            replaceItem(row);
         }
     }
 }

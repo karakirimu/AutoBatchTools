@@ -3,11 +3,11 @@
 EntryTask::EntryTask(QObject *parent)
     : QObject(parent)
 {
-    //set internal thread
-    worker = new QThread();
-
     //setmain worker
     executor = new Executor();
+
+    //set internal thread
+    worker = new QThread();
 
     //init executor const
     executor->setLaunchedfrom(Executor::SCHEDULER);
@@ -45,7 +45,9 @@ EntryTask::~EntryTask()
 
 void EntryTask::setFile(QString filepath)
 {
-    loadfilepath = filepath;
+    qDebug() << "EntryTask:: File Changed :" << filepath;
+//    loadfilepath = filepath;
+    executor->setProcessFile(filepath);
 }
 
 bool EntryTask::getStarted()
@@ -70,7 +72,6 @@ void EntryTask::start()
 
     }else{
         //load static settings
-        executor->setProcessFile(loadfilepath);
         executor->setGlobalList();
         executor->setLocalList();
 

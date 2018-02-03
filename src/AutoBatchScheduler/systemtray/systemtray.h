@@ -61,7 +61,7 @@ private:
     QString getNameByActions(QString objectname);
     QString encodeDayOfWeek(int dayofweek);
 //    QAction *generateAction(int itemid);
-    QSettings settings;
+//    QSettings settings;
 
     QMenu *trayIconMenu;
     QAction *launchAction;

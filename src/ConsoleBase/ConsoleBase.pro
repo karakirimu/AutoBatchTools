@@ -48,10 +48,14 @@ unix {
     INSTALLS += target
 }
 
+unix|win32:CONFIG(debug, debug|release) {
+    LIBS += -L$$PWD/../../build/debug/libs/ -lexecutor
+    INCLUDEPATH += $$PWD/../../build/debug/libs
+    DEPENDPATH += $$PWD/../../build/debug/libs
+}
 
-unix|win32: LIBS += \
-            -L$$PWD/../../build/debug/libs/ -lexecutor \
-
-
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
+unix|win32:CONFIG(release, debug|release) {
+    LIBS += -L$$PWD/../../build/release/libs/ -lexecutor
+    INCLUDEPATH += $$PWD/../../build/release/libs
+    DEPENDPATH += $$PWD/../../build/release/libs
+}

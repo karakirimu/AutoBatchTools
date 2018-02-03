@@ -24,9 +24,9 @@ signals:
     void stop(QString);
 
     //to cellwidget
-    void setProgress(QString, int, int);
-    void updateProgress(QString, int);
-    void updateProcess(QString, QString, int);
+//    void setProgress(QString, int, int);
+//    void updateProgress(QString, int);
+//    void updateProcess(QString, QString, int);
 
     //to systemtray
     void infoNofile(QString);
@@ -34,8 +34,13 @@ signals:
 public slots:
     //create ui
 //    void addItem(QString objname);
-//    void removeItem(QString objectname);
+
+    //from startuptable
+    void removeItem(int itemid);
     void insertItem(int itemid);
+    void replaceItem(int itemid);
+
+    //from tasksignalconnector
     void enableItem(QString objname);
     void disableItem(QString objname);
 
@@ -63,6 +68,7 @@ private slots:
 
 private:
     void initCellWidgets();
+    void initCellWidget(int itemid);
     void changeXmlValidState(int itemid);
     int getStartupXmlIndex(QString objectname);
 

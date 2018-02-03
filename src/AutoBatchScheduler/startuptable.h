@@ -14,16 +14,13 @@ public:
     ~StartupTable();
     void setTaskSchedulerConnector(TaskSchedulerConnector *task);
 
-signals:
-    //to systemtray ui
-    void actionDeleted(QString);
-    void actionAdded(int);
+public slots:
+    void reloadAction();
 
 private slots:
     void addAction();
     void editAction();
     void deleteAction();
-    void reloadAction();
     void copyAction();
     void upAction();
     void downAction();
@@ -48,6 +45,7 @@ private:
     StartupXmlBuilder *builder;
     TaskSchedulerConnector *taskc;
     void setTableItem(int row);
+    void replaceItem(int row);
 };
 
 #endif // STARTUPTABLE_H

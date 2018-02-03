@@ -24,65 +24,11 @@ ProcessShowTable::~ProcessShowTable()
     delete builder;
 }
 
-//void ProcessShowTable::addItem(QString objname)
-//{
-//    int count = this->rowCount();
-//    insertRow(count);
-//    CellInfoWidget *widget = new CellInfoWidget();
-//    widget->setObjectName(objname);
-
-//    //clicked operation
-//    connect(widget, &CellInfoWidget::consoleButtonClicked, this, &ProcessShowTable::launchConsole);
-//    connect(widget, &CellInfoWidget::pauseButtonClicked, this, &ProcessShowTable::pauseClicked);
-//    connect(widget, &CellInfoWidget::stopButtonClicked, this, &ProcessShowTable::stopClicked);
-
-//    //update operation
-////    connect(this, &ProcessShowTable::updateProcess, widget, &CellInfoWidget::updateProcess);
-////    connect(this, &ProcessShowTable::updateProgress, widget, &CellInfoWidget::updateProgress);
-
-//    //set action
-////    connect(this, &ProcessShowTable::setProgress, widget, &CellInfoWidget::setProgressminmax);
-
-//    setRowHeight(count, widget->height());
-//    setCellWidget(count, 0, widget);
-//}
-
-//void ProcessShowTable::removeItem(QString objectname)
-//{
-//    //search object name
-//    int count = this->rowCount();
-//    int row = -1;
-//    QWidget *widget = nullptr;
-//    for(int i = 0; i < count; i++){
-//        widget = this->cellWidget(i,0);
-//        if(widget->objectName() == objectname){
-//            row = i;
-//            break;
-//        }
-//    }
-
-//    //remove pattern matched item
-//    if(widget != nullptr && row > -1){
-//        CellInfoWidget *ciw = qobject_cast<CellInfoWidget *>(widget);
-
-//        //clicked operation
-//        disconnect(ciw, &CellInfoWidget::consoleButtonClicked, this, &ProcessShowTable::launchConsole);
-//        disconnect(ciw, &CellInfoWidget::pauseButtonClicked, this, &ProcessShowTable::pauseClicked);
-//        disconnect(ciw, &CellInfoWidget::stopButtonClicked, this, &ProcessShowTable::stopClicked);
-
-//        //update operation
-////        disconnect(this, &ProcessShowTable::updateProcess, ciw, &CellInfoWidget::updateProcess);
-////        disconnect(this, &ProcessShowTable::updateProgress, ciw, &CellInfoWidget::updateProgress);
-
-//        //set action
-////        disconnect(this, &ProcessShowTable::setProgress, ciw, &CellInfoWidget::setProgressminmax);
-
-//        this->takeItem(row, 0);
-//        this->removeCellWidget(row, 0);
-//        this->removeRow(row);
-//        setRowCount(count - 1);
-//    }
-//}
+void ProcessShowTable::removeItem(int itemid)
+{
+    //delete table only
+    this->removeRow(itemid);
+}
 
 void ProcessShowTable::insertItem(int itemid)
 {
@@ -113,26 +59,18 @@ void ProcessShowTable::insertItem(int itemid)
         setRowHeight(itemid, widget->indicateHeight());
         setCellWidget(itemid, 0, widget);
 
-        //start scheduler if checkbox is valid
-        if(isvalid){
-            QFileInfo info(list->at(StartupXmlBuilder::PROF).at(1));
-            if(info.exists()){
-                taskc->enableTask(list->at(StartupXmlBuilder::UNIQUE).at(1), info.canonicalFilePath());
-
-            }else{
-                //change xml data (warning : determined order)
-                changeXmlValidState(itemid);
-                //show message
-                emit infoNofile(list->at(StartupXmlBuilder::NAME).at(1));
-            }
-        }
-
         //clicked operation after
         connect(widget, &CellInfoWidget::changeRunStatus, this, &ProcessShowTable::onCheckStateChanged);
 
     }
 
     delete list;
+}
+
+void ProcessShowTable::replaceItem(int itemid)
+{
+    this->removeRow(itemid);
+    this->insertItem(itemid);
 }
 
 void ProcessShowTable::enableItem(QString objname)
@@ -212,16 +150,6 @@ void ProcessShowTable::setProcessErrorText(QString objectname, QString str)
 
 void ProcessShowTable::launchConsole(QString objname)
 {
-//    ConsoleWidget *cwid = new ConsoleWidget();
-
-////    QRect rec = qobject_cast<StatusWidget *>(this->parent())->rect();
-////    int d_width = rec.topRight().rx();
-
-////    cwid->move(d_width - cwid->width() - 30, 70);
-//    cwid->setWindowTitle(tr("console"));
-//    cwid->setConsoleViewTarget(taskc, objname);
-//    cwid->show();
-
     //search object name
     int count = this->rowCount();
     int tableid = -1;
@@ -267,6 +195,7 @@ void ProcessShowTable::onCheckStateChanged(bool checked)
             QFileInfo info(list.at(StartupXmlBuilder::PROF).at(1));
             if(info.exists()){
                 //change xml data (warning : determined order)
+
                 changeXmlValidState(itemid);
                 taskc->enableTask(objname, info.canonicalFilePath());
 
@@ -287,8 +216,58 @@ void ProcessShowTable::initCellWidgets()
     int count = builder->count();
 
     for(int i = 0; i < count; i++){
-        insertItem(i);
+        initCellWidget(i);
     }
+}
+
+void ProcessShowTable::initCellWidget(int itemid)
+{
+    QList<QStringList> *list = new QList<QStringList>();
+    insertRow(itemid);
+
+    if(builder->readItem(itemid, list)){
+
+        CellInfoWidget *widget = new CellInfoWidget();
+        widget->setObjectName(list->at(StartupXmlBuilder::UNIQUE).at(1));
+        widget->setConsoleTarget(taskc);
+
+        //clicked operation
+        connect(widget, &CellInfoWidget::consoleButtonClicked, this, &ProcessShowTable::launchConsole);
+        connect(widget, &CellInfoWidget::pauseButtonClicked, this, &ProcessShowTable::pauseClicked);
+        connect(widget, &CellInfoWidget::stopButtonClicked, this, &ProcessShowTable::stopClicked);
+
+        //set operation
+        widget->setProfileName(list->at(StartupXmlBuilder::NAME).at(1));
+
+        bool isvalid = (list->at(StartupXmlBuilder::VALID).at(1) == "yes")? true : false;
+
+        //set checked action
+        widget->setRunStatus(isvalid);
+
+        //insert tables
+        setRowHeight(itemid, widget->indicateHeight());
+        setCellWidget(itemid, 0, widget);
+
+        //start scheduler if checkbox is valid
+        if(isvalid){
+            QFileInfo info(list->at(StartupXmlBuilder::PROF).at(1));
+            if(info.exists()){
+                taskc->enableTask(list->at(StartupXmlBuilder::UNIQUE).at(1), info.canonicalFilePath());
+
+            }else{
+                //change xml data (warning : determined order)
+                changeXmlValidState(itemid);
+                //show message
+                emit infoNofile(list->at(StartupXmlBuilder::NAME).at(1));
+            }
+        }
+
+        //clicked operation after
+        connect(widget, &CellInfoWidget::changeRunStatus, this, &ProcessShowTable::onCheckStateChanged);
+
+    }
+
+    delete list;
 }
 
 void ProcessShowTable::changeXmlValidState(int itemid)
@@ -359,8 +338,14 @@ void ProcessShowTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
     connect(taskc, &TaskSchedulerConnector::encounteredScheduledTime, this, &ProcessShowTable::encounterdTime);
     connect(taskc, &TaskSchedulerConnector::processEnd, this, &ProcessShowTable::setProcessEnd);
     connect(taskc, &TaskSchedulerConnector::processStopped, this, &ProcessShowTable::setProcessStopped);
-    connect(taskc, &TaskSchedulerConnector::taskEnabled, this, &ProcessShowTable::enableItem);
-    connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &ProcessShowTable::disableItem);
+//    connect(taskc, &TaskSchedulerConnector::taskEnabled, this, &ProcessShowTable::enableItem);
+//    connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &ProcessShowTable::disableItem);
+
+    connect(taskc, &TaskSchedulerConnector::tableInserted, this, &ProcessShowTable::insertItem);
+    connect(taskc, &TaskSchedulerConnector::tableDeleted, this, &ProcessShowTable::removeItem);
+    connect(taskc, &TaskSchedulerConnector::tableReplaced, this, &ProcessShowTable::replaceItem);
+    connect(taskc, &TaskSchedulerConnector::tableEnabled, this, &ProcessShowTable::enableItem);
+    connect(taskc, &TaskSchedulerConnector::tableDisabled, this, &ProcessShowTable::disableItem);
 
     connect(this, &ProcessShowTable::pause, taskc, &TaskSchedulerConnector::processPause);
     connect(this, &ProcessShowTable::stop, taskc, &TaskSchedulerConnector::processStop);

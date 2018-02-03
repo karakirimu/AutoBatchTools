@@ -49,21 +49,37 @@ unix {
 }
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
-else:unix: LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
+#else:unix: LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
 
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
+#INCLUDEPATH += $$PWD/../../build/debug/libs
+#DEPENDPATH += $$PWD/../../build/debug/libs
 
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder
+#unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder
 
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
+#INCLUDEPATH += $$PWD/../../build/debug/libs
+#DEPENDPATH += $$PWD/../../build/debug/libs
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../build/debug/libs/ -lVariantConverter
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build/debug/libs/ -lVariantConverter
-else:unix: LIBS += -L$$PWD/../../build/debug/libs/ -lVariantConverter
+#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../build/debug/libs/ -lVariantConverter
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build/debug/libs/ -lVariantConverter
+#else:unix: LIBS += -L$$PWD/../../build/debug/libs/ -lVariantConverter
 
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
+#INCLUDEPATH += $$PWD/../../build/debug/libs
+#DEPENDPATH += $$PWD/../../build/debug/libs
+
+unix|win32:CONFIG(debug, debug|release) {
+    LIBS += \
+        -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
+        -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder
+    INCLUDEPATH += $$PWD/../../build/debug/libs
+    DEPENDPATH += $$PWD/../../build/debug/libs
+}
+
+unix|win32:CONFIG(release, debug|release) {
+    LIBS += \
+        -L$$PWD/../../build/release/libs/ -lxmlbuilder \
+        -L$$PWD/../../build/release/libs/ -lsearchxmlbuilder
+    INCLUDEPATH += $$PWD/../../build/release/libs
+    DEPENDPATH += $$PWD/../../build/release/libs
+}

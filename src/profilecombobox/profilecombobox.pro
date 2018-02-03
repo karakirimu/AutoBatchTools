@@ -46,18 +46,36 @@ unix {
     INSTALLS += target
 }
 
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
+#unix|win32:CONFIG(debug, debug|release) LIBS += \
+#            -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
+#            -L$$PWD/../../build/debug/libs/ -lprocessxmlbuilder \
+#            -L$$PWD/../../build/debug/libs/ -lprofilexmlbuilder \
 
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
+#unix|win32:CONFIG(debug, debug|release) INCLUDEPATH += $$PWD/../../build/debug/libs
+#unix|win32:CONFIG(debug, debug|release) DEPENDPATH += $$PWD/../../build/debug/libs
 
+#unix|win32:CONFIG(release, debug|release) LIBS += \
+#            -L$$PWD/../../build/release/libs/ -lxmlbuilder \
+#            -L$$PWD/../../build/release/libs/ -lprocessxmlbuilder \
+#            -L$$PWD/../../build/release/libs/ -lprofilexmlbuilder \
 
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lprofilexmlbuilder
+#unix|win32:CONFIG(release, debug|release) INCLUDEPATH += $$PWD/../../build/release/libs
+#unix|win32:CONFIG(release, debug|release) DEPENDPATH += $$PWD/../../build/release/libs
 
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
+unix|win32:CONFIG(debug, debug|release) {
+    LIBS += \
+        -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
+        -L$$PWD/../../build/debug/libs/ -lprocessxmlbuilder \
+        -L$$PWD/../../build/debug/libs/ -lprofilexmlbuilder
+    INCLUDEPATH += $$PWD/../../build/debug/libs
+    DEPENDPATH += $$PWD/../../build/debug/libs
+}
 
-unix|win32: LIBS += -L$$PWD/../../build/debug/libs/ -lprocessxmlbuilder
-
-INCLUDEPATH += $$PWD/../../build/debug/libs
-DEPENDPATH += $$PWD/../../build/debug/libs
+unix|win32:CONFIG(release, debug|release) {
+    LIBS += \
+        -L$$PWD/../../build/release/libs/ -lxmlbuilder \
+        -L$$PWD/../../build/release/libs/ -lprocessxmlbuilder \
+        -L$$PWD/../../build/release/libs/ -lprofilexmlbuilder
+    INCLUDEPATH += $$PWD/../../build/release/libs
+    DEPENDPATH += $$PWD/../../build/release/libs
+}

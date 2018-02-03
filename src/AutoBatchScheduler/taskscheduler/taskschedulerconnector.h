@@ -14,10 +14,13 @@ signals:
     void taskDisabled(QString);
     void taskEnabled(QString);
 
-    //to table to systemtray signals
-//    void xmlStateChanged(QString);
-    void addListAction(int);
-    void deleteListAction(QString);
+    //for syncronize table
+    //startuptable <-> processshowtable
+    void tableInserted(int);
+    void tableDeleted(int);
+    void tableReplaced(int);
+    void tableEnabled(QString);
+    void tableDisabled(QString);
 
 public slots:
     //from systemtray or settingdialog

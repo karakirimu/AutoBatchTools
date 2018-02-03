@@ -23,6 +23,22 @@ TaskScheduler::~TaskScheduler()
     delete basemutex;
 }
 
+bool TaskScheduler::taskRunningCheck(QString objectname)
+{
+    bool result = false;
+    if(processAliveCheck(objectname)){
+        EntryTask *et = task->value(objectname);
+        result = et->getStarted();
+    }
+
+    return result;
+}
+
+bool TaskScheduler::processAliveCheck(QString objectname)
+{
+    return task->contains(objectname) && scheduler->contains(objectname) ? true : false;
+}
+
 void TaskScheduler::addTask(QString objectname, QString processfile)
 {
     //new task set
@@ -59,11 +75,14 @@ void TaskScheduler::addTask(QString objectname, QString processfile)
     //add pointer
     task->insert(objectname, et);
     scheduler->insert(objectname, es);
+
+    //start scheduler
+    scheduler->value(objectname)->start();
 }
 
 void TaskScheduler::removeTask(QString objectname)
 {
-    if(task->contains(objectname) && scheduler->contains(objectname)){
+    if(processAliveCheck(objectname)){
         EntryTask *et = task->value(objectname);
         EntryScheduler *es = scheduler->value(objectname);
 
@@ -95,27 +114,28 @@ void TaskScheduler::removeTask(QString objectname)
     }
 }
 
-void TaskScheduler::schedulerStart(QString objectname)
-{
+//void TaskScheduler::schedulerStart(QString objectname)
+//{
     //TODO: same key value pair needed
-    if(task->contains(objectname) && scheduler->contains(objectname)){
-        EntryTask *et = task->value(objectname);
-        if(et->getPause()){
-            et->pause(false);
-        }else{
-            scheduler->value(objectname)->start();
-        }
-    }
-}
+//    if(task->contains(objectname) && scheduler->contains(objectname)){
+//        EntryTask *et = task->value(objectname);
+//        if(et->getPause()){
+//            et->pause(false);
+//        }else{
+//            scheduler->value(objectname)->start();
+//        }
+//    }
 
-void TaskScheduler::schedulerStop(QString objectname)
-{
-    removeTask(objectname);
-}
+//}
+
+//void TaskScheduler::schedulerStop(QString objectname)
+//{
+//    removeTask(objectname);
+//}
 
 void TaskScheduler::processPause(QString objectname)
 {
-    if(task->contains(objectname) && scheduler->contains(objectname)){
+    if(processAliveCheck(objectname)){
         EntryTask *et = task->value(objectname);
         if(et->getStarted() && !et->getPause()){
             et->pause(true);
@@ -127,7 +147,7 @@ void TaskScheduler::processPause(QString objectname)
 
 void TaskScheduler::processStop(QString objectname)
 {
-    if(task->contains(objectname) && scheduler->contains(objectname)){
+    if(processAliveCheck(objectname)){
         EntryTask *et = task->value(objectname);
         if(et->getStarted()){
             et->stop();
@@ -137,7 +157,7 @@ void TaskScheduler::processStop(QString objectname)
 
 void TaskScheduler::sendInput(QString objectname, QString text)
 {
-    if(task->contains(objectname) && scheduler->contains(objectname)){
+    if(processAliveCheck(objectname)){
         EntryTask *et = task->value(objectname);
         if(et->getStarted()){
             et->sendInput(text);

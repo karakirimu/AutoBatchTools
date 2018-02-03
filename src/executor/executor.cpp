@@ -562,7 +562,7 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
     for(int i = 0; i < counter; i++){
         ilist->clear();
 
-        qDebug() << "Executor:: otherexeclist count" << counter;
+        qDebug() << "HINT :: Executor:: otherexeclist count" << counter;
 
         //read each list
         if(pbuilder->readItem(execlist->at(i), ilist)){
@@ -725,8 +725,10 @@ void Executor::resetdata()
 {
     //reset flags
     working = false;
-    processfileloaded = false;
-    pbuilder->setLoadPath("");
+    if(launchedfrom == DEFAULT){
+        processfileloaded = false;
+        pbuilder->setLoadPath("");
+    }
     if(autoaddexec){
         execlist->clear();
         autoaddexec = false;
