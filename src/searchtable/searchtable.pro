@@ -57,6 +57,7 @@ unix|win32:CONFIG(debug, debug|release) {
         -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder \
         -L$$PWD/../../build/debug/libs/ -lVariantConverter \
         -L$$PWD/../../build/debug/libs/ -lfilesearchdialog
+
     INCLUDEPATH += $$PWD/../../build/debug/libs
     DEPENDPATH += $$PWD/../../build/debug/libs
 }
@@ -69,6 +70,7 @@ unix|win32:CONFIG(release, debug|release) {
         -L$$PWD/../../build/release/libs/ -lsearchxmlbuilder \
         -L$$PWD/../../build/release/libs/ -lVariantConverter \
         -L$$PWD/../../build/release/libs/ -lfilesearchdialog
+
     INCLUDEPATH += $$PWD/../../build/release/libs
     DEPENDPATH += $$PWD/../../build/release/libs
 }

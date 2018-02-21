@@ -10,7 +10,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = AutoBatchRunner
 TEMPLATE = app
-
+win32 {
+    RC_FILE = $$PWD/../../res/app_icons/app_abr.rc
+}
 Release:DESTDIR = $$PWD/../../build/release
 Release:OBJECTS_DIR = $$PWD/../../build/release/AutoBatchRunner/.obj
 Release:MOC_DIR = $$PWD/../../build/release/AutoBatchRunner/.moc
@@ -26,12 +28,14 @@ Debug:UI_DIR = $$PWD/../../build/debug/AutoBatchRunner/.ui
 SOURCES += main.cpp\
     basedockwidget.cpp \
     autobatchrunner.cpp \
-    entrytask.cpp
+    entrytask.cpp \
+    multitask.cpp
 
 HEADERS  += \
     basedockwidget.h \
     autobatchrunner.h \
-    entrytask.h
+    entrytask.h \
+    multitask.h
 
 FORMS    += \
     autobatchrunner.ui
@@ -67,7 +71,8 @@ unix|win32:CONFIG(debug, debug|release) {
             -L$$PWD/../../build/debug/libs/ -lfileinfodialog \
             -L$$PWD/../../build/debug/libs/ -lfilesearchdialog \
             -L$$PWD/../../build/debug/libs/ -lfilesearchloader \
-            -L$$PWD/../../build/debug/libs/ -lexecutor \
+            -L$$PWD/../../build/debug/libs/ -lconsolebase \
+            -L$$PWD/../../build/debug/libs/ -lexecutor
 
         INCLUDEPATH += $$PWD/../../build/debug/libs
         DEPENDPATH += $$PWD/../../build/debug/libs
@@ -92,7 +97,8 @@ unix|win32:CONFIG(release, debug|release) {
             -L$$PWD/../../build/release/libs/ -lfileinfodialog \
             -L$$PWD/../../build/release/libs/ -lfilesearchdialog \
             -L$$PWD/../../build/release/libs/ -lfilesearchloader \
-            -L$$PWD/../../build/release/libs/ -lexecutor \
+            -L$$PWD/../../build/release/libs/ -lconsolebase \
+            -L$$PWD/../../build/release/libs/ -lexecutor
 
         INCLUDEPATH += $$PWD/../../build/release/libs
         DEPENDPATH += $$PWD/../../build/release/libs

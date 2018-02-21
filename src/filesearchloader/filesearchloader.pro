@@ -70,6 +70,7 @@ unix {
 
 unix|win32:CONFIG(debug, debug|release) {
     LIBS += \
+        -L$$PWD/../../build/debug/libs/ -lVariantConverter \
         -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
         -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder
     INCLUDEPATH += $$PWD/../../build/debug/libs
@@ -78,6 +79,7 @@ unix|win32:CONFIG(debug, debug|release) {
 
 unix|win32:CONFIG(release, debug|release) {
     LIBS += \
+        -L$$PWD/../../build/release/libs/ -lVariantConverter \
         -L$$PWD/../../build/release/libs/ -lxmlbuilder \
         -L$$PWD/../../build/release/libs/ -lsearchxmlbuilder
     INCLUDEPATH += $$PWD/../../build/release/libs

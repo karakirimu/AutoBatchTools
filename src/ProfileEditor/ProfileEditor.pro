@@ -11,6 +11,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = ProfileEditor
 TEMPLATE = app
 
+win32 {
+    RC_FILE = $$PWD/../../res/app_icons/app_pe.rc
+}
+
 Release:DESTDIR = $$PWD/../../build/release
 Release:OBJECTS_DIR = $$PWD/../../build/release/ProfileEditor/.obj
 Release:MOC_DIR = $$PWD/../../build/release/ProfileEditor/.moc
@@ -74,7 +78,7 @@ unix|win32:CONFIG(debug, debug|release) {
             -L$$PWD/../../build/debug/libs/ -lfilesearchdialog \
             -L$$PWD/../../build/debug/libs/ -lextrafunctionstable \
             -L$$PWD/../../build/debug/libs/ -lexecutor \
-            -L$$PWD/../../build/debug/libs/ -lconsolebase \
+            -L$$PWD/../../build/debug/libs/ -lconsolebase
 
     INCLUDEPATH += $$PWD/../../build/debug/libs
     DEPENDPATH += $$PWD/../../build/debug/libs
@@ -101,7 +105,7 @@ unix|win32:CONFIG(release, debug|release) {
             -L$$PWD/../../build/release/libs/ -lfilesearchdialog \
             -L$$PWD/../../build/release/libs/ -lextrafunctionstable \
             -L$$PWD/../../build/release/libs/ -lexecutor \
-            -L$$PWD/../../build/release/libs/ -lconsolebase \
+            -L$$PWD/../../build/release/libs/ -lconsolebase
 
     INCLUDEPATH += $$PWD/../../build/release/libs
     DEPENDPATH += $$PWD/../../build/release/libs
