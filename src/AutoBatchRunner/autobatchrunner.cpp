@@ -14,6 +14,7 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     ui->setupUi(this);
 
     //Window init
+    setWindowTitle(tr("AutoBatchRunner - BatchRunner"));
     QSettings settings( "./settings.ini", QSettings::IniFormat );
     QVariant v = settings.value( "main/geometry" );
     if (v.type() != QVariant::Invalid){
@@ -42,7 +43,18 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     //init profilelist
     ui->comboBox->reloadComboBoxItem();
 
+    mlTask = new MultiTask();
+
     initStatusBar();
+
+    //to send to console
+    ui->console->setMultiTask(mlTask);
+    ui->commandSender->setMultiTask(mlTask);
+
+    connect(mlTask, &MultiTask::processStarted, this, &AutoBatchRunner::taskStarted);
+    connect(mlTask, &MultiTask::processPaused, this, &AutoBatchRunner::taskPaused);
+    connect(mlTask, &MultiTask::processStopped, this, &AutoBatchRunner::taskStopped);
+    connect(mlTask, &MultiTask::processEnd, this, &AutoBatchRunner::taskEnd);
 }
 
 AutoBatchRunner::~AutoBatchRunner()
@@ -52,15 +64,100 @@ AutoBatchRunner::~AutoBatchRunner()
     settings.setValue( "main/geometry", saveGeometry() );
     settings.setValue( "main/windowState", saveState() );
 
-    //delete object
     delete opdialog;
-//    delete sysTray;
+    delete mlTask;
     delete ui;
+}
+
+void AutoBatchRunner::taskStarted(QString objectname, int runfrom)
+{
+    Q_UNUSED(objectname);
+    Q_UNUSED(runfrom);
+    ui->actionRun->setEnabled(false);
+    ui->actionPause->setEnabled(true);
+    ui->actionStop->setEnabled(true);
+}
+
+void AutoBatchRunner::taskPaused(QString objectname)
+{
+    Q_UNUSED(objectname);
+    ui->actionRun->setEnabled(true);
+    ui->actionPause->setEnabled(false);
+    ui->actionStop->setEnabled(true);
+}
+
+void AutoBatchRunner::taskStopped(QString objectname)
+{
+    Q_UNUSED(objectname);
+    ui->actionRun->setEnabled(true);
+    ui->actionPause->setEnabled(false);
+    ui->actionStop->setEnabled(false);
+}
+
+void AutoBatchRunner::taskEnd(QString objectname, int runfrom)
+{
+    Q_UNUSED(objectname);
+    Q_UNUSED(runfrom);
+    ui->actionRun->setEnabled(true);
+    ui->actionPause->setEnabled(false);
+    ui->actionStop->setEnabled(false);
+
+    mlTask->removeTask(key);
+    key = "";
+    ui->console->setReadObjectName(key);
+    ui->commandSender->setObjectName(key);
 }
 
 void AutoBatchRunner::on_actionOpen_triggered()
 {
     ui->fileTable->addAction();
+}
+
+void AutoBatchRunner::on_actionRun_triggered()
+{
+    ui->actionRun->setEnabled(false);
+    ui->actionPause->setEnabled(false);
+    ui->actionStop->setEnabled(false);
+
+    if(key == ""){
+        key = mlTask->generateRandom(32);
+        mlTask->addTask(key, ui->comboBox->getCurrentFileName());
+        ui->console->setReadObjectName(key);
+        ui->commandSender->setObjectName(key);
+
+        //get filelist
+        QStringList flist;
+        int filecount = ui->fileTable->rowCount();
+        for(int i = 0; i < filecount; i++){
+            flist.append(ui->fileTable->item(i,0)->text());
+        }
+
+        mlTask->setInputFileList(key, &flist);
+
+    }else{
+        mlTask->processPause(key);
+    }
+}
+
+void AutoBatchRunner::on_actionPause_triggered()
+{
+    ui->actionRun->setEnabled(false);
+    ui->actionPause->setEnabled(false);
+    ui->actionStop->setEnabled(false);
+
+    mlTask->processPause(key);
+}
+
+void AutoBatchRunner::on_actionStop_triggered()
+{
+    ui->actionRun->setEnabled(false);
+    ui->actionPause->setEnabled(false);
+    ui->actionStop->setEnabled(false);
+
+    mlTask->removeTask(key);
+    key = "";
+    ui->console->setReadObjectName(key);
+    ui->commandSender->setObjectName(key);
 }
 
 void AutoBatchRunner::on_actionSettings_triggered()
@@ -86,6 +183,19 @@ void AutoBatchRunner::initStatusBar()
     QProgressBar *progressbar = new QProgressBar();
     progressbar->setAlignment(Qt::AlignCenter);
     ui->statusBar->addPermanentWidget(progressbar, 1);
-//    connect(rbinder, &RunTaskSignalBinder::processInitCount, progressbar, &QProgressBar::setRange);
-//    connect(rbinder, &RunTaskSignalBinder::processCurrent, progressbar, &QProgressBar::setValue);
+    connect(mlTask, &MultiTask::processInitCount, progressbar, &QProgressBar::setRange);
+    connect(mlTask, &MultiTask::processCurrent, progressbar, &QProgressBar::setValue);
+}
+
+void AutoBatchRunner::on_editButton_clicked()
+{
+    //run ProfileEditor.exe
+    QProcess process;
+#ifdef QT_DEBUG
+    bool result = process.startDetached(tr("./ProfileEditor.exe"), \
+                    (QStringList() << ui->comboBox->getCurrentFileName()));
+    if(!result) qDebug() << tr("ProfileEditor launch failed.");
+#else
+    process.startDetached(tr("./ProfileEditor.exe"), QStringList() << ui->comboBox->getCurrentFileName());
+#endif
 }

@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../../res/resources.qrc">
-    <normaloff>:/icons/Gear.png</normaloff>:/icons/Gear.png</iconset>
+    <normaloff>:/default_icons/settings.png</normaloff>:/default_icons/settings.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -331,7 +331,7 @@
                        </property>
                        <property name="icon">
                         <iconset resource="../../../res/resources.qrc">
-                         <normaloff>:/icons/Add.png</normaloff>:/icons/Add.png</iconset>
+                         <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
                        </property>
                       </widget>
                      </item>
@@ -342,7 +342,7 @@
                        </property>
                        <property name="icon">
                         <iconset resource="../../../res/resources.qrc">
-                         <normaloff>:/icons/Denided.png</normaloff>:/icons/Denided.png</iconset>
+                         <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
                        </property>
                       </widget>
                      </item>
@@ -353,7 +353,7 @@
                        </property>
                        <property name="icon">
                         <iconset resource="../../../res/resources.qrc">
-                         <normaloff>:/icons/Files_Copy.png</normaloff>:/icons/Files_Copy.png</iconset>
+                         <normaloff>:/default_icons/copy.png</normaloff>:/default_icons/copy.png</iconset>
                        </property>
                       </widget>
                      </item>
@@ -364,7 +364,7 @@
                        </property>
                        <property name="icon">
                         <iconset resource="../../../res/resources.qrc">
-                         <normaloff>:/icons/Button_Up.png</normaloff>:/icons/Button_Up.png</iconset>
+                         <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
                        </property>
                       </widget>
                      </item>
@@ -375,7 +375,7 @@
                        </property>
                        <property name="icon">
                         <iconset resource="../../../res/resources.qrc">
-                         <normaloff>:/icons/Button_Down.png</normaloff>:/icons/Button_Down.png</iconset>
+                         <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
                        </property>
                       </widget>
                      </item>
@@ -458,7 +458,7 @@
                        </property>
                        <property name="icon">
                         <iconset resource="../../../res/resources.qrc">
-                         <normaloff>:/icons/Add.png</normaloff>:/icons/Add.png</iconset>
+                         <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
                        </property>
                       </widget>
                      </item>
@@ -469,7 +469,7 @@
                        </property>
                        <property name="icon">
                         <iconset resource="../../../res/resources.qrc">
-                         <normaloff>:/icons/Denided.png</normaloff>:/icons/Denided.png</iconset>
+                         <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
                        </property>
                       </widget>
                      </item>
@@ -480,7 +480,7 @@
                        </property>
                        <property name="icon">
                         <iconset resource="../../../res/resources.qrc">
-                         <normaloff>:/icons/Files_Copy.png</normaloff>:/icons/Files_Copy.png</iconset>
+                         <normaloff>:/default_icons/copy.png</normaloff>:/default_icons/copy.png</iconset>
                        </property>
                       </widget>
                      </item>
@@ -491,7 +491,7 @@
                        </property>
                        <property name="icon">
                         <iconset resource="../../../res/resources.qrc">
-                         <normaloff>:/icons/Button_Up.png</normaloff>:/icons/Button_Up.png</iconset>
+                         <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
                        </property>
                       </widget>
                      </item>
@@ -502,7 +502,7 @@
                        </property>
                        <property name="icon">
                         <iconset resource="../../../res/resources.qrc">
-                         <normaloff>:/icons/Button_Down.png</normaloff>:/icons/Button_Down.png</iconset>
+                         <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
                        </property>
                       </widget>
                      </item>

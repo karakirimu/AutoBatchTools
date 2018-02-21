@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QMutex>
 #include <QThread>
+#include <QSettings>
 #include "../executor/executor.h"
 
 /**
@@ -21,6 +22,7 @@ public:
     ~EntryTask();
 
     void setFile(QString filepath);
+    void setMutex(QMutex *sharedmutex);
 
     bool getStarted();
     bool getPause();
@@ -68,11 +70,12 @@ public slots:
     void stop();
 
     //from settest dock
-    void updateFileList(QHash<QString, int> *data); /*int indicates status*/
+    void updateFileList(QStringList *need); /*int indicates status*/
 
 private slots:
     //debug message
     void processCompleted();
+
 private:
     QMutex *mutex;
     Executor *executor;

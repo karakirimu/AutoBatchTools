@@ -1,7 +1,9 @@
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    $$PWD/commandlinetextedit.h
+    $$PWD/consoleview.h \
+    $$PWD/consoleedit.h
 
 SOURCES += \
-    $$PWD/commandlinetextedit.cpp
+    $$PWD/consoleview.cpp \
+    $$PWD/consoleedit.cpp

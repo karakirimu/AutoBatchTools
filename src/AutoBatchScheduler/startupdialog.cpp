@@ -8,7 +8,7 @@ StartupDialog::StartupDialog(QWidget *parent) :
     // delete ui on dialog closed
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::WindowCloseButtonHint);
-    setWindowIcon(QIcon(":/icons/Pen.png"));
+    setWindowIcon(QIcon(":/default_icons/edit.png"));
 
     //install closeevent filter
     installEventFilter(this);

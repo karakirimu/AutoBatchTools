@@ -122,7 +122,7 @@ void RunTaskSignalBinder::updateFileList(QHash<QString, int> *data)
 
     QSettings settings( "./psettings.ini", QSettings::IniFormat );
     settings.beginGroup("TESTEXEC");
-    executor->addInputFiles(need, settings.value("FILELOADMAX", 1).toInt());
+    executor->addInputFiles(need, settings.value("FILELOADMAX", 10).toInt());
     settings.endGroup();
 }
 

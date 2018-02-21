@@ -47,7 +47,7 @@ SettingDialog::~SettingDialog()
 
 void SettingDialog::setupItem(){
     ui->listWidget->addItem(tr("General"));
-    ui->listWidget->addItem(tr("String"));
+    ui->listWidget->addItem(tr("Variant"));
     ui->listWidget->addItem(tr("Search"));
     ui->listWidget->addItem(tr("Extra Function"));
 //    ui->listWidget->addItem(tr("Theme"));
@@ -55,10 +55,10 @@ void SettingDialog::setupItem(){
     ui->listWidget->item(0)->setSelected(true);
     ui->listWidget->setIconSize(QSize(32,32));
 
-    ui->listWidget->item(0)->setIcon(QIcon(":/icons/setting_tools.png"));
-    ui->listWidget->item(1)->setIcon(QIcon(":/icons/File_Text.png"));
-    ui->listWidget->item(2)->setIcon(QIcon(":/icons/Search.png"));
-    ui->listWidget->item(3)->setIcon(QIcon(":/icons/extension.png"));
+    ui->listWidget->item(0)->setIcon(QIcon(":/default_icons/settings.png"));
+    ui->listWidget->item(1)->setIcon(QIcon(":/default_icons/extras.png"));
+    ui->listWidget->item(2)->setIcon(QIcon(":/default_icons/search.png"));
+    ui->listWidget->item(3)->setIcon(QIcon(":/default_icons/extras.png"));
 //    ui->listWidget->item(4)->setIcon(QIcon(":/icons/Colors.png"));
 }
 
@@ -106,7 +106,7 @@ void SettingDialog::loadSettings()
     ui->fakeresidentCheckBox->setChecked(settings.value("FAKERES", false).toBool());
     ui->fsupdateCheckBox->setChecked(settings.value("FSUPDATE", true).toBool());
 //    ui->timeoutSpinBox->setValue(settings.value("TIMEOUT", 30000).toInt());
-    ui->fileloadSpinBox->setValue(settings.value("FILELOADMAX", 1).toInt());
+    ui->fileloadSpinBox->setValue(settings.value("FILELOADMAX", 10).toInt());
     settings.endGroup();
 
 //    settings.beginGroup("STARTUP");

@@ -50,6 +50,12 @@ void EntryTask::setFile(QString filepath)
     executor->setProcessFile(filepath);
 }
 
+void EntryTask::setMutex(QMutex *sharedmutex)
+{
+    //TODO: no imprementation to run function
+    executor->setMutex(sharedmutex);
+}
+
 bool EntryTask::getStarted()
 {
     return executor->getWorking();

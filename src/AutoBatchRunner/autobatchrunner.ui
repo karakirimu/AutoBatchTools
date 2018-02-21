@@ -67,7 +67,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../res/resources.qrc">
-           <normaloff>:/icons/Add.png</normaloff>:/icons/Add.png</iconset>
+           <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
          </property>
         </widget>
        </item>
@@ -78,7 +78,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../res/resources.qrc">
-           <normaloff>:/icons/Denided.png</normaloff>:/icons/Denided.png</iconset>
+           <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
          </property>
         </widget>
        </item>
@@ -89,7 +89,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../res/resources.qrc">
-           <normaloff>:/icons/Pen.png</normaloff>:/icons/Pen.png</iconset>
+           <normaloff>:/default_icons/edit.png</normaloff>:/default_icons/edit.png</iconset>
          </property>
         </widget>
        </item>
@@ -209,7 +209,7 @@ selection-color: rgb(0, 0, 0);</string>
       <number>0</number>
      </property>
      <item>
-      <widget class="CommandLineTextEdit" name="commandLineText">
+      <widget class="ConsoleView" name="console">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(0, 0, 0);
 color: rgb(204, 204, 204);</string>
@@ -219,13 +219,33 @@ color: rgb(204, 204, 204);</string>
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="ConsoleEdit" name="commandSender">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(204, 204, 204);</string>
+       </property>
+       <property name="inputMask">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="frame">
+        <bool>false</bool>
+       </property>
+       <property name="placeholderText">
+        <string>&gt; Press Enter to send command ...</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/File_Add.png</normaloff>:/icons/File_Add.png</iconset>
+     <normaloff>:/default_icons/newfile.png</normaloff>:/default_icons/newfile.png</iconset>
    </property>
    <property name="text">
     <string>ファイルを開く</string>
@@ -247,21 +267,10 @@ color: rgb(204, 204, 204);</string>
     <string>コンソール</string>
    </property>
   </action>
-  <action name="actionProfile">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>プロファイル選択</string>
-   </property>
-  </action>
   <action name="actionSettings">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/Gear.png</normaloff>:/icons/Gear.png</iconset>
+     <normaloff>:/default_icons/settings.png</normaloff>:/default_icons/settings.png</iconset>
    </property>
    <property name="text">
     <string>設定</string>
@@ -270,7 +279,7 @@ color: rgb(204, 204, 204);</string>
   <action name="actionRun">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/run.png</normaloff>:/icons/run.png</iconset>
+     <normaloff>:/default_icons/run.png</normaloff>:/default_icons/run.png</iconset>
    </property>
    <property name="text">
     <string>Run</string>
@@ -282,7 +291,7 @@ color: rgb(204, 204, 204);</string>
    </property>
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/pause.png</normaloff>:/icons/pause.png</iconset>
+     <normaloff>:/default_icons/pause.png</normaloff>:/default_icons/pause.png</iconset>
    </property>
    <property name="text">
     <string>Pause</string>
@@ -294,7 +303,7 @@ color: rgb(204, 204, 204);</string>
    </property>
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/stop_flat.png</normaloff>:/icons/stop_flat.png</iconset>
+     <normaloff>:/default_icons/stop.png</normaloff>:/default_icons/stop.png</iconset>
    </property>
    <property name="text">
     <string>Stop</string>
@@ -331,9 +340,14 @@ color: rgb(204, 204, 204);</string>
    <header>../filequeuetable/filequeuetable.h</header>
   </customwidget>
   <customwidget>
-   <class>CommandLineTextEdit</class>
+   <class>ConsoleView</class>
    <extends>QTextEdit</extends>
-   <header>commandlinetextedit.h</header>
+   <header>consoleview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ConsoleEdit</class>
+   <extends>QLineEdit</extends>
+   <header>consoleedit.h</header>
   </customwidget>
  </customwidgets>
  <resources>

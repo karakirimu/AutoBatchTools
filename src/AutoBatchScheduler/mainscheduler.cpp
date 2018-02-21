@@ -10,6 +10,7 @@ MainScheduler::MainScheduler(QWidget *parent) :
     //initial selected position
     ui->optionStackedWidget->setCurrentIndex(0);
     ui->actionSchedule->setChecked(true);
+    setWindowTitle(tr("AutoBatchRunner - Scheduler"));
 
     //set toolbar buttons
     connect(ui->actionExit, &QAction::triggered, this, &MainScheduler::hide);

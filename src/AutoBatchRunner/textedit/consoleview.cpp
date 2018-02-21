@@ -1,19 +1,55 @@
-#include "commandlinetextedit.h"
+#include "consoleview.h"
 
-CommandLineTextEdit::CommandLineTextEdit(QObject *)
+ConsoleView::ConsoleView(QObject *)
 {
 }
 
-CommandLineTextEdit::~CommandLineTextEdit()
+ConsoleView::~ConsoleView()
 {
 
 }
 
-void CommandLineTextEdit::getUpdateStream(QString type, QString data)
+void ConsoleView::setMultiTask(MultiTask *mltask)
 {
-    if(type == "running"){
-        this->setText(data);
-    }
+    connect(mltask, &MultiTask::processStarted, this, &ConsoleView::startedMessage);
+    connect(mltask, &MultiTask::processPaused, this, &ConsoleView::pausedMessage);
+    connect(mltask, &MultiTask::processStopped, this, &ConsoleView::stoppedMessage);
+    connect(mltask, &MultiTask::processEnd, this, &ConsoleView::endMessage);
+    connect(mltask, &MultiTask::processMessage, this, &ConsoleView::updateMessage);
+    connect(mltask, &MultiTask::processErrorText, this, &ConsoleView::errorMessage);
 }
 
+void ConsoleView::setReadObjectName(QString objname)
+{
+    this->objname = objname;
+}
 
+void ConsoleView::startedMessage(QString obj, int runtype)
+{
+    if(objname == obj) this->started(runtype);
+}
+
+void ConsoleView::pausedMessage(QString obj)
+{
+    if(objname == obj) this->pause();
+}
+
+void ConsoleView::stoppedMessage(QString obj)
+{
+    if(objname == obj) this->stop();
+}
+
+void ConsoleView::endMessage(QString obj, int runtype)
+{
+    if(objname == obj) this->end(runtype);
+}
+
+void ConsoleView::updateMessage(QString obj, QString data, int runtype)
+{
+    if(objname == obj) this->updateText(data, runtype);
+}
+
+void ConsoleView::errorMessage(QString obj, QString str)
+{
+    if(objname == obj) this->updateExternalError(str);
+}

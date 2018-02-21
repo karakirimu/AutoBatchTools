@@ -61,7 +61,13 @@ void Executor::processKill()
 {
     process->kill();
     emit processMessage(QObject::tr("Process killed."), INPUT);
-//    emit processStopped();
+    //    emit processStopped();
+}
+
+void Executor::setMutex(QMutex *mutex)
+{
+    //TODO: no imprementation to run function
+    sMutex = mutex;
 }
 
 //int Executor::getForcequittime() const
@@ -120,6 +126,7 @@ void Executor::setProcessFile(QString filepath)
 
 void Executor::addInputFiles(QStringList list, int inputmax)
 {
+    if(inputmax == -1) inputmax = INT_MAX;
     int i = fileHash.count() / 5;
     foreach(QString str , list){
         QFileInfo info(str);

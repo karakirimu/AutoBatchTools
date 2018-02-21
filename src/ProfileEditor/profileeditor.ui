@@ -931,7 +931,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../res/resources.qrc">
-                   <normaloff>:/icons/Add.png</normaloff>:/icons/Add.png</iconset>
+                   <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -945,7 +945,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../res/resources.qrc">
-                   <normaloff>:/icons/Denided.png</normaloff>:/icons/Denided.png</iconset>
+                   <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1055,7 +1055,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../res/resources.qrc">
-                   <normaloff>:/icons/Denided.png</normaloff>:/icons/Denided.png</iconset>
+                   <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1066,7 +1066,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../res/resources.qrc">
-                   <normaloff>:/icons/Add.png</normaloff>:/icons/Add.png</iconset>
+                   <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1186,7 +1186,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../res/resources.qrc">
-            <normaloff>:/icons/run.png</normaloff>:/icons/run.png</iconset>
+            <normaloff>:/default_icons/run.png</normaloff>:/default_icons/run.png</iconset>
           </property>
          </widget>
         </item>
@@ -1200,7 +1200,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../res/resources.qrc">
-            <normaloff>:/icons/pause.png</normaloff>:/icons/pause.png</iconset>
+            <normaloff>:/default_icons/pause.png</normaloff>:/default_icons/pause.png</iconset>
           </property>
          </widget>
         </item>
@@ -1214,7 +1214,7 @@
           </property>
           <property name="icon">
            <iconset resource="../../res/resources.qrc">
-            <normaloff>:/icons/stop_flat.png</normaloff>:/icons/stop_flat.png</iconset>
+            <normaloff>:/default_icons/stop.png</normaloff>:/default_icons/stop.png</iconset>
           </property>
          </widget>
         </item>
@@ -1400,7 +1400,7 @@ border: none;</string>
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/Folder.png</normaloff>:/icons/Folder.png</iconset>
+     <normaloff>:/default_icons/folder.png</normaloff>:/default_icons/folder.png</iconset>
    </property>
    <property name="text">
     <string>開く</string>
@@ -1412,7 +1412,7 @@ border: none;</string>
   <action name="actionNew">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/File_Add.png</normaloff>:/icons/File_Add.png</iconset>
+     <normaloff>:/default_icons/newfile.png</normaloff>:/default_icons/newfile.png</iconset>
    </property>
    <property name="text">
     <string>新規ファイル</string>
@@ -1427,7 +1427,7 @@ border: none;</string>
   <action name="actionOverWriteSave">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/file_save_as.png</normaloff>:/icons/file_save_as.png</iconset>
+     <normaloff>:/default_icons/save.png</normaloff>:/default_icons/save.png</iconset>
    </property>
    <property name="text">
     <string>上書き保存</string>
@@ -1449,7 +1449,7 @@ border: none;</string>
   <action name="actionExport">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/xml_exports.png</normaloff>:/icons/xml_exports.png</iconset>
+     <normaloff>:/default_icons/export.png</normaloff>:/default_icons/export.png</iconset>
    </property>
    <property name="text">
     <string>xmlへエクスポート</string>
@@ -1463,7 +1463,7 @@ border: none;</string>
   <action name="actionSettings">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/Gear.png</normaloff>:/icons/Gear.png</iconset>
+     <normaloff>:/default_icons/settings.png</normaloff>:/default_icons/settings.png</iconset>
    </property>
    <property name="text">
     <string>設定</string>
@@ -1475,7 +1475,7 @@ border: none;</string>
   <action name="actionAddItem">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/Add.png</normaloff>:/icons/Add.png</iconset>
+     <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
    </property>
    <property name="text">
     <string>Add</string>
@@ -1487,7 +1487,7 @@ border: none;</string>
   <action name="actionDeleteItem">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/Denided.png</normaloff>:/icons/Denided.png</iconset>
+     <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
    </property>
    <property name="text">
     <string>Delete</string>
@@ -1499,7 +1499,7 @@ border: none;</string>
   <action name="actionUpItem">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/Button_Up.png</normaloff>:/icons/Button_Up.png</iconset>
+     <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
    </property>
    <property name="text">
     <string>Up</string>
@@ -1511,7 +1511,7 @@ border: none;</string>
   <action name="actionDownItem">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/Button_Down.png</normaloff>:/icons/Button_Down.png</iconset>
+     <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
    </property>
    <property name="text">
     <string>Down</string>
@@ -1523,7 +1523,7 @@ border: none;</string>
   <action name="actionRun">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/run.png</normaloff>:/icons/run.png</iconset>
+     <normaloff>:/default_icons/run.png</normaloff>:/default_icons/run.png</iconset>
    </property>
    <property name="text">
     <string>実行</string>
@@ -1538,7 +1538,7 @@ border: none;</string>
    </property>
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/pause.png</normaloff>:/icons/pause.png</iconset>
+     <normaloff>:/default_icons/pause.png</normaloff>:/default_icons/pause.png</iconset>
    </property>
    <property name="text">
     <string>一時停止</string>
@@ -1550,7 +1550,7 @@ border: none;</string>
    </property>
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/stop_flat.png</normaloff>:/icons/stop_flat.png</iconset>
+     <normaloff>:/default_icons/stop.png</normaloff>:/default_icons/stop.png</iconset>
    </property>
    <property name="text">
     <string>停止</string>
@@ -1589,7 +1589,7 @@ border: none;</string>
   <action name="actionCopy">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/Files_Copy.png</normaloff>:/icons/Files_Copy.png</iconset>
+     <normaloff>:/default_icons/copy.png</normaloff>:/default_icons/copy.png</iconset>
    </property>
    <property name="text">
     <string>Copy</string>
@@ -1601,7 +1601,7 @@ border: none;</string>
   <action name="actionPaste">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/Clipboard_Full.png</normaloff>:/icons/Clipboard_Full.png</iconset>
+     <normaloff>:/default_icons/paste.png</normaloff>:/default_icons/paste.png</iconset>
    </property>
    <property name="text">
     <string>Paste</string>

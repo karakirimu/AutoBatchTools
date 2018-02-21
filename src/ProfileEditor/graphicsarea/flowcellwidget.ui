@@ -205,7 +205,7 @@ p, li { white-space: pre-wrap; }
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../../../res/resources.qrc">:/icons/downtriangle.png</pixmap>
+      <pixmap resource="../../../res/resources.qrc">:/default_icons/flowarrow.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>false</bool>

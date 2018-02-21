@@ -40,6 +40,7 @@ public:
 
 //    EXECUTORSHARED_EXPORT int getForcequittime() const;
 //    EXECUTORSHARED_EXPORT void setForcequittime(int ms); /*preset func*/
+    EXECUTORSHARED_EXPORT void setMutex(QMutex *mutex);
 
     EXECUTORSHARED_EXPORT bool getPaused() const;
     EXECUTORSHARED_EXPORT void setPaused(bool pause);
@@ -166,6 +167,9 @@ private:
 
     //execute part
     QProcess *process;
+
+    //for file read secure
+    QMutex *sMutex = nullptr;
 
     //script part
     RunnerExtraPluginInterface *ext;

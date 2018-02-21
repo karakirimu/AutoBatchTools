@@ -13,18 +13,18 @@ FlowCellWidget::FlowCellWidget(QWidget *parent) :
 
     QSettings settings( "./psettings.ini", QSettings::IniFormat );
 
-    //theme settings
-    settings.beginGroup("BASICSETTING");
-    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
-    settings.endGroup();
+//    //theme settings
+//    settings.beginGroup("BASICSETTING");
+//    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
+//    settings.endGroup();
 
-    if(stylecolor == "Light"){
-        arrowpixmap = QIcon(":/icons/downtriangle.png").pixmap(32,32);
-    }
+//    if(stylecolor == "Light"){
+//        arrowpixmap = QIcon(":/default_icons/flowarrow.png").pixmap(32,32);
+//    }
 
-    if(stylecolor == "Dark"){
-        arrowpixmap = QIcon(":/icons/downtriangle_light.png").pixmap(32,32);
-    }
+//    if(stylecolor == "Dark"){
+//        arrowpixmap = QIcon(":/icons/downtriangle_light.png").pixmap(32,32);
+//    }
 }
 
 FlowCellWidget::~FlowCellWidget()

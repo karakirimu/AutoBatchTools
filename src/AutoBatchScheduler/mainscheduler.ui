@@ -523,7 +523,7 @@
   <action name="actionExit">
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/Error.png</normaloff>:/icons/Error.png</iconset>
+     <normaloff>:/default_icons/error.png</normaloff>:/default_icons/error.png</iconset>
    </property>
    <property name="text">
     <string>閉じる</string>
@@ -541,7 +541,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/Clock.png</normaloff>:/icons/Clock.png</iconset>
+     <normaloff>:/default_icons/app_abs.png</normaloff>:/default_icons/app_abs.png</iconset>
    </property>
    <property name="text">
     <string>スケジュール</string>
@@ -556,7 +556,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/icons/Gear.png</normaloff>:/icons/Gear.png</iconset>
+     <normaloff>:/default_icons/settings.png</normaloff>:/default_icons/settings.png</iconset>
    </property>
    <property name="text">
     <string>オプション</string>

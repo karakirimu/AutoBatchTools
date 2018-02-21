@@ -404,9 +404,9 @@ int FlowTable::fixedRowFromId(int id)
 void FlowTable::setPopupActionTop()
 {
     //set basic items
-    m_add = contextMenu->addAction(QIcon(":/icons/Add.png"),tr("Add"));
+    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add"));
     m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
-    m_delete = contextMenu->addAction(QIcon(":/icons/Denided.png"), tr("Delete"));
+    m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
     m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
     contextMenu->addSeparator();
 
@@ -420,10 +420,10 @@ void FlowTable::setPopupActionDefault()
     m_cut = contextMenu->addAction(tr("Cut"));
     m_cut->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
 
-    m_copy = contextMenu->addAction(QIcon(":/icons/Files_Copy.png"), tr("Copy"));
+    m_copy = contextMenu->addAction(QIcon(":/default_icons/copy.png"), tr("Copy"));
     m_copy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
 
-    m_paste = contextMenu->addAction(QIcon(":/icons/Clipboard_Full.png"), tr("Paste"));
+    m_paste = contextMenu->addAction(QIcon(":/default_icons/paste.png"), tr("Paste"));
     m_paste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
     contextMenu->addSeparator();
 
@@ -434,14 +434,14 @@ void FlowTable::setPopupActionDefault()
 
 void FlowTable::setPopupActionBottom()
 {
-    m_up = contextMenu->addAction(QIcon(":/icons/Button_Up.png"), tr("Up"));
+    m_up = contextMenu->addAction(QIcon(":/default_icons/arrow_up.png"), tr("Up"));
     m_up->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Up));
 
-    m_down = contextMenu->addAction(QIcon(":/icons/Button_Down.png"), tr("Down"));
+    m_down = contextMenu->addAction(QIcon(":/default_icons/arrow_down.png"), tr("Down"));
     m_down->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
 
     contextMenu->addSeparator();
-    m_ref = contextMenu->addAction(QIcon(":/icons/arrow_refresh.png"), tr("Reload"));
+    m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
     m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
 
     connect(m_up, &QAction::triggered, this, &FlowTable::upAction);
@@ -515,7 +515,7 @@ void FlowTable::setFlowItem(int itemid, bool selector)
 
 void FlowTable::setTempItem(FlowCellWidget *cell, QList<QStringList> *list)
 {
-    int istack = VariantConverter::stringToInt(list->at(1).at(1));
+    int istack = QString(list->at(1).at(1)).toInt();
 
     QHash<int, int> hlist;
     xgen.getListStructure(list, &hlist);
@@ -547,9 +547,9 @@ void FlowTable::setInfoItem(FlowCellWidget *cell, QList<QStringList> *list, int 
     QString curdata;
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "(no name)" : curdata;
-//    cell->setType("info", QPixmap(":/icons/Info_Light.png"));
+//    cell->setType("info", QPixmap(":/default_icons/info.png"));
     cell->setType("Information");
-    cell->setTypepixmap(QIcon(":/icons/Info_Light.png").pixmap(16,16));
+    cell->setTypepixmap(QIcon(":/default_icons/info.png").pixmap(16,16));
     cell->setTypecolor("color: black; background-color: rgb(230, 230, 230);");
     cell->setFramecolor("background-color: rgb(120, 120, 120);");
     cell->hideArrow();
@@ -570,12 +570,12 @@ void FlowTable::setInfoItem(FlowCellWidget *cell, QList<QStringList> *list, int 
 
 void FlowTable::setNormalItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
 {
-    int cmdskip = VariantConverter::stringToInt(list->at(firstpos + 1).at(1));
+    int cmdskip = QString(list->at(firstpos + 1).at(1)).toInt();
 
     QString curdata;
-//    cell->setType("normal", QPixmap(":/icons/Terminal.png"));
+//    cell->setType("normal", QPixmap(":/default_icons/terminal.png"));
     cell->setType("Executable");
-    cell->setTypepixmap(QIcon(":/icons/Terminal.png").pixmap(16,16));
+    cell->setTypepixmap(QIcon(":/default_icons/terminal.png").pixmap(16,16));
     cell->setTypecolor("color: black; background-color: rgb(222, 235, 247);");
     cell->setFramecolor("background-color: rgb(44, 70, 94);");
     curdata = (cmdskip == 0)? "NewCommand" : list->at(firstpos + 2).at(1);
@@ -607,9 +607,9 @@ void FlowTable::setSearchItem(FlowCellWidget *cell, QList<QStringList> *list, in
     QString curdata;
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
-//    cell->setType("search", QPixmap(":/icons/Search.png"));
+//    cell->setType("search", QPixmap(":/default_icons/search.png"));
     cell->setType("File Search");
-    cell->setTypepixmap(QIcon(":/icons/Search.png").pixmap(16,16));
+    cell->setTypepixmap(QIcon(":/default_icons/search.png").pixmap(16,16));
     cell->setTypecolor("color: black; background-color: rgb(226, 240, 217);");
     cell->setFramecolor("background-color: rgb(56, 87, 35);");
 
@@ -631,15 +631,15 @@ void FlowTable::setSearchItem(FlowCellWidget *cell, QList<QStringList> *list, in
 void FlowTable::setExtraFuncItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
 {
     QString curdata;
-//    cell->setType("script", QPixmap(":/icons/File_Text.png"));
+//    cell->setType("script", QPixmap(":/default_icons/extras.png"));
     cell->setType("External Function");
-    cell->setTypepixmap(QIcon(":/icons/File_Text.png").pixmap(16,16));
+    cell->setTypepixmap(QIcon(":/default_icons/extras.png").pixmap(16,16));
     cell->setTypecolor("color: black; background-color: rgb(251, 215, 214);");
     cell->setFramecolor("background-color: rgb(132, 12, 12);");
 
     QString tmp = "";
 
-    int scrskip = VariantConverter::stringToInt(list->at(firstpos + 2).at(1));
+    int scrskip = QString(list->at(firstpos + 2).at(1)).toInt();
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
     QFileInfo info(curdata);
@@ -663,9 +663,9 @@ void FlowTable::setExtraFuncItem(FlowCellWidget *cell, QList<QStringList> *list,
 void FlowTable::setOtherItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
 {
     QString curdata;
-//    cell->setType("other", QPixmap(":/icons/Project.png"));
+//    cell->setType("other", QPixmap(":/default_icons/others.png"));
     cell->setType("Run Other Profile");
-    cell->setTypepixmap(QIcon(":/icons/Project.png").pixmap(16,16));
+    cell->setTypepixmap(QIcon(":/default_icons/others.png").pixmap(16,16));
     cell->setTypecolor("color: black; background-color: rgb(255, 242, 204);");
     cell->setFramecolor("background-color: rgb(132, 60, 12);");
 

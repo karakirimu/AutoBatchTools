@@ -343,35 +343,35 @@ void ProfileTreeWidget::rowSelected()
 void ProfileTreeWidget::popupAction()
 {
     //set basic items
-    m_add = contextMenu->addAction(QIcon(":/icons/Add.png"),tr("Add"));
+    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add"));
     m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
-    m_delete = contextMenu->addAction(QIcon(":/icons/Denided.png"), tr("Delete"));
+    m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
     m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
 
     contextMenu->addSeparator();
-//    m_edit = contextMenu->addAction(QIcon(":/icons/Pen.png"), tr("編集"));
+//    m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"), tr("編集"));
 //    m_edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
 //    contextMenu->addSeparator();
 
     m_cut = contextMenu->addAction(tr("Cut"));
     m_cut->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
 
-    m_copy = contextMenu->addAction(QIcon(":/icons/Files_Copy.png"), tr("Copy"));
+    m_copy = contextMenu->addAction(QIcon(":/default_icons/copy.png"), tr("Copy"));
     m_copy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
 
-    m_paste = contextMenu->addAction(QIcon(":/icons/Clipboard_Full.png"), tr("Paste"));
+    m_paste = contextMenu->addAction(QIcon(":/default_icons/paste.png"), tr("Paste"));
     m_paste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
 
     contextMenu->addSeparator();
 
-    m_up = contextMenu->addAction(QIcon(":/icons/Button_Up.png"), tr("Up"));
+    m_up = contextMenu->addAction(QIcon(":/default_icons/arrow_up.png"), tr("Up"));
     m_up->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Up));
 
-    m_down = contextMenu->addAction(QIcon(":/icons/Button_Down.png"), tr("Down"));
+    m_down = contextMenu->addAction(QIcon(":/default_icons/arrow_down.png"), tr("Down"));
     m_down->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
 
     contextMenu->addSeparator();
-    m_ref = contextMenu->addAction(QIcon(":/icons/arrow_refresh.png"), tr("Reload"));
+    m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
     m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
 
     //connect signals
@@ -443,18 +443,18 @@ void ProfileTreeWidget::setInfoTree(QTreeWidgetItem *root, QList<QStringList> *l
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "(no name)" : curdata;
     root->setText(0, curdata);
-    root->setIcon(1, QIcon(":/icons/Info_Light.png"));
+    root->setIcon(1, QIcon(":/default_icons/info.png"));
 }
 
 ///DEPENDS_XML
 void ProfileTreeWidget::setNormalTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
 {
-    int cmdskip = VariantConverter::stringToInt(list->at(firstpos + 1).at(1));
+    int cmdskip = QString(list->at(firstpos + 1).at(1)).toInt();
 
     QString curdata;
     QTreeWidgetItem *childitem;
     root->setText(1,"Exec");
-    root->setIcon(1, QIcon(":/icons/Terminal.png"));
+    root->setIcon(1, QIcon(":/default_icons/terminal.png"));
     curdata = (cmdskip == 0)? "NewCommand" : list->at(firstpos + 2).at(1);
 
     QFileInfo info(curdata);
@@ -491,7 +491,7 @@ void ProfileTreeWidget::setSearchTree(QTreeWidgetItem *root, QList<QStringList> 
     curdata = (curdata == "")? "Unknown" : curdata;
     root->setText(0, curdata);
     root->setText(1,"Search");
-    root->setIcon(1, QIcon(":/icons/Search.png"));
+    root->setIcon(1, QIcon(":/default_icons/search.png"));
     childitem = new QTreeWidgetItem(root);
     childitem->setText(0, list->at(firstpos + 1).at(1));
     childitem->setText(1, tr("Separator"));
@@ -515,8 +515,8 @@ void ProfileTreeWidget::setExtraFuncTree(QTreeWidgetItem *root, QList<QStringLis
     QTreeWidgetItem *childitem;
 
     root->setText(1,"External");
-    root->setIcon(1, QIcon(":/icons/File_Text.png"));
-    int scrskip = VariantConverter::stringToInt(list->at(firstpos + 2).at(1));
+    root->setIcon(1, QIcon(":/default_icons/extras.png"));
+    int scrskip = QString(list->at(firstpos + 2).at(1)).toInt();
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
     QFileInfo info(curdata);
@@ -546,7 +546,7 @@ void ProfileTreeWidget::setOtherTree(QTreeWidgetItem *root, QList<QStringList> *
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
     root->setText(0, curdata);
-    root->setIcon(1, QIcon(":/icons/Project.png"));
+    root->setIcon(1, QIcon(":/default_icons/others.png"));
 }
 
 int ProfileTreeWidget::currentRow()
@@ -617,7 +617,7 @@ void ProfileTreeWidget::setEditOperator(EditOperator *op)
 ///DEPENDS_XML
 void ProfileTreeWidget::setTempTree(QTreeWidgetItem *root, QList<QStringList> *list)
 {
-    int istack = VariantConverter::stringToInt(list->at(1).at(1));
+    int istack = QString(list->at(1).at(1)).toInt();
 //    int cmdskip = VariantConverter::stringToInt(list->at(3).at(1));
 
     QHash<int, int> hlist;

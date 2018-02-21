@@ -5,7 +5,7 @@ ExtraFunctionsTable::ExtraFunctionsTable(QWidget *parent)
 {
     //popupAction
     setPopupActionTop();
-    setPopupActionDefault(QIcon(":/icons/Files_Copy.png"), QIcon(":/icons/Button_Up.png"), QIcon(":/icons/Button_Down.png"));
+    setPopupActionDefault(QIcon(":/default_icons/copy.png"), QIcon(":/default_icons/arrow_up.png"), QIcon(":/default_icons/arrow_down.png"));
     setPopupActionBottom();
 
     //init table size
@@ -40,15 +40,15 @@ void ExtraFunctionsTable::setPopupActionTop()
 {
     //copy
     //set basic items
-    m_add = contextMenu->addAction(QIcon(":/icons/Add.png"),tr("Add"));
+    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add"));
     m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
-    m_delete = contextMenu->addAction(QIcon(":/icons/Denided.png"), tr("Delete"));
+    m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
     m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
     contextMenu->addSeparator();
-    m_edit = contextMenu->addAction(QIcon(":/icons/Pen.png"), tr("Edit"));
+    m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"), tr("Edit"));
     m_edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
     contextMenu->addSeparator();
-    m_file = contextMenu->addAction(QIcon(":/icons/File.png"), tr("Select file..."));
+    m_file = contextMenu->addAction(QIcon(":/default_icons/file.png"), tr("Select file..."));
     contextMenu->addSeparator();
 
     //connect signals
@@ -63,7 +63,7 @@ void ExtraFunctionsTable::setPopupActionBottom()
 {
     //copy
     contextMenu->addSeparator();
-    m_ref = contextMenu->addAction(QIcon(":/icons/arrow_refresh.png"), tr("Reload"));
+    m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
     m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
 
     connect(m_ref, SIGNAL(triggered()), this, SLOT(reloadAction()));

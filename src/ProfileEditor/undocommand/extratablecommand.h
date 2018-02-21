@@ -18,7 +18,7 @@ public:
     void redo() Q_DECL_OVERRIDE;
 
     int id() const Q_DECL_OVERRIDE;
-    bool mergeWith(const QUndoCommand *other) Q_DECL_OVERRIDE;
+//    bool mergeWith(const QUndoCommand *other) Q_DECL_OVERRIDE;
 
     QString m_newstr;
 

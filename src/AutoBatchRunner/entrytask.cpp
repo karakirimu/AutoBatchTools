@@ -50,6 +50,11 @@ void EntryTask::setFile(QString filepath)
     executor->setProcessFile(filepath);
 }
 
+void EntryTask::setMutex(QMutex *sharedmutex)
+{
+    executor->setMutex(sharedmutex);
+}
+
 bool EntryTask::getStarted()
 {
     return executor->getWorking();
@@ -89,21 +94,13 @@ void EntryTask::stop()
     executor->stopProcess();
 }
 
-void EntryTask::updateFileList(QHash<QString, int> *data)
+void EntryTask::updateFileList(QStringList *need)
 {
-    if(data->empty()) return;
-    QStringList need;
-
-    QHash<QString, int>::iterator i = data->begin();
-    while (i != data->end() && i.value() == 0) {
-        need.append(i.key());
-        ++i;
-    }
-
-//    QSettings settings( "./psettings.ini", QSettings::IniFormat );
-//    settings.beginGroup("TESTEXEC");
-//    executor->addInputFiles(need, settings.value("FILELOADMAX", 1).toInt());
-//    settings.endGroup();
+    if(need->empty()) return;
+    QSettings settings( "./psettings.ini", QSettings::IniFormat );
+    settings.beginGroup("TESTEXEC");
+    executor->addInputFiles(*need, settings.value("FILELOADMAX", -1).toInt());
+    settings.endGroup();
 }
 
 void EntryTask::processCompleted()

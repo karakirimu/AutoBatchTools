@@ -21,7 +21,7 @@ void VariantComboBox::reloadComboBoxItem()
 
     //Processxmlbuilder update (local)
     if(editop->read(PEMAGIC, &item)){
-        counter = VariantConverter::stringToInt(item.at(1).at(1));
+        counter = QString(item.at(1).at(1)).toInt();
         for(int i = 0; i < counter; i++){
             this->addItem(item.at(2 + i).at(1));
         }

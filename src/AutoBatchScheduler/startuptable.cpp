@@ -8,7 +8,7 @@ StartupTable::StartupTable(QWidget *parent)
 
     //popupAction
     setPopupActionTop();
-    setPopupActionDefault(QIcon(":/icons/Files_Copy.png"), QIcon(":/icons/Button_Up.png"), QIcon(":/icons/Button_Down.png"));
+    setPopupActionDefault(QIcon(":/default_icons/copy.png"), QIcon(":/default_icons/arrow_up.png"), QIcon(":/default_icons/arrow_down.png"));
     setPopupActionBottom();
 
     //init table size
@@ -50,16 +50,16 @@ void StartupTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
 void StartupTable::setPopupActionTop()
 {
     //set basic items
-    m_add = contextMenu->addAction(QIcon(":/icons/Add.png"), tr("Add"));
+    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"), tr("Add"));
     m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
-    m_delete = contextMenu->addAction(QIcon(":/icons/Denided.png"), tr("Delete"));
+    m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
     m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
     contextMenu->addSeparator();
-    m_edit = contextMenu->addAction(QIcon(":/icons/Pen.png"), tr("Edit"));
+    m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"), tr("Edit"));
     m_edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
     contextMenu->addSeparator();
-    m_enable = contextMenu->addAction(QIcon(":/icons/Valid.png"), tr("Enable"));
-    m_disable = contextMenu->addAction(QIcon(":/icons/Error.png"), tr("Disable"));
+    m_enable = contextMenu->addAction(QIcon(":/default_icons/enable.png"), tr("Enable"));
+    m_disable = contextMenu->addAction(QIcon(":/default_icons/error.png"), tr("Disable"));
     contextMenu->addSeparator();
 
     //connect signals
@@ -74,7 +74,7 @@ void StartupTable::setPopupActionTop()
 void StartupTable::setPopupActionBottom()
 {
     contextMenu->addSeparator();
-    m_ref = contextMenu->addAction(QIcon(":/icons/arrow_refresh.png"), tr("Reload"));
+    m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
     m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
 
     connect(m_ref, SIGNAL(triggered()), this, SLOT(reloadAction()));
@@ -174,9 +174,9 @@ void StartupTable::setTableItem(int row)
         //set icon
         QString icon;
         if(list->at(2).at(1) == "yes"){
-            icon = ":/icons/Valid.png";
+            icon = ":/default_icons/enable.png";
         }else{
-            icon = ":/icons/Denided.png";
+            icon = ":/default_icons/remove.png";
         }
 
         this->setItem(row,2,new QTableWidgetItem(QIcon(icon),list->at(2).at(1)));

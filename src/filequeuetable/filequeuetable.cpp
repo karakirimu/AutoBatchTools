@@ -112,8 +112,8 @@ void FileQueueTable::setPopupActionTop()
 {
     //init menu context
     contextMenu->setStyleSheet("border:1px;");
-    m_add = contextMenu->addAction(QIcon(":/icons/File.png"), tr("Add Files"));
-    m_deleteitems = contextMenu->addAction(QIcon(":/icons/Denided.png"), tr("Clear this Item"));
+    m_add = contextMenu->addAction(QIcon(":/default_icons/file.png"), tr("Add Files"));
+    m_deleteitems = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Clear this Item"));
     contextMenu->addSeparator();
     m_deleteAll = contextMenu->addAction(tr("Clear All Items"));
 
@@ -127,8 +127,8 @@ void FileQueueTable::setPopupActionDefault()
 {
     contextMenu->addSeparator();
     //set basic items
-    m_up = contextMenu->addAction(QIcon(":/icons/Button_Up.png"), tr("Up"));
-    m_down = contextMenu->addAction(QIcon(":/icons/Button_Down.png"), tr("Down"));
+    m_up = contextMenu->addAction(QIcon(":/default_icons/arrow_up.png"), tr("Up"));
+    m_down = contextMenu->addAction(QIcon(":/default_icons/arrow_down.png"), tr("Down"));
 
     //connect signals
     connect(m_up, SIGNAL(triggered()), this, SLOT(upAction()));

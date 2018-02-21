@@ -88,7 +88,7 @@ int ExtraTableCommand::id() const
     return ProcessXmlListGenerator::ECMDCOUNT;
 }
 
-bool ExtraTableCommand::mergeWith(const QUndoCommand *other)
-{
+//bool ExtraTableCommand::mergeWith(const QUndoCommand *other)
+//{
 
-}
+//}

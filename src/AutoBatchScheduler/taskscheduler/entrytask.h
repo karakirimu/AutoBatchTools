@@ -14,6 +14,7 @@ public:
     ~EntryTask();
 
     void setFile(QString filepath);
+    void setMutex(QMutex *sharedmutex);
 
     bool getStarted();
     bool getPause();

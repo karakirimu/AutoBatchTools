@@ -30,10 +30,10 @@ void OptionDialog::setupItem(){
     ui->listWidget->item(0)->setSelected(true);
     ui->listWidget->setIconSize(QSize(32,32));
 
-    ui->listWidget->item(0)->setIcon(QIcon(":/icons/setting_tools.png"));
-    ui->listWidget->item(1)->setIcon(QIcon(":/icons/Apps.png"));
-//    ui->listWidget->item(2)->setIcon(QIcon(":/icons/Clock.png"));
-    ui->listWidget->item(2)->setIcon(QIcon(":/icons/extension.png"));
+    ui->listWidget->item(0)->setIcon(QIcon(":/default_icons/settings.png"));
+    ui->listWidget->item(1)->setIcon(QIcon(":/default_icons/others.png"));
+//    ui->listWidget->item(2)->setIcon(QIcon(":/default_icons/app_abs.png"));
+    ui->listWidget->item(2)->setIcon(QIcon(":/default_icons/extras.png"));
 //    ui->listWidget->item(3)->setIcon(QIcon(":/icons/Colors.png"));
 }
 

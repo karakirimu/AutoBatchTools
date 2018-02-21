@@ -196,7 +196,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 }
 
 //with loading constructor
-ProfileEditor::ProfileEditor(QString loadfile, QWidget *parent)
+ProfileEditor::ProfileEditor(QStringList loadfile, QWidget *parent)
     : ProfileEditor(parent)
 {
 //    sfunction->loadFile(loadfile);
@@ -204,7 +204,9 @@ ProfileEditor::ProfileEditor(QString loadfile, QWidget *parent)
 //    ui->graphicsView->reloadAction();
 //    ui->variantTableWidget->reloadAction();
 //    preResetUi();
-    editop->openAction(loadfile);
+    if(loadfile.count() == 2){
+        editop->openAction(loadfile.last());
+    }
 //    setLoadfile(loadfile); /*int title changed*/
     postResetUi();
 }
@@ -497,7 +499,7 @@ void ProfileEditor::about()
                             "ProfileEditor can create execution list of other projects.\r\n\r\n"
                             "Currently, this program runs only windows systems.\r\n"
                             "These programs licensed under GNU LGPL version 3 for now.\r\n\r\n"
-                            "Made by mr_elphis in 2017/11/17"));
+                            "Made by mr_elphis in 2018/02/18"));
 }
 
 void ProfileEditor::setTreerowpos_select(int value, int from)

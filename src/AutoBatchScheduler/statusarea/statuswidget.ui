@@ -73,7 +73,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../../res/resources.qrc">
-          <normaloff>:/icons/Gear.png</normaloff>:/icons/Gear.png</iconset>
+          <normaloff>:/default_icons/settings.png</normaloff>:/default_icons/settings.png</iconset>
         </property>
        </widget>
       </item>

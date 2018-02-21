@@ -7,6 +7,7 @@
 #include <QProgressBar>
 #include <QLabel>
 #include <optiondialog.h>
+#include <multitask.h>
 //#include <mainprocessloader.h>
 //#include <profileeditor.h>
 
@@ -23,19 +24,32 @@ public:
     ~AutoBatchRunner();
 
 private slots:
+
+    //received from task
+    void taskStarted(QString objectname, int runfrom);
+    void taskPaused(QString objectname);
+    void taskStopped(QString objectname);
+    void taskEnd(QString objectname, int runfrom);
+
+    //send to task
     void on_actionOpen_triggered();
+    void on_actionRun_triggered();
+    void on_actionPause_triggered();
+    void on_actionStop_triggered();
     void on_actionSettings_triggered();
 
-    void on_runButton_clicked();
-
-//    void on_editButton_clicked();
+    void on_editButton_clicked();
 
 private:
     void initStatusBar();
 
     Ui::MainWindow *ui;
     OptionDialog *opdialog;
-//    SystemTray *sysTray;
+    MultiTask *mlTask;
+
+    //this variable is temporary.
+    //currently, this program can run only one task.
+    QString key = "";
 };
 
 #endif // MAINWINDOW_H

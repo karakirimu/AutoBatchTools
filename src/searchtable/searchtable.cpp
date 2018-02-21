@@ -7,7 +7,9 @@ SearchTable::SearchTable(QWidget *)
 
     //popupAction
     setPopupActionTop();
-    setPopupActionDefault(QIcon(":/icons/Files_Copy.png"), QIcon(":/icons/Button_Up.png"), QIcon(":/icons/Button_Down.png"));
+    setPopupActionDefault(QIcon(":/default_icons/copy.png"), \
+                          QIcon(":/default_icons/arrow_up.png"), \
+                          QIcon(":/default_icons/arrow_down.png"));
     setPopupActionBottom();
 
     //init table size
@@ -41,12 +43,12 @@ SearchTable::~SearchTable()
 void SearchTable::setPopupActionTop()
 {
     //set basic items
-    m_add = contextMenu->addAction(QIcon(":/icons/Add.png"),tr("追加"));
+    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("追加"));
     m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
-    m_delete = contextMenu->addAction(QIcon(":/icons/Denided.png"), tr("削除"));
+    m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("削除"));
     m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
     contextMenu->addSeparator();
-    m_edit = contextMenu->addAction(QIcon(":/icons/Pen.png"), tr("編集"));
+    m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"), tr("編集"));
     m_edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
     contextMenu->addSeparator();
 
@@ -59,7 +61,7 @@ void SearchTable::setPopupActionTop()
 void SearchTable::setPopupActionBottom()
 {
     contextMenu->addSeparator();
-    m_ref = contextMenu->addAction(QIcon(":/icons/arrow_refresh.png"), tr("テーブルの更新"));
+    m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("テーブルの更新"));
     m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
 
     connect(m_ref, SIGNAL(triggered()), this, SLOT(reloadAction()));

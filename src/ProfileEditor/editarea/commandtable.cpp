@@ -214,16 +214,16 @@ void CommandTable::editedAction(int row, int column)
 void CommandTable::setPopupActionTop()
 {
     //set basic items
-    m_add = contextMenu->addAction(QIcon(":/icons/Add.png"),tr("Add"));
+    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add"));
     m_add->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Enter));
-    m_delete = contextMenu->addAction(QIcon(":/icons/Denided.png"), tr("Delete"));
+    m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
     m_delete->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Delete));
     contextMenu->addSeparator();
-    m_edit = contextMenu->addAction(QIcon(":/icons/Pen.png"), tr("Edit"));
+    m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"), tr("Edit"));
     m_edit->setShortcut(QKeySequence(Qt::ALT + Qt::Key_E));
     contextMenu->addSeparator();
-    m_file = contextMenu->addAction(QIcon(":/icons/File.png"), tr("Select file..."));
-    m_dir = contextMenu->addAction(QIcon(":/icons/Folder.png"), tr("Select Dir..."));
+    m_file = contextMenu->addAction(QIcon(":/default_icons/file.png"), tr("Select file..."));
+    m_dir = contextMenu->addAction(QIcon(":/default_icons/folder.png"), tr("Select Dir..."));
     contextMenu->addSeparator();
 
     //connect signals
@@ -238,16 +238,16 @@ void CommandTable::setPopupActionTop()
 void CommandTable::setPopupActionDefault()
 {
     //set basic items
-    m_copy = contextMenu->addAction(QIcon(":/icons/Files_Copy.png"), tr("Copy"));
+    m_copy = contextMenu->addAction(QIcon(":/default_icons/copy.png"), tr("Copy"));
     m_copy->setShortcut(QKeySequence(Qt::ALT + Qt::Key_C));
 
-    m_paste = contextMenu->addAction(QIcon(":/icons/Clipboard_Full.png"), tr("Paste"));
+    m_paste = contextMenu->addAction(QIcon(":/default_icons/paste.png"), tr("Paste"));
     m_paste->setShortcut(QKeySequence(Qt::ALT + Qt::Key_V));
 
-    m_up = contextMenu->addAction(QIcon(":/icons/Button_Up.png"), tr("Up"));
+    m_up = contextMenu->addAction(QIcon(":/default_icons/arrow_up.png"), tr("Up"));
     m_up->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Up));
 
-    m_down = contextMenu->addAction(QIcon(":/icons/Button_Down.png"), tr("Down"));
+    m_down = contextMenu->addAction(QIcon(":/default_icons/arrow_down.png"), tr("Down"));
     m_down->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Down));
 
     //connect signals

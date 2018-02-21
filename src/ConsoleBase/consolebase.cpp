@@ -137,7 +137,7 @@ void ConsoleBase::setPopupAction()
     contextMenu = new QMenu(this);
     contextMenu->setStyleSheet("border:1px;");
     m_selectall = contextMenu->addAction(tr("Select All"));
-    m_copy = contextMenu->addAction(QIcon(":/icons/Copy.png"), tr("Copy"));
+    m_copy = contextMenu->addAction(QIcon(":/default_icons/copy.png"), tr("Copy"));
     contextMenu->addSeparator();
     m_clear = contextMenu->addAction(tr("Clear all text"));
 

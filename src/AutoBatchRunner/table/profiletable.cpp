@@ -7,7 +7,7 @@ ProfileTable::ProfileTable(QWidget *)
 
     //popupAction
     setPopupActionTop();
-    setPopupActionDefault(QIcon(":/icons/Files_Copy.png"), QIcon(":/icons/Button_Up.png"), QIcon(":/icons/Button_Down.png"));
+    setPopupActionDefault(QIcon(":/default_icons/copy.png"), QIcon(":/default_icons/arrow_up.png"), QIcon(":/default_icons/arrow_down.png"));
 
     //init table size
     setColumnCount(3);
@@ -49,13 +49,13 @@ void ProfileTable::newAction()
 void ProfileTable::setPopupActionTop()
 {
     //set basic items
-    m_new = contextMenu->addAction(QIcon(":/icons/Add.png"),tr("New file"));
-    m_add = contextMenu->addAction(QIcon(":/icons/Add.png"),tr("Add file"));
+    m_new = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("New file"));
+    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add file"));
     m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
-    m_delete = contextMenu->addAction(QIcon(":/icons/Denided.png"), tr("Delete list"));
+    m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete list"));
     m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
     contextMenu->addSeparator();
-    m_edit = contextMenu->addAction(QIcon(":/icons/Pen.png"), tr("Edit"));
+    m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"), tr("Edit"));
     m_edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
     contextMenu->addSeparator();
 

@@ -208,7 +208,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../res/resources.qrc">
-             <normaloff>:/icons/Terminal.png</normaloff>:/icons/Terminal.png</iconset>
+             <normaloff>:/default_icons/terminal.png</normaloff>:/default_icons/terminal.png</iconset>
            </property>
           </widget>
          </item>
@@ -222,7 +222,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../res/resources.qrc">
-             <normaloff>:/icons/pause.png</normaloff>:/icons/pause.png</iconset>
+             <normaloff>:/default_icons/pause.png</normaloff>:/default_icons/pause.png</iconset>
            </property>
           </widget>
          </item>
@@ -236,7 +236,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../../res/resources.qrc">
-             <normaloff>:/icons/stop_flat.png</normaloff>:/icons/stop_flat.png</iconset>
+             <normaloff>:/default_icons/stop.png</normaloff>:/default_icons/stop.png</iconset>
            </property>
           </widget>
          </item>

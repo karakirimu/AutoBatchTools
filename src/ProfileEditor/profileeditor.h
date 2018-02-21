@@ -20,7 +20,7 @@ class ProfileEditor : public QMainWindow
 
 public:
     explicit ProfileEditor(QWidget *parent = 0);
-    explicit ProfileEditor(QString loadfile, QWidget *parent = 0);
+    explicit ProfileEditor(QStringList loadfile, QWidget *parent = 0);
     ~ProfileEditor();
 
     void closeEvent(QCloseEvent *event);

@@ -23,8 +23,8 @@
    <string>Dialog</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../autobatchrunner.qrc">
-    <normaloff>:/icons/Pen.png</normaloff>:/icons/Pen.png</iconset>
+   <iconset resource="../../res/resources.qrc">
+    <normaloff>:/default_icons/edit.png</normaloff>:/default_icons/edit.png</iconset>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -486,7 +486,13 @@
   <tabstop>testSearchButton</tabstop>
  </tabstops>
  <resources>
-  <include location="../../autobatchrunner.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
  </resources>
  <connections>
   <connection>

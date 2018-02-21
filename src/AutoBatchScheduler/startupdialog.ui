@@ -80,7 +80,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../res/resources.qrc">
-             <normaloff>:/icons/Add.png</normaloff>:/icons/Add.png</iconset>
+             <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
            </property>
           </widget>
          </item>
@@ -91,7 +91,7 @@
            </property>
            <property name="icon">
             <iconset resource="../../res/resources.qrc">
-             <normaloff>:/icons/Denided.png</normaloff>:/icons/Denided.png</iconset>
+             <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
            </property>
           </widget>
          </item>
