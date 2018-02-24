@@ -101,7 +101,7 @@ public slots:
 
 private slots:
     void loadNormalStandardOutput();
-    void processEndLastStatus();
+//    void processEndLastStatus(int maxcount);
 //    void extrafuncInternalMessage(QString str){ emit processMessage(str, SCRIPT);}
 
 private:

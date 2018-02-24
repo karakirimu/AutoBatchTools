@@ -10,7 +10,7 @@ Executor::Executor(QObject *parent)
 //    execlist = new QList<int>();
     userexeclist.clear();
 
-    connect(this, &Executor::processEnded, this, &Executor::processEndLastStatus);
+//    connect(this, &Executor::processEnded, this, &Executor::processEndLastStatus);
 }
 
 Executor::~Executor()
@@ -162,6 +162,10 @@ void Executor::setLocalList()
     if(!processfileloaded) return;
     if(!localHash->empty()) localHash->clear();
 
+#ifdef QT_DEBUG
+    qDebug() << "Executor::setLocalList";
+#endif
+
     int counter = pbuilder->count();
     QList<QStringList> list;
 
@@ -213,6 +217,9 @@ bool Executor::runProcess()
 
 
     int execlistcounter = execlist->count();
+#ifdef QT_DEBUG
+    qDebug() << "Executor:: execlist count" << execlistcounter;
+#endif
 
     for(int i = 0; i < execlistcounter; i++){
 
@@ -230,8 +237,6 @@ bool Executor::runProcess()
         }
 
         emit processStateUpdate(i);
-
-        qDebug() << "Executor:: execlist count" << execlistcounter;
 
         //read each list
         if(pbuilder->readItem(execlist->at(i), list)){
@@ -277,16 +282,20 @@ bool Executor::runProcess()
         }
     }
 
+    //send max counter of all processcount
+    emit processStateUpdate(execlistcounter);
+
+    //load file etc force reset.
+    resetdata();
+
     //reset process
     disconnect(process, SIGNAL(readyRead()), this, SLOT(loadNormalStandardOutput()));
     delete process;
     delete execlist;
     delete list;
 
-    //load file etc force reset.
-    resetdata();
-
     emit processEnded(MAINPROCESS);
+
     return true;
 }
 
@@ -307,10 +316,13 @@ void Executor::loadNormalStandardOutput()
     emit processMessage(encode, NORMAL);
 }
 
-void Executor::processEndLastStatus()
-{
-    emit processStateUpdate(execlist->count());
-}
+//void Executor::processEndLastStatus(int maxcount)
+//{
+//#ifdef QT_DEBUG
+//    qDebug() << "Executor:: processEndLastStatus()" << maxcount;
+//#endif
+//    emit processStateUpdate(maxcount);
+//}
 
 //Think kinds of text
 bool Executor::loadInfo(QList<QStringList> *list, int firstpos)
@@ -730,6 +742,10 @@ int Executor::getReadType(QString type)
 
 void Executor::resetdata()
 {
+#ifdef QT_DEBUG
+    qDebug() << "Executor::resetdata";
+#endif
+
     //reset flags
     working = false;
     if(launchedfrom == DEFAULT){
