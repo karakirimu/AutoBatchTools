@@ -9,6 +9,7 @@
 #include <QFileDialog>
 #include <SettingDialog.h>
 #include <editoperator.h>
+#include <multitask.h>
 
 namespace Ui {
 class ProfileEditor;
@@ -64,6 +65,20 @@ private slots:
 
     void about();
 
+    //received from task
+    void taskStarted(QString objectname, int runfrom);
+    void taskPaused(QString objectname);
+    void taskStopped(QString objectname);
+    void taskEnd(QString objectname, int runfrom);
+
+    //send to task
+    void runTriggered();
+    void pauseTriggered();
+    void stopTriggered();
+
+    //text sender
+    void updateRangeText(QString range);
+
 private:
 
     void setLoadfile(const QString &value);
@@ -82,6 +97,10 @@ private:
 
     EditOperator *editop;
     RunTaskSignalBinder *rbinder;
+
+    //key is thread name
+    MultiTask *mlTask;
+    QString key;
 
 };
 

@@ -11,7 +11,7 @@ ConsoleEdit::~ConsoleEdit()
 
 }
 
-void ConsoleEdit::setRunTaskSignalBinder(RunTaskSignalBinder *rbinder)
+void ConsoleEdit::setMultiTask(MultiTask *rbinder)
 {
     binder = rbinder;
     connect(this, &ConsoleEdit::returnPressed, this, &ConsoleEdit::sendMessage);
@@ -22,12 +22,12 @@ void ConsoleEdit::sendMessage()
     QString text = this->text();
     if(text == ""){
 #ifdef Q_OS_WIN
-        binder->sendInput("\n");
+        binder->sendInput(this->objectName(), "\n");
 #else
-        binder->sendInput("\r\n");
+        binder->sendInput(this->objectName(), "\r\n");
 #endif
     }else{
-        binder->sendInput(text);
+        binder->sendInput(this->objectName(), text);
         this->clear();
     }
 }

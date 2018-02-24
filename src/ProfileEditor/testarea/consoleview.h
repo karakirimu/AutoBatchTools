@@ -2,7 +2,7 @@
 #define CONSOLEVIEW_H
 
 #include <QWidget>
-#include <runtasksignalbinder.h>
+#include <multitask.h>
 #include <../ConsoleBase/consolebase.h>
 
 class ConsoleView : public ConsoleBase
@@ -13,10 +13,20 @@ public:
     ~ConsoleView();
 
     //ui settings
-    void setRunTaskSignalBinder(RunTaskSignalBinder *rbinder);
+    void setMultiTask(MultiTask *task);    
+    void setReadObjectName(QString objname);
+
+private slots:
+    void startedMessage(QString obj, int runtype);
+    void pausedMessage(QString obj);
+    void stoppedMessage(QString obj);
+    void endMessage(QString obj, int runtype);
+    void updateMessage(QString obj, QString data, int runtype);
+    void errorMessage(QString obj, QString str);
 
 private:
-    RunTaskSignalBinder *binder;
+    QString objname;
+
 };
 
 #endif // CONSOLEVIEW_H

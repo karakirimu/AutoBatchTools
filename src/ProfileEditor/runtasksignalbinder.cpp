@@ -15,10 +15,7 @@ RunTaskSignalBinder::RunTaskSignalBinder(QObject *parent)
     connect(worker, &QThread::started, executor, &Executor::runProcess);
     connect(executor, &Executor::processEnded, worker, &QThread::quit);
     connect(executor, &Executor::processStopped, worker, &QThread::quit);
-    connect(worker, &QThread::finished, this, &RunTaskSignalBinder::testMessage);
-
-    //move to thread
-    executor->moveToThread(worker);
+//    connect(worker, &QThread::finished, this, &RunTaskSignalBinder::testMessage);
 
     //connect executor
     connect(executor, &Executor::processStarted, this, &RunTaskSignalBinder::receiveStarted);
@@ -30,6 +27,9 @@ RunTaskSignalBinder::RunTaskSignalBinder(QObject *parent)
     connect(executor, &Executor::processStateCount, this, &RunTaskSignalBinder::receiveInitCount);
     connect(executor, &Executor::processCheckError, this, &RunTaskSignalBinder::receiveErrorText);
     connect(executor, &Executor::processMessage, this, &RunTaskSignalBinder::receiveMessage);
+
+    //move to thread
+    executor->moveToThread(worker);
 }
 
 RunTaskSignalBinder::~RunTaskSignalBinder()
@@ -40,6 +40,27 @@ RunTaskSignalBinder::~RunTaskSignalBinder()
     }
     delete worker;
     delete executor;
+}
+
+bool RunTaskSignalBinder::getStarted()
+{
+    return executor->getWorking();
+}
+
+bool RunTaskSignalBinder::getPause()
+{
+    return executor->getPaused();
+}
+
+void RunTaskSignalBinder::setMutex(QMutex *sharedmutex)
+{
+    executor->setMutex(sharedmutex);
+}
+
+void RunTaskSignalBinder::setFile(QString filepath)
+{
+    qDebug() << "RunTaskSignalBinder:: File Changed :" << filepath;
+    executor->setProcessFile(filepath);
 }
 
 void RunTaskSignalBinder::sendInput(QString message)
@@ -57,13 +78,13 @@ void RunTaskSignalBinder::start()
         QSettings settings( "./psettings.ini", QSettings::IniFormat );
 
         settings.beginGroup("TESTEXEC");
-        executor->setDetached(settings.value("DETACH", false).toBool());
+//        executor->setDetached(settings.value("DETACH", false).toBool());
         executor->setLaunchedfrom(settings.value("FAKERES", false).toInt());
         executor->setSearchfileoverwrite(settings.value("FSUPDATE", true).toBool());
 //        executor->setForcequittime(settings.value("TIMEOUT", 30000).toInt());
         settings.endGroup();
 
-        executor->setProcessFile(editingfile);
+//        executor->setProcessFile(editingfile);
         executor->setGlobalList();
         executor->setLocalList();
 
@@ -71,15 +92,15 @@ void RunTaskSignalBinder::start()
     }
 }
 
-void RunTaskSignalBinder::pause()
+void RunTaskSignalBinder::pause(bool pause)
 {
-    executor->setPaused(true);
+    executor->setPaused(pause);
 }
 
 void RunTaskSignalBinder::stop()
 {
     executor->stopProcess();
-    executor->processKill();
+//    executor->processKill();
 }
 
 void RunTaskSignalBinder::updateRange(QString str)
@@ -109,29 +130,29 @@ void RunTaskSignalBinder::updateRange(QString str)
     executor->setExecList(result);
 }
 
-void RunTaskSignalBinder::updateFileList(QHash<QString, int> *data)
+void RunTaskSignalBinder::updateFileList(QStringList *data)
 {
     if(data->empty()) return;
-    QStringList need;
+//    QStringList need;
 
-    QHash<QString, int>::iterator i = data->begin();
-    while (i != data->end() && i.value() == 0) {
-        need.append(i.key());
-        ++i;
-    }
+//    QHash<QString, int>::iterator i = data->begin();
+//    while (i != data->end() && i.value() == 0) {
+//        need.append(i.key());
+//        ++i;
+//    }
 
     QSettings settings( "./psettings.ini", QSettings::IniFormat );
     settings.beginGroup("TESTEXEC");
-    executor->addInputFiles(need, settings.value("FILELOADMAX", 10).toInt());
+    executor->addInputFiles(*data, settings.value("FILELOADMAX", -1).toInt());
     settings.endGroup();
 }
 
-void RunTaskSignalBinder::updateEditFile(QString editfile)
-{
-    editingfile = editfile;
-}
+//void RunTaskSignalBinder::updateEditFile(QString editfile)
+//{
+//    editingfile = editfile;
+//}
 
-void RunTaskSignalBinder::testMessage()
-{
-    qDebug() << "process completed";
-}
+//void RunTaskSignalBinder::testMessage()
+//{
+//    qDebug() << "process completed";
+//}

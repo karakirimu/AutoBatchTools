@@ -13,6 +13,11 @@ public:
     explicit RunTaskSignalBinder(QObject *parent = nullptr);
     ~RunTaskSignalBinder();
 
+    bool getStarted();
+    bool getPause();
+    void setMutex(QMutex *sharedmutex);
+    void setFile(QString filepath);
+
 signals:
     //for progress
     void processInitCount(int start, int end);
@@ -27,16 +32,9 @@ signals:
 
     //for all ui
     void processStarted(int runfrom);
-    void processStarted_action(bool);
-
     void processPaused();
-    void processPaused_action(bool);
-
     void processStopped();
-    void processStopped_action(bool);
-
     void processEnd(int);
-    void processEnd_action(bool);
 
 public slots:
     //for executor signals
@@ -53,30 +51,30 @@ public slots:
     void sendInput(QString message);
 
     //for all ui
-    void receiveStarted(int runfrom){emit processStarted(runfrom); emit processStarted_action(true);}
-    void receivePaused(){emit processPaused(); emit processPaused_action(true);}
-    void receiveStopped(){emit processStopped(); emit processStopped_action(true);}
-    void receiveEnd(int type){emit processEnd(type); emit processEnd_action(true);}
+    void receiveStarted(int runfrom){emit processStarted(runfrom);}
+    void receivePaused(){emit processPaused();}
+    void receiveStopped(){emit processStopped();}
+    void receiveEnd(int type){emit processEnd(type);}
 
     //from menu
     void start();
-    void pause();
+    void pause(bool pause);
     void stop();
 
     //from settest dock
     void updateRange(QString str);
-    void updateFileList(QHash<QString, int> *data); /*int indicates status*/
+    void updateFileList(QStringList *data); /*int indicates status*/
 
-    void updateEditFile(QString editfile);
+//    void updateEditFile(QString editfile);
 
     //for test
-    void testMessage();
+//    void testMessage();
 
 private:
     QMutex *mutex;
     Executor *executor;
     QThread *worker;
-    QString editingfile;
+//    QString editingfile;
 
 };
 

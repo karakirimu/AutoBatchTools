@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QTime>
-#include <entrytask.h>
+#include <runtasksignalbinder.h>
 
+// this class is almost copy of autobatchrunner/multitask.cpp
 class MultiTask : public QObject
 {
     Q_OBJECT
@@ -18,13 +19,12 @@ public:
     void removeTask(QString objectname);
 
     void setInputFileList(QString objectname, QStringList *list);
+    void setRange(QString objectname, QString str);
 
     QString generateRandom(int length);
 signals:
-    //from EntryTask to ui-------------------------------------------------
+    //from RunTaskSignalBinder to ui-------------------------------------------------
 //  For multitask ui manage function
-//    void processInitCount(QString objectname, int start, int end);
-//    void processCurrent(QString objectname, int currentnum);
     void processInitCount(int start, int end);
     void processCurrent(int currentnum);
 
@@ -43,10 +43,8 @@ public slots:
     void processStop(QString objectname);
     void sendInput(QString objectname, QString text);
 
-    //from EntryTask-----------------------------------------------------------
-// For multitask ui manage. Currently it does singletask.
-//    void receiveInitCount(int start, int end) { emit processInitCount(sender()->objectName(), start, end); }
-//    void receiveCurrent(int currentnum){emit processCurrent(sender()->objectName(), currentnum); }
+    //from RunTaskSignalBinder-----------------------------------------------------------
+    // For multitask ui manage.
     void receiveInitCount(int start, int end) { emit processInitCount(start, end); }
     void receiveCurrent(int currentnum){emit processCurrent(currentnum); }
 
@@ -62,7 +60,7 @@ public slots:
 private:
     bool processAliveCheck(QString objectname);
 
-    QHash<QString, EntryTask *> *task;
+    QHash<QString, RunTaskSignalBinder *> *task;
     QMutex *basemutex;
 };
 

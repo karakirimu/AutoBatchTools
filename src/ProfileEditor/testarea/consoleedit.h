@@ -2,7 +2,7 @@
 #define CONSOLEEDIT_H
 
 #include <QLineEdit>
-#include <runtasksignalbinder.h>
+#include <multitask.h>
 
 class ConsoleEdit : public QLineEdit
 {
@@ -10,13 +10,13 @@ public:
     explicit ConsoleEdit(QWidget *parent = nullptr);
     ~ConsoleEdit();
 
-    void setRunTaskSignalBinder(RunTaskSignalBinder *rbinder);
+    void setMultiTask(MultiTask *rbinder);
 
 private slots:
     void sendMessage();
 
 private:
-    RunTaskSignalBinder *binder;
+    MultiTask *binder;
 
 };
 
