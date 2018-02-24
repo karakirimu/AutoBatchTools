@@ -39,9 +39,10 @@ void OptionDialog::setupItem(){
 
 void OptionDialog::setSettings()
 {
-//    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
 
-//    settings.beginGroup("STARTUP");
+    settings.beginGroup("abr_settings");
+    settings.setValue("THEMECOLOR", ui->themeComboBox->currentText());
 //    settings.setValue("ENABLED", ui->sysTrayCheckBox->isChecked());
 //    settings.setValue("STARTUPM", ui->startupCheckBox->isChecked());
 //    settings.setValue("ALLCLOSE", ui->allcloseCheckBox->isChecked());
@@ -49,14 +50,15 @@ void OptionDialog::setSettings()
 //    settings.setValue("TIMERSTARTMS", ui->timerStartSpinBox->value());
 //    settings.setValue("HIDETASKSTART", ui->taskStartCheckBox->isChecked());
 //    settings.setValue("TASKSTARTMS", ui->taskStartSpinBox->value());
-//    settings.endGroup();
+    settings.endGroup();
 }
 
 void OptionDialog::loadSettings()
 {
-//    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
 
-//    settings.beginGroup("STARTUP");
+    settings.beginGroup("abr_settings");
+    ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Default").toString());
 //    ui->sysTrayCheckBox->setChecked(settings.value("ENABLED", false).toBool());
 //    ui->startupCheckBox->setChecked(settings.value("STARTUPM", false).toBool());
 //    ui->allcloseCheckBox->setChecked(settings.value("ALLCLOSE", true).toBool());
@@ -64,7 +66,7 @@ void OptionDialog::loadSettings()
 //    ui->timerStartSpinBox->setValue(settings.value("TIMERSTARTMS", 2500).toInt());
 //    ui->taskStartCheckBox->setChecked(settings.value("HIDETASKSTART", false).toBool());
 //    ui->taskStartSpinBox->setValue(settings.value("TASKSTARTMS", 2500).toInt());
-//    settings.endGroup();
+    settings.endGroup();
 }
 
 //change list to stackedwidget

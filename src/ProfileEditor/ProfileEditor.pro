@@ -33,7 +33,8 @@ HEADERS  += $$PWD/profileeditor.h \
 #    $$PWD/fileoperationsignalbinder.h \
 #    $$PWD/profilexmlbuilder.h \
     basedockwidget.h \
-    runtasksignalbinder.h
+    runtasksignalbinder.h \
+    multitask.h
 
 SOURCES += $$PWD/profileeditor.cpp \
     $$PWD/profiletreewidget.cpp \
@@ -41,7 +42,8 @@ SOURCES += $$PWD/profileeditor.cpp \
 #    $$PWD/fileoperationsignalbinder.cpp \
 #    $$PWD/profilexmlbuilder.cpp \
     basedockwidget.cpp \
-    runtasksignalbinder.cpp
+    runtasksignalbinder.cpp \
+    multitask.cpp
 
 SOURCES += main.cpp
 

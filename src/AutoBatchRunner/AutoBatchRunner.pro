@@ -13,6 +13,8 @@ TEMPLATE = app
 win32 {
     RC_FILE = $$PWD/../../res/app_icons/app_abr.rc
 }
+TRANSLATIONS = abr_en.ts
+
 Release:DESTDIR = $$PWD/../../build/release
 Release:OBJECTS_DIR = $$PWD/../../build/release/AutoBatchRunner/.obj
 Release:MOC_DIR = $$PWD/../../build/release/AutoBatchRunner/.moc

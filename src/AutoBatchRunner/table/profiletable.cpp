@@ -42,14 +42,20 @@ ProfileTable::~ProfileTable()
 
 void ProfileTable::newAction()
 {
-//    ProfileEditor *edit = new ProfileEditor();
-//    edit->show();
+    //run ProfileEditor.exe
+    QProcess process;
+#ifdef QT_DEBUG
+    bool result = process.startDetached(tr("./ProfileEditor.exe"));
+    if(!result) qDebug() << tr("ProfileEditor launch failed.");
+#else
+    process.startDetached(tr("./ProfileEditor.exe"));
+#endif
 }
 
 void ProfileTable::setPopupActionTop()
 {
     //set basic items
-    m_new = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("New file"));
+    m_new = contextMenu->addAction(QIcon(":/default_icons/newfile.png"),tr("New file"));
     m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add file"));
     m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
     m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete list"));
@@ -181,9 +187,15 @@ void ProfileTable::editAction()
 
     QList<QStringList> *list = new QList<QStringList>();
     if(builder->readItem(this->currentRow(), list)){
-        //set tableitem
-//        ProfileEditor *edit = new ProfileEditor(list->at(2).at(1));
-//        edit->show();
+
+        QProcess process;
+#ifdef QT_DEBUG
+        bool result = process.startDetached(tr("./ProfileEditor.exe"), \
+                        (QStringList() << list->at(2).at(1)));
+       if(!result) qDebug() << tr("ProfileEditor launch failed.");
+#else
+      process.startDetached(tr("./ProfileEditor.exe"), QStringList() << list->at(2).at(1));
+#endif
     }
     delete list;
 }

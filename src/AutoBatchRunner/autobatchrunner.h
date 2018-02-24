@@ -12,7 +12,7 @@
 //#include <profileeditor.h>
 
 namespace Ui {
-class MainWindow;
+class AutoBatchRunner;
 }
 
 class AutoBatchRunner : public QMainWindow
@@ -41,9 +41,10 @@ private slots:
     void on_editButton_clicked();
 
 private:
+    void themeChangeAction();
     void initStatusBar();
 
-    Ui::MainWindow *ui;
+    Ui::AutoBatchRunner *ui;
     OptionDialog *opdialog;
     MultiTask *mlTask;
 

@@ -97,10 +97,10 @@ void EntryTask::stop()
 void EntryTask::updateFileList(QStringList *need)
 {
     if(need->empty()) return;
-    QSettings settings( "./psettings.ini", QSettings::IniFormat );
-    settings.beginGroup("TESTEXEC");
-    executor->addInputFiles(*need, settings.value("FILELOADMAX", -1).toInt());
-    settings.endGroup();
+//    QSettings settings( "./psettings.ini", QSettings::IniFormat );
+//    settings.beginGroup("TESTEXEC");
+    executor->addInputFiles(*need, -1);
+//    settings.endGroup();
 }
 
 void EntryTask::processCompleted()

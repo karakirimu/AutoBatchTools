@@ -56,7 +56,7 @@ void SettingDialog::setupItem(){
     ui->listWidget->setIconSize(QSize(32,32));
 
     ui->listWidget->item(0)->setIcon(QIcon(":/default_icons/settings.png"));
-    ui->listWidget->item(1)->setIcon(QIcon(":/default_icons/extras.png"));
+    ui->listWidget->item(1)->setIcon(QIcon(":/default_icons/string.png"));
     ui->listWidget->item(2)->setIcon(QIcon(":/default_icons/search.png"));
     ui->listWidget->item(3)->setIcon(QIcon(":/default_icons/extras.png"));
 //    ui->listWidget->item(4)->setIcon(QIcon(":/icons/Colors.png"));
@@ -98,7 +98,7 @@ void SettingDialog::loadSettings()
     settings.beginGroup("BASICSETTING");
     ui->tempEdit->setText(settings.value("TEMPDIR", "./").toString());
     ui->autosaveSpinBox->setValue(settings.value("AUTOSAVEPERIOD", 5).toInt());
-    ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Light").toString());
+    ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Default").toString());
     settings.endGroup();
 
     settings.beginGroup("TESTEXEC");

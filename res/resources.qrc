@@ -38,5 +38,6 @@
         <file>app_icons/app_abs.rc</file>
         <file>app_icons/app_pe.ico</file>
         <file>app_icons/app_pe.rc</file>
+        <file>default_icons/string.png</file>
     </qresource>
 </RCC>

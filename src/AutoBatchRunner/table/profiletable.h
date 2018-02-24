@@ -2,6 +2,7 @@
 #define PROFILETABLE_H
 
 //#include "optiontable.h"
+#include <QProcess>
 #include <../basictable/basictable.h>
 //#include "profileeditor.h"
 #include <../profilexmlbuilder/profilexmlbuilder.h>

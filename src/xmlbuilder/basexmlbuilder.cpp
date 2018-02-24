@@ -32,7 +32,7 @@ void BaseXmlBuilder::setFileName(QString filename){
         file->close();
 //        qDebug() << "file opened.";
     }else{
-        qDebug() << "BaseXmlBuilder::makenewfile";
+        qDebug() << "BaseXmlBuilder::make newfile";
         //create new file
         QFile tmpfilemake(filename);
         if(tmpfilemake.open(QIODevice::WriteOnly)){
@@ -101,7 +101,7 @@ bool BaseXmlBuilder::deleteSpecifiedElementGroup(QString element, QString attr, 
     }
 
     //xml error check
-    qDebug() << "BaseXmlBuilder: " << this->sender();
+//    qDebug() << "BaseXmlBuilder: " << this->sender();
     checkXmlError();
 
     //reset file
@@ -167,7 +167,7 @@ int BaseXmlBuilder::getSpecifiedElementLineFirst(QString element)
         }
     }
 
-    qDebug() << "BaseXmlBuilder: " << element;
+//    qDebug() << "BaseXmlBuilder: " << element;
     checkXmlError();
 //    qDebug() << line << ":linefirst";
     closeFile();
@@ -194,7 +194,7 @@ int BaseXmlBuilder::getSpecifiedElementLineFirst(QString element, QString attr, 
         }
     }
 
-    qDebug() << "BaseXmlBuilder: " << element << attr << attrvalue;
+//    qDebug() << "BaseXmlBuilder: " << element << attr << attrvalue;
     checkXmlError();
     //qDebug() << line << ":line";
     closeFile();
@@ -225,7 +225,7 @@ int BaseXmlBuilder::getSpecifiedElementLineEnd(QString element, QString attr, in
         }
     }
 
-    qDebug() << "BaseXmlBuilder: " << line << attr << value;
+//    qDebug() << "BaseXmlBuilder: " << line << attr << value;
     checkXmlError();
     closeFile();
     return line;
@@ -247,7 +247,7 @@ int BaseXmlBuilder::getSpecifiedElementItemsCount(QString element)
         }
     }
 
-    qDebug() << "BaseXmlBuilder: " << element;
+//    qDebug() << "BaseXmlBuilder: " << element;
     checkXmlError();
     closeFile();
 //    qDebug() << count << " :count";
@@ -328,12 +328,12 @@ QString BaseXmlBuilder::getAdjustedXmlDataString(QTemporaryFile *tmp, int indent
         QString appenddata = in.readAll();
         QRegularExpression re;
 
-        //TODO: probably running in windows only.
         //Windows
 #ifdef Q_OS_WIN
         re.setPattern("\n");
         appenddata.replace( re, "\n" + appendTabIndent(indent));
 #else
+        //other
         re.setPattern("\r\n");
         appenddata.replace( re, "\r\n" + appendTabIndent(indent));
 #endif

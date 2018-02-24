@@ -4,7 +4,7 @@
 
 AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::AutoBatchRunner)
 {
     //set dockwidget occupied area
 //    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
@@ -35,6 +35,9 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
 
     //init optiondialog object
     opdialog = new OptionDialog();
+
+    //init ui theme
+    themeChangeAction();
 
     //init ui add delete edit button
     connect(ui->addButton, &QToolButton::clicked, ui->comboBox, &ProfileComboBox::addItemAction);
@@ -198,4 +201,28 @@ void AutoBatchRunner::on_editButton_clicked()
 #else
     process.startDetached(tr("./ProfileEditor.exe"), QStringList() << ui->comboBox->getCurrentFileName());
 #endif
+}
+
+//QSS_THEME
+void AutoBatchRunner::themeChangeAction()
+{
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+
+    //theme settings
+    settings.beginGroup("abr_settings");
+    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
+    settings.endGroup();
+
+    if(stylecolor != "Default"){
+#ifdef QT_DEBUG
+        QFile file(QString("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/%1.qss").arg(stylecolor));
+#else
+        QFile file(QString(":/themes/%1.qss").arg(stylecolor));
+#endif
+        if(file.open( QFile::ReadOnly | QFile::Text )){
+            QString data(QLatin1String(file.readAll()));
+            this->setStyleSheet(data);
+//            settingdialog->setStyleSheet(data);
+        }
+    }
 }

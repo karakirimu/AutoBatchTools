@@ -28,6 +28,7 @@ private slots:
     void closeEvent(QCloseEvent *event);
 
 private:
+    void themeChangeAction();
 
     Ui::MainScheduler *ui;
     SystemTray *sysTray;
