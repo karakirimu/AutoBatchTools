@@ -290,7 +290,12 @@ void EditOperator::swapTableAction(int id, int beforeid, int afterid, QString ob
 void EditOperator::newAction()
 {
     reset();
-    autosavefile = "./.~$" + QString::number(QDateTime::currentSecsSinceEpoch()).append(".autosave");
+#ifdef Q_OS_WIN
+    autosavefile = ".\\.~$";
+#else
+    autosavefile = "./.~$";
+#endif
+    autosavefile.append(QString::number(QDateTime::currentSecsSinceEpoch()).append(".autosave"));
 
     //create xmlfile
     ProcessXmlBuilder *updater = new ProcessXmlBuilder();

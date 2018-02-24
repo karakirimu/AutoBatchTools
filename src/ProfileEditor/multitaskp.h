@@ -1,17 +1,17 @@
-#ifndef MULTITASK_H
-#define MULTITASK_H
+#ifndef MULTITASKP_H
+#define MULTITASKP_H
 
 #include <QObject>
 #include <QTime>
 #include <runtasksignalbinder.h>
 
 // this class is almost copy of autobatchrunner/multitask.cpp
-class MultiTask : public QObject
+class MultiTaskP : public QObject
 {
     Q_OBJECT
 public:
-    explicit MultiTask(QObject *parent = nullptr);
-    ~MultiTask();
+    explicit MultiTaskP(QObject *parent = nullptr);
+    ~MultiTaskP();
 
     bool taskRunningCheck(QString objectname);
 
@@ -64,4 +64,4 @@ private:
     QMutex *basemutex;
 };
 
-#endif // MULTITASK_H
+#endif // MULTITASKP_H

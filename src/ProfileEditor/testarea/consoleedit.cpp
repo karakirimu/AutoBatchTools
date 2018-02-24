@@ -11,7 +11,7 @@ ConsoleEdit::~ConsoleEdit()
 
 }
 
-void ConsoleEdit::setMultiTask(MultiTask *rbinder)
+void ConsoleEdit::setMultiTask(MultiTaskP *rbinder)
 {
     binder = rbinder;
     connect(this, &ConsoleEdit::returnPressed, this, &ConsoleEdit::sendMessage);

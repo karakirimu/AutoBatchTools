@@ -43,8 +43,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //init sharedfunction
     editop = new EditOperator(this);
-//    rbinder = new RunTaskSignalBinder(this);
-    mlTask = new MultiTask();
+    mlTask = new MultiTaskP();
 
     //connection set
     ui->editorTab->setConnection();
@@ -90,7 +89,6 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->actionExit, &QAction::triggered, this, &QWidget::close);
 
     //Edit
-//    connect(ui->actionAddItem, SIGNAL(triggered()), binder, SLOT(addItem()));
     connect(ui->actionUndo, &QAction::triggered, this, &ProfileEditor::undoAction);
     connect(ui->actionRedo, &QAction::triggered, this, &ProfileEditor::redoAction);
     connect(ui->actionAddItem, &QAction::triggered, this, &ProfileEditor::addAction);
@@ -108,53 +106,6 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(editop->getUndostack(), &QUndoStack::redoTextChanged, this, &ProfileEditor::onRedoTextChanged);
 
     //Tools
-//    connect(ui->actionRun, &QAction::triggered, rbinder, &RunTaskSignalBinder::start);
-
-//    connect(ui->actionPause, &QAction::triggered, rbinder, &RunTaskSignalBinder::pause);
-//    connect(ui->actionPause, &QAction::triggered, ui->actionPause, &QAction::setDisabled);
-//    connect(ui->actionPause, &QAction::triggered, ui->pauseToolButton, &QToolButton::setDisabled);
-
-//    connect(ui->actionStop, &QAction::triggered, rbinder, &RunTaskSignalBinder::stop);
-
-//    connect(rbinder, &RunTaskSignalBinder::processStarted_action, ui->actionRun, &QAction::setDisabled);
-//    connect(rbinder, &RunTaskSignalBinder::processStarted_action, ui->actionPause, &QAction::setEnabled);
-//    connect(rbinder, &RunTaskSignalBinder::processStarted_action, ui->actionStop, &QAction::setEnabled);
-
-//    connect(rbinder, &RunTaskSignalBinder::processPaused_action, ui->actionRun, &QAction::setEnabled);
-//    connect(rbinder, &RunTaskSignalBinder::processPaused_action, ui->actionPause, &QAction::setDisabled);
-//    connect(rbinder, &RunTaskSignalBinder::processPaused_action, ui->actionStop, &QAction::setEnabled);
-
-//    connect(rbinder, &RunTaskSignalBinder::processStopped_action, ui->actionRun, &QAction::setEnabled);
-//    connect(rbinder, &RunTaskSignalBinder::processStopped_action, ui->actionStop, &QAction::setDisabled);
-//    connect(rbinder, &RunTaskSignalBinder::processStopped_action, ui->actionPause, &QAction::setDisabled);
-
-//    connect(rbinder, &RunTaskSignalBinder::processEnd_action, ui->actionRun, &QAction::setEnabled);
-//    connect(rbinder, &RunTaskSignalBinder::processEnd_action, ui->actionStop, &QAction::setDisabled);
-//    connect(rbinder, &RunTaskSignalBinder::processEnd_action, ui->actionPause, &QAction::setDisabled);
-
-//    connect(ui->runToolButton, &QToolButton::clicked, rbinder, &RunTaskSignalBinder::start);
-
-//    connect(ui->pauseToolButton, &QToolButton::clicked, rbinder, &RunTaskSignalBinder::pause);
-//    connect(ui->pauseToolButton, &QToolButton::clicked, ui->pauseToolButton, &QToolButton::setDisabled);
-//    connect(ui->pauseToolButton, &QToolButton::clicked, ui->actionPause, &QAction::setDisabled);
-
-//    connect(ui->stopToolButton, &QToolButton::clicked, rbinder, &RunTaskSignalBinder::stop);
-
-//    connect(rbinder, &RunTaskSignalBinder::processStarted_action, ui->runToolButton, &QToolButton::setDisabled);
-//    connect(rbinder, &RunTaskSignalBinder::processStarted_action, ui->pauseToolButton, &QToolButton::setEnabled);
-//    connect(rbinder, &RunTaskSignalBinder::processStarted_action, ui->stopToolButton, &QToolButton::setEnabled);
-
-//    connect(rbinder, &RunTaskSignalBinder::processPaused_action, ui->runToolButton, &QToolButton::setEnabled);
-//    connect(rbinder, &RunTaskSignalBinder::processPaused_action, ui->pauseToolButton, &QToolButton::setDisabled);
-//    connect(rbinder, &RunTaskSignalBinder::processPaused_action, ui->stopToolButton, &QToolButton::setEnabled);
-
-//    connect(rbinder, &RunTaskSignalBinder::processStopped_action, ui->runToolButton, &QToolButton::setEnabled);
-//    connect(rbinder, &RunTaskSignalBinder::processStopped_action, ui->stopToolButton, &QToolButton::setDisabled);
-//    connect(rbinder, &RunTaskSignalBinder::processStopped_action, ui->pauseToolButton, &QToolButton::setDisabled);
-
-//    connect(rbinder, &RunTaskSignalBinder::processEnd_action, ui->runToolButton, &QToolButton::setEnabled);
-//    connect(rbinder, &RunTaskSignalBinder::processEnd_action, ui->stopToolButton, &QToolButton::setDisabled);
-//    connect(rbinder, &RunTaskSignalBinder::processEnd_action, ui->pauseToolButton, &QToolButton::setDisabled);
     connect(ui->actionRun, &QAction::triggered,this, &ProfileEditor::runTriggered);
     connect(ui->actionPause, &QAction::triggered, this, &ProfileEditor::pauseTriggered);
     connect(ui->actionStop, &QAction::triggered, this, &ProfileEditor::stopTriggered);
@@ -163,10 +114,10 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->pauseToolButton, &QToolButton::clicked, this, &ProfileEditor::pauseTriggered);
     connect(ui->stopToolButton, &QToolButton::clicked, this, &ProfileEditor::stopTriggered);
 
-    connect(mlTask, &MultiTask::processStarted, this, &ProfileEditor::taskStarted);
-    connect(mlTask, &MultiTask::processPaused, this, &ProfileEditor::taskPaused);
-    connect(mlTask, &MultiTask::processStopped, this, &ProfileEditor::taskStopped);
-    connect(mlTask, &MultiTask::processEnd, this, &ProfileEditor::taskEnd);
+    connect(mlTask, &MultiTaskP::processStarted, this, &ProfileEditor::taskStarted);
+    connect(mlTask, &MultiTaskP::processPaused, this, &ProfileEditor::taskPaused);
+    connect(mlTask, &MultiTaskP::processStopped, this, &ProfileEditor::taskStopped);
+    connect(mlTask, &MultiTaskP::processEnd, this, &ProfileEditor::taskEnd);
 
     connect(ui->actionSettings, &QAction::triggered, this, &ProfileEditor::launchSettingAction);
 
@@ -212,17 +163,11 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 ProfileEditor::ProfileEditor(QStringList cuiargs, QWidget *parent)
     : ProfileEditor(parent)
 {
-//    sfunction->loadFile(loadfile);
-//    ui->runTreeWidget->reloadAction();
-//    ui->graphicsView->reloadAction();
-//    ui->variantTableWidget->reloadAction();
-//    preResetUi();
     QString lfile = cuiargs.last();
 
     if(cuiargs.count() == 2 && lfile.contains("apro")){
         editop->openAction(lfile);
     }
-//    setLoadfile(loadfile); /*int title changed*/
     postResetUi();
 }
 
@@ -238,7 +183,6 @@ ProfileEditor::~ProfileEditor()
     delete fdialog;
     delete editop;
     delete mlTask;
-//    delete rbinder;
 }
 
 void ProfileEditor::newfileAction()
@@ -449,7 +393,7 @@ void ProfileEditor::overWriteSaveAction()
                                          tr("APRO Files (*.apro)"));
 
         editop->saveAction(fileName);
-        loadfile = fileName;
+//        loadfile = fileName;
     }
     editop->saveAction(loadfile);
 }
@@ -477,12 +421,8 @@ void ProfileEditor::onTitleChanged(QString newload)
 
     setWindowTitle(newtitle + tr(" - ProfileEditor"));
 
-    //set new update file (search, script)
-//    ui->localVariantComboBox->setProfileFileName(newload);
-
     //update filepath
     setLoadfile(newload);
-//    rbinder->updateEditFile(newload);
 }
 
 void ProfileEditor::onFileEdited(bool edited)
@@ -558,7 +498,6 @@ void ProfileEditor::taskStopped(QString objectname)
 void ProfileEditor::taskEnd(QString objectname, int runfrom)
 {
     qDebug() << "profileeditor::taskend";
-    Q_UNUSED(objectname);
     Q_UNUSED(runfrom);
     ui->actionRun->setEnabled(true);
     ui->actionPause->setEnabled(false);
@@ -567,17 +506,17 @@ void ProfileEditor::taskEnd(QString objectname, int runfrom)
     ui->pauseToolButton->setEnabled(false);
     ui->stopToolButton->setEnabled(false);
 
-    mlTask->removeTask(key);
+    mlTask->removeTask(objectname);
     key = "";
-    ui->console->setReadObjectName(key);
-    ui->consolemessage->setObjectName(key);
+    ui->console->setReadObjectName(objectname);
+    ui->consolemessage->setObjectName(objectname);
 }
 
 void ProfileEditor::runTriggered()
 {
     qDebug() << "profileeditor::run triggered";
-
     if(key != "") return;
+
     ui->actionRun->setEnabled(false);
     ui->actionPause->setEnabled(false);
     ui->actionStop->setEnabled(false);
@@ -586,6 +525,7 @@ void ProfileEditor::runTriggered()
     ui->stopToolButton->setEnabled(false);
 
     key = mlTask->generateRandom(32);
+
     mlTask->addTask(key, loadfile);
     ui->console->setReadObjectName(key);
     ui->consolemessage->setObjectName(key);
@@ -631,6 +571,7 @@ void ProfileEditor::stopTriggered()
 
 void ProfileEditor::updateRangeText(QString range)
 {
+    if(key != "") return;
     mlTask->setRange(key, range);
 }
 
@@ -704,10 +645,8 @@ void ProfileEditor::initStatusBar()
     QProgressBar *progressbar = new QProgressBar();
     progressbar->setAlignment(Qt::AlignCenter);
     ui->statusBar->addPermanentWidget(progressbar, 1);
-    connect(mlTask, &MultiTask::processInitCount, progressbar, &QProgressBar::setRange);
-    connect(mlTask, &MultiTask::processCurrent, progressbar, &QProgressBar::setValue);
-//    connect(rbinder, &RunTaskSignalBinder::processInitCount, progressbar, &QProgressBar::setRange);
-//    connect(rbinder, &RunTaskSignalBinder::processCurrent, progressbar, &QProgressBar::setValue);
+    connect(mlTask, &MultiTaskP::processInitCount, progressbar, &QProgressBar::setRange);
+    connect(mlTask, &MultiTaskP::processCurrent, progressbar, &QProgressBar::setValue);
 }
 
 void ProfileEditor::setLoadfile(const QString &value)
@@ -730,9 +669,6 @@ void ProfileEditor::setLoadfile(const QString &value)
 //when opening new file
 void ProfileEditor::postResetUi()
 {
-    //reload variant combobox
-//    ui->localVariantComboBox->reloadComboBoxItem();
-
     //reload file
     ui->runTreeWidget->reloadAction();
 //    ui->graphicsView->reloadAction();

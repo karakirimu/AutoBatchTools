@@ -1,6 +1,6 @@
-#include "multitask.h"
+#include "multitaskp.h"
 
-MultiTask::MultiTask(QObject *parent)
+MultiTaskP::MultiTaskP(QObject *parent)
     : QObject(parent)
 {
     task = new QHash<QString, RunTaskSignalBinder *>();
@@ -12,7 +12,7 @@ MultiTask::MultiTask(QObject *parent)
     delete ti;
 }
 
-MultiTask::~MultiTask()
+MultiTaskP::~MultiTaskP()
 {
     //delete all left tasks
     QHash<QString, RunTaskSignalBinder *>::iterator i = task->begin();
@@ -25,7 +25,7 @@ MultiTask::~MultiTask()
     delete basemutex;
 }
 
-bool MultiTask::taskRunningCheck(QString objectname)
+bool MultiTaskP::taskRunningCheck(QString objectname)
 {
     bool result = false;
     if(processAliveCheck(objectname)){
@@ -36,21 +36,21 @@ bool MultiTask::taskRunningCheck(QString objectname)
     return result;
 }
 
-void MultiTask::addTask(QString objectname, QString processfile)
+void MultiTaskP::addTask(QString objectname, QString processfile)
 {
     //new task set
     RunTaskSignalBinder *et = new RunTaskSignalBinder();
 
     //connect message
-    connect(et, &RunTaskSignalBinder::processInitCount, this, &MultiTask::receiveInitCount);
-    connect(et, &RunTaskSignalBinder::processCurrent, this, &MultiTask::receiveCurrent);
-    connect(et, &RunTaskSignalBinder::processError, this, &MultiTask::receiveError);
-    connect(et, &RunTaskSignalBinder::processErrorText, this, &MultiTask::receiveErrorText);
-    connect(et, &RunTaskSignalBinder::processMessage, this, &MultiTask::receiveMessage);
-    connect(et, &RunTaskSignalBinder::processStarted, this, &MultiTask::receiveStarted);
-    connect(et, &RunTaskSignalBinder::processPaused, this, &MultiTask::receivePaused);
-    connect(et, &RunTaskSignalBinder::processStopped, this, &MultiTask::receiveStopped);
-    connect(et, &RunTaskSignalBinder::processEnd, this, &MultiTask::receiveEnd);
+    connect(et, &RunTaskSignalBinder::processInitCount, this, &MultiTaskP::receiveInitCount);
+    connect(et, &RunTaskSignalBinder::processCurrent, this, &MultiTaskP::receiveCurrent);
+    connect(et, &RunTaskSignalBinder::processError, this, &MultiTaskP::receiveError);
+    connect(et, &RunTaskSignalBinder::processErrorText, this, &MultiTaskP::receiveErrorText);
+    connect(et, &RunTaskSignalBinder::processMessage, this, &MultiTaskP::receiveMessage);
+    connect(et, &RunTaskSignalBinder::processStarted, this, &MultiTaskP::receiveStarted);
+    connect(et, &RunTaskSignalBinder::processPaused, this, &MultiTaskP::receivePaused);
+    connect(et, &RunTaskSignalBinder::processStopped, this, &MultiTaskP::receiveStopped);
+    connect(et, &RunTaskSignalBinder::processEnd, this, &MultiTaskP::receiveEnd);
 
     //set task filename
     et->setFile(processfile);
@@ -68,7 +68,7 @@ void MultiTask::addTask(QString objectname, QString processfile)
     et->start();
 }
 
-void MultiTask::removeTask(QString objectname)
+void MultiTaskP::removeTask(QString objectname)
 {
     if(!processAliveCheck(objectname)) return;
     RunTaskSignalBinder *et = task->value(objectname);
@@ -77,15 +77,15 @@ void MultiTask::removeTask(QString objectname)
     et->stop();
 
     //disconnect child object
-    disconnect(et, &RunTaskSignalBinder::processInitCount, this, &MultiTask::receiveInitCount);
-    disconnect(et, &RunTaskSignalBinder::processCurrent, this, &MultiTask::receiveCurrent);
-    disconnect(et, &RunTaskSignalBinder::processError, this, &MultiTask::receiveError);
-    disconnect(et, &RunTaskSignalBinder::processErrorText, this, &MultiTask::receiveErrorText);
-    disconnect(et, &RunTaskSignalBinder::processMessage, this, &MultiTask::receiveMessage);
-    disconnect(et, &RunTaskSignalBinder::processStarted, this, &MultiTask::receiveStarted);
-    disconnect(et, &RunTaskSignalBinder::processPaused, this, &MultiTask::receivePaused);
-    disconnect(et, &RunTaskSignalBinder::processStopped, this, &MultiTask::receiveStopped);
-    disconnect(et, &RunTaskSignalBinder::processEnd, this, &MultiTask::receiveEnd);
+    disconnect(et, &RunTaskSignalBinder::processInitCount, this, &MultiTaskP::receiveInitCount);
+    disconnect(et, &RunTaskSignalBinder::processCurrent, this, &MultiTaskP::receiveCurrent);
+    disconnect(et, &RunTaskSignalBinder::processError, this, &MultiTaskP::receiveError);
+    disconnect(et, &RunTaskSignalBinder::processErrorText, this, &MultiTaskP::receiveErrorText);
+    disconnect(et, &RunTaskSignalBinder::processMessage, this, &MultiTaskP::receiveMessage);
+    disconnect(et, &RunTaskSignalBinder::processStarted, this, &MultiTaskP::receiveStarted);
+    disconnect(et, &RunTaskSignalBinder::processPaused, this, &MultiTaskP::receivePaused);
+    disconnect(et, &RunTaskSignalBinder::processStopped, this, &MultiTaskP::receiveStopped);
+    disconnect(et, &RunTaskSignalBinder::processEnd, this, &MultiTaskP::receiveEnd);
 
     //delete register
     task->remove(objectname);
@@ -93,21 +93,21 @@ void MultiTask::removeTask(QString objectname)
     delete et;
 }
 
-void MultiTask::setInputFileList(QString objectname, QStringList *list)
+void MultiTaskP::setInputFileList(QString objectname, QStringList *list)
 {
     if(!processAliveCheck(objectname)) return;
     RunTaskSignalBinder *et = task->value(objectname);
     et->updateFileList(list);
 }
 
-void MultiTask::setRange(QString objectname, QString str)
+void MultiTaskP::setRange(QString objectname, QString str)
 {
     if(!processAliveCheck(objectname)) return;
     RunTaskSignalBinder *et = task->value(objectname);
     et->updateRange(str);
 }
 
-void MultiTask::processPause(QString objectname)
+void MultiTaskP::processPause(QString objectname)
 {
     if(!processAliveCheck(objectname)) return;
     RunTaskSignalBinder *et = task->value(objectname);
@@ -119,26 +119,26 @@ void MultiTask::processPause(QString objectname)
     }
 }
 
-void MultiTask::processStop(QString objectname)
+void MultiTaskP::processStop(QString objectname)
 {
     if(!processAliveCheck(objectname)) return;
     RunTaskSignalBinder *et = task->value(objectname);
     if(et->getStarted()) et->stop();
 }
 
-void MultiTask::sendInput(QString objectname, QString text)
+void MultiTaskP::sendInput(QString objectname, QString text)
 {
     if(!processAliveCheck(objectname)) return;
     RunTaskSignalBinder *et = task->value(objectname);
     if(et->getStarted()) et->sendInput(text);
 }
 
-bool MultiTask::processAliveCheck(QString objectname)
+bool MultiTaskP::processAliveCheck(QString objectname)
 {
     return task->contains(objectname) ? true : false;
 }
 
-QString MultiTask::generateRandom(int length)
+QString MultiTaskP::generateRandom(int length)
 {
     const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.");
 

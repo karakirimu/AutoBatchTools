@@ -9,14 +9,14 @@ ConsoleView::~ConsoleView()
 {
 }
 
-void ConsoleView::setMultiTask(MultiTask *mlTask)
+void ConsoleView::setMultiTask(MultiTaskP *mlTask)
 {
-    connect(mlTask, &MultiTask::processStarted, this, &ConsoleView::startedMessage);
-    connect(mlTask, &MultiTask::processPaused, this, &ConsoleView::pausedMessage);
-    connect(mlTask, &MultiTask::processStopped, this, &ConsoleView::stoppedMessage);
-    connect(mlTask, &MultiTask::processEnd, this, &ConsoleView::endMessage);
-    connect(mlTask, &MultiTask::processMessage, this, &ConsoleView::updateMessage);
-    connect(mlTask, &MultiTask::processErrorText, this, &ConsoleView::errorMessage);
+    connect(mlTask, &MultiTaskP::processStarted, this, &ConsoleView::startedMessage);
+    connect(mlTask, &MultiTaskP::processPaused, this, &ConsoleView::pausedMessage);
+    connect(mlTask, &MultiTaskP::processStopped, this, &ConsoleView::stoppedMessage);
+    connect(mlTask, &MultiTaskP::processEnd, this, &ConsoleView::endMessage);
+    connect(mlTask, &MultiTaskP::processMessage, this, &ConsoleView::updateMessage);
+    connect(mlTask, &MultiTaskP::processErrorText, this, &ConsoleView::errorMessage);
 
 }
 

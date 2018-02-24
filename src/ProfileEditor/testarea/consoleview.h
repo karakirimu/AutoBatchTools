@@ -2,7 +2,7 @@
 #define CONSOLEVIEW_H
 
 #include <QWidget>
-#include <multitask.h>
+#include <multitaskp.h>
 #include <../ConsoleBase/consolebase.h>
 
 class ConsoleView : public ConsoleBase
@@ -13,7 +13,7 @@ public:
     ~ConsoleView();
 
     //ui settings
-    void setMultiTask(MultiTask *task);    
+    void setMultiTask(MultiTaskP *task);    
     void setReadObjectName(QString objname);
 
 private slots:

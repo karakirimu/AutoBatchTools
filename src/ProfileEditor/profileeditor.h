@@ -9,7 +9,7 @@
 #include <QFileDialog>
 #include <SettingDialog.h>
 #include <editoperator.h>
-#include <multitask.h>
+#include <multitaskp.h>
 
 namespace Ui {
 class ProfileEditor;
@@ -80,12 +80,10 @@ private slots:
     void updateRangeText(QString range);
 
 private:
-
     void setLoadfile(const QString &value);
     void initStatusBar();
 
     //reset ui
-//    void preResetUi();
     void postResetUi();
 
     Ui::ProfileEditor *ui;
@@ -96,10 +94,9 @@ private:
     bool lastedited = false;
 
     EditOperator *editop;
-    RunTaskSignalBinder *rbinder;
 
     //key is thread name
-    MultiTask *mlTask;
+    MultiTaskP *mlTask;
     QString key;
 
 };
