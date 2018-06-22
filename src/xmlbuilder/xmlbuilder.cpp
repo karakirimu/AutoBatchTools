@@ -16,11 +16,12 @@ bool Xmlbuilder::readItem(int itemid,
                                    QList<QStringList> *itemlist)
 {
     bool hasid = false;
+    QString name = "";
 
     openFile(QFile::ReadOnly);
     readFileReset();
 
-    while (!rxml->atEnd() && !rxml->hasError())
+    while (!(rxml->atEnd() || rxml->hasError()))
     {
 //        rxml->readNext();
         rxml->readNextStartElement();
@@ -35,21 +36,22 @@ bool Xmlbuilder::readItem(int itemid,
 
 //                if(val == QString::number(itemid)) hasid = true;
 //            }
-        QString name = rxml->name().toString();
+        name = rxml->name().toString();
 
         if(name == firstlayername
                 && !hasid
-                && rxml->attributes().value(attr).toString() == QString::number(itemid))
+                && rxml->attributes().value(attr).toInt() == itemid)
         {
             hasid = true;
         }
 
 
-
-            if(hasid) setSearchItemData(name, itemlist);
+        if(hasid) setSearchItemData(name, itemlist);
 //        }
 
-        if(rxml->isEndElement() && hasid && /*rxml->name()*/name == firstlayername)
+        if(name == firstlayername
+                && hasid
+                && rxml->isEndElement()/*rxml->name()*/)
         {
             hasid = false;
             break;

@@ -17,11 +17,11 @@ class XMLBUILDERSHARED_EXPORT BaseXmlBuilder : public QObject
 {
     Q_OBJECT
 public:
-    XMLBUILDERSHARED_EXPORT explicit BaseXmlBuilder(QObject *parent = 0);
-    XMLBUILDERSHARED_EXPORT virtual ~BaseXmlBuilder();
+    explicit BaseXmlBuilder(QObject *parent = 0);
+    virtual ~BaseXmlBuilder();
 
-    XMLBUILDERSHARED_EXPORT void createXmlBaseDocument(QString rootelement);
-    XMLBUILDERSHARED_EXPORT int getSpecifiedElementItemsCount(QString element);
+    void createXmlBaseDocument(QString rootelement);
+    int getSpecifiedElementItemsCount(QString element);
 
 protected:
 
