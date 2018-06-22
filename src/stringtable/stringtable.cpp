@@ -4,7 +4,7 @@ StringTable::StringTable(QWidget *parent) : BasicTable(parent)
 {
     //popupAction
     setPopupActionTop();
-    setPopupActionDefault(QIcon(":/default_icons/copy.png"), QIcon(":/default_icons/arrow_up.png"), QIcon(":/default_icons/arrow_down.png"));
+    setPopupActionDefault();
     setPopupActionBottom();
 
     //init table size
@@ -58,6 +58,34 @@ void StringTable::setPopupActionTop()
     connect(m_dir, SIGNAL(triggered()), this, SLOT(openDirectoryAction()));
 }
 
+void StringTable::setPopupActionDefault()
+{
+    //set basic items
+    m_cut = contextMenu->addAction(QIcon(":/default_icons/cut.png"), tr("Cut"));
+    m_cut->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
+
+    m_copy = contextMenu->addAction(QIcon(":/default_icons/copy.png"), tr("Copy"));
+    m_copy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
+
+    m_paste = contextMenu->addAction(QIcon(":/default_icons/paste.png"), tr("Paste"));
+    m_paste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
+
+    contextMenu->addSeparator();
+
+    m_up = contextMenu->addAction(QIcon(":/default_icons/arrow_up.png"), tr("Up"));
+    m_up->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Up));
+
+    m_down = contextMenu->addAction(QIcon(":/default_icons/arrow_down.png"), tr("Down"));
+    m_down->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
+
+    //connect signals
+    connect(m_cut, SIGNAL(triggered()), this, SLOT(cutAction()));
+    connect(m_copy, SIGNAL(triggered()), this, SLOT(copyAction()));
+    connect(m_paste, SIGNAL(triggered()), this, SLOT(pasteAction()));
+    connect(m_up, SIGNAL(triggered()), this, SLOT(upAction()));
+    connect(m_down, SIGNAL(triggered()), this, SLOT(downAction()));
+}
+
 void StringTable::setPopupActionBottom()
 {
     contextMenu->addSeparator();
@@ -102,9 +130,19 @@ bool StringTable::eventFilter(QObject *obj, QEvent *event)
              }
             break;
 
+           case Qt::Key_X:
+             if (keyEvent->modifiers() & Qt::ControlModifier)
+                 cutAction();
+             break;
+
            case Qt::Key_C:
              if (keyEvent->modifiers() & Qt::ControlModifier)
                  copyAction();
+             break;
+
+           case Qt::Key_V:
+             if (keyEvent->modifiers() & Qt::ControlModifier)
+                 pasteAction();
              break;
 
            case Qt::Key_E:
@@ -129,17 +167,10 @@ bool StringTable::eventFilter(QObject *obj, QEvent *event)
 
 void StringTable::createList(int row, QList<QStringList> *newlist)
 {
-    QStringList tmp;
-
     //add variant
-    tmp << "variant" << this->model()->index(row, 0).data().toString();
-    newlist->append(tmp);
-    tmp.clear();
-
+    newlist->append(QStringList() << "variant" << this->model()->index(row, 0).data().toString());
     //add value
-    tmp << "value" << this->model()->index(row, 1).data().toString();
-    newlist->append(tmp);
-    tmp.clear();
+    newlist->append(QStringList() << "value" << this->model()->index(row, 1).data().toString());
 }
 
 void StringTable::addAction()
@@ -167,11 +198,17 @@ void StringTable::deleteAction()
     //check delete warning message
     if(deleteCheckMessage())
     {
-        //delete file item
-        builder->deleteItem(currentRow());
+        QModelIndexList lists = this->selectedIndexes();
+        while(!lists.empty()){
+            this->removeRow(lists.at(0).row());
+            builder->deleteItem(lists.at(0).row());
 
-        //reload
-        reloadAction();
+            //delete column index
+            for(int i = 0; i < lists.at(0).column(); i++){
+                lists.removeAt(0);
+            }
+            lists = this->selectedIndexes();
+        }
     }
 }
 
@@ -185,15 +222,93 @@ void StringTable::reloadAction()
     }
 }
 
-void StringTable::copyAction()
+//TODO: for fast
+void StringTable::cutAction()
 {
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
 
-    builder->copyItem(this->currentRow());
+    copyAction();
 
-    reloadAction();
-    selectRow(this-> rowCount() - 1);
+    // modified delete table recursive
+    QModelIndexList lists = this->selectedIndexes();
+    while(!lists.empty()){
+        this->removeRow(lists.at(0).row());
+        builder->deleteItem(lists.at(0).row());
+
+        //delete column index
+        for(int i = 0; i < lists.at(0).column(); i++){
+            lists.removeAt(0);
+        }
+        lists = this->selectedIndexes();
+    }
+}
+
+void StringTable::copyAction()
+{
+    //if rowcount is zero.
+//    if(this->rowCount() == 0) return;
+
+//    builder->copyItem(this->currentRow());
+
+//    reloadAction();
+//    selectRow(this-> rowCount() - 1);
+
+    //if rowcount is zero.
+    if(this->rowCount() == 0) return;
+
+    // copy from VariantTable::copyAction()
+    QString tmp;
+    QModelIndexList mlist = this->selectedIndexes();
+
+    // 2 column
+    int counter = mlist.count();
+    for(int i = 0; i < counter; i++){
+        int crow = mlist.at(i).row();
+
+        tmp.append(mlist.at(i).model()->index(crow, i%2).data().toString());
+
+        if(i%2 == 0){
+            tmp.append("\t");
+        }else{
+            tmp.append("\n");
+        }
+    }
+
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setText(tmp);
+}
+
+void StringTable::pasteAction()
+{
+    //copy from CommandTable::pasteEnterAction()
+    QClipboard *clipboard = QApplication::clipboard();
+    QStringList text = clipboard->text().split(QRegularExpression("\\n|\\r\\n"));
+
+    //last lests unknown ""
+    if(text.count() > 1) text.removeLast();
+
+    int row = this->rowCount();
+    int txcount = text.count();
+
+    for(int i = 0; i < txcount; i++){
+       if(row > 0) row = this->currentRow();
+       insertRow(row);
+
+       // One row table
+       QStringList intext = ((QString)text.at(i)).split(QRegularExpression("\\t|,"));
+
+       int intxt = intext.count();
+       if(intxt > 0){
+           this->setItem(row, 0, new QTableWidgetItem(intext.at(0)));
+           if(intxt > 1){
+               this->setItem(row, 1, new QTableWidgetItem(intext.at(1)));
+           }
+       }
+
+       //update
+       resave();
+    }
 }
 
 void StringTable::upAction()
@@ -253,4 +368,23 @@ void StringTable::saveAction(int row)
     QList<QStringList> list;
     createList(row, &list);
     builder->editItem(row, &list);
+}
+
+//FIXME: not efficient method
+void StringTable::resave()
+{
+    //clear item
+    int datacount = builder->count();
+    for(int i = 0; i < datacount; i++) builder->deleteItem(0);
+
+    datacount = this->rowCount();
+
+    for(int i = 0; i < datacount; i++){
+        //add empty item
+        QList<QStringList> list;
+        createList(i, &list);
+        builder->addItem(&list);
+        //oversave item
+        saveAction(i);
+    }
 }

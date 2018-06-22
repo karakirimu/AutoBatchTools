@@ -4,29 +4,35 @@
 #include "stringtable_global.h"
 #include "../basictable/basictable.h"
 #include "../stringxmlbuilder/stringxmlbuilder.h"
+#include <QClipboard>
+#include <QApplication>
 
 class STRINGTABLESHARED_EXPORT StringTable : public BasicTable
 {
     Q_OBJECT
 public:
-    STRINGTABLESHARED_EXPORT explicit StringTable(QWidget *parent = Q_NULLPTR);
-    STRINGTABLESHARED_EXPORT ~StringTable();
+    explicit StringTable(QWidget *parent = Q_NULLPTR);
+    ~StringTable();
 
 public slots:
-    STRINGTABLESHARED_EXPORT void addAction();
-    STRINGTABLESHARED_EXPORT void editAction();
-    STRINGTABLESHARED_EXPORT void deleteAction();
-    STRINGTABLESHARED_EXPORT void reloadAction();
-    STRINGTABLESHARED_EXPORT void copyAction();
-    STRINGTABLESHARED_EXPORT void upAction();
-    STRINGTABLESHARED_EXPORT void downAction();
-    STRINGTABLESHARED_EXPORT void openFileAction();
-    STRINGTABLESHARED_EXPORT void openDirectoryAction();
+    void addAction();
+    void editAction();
+    void deleteAction();
+    void reloadAction();
+    void cutAction();
+    void copyAction();
+    void pasteAction();
+    void upAction();
+    void downAction();
+    void openFileAction();
+    void openDirectoryAction();
 
-    STRINGTABLESHARED_EXPORT void saveAction(int row);
+    void saveAction(int row);
+    void resave();
 
 private:
     void setPopupActionTop();
+    void setPopupActionDefault();
     void setPopupActionBottom();
     void setTableItem(int row);
     bool eventFilter(QObject *obj, QEvent *event);
@@ -37,6 +43,8 @@ private:
     QAction *m_add;
     QAction *m_delete;
     QAction *m_edit;
+    QAction *m_cut;
+    QAction *m_paste;
     QAction *m_ref;
 
     StringXmlBuilder *builder;
