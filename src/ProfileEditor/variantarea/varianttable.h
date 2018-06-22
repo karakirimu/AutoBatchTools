@@ -22,13 +22,16 @@ public slots:
     void addAction();
     void editAction();
     void deleteAction();
+    void cutAction();
     void copyAction();
+    void pasteAction();
     void upAction();
     void downAction();
     void reloadAction();
 
 private:
     void setPopupActionTop();
+    void setPopupActionDefault();
     void setPopupActionBottom();
     bool eventFilter(QObject *obj, QEvent *event);
     bool setLocalListItem(int itemid);
@@ -44,6 +47,8 @@ private:
     QAction *m_add;
     QAction *m_edit;
     QAction *m_delete;
+    QAction *m_cut;
+    QAction *m_paste;
     QAction *m_ref;
 
     static const int MAGIC = 1;

@@ -30,18 +30,18 @@ class SEARCHXMLBUILDERSHARED_EXPORT SearchXmlBuilder : public Xmlbuilder
 {
     Q_OBJECT
 public:
-    SEARCHXMLBUILDERSHARED_EXPORT explicit SearchXmlBuilder(QObject *parent = 0);
-    SEARCHXMLBUILDERSHARED_EXPORT ~SearchXmlBuilder();
+   explicit SearchXmlBuilder(QObject *parent = 0);
+   ~SearchXmlBuilder();
 
-    SEARCHXMLBUILDERSHARED_EXPORT bool readItem(int itemid, QList<QStringList> *itemlist);
-    SEARCHXMLBUILDERSHARED_EXPORT bool addItem(const QList<QStringList> *itemlist);
-    SEARCHXMLBUILDERSHARED_EXPORT bool deleteItem(int itemid);
-    SEARCHXMLBUILDERSHARED_EXPORT bool editItem(int itemid, const QList<QStringList> *itemlist);
-    SEARCHXMLBUILDERSHARED_EXPORT void swapItem(int beforeitemid, int afteritemid);
-    SEARCHXMLBUILDERSHARED_EXPORT void copyItem(int itemid);
-    SEARCHXMLBUILDERSHARED_EXPORT bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
-    SEARCHXMLBUILDERSHARED_EXPORT void createDocument();
-    SEARCHXMLBUILDERSHARED_EXPORT int count();
+   bool readItem(int itemid, QList<QStringList> *itemlist);
+   bool addItem(const QList<QStringList> *itemlist);
+   bool deleteItem(int itemid);
+   bool editItem(int itemid, const QList<QStringList> *itemlist);
+   void swapItem(int beforeitemid, int afteritemid);
+   void copyItem(int itemid);
+   bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
+   void createDocument();
+   int count();
 private:
 
     void setSearchItemData(QString element, QList<QStringList> *list);

@@ -75,9 +75,9 @@ void RunTaskSignalBinder::start()
 
     }else{
         //load static settings
-        QSettings settings( "./psettings.ini", QSettings::IniFormat );
+        QSettings settings( "./settings.ini", QSettings::IniFormat );
 
-        settings.beginGroup("TESTEXEC");
+        settings.beginGroup("pe_testexec");
 //        executor->setDetached(settings.value("DETACH", false).toBool());
         executor->setLaunchedfrom(settings.value("FAKERES", false).toInt());
         executor->setSearchfileoverwrite(settings.value("FSUPDATE", true).toBool());
@@ -115,15 +115,15 @@ void RunTaskSignalBinder::updateRange(QString str)
             tmp.clear();
             tmp = var.split("-");
 
-            tmpstart = ((QString)tmp.at(0)).toInt();
+            tmpstart = ((QString)tmp.at(0)).toInt() - 1;
             tmpend = ((QString)tmp.at(1)).toInt();
 
-            for(; tmpstart < tmpend; tmpstart++){
-                result.append(tmpstart > 0 ? tmpstart + 1 : 0);
+            for(; tmpstart <= tmpend; tmpstart++){
+                result.append(tmpstart);
             }
 
         }else{
-            result.append(var.toInt() > 0 ? var.toInt() + 1 : 0);
+            result.append(var.toInt() > 0 ? var.toInt() : 0);
         }
     }
 
@@ -141,8 +141,8 @@ void RunTaskSignalBinder::updateFileList(QStringList *data)
 //        ++i;
 //    }
 
-    QSettings settings( "./psettings.ini", QSettings::IniFormat );
-    settings.beginGroup("TESTEXEC");
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    settings.beginGroup("pe_testexec");
     executor->addInputFiles(*data, settings.value("FILELOADMAX", -1).toInt());
     settings.endGroup();
 }

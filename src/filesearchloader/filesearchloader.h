@@ -11,11 +11,11 @@
 class FILESEARCHLOADERSHARED_EXPORT FileSearchLoader : public BaseFileSearch
 {
 public:
-    FILESEARCHLOADERSHARED_EXPORT explicit FileSearchLoader(QObject *parent = 0);
-    FILESEARCHLOADERSHARED_EXPORT ~FileSearchLoader();
+    explicit FileSearchLoader(QObject *parent = 0);
+    ~FileSearchLoader();
 
-    FILESEARCHLOADERSHARED_EXPORT QStringList searchFromXml(int itemid);
-    FILESEARCHLOADERSHARED_EXPORT QStringList searchFromStrList(QList<QStringList> *list);
+    QStringList searchFromXml(int itemid);
+    QStringList searchFromStrList(QList<QStringList> *list);
 private:
     SearchXmlBuilder *builder;
     enum{NAME, KEYWORD, DIR, RECURSIVE, SECONDS, CREATION, MODIFIED, FSIZE_1, FSIZE_2};

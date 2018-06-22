@@ -58,7 +58,9 @@ void ProcessXmlBuilder::setLoadBlankPath(QString filepath)
 
 bool ProcessXmlBuilder::readItem(int itemid, QList<QStringList> *itemlist)
 {
+#ifdef QT_DEBUG
     qDebug() << "ProcessXmlBuilder: readItem :" << itemid;
+#endif
     return Xmlbuilder::readItem(itemid, FIRSTLAYER, ATTR, itemlist);
 }
 
@@ -147,100 +149,98 @@ int ProcessXmlBuilder::count()
 
 void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {
-    if(element == "name"
-            || element == "ver"
-            || element == "var"
-            || element == "author"
-            || element == "desc"
-            || element == "uptime"
-//            || element == "nowait"
-            || element == "cmdc"
-            || element == "localc"
-            || element == "sep"
-            || element == "file"
-            /*|| element == "fstack"*/
-            || element == "istack")
+//    if(element == "name"
+//            || element == "ver"
+//            || element == "var"
+//            || element == "author"
+//            || element == "desc"
+//            || element == "uptime"
+////            || element == "nowait"
+//            || element == "cmdc"
+//            || element == "localc"
+//            || element == "sep"
+//            || element == "file"
+//            /*|| element == "fstack"*/
+//            || element == "istack")
+    if(element.contains(QRegularExpression("name|ver|var|author|desc|uptime"
+                                           "|cmdc|localc|sep|file|istack")))
     {
-        QStringList data;
         //add element and text
-        data.append(element);
-        QString text = rxml->readElementText();
-        data.append(text);
-        list->append(data);
+        list->append(QStringList() << element << rxml->readElementText());
     }
 
     if(element == "type")
     {
-        QString only = rxml->attributes().value("only").toString();
-        QStringList data;
-        //add element and text
-        data.append(element);
-        data.append(rxml->readElementText());
-        //add attributes and data
-        data.append("only");
-        data.append(only);
-
-        //add to QList
-        list->append(data);
+        //add element and text, attributes and data
+        list->append(QStringList() << element << rxml->readElementText()
+                     << "only" << rxml->attributes().value("only").toString());
     }
 
     if(element == "timeout")
     {
-        QString during = rxml->attributes().value("dur").toString();
-        QStringList data;
-        //add element and text
-        data.append(element);
-        data.append(rxml->readElementText());
-        //add attributes and data
-        data.append("dur");
-        data.append(during);
+//        QString during = rxml->attributes().value("dur").toString();
+//        QStringList data;
+//        //add element and text
+//        data.append(element);
+//        data.append(rxml->readElementText());
+//        //add attributes and data
+//        data.append("dur");
+//        data.append(during);
 
-        //add to QList
-        list->append(data);
+        //add element and text, attributes and data
+        list->append(QStringList() << element << rxml->readElementText()
+                     << "dur" << rxml->attributes().value("dur").toString());
     }
 
     if(element == "cmd" || element == "sname")
     {
-        QString id = rxml->attributes().value("id").toString();
-        QStringList data;
-        //add element and text
-        data.append(element);
-        data.append(rxml->readElementText());
-        //add attributes and data
-        data.append("id");
-        data.append(id);
+//        QString id = rxml->attributes().value("id").toString();
+//        QStringList data;
+//        //add element and text
+//        data.append(element);
+//        data.append(rxml->readElementText());
+//        //add attributes and data
+//        data.append("id");
+//        data.append(id);
 
         //add to QList
-        list->append(data);
+        list->append(QStringList() << element << rxml->readElementText()
+                     << "id" << rxml->attributes().value("id").toString());
     }
 
     if(element == "lvar")
     {
-        QString lval = rxml->attributes().value("lval").toString();
-        QStringList data;
-        //add element and text
-        data.append(element);
-        data.append(rxml->readElementText());
-        //add attributes and data
-        data.append("lval");
-        data.append(lval);
+//        QString lval = rxml->attributes().value("lval").toString();
+//        QStringList data;
+//        //add element and text
+//        data.append(element);
+//        data.append(rxml->readElementText());
+//        //add attributes and data
+//        data.append("lval");
+//        data.append(lval);
 
-        //add to QList
-        list->append(data);
+//        //add to QList
+//        list->append(data);
+
+        list->append(QStringList() << element << rxml->readElementText()
+                     << "lval" << rxml->attributes().value("lval").toString());
     }
 
     if(element == "output")
     {
-        QString radio = rxml->attributes().value("radio").toString();
-        QStringList data;
-        //add element and text
-        data.append(element);
-        data.append(rxml->readElementText());
-        //add attributes and data
-        data.append("radio");
-        data.append(radio);
+//        QString radio = rxml->attributes().value("radio").toString();
+//        QStringList data;
+//        //add element and text
+//        data.append(element);
+//        data.append(rxml->readElementText());
+//        //add attributes and data
+//        data.append("radio");
+//        data.append(radio);
 
-        //add to QList
-        list->append(data);
+//        //add to QList
+//        list->append(data);
+
+        list->append(QStringList() << element << rxml->readElementText()
+                     << "radio" << rxml->attributes().value("radio").toString());
     }
 }

@@ -15,10 +15,10 @@ class FILEINFODIALOGSHARED_EXPORT FileInfoDialog : public QDialog
     Q_OBJECT
 
 public:
-    FILEINFODIALOGSHARED_EXPORT explicit FileInfoDialog(QWidget *parent = 0);
-    FILEINFODIALOGSHARED_EXPORT ~FileInfoDialog();
+    explicit FileInfoDialog(QWidget *parent = 0);
+    ~FileInfoDialog();
 
-    FILEINFODIALOGSHARED_EXPORT void setFileInfo(QString file);
+    void setFileInfo(QString file);
 private slots:
     void on_buttonBox_accepted();
 

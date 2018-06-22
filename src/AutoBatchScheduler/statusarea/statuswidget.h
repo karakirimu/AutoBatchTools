@@ -19,6 +19,7 @@ public:
     ~StatusWidget();
 
     void setTaskSchedulerConnector(TaskSchedulerConnector *task);
+    void showWidget();
 signals:
     void launchSettings();
 

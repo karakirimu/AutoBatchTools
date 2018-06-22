@@ -1,5 +1,6 @@
 #include "profileeditor.h"
 #include <QApplication>
+#include <QTranslator>
 
 int main(int argc, char *argv[])
 {
@@ -11,6 +12,10 @@ int main(int argc, char *argv[])
 #else
     QTextCodec::setCodecForLocale(QTextCodec::codecForLocale());
 #endif
+
+//    QTranslator myappTranslator;
+//    myappTranslator.load("peditor_ja_JP");
+//    a.installTranslator(&myappTranslator);
 
     ProfileEditor w(a.arguments());
     w.show();

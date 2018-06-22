@@ -507,9 +507,9 @@ void FlowTable::setFlowItem(int itemid, bool selector)
     if(selector) cell->selectedItem();
     this->setCellWidget(fixedRowFromId(itemid), 0, cell);
     //cell->show();
-
+#ifdef QT_DEBUG
     qDebug()<< "profileflow::setFlowItem";
-
+#endif
     delete list;
 }
 

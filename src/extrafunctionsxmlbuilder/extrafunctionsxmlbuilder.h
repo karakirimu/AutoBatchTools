@@ -3,6 +3,7 @@
 
 #include "extrafunctionsxmlbuilder_global.h"
 #include <../xmlbuilder/xmlbuilder.h>
+#include <QDir>
 
 /**
  * @class ExtrafunctionsXmlBuilder
@@ -20,18 +21,18 @@ class EXTRAFUNCTIONSXMLBUILDERSHARED_EXPORT ExtrafunctionsXmlBuilder : public Xm
 {
     Q_OBJECT
 public:
-    EXTRAFUNCTIONSXMLBUILDERSHARED_EXPORT explicit ExtrafunctionsXmlBuilder(QObject *parent = nullptr);
-    EXTRAFUNCTIONSXMLBUILDERSHARED_EXPORT ~ExtrafunctionsXmlBuilder();
+    explicit ExtrafunctionsXmlBuilder(QObject *parent = nullptr);
+    ~ExtrafunctionsXmlBuilder();
 
-    EXTRAFUNCTIONSXMLBUILDERSHARED_EXPORT bool readItem(int itemid, QList<QStringList> *itemlist);
-    EXTRAFUNCTIONSXMLBUILDERSHARED_EXPORT bool addItem(const QList<QStringList> *itemlist);
-    EXTRAFUNCTIONSXMLBUILDERSHARED_EXPORT bool deleteItem(int itemid);
-    EXTRAFUNCTIONSXMLBUILDERSHARED_EXPORT bool editItem(int itemid, const QList<QStringList> *itemlist);
-    EXTRAFUNCTIONSXMLBUILDERSHARED_EXPORT void swapItem(int beforeitemid, int afteritemid);
-    EXTRAFUNCTIONSXMLBUILDERSHARED_EXPORT void copyItem(int itemid);
-    EXTRAFUNCTIONSXMLBUILDERSHARED_EXPORT bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
-    EXTRAFUNCTIONSXMLBUILDERSHARED_EXPORT void createDocument();
-    EXTRAFUNCTIONSXMLBUILDERSHARED_EXPORT int count();
+    bool readItem(int itemid, QList<QStringList> *itemlist);
+    bool addItem(const QList<QStringList> *itemlist);
+    bool deleteItem(int itemid);
+    bool editItem(int itemid, const QList<QStringList> *itemlist);
+    void swapItem(int beforeitemid, int afteritemid);
+    void copyItem(int itemid);
+    bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
+    void createDocument();
+    int count();
 private:
 
     void setSearchItemData(QString element, QList<QStringList> *list);

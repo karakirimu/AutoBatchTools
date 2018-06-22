@@ -10,6 +10,7 @@
 #include <SettingDialog.h>
 #include <editoperator.h>
 #include <multitaskp.h>
+#include <aboutpe.h>
 
 namespace Ui {
 class ProfileEditor;

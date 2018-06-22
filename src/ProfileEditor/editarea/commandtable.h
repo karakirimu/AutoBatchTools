@@ -25,8 +25,9 @@ private slots:
     void deleteAction();
     void cutAction();
     void copyAction();
-    void plainpasteAction();
     void pasteAction();
+    void pasteSpaceAction();
+    void pasteEnterAction();
     void upAction();
     void downAction();
     void openFileAction();
@@ -44,7 +45,10 @@ private:
     QAction *m_add;
     QAction *m_delete;
     QAction *m_edit;
+    QAction *m_cut;
     QAction *m_paste;
+    QAction *m_pastespace;
+    QAction *m_pasteenter;
 };
 
 #endif // COMMANDTABLE_H

@@ -14,26 +14,26 @@ class BASICTABLESHARED_EXPORT BaseTable : public QTableWidget
 {
     Q_OBJECT
 public:
-    BASICTABLESHARED_EXPORT explicit BaseTable(QWidget *parent = Q_NULLPTR);
-    BASICTABLESHARED_EXPORT ~BaseTable();
+    explicit BaseTable(QWidget *parent = Q_NULLPTR);
+    ~BaseTable();
 
 protected slots:
-    BASICTABLESHARED_EXPORT void onCustomContextMenu(const QPoint &point);
-    BASICTABLESHARED_EXPORT void deleteTableRecursive();
-    BASICTABLESHARED_EXPORT void copyTable(int index);
+    void onCustomContextMenu(const QPoint &point);
+    void deleteTableRecursive();
+    void copyTable(int index);
 
-    BASICTABLESHARED_EXPORT QStringList selectFiles(QString basedir);
-    BASICTABLESHARED_EXPORT QString selectFile(QString basedir);
-    BASICTABLESHARED_EXPORT QString selectFolder(QString basedir);
+    QStringList selectFiles(QString basedir);
+    QString selectFile(QString basedir);
+    QString selectFolder(QString basedir);
 
 protected:
-    BASICTABLESHARED_EXPORT virtual void dropEvent(QDropEvent *event);
-    BASICTABLESHARED_EXPORT void dragEnterEvent(QDragEnterEvent *event);
-    BASICTABLESHARED_EXPORT QStringList droppedFromOutside(QDropEvent *event);
-    BASICTABLESHARED_EXPORT void droppedFromInside(QDropEvent *event);
-    BASICTABLESHARED_EXPORT void swapTableRow(int from, int dest);
-    BASICTABLESHARED_EXPORT void insertTableRow(int from, int dest);
-    BASICTABLESHARED_EXPORT virtual bool eventFilter(QObject *obj, QEvent *event);
+    virtual void dropEvent(QDropEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event);
+    QStringList droppedFromOutside(QDropEvent *event);
+    void droppedFromInside(QDropEvent *event);
+    void swapTableRow(int from, int dest);
+    void insertTableRow(int from, int dest);
+    virtual bool eventFilter(QObject *obj, QEvent *event);
 
     QMenu *contextMenu;
 

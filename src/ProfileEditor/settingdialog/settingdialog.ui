@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>設定</string>
+   <string>Settings</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../../res/resources.qrc">
@@ -127,23 +127,20 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>3</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="page">
              <layout class="QVBoxLayout" name="verticalLayout_4">
               <item>
                <widget class="QTabWidget" name="tabWidget">
                 <property name="currentIndex">
-                 <number>1</number>
+                 <number>0</number>
                 </property>
                 <widget class="QWidget" name="baseSettingTab">
                  <attribute name="title">
-                  <string>基本</string>
+                  <string>General</string>
                  </attribute>
-                 <layout class="QVBoxLayout" name="verticalLayout_6">
-                  <property name="spacing">
-                   <number>2</number>
-                  </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_5">
                   <item>
                    <widget class="QFrame" name="frame">
                     <property name="frameShape">
@@ -171,7 +168,7 @@
                      <item>
                       <widget class="QLabel" name="label_2">
                        <property name="text">
-                        <string>一時ファイルの保存先</string>
+                        <string>Temporary file location</string>
                        </property>
                       </widget>
                      </item>
@@ -216,7 +213,7 @@
                      <item>
                       <widget class="QLabel" name="label_7">
                        <property name="text">
-                        <string>自動保存間隔</string>
+                        <string>Autosave interval</string>
                        </property>
                       </widget>
                      </item>
@@ -260,7 +257,7 @@
                      <item>
                       <widget class="QLabel" name="label_9">
                        <property name="text">
-                        <string>テーマ</string>
+                        <string>Theme</string>
                        </property>
                       </widget>
                      </item>
@@ -287,52 +284,29 @@
                    </widget>
                   </item>
                   <item>
-                   <spacer name="verticalSpacer_2">
-                    <property name="orientation">
-                     <enum>Qt::Vertical</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>20</width>
-                      <height>40</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </widget>
-                <widget class="QWidget" name="runSettingTab">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <attribute name="title">
-                  <string>実行テスト</string>
-                 </attribute>
-                 <layout class="QVBoxLayout" name="verticalLayout_5">
-                  <item>
                    <widget class="QGroupBox" name="groupBox">
                     <property name="title">
-                     <string>一般</string>
+                     <string>Run project</string>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_3">
                      <item>
                       <widget class="QCheckBox" name="detachCheckBox">
                        <property name="text">
-                        <string>外部プロセスとして実行</string>
+                        <string>[Exec] Execute as an external process</string>
                        </property>
                       </widget>
                      </item>
                      <item>
                       <widget class="QCheckBox" name="fsupdateCheckBox">
                        <property name="text">
-                        <string>検索ファイル出力時のファイル上書き許可</string>
+                        <string>[Search] Allow overwriting of output file</string>
                        </property>
                       </widget>
                      </item>
                      <item>
                       <widget class="QCheckBox" name="fakeresidentCheckBox">
                        <property name="text">
-                        <string>実行元を常駐プロセスからに設定</string>
+                        <string>Run with the scheduler as the source</string>
                        </property>
                       </widget>
                      </item>
@@ -366,7 +340,7 @@
                            </size>
                           </property>
                           <property name="text">
-                           <string>初期検索時の最大ファイル読み込み数</string>
+                           <string>Input file Maximum number of reads</string>
                           </property>
                          </widget>
                         </item>
@@ -382,13 +356,13 @@
                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                           <property name="minimum">
-                           <number>0</number>
+                           <number>-1</number>
                           </property>
                           <property name="maximum">
                            <number>10000</number>
                           </property>
                           <property name="value">
-                           <number>1</number>
+                           <number>-1</number>
                           </property>
                          </widget>
                         </item>
@@ -399,7 +373,7 @@
                    </widget>
                   </item>
                   <item>
-                   <spacer name="verticalSpacer">
+                   <spacer name="verticalSpacer_2">
                     <property name="orientation">
                      <enum>Qt::Vertical</enum>
                     </property>
@@ -434,6 +408,9 @@
                  <enum>QFrame::Raised</enum>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
                  <property name="leftMargin">
                   <number>0</number>
                  </property>
@@ -449,7 +426,7 @@
                  <item>
                   <widget class="QPushButton" name="gAddButton">
                    <property name="text">
-                    <string>追加</string>
+                    <string>Add</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -460,7 +437,7 @@
                  <item>
                   <widget class="QPushButton" name="gDeleteButton">
                    <property name="text">
-                    <string>削除</string>
+                    <string>Delete</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -471,7 +448,7 @@
                  <item>
                   <widget class="QPushButton" name="gCopyButton">
                    <property name="text">
-                    <string>コピー</string>
+                    <string>Copy</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -482,7 +459,7 @@
                  <item>
                   <widget class="QPushButton" name="gUpButton">
                    <property name="text">
-                    <string>上へ</string>
+                    <string>Up</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -493,7 +470,7 @@
                  <item>
                   <widget class="QPushButton" name="gDownButton">
                    <property name="text">
-                    <string>下へ</string>
+                    <string>Down</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -502,13 +479,6 @@
                   </widget>
                  </item>
                 </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="Line" name="line_5">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
                </widget>
               </item>
               <item>
@@ -540,6 +510,9 @@
                  <enum>QFrame::Raised</enum>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_10">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
                  <property name="leftMargin">
                   <number>0</number>
                  </property>
@@ -555,7 +528,7 @@
                  <item>
                   <widget class="QPushButton" name="seAddButton">
                    <property name="text">
-                    <string>追加</string>
+                    <string>Add</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -566,7 +539,7 @@
                  <item>
                   <widget class="QPushButton" name="seDeleteButton">
                    <property name="text">
-                    <string>削除</string>
+                    <string>Delete</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -577,7 +550,7 @@
                  <item>
                   <widget class="QPushButton" name="seCopyButton">
                    <property name="text">
-                    <string>コピー</string>
+                    <string>Copy</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -588,7 +561,7 @@
                  <item>
                   <widget class="QPushButton" name="seUpButton">
                    <property name="text">
-                    <string>上へ</string>
+                    <string>Up</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -599,7 +572,7 @@
                  <item>
                   <widget class="QPushButton" name="seDownButton">
                    <property name="text">
-                    <string>下へ</string>
+                    <string>Down</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -608,13 +581,6 @@
                   </widget>
                  </item>
                 </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="Line" name="line_4">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
                </widget>
               </item>
               <item>
@@ -646,6 +612,9 @@
                  <enum>QFrame::Raised</enum>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_7">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
                  <property name="leftMargin">
                   <number>0</number>
                  </property>
@@ -661,7 +630,7 @@
                  <item>
                   <widget class="QPushButton" name="exAddButton">
                    <property name="text">
-                    <string>追加</string>
+                    <string>Add</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -672,7 +641,7 @@
                  <item>
                   <widget class="QPushButton" name="exCopyButton">
                    <property name="text">
-                    <string>コピー</string>
+                    <string>Copy</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -683,7 +652,7 @@
                  <item>
                   <widget class="QPushButton" name="exDeleteButton">
                    <property name="text">
-                    <string>削除</string>
+                    <string>Delete</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -694,7 +663,7 @@
                  <item>
                   <widget class="QPushButton" name="exOpenButton">
                    <property name="text">
-                    <string>開く</string>
+                    <string>Open plugin</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
@@ -703,13 +672,6 @@
                   </widget>
                  </item>
                 </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="Line" name="line_6">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
                </widget>
               </item>
               <item>
@@ -723,48 +685,6 @@
                 <property name="selectionBehavior">
                  <enum>QAbstractItemView::SelectRows</enum>
                 </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="theme">
-             <layout class="QVBoxLayout" name="verticalLayout_10">
-              <item>
-               <widget class="QLabel" name="label_5">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>テーマ</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QTabWidget" name="tabWidget_2">
-                <widget class="QWidget" name="mainwindowTab">
-                 <attribute name="title">
-                  <string>全般</string>
-                 </attribute>
-                 <layout class="QVBoxLayout" name="verticalLayout_14">
-                  <item>
-                   <widget class="QGroupBox" name="groupBox_3">
-                    <property name="title">
-                     <string>プロファイル選択</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
                </widget>
               </item>
              </layout>

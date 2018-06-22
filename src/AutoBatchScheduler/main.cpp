@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     MainScheduler w;
 
     QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("STARTUP");
+    settings.beginGroup("scheduler_startup");
     if(!settings.value("HIDEWINDOW", false).toBool()){
         w.show();
     }

@@ -21,48 +21,48 @@ class EXECUTORSHARED_EXPORT Executor : public QObject
 {   
     Q_OBJECT
 public:
-    EXECUTORSHARED_EXPORT explicit Executor(QObject *parent = nullptr);
-    EXECUTORSHARED_EXPORT ~Executor();
+    explicit Executor(QObject *parent = nullptr);
+    ~Executor();
 
     //run part
-    EXECUTORSHARED_EXPORT bool getDetached() const;
-    EXECUTORSHARED_EXPORT void setDetached(bool detach); /*preset func*/
+    bool getDetached() const;
+    void setDetached(bool detach); /*preset func*/
 
-    EXECUTORSHARED_EXPORT int getStartnum() const;
-    EXECUTORSHARED_EXPORT void setStartnum(int start); /*preset func*/
+    int getStartnum() const;
+    void setStartnum(int start); /*preset func*/
 
-    EXECUTORSHARED_EXPORT int getEndnum() const;
-    EXECUTORSHARED_EXPORT void setEndnum(int end); /*preset func*/
+    int getEndnum() const;
+    void setEndnum(int end); /*preset func*/
 
     //run input
-    EXECUTORSHARED_EXPORT void processWrite(QString code);
-    EXECUTORSHARED_EXPORT void processKill();
+    void processWrite(QString code);
+    void processKill();
 
-//    EXECUTORSHARED_EXPORT int getForcequittime() const;
-//    EXECUTORSHARED_EXPORT void setForcequittime(int ms); /*preset func*/
-    EXECUTORSHARED_EXPORT void setMutex(QMutex *mutex);
+//    int getForcequittime() const;
+//    void setForcequittime(int ms); /*preset func*/
+    void setMutex(QMutex *mutex);
 
-    EXECUTORSHARED_EXPORT bool getPaused() const;
-    EXECUTORSHARED_EXPORT void setPaused(bool pause);
+    bool getPaused() const;
+    void setPaused(bool pause);
 
-    EXECUTORSHARED_EXPORT QString macroConvert(QString part);
+    QString macroConvert(QString part);
 
-    EXECUTORSHARED_EXPORT void setExecList(QList<int> data);
+    void setExecList(QList<int> data);
 
     //status part
-    EXECUTORSHARED_EXPORT bool getWorking() const;
+    bool getWorking() const;
 
     //xml part
-    EXECUTORSHARED_EXPORT void setProcessFile(QString filepath); /*preset func*/
+    void setProcessFile(QString filepath); /*preset func*/
 
-    EXECUTORSHARED_EXPORT int getLaunchedfrom() const;
-    EXECUTORSHARED_EXPORT void setLaunchedfrom(int only = DEFAULT); /*preset func*/
+    int getLaunchedfrom() const;
+    void setLaunchedfrom(int only = DEFAULT); /*preset func*/
 
-    EXECUTORSHARED_EXPORT bool getSearchfileoverwrite() const;
-    EXECUTORSHARED_EXPORT void setSearchfileoverwrite(bool overwrite); /*preset func*/
+    bool getSearchfileoverwrite() const;
+    void setSearchfileoverwrite(bool overwrite); /*preset func*/
 
-    EXECUTORSHARED_EXPORT int getOthernestmax() const;
-    EXECUTORSHARED_EXPORT void setOthernestmax(int nest = 10);
+    int getOthernestmax() const;
+    void setOthernestmax(int nest = 10);
 
     enum {INFO, NORMAL, SEARCH, SCRIPT, OTHER, TEMP, LOCAL, WARNING, ERROR, INPUT};
     enum {DEFAULT, SCHEDULER};
@@ -70,34 +70,34 @@ public:
 signals:
     //in runprocess
     //signals to all
-    EXECUTORSHARED_EXPORT void processStarted(int);
-    EXECUTORSHARED_EXPORT void processEnded(int);
-    EXECUTORSHARED_EXPORT void processPaused();
-    EXECUTORSHARED_EXPORT void processTimeout();
-    EXECUTORSHARED_EXPORT void processStopped();
+    void processStarted(int);
+    void processEnded(int);
+    void processPaused();
+    void processTimeout();
+    void processStopped();
 
     //signals to ui (status)
-    EXECUTORSHARED_EXPORT void processStateUpdate(int);
-    EXECUTORSHARED_EXPORT void processErrorOccured(int);
-    EXECUTORSHARED_EXPORT void processStateCount(int start, int end);
+    void processStateUpdate(int);
+    void processErrorOccured(int);
+    void processStateCount(int start, int end);
 
     //signals to textview (output)
-    EXECUTORSHARED_EXPORT void processCheckError(QString);
-//    EXECUTORSHARED_EXPORT void processInformation(QString);
-    EXECUTORSHARED_EXPORT void processMessage(QString, int type);
-//    EXECUTORSHARED_EXPORT void processUpdated(QString);
+    void processCheckError(QString);
+//    void processInformation(QString);
+    void processMessage(QString, int type);
+//    void processUpdated(QString);
 
 
 public slots:
     //set slots
     /*inputmax is search only*/
-    EXECUTORSHARED_EXPORT void addInputFiles(QStringList list, int inputmax = 1); /*preset func*/
-    EXECUTORSHARED_EXPORT void setGlobalList(); /*preset func*/
-    EXECUTORSHARED_EXPORT void setLocalList(); /*preset func*/
+    void addInputFiles(QStringList list, int inputmax = 1); /*preset func*/
+    void setGlobalList(); /*preset func*/
+    void setLocalList(); /*preset func*/
 
     //process slot
-    EXECUTORSHARED_EXPORT bool runProcess(); /*main func*/
-    EXECUTORSHARED_EXPORT void stopProcess();
+    bool runProcess(); /*main func*/
+    void stopProcess();
 
 private slots:
     void loadNormalStandardOutput();
@@ -133,6 +133,9 @@ private:
 
     //sleep
     void sleep(int ms);
+
+    //stop pause handler
+    bool processStopHandleChecker();
 
     //status part
     bool working = false;

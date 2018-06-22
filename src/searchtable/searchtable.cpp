@@ -48,10 +48,10 @@ void SearchTable::setPopupActionTop()
     m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("削除"));
     m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
     contextMenu->addSeparator();
-    m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"), tr("編集"));
+
+    m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"),tr("Edit"));
     m_edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
     contextMenu->addSeparator();
-
     //connect signals
     connect(m_add, SIGNAL(triggered()), this, SLOT(addAction()));
     connect(m_delete, SIGNAL(triggered()), this, SLOT(deleteAction()));

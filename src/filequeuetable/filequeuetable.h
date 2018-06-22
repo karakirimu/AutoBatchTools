@@ -9,10 +9,10 @@ class FILEQUEUETABLESHARED_EXPORT FileQueueTable : public BasicTable
 {
     Q_OBJECT
 public:
-    FILEQUEUETABLESHARED_EXPORT explicit FileQueueTable(QWidget *parent = nullptr);
-    FILEQUEUETABLESHARED_EXPORT ~FileQueueTable();
+    explicit FileQueueTable(QWidget *parent = nullptr);
+    ~FileQueueTable();
 
-    FILEQUEUETABLESHARED_EXPORT void addFiles(const QStringList &filenames);
+    void addFiles(const QStringList &filenames);
 
     void addAction();
 

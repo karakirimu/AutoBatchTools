@@ -11,6 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = ProfileEditor
 TEMPLATE = app
 
+TRANSLATIONS = peditor_ja_JP.ts
+
 win32 {
     RC_FILE = $$PWD/../../res/app_icons/app_pe.rc
 }
@@ -34,7 +36,8 @@ HEADERS  += $$PWD/profileeditor.h \
 #    $$PWD/profilexmlbuilder.h \
     basedockwidget.h \
     runtasksignalbinder.h \
-    multitaskp.h
+    multitaskp.h \
+    aboutpe.h
 
 SOURCES += $$PWD/profileeditor.cpp \
     $$PWD/profiletreewidget.cpp \
@@ -43,11 +46,13 @@ SOURCES += $$PWD/profileeditor.cpp \
 #    $$PWD/profilexmlbuilder.cpp \
     basedockwidget.cpp \
     runtasksignalbinder.cpp \
-    multitaskp.cpp
+    multitaskp.cpp \
+    aboutpe.cpp
 
 SOURCES += main.cpp
 
-FORMS    += $$PWD/profileeditor.ui
+FORMS    += $$PWD/profileeditor.ui \
+    aboutpe.ui
 
 RESOURCES += \
     $$PWD/../../res/resources.qrc

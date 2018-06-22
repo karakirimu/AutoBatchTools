@@ -10,11 +10,13 @@ FlowCellWidget::FlowCellWidget(QWidget *parent) :
     //set default color
     framecolor = "background-color: transparent;";
 
+    //set arrow icon
+    arrowpixmap = QIcon(":/default_icons/flowarrow.png").pixmap(32,32);
 
-    QSettings settings( "./psettings.ini", QSettings::IniFormat );
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
 
 //    //theme settings
-//    settings.beginGroup("BASICSETTING");
+//    settings.beginGroup("pe_general");
 //    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
 //    settings.endGroup();
 
@@ -85,7 +87,7 @@ void FlowCellWidget::showArrow()
 
 void FlowCellWidget::selectedItem()
 {
-    ui->innerFrame->setStyleSheet("background-color: rgb(159, 179, 211);");
+    ui->innerFrame->setStyleSheet("background-color: rgb(180, 180, 180);");
 }
 
 void FlowCellWidget::unSelectedItem()

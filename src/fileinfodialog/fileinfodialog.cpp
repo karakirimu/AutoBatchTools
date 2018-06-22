@@ -28,7 +28,7 @@ void FileInfoDialog::setFileInfo(QString file)
         ui->filepass->setText(info.canonicalFilePath());
         ui->extension->setText(info.completeSuffix());
         ui->filesize->setText(QString::number(info.size()).append(" Bytes"));
-        ui->created->setText(info.created().toString("yyyy/MM/dd hh:mm:ss"));
+        ui->created->setText(info.birthTime().toString("yyyy/MM/dd hh:mm:ss"));
         ui->updated->setText(info.lastModified().toString("yyyy/MM/dd hh:mm:ss"));
     }
 }

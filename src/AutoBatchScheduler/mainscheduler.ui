@@ -82,13 +82,13 @@
           </property>
           <widget class="QWidget" name="service">
            <attribute name="title">
-            <string>起動</string>
+            <string>Start up</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
              <widget class="QCheckBox" name="minimizeLaunchCheckBox">
               <property name="text">
-               <string>起動時にこの画面を最小化</string>
+               <string>Minimize screen at startup</string>
               </property>
              </widget>
             </item>
@@ -116,7 +116,7 @@
                <item>
                 <widget class="QLabel" name="label_9">
                  <property name="text">
-                  <string>テーマ</string>
+                  <string>Theme</string>
                  </property>
                 </widget>
                </item>
@@ -159,7 +159,7 @@
           </widget>
           <widget class="QWidget" name="message">
            <attribute name="title">
-            <string>メッセージ</string>
+            <string>Message</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
@@ -189,7 +189,7 @@
                <item>
                 <widget class="QCheckBox" name="minimizeShowCheckBox">
                  <property name="text">
-                  <string>最小化時</string>
+                  <string>Minimized</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -245,7 +245,7 @@
                <item>
                 <widget class="QCheckBox" name="timerStartShowCheckBox">
                  <property name="text">
-                  <string>タイマー開始時</string>
+                  <string>Timer started</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -301,7 +301,7 @@
                <item>
                 <widget class="QCheckBox" name="timerStopShowCheckBox">
                  <property name="text">
-                  <string>タイマー終了時</string>
+                  <string>Timer finished</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -357,7 +357,7 @@
                <item>
                 <widget class="QCheckBox" name="taskStartShowCheckBox">
                  <property name="text">
-                  <string>タスク開始時</string>
+                  <string>Task started</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -413,7 +413,7 @@
                <item>
                 <widget class="QCheckBox" name="taskEndShowCheckBox">
                  <property name="text">
-                  <string>タスク終了時</string>
+                  <string>Task finished</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -469,7 +469,7 @@
                <item>
                 <widget class="QCheckBox" name="taskUnselectShowCheckBox">
                  <property name="text">
-                  <string>タスク解除時</string>
+                  <string>Task canceled</string>
                  </property>
                  <property name="checked">
                   <bool>true</bool>
@@ -538,7 +538,7 @@
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">
-     <string>ファイル</string>
+     <string>File</string>
     </property>
     <addaction name="actionExit"/>
    </widget>
@@ -576,10 +576,10 @@
      <normaloff>:/default_icons/error.png</normaloff>:/default_icons/error.png</iconset>
    </property>
    <property name="text">
-    <string>閉じる</string>
+    <string>Close</string>
    </property>
    <property name="toolTip">
-    <string>終了</string>
+    <string>Close</string>
    </property>
   </action>
   <action name="actionSchedule">
@@ -594,7 +594,7 @@
      <normaloff>:/default_icons/app_abs.png</normaloff>:/default_icons/app_abs.png</iconset>
    </property>
    <property name="text">
-    <string>スケジュール</string>
+    <string>Schedule</string>
    </property>
    <property name="toolTip">
     <string>スケジュール</string>
@@ -609,7 +609,7 @@
      <normaloff>:/default_icons/settings.png</normaloff>:/default_icons/settings.png</iconset>
    </property>
    <property name="text">
-    <string>オプション</string>
+    <string>Options</string>
    </property>
    <property name="toolTip">
     <string>オプション</string>

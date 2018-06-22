@@ -8,16 +8,16 @@ class VARIANTCONVERTERSHARED_EXPORT VariantConverter : public QObject
 {
     Q_OBJECT
 public:
-    VARIANTCONVERTERSHARED_EXPORT explicit VariantConverter(QObject *parent = 0);
-    VARIANTCONVERTERSHARED_EXPORT ~VariantConverter();
+    explicit VariantConverter(QObject *parent = 0);
+    ~VariantConverter();
 
-    VARIANTCONVERTERSHARED_EXPORT static int stringToInt(QString data);
-    VARIANTCONVERTERSHARED_EXPORT static int boolToInt(bool data);
+    static int stringToInt(QString data);
+    static int boolToInt(bool data);
 
-    VARIANTCONVERTERSHARED_EXPORT static bool stringToBool(QString checked);
-    VARIANTCONVERTERSHARED_EXPORT static bool intToBool(int data);
+    static bool stringToBool(QString checked);
+    static bool intToBool(int data);
 
-    VARIANTCONVERTERSHARED_EXPORT static QString boolToString(bool checked);
+    static QString boolToString(bool checked);
 };
 
 

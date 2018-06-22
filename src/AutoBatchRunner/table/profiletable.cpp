@@ -190,11 +190,15 @@ void ProfileTable::editAction()
 
         QProcess process;
 #ifdef QT_DEBUG
-        bool result = process.startDetached(tr("./ProfileEditor.exe"), \
+        bool result = process.startDetached("./ProfileEditor.exe", \
                         (QStringList() << list->at(2).at(1)));
        if(!result) qDebug() << tr("ProfileEditor launch failed.");
 #else
-      process.startDetached(tr("./ProfileEditor.exe"), QStringList() << list->at(2).at(1));
+    #ifdef Q_OS_WIN
+        process.startDetached("./ProfileEditor.exe", QStringList() << list->at(2).at(1));
+    #else
+        process.startDetached("./ProfileEditor", QStringList() << list->at(2).at(1));
+    #endif
 #endif
     }
     delete list;

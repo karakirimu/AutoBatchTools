@@ -11,20 +11,20 @@ class EXTRAFUNCTIONSTABLESHARED_EXPORT ExtraFunctionsTable : public BasicTable
 {
     Q_OBJECT
 public:
-    EXTRAFUNCTIONSTABLESHARED_EXPORT explicit ExtraFunctionsTable(QWidget *parent = nullptr);
-    EXTRAFUNCTIONSTABLESHARED_EXPORT ~ExtraFunctionsTable();
+    explicit ExtraFunctionsTable(QWidget *parent = nullptr);
+    ~ExtraFunctionsTable();
 
 public slots:
-    EXTRAFUNCTIONSTABLESHARED_EXPORT void addAction();
-    EXTRAFUNCTIONSTABLESHARED_EXPORT void editAction();
-    EXTRAFUNCTIONSTABLESHARED_EXPORT void deleteAction();
-    EXTRAFUNCTIONSTABLESHARED_EXPORT void reloadAction();
-    EXTRAFUNCTIONSTABLESHARED_EXPORT void copyAction();
-    EXTRAFUNCTIONSTABLESHARED_EXPORT void upAction();
-    EXTRAFUNCTIONSTABLESHARED_EXPORT void downAction();
-    EXTRAFUNCTIONSTABLESHARED_EXPORT void openFileAction();
+    void addAction();
+    void editAction();
+    void deleteAction();
+    void reloadAction();
+    void copyAction();
+    void upAction();
+    void downAction();
+    void openFileAction();
 
-    EXTRAFUNCTIONSTABLESHARED_EXPORT void saveAction(int row);
+    void saveAction(int row);
 
 private:
     void setPopupActionTop();

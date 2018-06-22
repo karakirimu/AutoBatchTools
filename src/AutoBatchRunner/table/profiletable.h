@@ -15,7 +15,7 @@ public:
     explicit ProfileTable(QWidget *parent = Q_NULLPTR);
     ~ProfileTable();
 
-private slots:
+public slots:
     void newAction();
     void addAction();
     void editAction();

@@ -185,21 +185,21 @@ class PROCESSXMLBUILDERSHARED_EXPORT ProcessXmlBuilder : public Xmlbuilder
 {
     Q_OBJECT
 public:
-    PROCESSXMLBUILDERSHARED_EXPORT explicit ProcessXmlBuilder(QObject *parent = 0);
-    PROCESSXMLBUILDERSHARED_EXPORT ~ProcessXmlBuilder();
+   explicit ProcessXmlBuilder(QObject *parent = 0);
+   ~ProcessXmlBuilder();
 
-    PROCESSXMLBUILDERSHARED_EXPORT void setLoadPath(QString filepath);
-    PROCESSXMLBUILDERSHARED_EXPORT void setLoadBlankPath(QString filepath);
-//    PROCESSXMLBUILDERSHARED_EXPORT void delLoadPath();
+   void setLoadPath(QString filepath);
+   void setLoadBlankPath(QString filepath);
+//   void delLoadPath();
 
-    PROCESSXMLBUILDERSHARED_EXPORT bool readItem(int itemid, QList<QStringList> *itemlist);
-    PROCESSXMLBUILDERSHARED_EXPORT bool addItem(const QList<QStringList> *itemlist);
-    PROCESSXMLBUILDERSHARED_EXPORT bool deleteItem(int itemid);
-    PROCESSXMLBUILDERSHARED_EXPORT bool editItem(int itemid, const QList<QStringList> *itemlist);
-    PROCESSXMLBUILDERSHARED_EXPORT void swapItem(int beforeitemid, int afteritemid);
-    PROCESSXMLBUILDERSHARED_EXPORT void copyItem(int itemid);
-    PROCESSXMLBUILDERSHARED_EXPORT bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
-    PROCESSXMLBUILDERSHARED_EXPORT int count();
+   bool readItem(int itemid, QList<QStringList> *itemlist);
+   bool addItem(const QList<QStringList> *itemlist);
+   bool deleteItem(int itemid);
+   bool editItem(int itemid, const QList<QStringList> *itemlist);
+   void swapItem(int beforeitemid, int afteritemid);
+   void copyItem(int itemid);
+   bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
+   int count();
 
 //    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempNormal() const;
 //    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempSearch() const;

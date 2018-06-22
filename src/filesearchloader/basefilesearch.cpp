@@ -84,7 +84,7 @@ void BaseFileSearch::setCreatedTimeCondition(QStringList *filelist, QDateTime ba
     for(int i = 0; i < filecount; i++){
         file = filelist->at(i);
         QFileInfo info(file);
-        conditionTime(&deleteddata, i, basetime.secsTo(info.created()), type);
+        conditionTime(&deleteddata, i, basetime.secsTo(info.birthTime()), type);
     }
 
     deleteLists(&deleteddata, filelist);

@@ -13,6 +13,34 @@ OptionDialog::OptionDialog(QWidget *parent) :
     //connect action
     connect( ui->buttonBox, SIGNAL(accepted()), this, SLOT(onAccept()));
 //    connect( ui->buttonBox, SIGNAL(rejected()), this, SLOT(onReject()));
+
+    //project
+    connect(ui->pAddButton, &QPushButton::clicked, ui->profileTableWidget, &ProfileTable::addAction);
+    connect(ui->pDeleteButton, &QPushButton::clicked, ui->profileTableWidget, &ProfileTable::deleteAction);
+    connect(ui->pUpButton, &QPushButton::clicked, ui->profileTableWidget, &ProfileTable::upAction);
+    connect(ui->pDownButton, &QPushButton::clicked, ui->profileTableWidget, &ProfileTable::downAction);
+    connect(ui->pEditButton, &QPushButton::clicked, ui->profileTableWidget, &ProfileTable::editAction);
+
+    //application variant
+    connect(ui->vAddButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::addAction);
+    connect(ui->vCopyButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::copyAction);
+    connect(ui->vDeleteButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::deleteAction);
+    connect(ui->vUpButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::upAction);
+    connect(ui->vDownButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::downAction);
+
+    //search variant
+    connect(ui->sAddButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::addAction);
+    connect(ui->sCopyButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::copyAction);
+    connect(ui->sDeleteButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::deleteAction);
+    connect(ui->sDownButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::upAction);
+    connect(ui->sUpButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::downAction);
+
+    //extend variant
+    connect(ui->eAddButton, &QPushButton::clicked, ui->extendTableWidget, &ExtraFunctionsTable::addAction);
+    connect(ui->eDeleteButton, &QPushButton::clicked, ui->extendTableWidget, &ExtraFunctionsTable::deleteAction);
+    connect(ui->eCopyButton, &QPushButton::clicked, ui->extendTableWidget, &ExtraFunctionsTable::copyAction);
+    connect(ui->eOpenButton, &QPushButton::clicked, ui->extendTableWidget, &ExtraFunctionsTable::openFileAction);
+
 }
 
 OptionDialog::~OptionDialog()
@@ -22,9 +50,11 @@ OptionDialog::~OptionDialog()
 
 void OptionDialog::setupItem(){
     ui->listWidget->addItem(tr("General"));
-    ui->listWidget->addItem(tr("Profile"));
+    ui->listWidget->addItem(tr("Project files"));
 //    ui->listWidget->addItem(tr("Resident"));
-    ui->listWidget->addItem(tr("Extra Functions"));
+    ui->listWidget->addItem(tr("App Variant"));
+    ui->listWidget->addItem(tr("Search"));
+    ui->listWidget->addItem(tr("Extend Functions"));
 //    ui->listWidget->addItem(tr("Theme"));
 
     ui->listWidget->item(0)->setSelected(true);
@@ -33,7 +63,9 @@ void OptionDialog::setupItem(){
     ui->listWidget->item(0)->setIcon(QIcon(":/default_icons/settings.png"));
     ui->listWidget->item(1)->setIcon(QIcon(":/default_icons/others.png"));
 //    ui->listWidget->item(2)->setIcon(QIcon(":/default_icons/app_abs.png"));
-    ui->listWidget->item(2)->setIcon(QIcon(":/default_icons/extras.png"));
+    ui->listWidget->item(2)->setIcon(QIcon(":/default_icons/string.png"));
+    ui->listWidget->item(3)->setIcon(QIcon(":/default_icons/search.png"));
+    ui->listWidget->item(4)->setIcon(QIcon(":/default_icons/extras.png"));
 //    ui->listWidget->item(3)->setIcon(QIcon(":/icons/Colors.png"));
 }
 
@@ -100,7 +132,7 @@ void OptionDialog::onAccept()
 //#endif
 //    //when startup action selected, hide window.
 //    QSettings settings( "./settings.ini", QSettings::IniFormat );
-//    settings.beginGroup("STARTUP");
+//    settings.beginGroup("scheduler_startup");
 //    bool isstartup = settings.value("ENABLED", false).toBool();
 //    settings.endGroup();
 

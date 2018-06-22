@@ -13,13 +13,13 @@ MainScheduler::MainScheduler(QWidget *parent) :
     setWindowTitle(tr("AutoBatchRunner - Scheduler"));
 
     //set toolbar buttons
-    connect(ui->actionExit, &QAction::triggered, this, &MainScheduler::hide);
+    connect(ui->actionExit, &QAction::triggered, this, &MainScheduler::close);
     connect(ui->actionSchedule, &QAction::triggered, this, &MainScheduler::onSchedulerButtonClicked);
     connect(ui->actionOption, &QAction::triggered, this, &MainScheduler::onOptionButtonClicked);
 
     //restore settings
     QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("STARTUP");
+    settings.beginGroup("scheduler_startup");
     //restore settings
     ui->minimizeShowCheckBox->setChecked(settings.value("MINIMIZESHOW", true).toBool());
     ui->minimizeSpinBox->setValue(settings.value("MINIMIZESHOWMS", 2500).toInt());
@@ -96,7 +96,7 @@ void MainScheduler::closeEvent(QCloseEvent *event)
     //save settings when close window
     QSettings settings( "./settings.ini", QSettings::IniFormat );
 
-    settings.beginGroup("STARTUP");
+    settings.beginGroup("scheduler_startup");
     //message tab
     settings.setValue("MINIMIZESHOW", ui->minimizeShowCheckBox->isChecked());
     settings.setValue("MINIMIZESHOWMS", ui->minimizeSpinBox->value());
@@ -137,7 +137,7 @@ void MainScheduler::themeChangeAction()
     QSettings settings( "./settings.ini", QSettings::IniFormat );
 
     //theme settings
-    settings.beginGroup("STARTUP");
+    settings.beginGroup("scheduler_startup");
     QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
     settings.endGroup();
 

@@ -74,7 +74,7 @@ void SystemTray::trayActivated(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason) {
     case QSystemTrayIcon::Trigger:
-        strw->show();
+        strw->showWidget();
         break;
     case QSystemTrayIcon::DoubleClick:
         launchSettingsAction();
@@ -87,10 +87,10 @@ void SystemTray::trayActivated(QSystemTrayIcon::ActivationReason reason)
 void SystemTray::showNotCloseMessage()
 {
     QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("STARTUP");
+    settings.beginGroup("scheduler_startup");
     if(settings.value("MINIMIZESHOW", true).toBool()){
-        trayIcon->showMessage(tr("AutoBatchSchedulerは起動しています")
-                              , tr("プログラムを完全に終了する場合は、タスクトレイにあるアイコンを右クリックし、終了を選択してください")\
+        trayIcon->showMessage(tr("AutoBatchScheduler is running")
+                              , tr("To completely exit the program, right-click the icon in the task tray and choose Exit.")\
                               , QSystemTrayIcon::Information\
                               , settings.value("MINIMIZESHOWMS", 2500).toInt());
     }
@@ -104,7 +104,7 @@ void SystemTray::showTimerStart(QString objectname, QDateTime time)
 
     // load setting datas
     QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("STARTUP");
+    settings.beginGroup("scheduler_startup");
     bool started = settings.value("TIMERSTART", true).toBool();
     int timerms = settings.value("TIMERSTARTMS", 2500).toInt();
     settings.endGroup();
@@ -127,7 +127,7 @@ void SystemTray::showTimerStart(QString objectname, QDateTime time)
         }
 
         //show message
-        trayIcon->showMessage(tr("タイマーを開始しました"), textdata\
+        trayIcon->showMessage(tr("Timer started"), textdata\
                               , QSystemTrayIcon::Information\
                               , timerms);
 
@@ -145,9 +145,9 @@ void SystemTray::showTimerStopped(QString objectname, int type)
     {
         //show message
         QSettings settings( "./settings.ini", QSettings::IniFormat );
-        settings.beginGroup("STARTUP");
+        settings.beginGroup("scheduler_startup");
         if(settings.value("TIMERSTOP", true).toBool()){
-            trayIcon->showMessage(tr("タイマーは終了しました"),\
+            trayIcon->showMessage(tr("Timer has ended"),\
                                   getNameByActions(objectname),\
                                   QSystemTrayIcon::Information,\
                                   settings.value("TIMERSTOPMS", 2500).toInt());
@@ -158,7 +158,7 @@ void SystemTray::showTimerStopped(QString objectname, int type)
     case SchedulerWait::EXPIRED:
     {
         //show message
-        trayIcon->showMessage(tr("設定した時刻は既に過ぎています"),\
+        trayIcon->showMessage(tr("The set time has already passed"),\
                               getNameByActions(objectname),\
                               QSystemTrayIcon::Warning,\
                               3500);
@@ -182,7 +182,7 @@ void SystemTray::showProcessStart(QString objectname, int runfrom)
 //    case Executor::SCHEDULER:
 //        //show message
 //        QSettings settings( "./settings.ini", QSettings::IniFormat );
-//        settings.beginGroup("STARTUP");
+//        settings.beginGroup("scheduler_startup");
 //        if(settings.value("TASKSTART", true).toBool()){
 //            trayIcon->showMessage(tr("タスクを開始しました"),\
 //                                  getNameByActions(objectname),\
@@ -199,9 +199,9 @@ void SystemTray::showProcessStart(QString objectname, int runfrom)
     if(runfrom == Executor::SCHEDULER){
         //show message
         QSettings settings( "./settings.ini", QSettings::IniFormat );
-        settings.beginGroup("STARTUP");
+        settings.beginGroup("scheduler_startup");
         if(settings.value("TASKSTART", true).toBool()){
-            trayIcon->showMessage(tr("タスクを開始しました"),\
+            trayIcon->showMessage(tr("Task started"),\
                                   getNameByActions(objectname),\
                                   QSystemTrayIcon::Information,\
                                   settings.value("TASKSTOPMS", 2500).toInt());
@@ -213,7 +213,7 @@ void SystemTray::showProcessStart(QString objectname, int runfrom)
 void SystemTray::showProcessPause(QString objectname)
 {
     //show message
-    trayIcon->showMessage(tr("指定したタスクは一時停止中です"),\
+    trayIcon->showMessage(tr("The specified task is paused"),\
                           getNameByActions(objectname),\
                           QSystemTrayIcon::Information,\
                           3500);
@@ -222,7 +222,7 @@ void SystemTray::showProcessPause(QString objectname)
 void SystemTray::showProcessStopped(QString objectname)
 {
     //show message
-    trayIcon->showMessage(tr("タスクは停止しました"),\
+    trayIcon->showMessage(tr("Task stopped"),\
                           getNameByActions(objectname),\
                           QSystemTrayIcon::Information,\
                           3500);
@@ -234,7 +234,7 @@ void SystemTray::showProcessEnded(QString objectname, int type)
 //    case Executor::MAINPROCESS:
 //        //show message
 //        QSettings settings( "./settings.ini", QSettings::IniFormat );
-//        settings.beginGroup("STARTUP");
+//        settings.beginGroup("scheduler_startup");
 //        if(settings.value("TASKEND", true).toBool()){
 //            trayIcon->showMessage(tr("タスクは正常終了しました"),\
 //                                  getNameByActions(objectname),\
@@ -253,9 +253,9 @@ void SystemTray::showProcessEnded(QString objectname, int type)
     if(type == Executor::MAINPROCESS){
         //show message
         QSettings settings( "./settings.ini", QSettings::IniFormat );
-        settings.beginGroup("STARTUP");
+        settings.beginGroup("scheduler_startup");
         if(settings.value("TASKEND", true).toBool()){
-            trayIcon->showMessage(tr("タスクは正常終了しました"),\
+            trayIcon->showMessage(tr("Task ended normally"),\
                                   getNameByActions(objectname),\
                                   QSystemTrayIcon::Information,\
                                   settings.value("TASKENDMS", 2500).toInt());
@@ -269,9 +269,9 @@ void SystemTray::showTaskDisabled(QString objectname)
 {
     //show message
     QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("STARTUP");
+    settings.beginGroup("scheduler_startup");
     if(settings.value("TASKUNSELECT", true).toBool()){
-        trayIcon->showMessage(tr("タスクを解除しました"),\
+        trayIcon->showMessage(tr("Task canceled"),\
                               getNameByActions(objectname),\
                               QSystemTrayIcon::Information,\
                               settings.value("TASKUNSELECTMS", 2500).toInt());
@@ -281,19 +281,19 @@ void SystemTray::showTaskDisabled(QString objectname)
 
 void SystemTray::showProcessFileEmpty(QString profilename)
 {
-    trayIcon->showMessage(tr("実行用プロファイルが存在しません"),\
+    trayIcon->showMessage(tr("Profile does not exist for execution"),\
                           profilename\
-                          +tr("\r\nこのスケジュールを実行するためには、実行用プロファイルを再設定してください"),\
+                          +tr("\r\nIn order to execute this schedule, please reset the execution profile"),\
                           QSystemTrayIcon::Warning,\
                           3500);
 }
 
 void SystemTray::initTrayIcon()
 {
-    settingsAction = trayIconMenu->addAction(tr("設定を開く…"));
+    settingsAction = trayIconMenu->addAction(tr("Open settings ..."));
 
     trayIconMenu->addSeparator();
-    quitAction = trayIconMenu->addAction(tr("終了"));
+    quitAction = trayIconMenu->addAction(tr("Quit"));
 
 //    connect(launchAction, &QAction::triggered, this, &SystemTray::launchMainAction);
     connect(settingsAction, &QAction::triggered, this, &SystemTray::launchSettingsAction);
@@ -364,19 +364,19 @@ QString SystemTray::encodeDayOfWeek(int dayofweek)
 {
     switch (dayofweek) {
     case 1:
-        return tr("月曜日");
+        return tr("Monday");
     case 2:
-        return tr("火曜日");
+        return tr("Tuesday");
     case 3:
-        return tr("水曜日");
+        return tr("Wednesday");
     case 4:
-        return tr("木曜日");
+        return tr("Thursday");
     case 5:
-        return tr("金曜日");
+        return tr("Friday");
     case 6:
-        return tr("土曜日");
+        return tr("Saturday");
     case 7:
-        return tr("日曜日");
+        return tr("Sunday");
     default:
         break;
     }

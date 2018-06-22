@@ -4,8 +4,12 @@
 ExtrafunctionsXmlBuilder::ExtrafunctionsXmlBuilder(QObject *parent)
     : Xmlbuilder(parent)
 {
+    //set new folder
+    QDir dir;
+    dir.mkdir("./plugins");
+
     //set new file
-    setFileName("./extralist.xml");
+    setFileName("./plugins/.extralist");
 
     if(count() == 0){
         createDocument();

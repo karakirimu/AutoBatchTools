@@ -14,12 +14,6 @@ StatusWidget::StatusWidget(QWidget *parent) :
 
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
 
-    QRect rec = QApplication::desktop()->screenGeometry();
-    int d_height = rec.height();
-    int d_width = rec.width();
-
-    this->move(d_width - this->width() - 30, d_height - this->height() - 70);
-
     connect(ui->settingToolButton, &QToolButton::clicked, this, &StatusWidget::settingsClicked);
 
 //    //test
@@ -40,6 +34,14 @@ void StatusWidget::setTaskSchedulerConnector(TaskSchedulerConnector *task)
 {
     taskc = task;
     ui->enabledTableWidget->setTaskSchedulerConnector(task);
+}
+
+void StatusWidget::showWidget()
+{
+    this->show();
+
+    QRect rec = QApplication::desktop()->screenGeometry();
+    this->move(rec.width() - this->width() - 30, rec.height() - this->height() - 70);
 }
 
 void StatusWidget::closeEvent(QCloseEvent *event)

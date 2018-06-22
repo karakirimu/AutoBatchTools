@@ -16,11 +16,11 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     //Window init
     setWindowTitle(tr("AutoBatchRunner - BatchRunner"));
     QSettings settings( "./settings.ini", QSettings::IniFormat );
-    QVariant v = settings.value( "main/geometry" );
+    QVariant v = settings.value( "batchrunner/geometry" );
     if (v.type() != QVariant::Invalid){
         // load window settings on MainWindow
-        restoreGeometry( settings.value( "main/geometry" ).toByteArray() );
-        restoreState( settings.value( "main/windowState" ).toByteArray() );
+        restoreGeometry( settings.value( "batchrunner/geometry" ).toByteArray() );
+        restoreState( settings.value( "batchrunner/windowState" ).toByteArray() );
     }
 
     //set menu file
@@ -64,8 +64,8 @@ AutoBatchRunner::~AutoBatchRunner()
 {
     //save window state
     QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.setValue( "main/geometry", saveGeometry() );
-    settings.setValue( "main/windowState", saveState() );
+    settings.setValue( "batchrunner/geometry", saveGeometry() );
+    settings.setValue( "batchrunner/windowState", saveState() );
 
     delete opdialog;
     delete mlTask;
@@ -195,11 +195,15 @@ void AutoBatchRunner::on_editButton_clicked()
     //run ProfileEditor.exe
     QProcess process;
 #ifdef QT_DEBUG
-    bool result = process.startDetached(tr("./ProfileEditor.exe"), \
+    bool result = process.startDetached("./ProfileEditor.exe", \
                     (QStringList() << ui->comboBox->getCurrentFileName()));
     if(!result) qDebug() << tr("ProfileEditor launch failed.");
 #else
-    process.startDetached(tr("./ProfileEditor.exe"), QStringList() << ui->comboBox->getCurrentFileName());
+#ifdef Q_OS_WIN
+    process.startDetached("./ProfileEditor.exe", QStringList() << ui->comboBox->getCurrentFileName());
+#else
+    process.startDetached("./ProfileEditor", QStringList() << ui->comboBox->getCurrentFileName());
+#endif
 #endif
 }
 

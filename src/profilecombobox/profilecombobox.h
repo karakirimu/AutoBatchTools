@@ -14,12 +14,12 @@ class PROFILECOMBOBOXSHARED_EXPORT ProfileComboBox : public QComboBox
 {
     Q_OBJECT
 public:
-    PROFILECOMBOBOXSHARED_EXPORT explicit ProfileComboBox(QObject *parent = 0);
-    PROFILECOMBOBOXSHARED_EXPORT ~ProfileComboBox();
+    explicit ProfileComboBox(QObject *parent = 0);
+    ~ProfileComboBox();
 
-    PROFILECOMBOBOXSHARED_EXPORT QString getCurrentFileName();
-    PROFILECOMBOBOXSHARED_EXPORT QString getCurrentFileName(int index);
-    PROFILECOMBOBOXSHARED_EXPORT int getIndexFromFileName(QString filepath);
+    QString getCurrentFileName();
+    QString getCurrentFileName(int index);
+    int getIndexFromFileName(QString filepath);
 public slots:
     void reloadComboBoxItem();
     void addItemAction();

@@ -151,7 +151,7 @@ void ExtraFunctionsTable::openFileAction()
 {
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::ExistingFile);
-    QString dir = dialog.getOpenFileName(this, tr("Select Extras"), "./", tr("dll (*.dll)"));
+    QString dir = dialog.getOpenFileName(this, tr("Select Extras"), "./plugins/", tr("dll (*.dll)"));
 
     QFileInfo info(dir);
     if(info.exists()){

@@ -106,8 +106,8 @@ void EntryTask::updateFileList(QHash<QString, int> *data)
         ++i;
     }
 
-//    QSettings settings( "./psettings.ini", QSettings::IniFormat );
-//    settings.beginGroup("TESTEXEC");
+//    QSettings settings( "./settings.ini", QSettings::IniFormat );
+//    settings.beginGroup("pe_testexec");
 //    executor->addInputFiles(need, settings.value("FILELOADMAX", 1).toInt());
 //    settings.endGroup();
 }

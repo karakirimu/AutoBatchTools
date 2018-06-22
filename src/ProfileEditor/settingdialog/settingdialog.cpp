@@ -64,15 +64,15 @@ void SettingDialog::setupItem(){
 
 void SettingDialog::setSettings()
 {
-    QSettings settings( "./psettings.ini", QSettings::IniFormat );
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
 
-    settings.beginGroup("BASICSETTING");
+    settings.beginGroup("pe_general");
     settings.setValue("TEMPDIR", ui->tempEdit->text());
     settings.setValue("AUTOSAVEPERIOD", ui->autosaveSpinBox->value());
     settings.setValue("THEMECOLOR", ui->themeComboBox->currentText());
     settings.endGroup();
 
-    settings.beginGroup("TESTEXEC");
+    settings.beginGroup("pe_testexec");
     settings.setValue("DETACH", ui->detachCheckBox->isChecked());
     settings.setValue("FAKERES", ui->fakeresidentCheckBox->isChecked());
     settings.setValue("FSUPDATE", ui->fsupdateCheckBox->isChecked());
@@ -80,7 +80,7 @@ void SettingDialog::setSettings()
     settings.setValue("FILELOADMAX", ui->fileloadSpinBox->value());
     settings.endGroup();
 
-//    settings.beginGroup("STARTUP");
+//    settings.beginGroup("scheduler_startup");
 //    settings.setValue("ENABLED", ui->sysTrayCheckBox->isChecked());
 //    settings.setValue("STARTUPM", ui->startupCheckBox->isChecked());
 //    settings.setValue("ALLCLOSE", ui->allcloseCheckBox->isChecked());
@@ -93,15 +93,15 @@ void SettingDialog::setSettings()
 
 void SettingDialog::loadSettings()
 {
-    QSettings settings( "./psettings.ini", QSettings::IniFormat );
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
 
-    settings.beginGroup("BASICSETTING");
+    settings.beginGroup("pe_general");
     ui->tempEdit->setText(settings.value("TEMPDIR", "./").toString());
     ui->autosaveSpinBox->setValue(settings.value("AUTOSAVEPERIOD", 5).toInt());
     ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Default").toString());
     settings.endGroup();
 
-    settings.beginGroup("TESTEXEC");
+    settings.beginGroup("pe_testexec");
     ui->detachCheckBox->setChecked(settings.value("DETACH", false).toBool());
     ui->fakeresidentCheckBox->setChecked(settings.value("FAKERES", false).toBool());
     ui->fsupdateCheckBox->setChecked(settings.value("FSUPDATE", true).toBool());
@@ -109,7 +109,7 @@ void SettingDialog::loadSettings()
     ui->fileloadSpinBox->setValue(settings.value("FILELOADMAX", 10).toInt());
     settings.endGroup();
 
-//    settings.beginGroup("STARTUP");
+//    settings.beginGroup("scheduler_startup");
 //    ui->sysTrayCheckBox->setChecked(settings.value("ENABLED", false).toBool());
 //    ui->startupCheckBox->setChecked(settings.value("STARTUPM", false).toBool());
 //    ui->allcloseCheckBox->setChecked(settings.value("ALLCLOSE", true).toBool());
@@ -167,7 +167,7 @@ void SettingDialog::closeEvent(QCloseEvent *event)
 //#endif
 //    //when startup action selected, hide window.
 //    QSettings settings( "./settings.ini", QSettings::IniFormat );
-//    settings.beginGroup("STARTUP");
+//    settings.beginGroup("scheduler_startup");
 //    bool isstartup = settings.value("ENABLED", false).toBool();
 //    settings.endGroup();
 

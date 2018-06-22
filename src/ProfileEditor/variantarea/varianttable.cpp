@@ -4,7 +4,7 @@ VariantTable::VariantTable(QWidget *)
 {
     //popupAction
     setPopupActionTop();
-    setPopupActionDefault(QIcon(":/default_icons/copy.png"), QIcon(":/default_icons/arrow_up.png"), QIcon(":/default_icons/arrow_down.png"));
+    setPopupActionDefault();
     setPopupActionBottom();
 
     //init table size
@@ -73,19 +73,84 @@ void VariantTable::deleteAction()
     }
 }
 
+void VariantTable::cutAction()
+{
+    //if rowcount is zero.
+    if(this->rowCount() == 0) return;
+
+    copyAction();
+
+    //force delete
+    BaseTable::deleteTableRecursive();
+
+    //save to backup file
+    editAction();
+}
+
 void VariantTable::copyAction()
 {
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
 
     //item copy
-    int current = this->currentRow();
-    this->insertRow(current + 1);
-    //set tableitem
-    this->setItem(current + 1, 0, new QTableWidgetItem(this->model()->index(current, 0).data().toString()));
-    this->setItem(current + 1, 1, new QTableWidgetItem(this->model()->index(current, 1).data().toString()));
+//    int current = this->currentRow();
+//    this->insertRow(current + 1);
+//    //set tableitem
+//    this->setItem(current + 1, 0, new QTableWidgetItem(this->model()->index(current, 0).data().toString()));
+//    this->setItem(current + 1, 1, new QTableWidgetItem(this->model()->index(current, 1).data().toString()));
 
-    selectRow(current + 1);
+//    selectRow(current + 1);
+
+    QString tmp;
+    QModelIndexList mlist = this->selectedIndexes();
+
+    // 2 column
+    int counter = mlist.count();
+    for(int i = 0; i < counter; i++){
+        int crow = mlist.at(i).row();
+
+        tmp.append(mlist.at(i).model()->index(crow, i%2).data().toString());
+
+        if(i%2 == 0){
+            tmp.append("\t");
+        }else{
+            tmp.append("\n");
+        }
+    }
+
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setText(tmp);
+
+//    //save to backup file
+//    editAction();
+}
+
+void VariantTable::pasteAction()
+{
+    //modified CommandTable::pasteEnterAction()
+    QClipboard *clipboard = QApplication::clipboard();
+    QStringList text = clipboard->text().split(QRegularExpression("\\n|\\r\\n"));
+
+    //last lests unknown ""
+    if(text.count() > 1) text.removeLast();
+
+    int row = this->rowCount();
+    int txcount = text.count();
+
+    for(int i = 0; i < txcount; i++){
+       if(row > 0) row = this->currentRow();
+       insertRow(row);
+       QStringList intext = ((QString)text.at(i)).split(QRegularExpression("\\t|,"));
+
+       int intxt = intext.count();
+       if(intxt > 0){
+           this->setItem(row, 0, new QTableWidgetItem(intext.at(0)));
+           if(intxt > 1){
+               this->setItem(row, 1, new QTableWidgetItem(intext.at(1)));
+           }
+       }
+//       emit updateTable(row, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
+    }
 
     //save to backup file
     editAction();
@@ -142,6 +207,34 @@ void VariantTable::setPopupActionTop()
     connect(m_edit, SIGNAL(triggered()), this, SLOT(editAction()));
 }
 
+void VariantTable::setPopupActionDefault()
+{
+    //set basic items
+    m_cut = contextMenu->addAction(QIcon(":/default_icons/cut.png"), tr("Cut"));
+    m_cut->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
+
+    m_copy = contextMenu->addAction(QIcon(":/default_icons/copy.png"), tr("Copy"));
+    m_copy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
+
+    m_paste = contextMenu->addAction(QIcon(":/default_icons/paste.png"), tr("Paste"));
+    m_paste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
+
+    contextMenu->addSeparator();
+
+    m_up = contextMenu->addAction(QIcon(":/default_icons/arrow_up.png"), tr("Up"));
+    m_up->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Up));
+
+    m_down = contextMenu->addAction(QIcon(":/default_icons/arrow_down.png"), tr("Down"));
+    m_down->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
+
+    //connect signals
+    connect(m_cut, SIGNAL(triggered()), this, SLOT(cutAction()));
+    connect(m_copy, SIGNAL(triggered()), this, SLOT(copyAction()));
+    connect(m_paste, SIGNAL(triggered()), this, SLOT(pasteAction()));
+    connect(m_up, SIGNAL(triggered()), this, SLOT(upAction()));
+    connect(m_down, SIGNAL(triggered()), this, SLOT(downAction()));
+}
+
 void VariantTable::setPopupActionBottom()
 {
     contextMenu->addSeparator();
@@ -185,9 +278,19 @@ bool VariantTable::eventFilter(QObject *obj, QEvent *event)
              }
             break;
 
+           case Qt::Key_X:
+             if (keyEvent->modifiers() & Qt::ControlModifier)
+                 cutAction();
+             break;
+
            case Qt::Key_C:
              if (keyEvent->modifiers() & Qt::ControlModifier)
                  copyAction();
+             break;
+
+           case Qt::Key_V:
+             if (keyEvent->modifiers() & Qt::ControlModifier)
+                 pasteAction();
              break;
 
            case Qt::Key_E:
@@ -209,6 +312,7 @@ bool VariantTable::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 
+//DEPENDS_XML
 bool VariantTable::setLocalListItem(int itemid)
 {
     QList<QStringList> *list = new QList<QStringList>();
@@ -252,6 +356,7 @@ void VariantTable::tableItemSwap(int from, int to)
     this->setItem(to, 1, new QTableWidgetItem(bku1));
 }
 
+//DEPENDS_XML
 void VariantTable::getLocalList(QList<QStringList> *newlist)
 {
     QStringList list;

@@ -59,41 +59,36 @@ void CommandTable::deleteAction()
 
     //check delete warning message
     if(deleteCheckMessage()){
-        //copy of BaseTable::deleteTableRecursive()
-        //すべての条件で消える
         QModelIndexList lists = this->selectedIndexes();
-        int row;
-        while(!lists.empty()){
-            row = lists.at(0).row();
-            this->removeRow(row);
-            emit updateTable(row, "", ProcessXmlListGenerator::TABLE_DELETE);
-
-            //delete column index
-            for(int i = 0; i < lists.at(0).column(); i++){
-                lists.removeAt(0);
-            }
-            lists = this->selectedIndexes();
+        int rows = lists.count();
+        for(int i = 0; i < rows; i++){
+            emit updateTable(lists.at(i).row(), "", ProcessXmlListGenerator::TABLE_DELETE);
         }
+        BaseTable::deleteTableRecursive();
     }
 }
 
-//TODO : multiple select
+//FIXME : multiple select (it msy be not so good ...)
 void CommandTable::cutAction()
 {
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
+
     QString tmp;
     QModelIndexList mlist = this->selectedIndexes();
-    QMutableListIterator<QModelIndex> it(mlist);
-    while(it.hasNext()){
-        tmp.append(it.next().data().toString());
-        if(!it.hasNext()) tmp.append(" ");
+    int rows = mlist.count();
+    for(int i = 0; i < rows; i++){
+        tmp.append(mlist.at(i).data().toString());
+        if(i < rows) tmp.append("\t");
+
+        emit updateTable(mlist.at(i).row(), "", ProcessXmlListGenerator::TABLE_DELETE);
     }
+
+    //force delete
+    BaseTable::deleteTableRecursive();
 
     QClipboard *clipboard = QApplication::clipboard();
     clipboard->setText(tmp);
-
-    deleteAction();
 }
 
 void CommandTable::copyAction()
@@ -112,10 +107,10 @@ void CommandTable::copyAction()
 
     QString tmp;
     QModelIndexList mlist = this->selectedIndexes();
-    QMutableListIterator<QModelIndex> it(mlist);
-    while(it.hasNext()){
-        tmp.append(it.next().data().toString());
-        if(!it.hasNext()) tmp.append(" ");
+    int rows = mlist.count();
+    for(int i = 0; i < rows; i++){
+        tmp.append(mlist.at(i).data().toString());
+        if(i < rows) tmp.append("\t");
     }
 
     QClipboard *clipboard = QApplication::clipboard();
@@ -123,30 +118,62 @@ void CommandTable::copyAction()
 
 }
 
-void CommandTable::plainpasteAction()
-{
-    QClipboard *clipboard = QApplication::clipboard();
-    QString text = clipboard->text();
-
-    int current = this->currentRow();
-    this->insertRow(current);
-    this->setRowCount(this->rowCount() + 1);
-    this->setItem(current, 0, new QTableWidgetItem(text));
-    emit updateTable(current, text, ProcessXmlListGenerator::TABLE_INSERT);
-
-}
-
 void CommandTable::pasteAction()
 {
     QClipboard *clipboard = QApplication::clipboard();
-    QStringList text = clipboard->text().split(" ");
+    QStringList text = clipboard->text().split("\t");
+
+    //last lests unknown ""
+    if(text.count() > 1) text.removeLast();
+
     int row = this->rowCount();
     int txcount = text.count();
-    setRowCount(row + txcount);
 
     for(int i = 0; i < txcount; i++){
-        this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
-        emit updateTable(row + i, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
+       if(row > 0) row = this->currentRow();
+       insertRow(row);
+       this->setItem(row, 0, new QTableWidgetItem(text.at(i)));
+       emit updateTable(row, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
+    }
+}
+
+void CommandTable::pasteSpaceAction()
+{
+    QClipboard *clipboard = QApplication::clipboard();
+    QStringList text = clipboard->text().split(QRegularExpression("\\t| "));
+
+    //last lests unknown ""
+    text.removeLast();
+    int row = this->rowCount();
+    int txcount = text.count();
+
+    for(int i = 0; i < txcount; i++){
+       if(row > 0) row = this->currentRow();
+       insertRow(row);
+       this->setItem(row, 0, new QTableWidgetItem(text.at(i)));
+       emit updateTable(row, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
+    }
+}
+
+void CommandTable::pasteEnterAction()
+{
+    QClipboard *clipboard = QApplication::clipboard();
+
+    QStringList text = clipboard->text().split(QRegularExpression("\\t|\\n|\\r\\n"));
+
+    //last lests unknown ""
+    text.removeLast();
+
+    int row = this->rowCount();
+    int txcount = text.count();
+
+    for(int i = 0; i < txcount; i++){
+        if(text.at(i) != "\n" || text.at(i) != "\r\n"){
+            if(row > 0) row = this->currentRow();
+            insertRow(row);
+            this->setItem(row, 0, new QTableWidgetItem(text.at(i)));
+            emit updateTable(row, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
+        }
     }
 }
 
@@ -238,11 +265,21 @@ void CommandTable::setPopupActionTop()
 void CommandTable::setPopupActionDefault()
 {
     //set basic items
+    m_cut = contextMenu->addAction(QIcon(":/default_icons/cut.png"), tr("Cut"));
+    m_cut->setShortcut(QKeySequence(Qt::ALT + Qt::Key_X));
+
     m_copy = contextMenu->addAction(QIcon(":/default_icons/copy.png"), tr("Copy"));
     m_copy->setShortcut(QKeySequence(Qt::ALT + Qt::Key_C));
 
+    contextMenu->addSeparator();
+
     m_paste = contextMenu->addAction(QIcon(":/default_icons/paste.png"), tr("Paste"));
     m_paste->setShortcut(QKeySequence(Qt::ALT + Qt::Key_V));
+
+    m_pastespace = contextMenu->addAction(tr("Paste separated by space"));
+    m_pasteenter = contextMenu->addAction(tr("Paste separated by newline"));
+
+    contextMenu->addSeparator();
 
     m_up = contextMenu->addAction(QIcon(":/default_icons/arrow_up.png"), tr("Up"));
     m_up->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Up));
@@ -251,8 +288,11 @@ void CommandTable::setPopupActionDefault()
     m_down->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Down));
 
     //connect signals
+    connect(m_cut, SIGNAL(triggered()), this, SLOT(cutAction()));
     connect(m_copy, SIGNAL(triggered()), this, SLOT(copyAction()));
     connect(m_paste, SIGNAL(triggered()), this, SLOT(pasteAction()));
+    connect(m_pastespace, SIGNAL(triggered()), this, SLOT(pasteSpaceAction()));
+    connect(m_pasteenter, SIGNAL(triggered()), this, SLOT(pasteEnterAction()));
     connect(m_up, SIGNAL(triggered()), this, SLOT(upAction()));
     connect(m_down, SIGNAL(triggered()), this, SLOT(downAction()));
 }
@@ -292,19 +332,24 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
              }
             break;
 
+           case Qt::Key_X:
+             if (keyEvent->modifiers() & Qt::AltModifier)
+                 cutAction();
+             break;
+
            case Qt::Key_C:
              if (keyEvent->modifiers() & Qt::AltModifier)
                  copyAction();
              break;
 
-           case Qt::Key_E:
-             if (keyEvent->modifiers() & Qt::AltModifier)
-                 editAction();
-             break;
-
            case Qt::Key_V:
              if (keyEvent->modifiers() & Qt::AltModifier)
                  pasteAction();
+             break;
+
+           case Qt::Key_E:
+             if (keyEvent->modifiers() & Qt::AltModifier)
+                 editAction();
              break;
 
            default:

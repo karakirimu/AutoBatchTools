@@ -104,7 +104,7 @@ void MultiTaskP::setRange(QString objectname, QString str)
 {
     if(!processAliveCheck(objectname)) return;
     RunTaskSignalBinder *et = task->value(objectname);
-    et->updateRange(str);
+    if(str != "") et->updateRange(str);
 }
 
 void MultiTaskP::processPause(QString objectname)

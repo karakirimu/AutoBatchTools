@@ -31,7 +31,7 @@ void SearchComboBox::addAction()
 {
     FileSearchDialog *fs = new FileSearchDialog();
     setTheme(fs);
-    fs->setWindowTitle(tr("編集-新規*"));
+    fs->setWindowTitle(tr("Edit - untitled*"));
     if(fs->exec() == QDialog::Accepted){
         reloadComboBoxItem();
         this->setCurrentIndex(this->count() - 1);
@@ -96,10 +96,10 @@ QString SearchComboBox::getCurrentVariant()
 //QSS_THEME
 void SearchComboBox::setTheme(FileSearchDialog *fs)
 {
-    QSettings settings( "./psettings.ini", QSettings::IniFormat );
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
 
     //theme settings
-    settings.beginGroup("BASICSETTING");
+    settings.beginGroup("pe_general");
     QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
     settings.endGroup();
 

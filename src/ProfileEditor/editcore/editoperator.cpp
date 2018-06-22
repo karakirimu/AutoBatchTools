@@ -7,9 +7,9 @@ EditOperator::EditOperator(QObject *parent)
     undostack = new QUndoStack();
     cache = new QList<QList<QStringList>*>();
 
-    QSettings settings( "./psettings.ini", QSettings::IniFormat );
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
     //init timer (ms)
-    settings.beginGroup("BASICSETTING");
+    settings.beginGroup("pe_general");
     timerid = startTimer(settings.value("AUTOSAVEPERIOD", 5).toInt() * 60000);
     settings.endGroup();
 }

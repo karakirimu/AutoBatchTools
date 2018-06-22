@@ -10,15 +10,15 @@ class FILESEARCHLOADERSHARED_EXPORT BaseFileSearch : public QObject
 {
     Q_OBJECT
 public:
-    FILESEARCHLOADERSHARED_EXPORT explicit BaseFileSearch(QObject *parent = 0);
-    FILESEARCHLOADERSHARED_EXPORT ~BaseFileSearch();
+    explicit BaseFileSearch(QObject *parent = 0);
+    ~BaseFileSearch();
 
-    FILESEARCHLOADERSHARED_EXPORT QStringList listFiles(QString path, QStringList *searchword);
-    FILESEARCHLOADERSHARED_EXPORT QStringList listFilesRecursive(QString path, QStringList *searchword);
-    FILESEARCHLOADERSHARED_EXPORT void setCurrentTimeCondition(QStringList *filelist, qint64 limitedtime);
-    FILESEARCHLOADERSHARED_EXPORT void setModifiedTimeCondition(QStringList *filelist, QDateTime basetime, int type);
-    FILESEARCHLOADERSHARED_EXPORT void setCreatedTimeCondition(QStringList *filelist, QDateTime basetime, int type);
-    FILESEARCHLOADERSHARED_EXPORT void setFilesizeCondition(QStringList *filelist, long long basebytes, int type);
+    QStringList listFiles(QString path, QStringList *searchword);
+    QStringList listFilesRecursive(QString path, QStringList *searchword);
+    void setCurrentTimeCondition(QStringList *filelist, qint64 limitedtime);
+    void setModifiedTimeCondition(QStringList *filelist, QDateTime basetime, int type);
+    void setCreatedTimeCondition(QStringList *filelist, QDateTime basetime, int type);
+    void setFilesizeCondition(QStringList *filelist, long long basebytes, int type);
 
 private:
     void conditionFileSize(QList<int> *deleteddata, int counter, long long targetbytes, long long basebytes, int type);

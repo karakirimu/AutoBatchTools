@@ -221,22 +221,14 @@ bool Executor::runProcess()
     qDebug() << "Executor:: execlist count" << execlistcounter;
 #endif
 
-    for(int i = 0; i < execlistcounter; i++){
+    for(int i = 0; i < execlistcounter; i++){     
 
-        if(paused) emit processPaused();
-
-        while (paused && working){
-            //infinity loop wait 50 ms
-            sleep(50);
-        }
-
-        //check stop check
-        if(!working){
-            emit processStopped();
+        // if this check results true, working.
+        if(processStopHandleChecker()){
+           emit processStateUpdate(i);
+        }else{
             break;
         }
-
-        emit processStateUpdate(i);
 
         //read each list
         if(pbuilder->readItem(execlist->at(i), list)){
@@ -280,10 +272,16 @@ bool Executor::runProcess()
                 emit processErrorOccured(i);
             }
         }
-    }
 
+        // if this check results true, working.
+        if(!processStopHandleChecker()) break;
+
+    }
     //send max counter of all processcount
     emit processStateUpdate(execlistcounter);
+
+    //working data is reseted in resetdata();
+    if(working) emit processEnded(MAINPROCESS);
 
     //load file etc force reset.
     resetdata();
@@ -293,8 +291,6 @@ bool Executor::runProcess()
     delete process;
     delete execlist;
     delete list;
-
-    emit processEnded(MAINPROCESS);
 
     return true;
 }
@@ -690,13 +686,22 @@ QString Executor::replaceLocalMacro(QString original)
 QString Executor::replaceMacro(QString original, QHash<QString, QString> *list)
 {
     QString result = original;
-    QHash<QString, QString>::iterator i = list->find(original);
-    while (i != list->end()) {
-        if(i.key() == original){
-            result = result.replace(original, i.value());
-        }
-        ++i;
+    QList<QString> il = list->keys();
+    int sizer = il.size();
+    for(int i = 0; i < sizer; i++){
+//        if(original.contains(il.at(i))){
+            result = result.replace(il.at(i), list->value(il.at(i)));
+//        }
     }
+
+//    QHash<QString, QString>::iterator i = list->find(original);
+//    while (i != list->end()) {
+//        if(original.contains(i.key())){
+//            result = result.replace(original, i.value());
+//        }
+//        ++i;
+//    }
+
     return result;
 }
 
@@ -763,6 +768,23 @@ void Executor::sleep(int ms)
     QEventLoop loop;
     QTimer::singleShot( ms, &loop, SLOT( quit() ) );
     loop.exec();
+}
+
+bool Executor::processStopHandleChecker()
+{
+    if(paused) emit processPaused();
+
+    while (paused && working){
+        //infinity loop wait 50 ms
+        sleep(50);
+    }
+
+    //check stop check
+    if(!working){
+        emit processStopped();
+    }
+
+    return working;
 }
 
 int Executor::getOthernestmax() const

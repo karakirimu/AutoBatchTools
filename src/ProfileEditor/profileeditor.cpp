@@ -13,17 +13,17 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
 
     //set docktab
-    tabifyDockWidget(ui->localVariantDockWidget, ui->globalVariantDockWidget);
+    tabifyDockWidget(ui->globalVariantDockWidget, ui->localVariantDockWidget);
     setTabPosition(Qt::RightDockWidgetArea, QTabWidget::TabPosition::East);
     ui->localVariantDockWidget->show();
 
     //Window data restore
-    QSettings settings( "./psettings.ini", QSettings::IniFormat );
-    QVariant v = settings.value( "main/geometry" );
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QVariant v = settings.value( "profileeditor/geometry" );
     if (v.type() != QVariant::Invalid){
         // load window settings on MainWindow
-        restoreGeometry( settings.value( "main/geometry" ).toByteArray() );
-        restoreState( settings.value( "main/windowState" ).toByteArray() );
+        restoreGeometry( settings.value( "profileeditor/geometry" ).toByteArray() );
+        restoreState( settings.value( "profileeditor/windowState" ).toByteArray() );
     }
 
     //set Attrs
@@ -35,11 +35,11 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //set dock autohide TODO: not saved menu
     ui->processDockWidget->setAutohide(ui->actionAutohide->isChecked());
-    ui->setTestDockWidget->setAutohide(ui->actionAutohide->isChecked());
-    ui->runTestDockWidget->setAutohide(ui->actionAutohide->isChecked());
     ui->editorDockWidget->setAutohide(ui->actionAutohide->isChecked());
     ui->globalVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
     ui->localVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
+    ui->setTestDockWidget->setAutohide(ui->actionAutohide->isChecked());
+    ui->consoleDockWidget->setAutohide(ui->actionAutohide->isChecked());
 
     //init sharedfunction
     editop = new EditOperator(this);
@@ -122,20 +122,25 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->actionSettings, &QAction::triggered, this, &ProfileEditor::launchSettingAction);
 
     //Window
-    connect(ui->actionProcessTree, &QAction::triggered, ui->processDockWidget, &QWidget::setVisible);
-    connect(ui->actionLocalVariant, &QAction::triggered, ui->localVariantDockWidget, &QWidget::setVisible);
-    connect(ui->actionGlobalVariant, &QAction::triggered, ui->globalVariantDockWidget, &QWidget::setVisible);
-    connect(ui->actionEditor, &QAction::triggered, ui->editorDockWidget, &QWidget::setVisible);
     connect(ui->actionToolBar, &QAction::triggered, ui->mainToolBar, &QWidget::setVisible);
-    connect(ui->processDockWidget, &QDockWidget::visibilityChanged, ui->actionProcessTree, &QAction::setChecked);
-    connect(ui->localVariantDockWidget, &QDockWidget::visibilityChanged, ui->actionLocalVariant, &QAction::setChecked);
-    connect(ui->globalVariantDockWidget, &QDockWidget::visibilityChanged, ui->actionGlobalVariant, &QAction::setChecked);
+    connect(ui->actionProcess, &QAction::triggered, ui->processDockWidget, &QWidget::setVisible);
+    connect(ui->actionEditor, &QAction::triggered, ui->editorDockWidget, &QWidget::setVisible);
+    connect(ui->actionFileVariant, &QAction::triggered, ui->localVariantDockWidget, &QWidget::setVisible);
+    connect(ui->actionAppVariant, &QAction::triggered, ui->globalVariantDockWidget, &QWidget::setVisible);
+    connect(ui->actionRunSetting, &QAction::triggered, ui->setTestDockWidget, &BaseDockWidget::setVisible);
+    connect(ui->actionRunConsole, &QAction::triggered, ui->consoleDockWidget, &BaseDockWidget::setVisible);
+
+    connect(ui->processDockWidget, &QDockWidget::visibilityChanged, ui->actionProcess, &QAction::setChecked);
+    connect(ui->localVariantDockWidget, &QDockWidget::visibilityChanged, ui->actionFileVariant, &QAction::setChecked);
+    connect(ui->globalVariantDockWidget, &QDockWidget::visibilityChanged, ui->actionAppVariant, &QAction::setChecked);
     connect(ui->editorDockWidget, &QDockWidget::visibilityChanged, ui->actionEditor, &QAction::setChecked);
     connect(ui->mainToolBar, &QToolBar::visibilityChanged, ui->actionToolBar, &QAction::setChecked);
+    connect(ui->setTestDockWidget, &BaseDockWidget::visibilityChanged, ui->actionRunSetting, &QAction::setChecked);
+    connect(ui->consoleDockWidget, &BaseDockWidget::visibilityChanged, ui->actionRunConsole, &QAction::setChecked);
 
     connect(ui->actionAutohide, &QAction::triggered, ui->processDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->setTestDockWidget, &BaseDockWidget::setAutohide);
-    connect(ui->actionAutohide, &QAction::triggered, ui->runTestDockWidget, &BaseDockWidget::setAutohide);
+    connect(ui->actionAutohide, &QAction::triggered, ui->consoleDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->editorDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->globalVariantDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->localVariantDockWidget, &BaseDockWidget::setAutohide);
@@ -174,9 +179,9 @@ ProfileEditor::ProfileEditor(QStringList cuiargs, QWidget *parent)
 ProfileEditor::~ProfileEditor()
 {
     //save window state
-    QSettings settings( "./psettings.ini", QSettings::IniFormat );
-    settings.setValue( "main/geometry", saveGeometry() );
-    settings.setValue( "main/windowState", saveState() );
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    settings.setValue( "profileeditor/geometry", saveGeometry() );
+    settings.setValue( "profileeditor/windowState", saveState() );
 
     delete ui;
     delete settingdialog;
@@ -360,10 +365,10 @@ void ProfileEditor::launchSettingAction()
 //QSS_THEME
 void ProfileEditor::themeChangeAction()
 {
-    QSettings settings( "./psettings.ini", QSettings::IniFormat );
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
 
     //theme settings
-    settings.beginGroup("BASICSETTING");
+    settings.beginGroup("pe_general");
     QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
     settings.endGroup();
 
@@ -376,7 +381,7 @@ void ProfileEditor::themeChangeAction()
         if(file.open( QFile::ReadOnly | QFile::Text )){
             QString data(QLatin1String(file.readAll()));
             this->setStyleSheet(data);
-//            settingdialog->setStyleSheet(data);
+            settingdialog->setStyleSheet(data);
         }
     }
 }
@@ -449,13 +454,18 @@ void ProfileEditor::itemChangedAction(int index)
 
 void ProfileEditor::about()
 {
-    QMessageBox::about(this, tr("About ProfileEditor")
-                       , tr("AutoBatchRunner - ProfileEditor ver.beta\r\n\r\n"
-                            "This is an editor of AutoBatchRunner.\r\n"
-                            "ProfileEditor can create execution list of other projects.\r\n\r\n"
-                            "Currently, this program runs only windows systems.\r\n"
-                            "These programs licensed under GNU LGPL version 3 for now.\r\n\r\n"
-                            "Made by mr_elphis in 2018/02/18"));
+    //setup settingdialog
+    AboutPE *ab = new AboutPE;
+    ab->setStyleSheet(this->styleSheet());
+    ab->move(this->geometry().center() - settingdialog->rect().center());
+    ab->show();
+//    QMessageBox::about(this, tr("About ProfileEditor")
+//                       , tr("AutoBatchRunner - ProfileEditor ver.beta\r\n\r\n"
+//                            "This is an editor of AutoBatchRunner.\r\n"
+//                            "ProfileEditor can create execution list of other projects.\r\n\r\n"
+//                            "Currently, this program runs only windows systems.\r\n"
+//                            "These programs licensed under GNU LGPL version 3 for now.\r\n\r\n"
+//                            "Made by mr_elphis in 2018/02/18"));
 }
 
 void ProfileEditor::taskStarted(QString objectname, int runfrom)
@@ -483,6 +493,7 @@ void ProfileEditor::taskPaused(QString objectname)
     ui->stopToolButton->setEnabled(true);
 }
 
+// deleting target
 void ProfileEditor::taskStopped(QString objectname)
 {
     qDebug() << "profileeditor::taskstopped";
@@ -514,32 +525,38 @@ void ProfileEditor::taskEnd(QString objectname, int runfrom)
 
 void ProfileEditor::runTriggered()
 {
-    qDebug() << "profileeditor::run triggered";
-    if(key != "") return;
-
     ui->actionRun->setEnabled(false);
     ui->actionPause->setEnabled(false);
     ui->actionStop->setEnabled(false);
     ui->runToolButton->setEnabled(false);
     ui->pauseToolButton->setEnabled(false);
     ui->stopToolButton->setEnabled(false);
+    qDebug() << "profileeditor::run triggered";
 
-    key = mlTask->generateRandom(32);
+    if(key == ""){
+        key = mlTask->generateRandom(32);
 
-    mlTask->addTask(key, loadfile);
-    ui->console->setReadObjectName(key);
-    ui->consolemessage->setObjectName(key);
+        mlTask->addTask(key, loadfile);
+        ui->console->setReadObjectName(key);
+        ui->consolemessage->setObjectName(key);
 
-    //get filelist
-    QStringList flist;
-    int filecount = ui->fileTableWidget->rowCount();
-    for(int i = 0; i < filecount; i++){
-        flist.append(ui->fileTableWidget->item(i,0)->text());
+        //get filelist
+        QStringList flist;
+        int filecount = ui->fileTableWidget->rowCount();
+        for(int i = 0; i < filecount; i++){
+            flist.append(ui->fileTableWidget->item(i,0)->text());
+        }
+
+        mlTask->setInputFileList(key, &flist);
+
+        //init execute list range
+        mlTask->setRange(key, ui->rangeLineEdit->text());
+
+        qDebug() << "key:: " << key;
+
+    }else{
+        mlTask->processPause(key);
     }
-
-    mlTask->setInputFileList(key, &flist);
-
-    qDebug() << "key:: " << key;
 }
 
 void ProfileEditor::pauseTriggered()
@@ -556,10 +573,10 @@ void ProfileEditor::pauseTriggered()
 
 void ProfileEditor::stopTriggered()
 {
-    ui->actionRun->setEnabled(false);
+    ui->actionRun->setEnabled(true);
     ui->actionPause->setEnabled(false);
     ui->actionStop->setEnabled(false);
-    ui->runToolButton->setEnabled(false);
+    ui->runToolButton->setEnabled(true);
     ui->pauseToolButton->setEnabled(false);
     ui->stopToolButton->setEnabled(false);
 
