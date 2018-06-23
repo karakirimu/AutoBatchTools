@@ -327,12 +327,12 @@ bool VariantTable::setLocalListItem(int itemid)
 
     //set root
     if(type == "local"){
-        int counter = list->count();
-        setRowCount(counter - 2);
-        for(int i = 2; i < counter; i++){
+        int counter = QString(list->at(1).at(1)).toInt();
+        setRowCount(counter);
+        for(int i = 0; i < counter; i++){
             //set tableitem
-            this->setItem(i - 2, 0, new QTableWidgetItem(list->at(i).at(1)));
-            this->setItem(i - 2, 1, new QTableWidgetItem(list->at(i).at(3)));
+            this->setItem(i, 0, new QTableWidgetItem(list->at(i+2).at(1)));
+            this->setItem(i, 1, new QTableWidgetItem(list->at(i+2).at(3)));
         }
 
         qDebug()<< "VariantTable::setTreeItem";

@@ -162,8 +162,7 @@ void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *l
 //            || element == "file"
 //            /*|| element == "fstack"*/
 //            || element == "istack")
-    if(element.contains(QRegularExpression("name|ver|var|author|desc|uptime"
-                                           "|cmdc|localc|sep|file|istack")))
+    if(element.contains(QRegularExpression("^(name|ver|var|author|desc|uptime|cmdc|localc|sep|file|istack)$")))
     {
         //add element and text
         list->append(QStringList() << element << rxml->readElementText());
