@@ -41,5 +41,6 @@
         <file>default_icons/string.png</file>
         <file>license/gpl-3.0-standalone.html</file>
         <file>license/lgpl-3.0-standalone.html</file>
+        <file>themes/Material_Dark.qss</file>
     </qresource>
 </RCC>
