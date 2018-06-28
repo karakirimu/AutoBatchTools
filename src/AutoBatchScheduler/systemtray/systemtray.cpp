@@ -16,7 +16,7 @@ SystemTray::SystemTray(QWidget *parent) : QWidget(parent)
     connect(psw, &ProcessShowTable::infoNofile, this, &SystemTray::showProcessFileEmpty);
 
     //set trayicon
-    trayIcon->setIcon(QIcon(":/app_icons/app_abs.ico"));
+    trayIcon->setIcon(QIcon(":/app_icons/app_abs_24x24.ico"));
 
     //connect action
     connect(trayIcon, &QSystemTrayIcon::activated, this, &SystemTray::trayActivated);
