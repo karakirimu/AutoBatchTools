@@ -40,8 +40,45 @@ void StatusWidget::showWidget()
 {
     this->show();
 
+    // exclude taskbar
     QRect rec = QApplication::desktop()->screenGeometry();
-    this->move(rec.width() - this->width() - 30, rec.height() - this->height() - 70);
+
+    // include taskbar
+    QRect ava = QApplication::desktop()->availableGeometry();
+
+#ifdef QT_DEBUG
+    qDebug() << "height" << rec.height() << ava.height();
+    qDebug() << "width" << rec.width() << ava.width();
+    qDebug() << "y" << rec.y() << ava.y();
+    qDebug() << "x" << rec.x() << ava.x();
+
+#endif
+
+    if(rec.height() > ava.height()){
+        int taskbarsize = rec.height() - ava.height();
+        if(rec.y() < ava.y()){
+            //top
+            this->move(rec.width() - this->width() - 30, taskbarsize + 10);
+
+        }else{
+            //bottom
+            this->move(rec.width() - this->width() - 30, rec.height() - this->height() - taskbarsize - 10);
+
+        }
+    }else {
+
+        int taskbarsize = rec.width() - ava.width();
+
+        if(rec.x() < ava.x()){
+            //left
+            this->move(taskbarsize + 10, rec.height() - this->height() - 10);
+
+        }else{
+            //right
+            this->move(rec.width() - this->width() - taskbarsize - 10, rec.height() - this->height() - 10);
+
+        }
+    }
 }
 
 void StatusWidget::closeEvent(QCloseEvent *event)
