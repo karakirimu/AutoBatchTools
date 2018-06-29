@@ -79,7 +79,7 @@ void StartupDialog::loadSettingList(int index, const QList<QStringList> *data)
     }
 
     //setting valid
-    ui->validCheckBox->setChecked(VariantConverter::stringToBool(data->at(2).at(1)));
+//    ui->validCheckBox->setChecked(VariantConverter::stringToBool(data->at(2).at(1)));
 
     //set radio button
     ui->radioButtonGroup->button(VariantConverter::stringToInt(data->at(3).at(1)))->setChecked(true);
@@ -171,7 +171,8 @@ void StartupDialog::createList(QList<QStringList> *newlist)
     newlist->append((QStringList() << "prof" << ui->profileComboBox->getCurrentFileName()));
 
     //add setting is valid
-    newlist->append((QStringList() << "valid" << VariantConverter::boolToString(ui->validCheckBox->isChecked())));
+//    newlist->append((QStringList() << "valid" << VariantConverter::boolToString(ui->validCheckBox->isChecked())));
+    newlist->append((QStringList() << "valid" << VariantConverter::boolToString(false)));
 
     //add radiobutton select
     newlist->append((QStringList() << "radio" << QString::number(ui->radioButtonGroup->checkedId())));
