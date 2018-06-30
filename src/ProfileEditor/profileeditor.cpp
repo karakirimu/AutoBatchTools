@@ -73,6 +73,9 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     //update window title
     connect(editop, &EditOperator::loadfileChanged, this, &ProfileEditor::onTitleChanged);
 
+    //set window icon
+    setWindowIcon(QIcon(":/app_icons/app_pe_24x24.ico"));
+
     //set radiobutton group id
     ui->searchButtonGroup->setId(ui->variRadioButton, 0);
     ui->searchButtonGroup->setId(ui->fileRadioButton, 1);
@@ -375,6 +378,8 @@ void ProfileEditor::themeChangeAction()
     if(stylecolor != "Default"){
 #ifdef QT_DEBUG
         QFile file(QString("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/%1.qss").arg(stylecolor));
+//        QFile file(QString("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/Material_Dark.qss").arg(stylecolor));
+
 #else
         QFile file(QString(":/themes/%1.qss").arg(stylecolor));
 #endif
