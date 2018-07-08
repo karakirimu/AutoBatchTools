@@ -164,18 +164,18 @@ void FileSearchDialog::closeEvent(QCloseEvent *event)
     switch( res )
     {
     case QMessageBox::Yes:
-      // 保存できたなら、閉じてOK
+      // save
       onAccept();
       //if (saved())  event->accept();
       break;
 
     case QMessageBox::No:
-      // 保存しなくて、そのまま閉じてOK
+      // not save
       reject();
       break;
 
     case QMessageBox::Cancel:
-      // キャンセルして作業に戻る
+      // cancel
       event->ignore();
 
     default:

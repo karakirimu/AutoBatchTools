@@ -70,9 +70,9 @@ private:
 
     //search
     QWidget *widgetsearch;
-    QPushButton *addbutton;
-    QPushButton *editbutton;
-    QPushButton *deletebutton;
+    QToolButton *addbutton;
+    QToolButton *editbutton;
+    QToolButton *deletebutton;
     SearchComboBox *searchcombobox;
     QToolButton *openButton;
     QLineEdit *separatorLineEdit;

@@ -2,8 +2,12 @@
 
 StringXmlBuilder::StringXmlBuilder(QObject *)
 {
+    //set new folder
+    QDir dir;
+    dir.mkdir("./settings");
+
     //set new file
-    setFileName("./stringsettings.xml");
+    setFileName("./settings/string");
 
     if(count() == 0){
         createDocument();

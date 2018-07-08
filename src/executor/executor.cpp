@@ -329,15 +329,15 @@ bool Executor::loadInfo(QList<QStringList> *list, int firstpos)
     curdata = (curdata == "")? "(no name)" : curdata;
 
     // line 1
-    result.append(tr("ProcessInformation : "));
+    result.append(tr("Project : "));
     result.append(curdata);
     result.append(" : ver.");
 
     curdata = list->at(firstpos + 1).at(1);
     curdata = (curdata == "")? "test" : curdata;
     result.append(curdata);
-    result.append(" - last update ");
-    result.append(list->at(firstpos + 4).at(1));
+//    result.append(" - last update ");
+//    result.append(list->at(firstpos + 4).at(1));
     result.append(tr("\r\n"));
 
     // line 2

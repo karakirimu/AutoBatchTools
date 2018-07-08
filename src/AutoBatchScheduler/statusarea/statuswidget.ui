@@ -68,6 +68,9 @@
       </item>
       <item>
        <widget class="QToolButton" name="settingToolButton">
+        <property name="toolTip">
+         <string>show settings</string>
+        </property>
         <property name="text">
          <string>...</string>
         </property>

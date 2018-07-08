@@ -22,6 +22,20 @@
  * 4    :desc     :text   :
  * 5    :uptime   :text   :
  *
+ * data structure <order> type=info (2018/07/07 update)
+ * \    :        0:      1:      2:      3:
+ * 0    :type     :info   :
+ * 1    :name     :text   :
+ * 2    :ver      :text   :
+ * 3    :author   :text   :
+ * 4    :desc     :text   :
+ * 5    :finput   :yes/no :
+ * 6    :sinput   :yes/no :
+ * 7    :fsname   :text   :id     :data   :
+ * 8    :rloop    :yes/no :max    :count  :
+ * 9    :rlarg    :counts :
+ * 10   :reloop   :counts :
+ *
  *  data structure <order> type=local
  * \    :        0:      1:      2:      3:
  * 0    :type     :local  :

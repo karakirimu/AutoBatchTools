@@ -12,15 +12,19 @@ EditCheckCommand::EditCheckCommand(const int &targetindex
     m_objname = objname;
     m_cache = cache;
 
-    //init generator
-    ProcessXmlListGenerator x;
-    x.getListStructure(m_cache->at(m_targetindex), &xmlpos);
+    if(m_targetindex > 1){
+        //init generator
+        ProcessXmlListGenerator x;
+        x.getListStructure(m_cache->at(m_targetindex), &xmlpos);
+    }
 
-    if(m_objname == "timeoutCheckBox"){
+    if(m_objname.contains(QRegularExpression("^(timeoutCheckBox|allowInputCheckBox|"
+                                             "loopCountInfCheckBox|searchInputCheckBox)$"))){
         m_oldcheck = m_cache->at(m_targetindex)->at(getxmlpos()).at(1);
     }else{
         m_oldcheck = m_cache->at(m_targetindex)->at(getxmlpos()).at(3);
     }
+
 }
 
 void EditCheckCommand::undo()
@@ -28,7 +32,8 @@ void EditCheckCommand::undo()
     QStringList alist = m_cache->at(m_targetindex)->at(getxmlpos());
 
 
-    if(m_objname == "timeoutCheckBox"){
+    if(m_objname.contains(QRegularExpression("^(timeoutCheckBox|allowInputCheckBox|"
+                                             "loopCountInfCheckBox|searchInputCheckBox)$"))){
         alist.replace(1, m_oldcheck);
 //        m_cache->at(m_targetindex)->at(getxmlpos()).replace(1, m_oldcheck);
     }else{
@@ -44,7 +49,8 @@ void EditCheckCommand::redo()
 {
     QStringList alist = m_cache->at(m_targetindex)->at(getxmlpos());
 
-    if(m_objname == "timeoutCheckBox"){
+    if(m_objname.contains(QRegularExpression("^(timeoutCheckBox|allowInputCheckBox|"
+                                             "loopCountInfCheckBox|searchInputCheckBox)$"))){
         alist.replace(1, m_newcheck);
 //        m_cache->at(m_targetindex)->at(getxmlpos()).replace(1, m_newcheck);
     }else{
@@ -59,6 +65,7 @@ void EditCheckCommand::redo()
 //DEPENDS_XML DEPENDS_UI
 int EditCheckCommand::getxmlpos()
 {
+    //return edit position
     if(m_objname == "timeoutCheckBox"){
         return xmlpos.value(ProcessXmlListGenerator::NORMAL) + 1;
 
@@ -73,6 +80,18 @@ int EditCheckCommand::getxmlpos()
 
     }else if(m_objname == "autoOnlyCheckBox_4"){
         return xmlpos.value(ProcessXmlListGenerator::OTHER);
+
+    }else if(m_objname == "allowInputCheckBox"){
+        // match "finput"
+        return 5;
+
+    }else if(m_objname == "searchInputCheckBox"){
+        // match "sinput"
+        return 6;
+
+    }else if(m_objname == "loopCountInfCheckBox"){
+        // match rloop
+        return 8;
 
     }else{
         return -1;

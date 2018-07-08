@@ -34,7 +34,7 @@ private slots:
     //file
     void newfileAction();
     void openAction();
-    void saveAction();
+    bool saveAction();
     void overWriteSaveAction();
     void exportAction();
 
@@ -92,6 +92,7 @@ private:
     QFileDialog *fdialog;
     int rowpos;
     QString loadfile;
+    QString genfile;
     bool lastedited = false;
 
     EditOperator *editop;

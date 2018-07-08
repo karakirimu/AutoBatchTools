@@ -1,11 +1,16 @@
 #ifndef INNERSTACKEDWIDGET_H
 #define INNERSTACKEDWIDGET_H
 
+#include "searchcombobox.h"
+
+#include <QCheckBox>
 #include <QLabel>
 #include <QLineEdit>
 #include <QObject>
 #include <QPlainTextEdit>
+#include <QSpinBox>
 #include <QStackedWidget>
+#include <QToolButton>
 #include <QWidget>
 #include <editoperator.h>
 
@@ -26,6 +31,8 @@ public slots:
 private slots:
     void editTextAction(QString text);
     void editPlainTextAction();
+    void editCheckAction(bool check);
+    void editValueAction(int value);
 
 private:
 
@@ -35,6 +42,18 @@ private:
     QLineEdit *ver;
     QLineEdit *author;
     QPlainTextEdit *desc;
+
+    QToolButton *addbutton;
+    QToolButton *editbutton;
+    QToolButton *deletebutton;
+
+    QCheckBox *finput;
+    QCheckBox *sinput;
+    SearchComboBox *fscombo;
+    QCheckBox *rloop;
+    QSpinBox *rloopmax;
+    QSpinBox *rlargs;
+    QSpinBox *reloop;
     QLabel *rlabel;
 };
 

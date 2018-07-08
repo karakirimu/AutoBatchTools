@@ -203,6 +203,9 @@
            <property name="enabled">
             <bool>true</bool>
            </property>
+           <property name="toolTip">
+            <string>show/hide console</string>
+           </property>
            <property name="text">
             <string>...</string>
            </property>
@@ -217,6 +220,9 @@
            <property name="enabled">
             <bool>false</bool>
            </property>
+           <property name="toolTip">
+            <string>pause</string>
+           </property>
            <property name="text">
             <string>...</string>
            </property>
@@ -230,6 +236,9 @@
           <widget class="QToolButton" name="stopToolButton">
            <property name="enabled">
             <bool>false</bool>
+           </property>
+           <property name="toolTip">
+            <string>stop</string>
            </property>
            <property name="text">
             <string>...</string>

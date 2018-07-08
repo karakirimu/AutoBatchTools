@@ -210,8 +210,7 @@ void StartupTable::addAction()
         int index = this->rowCount();
         setRowCount(index + 1);
 
-        emit taskc->tableInserted(index);
-
+        //taskenable
         QList<QStringList> list;
         if(builder->readItem(currentRow(), &list)
                 && list.at(StartupXmlBuilder::VALID).at(1) == "yes"){
@@ -220,6 +219,8 @@ void StartupTable::addAction()
         }else{
             setTableItem(index);
         }
+
+        emit taskc->tableInserted(index);
     }
 }
 

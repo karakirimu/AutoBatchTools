@@ -17,6 +17,14 @@
  * 1    :ver_text   :
  * 2    :author_text:
  * 3    :desc_text  :
+ * 4    :finput_yesno:
+ * 5    :sinput_yesno:
+ * 6    :name_text   :
+ * 7    :name_id_data:
+ * 8    :rloop_yesno :
+ * 9    :rloop_count :
+ * 10   :rlarg_count :
+ * 11   :reloop_count:
  *
  * QStringList structure createLocalList
  * 0    :localc_counts:
@@ -76,7 +84,10 @@ public:
     enum{NORMAL, SEARCH, EXTRAFUNC, OTHER};
 
     //inner list connection map // "_" means "and"
-    enum{INFO_NAME,INFO_VER,INFO_AUTHOR,INFO_DESCRIPT,LOCALVARIANT,CURRENTONLY,INNERSTACK,
+    //used in Undo Redo Command
+    enum{INFO_NAME,INFO_VER,INFO_AUTHOR,INFO_DESCRIPT,INFO_FINPUT,
+         INFO_SINPUT,INFO_RLOOP,INFO_RLARG,INFO_RELOOP,
+         LOCALVARIANT,CURRENTONLY,INNERSTACK,
          SEARCHONLY,SEARCHNAME_ID,SEPARATOR,VARIANT,OUTPUTFILE,OUTPUT_RADIO,
          OTHERONLY,OTHERNAME,OTHERFILEPATH,
          NORMALONLY,TIMEOUT_DURITION,NCMDCOUNT,
@@ -89,11 +100,11 @@ public:
     void createNewList(QList<QStringList> *newlist);
 
     //list create function
-    void createInfoList(QList<QStringList> *newlist, QStringList *list);
+//    void createInfoList(QList<QStringList> *newlist, QStringList *list);
     void createLocalList(QList<QStringList> *newlist, QStringList *list);
 
     //combined above list
-    void createCombineList(QList<QStringList> *newlist, int index, QHash<int, QStringList *> *combine);
+//    void createCombineList(QList<QStringList> *newlist, int index, QHash<int, QStringList *> *combine);
 
     //change combined structure to separated structure
     void createSeparateList(QList<QStringList> *ctos);
@@ -107,12 +118,12 @@ public:
     //for change inner table structures
     static QStringList createCmdElement(QString value, int index);
 
-private:
+//private:
     //separated list create function
-    void createNormalList(QList<QStringList> *newlist, QStringList *list);
-    void createSearchList(QList<QStringList> *newlist, QStringList *list);
-    void createExtraFuncList(QList<QStringList> *newlist, QStringList *list);
-    void createOtherList(QList<QStringList> *newlist, QStringList *list);
+//    void createNormalList(QList<QStringList> *newlist, QStringList *list);
+//    void createSearchList(QList<QStringList> *newlist, QStringList *list);
+//    void createExtraFuncList(QList<QStringList> *newlist, QStringList *list);
+//    void createOtherList(QList<QStringList> *newlist, QStringList *list);
 
 };
 

@@ -3,6 +3,7 @@
 
 #include <QHash>
 #include <QUndoCommand>
+#include <QRegularExpression>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <../variantconverter/variantconverter.h>
 

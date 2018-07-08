@@ -2,8 +2,12 @@
 
 StartupXmlBuilder::StartupXmlBuilder(QObject *)
 {
+    //set new folder
+    QDir dir;
+    dir.mkdir("./settings");
+
     //set new file
-    setFileName("./startupsettings.xml");
+    setFileName("./settings/startup");
 
     if(count() == 0){
         createDocument();

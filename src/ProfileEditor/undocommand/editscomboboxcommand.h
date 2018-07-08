@@ -25,6 +25,7 @@ private:
     int m_newindex;
     QList<QList<QStringList> *> *m_cache;
     QHash<int, int> posinfo;
+    int m_indexpos = 0;
 };
 
 #endif // EDITSCOMBOBOXCOMMAND_H

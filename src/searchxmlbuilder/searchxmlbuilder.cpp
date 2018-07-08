@@ -2,8 +2,12 @@
 
 SearchXmlBuilder::SearchXmlBuilder(QObject *)
 {
+    //set new folder
+    QDir dir;
+    dir.mkdir("./settings");
+
     //set new file
-    setFileName("./searchsettings.xml");
+    setFileName(".settings/search");
 
     if(count() == 0){
         createDocument();

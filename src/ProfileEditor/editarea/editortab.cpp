@@ -16,9 +16,9 @@ EditorTab::~EditorTab()
 void EditorTab::setConnection()
 {
     widgetsearch = this->widget(ProcessXmlListGenerator::SEARCH);
-    addbutton = widgetsearch->findChild<QPushButton *>("searchAddButton");
-    editbutton = widgetsearch->findChild<QPushButton *>("searchEditButton");
-    deletebutton = widgetsearch->findChild<QPushButton *>("searchDeleteButton");
+    addbutton = widgetsearch->findChild<QToolButton *>("searchAddButton");
+    editbutton = widgetsearch->findChild<QToolButton *>("searchEditButton");
+    deletebutton = widgetsearch->findChild<QToolButton *>("searchDeleteButton");
     searchcombobox = widgetsearch->findChild<SearchComboBox *>("searchComboBox");
     openButton = widgetsearch->findChild<QToolButton *>("openToolButton");
 
@@ -316,7 +316,6 @@ void EditorTab::editCheckAction(bool check)
 //"autoOnlyCheckBox_2"
 //"autoOnlyCheckBox_3"
 //"autoOnlyCheckBox_4"
-
     editop->editCheckAction(currentid, check, objname);
 }
 

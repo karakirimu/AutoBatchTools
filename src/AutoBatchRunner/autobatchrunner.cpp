@@ -39,6 +39,9 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     //init ui theme
     themeChangeAction();
 
+    //set window icon
+    setWindowIcon(QIcon(":/app_icons/app_abr_24x24.ico"));
+
     //init ui add delete edit button
     connect(ui->addButton, &QToolButton::clicked, ui->comboBox, &ProfileComboBox::addItemAction);
     connect(ui->deleteButton, &QToolButton::clicked, ui->comboBox, &ProfileComboBox::deleteItemAction);

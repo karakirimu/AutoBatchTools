@@ -2,8 +2,12 @@
 
 ProfileXmlBuilder::ProfileXmlBuilder(QObject *)
 {
+    //set new folder
+    QDir dir;
+    dir.mkdir("./settings");
+
     //set new file
-    setFileName("./profilelist.xml");
+    setFileName("./settings/profiles");
 
     if(count() == 0){
         createDocument();

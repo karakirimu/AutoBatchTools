@@ -1,7 +1,19 @@
 TEMPLATE = subdirs 
 CONFIG += ordered
 
-win32|unix {
+#win32-msvc* {
+#    MSVC_VER = $$(VisualStudioVersion)
+#    equals(MSVC_VER, 14.0){
+#        message("msvc 2015")
+#    }
+
+#    equals(MSVC_VER, 15.0){
+#        message("msvc 2017")
+#    }
+
+#    QMAKE_CXXFLAGS += /FS
+#}
+
 SUBDIRS += \
           $$PWD\src\variantconverter \
           $$PWD\src\convertchecker \
@@ -32,4 +44,3 @@ SUBDIRS += \
           $$PWD\src\AutoBatchRunner \
           $$PWD\src\ProfileEditor \
           $$PWD\src\AutoBatchScheduler
-}

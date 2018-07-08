@@ -252,7 +252,9 @@ void ProfileEditor::openAction()
 
 }
 
-void ProfileEditor::saveAction()
+
+// true is save complete, false is not
+bool ProfileEditor::saveAction()
 {
     // copy only in save action
     QString fileName =
@@ -263,7 +265,10 @@ void ProfileEditor::saveAction()
 
     if(fileName != ""){
         editop->saveAction(fileName);
+    }else{
+        return false;
     }
+    return true;
 }
 
 void ProfileEditor::undoAction()
@@ -425,6 +430,7 @@ void ProfileEditor::onTitleChanged(QString newload)
     QFileInfo info(newload);
     if(info.suffix() == "autosave"){
         newtitle = tr("untitled");
+        genfile = newload;
     }else{
         newtitle = info.fileName();
     }
@@ -530,6 +536,11 @@ void ProfileEditor::taskEnd(QString objectname, int runfrom)
 
 void ProfileEditor::runTriggered()
 {
+    //when user is not save
+    if(loadfile == genfile && !this->saveAction()){
+        return;
+    }
+
     ui->actionRun->setEnabled(false);
     ui->actionPause->setEnabled(false);
     ui->actionStop->setEnabled(false);

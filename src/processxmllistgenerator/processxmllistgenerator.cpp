@@ -40,16 +40,21 @@ void ProcessXmlListGenerator::createNewList(QList<QStringList> *newlist)
 }
 
 ///DEPENDS_XML
-void ProcessXmlListGenerator::createInfoList(QList<QStringList> *newlist, QStringList *list)
-{
-    newlist->append((QStringList() << "type" << "info"));
-    newlist->append((QStringList() << "name" << list->at(0)));
-    newlist->append((QStringList() << "ver" << list->at(1)));
-    newlist->append((QStringList() << "author" << list->at(2)));
-    newlist->append((QStringList() << "desc" << list->at(3)));
-    newlist->append((QStringList() << "uptime" << QDateTime::currentDateTime().toString("yyyy/MM/dd HH:mm:ss")));
+//void ProcessXmlListGenerator::createInfoList(QList<QStringList> *newlist, QStringList *list)
+//{
+//    newlist->append((QStringList() << "type" << "info"));
+//    newlist->append((QStringList() << "name" << list->at(0)));
+//    newlist->append((QStringList() << "ver" << list->at(1)));
+//    newlist->append((QStringList() << "author" << list->at(2)));
+//    newlist->append((QStringList() << "desc" << list->at(3)));
+//    newlist->append((QStringList() << "finput" << list->at(4)));
+//    newlist->append((QStringList() << "sinput" << list->at(5)));
+//    newlist->append((QStringList() << "fsname" << list->at(6) << "id" << list->at(7)));
+//    newlist->append((QStringList() << "rloop" << list->at(8) << "max" << list->at(9)));
+//    newlist->append((QStringList() << "rlarg" << list->at(10)));
+//    newlist->append((QStringList() << "reloop" << list->at(11)));
 
-}
+//}
 
 ///DEPENDS_XML
 void ProcessXmlListGenerator::createLocalList(QList<QStringList> *newlist, QStringList *list)
@@ -63,70 +68,70 @@ void ProcessXmlListGenerator::createLocalList(QList<QStringList> *newlist, QStri
     }
 }
 
-///DEPENDS_XML
-void ProcessXmlListGenerator::createNormalList(QList<QStringList> *newlist, QStringList *list)
-{
-    int rcount = ((QString)list->at(3)).toInt();
-    newlist->append((QStringList() << "type" << "normal" << "only" << list->at(0)));
-    newlist->append((QStringList() << "timeout" << list->at(1) << "dur" << list->at(2)));
-    newlist->append((QStringList() << "cmdc" << list->at(3)));
-    for(int i = 0; i < rcount; i++){
-        newlist->append((QStringList() << "cmd"
-                         << list->at(i + 4) << "id" << QString::number(i)));
-    }
-}
+/////DEPENDS_XML
+//void ProcessXmlListGenerator::createNormalList(QList<QStringList> *newlist, QStringList *list)
+//{
+//    int rcount = ((QString)list->at(3)).toInt();
+//    newlist->append((QStringList() << "type" << "normal" << "only" << list->at(0)));
+//    newlist->append((QStringList() << "timeout" << list->at(1) << "dur" << list->at(2)));
+//    newlist->append((QStringList() << "cmdc" << list->at(3)));
+//    for(int i = 0; i < rcount; i++){
+//        newlist->append((QStringList() << "cmd"
+//                         << list->at(i + 4) << "id" << QString::number(i)));
+//    }
+//}
+
+/////DEPENDS_XML
+//void ProcessXmlListGenerator::createSearchList(QList<QStringList> *newlist, QStringList *list)
+//{
+//    newlist->append((QStringList() << "type" << "search" << "only" << list->at(0)));
+//    newlist->append((QStringList() << "sname" << list->at(1) << "id" << list->at(2)));
+//    newlist->append((QStringList() << "sep" << list->at(3)));
+//    newlist->append((QStringList() << "var" << list->at(4)));
+//    newlist->append((QStringList() << "output" << list->at(5) << "radio" << list->at(6)));
+//}
+
+/////DEPENDS_XML
+//void ProcessXmlListGenerator::createExtraFuncList(QList<QStringList> *newlist, QStringList *list)
+//{
+//    int rcount = ((QString)list->at(3)).toInt();
+//    newlist->append((QStringList() << "type" << "script" << "only" << list->at(0)));
+//    newlist->append((QStringList() << "name" << list->at(1)));
+//    newlist->append((QStringList() << "file" << list->at(2)));
+//    newlist->append((QStringList() << "cmdc" << list->at(3)));
+//    for(int i = 0; i < rcount; i++){
+//        newlist->append((QStringList() << "cmd"
+//                         << list->at(i + 4) << "id" << QString::number(i)));
+//    }
+//}
+
+/////DEPENDS_XML
+//void ProcessXmlListGenerator::createOtherList(QList<QStringList> *newlist, QStringList *list)
+//{
+//    newlist->append((QStringList() << "type" << "other" << "only" << list->at(0)));
+//    newlist->append((QStringList() << "name" << list->at(1)));
+//    newlist->append((QStringList() << "file" << list->at(2)));
+//}
 
 ///DEPENDS_XML
-void ProcessXmlListGenerator::createSearchList(QList<QStringList> *newlist, QStringList *list)
-{
-    newlist->append((QStringList() << "type" << "search" << "only" << list->at(0)));
-    newlist->append((QStringList() << "sname" << list->at(1) << "id" << list->at(2)));
-    newlist->append((QStringList() << "sep" << list->at(3)));
-    newlist->append((QStringList() << "var" << list->at(4)));
-    newlist->append((QStringList() << "output" << list->at(5) << "radio" << list->at(6)));
-}
+//void ProcessXmlListGenerator::createCombineList(QList<QStringList> *newlist, int index, QHash<int, QStringList *> *combine)
+//{
+//    // basic infomation
+//    newlist->append((QStringList() << "type" << "temp" << "only" << combine->value(index)->at(0)));
+//    newlist->append((QStringList() << "istack" << QString::number(index)));
 
-///DEPENDS_XML
-void ProcessXmlListGenerator::createExtraFuncList(QList<QStringList> *newlist, QStringList *list)
-{
-    int rcount = ((QString)list->at(3)).toInt();
-    newlist->append((QStringList() << "type" << "script" << "only" << list->at(0)));
-    newlist->append((QStringList() << "name" << list->at(1)));
-    newlist->append((QStringList() << "file" << list->at(2)));
-    newlist->append((QStringList() << "cmdc" << list->at(3)));
-    for(int i = 0; i < rcount; i++){
-        newlist->append((QStringList() << "cmd"
-                         << list->at(i + 4) << "id" << QString::number(i)));
-    }
-}
+//    // "type" << "search";
+//    createSearchList(newlist, combine->value(SEARCH));
 
-///DEPENDS_XML
-void ProcessXmlListGenerator::createOtherList(QList<QStringList> *newlist, QStringList *list)
-{
-    newlist->append((QStringList() << "type" << "other" << "only" << list->at(0)));
-    newlist->append((QStringList() << "name" << list->at(1)));
-    newlist->append((QStringList() << "file" << list->at(2)));
-}
+//    // "type" << "other";
+//    createOtherList(newlist, combine->value(OTHER));
 
-///DEPENDS_XML
-void ProcessXmlListGenerator::createCombineList(QList<QStringList> *newlist, int index, QHash<int, QStringList *> *combine)
-{
-    // basic infomation
-    newlist->append((QStringList() << "type" << "temp" << "only" << combine->value(index)->at(0)));
-    newlist->append((QStringList() << "istack" << QString::number(index)));
+//    // "type" << "normal";
+//    createNormalList(newlist, combine->value(NORMAL));
 
-    // "type" << "search";
-    createSearchList(newlist, combine->value(SEARCH));
-
-    // "type" << "other";
-    createOtherList(newlist, combine->value(OTHER));
-
-    // "type" << "normal";
-    createNormalList(newlist, combine->value(NORMAL));
-
-    // "type" << "script";
-    createExtraFuncList(newlist, combine->value(EXTRAFUNC));
-}
+//    // "type" << "script";
+//    createExtraFuncList(newlist, combine->value(EXTRAFUNC));
+//}
 
 ///DEPENDS_XML
 void ProcessXmlListGenerator::createSeparateList(QList<QStringList> *ctos)
@@ -158,6 +163,7 @@ void ProcessXmlListGenerator::createSeparateList(QList<QStringList> *ctos)
 void ProcessXmlListGenerator::getListStructure(QList<QStringList> *ctos, QHash<int, int> *posinfo)
 {
     //dynamic first index generator
+    //take each attributes count
     QMutableListIterator<QStringList> i(*ctos);
 
     int c = 0;

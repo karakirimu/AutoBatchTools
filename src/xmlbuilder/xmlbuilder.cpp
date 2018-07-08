@@ -61,7 +61,8 @@ bool Xmlbuilder::readItem(int itemid,
     checkXmlError();
     closeFile();
 
-    return true;
+    //if item count is zero, return false
+    return (itemlist->count() > 0)? true: false;
 }
 
 void Xmlbuilder::swapItem(int beforeitemid,

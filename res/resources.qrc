@@ -43,5 +43,8 @@
         <file>license/lgpl-3.0-standalone.html</file>
         <file>themes/Material_Dark.qss</file>
         <file>app_icons/app_abs_24x24.ico</file>
+        <file>app_icons/app_pe_24x24.ico</file>
+        <file>app_icons/app_abr_24x24.ico</file>
+        <file>app_icons/app_abs_24x24_white.ico</file>
     </qresource>
 </RCC>

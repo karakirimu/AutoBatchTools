@@ -422,19 +422,19 @@
             </attribute>
             <layout class="QVBoxLayout" name="verticalLayout_19">
              <property name="spacing">
-              <number>2</number>
+              <number>0</number>
              </property>
              <property name="leftMargin">
               <number>2</number>
              </property>
              <property name="topMargin">
-              <number>6</number>
+              <number>2</number>
              </property>
              <property name="rightMargin">
               <number>2</number>
              </property>
              <property name="bottomMargin">
-              <number>6</number>
+              <number>2</number>
              </property>
              <item>
               <widget class="QLineEdit" name="nameLineEdit">
@@ -461,32 +461,6 @@
               <widget class="QPlainTextEdit" name="descTextEdit">
                <property name="placeholderText">
                 <string>Description</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_5">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string>Last updated</string>
-               </property>
-               <property name="margin">
-                <number>4</number>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="refreshDateLabel">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string>-</string>
-               </property>
-               <property name="margin">
-                <number>4</number>
                </property>
               </widget>
              </item>
@@ -550,7 +524,7 @@
                 <item>
                  <widget class="QFrame" name="searchInput">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="frameShape">
                    <enum>QFrame::NoFrame</enum>
@@ -575,10 +549,17 @@
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="SearchComboBox" name="searchInputComboBox"/>
+                    <widget class="SearchComboBox" name="searchInputComboBox">
+                     <property name="enabled">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
                    </item>
                    <item>
                     <widget class="QToolButton" name="addInputToolButton">
+                     <property name="enabled">
+                      <bool>true</bool>
+                     </property>
                      <property name="text">
                       <string>...</string>
                      </property>
@@ -590,6 +571,9 @@
                    </item>
                    <item>
                     <widget class="QToolButton" name="removeInputToolButton">
+                     <property name="enabled">
+                      <bool>true</bool>
+                     </property>
                      <property name="text">
                       <string>...</string>
                      </property>
@@ -601,6 +585,9 @@
                    </item>
                    <item>
                     <widget class="QToolButton" name="editInputToolButton">
+                     <property name="enabled">
+                      <bool>true</bool>
+                     </property>
                      <property name="text">
                       <string>...</string>
                      </property>
@@ -647,7 +634,7 @@
                 <item>
                  <widget class="QFrame" name="loopCountMax">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="frameShape">
                    <enum>QFrame::NoFrame</enum>
@@ -669,14 +656,21 @@
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="label_3">
+                    <widget class="QLabel" name="loopMaxLabel">
+                     <property name="enabled">
+                      <bool>true</bool>
+                     </property>
                      <property name="text">
                       <string>最大ループ回数</string>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QSpinBox" name="loopCountMaxSpinBox"/>
+                    <widget class="QSpinBox" name="loopMaxSpinBox">
+                     <property name="enabled">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
                    </item>
                   </layout>
                  </widget>
@@ -710,7 +704,7 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QSpinBox" name="loopPerOneTimeSpinBox">
+                    <widget class="QSpinBox" name="loopArgumentsSpinBox">
                      <property name="minimum">
                       <number>0</number>
                      </property>
@@ -817,7 +811,7 @@
             <enum>QTabWidget::East</enum>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="exec">
             <attribute name="title">
@@ -926,9 +920,6 @@
               </widget>
              </item>
              <item>
-              <widget class="SearchComboBox" name="searchComboBox"/>
-             </item>
-             <item>
               <widget class="QFrame" name="frame">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -959,23 +950,38 @@
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QPushButton" name="searchAddButton">
+                 <widget class="SearchComboBox" name="searchComboBox"/>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="searchAddButton">
                   <property name="text">
-                   <string>Add</string>
+                   <string>+</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../res/resources.qrc">
+                    <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="searchDeleteButton">
+                 <widget class="QToolButton" name="searchDeleteButton">
                   <property name="text">
-                   <string>Delete</string>
+                   <string>-</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../res/resources.qrc">
+                    <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="searchEditButton">
+                 <widget class="QToolButton" name="searchEditButton">
                   <property name="text">
-                   <string>Edit</string>
+                   <string>*</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../../res/resources.qrc">
+                    <normaloff>:/default_icons/edit.png</normaloff>:/default_icons/edit.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -1132,14 +1138,11 @@
                     <number>0</number>
                    </property>
                    <item>
-                    <widget class="QLabel" name="label_28">
-                     <property name="text">
-                      <string>File name</string>
+                    <widget class="QLineEdit" name="outputLineEdit">
+                     <property name="placeholderText">
+                      <string>Output filename</string>
                      </property>
                     </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="outputLineEdit"/>
                    </item>
                    <item>
                     <widget class="QToolButton" name="openToolButton">

@@ -12,6 +12,9 @@ MainScheduler::MainScheduler(QWidget *parent) :
     ui->actionSchedule->setChecked(true);
     setWindowTitle(tr("AutoBatchRunner - Scheduler"));
 
+    //set window icon
+    setWindowIcon(QIcon(":/app_icons/app_abs_24x24.ico"));
+
     //set toolbar buttons
     connect(ui->actionExit, &QAction::triggered, this, &MainScheduler::close);
     connect(ui->actionSchedule, &QAction::triggered, this, &MainScheduler::onSchedulerButtonClicked);
