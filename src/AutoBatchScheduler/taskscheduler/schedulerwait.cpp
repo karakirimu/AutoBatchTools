@@ -84,7 +84,7 @@ QDateTime SchedulerWait::init_GetScheduledTimeFromXml(int itemid)
 
     if(builder->readItem(itemid, list)){
         if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"){
-            switch(VariantConverter::stringToInt(list->at(StartupXmlBuilder::SELECTEDTYPE).at(1))){
+            switch(((QString)list->at(StartupXmlBuilder::SELECTEDTYPE).at(1)).toInt()){
             case StartupXmlBuilder::ONESHOT:
                 time = QDateTime::fromString(list->at(StartupXmlBuilder::SC_DATETIME).at(1)
                                             , "yyyy/MM/dd HH:mm:ss");
@@ -99,7 +99,7 @@ QDateTime SchedulerWait::init_GetScheduledTimeFromXml(int itemid)
                 break;
 
             case StartupXmlBuilder::TIMELOOP:
-                time = QDateTime::currentDateTime().addSecs(VariantConverter::VariantConverter::stringToInt(list->at(5).at(1)));
+                time = QDateTime::currentDateTime().addSecs(((QString)list->at(5).at(1)).toInt());
                 loopschedule = true;
                 break;
 
@@ -120,11 +120,11 @@ QDateTime SchedulerWait::getNextTimeFromXml(int itemid, QDateTime current)
 
     if(builder->readItem(itemid, list)){
         if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"
-                && VariantConverter::stringToInt(list->at(3).at(1)) == 2){
-            time = current.addSecs(VariantConverter::stringToInt(list->at(5).at(1)));
+                && ((QString)list->at(3).at(1)).toInt() == 2){
+            time = current.addSecs(((QString)list->at(5).at(1)).toInt());
         }
         if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"
-                && VariantConverter::stringToInt(list->at(3).at(1)) == 1){
+                && ((QString)list->at(3).at(1)).toInt() == 1){
             time = getNextDateTime(getNextDaysCount(list->at(7).at(1), list->at(6).at(1))
                                    , list->at(6).at(1));
         }
@@ -258,7 +258,7 @@ int SchedulerWait::getNextDaysCount(QString datecode, QString timedata)
     }
 
     //add weeks
-    result += (VariantConverter::stringToInt(datecode.at(0)) - 1) * 7;
+    result += (((QString)datecode.at(0)).toInt() - 1) * 7;
 
     return result;
 }
@@ -267,7 +267,7 @@ int SchedulerWait::getNextDaysCount(QString datecode, QString timedata)
 //{
 //    int count = 0;
 //    for(int i = 1; i < WEEKDATA; i++){
-//        if(VariantConverter::stringToInt(datecode.at(i)) == 1) count++;
+//        if((QString)(datecode.at(i)).toInt() == 1) count++;
 //    }
 //    return count;
 //}

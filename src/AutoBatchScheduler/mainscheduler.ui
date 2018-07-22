@@ -32,6 +32,9 @@
     </property>
     <item>
      <widget class="QStackedWidget" name="optionStackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
       <widget class="QWidget" name="table">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="spacing">
@@ -58,7 +61,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="general">
+      <widget class="QWidget" name="startupgeneral">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <property name="spacing">
          <number>0</number>
@@ -77,12 +80,15 @@
         </property>
         <item>
          <widget class="QTabWidget" name="tabWidget">
+          <property name="tabPosition">
+           <enum>QTabWidget::East</enum>
+          </property>
           <property name="currentIndex">
            <number>0</number>
           </property>
-          <widget class="QWidget" name="service">
+          <widget class="QWidget" name="settingservice">
            <attribute name="title">
-            <string>Start up</string>
+            <string>Startup</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
@@ -157,7 +163,7 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="message">
+          <widget class="QWidget" name="settingmessage">
            <attribute name="title">
             <string>Message</string>
            </attribute>

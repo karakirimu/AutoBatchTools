@@ -26,6 +26,8 @@ SystemTray::SystemTray(QWidget *parent) : QWidget(parent)
     //set new xml builder
     builder = new StartupXmlBuilder();
 
+    themeChangeAction();
+
 //    settings.setDefaultFormat(QSettings::IniFormat);
 //    settings.setUserIniPath("./settings.ini");
 }
@@ -250,7 +252,7 @@ void SystemTray::showProcessEnded(QString objectname, int type)
 //        break;
 //    }
 
-    if(type == Executor::MAINPROCESS){
+    if(type == Executor::SCHEDULER){
         //show message
         QSettings settings( "./settings.ini", QSettings::IniFormat );
         settings.beginGroup("scheduler_startup");
@@ -381,4 +383,28 @@ QString SystemTray::encodeDayOfWeek(int dayofweek)
         break;
     }
     return "";
+}
+
+//QSS_THEME
+void SystemTray::themeChangeAction()
+{
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+
+    //theme settings
+    settings.beginGroup("scheduler_startup");
+    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
+    settings.endGroup();
+
+    if(stylecolor != "Default"){
+#ifdef QT_DEBUG
+        QFile file(QString("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/%1.qss").arg(stylecolor));
+#else
+        QFile file(QString(":/themes/%1.qss").arg(stylecolor));
+#endif
+        if(file.open( QFile::ReadOnly | QFile::Text )){
+            QString data(QLatin1String(file.readAll()));
+            this->setStyleSheet(data);
+            strw->setStyleSheet(data);
+        }
+    }
 }

@@ -21,28 +21,7 @@ MainScheduler::MainScheduler(QWidget *parent) :
     connect(ui->actionOption, &QAction::triggered, this, &MainScheduler::onOptionButtonClicked);
 
     //restore settings
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("scheduler_startup");
-    //restore settings
-    ui->minimizeShowCheckBox->setChecked(settings.value("MINIMIZESHOW", true).toBool());
-    ui->minimizeSpinBox->setValue(settings.value("MINIMIZESHOWMS", 2500).toInt());
-
-    ui->timerStartShowCheckBox->setChecked(settings.value("TIMERSTART", true).toBool());
-    ui->timerStartSpinBox->setValue(settings.value("TIMERSTARTMS", 2500).toInt());
-    ui->timerStopShowCheckBox->setChecked(settings.value("TIMERSTOP", true).toBool());
-    ui->timerStopSpinBox->setValue(settings.value("TIMERSTOPMS", 2500).toInt());
-
-    ui->taskStartShowCheckBox->setChecked(settings.value("TASKSTART", true).toBool());
-    ui->taskStartSpinBox->setValue(settings.value("TASKSTARTMS", 2500).toInt());
-    ui->taskEndShowCheckBox->setChecked(settings.value("TASKEND", true).toBool());
-    ui->taskEndSpinBox->setValue(settings.value("TASKENDMS", 2500).toInt());
-
-    ui->taskUnselectShowCheckBox->setChecked(settings.value("TASKUNSELECT", true).toBool());
-    ui->taskUnselectSpinBox->setValue(settings.value("TASKUNSELECTMS", 2500).toInt());
-
-    ui->minimizeLaunchCheckBox->setChecked(settings.value("HIDEWINDOW", false).toBool());
-    ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Default").toString());
-    settings.endGroup();
+    restoreSettings();
 
     //make taskscheduler
     taskscheduler = new TaskSchedulerConnector();
@@ -96,6 +75,23 @@ void MainScheduler::showWindow()
 
 void MainScheduler::closeEvent(QCloseEvent *event)
 {
+    saveSettings();
+
+#ifdef Q_OS_OSX
+    if (!event->spontaneous() || !isVisible()) {
+        return;
+    }
+#endif
+
+    //hide and left tasktray.
+    //show message
+    sysTray->showNotCloseMessage();
+    this->hide();
+    event->ignore();
+}
+
+void MainScheduler::saveSettings()
+{
     //save settings when close window
     QSettings settings( "./settings.ini", QSettings::IniFormat );
 
@@ -120,18 +116,32 @@ void MainScheduler::closeEvent(QCloseEvent *event)
     settings.setValue("HIDEWINDOW", ui->minimizeLaunchCheckBox->isChecked());
     settings.setValue("THEMECOLOR", ui->themeComboBox->currentText());
     settings.endGroup();
+}
 
-#ifdef Q_OS_OSX
-    if (!event->spontaneous() || !isVisible()) {
-        return;
-    }
-#endif
+void MainScheduler::restoreSettings()
+{
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    settings.beginGroup("scheduler_startup");
+    //restore settings
+    ui->minimizeShowCheckBox->setChecked(settings.value("MINIMIZESHOW", true).toBool());
+    ui->minimizeSpinBox->setValue(settings.value("MINIMIZESHOWMS", 2500).toInt());
 
-    //hide and left tasktray.
-    //show message
-    sysTray->showNotCloseMessage();
-    this->hide();
-    event->ignore();
+    ui->timerStartShowCheckBox->setChecked(settings.value("TIMERSTART", true).toBool());
+    ui->timerStartSpinBox->setValue(settings.value("TIMERSTARTMS", 2500).toInt());
+    ui->timerStopShowCheckBox->setChecked(settings.value("TIMERSTOP", true).toBool());
+    ui->timerStopSpinBox->setValue(settings.value("TIMERSTOPMS", 2500).toInt());
+
+    ui->taskStartShowCheckBox->setChecked(settings.value("TASKSTART", true).toBool());
+    ui->taskStartSpinBox->setValue(settings.value("TASKSTARTMS", 2500).toInt());
+    ui->taskEndShowCheckBox->setChecked(settings.value("TASKEND", true).toBool());
+    ui->taskEndSpinBox->setValue(settings.value("TASKENDMS", 2500).toInt());
+
+    ui->taskUnselectShowCheckBox->setChecked(settings.value("TASKUNSELECT", true).toBool());
+    ui->taskUnselectSpinBox->setValue(settings.value("TASKUNSELECTMS", 2500).toInt());
+
+    ui->minimizeLaunchCheckBox->setChecked(settings.value("HIDEWINDOW", false).toBool());
+    ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Default").toString());
+    settings.endGroup();
 }
 
 //QSS_THEME

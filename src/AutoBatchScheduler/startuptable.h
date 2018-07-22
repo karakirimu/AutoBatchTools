@@ -5,6 +5,9 @@
 #include "startupdialog.h"
 #include "startupxmlbuilder.h"
 #include "taskschedulerconnector.h"
+#include <../variantconverter/variantconverter.h>
+
+#include <QSettings>
 
 class StartupTable : public BasicTable
 {
@@ -19,6 +22,7 @@ public slots:
 
 private slots:
     void addAction();
+    void editTableAction(int row, int col);
     void editAction();
     void deleteAction();
     void copyAction();
@@ -34,6 +38,7 @@ private:
     void setPopupActionBottom();
     bool eventFilter(QObject *obj, QEvent *event);
     int getStartupXmlIndex(QString objectname);
+    void themeChangeAction(StartupDialog *sd);
 
     QAction *m_add;
     QAction *m_edit;
@@ -46,6 +51,7 @@ private:
     TaskSchedulerConnector *taskc;
     void setTableItem(int row);
     void replaceItem(int row);
+    QString getRandomString(int length);
 };
 
 #endif // STARTUPTABLE_H

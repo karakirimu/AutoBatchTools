@@ -41,7 +41,7 @@ private:
     void createList(QList<QStringList> *newlist);
 
     QString daySelectToString();
-    QString getRandomString(int size);
+    QString getRandomString(int length);
     QString timeToSeconds(QString data);
     QString secondsToTime(QString data);
     void StringToDaySelect(QString data);

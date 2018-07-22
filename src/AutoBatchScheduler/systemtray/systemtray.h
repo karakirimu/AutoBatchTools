@@ -60,6 +60,7 @@ private:
     int getStartupXmlIndex(QString objectname);
     QString getNameByActions(QString objectname);
     QString encodeDayOfWeek(int dayofweek);
+    void themeChangeAction();
 //    QAction *generateAction(int itemid);
 //    QSettings settings;
 

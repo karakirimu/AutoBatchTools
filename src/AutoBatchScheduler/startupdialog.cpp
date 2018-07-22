@@ -46,6 +46,8 @@ StartupDialog::StartupDialog(QWidget *parent) :
     //set current time
     QDateTime time = QDateTime::currentDateTime();
     ui->scheduleDateTimeEdit->setDateTime(time);
+
+    qsrand(time.currentSecsSinceEpoch() ^ 987465123);
 }
 
 StartupDialog::~StartupDialog()
@@ -82,7 +84,7 @@ void StartupDialog::loadSettingList(int index, const QList<QStringList> *data)
 //    ui->validCheckBox->setChecked(VariantConverter::stringToBool(data->at(2).at(1)));
 
     //set radio button
-    ui->radioButtonGroup->button(VariantConverter::stringToInt(data->at(3).at(1)))->setChecked(true);
+    ui->radioButtonGroup->button(((QString)data->at(3).at(1)).toInt())->setChecked(true);
 
     //set schedule datetime
     QDateTime datetime = QDateTime::fromString(data->at(4).at(1), "yyyy/MM/dd HH:mm:ss");
@@ -200,27 +202,37 @@ QString StartupDialog::daySelectToString()
     QString tmp;
 
     tmp.append(ui->weeksSpinBox->text());
-    tmp.append(QString::number(VariantConverter::boolToInt(ui->MonCheckBox->isChecked())));
-    tmp.append(QString::number(VariantConverter::boolToInt(ui->TueCheckBox->isChecked())));
-    tmp.append(QString::number(VariantConverter::boolToInt(ui->WedCheckBox->isChecked())));
-    tmp.append(QString::number(VariantConverter::boolToInt(ui->ThuCheckBox->isChecked())));
-    tmp.append(QString::number(VariantConverter::boolToInt(ui->FriCheckBox->isChecked())));
-    tmp.append(QString::number(VariantConverter::boolToInt(ui->SatCheckBox->isChecked())));
-    tmp.append(QString::number(VariantConverter::boolToInt(ui->SunCheckBox->isChecked())));
+    tmp.append(QString::number(ui->MonCheckBox->isChecked()));
+    tmp.append(QString::number(ui->TueCheckBox->isChecked()));
+    tmp.append(QString::number(ui->WedCheckBox->isChecked()));
+    tmp.append(QString::number(ui->ThuCheckBox->isChecked()));
+    tmp.append(QString::number(ui->FriCheckBox->isChecked()));
+    tmp.append(QString::number(ui->SatCheckBox->isChecked()));
+    tmp.append(QString::number(ui->SunCheckBox->isChecked()));
 
     return tmp;
 }
 
-QString StartupDialog::getRandomString(int size)
+QString StartupDialog::getRandomString(int length)
 {
-    const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+    QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.");
 
+    //shuffle characters
+    int pos = possibleCharacters.size() - 1;
+    int random;
+    while(pos > 1){
+        random = qrand() % pos;
+        QChar tmp = possibleCharacters.at(random);
+        possibleCharacters.replace(random, 1, possibleCharacters.at(pos));
+        possibleCharacters.replace(pos, 1, tmp);
+        pos--;
+    }
+
+    //select characters
     QString randomString;
-    QDateTime time;
-    qsrand(time.currentDateTime().toMSecsSinceEpoch());
-    for(int i=0; i < size; ++i)
+    for(int i=0; i < length; ++i)
     {
-        int index = (qrand() * (i + 1)) % possibleCharacters.length();
+        int index = qrand() % length;
         QChar nextChar = possibleCharacters.at(index);
         randomString.append(nextChar);
     }
@@ -269,14 +281,14 @@ QString StartupDialog::secondsToTime(QString data)
 
 void StartupDialog::StringToDaySelect(QString data)
 {
-    ui->weeksSpinBox->setValue(data.at(0).digitValue());
-    ui->MonCheckBox->setChecked(VariantConverter::intToBool(data.at(1).digitValue()));
-    ui->TueCheckBox->setChecked(VariantConverter::intToBool(data.at(2).digitValue()));
-    ui->WedCheckBox->setChecked(VariantConverter::intToBool(data.at(3).digitValue()));
-    ui->ThuCheckBox->setChecked(VariantConverter::intToBool(data.at(4).digitValue()));
-    ui->FriCheckBox->setChecked(VariantConverter::intToBool(data.at(5).digitValue()));
-    ui->SatCheckBox->setChecked(VariantConverter::intToBool(data.at(6).digitValue()));
-    ui->SunCheckBox->setChecked(VariantConverter::intToBool(data.at(7).digitValue()));
+    ui->weeksSpinBox->setValue(data.at(0).digitValue() == 1);
+    ui->MonCheckBox->setChecked(data.at(1).digitValue() == 1);
+    ui->TueCheckBox->setChecked(data.at(2).digitValue() == 1);
+    ui->WedCheckBox->setChecked(data.at(3).digitValue() == 1);
+    ui->ThuCheckBox->setChecked(data.at(4).digitValue() == 1);
+    ui->FriCheckBox->setChecked(data.at(5).digitValue() == 1);
+    ui->SatCheckBox->setChecked(data.at(6).digitValue() == 1);
+    ui->SunCheckBox->setChecked(data.at(7).digitValue() == 1);
 
     //check datas
     if(ui->MonCheckBox->isChecked() &&

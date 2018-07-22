@@ -71,7 +71,7 @@ void CellInfoWidget::scheduled()
 void CellInfoWidget::updateProcess(QString data, int type)
 {
     Q_UNUSED(type);
-    ui->processLabel->setText(data);
+    ui->currentProcessLabel->setText(data);
 }
 
 void CellInfoWidget::updateProgress(int num)
@@ -90,7 +90,7 @@ void CellInfoWidget::updateErrorProgress(int num)
 
 void CellInfoWidget::updateErrorText(QString message)
 {
-    ui->processLabel->setText(message);
+    ui->currentProcessLabel->setText(message);
 }
 
 void CellInfoWidget::setRunStatus(bool enabled)
@@ -117,7 +117,7 @@ void CellInfoWidget::onRunStatusChange(bool enabled)
 
 void CellInfoWidget::setTimerEnd(QString date)
 {
-    ui->processLabel->setText(date);
+    ui->nextTimeLabel->setText(date);
 }
 
 void CellInfoWidget::setProgressminmax(int start, int end)

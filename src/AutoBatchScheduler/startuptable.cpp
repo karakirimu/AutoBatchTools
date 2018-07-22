@@ -26,10 +26,14 @@ StartupTable::StartupTable(QWidget *parent)
     builder = new StartupXmlBuilder();
 
     //set doubleclick action
-    connect(this, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(editAction()));
+    connect(this, &QTableWidget::cellDoubleClicked, this, &StartupTable::editTableAction);
 
     //init table (reload read file.)
     reloadAction();
+
+    //set current time
+    QDateTime time = QDateTime::currentDateTime();
+    qsrand(time.currentSecsSinceEpoch() ^ 165423987);
 }
 
 StartupTable::~StartupTable()
@@ -63,12 +67,12 @@ void StartupTable::setPopupActionTop()
     contextMenu->addSeparator();
 
     //connect signals
-    connect(m_add, SIGNAL(triggered()), this, SLOT(addAction()));
-    connect(m_edit, SIGNAL(triggered()), this, SLOT(editAction()));
-    connect(m_delete, SIGNAL(triggered()), this, SLOT(deleteAction()));
+    connect(m_add, &QAction::triggered, this, &StartupTable::addAction);
+    connect(m_edit, &QAction::triggered, this, &StartupTable::editAction);
+    connect(m_delete, &QAction::triggered, this, &StartupTable::deleteAction);
 
-    connect(m_enable, SIGNAL(triggered()), this, SLOT(enableAction()));
-    connect(m_disable, SIGNAL(triggered()), this, SLOT(disableAction()));
+    connect(m_enable, &QAction::triggered, this, &StartupTable::enableAction);
+    connect(m_disable, &QAction::triggered, this, &StartupTable::disableAction);
 }
 
 void StartupTable::setPopupActionBottom()
@@ -77,7 +81,7 @@ void StartupTable::setPopupActionBottom()
     m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
     m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
 
-    connect(m_ref, SIGNAL(triggered()), this, SLOT(reloadAction()));
+    connect(m_ref, &QAction::triggered, this, &StartupTable::reloadAction);
 }
 
 bool StartupTable::eventFilter(QObject *obj, QEvent *event)
@@ -162,6 +166,29 @@ int StartupTable::getStartupXmlIndex(QString objectname)
     return itemid;
 }
 
+//QSS_THEME
+void StartupTable::themeChangeAction(StartupDialog *sd)
+{
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+
+    //theme settings
+    settings.beginGroup("scheduler_startup");
+    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
+    settings.endGroup();
+
+    if(stylecolor != "Default"){
+#ifdef QT_DEBUG
+        QFile file(QString("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/%1.qss").arg(stylecolor));
+#else
+        QFile file(QString(":/themes/%1.qss").arg(stylecolor));
+#endif
+        if(file.open( QFile::ReadOnly | QFile::Text )){
+            QString data(QLatin1String(file.readAll()));
+            sd->setStyleSheet(data);
+        }
+    }
+}
+
 void StartupTable::setTableItem(int row)
 {
     //qDebug () << "setTableItem";
@@ -173,7 +200,7 @@ void StartupTable::setTableItem(int row)
 
         //set icon
         QString icon;
-        if(list->at(2).at(1) == "yes"){
+        if(VariantConverter::stringToBool(list->at(StartupXmlBuilder::VALID).at(1))){
             icon = ":/default_icons/enable.png";
         }else{
             icon = ":/default_icons/remove.png";
@@ -205,20 +232,21 @@ void StartupTable::replaceItem(int row)
 void StartupTable::addAction()
 {
     StartupDialog *sd = new StartupDialog();
+    themeChangeAction(sd);
     sd->setWindowTitle(tr("Editing-New_file*"));
     if(sd->exec() == QDialog::Accepted){
         int index = this->rowCount();
         setRowCount(index + 1);
 
         //taskenable
-        QList<QStringList> list;
-        if(builder->readItem(currentRow(), &list)
-                && list.at(StartupXmlBuilder::VALID).at(1) == "yes"){
-            QFileInfo info(list.at(StartupXmlBuilder::PROF).at(1));
-            if(info.exists()) taskc->enableTask(list.at(StartupXmlBuilder::UNIQUE).at(1), info.canonicalFilePath());
-        }else{
+//        QList<QStringList> list;
+//        if(builder->readItem(currentRow(), &list)
+//                && VariantConverter::stringToBool(list.at(StartupXmlBuilder::VALID).at(1))){
+//            QFileInfo info(list.at(StartupXmlBuilder::PROF).at(1));
+//            if(info.exists()) taskc->enableTask(list.at(StartupXmlBuilder::UNIQUE).at(1), info.canonicalFilePath());
+//        }else{
             setTableItem(index);
-        }
+//        }
 
         emit taskc->tableInserted(index);
     }
@@ -226,40 +254,45 @@ void StartupTable::addAction()
 
 void StartupTable::editAction()
 {
+    editTableAction(currentRow(), 0);
+}
+
+void StartupTable::editTableAction(int row, int col)
+{
+    Q_UNUSED(col);
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
 
-    QString yesno = "";
+//    QString yesno = "";
     StartupDialog *sd = new StartupDialog();
-    QList<QStringList> list;
-    int row = currentRow();
+    themeChangeAction(sd);
 
-    if(builder->readItem(row, &list)){
+    QList<QStringList> list;
+    int rows = row;
+
+    if(builder->readItem(rows, &list)){
         //set title
-        sd->loadSettingList(row, &list);
-        yesno = list.at(StartupXmlBuilder::VALID).at(1);
+        sd->loadSettingList(rows, &list);
+//        yesno = list.at(StartupXmlBuilder::VALID).at(1);
     }
 
     if(sd->exec() == QDialog::Accepted){
         setTableItem(row);
 
-        if(yesno == "yes"){
-            //disable
-            if(builder->readItem(row, &list)){
-                if(list.at(StartupXmlBuilder::VALID).at(1) == "no"){
-                    taskc->disableTask(list.at(StartupXmlBuilder::UNIQUE).at(1));
-                }
-            }
-        }else{
-            //enable
-            if(builder->readItem(row, &list)){
-                if(list.at(StartupXmlBuilder::VALID).at(1) == "yes"){
-                    QFileInfo info(list.at(StartupXmlBuilder::PROF).at(1));
-                    if(info.exists()) taskc->enableTask(list.at(StartupXmlBuilder::UNIQUE).at(1), info.canonicalFilePath());
-
-                }
-            }
-        }
+//        if(yesno == "yes"){
+//            //disable
+//            if(builder->readItem(row, &list)
+//                    && !VariantConverter::stringToBool(list.at(StartupXmlBuilder::VALID).at(1))){
+//                taskc->disableTask(list.at(StartupXmlBuilder::UNIQUE).at(1));
+//            }
+//        }else{
+//            //enable
+//            if(builder->readItem(row, &list)
+//                    && VariantConverter::stringToBool(list.at(StartupXmlBuilder::VALID).at(1))){
+//                QFileInfo info(list.at(StartupXmlBuilder::PROF).at(1));
+//                if(info.exists()) taskc->enableTask(list.at(StartupXmlBuilder::UNIQUE).at(1), info.canonicalFilePath());
+//            }
+//        }
     }
 
 
@@ -276,7 +309,7 @@ void StartupTable::deleteAction()
     {
         QList<QStringList> list;
         if(builder->readItem(currentRow(), &list)
-                && list.at(StartupXmlBuilder::VALID).at(1) == "yes"){
+                && VariantConverter::stringToBool(list.at(StartupXmlBuilder::VALID).at(1))){
             taskc->disableTask(list.at(StartupXmlBuilder::UNIQUE).at(1));
         }
 
@@ -307,9 +340,23 @@ void StartupTable::copyAction()
 
     builder->copyItem(this->currentRow());
 
+    //update unique code
+    int currentrow = this->rowCount();
+    QList<QStringList> *list = new QList<QStringList>();
+    if(builder->readItem(currentrow, list)){
+        //modify unique strings
+        list->removeAt(StartupXmlBuilder::UNIQUE);
+        list->insert(StartupXmlBuilder::UNIQUE, QStringList() << "unique" << getRandomString(32));
+
+        // update item
+        builder->editItem(currentrow, list);
+
+        emit taskc->tableInserted(currentrow);
+    }
+
     reloadAction();
 
-    selectRow(this-> rowCount() - 1);
+    selectRow(currentrow);
 }
 
 void StartupTable::upAction()
@@ -344,7 +391,7 @@ void StartupTable::enableAction(){
     int row = this->currentRow();
 
     if(builder->readItem(row, list)){
-        if(list->at(StartupXmlBuilder::VALID).at(1) == "no"){
+        if(!VariantConverter::stringToBool(list->at(StartupXmlBuilder::VALID).at(1))){
             QFileInfo info(list->at(StartupXmlBuilder::PROF).at(1));
             if(info.exists()){
 
@@ -379,7 +426,7 @@ void StartupTable::disableAction(){
 
 //        if(taskc->taskRunningCheck(list->at(StartupXmlBuilder::UNIQUE).at(1))) return;
 
-        if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"){
+        if(VariantConverter::stringToBool(list->at(StartupXmlBuilder::VALID).at(1))){
 
             //change validation
 //            QStringList tmp;
@@ -404,4 +451,30 @@ void StartupTable::updateItemEnabled(QString objectname)
 {
     int itemid = getStartupXmlIndex(objectname);
     if(itemid > -1) setTableItem(itemid);
+}
+
+QString StartupTable::getRandomString(int length)
+{
+    QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.");
+
+    //shuffle characters
+    int pos = possibleCharacters.size() - 1;
+    int random;
+    while(pos > 1){
+        random = qrand() % pos;
+        QChar tmp = possibleCharacters.at(random);
+        possibleCharacters.replace(random, 1, possibleCharacters.at(pos));
+        possibleCharacters.replace(pos, 1, tmp);
+        pos--;
+    }
+
+    //select characters
+    QString randomString;
+    for(int i=0; i < length; ++i)
+    {
+        int index = qrand() % length;
+        QChar nextChar = possibleCharacters.at(index);
+        randomString.append(nextChar);
+    }
+    return randomString;
 }

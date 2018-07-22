@@ -124,7 +124,7 @@ void ProcessShowTable::timerStarted(QString objname, QDateTime date)
 
 void ProcessShowTable::setProcessEnd(QString objname, int type)
 {
-    if(type == Executor::MAINPROCESS){
+    if(type == Executor::SCHEDULER){
         CellInfoWidget *cell = getCellWidget(objname);
         cell->scheduled();
     }

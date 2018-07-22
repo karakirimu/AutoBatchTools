@@ -28,6 +28,8 @@ private slots:
     void closeEvent(QCloseEvent *event);
 
 private:
+    void saveSettings();
+    void restoreSettings();
     void themeChangeAction();
 
     Ui::MainScheduler *ui;
