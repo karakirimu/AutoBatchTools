@@ -11,11 +11,11 @@ public:
     explicit VariantConverter(QObject *parent = 0);
     ~VariantConverter();
 
-    static int stringToInt(QString data);
-    static int boolToInt(bool data);
+//    static int stringToInt(QString data);
+//    static int boolToInt(bool data);
 
     static bool stringToBool(QString checked);
-    static bool intToBool(int data);
+//    static bool intToBool(int data);
 
     static QString boolToString(bool checked);
 };

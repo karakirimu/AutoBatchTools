@@ -38,8 +38,7 @@ bool Xmlbuilder::readItem(int itemid,
 //            }
         name = rxml->name().toString();
 
-        if(name == firstlayername
-                && !hasid
+        if(name == firstlayername && !hasid
                 && rxml->attributes().value(attr).toInt() == itemid)
         {
             hasid = true;
@@ -49,13 +48,55 @@ bool Xmlbuilder::readItem(int itemid,
         if(hasid) setSearchItemData(name, itemlist);
 //        }
 
-        if(name == firstlayername
-                && hasid
+        if(name == firstlayername && hasid
                 && rxml->isEndElement()/*rxml->name()*/)
         {
             hasid = false;
             break;
         }
+
+    }
+
+    checkXmlError();
+    closeFile();
+
+    //if item count is zero, return false
+    return (itemlist->count() > 0)? true: false;
+}
+
+//Reading with fewer open times of opening and closing files
+bool Xmlbuilder::readAllItem(QString firstlayername, QString attr, QList<QList<QStringList> *> *itemlist)
+{
+    bool hasid = false;
+    QString name = "";
+    QList<QStringList> *tmplist;
+
+    openFile(QFile::ReadOnly);
+    readFileReset();
+
+    while (!(rxml->atEnd() || rxml->hasError()))
+    {
+        rxml->readNextStartElement();
+        name = rxml->name().toString();
+
+        if(name == firstlayername && !hasid
+                && rxml->attributes().hasAttribute(attr))
+        {
+            tmplist = new QList<QStringList>();
+            hasid = true;
+        }
+
+        if(hasid){
+            setSearchItemData(name, tmplist);
+        }
+
+        if(name == firstlayername && hasid
+                && rxml->isEndElement())
+        {
+            hasid = false;
+            itemlist->append(tmplist);
+        }
+
     }
 
     checkXmlError();
@@ -144,10 +185,13 @@ bool Xmlbuilder::overwriteItem(int itemid,
 
     //read forword data set
     while(!add.atEnd() && linecount != specifiedline){
-        forward.append(add.readLine());
         //WARNING:hard coding
         //Windows
-        forward.append("\n");
+#ifdef Q_OS_WIN
+        forward.append(add.readLine()).append("\n");
+#else
+        forward.append(add.readLine()).append("\r\n");
+#endif
         linecount++;
     }
 
@@ -297,7 +341,11 @@ bool Xmlbuilder::shiftXmlData(int destitemid,
         forward.append(add.readLine());
         //WARNING:hard coding
         //Windows
+#ifdef Q_OS_WIN
         forward.append("\n");
+#else
+        forward.append("\r\n");
+#endif
         linecount++;
     }
 

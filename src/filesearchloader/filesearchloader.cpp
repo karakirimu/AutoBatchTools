@@ -41,29 +41,29 @@ QStringList FileSearchLoader::searchFromStrList(QList<QStringList> *list)
 
     //filtering data from currenttime
     if(VariantConverter::stringToBool(list->at(SECONDS).at(3))){
-        setCurrentTimeCondition(&result, VariantConverter::stringToInt(list->at(SECONDS).at(1)));
+        setCurrentTimeCondition(&result, (list->at(SECONDS).at(1)).toInt());
     }
 
     //filtering data from createdtime
     if(VariantConverter::stringToBool(list->at(CREATION).at(3))){
         QDateTime dtime = QDateTime::fromString(list->at(CREATION).at(1), "yyyy/MM/dd HH:mm:ss");
-        setCreatedTimeCondition(&result, dtime, VariantConverter::stringToInt(list->at(CREATION).at(5)));
+        setCreatedTimeCondition(&result, dtime, (list->at(CREATION).at(5)).toInt());
     }
 
     //filtering data from modifiedtime
     if(VariantConverter::stringToBool(list->at(MODIFIED).at(3))){
         QDateTime time = QDateTime::fromString(list->at(MODIFIED).at(1), "yyyy/MM/dd HH:mm:ss");
-        setModifiedTimeCondition(&result, time, VariantConverter::stringToInt(list->at(MODIFIED).at(5)));
+        setModifiedTimeCondition(&result, time, (list->at(MODIFIED).at(5)).toInt());
     }
 
     //filtering data from filesize1
     if(VariantConverter::stringToBool(list->at(FSIZE_1).at(3))){
-        setFilesizeCondition(&result, stringToLongLong(list->at(FSIZE_1).at(1)), VariantConverter::stringToInt(list->at(FSIZE_1).at(5)));
+        setFilesizeCondition(&result, stringToLongLong(list->at(FSIZE_1).at(1)), (list->at(FSIZE_1).at(5)).toInt());
     }
 
     //filtering data from filesize2
     if(VariantConverter::stringToBool(list->at(FSIZE_2).at(3))){
-        setFilesizeCondition(&result, stringToLongLong(list->at(FSIZE_2).at(1)), VariantConverter::stringToInt(list->at(FSIZE_2).at(5)));
+        setFilesizeCondition(&result, stringToLongLong(list->at(FSIZE_2).at(1)), (list->at(FSIZE_2).at(5)).toInt());
     }
 
     return result;

@@ -16,7 +16,7 @@ CONFIG += ordered
 
 SUBDIRS += \
           $$PWD\src\variantconverter \
-          $$PWD\src\convertchecker \
+#          $$PWD\src\convertchecker \
 #1
           $$PWD\src\xmlbuilder \
           $$PWD\src\searchxmlbuilder \
@@ -27,6 +27,7 @@ SUBDIRS += \
           $$PWD\src\profilexmlbuilder \
 #2
           $$PWD\src\filesearchloader \
+          $$PWD\src\plugins\ExtraPluginInterface \
           $$PWD\src\executor \
 #3
           $$PWD\src\profilecombobox \

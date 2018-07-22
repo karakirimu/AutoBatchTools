@@ -7,7 +7,7 @@ SearchXmlBuilder::SearchXmlBuilder(QObject *)
     dir.mkdir("./settings");
 
     //set new file
-    setFileName(".settings/search");
+    setFileName("./settings/.search");
 
     if(count() == 0){
         createDocument();

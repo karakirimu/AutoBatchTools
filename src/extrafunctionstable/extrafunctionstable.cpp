@@ -159,7 +159,7 @@ void ExtraFunctionsTable::openFileAction()
         QPluginLoader loader(dir);
         if(loader.load()){
             QObject *plugin = loader.instance();
-            if(qobject_cast<RunnerExtraPluginInterface *>(plugin)){
+            if(qobject_cast<ExtraPluginInterface *>(plugin)){
                 //    this->setItem(this->currentRow(),1,new QTableWidgetItem(dir));
                     this->setItem(this->currentRow(), 0, new QTableWidgetItem(dir));
             }

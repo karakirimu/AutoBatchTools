@@ -7,7 +7,7 @@
 #include "../processxmllistgenerator/processxmllistgenerator.h"
 #include "../variantconverter/variantconverter.h"
 #include "../filesearchloader/filesearchloader.h"
-#include "../plugins/RunnerExtraPluginInterface/runnerextraplugininterface.h"
+#include "../plugins/ExtraPluginInterface/extraplugininterface.h"
 
 #include <QObject>
 #include <QProcess>
@@ -61,12 +61,12 @@ public:
     bool getSearchfileoverwrite() const;
     void setSearchfileoverwrite(bool overwrite); /*preset func*/
 
-    int getOthernestmax() const;
-    void setOthernestmax(int nest = 10);
+//    int getOthernestmax() const;
+//    void setOthernestmax(int nest = 10);
 
     enum {INFO, NORMAL, SEARCH, SCRIPT, OTHER, TEMP, LOCAL, WARNING, ERROR, INPUT};
     enum {DEFAULT, SCHEDULER};
-    enum {MAINPROCESS, OTHERPROCESS};
+//    enum {MAINPROCESS, OTHERPROCESS};
 signals:
     //in runprocess
     //signals to all
@@ -97,6 +97,7 @@ public slots:
 
     //process slot
     bool runProcess(); /*main func*/
+//    bool runProcess2();
     void stopProcess();
 
 private slots:
@@ -109,9 +110,11 @@ private:
     bool loadInfo(QList<QStringList> *list, int firstpos);
     bool loadNormal(QList<QStringList> *list, int firstpos);
     bool loadSearch(QList<QStringList> *list, int firstpos);
-    bool loadScript(QList<QStringList> *list, int firstpos);
+    bool loadPlugins(QList<QStringList> *list, int firstpos);
     bool loadOther(QList<QStringList> *list, int firstpos);
     bool loadTemp(QList<QStringList> *list);
+
+    bool Execute();
 
     //MacroString Converter
     QString replaceInputMacro(QString original);
@@ -125,6 +128,9 @@ private:
     //check execlist state
     void checkExecList(QList<int> *elist);
 
+    //set processxmlbuilder's Infomation settings
+    void setProcessSettings(bool *fileinput, int *loopcount);
+
     //common selector
     int getReadType(QString type);
 
@@ -137,45 +143,61 @@ private:
     //stop pause handler
     bool processStopHandleChecker();
 
-    //status part
-    bool working = false;
-    bool paused = false;
+    //for execution task variant
+    typedef struct{
+        //status part
+        bool working = false;
+        bool paused = false;
+        //execute part
+        QProcess *process;
 
-    //setting part
-    bool detached = false;
-    int startnum = 0;
-    int endnum = -1;
+    }WorkingParam;
+
+    //execution setting task variant (normal)
+    typedef struct{
+        bool detached = false;
+        int launched = DEFAULT;
+        bool searchoutputoverwrite = true;
+        int argumentscount;
+        int othernestmax = 1;
+        QString initFilename = "";
+    }SettingParam;
+
+    //execution setting task variant (test for profileeditor)
+    typedef struct{
+        int startnum = 0;
+        int endnum = -1;
+    }TestParam;
+
+    WorkingParam *work;
+    SettingParam *setting;
+    TestParam *test;
+
+    //setting part (execution order)
     QList<int> userexeclist;
     QList<int> *execlist;
 //    int forcequittime = -1;
-    int launchedfrom = DEFAULT;
-    bool autoaddexec = false;
 
-    bool searchfileoverwrite = true;
-
-    //nest init
-    int othernestmax = 10;
+    //inner
     bool neststop = false;
+    bool noexeclist = false;
 
     //macro part
-    QHash<QString, QString> fileHash;
+//    QHash<QString, QString> fileHash;
+    QStringList fileList;
     QHash<QString, QString> globalHash;
     QHash<QString, QString> *localHash;
-
-    //xml part
-    ProcessXmlBuilder *pbuilder;
-    ProcessXmlListGenerator xgen;
-    bool processfileloaded = false;
-//    QString basefilename = "";
-
-    //execute part
-    QProcess *process;
 
     //for file read secure
     QMutex *sMutex = nullptr;
 
+    //xml part
+    ProcessXmlBuilder *pbuilder;
+    ProcessXmlListGenerator xgen;
+    bool profileloaded = false;
+
     //script part
-    RunnerExtraPluginInterface *ext;
+    ExtraPluginInterface *ext;
 
     //otherprocess part
     QStack<ProcessXmlBuilder *> builderstack;

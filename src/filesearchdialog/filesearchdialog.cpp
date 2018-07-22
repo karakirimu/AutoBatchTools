@@ -91,19 +91,19 @@ void FileSearchDialog::loadSettingList(int index, const QList<QStringList> *data
     QDateTime time = QDateTime::fromString(data->at(CREATION).at(1), "yyyy/MM/dd HH:mm:ss");
     ui->createDateTimeEdit->setDateTime(time);
     ui->createCheckBox->setChecked(VariantConverter::stringToBool(data->at(CREATION).at(3)));
-    ui->createComboBox->setCurrentIndex(VariantConverter::stringToInt(data->at(CREATION).at(5)));
+    ui->createComboBox->setCurrentIndex(((QString)data->at(CREATION).at(5)).toInt());
 
     QDateTime time2 = QDateTime::fromString(data->at(MODIFIED).at(1), "yyyy/MM/dd HH:mm:ss");
     ui->modifiedDateTimeEdit->setDateTime(time2);
     ui->modifiedCheckBox->setChecked(VariantConverter::stringToBool(data->at(MODIFIED).at(3)));
-    ui->modifiedComboBox->setCurrentIndex(VariantConverter::stringToInt(data->at(MODIFIED).at(5)));
+    ui->modifiedComboBox->setCurrentIndex(((QString)data->at(MODIFIED).at(5)).toInt());
 
     ui->fsizeLineEdit1->setText(decodeFromBytes(data->at(FSIZE_1).at(1), 1));
     ui->fsizeCheckBox->setChecked(VariantConverter::stringToBool(data->at(FSIZE_1).at(3)));
-    ui->fsizeComboBox1->setCurrentIndex(VariantConverter::stringToInt(data->at(FSIZE_1).at(5)));
+    ui->fsizeComboBox1->setCurrentIndex(((QString)data->at(FSIZE_1).at(5)).toInt());
 
     ui->fsizeLineEdit2->setText(decodeFromBytes(data->at(FSIZE_2).at(1), 2));
-    ui->fsizeComboBox2->setCurrentIndex(VariantConverter::stringToInt(data->at(FSIZE_2).at(5)));
+    ui->fsizeComboBox2->setCurrentIndex(((QString)data->at(FSIZE_2).at(5)).toInt());
 }
 
 void FileSearchDialog::onAccept(){

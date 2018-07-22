@@ -11,55 +11,61 @@ Executor::Executor(QObject *parent)
     userexeclist.clear();
 
 //    connect(this, &Executor::processEnded, this, &Executor::processEndLastStatus);
+    work = new WorkingParam();
+    test = new TestParam();
+    setting = new SettingParam();
 }
 
 Executor::~Executor()
 {
     delete pbuilder;
     delete localHash;
+    delete work;
+    delete test;
+    delete setting;
 //    delete execlist;
 }
 
 bool Executor::getDetached() const
 {
-    return detached;
+    return setting->detached;
 }
 
 void Executor::setDetached(bool detach)
 {
-    detached = detach;
+    setting->detached = detach;
 }
 
 int Executor::getStartnum() const
 {
-    return startnum;
+    return test->startnum;
 }
 
 void Executor::setStartnum(int start)
 {
-    startnum = start;
+    test->startnum = start;
 }
 
 int Executor::getEndnum() const
 {
-    return endnum;
+    return test->endnum;
 }
 
 void Executor::setEndnum(int end)
 {
     if(end < pbuilder->count())
-        endnum = end;
+        test->endnum = end;
 }
 
 void Executor::processWrite(QString code)
 {
-    process->write(code.toLocal8Bit());
+    work->process->write(code.toLocal8Bit());
     emit processMessage(code, INPUT);
 }
 
 void Executor::processKill()
 {
-    process->kill();
+    work->process->kill();
     emit processMessage(QObject::tr("Process killed."), INPUT);
     //    emit processStopped();
 }
@@ -82,12 +88,12 @@ void Executor::setMutex(QMutex *mutex)
 
 bool Executor::getPaused() const
 {
-    return paused;
+    return work->paused;
 }
 
 void Executor::setPaused(bool pause)
 {
-    paused = pause;
+    work->paused = pause;
 }
 
 QString Executor::macroConvert(QString part)
@@ -115,30 +121,38 @@ void Executor::setExecList(QList<int> data)
 
 bool Executor::getWorking() const
 {
-    return working;
+    return work->working;
 }
 
 void Executor::setProcessFile(QString filepath)
 {
-    pbuilder->setLoadPath(filepath);
-    processfileloaded = true;
+//    pbuilder->setLoadPath(filepath);
+    profileloaded = true;
+    setting->initFilename = filepath;
 }
+
+//void Executor::addInputFiles(QStringList list, int inputmax)
+//{
+//    if(inputmax == -1) inputmax = INT_MAX;
+//    int i = fileHash.count() / 5;
+//    QString pre = "$input_";
+//    foreach(QString str , list){
+//        QFileInfo info(str);
+//        if(info.exists()){
+//            fileHash[pre + QString::number(i) + "_full$"] = info.canonicalFilePath();
+//            fileHash[pre + QString::number(i) + "_dir$"] = info.canonicalPath();
+//            fileHash[pre + QString::number(i) + "_name$"] = info.fileName();
+//            fileHash[pre + QString::number(i) + "_basename$"] = info.baseName();
+//            fileHash[pre + QString::number(i) + "_extension$"] = info.completeSuffix();
+//            if(i++ == inputmax) break;
+//        }
+//    }
+//}
 
 void Executor::addInputFiles(QStringList list, int inputmax)
 {
     if(inputmax == -1) inputmax = INT_MAX;
-    int i = fileHash.count() / 5;
-    foreach(QString str , list){
-        QFileInfo info(str);
-        if(info.exists()){
-            fileHash["$input_" + QString::number(i) + "_full$"] = info.canonicalFilePath();
-            fileHash["$input_" + QString::number(i) + "_dir$"] = info.canonicalPath();
-            fileHash["$input_" + QString::number(i) + "_name$"] = info.fileName();
-            fileHash["$input_" + QString::number(i) + "_basename$"] = info.baseName();
-            fileHash["$input" + QString::number(i) + "_extension$"] = info.completeSuffix();
-            if(i++ == inputmax) break;
-        }
-    }
+    fileList = list;
 }
 
 void Executor::setGlobalList()
@@ -159,7 +173,7 @@ void Executor::setGlobalList()
 
 void Executor::setLocalList()
 {
-    if(!processfileloaded) return;
+    if(!profileloaded) return;
     if(!localHash->empty()) localHash->clear();
 
 #ifdef QT_DEBUG
@@ -171,7 +185,7 @@ void Executor::setLocalList()
 
     for(int i = 0; i < counter; i++){
         if(pbuilder->readItem(i, &list) && getReadType(list.at(0).at(1)) == 6){
-            int localc = VariantConverter::stringToInt(list.at(1).at(1));
+            int localc = ((QString)list.at(1).at(1)).toInt();
 
             for(int i = 0; i < localc; i++){
                 localHash->insert(list.at(2 + i).at(0), list.at(2 + i).at(1));
@@ -181,49 +195,202 @@ void Executor::setLocalList()
     }
 }
 
+//bool Executor::runProcess()
+//{
+//    emit processStarted(MAINPROCESS);
+
+//    //check state
+//    if(!profileloaded){
+//        emit processCheckError(tr("xmlfile not loaded!"));
+//        emit processStopped();
+//        return false;
+//    }
+
+//    //check counter
+//    //TODO:
+////    if(test->endnum < 0 || test->endnum > pbuilder->count()) test->endnum = pbuilder->count();
+//    //emit maximum count number
+//    execlist = new QList<int>();
+//    if(userexeclist.count() > 0) execlist->append(userexeclist);
+//    checkExecList(execlist);
+
+////    emit processStateCount(test->startnum, test->endnum);
+//    emit processStateCount(0, execlist->count());
+
+//    //init data
+//    QList<QStringList> *list = new QList<QStringList>();
+//    bool checker = true;
+
+//    //init process
+//    work->process = new QProcess();
+//    work->process->setProcessChannelMode(QProcess::MergedChannels);
+//    connect(work->process, SIGNAL(readyRead()), this, SLOT(loadNormalStandardOutput()));
+
+//    //set work->working
+//    work->working = true;
+
+
+//    int execlistcounter = execlist->count();
+//#ifdef QT_DEBUG
+//    qDebug() << "Executor:: execlist count" << execlistcounter;
+//#endif
+
+//    for(int i = 0; i < execlistcounter; i++){
+
+//        // if this check results true, work->working.
+//        if(processStopHandleChecker()){
+//           emit processStateUpdate(i);
+//        }else{
+//            break;
+//        }
+
+//        //read each list
+//        if(pbuilder->readItem(execlist->at(i), list)){
+
+//            //scheduler only or not
+//            if(VariantConverter::stringToBool(list->at(0).at(3)) && setting->launched == DEFAULT) break;
+
+//            switch (getReadType(list->at(0).at(1))) {
+//            case INFO:
+//                checker = loadInfo(list, 1);
+//                break;
+
+//            case NORMAL:
+//                checker = loadNormal(list, 0);
+//                break;
+
+//            case SEARCH:
+//                checker = loadSearch(list, 0);
+//                break;
+
+//            case SCRIPT:
+//                checker = loadScript(list, 0);
+//                break;
+
+//            case OTHER:
+//                checker = loadOther(list, 0);
+//                break;
+
+//            case TEMP:
+//                checker = loadTemp(list);
+//                break;
+
+//            case LOCAL:
+//            default:
+//                break;
+//            }
+
+//            list->clear();
+
+//            if(!checker){
+//                emit processErrorOccured(i);
+//            }
+//        }
+
+//        // if this check results true, work->working.
+//        if(!processStopHandleChecker()) break;
+
+//    }
+//    //send max counter of all processcount
+//    emit processStateUpdate(execlistcounter);
+
+//    //work->working data is reseted in resetdata();
+//    if(work->working) emit processEnded(MAINPROCESS);
+
+//    //load file etc force reset.
+//    resetdata();
+
+//    //reset process
+//    disconnect(work->process, SIGNAL(readyRead()), this, SLOT(loadNormalStandardOutput()));
+//    delete work->process;
+//    delete execlist;
+//    delete list;
+
+//    return true;
+//}
+
 bool Executor::runProcess()
 {
-    emit processStarted(MAINPROCESS);
+    //local
+    int loopcount;
+    bool fileinput = false;
 
-    //check state
-    if(!processfileloaded){
+    //file input existing check
+    if(setting->initFilename == ""){
         emit processCheckError(tr("xmlfile not loaded!"));
         emit processStopped();
         return false;
+
     }
 
-    //check counter
-    //TODO:
-//    if(endnum < 0 || endnum > pbuilder->count()) endnum = pbuilder->count();
-    //emit maximum count number
+    //load init xmlfile
+    pbuilder->setLoadPath(setting->initFilename);
+
+    //Execution range for ProfileEditor
     execlist = new QList<int>();
     if(userexeclist.count() > 0) execlist->append(userexeclist);
     checkExecList(execlist);
-
-//    emit processStateCount(startnum, endnum);
     emit processStateCount(0, execlist->count());
 
-    //init data
+    //Preparation for execution of executable file
+    work->process = new QProcess();
+    work->process->setProcessChannelMode(QProcess::MergedChannels);
+
+    //Preparing to communicate with the console
+    connect(work->process, &QIODevice::readyRead, this, &Executor::loadNormalStandardOutput);
+
+    #ifdef QT_DEBUG
+        qDebug() << "Executor:: execlist count" << execlist->count();
+    #endif
+
+    //Read profile information (Info data must index 0)
+    setProcessSettings(&fileinput, &loopcount);
+
+    //Load variables
+    setGlobalList();
+    setLocalList();
+
+    //Execution flags
+    work->working = true;
+
+    emit processStarted(setting->launched);
+
+    //Execute main process
+    while(loopcount > 0 || loopcount < 0){
+        Execute();
+
+        //Reduce the number of fileList and check lest file count
+        if(fileinput && fileList.count() > 0){
+            for(int i = 0; i < setting->argumentscount; i++) fileList.removeFirst();
+            if(fileList.count() == 0) loopcount = 0;
+        }
+
+        if(loopcount > 0) loopcount--;
+    }
+
+    //work->working data is reseted in resetdata();
+    if(work->working) emit processEnded(setting->launched);
+
+    //Disconnecting communication, erasing generated files, initializing
+    resetdata();
+
+    disconnect(work->process, &QIODevice::readyRead, this, &Executor::loadNormalStandardOutput);
+
+    delete work->process;
+    delete execlist;
+
+    return true;
+}
+
+bool Executor::Execute()
+{
     QList<QStringList> *list = new QList<QStringList>();
     bool checker = true;
-
-    //init process
-    process = new QProcess();
-    process->setProcessChannelMode(QProcess::MergedChannels);
-    connect(process, SIGNAL(readyRead()), this, SLOT(loadNormalStandardOutput()));
-
-    //set working
-    working = true;
-
-
     int execlistcounter = execlist->count();
-#ifdef QT_DEBUG
-    qDebug() << "Executor:: execlist count" << execlistcounter;
-#endif
 
-    for(int i = 0; i < execlistcounter; i++){     
+    for(int i = 0; i < execlistcounter; i++){
 
-        // if this check results true, working.
+        // if this check results true, work->working.
         if(processStopHandleChecker()){
            emit processStateUpdate(i);
         }else{
@@ -232,9 +399,6 @@ bool Executor::runProcess()
 
         //read each list
         if(pbuilder->readItem(execlist->at(i), list)){
-
-            //scheduler only or not
-            if(VariantConverter::stringToBool(list->at(0).at(3)) && launchedfrom == DEFAULT) break;
 
             switch (getReadType(list->at(0).at(1))) {
             case INFO:
@@ -250,7 +414,7 @@ bool Executor::runProcess()
                 break;
 
             case SCRIPT:
-                checker = loadScript(list, 0);
+                checker = loadPlugins(list, 0);
                 break;
 
             case OTHER:
@@ -268,31 +432,18 @@ bool Executor::runProcess()
 
             list->clear();
 
-            if(!checker){
-                emit processErrorOccured(i);
-            }
+            if(!checker) emit processErrorOccured(i);
         }
 
-        // if this check results true, working.
+        // if this check results true, work->working.
         if(!processStopHandleChecker()) break;
 
     }
     //send max counter of all processcount
     emit processStateUpdate(execlistcounter);
 
-    //working data is reseted in resetdata();
-    if(working) emit processEnded(MAINPROCESS);
-
-    //load file etc force reset.
-    resetdata();
-
-    //reset process
-    disconnect(process, SIGNAL(readyRead()), this, SLOT(loadNormalStandardOutput()));
-    delete process;
-    delete execlist;
     delete list;
-
-    return true;
+    return checker;
 }
 
 //void Executor::pauseProcess()
@@ -302,13 +453,16 @@ bool Executor::runProcess()
 
 void Executor::stopProcess()
 {
-    working = false;
+    work->working = false;
 }
 
 void Executor::loadNormalStandardOutput()
 {
-    QByteArray read = process->readAll();
+    //TODO: it needs to detect various application's encode
+    QByteArray read = work->process->readAll();
     QString encode = QTextCodec::codecForLocale()->toUnicode(read);
+//    QString encode = QTextCodec::codecForUtfText(read, QTextCodec::codecForLocale())->toUnicode(read);
+//    QString encode = QTextCodec::codecForUtfText(read)->toUnicode(read);
     emit processMessage(encode, NORMAL);
 }
 
@@ -353,12 +507,20 @@ bool Executor::loadInfo(QList<QStringList> *list, int firstpos)
     result.append(tr("\r\n"));
 
     emit processMessage(result, INFO);
+
+    //load other profile nest counter
+//    setting->othernestmax = ((QString)list->at(firstpos + 9).at(1)).toInt();
+
     return true;
 }
 
 bool Executor::loadNormal(QList<QStringList> *list, int firstpos)
 {
-    int cmdc = VariantConverter::stringToInt(list->at(firstpos + 2).at(1));
+    //scheduler only or not
+    if(VariantConverter::stringToBool(list->at(firstpos).at(3))
+            && setting->launched == DEFAULT) return true;
+
+    int cmdc = ((QString)list->at(firstpos + 2).at(1)).toInt();
 
     if(cmdc == 0){
         emit processMessage(tr("No executable file. Skip."), ERROR);
@@ -393,17 +555,17 @@ bool Executor::loadNormal(QList<QStringList> *list, int firstpos)
     emit processMessage(show, NORMAL);
 
     //start commands
-    if(detached){
-        process->startDetached(app, arguments);
+    if(setting->detached){
+        work->process->startDetached(app, arguments);
     }else{
-        process->start(app, arguments);
+        work->process->start(app, arguments);
     }
 
     //wait commands
     if(VariantConverter::stringToBool(list->at(firstpos + 1).at(1))){
-        process->waitForFinished(((QString)list->at(firstpos + 1).at(3)).toInt());
+        work->process->waitForFinished(((QString)list->at(firstpos + 1).at(3)).toInt());
     }else{
-        process->waitForFinished(-1);
+        work->process->waitForFinished(-1);
     }
 
     return true;
@@ -411,8 +573,12 @@ bool Executor::loadNormal(QList<QStringList> *list, int firstpos)
 
 bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
 {
+    //scheduler only or not
+    if(VariantConverter::stringToBool(list->at(firstpos).at(3))
+            && setting->launched == DEFAULT) return true;
+
     FileSearchLoader *loader = new FileSearchLoader();
-    QStringList result = loader->searchFromXml(VariantConverter::stringToInt(list->at(firstpos + 1).at(3)));
+    QStringList result = loader->searchFromXml(((QString)list->at(firstpos + 1).at(3)).toInt());
 
     emit processMessage(tr("Search : ") + QString::number(result.count()) + tr(" files found.\r\n"), SEARCH);
 
@@ -445,7 +611,7 @@ bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
         }
     }
 
-    int radiodata = VariantConverter::stringToInt(list->at(firstpos + 4).at(3));
+    int radiodata = ((QString)list->at(firstpos + 4).at(3)).toInt();
 
     //save to variant
     if(radiodata == 0){
@@ -466,7 +632,7 @@ bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
             QFile file(outputfile);
 
             //TODO: add overwrite permission (2017/09/02 updated)
-            if(file.exists() && searchfileoverwrite){
+            if(file.exists() && setting->searchoutputoverwrite){
                 //clear file string
                 file.resize(0);
             }
@@ -484,8 +650,12 @@ bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
     return true;
 }
 
-bool Executor::loadScript(QList<QStringList> *list, int firstpos)
+bool Executor::loadPlugins(QList<QStringList> *list, int firstpos)
 {
+    //scheduler only or not
+    if(VariantConverter::stringToBool(list->at(firstpos).at(3))
+            && setting->launched == DEFAULT) return true;
+
     QString file = list->at(firstpos + 2).at(1);
     QFileInfo info(file);
     bool result = true;
@@ -496,7 +666,7 @@ bool Executor::loadScript(QList<QStringList> *list, int firstpos)
 
         if(loader.load()){
             QObject *plugin = loader.instance();
-            ext = qobject_cast<RunnerExtraPluginInterface *>(plugin);
+            ext = qobject_cast<ExtraPluginInterface *>(plugin);
 
 //            connect(plugin, SIGNAL(sendMessage()), this, &Executor::extrafuncInternalMessage);
 
@@ -507,11 +677,11 @@ bool Executor::loadScript(QList<QStringList> *list, int firstpos)
                 tmp.append(macroConvert(list->at(firstpos + 4 + i).at(1)));
             }
 
-            ext->setInputFileData(fileHash);
+            ext->setInputFileData(fileList);
             ext->setGlobalValue(globalHash);
             ext->setLocalValue(localHash);
 
-//            plugin->disconnect(ext, &RunnerExtraPluginInterface::sendMessage
+//            plugin->disconnect(ext, &ExtraPluginInterface::sendMessage
 //                       , this, &Executor::extrafuncInternalMessage);
 
             if(!ext->functionMain(cmdc, &tmp)){
@@ -537,6 +707,10 @@ bool Executor::loadScript(QList<QStringList> *list, int firstpos)
 bool Executor::loadOther(QList<QStringList> *list, int firstpos)
 {
 //    emit processStarted(OTHERPROCESS);
+    //scheduler only or not
+    if(VariantConverter::stringToBool(list->at(firstpos).at(3))
+            && setting->launched == DEFAULT) return true;
+
     QFileInfo info(list->at(firstpos + 2).at(1));
     if(!info.exists()){
         emit processMessage(tr("Other Process : %1 is not existed.")
@@ -550,7 +724,7 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
     execliststack.push(execlist);
 
     //check nest
-    if(builderstack.count() >= othernestmax) neststop = true;
+    if(builderstack.count() >= setting->othernestmax) neststop = true;
 
     //alternate data
     pbuilder = new ProcessXmlBuilder();
@@ -583,7 +757,7 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
         if(pbuilder->readItem(execlist->at(i), ilist)){
 
             //scheduler only or not
-            if(VariantConverter::stringToBool(ilist->at(0).at(3)) && launchedfrom == DEFAULT) break;
+//            if(VariantConverter::stringToBool(ilist->at(0).at(3)) && setting->launched == DEFAULT) break;
 
             switch (getReadType(ilist->at(0).at(1))) {
             case INFO:
@@ -599,7 +773,7 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
                 break;
 
             case SCRIPT:
-                checker = loadScript(ilist, 0);
+                checker = loadPlugins(ilist, 0);
                 break;
 
             case OTHER:
@@ -645,7 +819,7 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
 bool Executor::loadTemp(QList<QStringList> *list)
 {
     //TODO: dynamic index update
-    int selected = VariantConverter::stringToInt(list->at(1).at(1));
+    int selected = ((QString)list->at(1).at(1)).toInt();
 
     QHash<int, int> hlist;
     xgen.getListStructure(list, &hlist);
@@ -655,7 +829,7 @@ bool Executor::loadTemp(QList<QStringList> *list)
 
     case ProcessXmlListGenerator::SEARCH/*search*/: return loadSearch(list, hlist.value(ProcessXmlListGenerator::SEARCH));
 
-    case ProcessXmlListGenerator::EXTRAFUNC/*script*/: return loadScript(list, hlist.value(ProcessXmlListGenerator::EXTRAFUNC));
+    case ProcessXmlListGenerator::EXTRAFUNC/*script*/: return loadPlugins(list, hlist.value(ProcessXmlListGenerator::EXTRAFUNC));
 
     case ProcessXmlListGenerator::OTHER/*other*/:
         if(neststop){
@@ -668,9 +842,28 @@ bool Executor::loadTemp(QList<QStringList> *list)
 }
 
 // original is part of 1 commands in one process
+//QString Executor::replaceInputMacro(QString original)
+//{
+//    return replaceMacro(original, &fileHash);
+//}
+
 QString Executor::replaceInputMacro(QString original)
 {
-    return replaceMacro(original, &fileHash);
+    QString pre = "$input_";
+    QString result = original;
+    int maxcount = fileList.count();
+    for(int i = 0; i < maxcount; i++){
+        QFileInfo info(fileList.at(i));
+        result.replace(pre + QString::number(i) + "_full$", info.canonicalFilePath());
+        result.replace(pre + QString::number(i) + "_dir$", info.canonicalPath());
+        result.replace(pre + QString::number(i) + "_name$", info.fileName());
+        result.replace(pre + QString::number(i) + "_basename$", info.baseName());
+        result.replace(pre + QString::number(i) + "_extension$", info.completeSuffix());
+        if(info.isSymLink())
+            result.replace(pre + QString::number(i) + "_symlink$", info.symLinkTarget());
+    }
+
+    return result;
 }
 
 QString Executor::replaceGlobalMacro(QString original)
@@ -719,7 +912,7 @@ void Executor::checkExecList(QList<int> *elist)
         for(int i = 0; i < buildermax; i++){
             elist->append(i);
         }
-        autoaddexec = true;
+        noexeclist = true;
 
     }else{
         for(int i = 0; i < excount; i++){
@@ -730,6 +923,35 @@ void Executor::checkExecList(QList<int> *elist)
                 elist->removeAt(i);
             }
         }
+    }
+}
+
+void Executor::setProcessSettings(bool *fileinput, int *loopcount)
+{
+    QList<QStringList> list;
+    if(pbuilder->readItem(0, &list)){
+        //File reading setting (manual file input)
+        if(VariantConverter::stringToBool(list.at(5).at(1))){
+            *fileinput = true;
+        }
+
+        //search file input
+        if(VariantConverter::stringToBool(list.at(6).at(1))){
+            *fileinput = true;
+            FileSearchLoader loader;
+            fileList.append(loader.searchFromXml(((QString)list.at(7).at(3)).toInt()));
+            emit processMessage(tr("Input : ") + QString::number(fileList.count()) + tr(" files.\r\n"), SEARCH);
+        }
+
+        //Whether to loop the read file to the end ( -1 : infinity loop or set max loop count )
+        *loopcount = VariantConverter::stringToBool(list.at(8).at(1)) ? -1 : ((QString)list.at(8).at(3)).toInt();
+
+        // Number of files used at one time
+        setting->argumentscount = ((QString)list.at(9).at(1)).toInt();
+
+        //load other profile nest counter
+        setting->othernestmax = ((QString)list.at(10).at(1)).toInt();
+
     }
 }
 
@@ -752,14 +974,14 @@ void Executor::resetdata()
 #endif
 
     //reset flags
-    working = false;
-    if(launchedfrom == DEFAULT){
-        processfileloaded = false;
+    work->working = false;
+    if(setting->launched == DEFAULT){
+        profileloaded = false;
         pbuilder->setLoadPath("");
     }
-    if(autoaddexec){
+    if(noexeclist){
         execlist->clear();
-        autoaddexec = false;
+        noexeclist = false;
     }
 }
 
@@ -772,47 +994,47 @@ void Executor::sleep(int ms)
 
 bool Executor::processStopHandleChecker()
 {
-    if(paused) emit processPaused();
+    if(work->paused) emit processPaused();
 
-    while (paused && working){
+    while (work->paused && work->working){
         //infinity loop wait 50 ms
         sleep(50);
     }
 
     //check stop check
-    if(!working){
+    if(!work->working){
         emit processStopped();
     }
 
-    return working;
+    return work->working;
 }
 
-int Executor::getOthernestmax() const
-{
-    return othernestmax;
-}
+//int Executor::getOthernestmax() const
+//{
+//    return setting->othernestmax;
+//}
 
-void Executor::setOthernestmax(int nest)
-{
-    othernestmax = nest;
-}
+//void Executor::setOthernestmax(int nest)
+//{
+//    setting->othernestmax = nest;
+//}
 
 bool Executor::getSearchfileoverwrite() const
 {
-    return searchfileoverwrite;
+    return setting->searchoutputoverwrite;
 }
 
 void Executor::setSearchfileoverwrite(bool overwrite)
 {
-    searchfileoverwrite = overwrite;
+    setting->searchoutputoverwrite = overwrite;
 }
 
 int Executor::getLaunchedfrom() const
 {
-    return launchedfrom;
+    return setting->launched;
 }
 
 void Executor::setLaunchedfrom(int only)
 {
-    launchedfrom = only;
+    setting->launched = only;
 }

@@ -229,6 +229,7 @@ void AutoBatchRunner::themeChangeAction()
         if(file.open( QFile::ReadOnly | QFile::Text )){
             QString data(QLatin1String(file.readAll()));
             this->setStyleSheet(data);
+            opdialog->setStyleSheet(data);
 //            settingdialog->setStyleSheet(data);
         }
     }

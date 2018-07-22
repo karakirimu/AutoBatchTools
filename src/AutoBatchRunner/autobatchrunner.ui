@@ -133,9 +133,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 240, 240);
-selection-background-color: rgb(144, 200, 246);
-selection-color: rgb(0, 0, 0);</string>
+    <string notr="true"/>
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">

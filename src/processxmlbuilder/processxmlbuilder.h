@@ -207,6 +207,7 @@ public:
 //   void delLoadPath();
 
    bool readItem(int itemid, QList<QStringList> *itemlist);
+   bool readAllItem(QList<QList<QStringList> *> *itemlist);
    bool addItem(const QList<QStringList> *itemlist);
    bool deleteItem(int itemid);
    bool editItem(int itemid, const QList<QStringList> *itemlist);
@@ -214,11 +215,6 @@ public:
    void copyItem(int itemid);
    bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
    int count();
-
-//    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempNormal() const;
-//    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempSearch() const;
-//    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempScript() const;
-//    PROCESSXMLBUILDERSHARED_EXPORT int firstPosTempOther() const;
 
 private:
     void setSearchItemData(QString element, QList<QStringList> *list);

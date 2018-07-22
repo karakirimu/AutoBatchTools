@@ -79,17 +79,19 @@ bool BaseXmlBuilder::deleteSpecifiedElementGroup(QString element, QString attr, 
     readFileReset();
 
     //get start and end line counter
-    while (!rxml->atEnd() && !rxml->hasError())
+    while (!(rxml->atEnd() || rxml->hasError()))
     {
         rxml->readNext();
-        if (rxml->isStartElement() && rxml->name().toString() == element)
+        if (rxml->isStartElement()
+                && rxml->name().toString() == element
+                && rxml->attributes().value(attr).toInt() == value)
         {
-            QString val = rxml->attributes().value(attr).toString();
+//            QString val = rxml->attributes().value(attr).toString();
 
-            if(val == QString::number(value)){
+//            if(rxml->attributes().value(attr).toInt() == value){
                 hasid = true;
                 firstline = rxml->lineNumber();
-            }
+//            }
         }
 
         if(rxml->isEndElement() && hasid && rxml->name() == element){
@@ -157,7 +159,7 @@ int BaseXmlBuilder::getSpecifiedElementLineFirst(QString element)
     openFile(QIODevice::ReadOnly);
     readFileReset();
 
-    while (!rxml->atEnd() && !rxml->hasError())
+    while (!(rxml->atEnd() || rxml->hasError()))
     {
         rxml->readNext();
         if (rxml->isStartElement() && rxml->name().toString() == element)
@@ -182,7 +184,7 @@ int BaseXmlBuilder::getSpecifiedElementLineFirst(QString element, QString attr, 
     openFile(QIODevice::ReadOnly);
     readFileReset();
 
-    while (!rxml->atEnd() && !rxml->hasError())
+    while (!(rxml->atEnd() || rxml->hasError()))
     {
         rxml->readNext();
         if (rxml->isStartElement()
@@ -209,7 +211,7 @@ int BaseXmlBuilder::getSpecifiedElementLineEnd(QString element, QString attr, in
     openFile(QIODevice::ReadOnly);
     readFileReset();
 
-    while (!rxml->atEnd() && !rxml->hasError())
+    while (!(rxml->atEnd() || rxml->hasError()))
     {
         rxml->readNext();
         if (rxml->isStartElement() && rxml->name().toString() == element)
@@ -238,7 +240,7 @@ int BaseXmlBuilder::getSpecifiedElementItemsCount(QString element)
     openFile(QIODevice::ReadOnly);
     readFileReset();
 
-    while (!rxml->atEnd() && !rxml->hasError())
+    while (!(rxml->atEnd() || rxml->hasError()))
     {
         rxml->readNext();
         if (rxml->isStartElement() && rxml->name().toString() == element)
@@ -269,7 +271,7 @@ void BaseXmlBuilder::checkXmlError()
 {
     if (rxml->hasError())
     {
-        qDebug() << "rxml error: " << rxml->errorString();
+        qDebug() << "XML read error: " << rxml->errorString();
     }
 }
 
