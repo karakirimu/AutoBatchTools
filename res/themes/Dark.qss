@@ -6,9 +6,10 @@
 @selected = #8e8e8e;
 @bg_light = #616161;
 @bg_dark = #373737;
-@pressed = #171717;
+@pressed = #1b1b1b;
 @item_hover = black;
 @checkbox_selected = #1ab185;
+@spinbox_hover_textcolor = #eeeeee;
 */
 
 
@@ -28,8 +29,13 @@ QMainWindow {
 
 QFrame {
     border: none;
-    background-color: #616161;
+    background-color: transparent;
     color: #c6c6c6;
+}
+
+QFrame#ScopeFrame {
+    border: none;
+    background-color: #616161;
 }
 
 /* ===== QMenuBar ===== */
@@ -103,7 +109,8 @@ QToolButton
 
 QToolButton#runToolButton
 , QToolButton#stopToolButton
-, QToolButton#pauseToolButton {
+, QToolButton#pauseToolButton
+, QToolButton#settingToolButton {
     background-color: #616161;
     border: none;
 }
@@ -112,7 +119,7 @@ QToolButton:hover
 ,QToolButton#runToolButton:hover
 , QToolButton#stopToolButton:hover
 , QToolButton#pauseToolButton:hover
-{
+, QToolButton#settingToolButton:hover {
     background-color: #8e8e8e;
     border: none;
 }
@@ -128,8 +135,8 @@ QToolButton:pressed
 ,QToolButton#runToolButton:pressed
 , QToolButton#stopToolButton:pressed
 , QToolButton#pauseToolButton:pressed
-{
-    background-color: #171717;
+, QToolButton#settingToolButton:pressed {
+    background-color: #1b1b1b;
     border: none;
 }
 
@@ -146,12 +153,18 @@ QHeaderView::section {
 
 QTableWidget QTableCornerButton::section {
     background-color: #616161;
+    color: #c6c6c6;
 }
 
 QTableWidget {
     background-color: #373737;
     selection-background-color: #8e8e8e;
+    color: #c6c6c6;
 /*    border: 1px solid #616161;*/
+}
+
+QTableWidget#flowTableWidget {
+    border-top: 1px solid #616161;
 }
 
 /* ===== QTreeView ===== */
@@ -193,7 +206,7 @@ QListView {
 }
 
 QListView::item:alternate {
-    background: #EEEEEE;
+    background: #eeeeee;
 }
 
 QListView::item:selected {
@@ -234,6 +247,12 @@ QLineEdit, QPlainTextEdit
     color: #c6c6c6;
 }
 
+QLineEdit:hover, QPlainTextEdit:hover
+{
+    background-color: #8e8e8e;
+    border: none;
+}
+
 QDockWidget {
     border: none;
     background-color: #373737;
@@ -242,7 +261,7 @@ QDockWidget {
 
 QDockWidget::title {
     text-align: left; /* align the text to the left */
-    background: #171717;
+    background: #1b1b1b;
     padding: 5px;
     color: #c6c6c6;
 }
@@ -278,20 +297,42 @@ QTabWidget::pane { /* The tab widget frame */
     background-color: #373737;
 }*/
 
+QWidget#general,
+QWidget#loop,
+QWidget#exec,
+QWidget#search,
+QWidget#plugins,
+QWidget#otherprof,
+QWidget#settinggeneral,
+QWidget#settingsearch,
+QWidget#settingstring,
+QWidget#settingplugins,
+QWidget#baseSettingTab,
+QWidget#settingservice,
+QWidget#settingmessage,
+QWidget#StatusWidget
+{
+    background-color: #616161;
+}
+
+QWidget#startupgeneral
+{
+    background-color: #373737;
+}
+
 /* Style the tab using the tab sub-control. Note that
     it reads QTabBar _not_ QTabWidget */
 QTabBar::tab {
     background-color: #373737;
-    border-bottom: 1px solid #8e8e8e;
+/*    border-bottom: 1px solid #8e8e8e;*/
 /*    border-top: 1px solid #8e8e8e;*/
-/*    border-right: 1px solid #8e8e8e;*/
     min-width: 8ex;
     padding-top: 6px;
     padding-bottom: 6px;
     color: #c6c6c6;
 }
 
-QTabBar::tab:selected, QTabBar::tab:hover {
+QTabBar::tab:hover {
     background-color: #8e8e8e;
 }
 
@@ -299,14 +340,16 @@ QTabBar::tab:selected {
     border-color: #8e8e8e;
 /*    border-bottom-color: #C2C7CB; /* same as pane color **/
     background-color: #616161;
+/*    border-left: 2px solid #eeeeee;*/
 }
 
 QTabBar::tab:!selected {
     background-color: #373737;
-    margin-top: 1px; /* make non-selected tabs look smaller */
+    /*margin-top: 1px; *//* make non-selected tabs look smaller */
 }
 
 QStatusBar {
+    border-top: 1px solid #616161;
     background: #373737;
 }
 
@@ -335,7 +378,7 @@ QPushButton:pressed {
 
 QCheckBox
 {
-    color: #eeeeee;
+    color: #c6c6c6;
 }
 
 QCheckBox::indicator
@@ -368,11 +411,22 @@ QCheckBox::indicator:checked:pressed {
     background-color: #373737;
 }
 
-QSpinBox
+QSpinBox,
+QTimeEdit,
+QDateTimeEdit
 {
     background-color: #373737;
     color: #c6c6c6;
 /*    border: 1px solid #8e8e8e;*/
+    border: none;
+}
+
+QSpinBox:hover,
+QTimeEdit:hover,
+QDateTimeEdit:hover
+{
+    background-color: #8e8e8e;
+    color: #eeeeee;
     border: none;
 }
 
@@ -403,12 +457,12 @@ QGroupBox
 
 QComboBox:pressed
 {
-    background-color: #171717;
+    background-color: #1b1b1b;
 }
 
 QProgressBar {
     border: none;
-    background-color: #171717;
+    background-color: #1b1b1b;
     color: #c6c6c6;
 }
 
