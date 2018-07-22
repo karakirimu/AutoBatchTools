@@ -446,29 +446,33 @@ void EditOperator::save()
 
 void EditOperator::loadcache(int amount)
 {
+    Q_UNUSED(amount);
     if(loadfile == "") return;
 
     //append new index along with "amount" number.
     ProcessXmlBuilder *updater = new ProcessXmlBuilder();
     updater->setLoadPath(loadfile);
 
-    int count = updater->count();
+//    int count = updater->count();
 
-    //load all data (TODO:not efficient)
-    if(amount == 0) amount = count;
-    int i;
-    QList<QStringList> *list;
-    for(i = loadedxmlid; i < count; i++){
-        list = new QList<QStringList>();
-        if(i < amount){
-            updater->readItem(i, list);
-            cache->append(list);
-        }else{
-            break;
-        }
-    }
+//    //load all data (TODO:not efficient)
+//    if(amount == 0) amount = count;
+//    int i;
+//    QList<QStringList> *list;
+//    for(i = loadedxmlid; i < count; i++){
+//        list = new QList<QStringList>();
+//        if(i < amount){
+//            updater->readItem(i, list);
+//            cache->append(list);
+//        }else{
+//            break;
+//        }
+//    }
 
-    loadedxmlid = i - 1;
+//    loadedxmlid = i - 1;
+
+    updater->readAllItem(cache);
+    loadedxmlid = updater->count() - 1;
 
     delete updater;
 }

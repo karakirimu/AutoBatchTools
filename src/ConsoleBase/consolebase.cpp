@@ -30,11 +30,11 @@ void ConsoleBase::started(int runtype)
     setTextColor(QColor(Qt::darkGray));
     switch (runtype) {
     case Executor::DEFAULT:
-        append(tr("*****PROCESS STARTED -  TYPE DEFAULT *****\r\n"));
+        append(tr("***** PROCESS STARTED *****\r\n"));
         break;
 
     case Executor::SCHEDULER:
-        append(tr("*****PROCESS STARTED - TYPE SCHEDULER*****\r\n"));
+        append(tr("***** PROCESS STARTED - SCHEDULER *****\r\n"));
         break;
 
     default:
@@ -63,11 +63,11 @@ void ConsoleBase::end(int runtype)
     setTextColor(QColor(Qt::darkGray));
     switch (runtype) {
     case Executor::DEFAULT:
-        append(tr("*****PROCESS COMPLETED - TYPE DEFAULT*****\r\n"));
+        append(tr("***** PROCESS COMPLETED *****\r\n"));
         break;
 
     case Executor::SCHEDULER:
-        append(tr("*****PROCESS COMPLETED - TYPE SCHEDULER*****\r\n"));
+        append(tr("***** PROCESS COMPLETED - SCHEDULER *****\r\n"));
         break;
 
     default:

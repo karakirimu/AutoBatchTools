@@ -13,7 +13,7 @@ SettingDialog::SettingDialog(QWidget *parent) :
     loadSettings();
 
     //connect action
-    connect( ui->buttonBox, SIGNAL(accepted()), this, SLOT(onAccept()));
+    connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(onAccept()));
 //    connect( ui->buttonBox, SIGNAL(rejected()), this, SLOT(onReject()));
     connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onButtonBoxClicked(QAbstractButton*)));
     connect(ui->openButton, &QToolButton::clicked, this, &SettingDialog::openDir);
@@ -77,7 +77,7 @@ void SettingDialog::setSettings()
     settings.setValue("FAKERES", ui->fakeresidentCheckBox->isChecked());
     settings.setValue("FSUPDATE", ui->fsupdateCheckBox->isChecked());
 //    settings.setValue("TIMEOUT", ui->timeoutSpinBox->value());
-    settings.setValue("FILELOADMAX", ui->fileloadSpinBox->value());
+//    settings.setValue("FILELOADMAX", ui->fileloadSpinBox->value());
     settings.endGroup();
 
 //    settings.beginGroup("scheduler_startup");
@@ -106,7 +106,7 @@ void SettingDialog::loadSettings()
     ui->fakeresidentCheckBox->setChecked(settings.value("FAKERES", false).toBool());
     ui->fsupdateCheckBox->setChecked(settings.value("FSUPDATE", true).toBool());
 //    ui->timeoutSpinBox->setValue(settings.value("TIMEOUT", 30000).toInt());
-    ui->fileloadSpinBox->setValue(settings.value("FILELOADMAX", 10).toInt());
+//    ui->fileloadSpinBox->setValue(settings.value("FILELOADMAX", 10).toInt());
     settings.endGroup();
 
 //    settings.beginGroup("scheduler_startup");

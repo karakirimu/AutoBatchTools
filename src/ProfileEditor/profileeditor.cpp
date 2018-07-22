@@ -1,8 +1,6 @@
 ﻿#include "profileeditor.h"
 #include "ui_profileeditor.h"
 
-#include <QProgressBar>
-
 ProfileEditor::ProfileEditor(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ProfileEditor)
@@ -195,21 +193,7 @@ ProfileEditor::~ProfileEditor()
 
 void ProfileEditor::newfileAction()
 {
-    if(lastedited){
-        // ドキュメントが変更されている場合の警告
-        QMessageBox::StandardButton res
-                = QMessageBox::question(this,\
-                                        tr("Alert"),\
-                                        tr("File was edited.\nDo you want to save this file ?"),\
-                                        QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
-
-
-        if(res == QMessageBox::Cancel) return;
-        if(res == QMessageBox::Yes){
-            // save and generate new file
-            overWriteSaveAction();
-        }
-    }
+    if(checkOverWrite() == CANCEL) return;
 
     // not save and newfile generate
     editop->newAction();
@@ -219,24 +203,7 @@ void ProfileEditor::newfileAction()
 
 void ProfileEditor::openAction()
 {
-    if(lastedited){
-        // Warning if document is edited by user.
-        QMessageBox::StandardButton res
-                = QMessageBox::question(this,\
-                                        tr("Alert"),\
-                                        tr("File was edited.\nDo you want to save this file ?"),\
-                                        QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
-
-
-
-        if(res == QMessageBox::Cancel) return;
-
-
-        if(res == QMessageBox::Yes){
-            // save file
-            overWriteSaveAction();
-        }
-    }
+    if(checkOverWrite() == CANCEL) return;
 
     // open file
     QString fileName =
@@ -460,7 +427,7 @@ void ProfileEditor::onFileEdited(bool edited)
 void ProfileEditor::itemChangedAction(int index)
 {
     qDebug() << "itemChangedAction::treerowpos" << index;
-    emit rowPosChanged("Selected: " + QString::number((index > 0)? index : 1));
+    emit rowPosChanged(tr("Process selected: No. ") + QString::number((index > 0)? index : 1));
 }
 
 void ProfileEditor::about()
@@ -468,7 +435,7 @@ void ProfileEditor::about()
     //setup settingdialog
     AboutPE *ab = new AboutPE;
     ab->setStyleSheet(this->styleSheet());
-    ab->move(this->geometry().center() - settingdialog->rect().center());
+    ab->move(this->geometry().center() - ab->rect().center());
     ab->show();
 //    QMessageBox::about(this, tr("About ProfileEditor")
 //                       , tr("AutoBatchRunner - ProfileEditor ver.beta\r\n\r\n"
@@ -484,24 +451,28 @@ void ProfileEditor::taskStarted(QString objectname, int runfrom)
     qDebug() << "profileeditor::taskstarted";
     Q_UNUSED(objectname);
     Q_UNUSED(runfrom);
-    ui->actionRun->setEnabled(false);
-    ui->actionPause->setEnabled(true);
-    ui->actionStop->setEnabled(true);
-    ui->runToolButton->setEnabled(false);
-    ui->pauseToolButton->setEnabled(true);
-    ui->stopToolButton->setEnabled(true);
+//    ui->actionRun->setEnabled(false);
+//    ui->actionPause->setEnabled(true);
+//    ui->actionStop->setEnabled(true);
+//    ui->runToolButton->setEnabled(false);
+//    ui->pauseToolButton->setEnabled(true);
+//    ui->stopToolButton->setEnabled(true);
+
+    setRunButtonState(false, true, true);
 }
 
 void ProfileEditor::taskPaused(QString objectname)
 {
     qDebug() << "profileeditor::taskpaused";
     Q_UNUSED(objectname);
-    ui->actionRun->setEnabled(true);
-    ui->actionPause->setEnabled(false);
-    ui->actionStop->setEnabled(true);
-    ui->runToolButton->setEnabled(true);
-    ui->pauseToolButton->setEnabled(false);
-    ui->stopToolButton->setEnabled(true);
+//    ui->actionRun->setEnabled(true);
+//    ui->actionPause->setEnabled(false);
+//    ui->actionStop->setEnabled(true);
+//    ui->runToolButton->setEnabled(true);
+//    ui->pauseToolButton->setEnabled(false);
+//    ui->stopToolButton->setEnabled(true);
+
+    setRunButtonState(true, false, true);
 }
 
 // deleting target
@@ -509,24 +480,29 @@ void ProfileEditor::taskStopped(QString objectname)
 {
     qDebug() << "profileeditor::taskstopped";
     Q_UNUSED(objectname);
-    ui->actionRun->setEnabled(true);
-    ui->actionPause->setEnabled(false);
-    ui->actionStop->setEnabled(false);
-    ui->runToolButton->setEnabled(true);
-    ui->pauseToolButton->setEnabled(false);
-    ui->stopToolButton->setEnabled(false);
+//    ui->actionRun->setEnabled(true);
+//    ui->actionPause->setEnabled(false);
+//    ui->actionStop->setEnabled(false);
+//    ui->runToolButton->setEnabled(true);
+//    ui->pauseToolButton->setEnabled(false);
+//    ui->stopToolButton->setEnabled(false);
+
+    setRunButtonState(true, false, false);
 }
 
 void ProfileEditor::taskEnd(QString objectname, int runfrom)
 {
     qDebug() << "profileeditor::taskend";
     Q_UNUSED(runfrom);
-    ui->actionRun->setEnabled(true);
-    ui->actionPause->setEnabled(false);
-    ui->actionStop->setEnabled(false);
-    ui->runToolButton->setEnabled(true);
-    ui->pauseToolButton->setEnabled(false);
-    ui->stopToolButton->setEnabled(false);
+//    ui->actionRun->setEnabled(true);
+//    ui->actionPause->setEnabled(false);
+//    ui->actionStop->setEnabled(false);
+//    ui->runToolButton->setEnabled(true);
+//    ui->pauseToolButton->setEnabled(false);
+//    ui->stopToolButton->setEnabled(false);
+
+    setRunButtonState(true, false, false);
+
 
     mlTask->removeTask(objectname);
     key = "";
@@ -541,12 +517,19 @@ void ProfileEditor::runTriggered()
         return;
     }
 
-    ui->actionRun->setEnabled(false);
-    ui->actionPause->setEnabled(false);
-    ui->actionStop->setEnabled(false);
-    ui->runToolButton->setEnabled(false);
-    ui->pauseToolButton->setEnabled(false);
-    ui->stopToolButton->setEnabled(false);
+    int state = checkOverWrite();
+    if(state == CANCEL || state == NO) return;
+
+//    ui->actionRun->setEnabled(false);
+//    ui->actionPause->setEnabled(false);
+//    ui->actionStop->setEnabled(false);
+//    ui->runToolButton->setEnabled(false);
+//    ui->pauseToolButton->setEnabled(false);
+//    ui->stopToolButton->setEnabled(false);
+
+    setRunButtonState(false, false, false);
+
+
     qDebug() << "profileeditor::run triggered";
 
     if(key == ""){
@@ -577,24 +560,27 @@ void ProfileEditor::runTriggered()
 
 void ProfileEditor::pauseTriggered()
 {
-    ui->actionRun->setEnabled(false);
-    ui->actionPause->setEnabled(false);
-    ui->actionStop->setEnabled(false);
-    ui->runToolButton->setEnabled(false);
-    ui->pauseToolButton->setEnabled(false);
-    ui->stopToolButton->setEnabled(false);
+//    ui->actionRun->setEnabled(false);
+//    ui->actionPause->setEnabled(false);
+//    ui->actionStop->setEnabled(false);
+//    ui->runToolButton->setEnabled(false);
+//    ui->pauseToolButton->setEnabled(false);
+//    ui->stopToolButton->setEnabled(false);
+    setRunButtonState(false, false, false);
 
     mlTask->processPause(key);
 }
 
 void ProfileEditor::stopTriggered()
 {
-    ui->actionRun->setEnabled(true);
-    ui->actionPause->setEnabled(false);
-    ui->actionStop->setEnabled(false);
-    ui->runToolButton->setEnabled(true);
-    ui->pauseToolButton->setEnabled(false);
-    ui->stopToolButton->setEnabled(false);
+//    ui->actionRun->setEnabled(true);
+//    ui->actionPause->setEnabled(false);
+//    ui->actionStop->setEnabled(false);
+//    ui->runToolButton->setEnabled(true);
+//    ui->pauseToolButton->setEnabled(false);
+//    ui->stopToolButton->setEnabled(false);
+
+    setRunButtonState(true, false, false);
 
     mlTask->removeTask(key);
     key = "";
@@ -671,9 +657,9 @@ void ProfileEditor::closeEvent(QCloseEvent *event)
 void ProfileEditor::initStatusBar()
 {
     QLabel *label = new QLabel();
-    label->setAlignment(Qt::AlignLeft);
+    label->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
     ui->statusBar->addPermanentWidget(label, 3);
-    connect(this, SIGNAL(rowPosChanged(QString)), label, SLOT(setText(QString)));
+    connect(this, &ProfileEditor::rowPosChanged, label, &QLabel::setText);
 
     QProgressBar *progressbar = new QProgressBar();
     progressbar->setAlignment(Qt::AlignCenter);
@@ -710,4 +696,43 @@ void ProfileEditor::postResetUi()
 
     //reset tree row position
     rowpos = 0;
+}
+
+void ProfileEditor::setRunButtonState(bool run, bool pause, bool stop)
+{
+    ui->actionRun->setEnabled(run);
+    ui->actionPause->setEnabled(pause);
+    ui->actionStop->setEnabled(stop);
+    ui->runToolButton->setEnabled(run);
+    ui->pauseToolButton->setEnabled(pause);
+    ui->stopToolButton->setEnabled(stop);
+}
+
+int ProfileEditor::checkOverWrite()
+{
+    if(!lastedited) return 3;
+
+    // Warning if document is edited by user.
+    QMessageBox::StandardButton res
+            = QMessageBox::question(this,\
+                                    tr("Alert"),\
+                                    tr("File was edited.\nDo you want to save this file ?"),\
+                                    QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+
+
+    switch( res )
+    {
+    case QMessageBox::Yes:
+      overWriteSaveAction();
+      return 0;
+
+    case QMessageBox::No:
+      return 1;
+
+    case QMessageBox::Cancel:
+      return 2;
+
+    default:
+      return 2;
+    }
 }

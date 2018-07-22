@@ -7,6 +7,8 @@
 #include <QDateTime>
 #include <QSettings>
 #include <QFileDialog>
+#include <QProgressBar>
+
 #include <SettingDialog.h>
 #include <editoperator.h>
 #include <multitaskp.h>
@@ -86,6 +88,13 @@ private:
 
     //reset ui
     void postResetUi();
+
+    //run pause stop button selection
+    void setRunButtonState(bool run, bool pause, bool stop);
+
+    //overwrite save option (yes :0, no : 1, cancel : 2, not need to save : 3)
+    int checkOverWrite();
+    enum{YES,NO,CANCEL,NOTNEED};
 
     Ui::ProfileEditor *ui;
     SettingDialog *settingdialog;

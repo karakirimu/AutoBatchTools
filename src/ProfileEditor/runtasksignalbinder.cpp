@@ -141,10 +141,11 @@ void RunTaskSignalBinder::updateFileList(QStringList *data)
 //        ++i;
 //    }
 
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("pe_testexec");
-    executor->addInputFiles(*data, settings.value("FILELOADMAX", -1).toInt());
-    settings.endGroup();
+//    QSettings settings( "./settings.ini", QSettings::IniFormat );
+//    settings.beginGroup("pe_testexec");
+//    executor->addInputFiles(*data, settings.value("FILELOADMAX", -1).toInt());
+    executor->addInputFiles(*data, -1);
+//    settings.endGroup();
 }
 
 //void RunTaskSignalBinder::updateEditFile(QString editfile)

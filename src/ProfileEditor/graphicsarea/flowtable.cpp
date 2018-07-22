@@ -560,7 +560,7 @@ void FlowTable::setInfoItem(FlowCellWidget *cell, QList<QStringList> *list, int 
     tmp.append(QString("version      : %1<br>").arg(list->at(2).at(1)));
     tmp.append(QString("author       : %1<br>").arg(list->at(3).at(1)));
     tmp.append(QString("description  :<br>%1<br>").arg(list->at(4).at(1)));
-    tmp.append(QString("last updated : %1").arg(list->at(5).at(1)));
+//    tmp.append(QString("last updated : %1").arg(list->at(5).at(1)));
     tmp.append(getHtmlFooter());
 
     cell->setContent(tmp);

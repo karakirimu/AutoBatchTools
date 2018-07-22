@@ -104,6 +104,7 @@ void InnerStackedWidget::setInfoDataList(int index, int sendfrom)
         if(list->count() > 5){
             finput->setChecked(VariantConverter::stringToBool(list->at(5).at(1)));
             sinput->setChecked(VariantConverter::stringToBool(list->at(6).at(1)));
+            fscombo->reloadComboBoxItem();
             fscombo->setCurrentText(list->at(7).at(1));
             rloop->setChecked(VariantConverter::stringToBool(list->at(8).at(1)));
             rloopmax->setValue(((QString)list->at(8).at(3)).toInt());

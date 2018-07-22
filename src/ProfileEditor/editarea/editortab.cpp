@@ -121,7 +121,7 @@ void EditorTab::setNormalDataList(QList<QStringList> *list, int firstpos)
     disconnect(autoonly, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
     disconnect(ctablenormal, &CommandTable::updateTable, this, &EditorTab::editTableAction);
 
-    int counter = VariantConverter::stringToInt(list->at(firstpos + 2).at(1));
+    int counter = ((QString)list->at(firstpos + 2).at(1)).toInt();
     timeoutCheckBox->setChecked(VariantConverter::stringToBool(list->at(firstpos + 1).at(1)));
     tospin->setValue(((QString)list->at(firstpos + 1).at(3)).toInt());
     ctablenormal->setRowCount(counter);
@@ -185,7 +185,7 @@ void EditorTab::setExtraFuncDataList(QList<QStringList> *list, int firstpos)
     connect(extrafunccombobox, &ExtraFunctionsComboBox::currentTextChanged, this, &EditorTab::editTextAction);
 
 //    vcb->insertItem(0,list->at(firstpos + 1).at(1));
-    int counter = VariantConverter::stringToInt(list->at(firstpos + 3).at(1));
+    int counter = ((QString)list->at(firstpos + 3).at(1)).toInt();
     disconnect(extrafuncTableWidget, &CommandTable::updateTable, this, &EditorTab::editTableAction);
     extrafuncTableWidget->setRowCount(counter);
     for(int i = 0; i < counter; i++){
@@ -227,12 +227,12 @@ void EditorTab::setCombinedDataList(int index, int selectfrom)
         xgen.getListStructure(list, &hlist);
 
         //no file showing module
-    //    int cmdskip = VariantConverter::stringToInt(list->at(sfunction->firstPosNormal() + 1).at(1));
+    //    int cmdskip = (QString)(list->at(sfunction->firstPosNormal() + 1).at(1)).toInt();
 
         //set widget selection
         if(hlist.count() > 1){
             disconnect(this, &EditorTab::currentChanged, this, &EditorTab::tabChanged);
-            setCurrentIndex(VariantConverter::stringToInt(list->at(1).at(1)));
+            setCurrentIndex(((QString)list->at(1).at(1)).toInt());
             connect(this, &EditorTab::currentChanged, this, &EditorTab::tabChanged);
         }
 

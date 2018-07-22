@@ -1,5 +1,5 @@
 #include "extrafunctionscombobox.h"
-#include "../plugins/RunnerExtraPluginInterface/runnerextraplugininterface.h"
+#include "../plugins/ExtraPluginInterface/extraplugininterface.h"
 #include <QFileDialog>
 
 ExtraFunctionsComboBox::ExtraFunctionsComboBox(QObject *)
@@ -48,7 +48,7 @@ void ExtraFunctionsComboBox::addItemAction()
         QPluginLoader loader(file);
         if(loader.load()){
             QObject *plugin = loader.instance();
-            if(qobject_cast<RunnerExtraPluginInterface *>(plugin)){
+            if(qobject_cast<ExtraPluginInterface *>(plugin)){
                 list.append(QStringList () << "extras" << file);
                 builder->addItem(&list);
 
@@ -118,7 +118,7 @@ void ExtraFunctionsComboBox::pluginCheckAction(int index)
     QPluginLoader loader(getCurrentExtraFile());
     if(loader.load()){
         QObject *plugin = loader.instance();
-        RunnerExtraPluginInterface *inter = qobject_cast<RunnerExtraPluginInterface *>(plugin);
+        ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
         if(inter->existsSettingWidget()){
             emit pluginChanged(true);
         }else{
