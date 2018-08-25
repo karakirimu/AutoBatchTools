@@ -108,25 +108,25 @@ void ProcessXmlBuilder::createDocument()
     QList<QStringList> newlist;
 
     //info element
-    newlist.append((QStringList() << "type" << "info"));
-    newlist.append((QStringList() << "name" << ""));
-    newlist.append((QStringList() << "ver" << ""));
-    newlist.append((QStringList() << "author" << ""));
-    newlist.append((QStringList() << "desc" << ""));
-//    newlist.append((QStringList() << "finput" << "yes" << "sinput" << "no"));
-    newlist.append((QStringList() << "finput" << "yes"));
-    newlist.append((QStringList() << "sinput" << "no"));
-    newlist.append((QStringList() << "fsname" << "" << "id" << ""));
-    newlist.append((QStringList() << "rloop" << "yes" << "max" << "1"));
-    newlist.append((QStringList() << "rlarg" << "1"));
-    newlist.append((QStringList() << "reloop" << "0"));
+    newlist.append((QStringList() << TYPE << TYPE_INFO));
+    newlist.append((QStringList() << NAME_INFO << ""));
+    newlist.append((QStringList() << VERSION << ""));
+    newlist.append((QStringList() << AUTHOR << ""));
+    newlist.append((QStringList() << DESCRIPTION << ""));
+//    newlist.append((QStringList() << FILEINPUT << "yes" << FILEINPUT_SEARCHCHECK << "no"));
+    newlist.append((QStringList() << FILEINPUT << "yes"));
+    newlist.append((QStringList() << FILEINPUT_SEARCHCHECK << "no"));
+    newlist.append((QStringList() << FILESEARCH_NAME << "" << ATTR_POSNUM << ""));
+    newlist.append((QStringList() << RECURSIVE_LOOP << "yes" << ATTR_MAXCOUNT << "1"));
+    newlist.append((QStringList() << RECURSIVE_LOOPARGCOUNT << "1"));
+    newlist.append((QStringList() << RECURSIVE_LOOPCOUNT << "0"));
 
     addItem(&newlist);
     newlist.clear();
 
     //local element
-    newlist.append((QStringList() << "type" << "local"));
-    newlist.append((QStringList() << "localc" << "0"));
+    newlist.append((QStringList() << TYPE << TYPE_LOCAL));
+    newlist.append((QStringList() << LOCAL_VAR_COUNT << "0"));
 
     addItem(&newlist);
     newlist.clear();
@@ -160,50 +160,71 @@ QString ProcessXmlBuilder::fetch(QString tag, QString attr, const QList<QStringL
 
 void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {
-    if(element.contains(QRegularExpression("^(name|ver|var|author|desc|finput|sinput|rlarg|reloop|cmdc|localc|sep|file|istack)$")))
+//    if(element.contains(QRegularExpression("^(name|ver|var|author|desc|finput|sinput|rlarg|reloop|cmdc|localc|sep|file|istack)$")))
+//    {
+//        //add element and text
+//        list->append(QStringList() << element << rxml->readElementText());
+//    }
+
+    if(element == NAME_INFO
+            || element == VERSION
+            || element == SEARCH_VARIANT
+            || element == AUTHOR
+            || element == DESCRIPTION
+            || element == FILEINPUT
+            || element == FILEINPUT_SEARCHCHECK
+            || element == RECURSIVE_LOOPARGCOUNT
+            || element == RECURSIVE_LOOPCOUNT
+            || element == EXEC_CMDARGCOUNT
+            || element == LOCAL_VAR_COUNT
+            || element == SEARCH_SEPARATOR
+            || element == PROFILE_FILEPATH
+            || element == STACKEDWIDGET_POSITION)
     {
         //add element and text
         list->append(QStringList() << element << rxml->readElementText());
     }
 
-    if(element == "type")
+    if(element == TYPE)
     {
         //add element and text, attributes and data
         list->append(QStringList() << element << rxml->readElementText()
-                     << "only" << rxml->attributes().value("only").toString());
+                     << ATTR_ONLY_SCHEDULER << rxml->attributes().value(ATTR_ONLY_SCHEDULER).toString());
     }
 
-    if(element == "timeout")
+    if(element == EXEC_TIMEOUT)
     {
         //add element and text, attributes and data
         list->append(QStringList() << element << rxml->readElementText()
-                     << "dur" << rxml->attributes().value("dur").toString());
+                     << ATTR_TIMEOUTMS << rxml->attributes().value(ATTR_TIMEOUTMS).toString());
     }
 
-    if(element == "rloop")
+    if(element == RECURSIVE_LOOP)
     {
         //add element and text, attributes and data
         list->append(QStringList() << element << rxml->readElementText()
-                     << "max" << rxml->attributes().value("max").toString());
+                     << ATTR_MAXCOUNT << rxml->attributes().value(ATTR_MAXCOUNT).toString());
     }
 
-    if(element == "cmd" || element == "sname" || element == "fsname")
+    if(element == CMDVALUE
+            || element == NAME_SEARCH
+            || element == FILESEARCH_NAME)
     {
         //add to QList
         list->append(QStringList() << element << rxml->readElementText()
-                     << "id" << rxml->attributes().value("id").toString());
+                     << ATTR_POSNUM << rxml->attributes().value(ATTR_POSNUM).toString());
     }
 
-    if(element == "lvar")
+    if(element == LOCAL_VARIANT)
     {
         list->append(QStringList() << element << rxml->readElementText()
-                     << "lval" << rxml->attributes().value("lval").toString());
+                     << ATTR_LOCALVALUE << rxml->attributes().value(ATTR_LOCALVALUE).toString());
     }
 
-    if(element == "output")
+    if(element == SEARCH_OUTPUTFILE)
     {
         list->append(QStringList() << element << rxml->readElementText()
-                     << "radio" << rxml->attributes().value("radio").toString());
+                     << ATTR_RADIOBUTTONPOS << rxml->attributes().value(ATTR_RADIOBUTTONPOS).toString());
     }
 
 }

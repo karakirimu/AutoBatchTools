@@ -73,6 +73,73 @@
  *
  */
 
+// tag define (index 0)
+// all
+#define TYPE                    "type"
+#define CMDVALUE                "cmd"
+
+// info
+#define NAME_INFO               "name"
+#define VERSION                 "ver"
+#define AUTHOR                  "author"
+#define DESCRIPTION             "desc"
+#define FILEINPUT               "finput"
+#define FILEINPUT_SEARCHCHECK   "sinput"
+#define FILESEARCH_NAME         "fsname"
+#define RECURSIVE_LOOP          "rloop"
+#define RECURSIVE_LOOPARGCOUNT  "rlarg"
+#define RECURSIVE_LOOPCOUNT     "reloop"
+
+// search
+#define NAME_SEARCH             "sname"
+#define SEARCH_SEPARATOR        "sep"
+#define SEARCH_VARIANT          "var"
+#define SEARCH_OUTPUTFILE       "output"
+
+// other
+#define NAME_PROFILE            "name"
+#define PROFILE_FILEPATH        "file"
+
+// normal
+#define EXEC_TIMEOUT            "timeout"
+#define EXEC_CMDARGCOUNT        "cmdc"
+
+// extrafunc
+#define NAME_PLUGIN             "name"
+#define PLUGIN_FILEPATH         "file"
+#define PLUGIN_CMDARGCOUNT      "cmdc"
+
+// temp
+#define STACKEDWIDGET_POSITION  "istack"
+
+// local
+#define LOCAL_VARIANT           "lvar"
+#define LOCAL_VAR_COUNT         "localc"
+
+// value define (index 1)
+#define TYPE_INFO               "info"
+#define TYPE_EXEC               "normal"
+#define TYPE_SEARCH             "search"
+#define TYPE_SCRIPT             "script"
+#define TYPE_ANOTHER            "other"
+
+#define TYPE_ALLINCLUDE         "temp"
+#define TYPE_LOCAL              "local"
+
+// attribute define (index 2)
+// all
+#define ATTR_ONLY_SCHEDULER     "only"
+#define ATTR_POSNUM             "id"
+#define ATTR_RADIOBUTTONPOS     "radio"
+#define ATTR_MAXCOUNT           "max"
+#define ATTR_NONE               ""
+
+// normal
+#define ATTR_TIMEOUTMS          "dur"
+
+// local
+#define ATTR_LOCALVALUE         "lval"
+
 class PROCESSXMLLISTGENERATORSHARED_EXPORT ProcessXmlListGenerator : public QObject
 {
     Q_OBJECT
