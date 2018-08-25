@@ -247,9 +247,19 @@ void ProfileTreeWidget::reloadAction()
     int counter = editop->getCacheSize();
     qDebug() << "profiletree :: reloadaction";
     this->clear();
+
+#ifdef QT_DEBUG
+    QTime time;
+    time.start();
+#endif
+
     for(int i = 0; i < counter; i++){
         setTree(i);
     }
+
+#ifdef QT_DEBUG
+    qDebug() << "ProfileTreeWidget::reloadAction() || elapsed: " << time.elapsed() << "ms";
+#endif
 }
 
 void ProfileTreeWidget::addTree(int id)
@@ -430,12 +440,12 @@ void ProfileTreeWidget::setTree(int itemid)
         setTempTree(root, list);
     }
 
-    qDebug()<< "profiletree::setTreeItem";
+//    qDebug()<< "profiletree::setTreeItem";
 
     delete list;
 }
 
-///DEPENDS_XML
+///DEPENDS_XML DEPENDS_UI PROCESS
 void ProfileTreeWidget::setInfoTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
 {
     QString curdata;
@@ -446,52 +456,44 @@ void ProfileTreeWidget::setInfoTree(QTreeWidgetItem *root, QList<QStringList> *l
     root->setIcon(1, QIcon(":/default_icons/info.png"));
 }
 
-///DEPENDS_XML
+///DEPENDS_XML DEPENDS_UI PROCESS
 void ProfileTreeWidget::setNormalTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
 {
     int cmdskip = QString(list->at(firstpos + 1).at(1)).toInt();
 
-    QString curdata;
-    QTreeWidgetItem *childitem;
     root->setText(1,"Exec");
-    root->setIcon(1, QIcon(":/default_icons/terminal.png"));
-    curdata = (cmdskip == 0)? "NewCommand" : list->at(firstpos + 2).at(1);
+    root->setIcon(1, exec_icon);
+
+    QString curdata = (cmdskip == 0)? "NewCommand" : list->at(firstpos + 2).at(1);
 
     QFileInfo info(curdata);
-    if(info.isFile()){
-        root->setText(0, info.fileName());
-    }else{
-        root->setText(0, curdata);
-    }
+    root->setText(0, (info.isFile() ? info.fileName() : curdata));
 
     QString tmp = "";
+    QTreeWidgetItem *childitem;
 
     for(int i = 1; i < cmdskip; i++){
         childitem = new QTreeWidgetItem(root);
         childitem->setText(0, list->at(firstpos + 2 + i).at(1));
 
-        tmp = list->at(firstpos + 2 + i).at(3);
-
-        if(tmp == "0"){
-            tmp = tr("program");
-        }else{
-            tmp = tr("arg %1").arg(tmp);
-        }
+        tmp = (list->at(firstpos + 2 + i).at(3) == "0")? \
+                            tr("program") : tr("arg %1").arg(i);
 
         childitem->setText(1, tmp);
     }
 }
 
-///DEPENDS_XML
+///DEPENDS_XML DEPENDS_UI PROCESS
 void ProfileTreeWidget::setSearchTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
 {
-    QString curdata;
     QTreeWidgetItem *childitem;
-    curdata = list->at(firstpos).at(1);
+    QString curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
+
     root->setText(0, curdata);
     root->setText(1,"Search");
-    root->setIcon(1, QIcon(":/default_icons/search.png"));
+    root->setIcon(1, search_icon);
+
     childitem = new QTreeWidgetItem(root);
     childitem->setText(0, list->at(firstpos + 1).at(1));
     childitem->setText(1, tr("Separator"));
@@ -508,23 +510,21 @@ void ProfileTreeWidget::setSearchTree(QTreeWidgetItem *root, QList<QStringList> 
     }
 }
 
-///DEPENDS_XML
+///DEPENDS_XML DEPENDS_UI PROCESS
 void ProfileTreeWidget::setExtraFuncTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
 {
-    QString curdata;
     QTreeWidgetItem *childitem;
 
     root->setText(1,"External");
-    root->setIcon(1, QIcon(":/default_icons/extras.png"));
+    root->setIcon(1, extra_icon);
+
     int scrskip = QString(list->at(firstpos + 2).at(1)).toInt();
-    curdata = list->at(firstpos).at(1);
+
+    QString curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
-    QFileInfo info(curdata);
-    if(info.isFile()){
-        root->setText(0, info.fileName());
-    }else{
-        root->setText(0, curdata);
-    }
+
+    QFileInfo info(curdata);   
+    root->setText(0, (info.isFile() ? info.fileName() : curdata));
 
     QString tmp;
 
@@ -538,7 +538,7 @@ void ProfileTreeWidget::setExtraFuncTree(QTreeWidgetItem *root, QList<QStringLis
     }
 }
 
-///DEPENDS_XML
+///DEPENDS_XML DEPENDS_UI PROCESS
 void ProfileTreeWidget::setOtherTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
 {
     QString curdata;
@@ -546,20 +546,20 @@ void ProfileTreeWidget::setOtherTree(QTreeWidgetItem *root, QList<QStringList> *
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
     root->setText(0, curdata);
-    root->setIcon(1, QIcon(":/default_icons/others.png"));
+    root->setIcon(1, other_icon);
 }
 
 int ProfileTreeWidget::currentRow()
 {
   QTreeWidgetItem *current = this->currentItem();
-  QTreeWidgetItem *first;
+//  QTreeWidgetItem *first;
 
   int index = -1;
   int count = this->topLevelItemCount();
 
   for(int i = 0; i < count; i++){
-      first = this->topLevelItem(i);
-      if(first == current){
+//      first = this->topLevelItem(i);
+      if(this->topLevelItem(i) == current){
           index = i;
           break;
       }
@@ -570,14 +570,14 @@ int ProfileTreeWidget::currentRow()
 
 int ProfileTreeWidget::rowFromItem(QTreeWidgetItem *item)
 {
-    QTreeWidgetItem *first;
+//    QTreeWidgetItem *first;
 
     int index = -1;
     int count = this->topLevelItemCount();
 
     for(int i = 0; i < count; i++){
-        first = this->topLevelItem(i);
-        if(first == item){
+//        first = this->topLevelItem(i);
+        if(this->topLevelItem(i) == item){
             index = i;
             break;
         }
@@ -614,7 +614,7 @@ void ProfileTreeWidget::setEditOperator(EditOperator *op)
     popupAction();
 }
 
-///DEPENDS_XML
+///DEPENDS_XML DEPENDS_UI PROCESS
 void ProfileTreeWidget::setTempTree(QTreeWidgetItem *root, QList<QStringList> *list)
 {
     int istack = QString(list->at(1).at(1)).toInt();

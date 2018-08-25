@@ -163,7 +163,7 @@ void MainScheduler::themeChangeAction()
         if(file.open( QFile::ReadOnly | QFile::Text )){
             QString data(QLatin1String(file.readAll()));
             this->setStyleSheet(data);
-//            settingdialog->setStyleSheet(data);
+            ui->startupTableWidget->setStyleSheet(data);
         }
     }
 }

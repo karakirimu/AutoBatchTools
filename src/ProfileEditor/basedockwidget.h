@@ -5,9 +5,9 @@
 #include <QDockWidget>
 #include <QEvent>
 #include <QDebug>
-#include <QThread>
-#include <QTime>
-#include <QMutex>
+//#include <QThread>
+//#include <QTime>
+//#include <QMutex>
 
 //#define TIME_MS 1000
 #define Y_RANGE 10

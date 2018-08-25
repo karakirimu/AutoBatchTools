@@ -33,7 +33,9 @@ QFrame {
     color: #c6c6c6;
 }
 
-QFrame#ScopeFrame {
+QFrame#ScopeFrame,
+QFrame#AboutPEFrame
+{
     border: none;
     background-color: #616161;
 }
@@ -310,7 +312,11 @@ QWidget#settingplugins,
 QWidget#baseSettingTab,
 QWidget#settingservice,
 QWidget#settingmessage,
-QWidget#StatusWidget
+QWidget#StatusWidget,
+QWidget#AboutPE,
+QWidget#information,
+QWidget#license,
+QWidget#changelog
 {
     background-color: #616161;
 }
@@ -381,6 +387,11 @@ QCheckBox
     color: #c6c6c6;
 }
 
+QCheckBox#profileCheckBox::indicator:unchecked
+{
+    background-color: #616161;
+}
+
 QCheckBox::indicator
 {
     background-color: #373737;
@@ -391,7 +402,8 @@ QCheckBox::indicator:unchecked {
     background-color: #373737;
 }
 
-QCheckBox::indicator:unchecked:hover {
+QCheckBox::indicator:unchecked:hover,
+QCheckBox#profileCheckBox::indicator:unchecked:hover {
     background-color: #8e8e8e;
 }
 

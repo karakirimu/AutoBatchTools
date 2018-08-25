@@ -56,6 +56,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //test
 //    ui->graphicsView->hide();
+//    qDebug() << "profileeditor" << geometry().center();
 
     //update tree position
     connect(editop, &EditOperator::ui_selectindexUpdate, this, &ProfileEditor::setTreerowpos_select);
@@ -158,6 +159,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     //Title * flag
 //    connect(editop, &EditOperator::edited, this, &ProfileEditor::onFileEdited);
     connect(editop->getUndostack(), &QUndoStack::canUndoChanged, this, &ProfileEditor::onFileEdited);
+    connect(editop->getUndostack(), &QUndoStack::canRedoChanged, this, &ProfileEditor::onFileEdited);
 
     initStatusBar();
 
@@ -204,15 +206,18 @@ void ProfileEditor::newfileAction()
 void ProfileEditor::openAction()
 {
     if(checkOverWrite() == CANCEL) return;
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
 
     // open file
     QString fileName =
             fdialog->getOpenFileName(this,\
                                      tr("Open file"),\
-                                     QDir::currentPath(),\
+                                     settings.value("profileeditor/lastopened",\
+                                                    QDir::currentPath()).toString(),\
                                      tr("Profile (*.xml *.apro)"));
     if(fileName != ""){
 //          preResetUi();
+        settings.setValue("profileeditor/lastopened", QFileInfo(fileName).canonicalPath());
         editop->openAction(fileName);
         postResetUi();
     }
@@ -224,13 +229,16 @@ void ProfileEditor::openAction()
 bool ProfileEditor::saveAction()
 {
     // copy only in save action
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+
     QString fileName =
             fdialog->getSaveFileName(this,\
                                      tr("Save Edit file"),\
-                                     QDir::currentPath(),\
+                                     settings.value("profileeditor/lastsaved", QDir::currentPath()).toString(),\
                                      tr("APRO Files (*.apro)"));
 
     if(fileName != ""){
+        settings.setValue("profileeditor/lastsaved", QFileInfo(fileName).canonicalPath());
         editop->saveAction(fileName);
     }else{
         return false;
@@ -279,8 +287,10 @@ void ProfileEditor::deleteAction()
         editop->deleteAction(rowpos);
         //emit editop->ui_selectindexUpdate(, EditOperator::MAINEDITOR);
 
-        emit editop->ui_selectindexUpdate(rowpos, EditOperator::MAINEDITOR);
+        emit editop->ui_selectindexUpdate(rowpos -1, EditOperator::MAINEDITOR);
         emit editop->ui_funcindexUpdate(rowpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
+
+        rowpos--;
     }
 }
 
@@ -288,8 +298,10 @@ void ProfileEditor::cutAction()
 {
     if(rowpos > 1){
         editop->cutAction(rowpos);
-        emit editop->ui_selectindexUpdate(rowpos, EditOperator::MAINEDITOR);
+        emit editop->ui_selectindexUpdate(rowpos -1, EditOperator::MAINEDITOR);
         emit editop->ui_funcindexUpdate(rowpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
+
+        rowpos--;
     }
 }
 
@@ -323,7 +335,7 @@ void ProfileEditor::upAction()
 void ProfileEditor::downAction()
 {
 //    binder->downItem(treerowpos);
-    if(rowpos < (editop->getCacheSize() - 1)){
+    if(rowpos > 0){
         editop->swapAction(rowpos, rowpos + 1);
         emit editop->ui_selectindexUpdate(rowpos + 1, EditOperator::MAINEDITOR);
         emit editop->ui_funcindexUpdate(rowpos + 1, rowpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
@@ -359,6 +371,10 @@ void ProfileEditor::themeChangeAction()
             QString data(QLatin1String(file.readAll()));
             this->setStyleSheet(data);
             settingdialog->setStyleSheet(data);
+            ui->searchComboBox->setStyleSheet(data);
+            ui->extrafuncComboBox->setStyleSheet(data);
+            ui->searchInputComboBox->setStyleSheet(data);
+            ui->fileTableWidget->setStyleSheet(data);
         }
     }
 }
@@ -437,13 +453,7 @@ void ProfileEditor::about()
     ab->setStyleSheet(this->styleSheet());
     ab->move(this->geometry().center() - ab->rect().center());
     ab->show();
-//    QMessageBox::about(this, tr("About ProfileEditor")
-//                       , tr("AutoBatchRunner - ProfileEditor ver.beta\r\n\r\n"
-//                            "This is an editor of AutoBatchRunner.\r\n"
-//                            "ProfileEditor can create execution list of other projects.\r\n\r\n"
-//                            "Currently, this program runs only windows systems.\r\n"
-//                            "These programs licensed under GNU LGPL version 3 for now.\r\n\r\n"
-//                            "Made by mr_elphis in 2018/02/18"));
+
 }
 
 void ProfileEditor::taskStarted(QString objectname, int runfrom)
@@ -451,13 +461,6 @@ void ProfileEditor::taskStarted(QString objectname, int runfrom)
     qDebug() << "profileeditor::taskstarted";
     Q_UNUSED(objectname);
     Q_UNUSED(runfrom);
-//    ui->actionRun->setEnabled(false);
-//    ui->actionPause->setEnabled(true);
-//    ui->actionStop->setEnabled(true);
-//    ui->runToolButton->setEnabled(false);
-//    ui->pauseToolButton->setEnabled(true);
-//    ui->stopToolButton->setEnabled(true);
-
     setRunButtonState(false, true, true);
 }
 
@@ -465,13 +468,6 @@ void ProfileEditor::taskPaused(QString objectname)
 {
     qDebug() << "profileeditor::taskpaused";
     Q_UNUSED(objectname);
-//    ui->actionRun->setEnabled(true);
-//    ui->actionPause->setEnabled(false);
-//    ui->actionStop->setEnabled(true);
-//    ui->runToolButton->setEnabled(true);
-//    ui->pauseToolButton->setEnabled(false);
-//    ui->stopToolButton->setEnabled(true);
-
     setRunButtonState(true, false, true);
 }
 
@@ -480,13 +476,6 @@ void ProfileEditor::taskStopped(QString objectname)
 {
     qDebug() << "profileeditor::taskstopped";
     Q_UNUSED(objectname);
-//    ui->actionRun->setEnabled(true);
-//    ui->actionPause->setEnabled(false);
-//    ui->actionStop->setEnabled(false);
-//    ui->runToolButton->setEnabled(true);
-//    ui->pauseToolButton->setEnabled(false);
-//    ui->stopToolButton->setEnabled(false);
-
     setRunButtonState(true, false, false);
 }
 
@@ -494,13 +483,6 @@ void ProfileEditor::taskEnd(QString objectname, int runfrom)
 {
     qDebug() << "profileeditor::taskend";
     Q_UNUSED(runfrom);
-//    ui->actionRun->setEnabled(true);
-//    ui->actionPause->setEnabled(false);
-//    ui->actionStop->setEnabled(false);
-//    ui->runToolButton->setEnabled(true);
-//    ui->pauseToolButton->setEnabled(false);
-//    ui->stopToolButton->setEnabled(false);
-
     setRunButtonState(true, false, false);
 
 
@@ -512,20 +494,8 @@ void ProfileEditor::taskEnd(QString objectname, int runfrom)
 
 void ProfileEditor::runTriggered()
 {
-    //when user is not save
-    if(loadfile == genfile && !this->saveAction()){
-        return;
-    }
-
     int state = checkOverWrite();
     if(state == CANCEL || state == NO) return;
-
-//    ui->actionRun->setEnabled(false);
-//    ui->actionPause->setEnabled(false);
-//    ui->actionStop->setEnabled(false);
-//    ui->runToolButton->setEnabled(false);
-//    ui->pauseToolButton->setEnabled(false);
-//    ui->stopToolButton->setEnabled(false);
 
     setRunButtonState(false, false, false);
 
@@ -560,12 +530,6 @@ void ProfileEditor::runTriggered()
 
 void ProfileEditor::pauseTriggered()
 {
-//    ui->actionRun->setEnabled(false);
-//    ui->actionPause->setEnabled(false);
-//    ui->actionStop->setEnabled(false);
-//    ui->runToolButton->setEnabled(false);
-//    ui->pauseToolButton->setEnabled(false);
-//    ui->stopToolButton->setEnabled(false);
     setRunButtonState(false, false, false);
 
     mlTask->processPause(key);
@@ -573,13 +537,6 @@ void ProfileEditor::pauseTriggered()
 
 void ProfileEditor::stopTriggered()
 {
-//    ui->actionRun->setEnabled(true);
-//    ui->actionPause->setEnabled(false);
-//    ui->actionStop->setEnabled(false);
-//    ui->runToolButton->setEnabled(true);
-//    ui->pauseToolButton->setEnabled(false);
-//    ui->stopToolButton->setEnabled(false);
-
     setRunButtonState(true, false, false);
 
     mlTask->removeTask(key);

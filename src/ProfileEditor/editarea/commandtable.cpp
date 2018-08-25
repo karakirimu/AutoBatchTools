@@ -18,7 +18,7 @@ CommandTable::CommandTable(QWidget *parent)
     horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 
     //set header label
-    setHorizontalHeaderLabels((QStringList() << tr("Runnable file / Arguments")));
+    setHorizontalHeaderLabels((QStringList() << tr("Executable file / Arguments")));
 
     connect(this,&CommandTable::cellChanged, this, &CommandTable::editedAction);
 }
@@ -31,6 +31,19 @@ CommandTable::~CommandTable()
 QString CommandTable::getText(int row)
 {
     return this->model()->index(row, 0).data().toString();
+}
+
+void CommandTable::insertItems(QStringList *item)
+{
+    int counter = item->count();
+    setRowCount(counter);
+
+    for(int i = 0; i < counter; i++){
+       this->blockSignals(true);
+       this->setItem(i, 0, new QTableWidgetItem(item->at(i)));
+       this->blockSignals(false);
+       emit updateTable(i, item->at(i), ProcessXmlListGenerator::TABLE_ADD);
+    }
 }
 
 void CommandTable::addAction()
@@ -124,7 +137,7 @@ void CommandTable::pasteAction()
     QStringList text = clipboard->text().split("\t");
 
     //last lests unknown ""
-    if(text.count() > 1) text.removeLast();
+    if(text.last() == "") text.removeLast();
 
     int row = this->rowCount();
     int txcount = text.count();
@@ -142,17 +155,24 @@ void CommandTable::pasteSpaceAction()
     QClipboard *clipboard = QApplication::clipboard();
     QStringList text = clipboard->text().split(QRegularExpression("\\t| "));
 
-    //last lests unknown ""
-    text.removeLast();
-    int row = this->rowCount();
+    if(text.last() == "") text.removeLast();
+    if(text.first() == "") text.removeFirst();
+
     int txcount = text.count();
+    int row = this->currentRow();
+    row = (row < 0) ? 0 : row;
 
     for(int i = 0; i < txcount; i++){
-       if(row > 0) row = this->currentRow();
        insertRow(row);
-       this->setItem(row, 0, new QTableWidgetItem(text.at(i)));
-       emit updateTable(row, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
     }
+
+    for(int i = 0; i < txcount; i++){
+       this->blockSignals(true);
+       this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
+       this->blockSignals(false);
+       emit updateTable(row + i, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
+    }
+
 }
 
 void CommandTable::pasteEnterAction()
@@ -162,18 +182,36 @@ void CommandTable::pasteEnterAction()
     QStringList text = clipboard->text().split(QRegularExpression("\\t|\\n|\\r\\n"));
 
     //last lests unknown ""
-    text.removeLast();
+//    text.removeLast();
 
-    int row = this->rowCount();
+//    int row = this->rowCount();
+//    int txcount = text.count();
+
+//    for(int i = 0; i < txcount; i++){
+//        if(text.at(i) != "\n" || text.at(i) != "\r\n"){
+//            if(row > 0) row = this->currentRow();
+//            insertRow(row);
+//            this->setItem(row, 0, new QTableWidgetItem(text.at(i)));
+//            emit updateTable(row, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
+//        }
+//    }
+
+    if(text.last() == "") text.removeLast();
+    if(text.first() == "") text.removeFirst();
+
     int txcount = text.count();
+    int row = this->currentRow();
+    row = (row < 0) ? 0 : row;
 
     for(int i = 0; i < txcount; i++){
-        if(text.at(i) != "\n" || text.at(i) != "\r\n"){
-            if(row > 0) row = this->currentRow();
-            insertRow(row);
-            this->setItem(row, 0, new QTableWidgetItem(text.at(i)));
-            emit updateTable(row, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
-        }
+       insertRow(row);
+    }
+
+    for(int i = 0; i < txcount; i++){
+       this->blockSignals(true);
+       this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
+       this->blockSignals(false);
+       emit updateTable(row + i, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
     }
 }
 
@@ -183,11 +221,12 @@ void CommandTable::upAction()
     if(current == 0) return;
 
     //swap item
+    QModelIndexList mlist = this->selectedIndexes();
     QString tmp = this->model()->index(current - 1, 0).data().toString();
     this->setItem(current - 1, 0, new QTableWidgetItem(this->model()->index(current, 0).data().toString()));
     this->setItem(current, 0, new QTableWidgetItem(tmp));
 
-    emit swapTable(current, current - 1);
+//    emit swapTable(current, current - 1);
     this->clearSelection();
     selectRow(current - 1);
 }
@@ -204,7 +243,8 @@ void CommandTable::downAction()
     this->setItem(current + 1, 0, new QTableWidgetItem(this->model()->index(current, 0).data().toString()));
     this->setItem(current, 0, new QTableWidgetItem(tmp));
 
-    emit swapTable(current, current + 1);
+//  TODO:
+//    emit swapTable(current, current + 1);
     this->clearSelection();
     selectRow(current + 1);
 }

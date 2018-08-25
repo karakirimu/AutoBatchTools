@@ -12,6 +12,11 @@
 #include <QFileDialog>
 #include <QDebug>
 
+#define KB 1024
+#define MB 1048576
+#define GB 1073741824
+#define TB 1099511627776
+
 namespace Ui {
 class FileSearchDialog;
 }
@@ -39,7 +44,7 @@ private:
     SearchXmlBuilder *builder;
     bool editflag;
     int editindex;
-    enum{NAME, KEYWORD, DIR, RECURSIVE, SECONDS, CREATION, MODIFIED, FSIZE_1, FSIZE_2};
+//    enum{NAME, KEYWORD, DIR, RECURSIVE, SECONDS, CREATION, MODIFIED, FSIZE_1, FSIZE_2};
 
     void createList(QList<QStringList> *newlist);
     QString timeToSeconds(QString data);

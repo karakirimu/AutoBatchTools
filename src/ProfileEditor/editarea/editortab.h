@@ -18,9 +18,17 @@
 #include <QTableWidget>
 #include <QRadioButton>
 #include <editoperator.h>
+#include <QDesktopWidget>
 //#include <pesharedfunction.h>
 #include <../variantconverter/variantconverter.h>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <../plugins/ExtraPluginInterface/extraplugininterface.h>
+
+//ui object strings
+#define SEARCH_ADD      "searchAddButton"
+#define SEARCH_EDIT     "searchEditButton"
+#define SEARCH_DELETE   "searchDeleteButton"
+#define SEARCH_COMBO    "searchComboBox"
 
 class EditorTab : public QTabWidget
 {
@@ -51,6 +59,8 @@ private slots:
     void editTextAction(QString text);
     void editTableAction(int index, QString str, int function);
     void editSwapTableAction(int indexbefore, int indexafter);
+
+    void pluginSettingsClicked();
 
 private:
     void openSavefile();

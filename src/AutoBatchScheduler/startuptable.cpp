@@ -166,28 +166,28 @@ int StartupTable::getStartupXmlIndex(QString objectname)
     return itemid;
 }
 
-//QSS_THEME
-void StartupTable::themeChangeAction(StartupDialog *sd)
-{
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+////QSS_THEME
+//void StartupTable::themeChangeAction(StartupDialog *sd)
+//{
+//    QSettings settings( "./settings.ini", QSettings::IniFormat );
 
-    //theme settings
-    settings.beginGroup("scheduler_startup");
-    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
-    settings.endGroup();
+//    //theme settings
+//    settings.beginGroup("scheduler_startup");
+//    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
+//    settings.endGroup();
 
-    if(stylecolor != "Default"){
-#ifdef QT_DEBUG
-        QFile file(QString("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/%1.qss").arg(stylecolor));
-#else
-        QFile file(QString(":/themes/%1.qss").arg(stylecolor));
-#endif
-        if(file.open( QFile::ReadOnly | QFile::Text )){
-            QString data(QLatin1String(file.readAll()));
-            sd->setStyleSheet(data);
-        }
-    }
-}
+//    if(stylecolor != "Default"){
+//#ifdef QT_DEBUG
+//        QFile file(QString("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/%1.qss").arg(stylecolor));
+//#else
+//        QFile file(QString(":/themes/%1.qss").arg(stylecolor));
+//#endif
+//        if(file.open( QFile::ReadOnly | QFile::Text )){
+//            QString data(QLatin1String(file.readAll()));
+//            sd->setStyleSheet(data);
+//        }
+//    }
+//}
 
 void StartupTable::setTableItem(int row)
 {
@@ -232,8 +232,9 @@ void StartupTable::replaceItem(int row)
 void StartupTable::addAction()
 {
     StartupDialog *sd = new StartupDialog();
-    themeChangeAction(sd);
-    sd->setWindowTitle(tr("Editing-New_file*"));
+//    themeChangeAction(sd);
+    sd->setStyleSheet(this->styleSheet());
+    sd->setWindowTitle(tr("Editing - New_file*"));
     if(sd->exec() == QDialog::Accepted){
         int index = this->rowCount();
         setRowCount(index + 1);
@@ -265,7 +266,8 @@ void StartupTable::editTableAction(int row, int col)
 
 //    QString yesno = "";
     StartupDialog *sd = new StartupDialog();
-    themeChangeAction(sd);
+//    themeChangeAction(sd);
+    sd->setStyleSheet(this->styleSheet());
 
     QList<QStringList> list;
     int rows = row;

@@ -15,16 +15,15 @@ public:
     ~SearchComboBox();
     void reloadComboBoxItem();
 
-    QString getCurrentVariant();
+//    QString getCurrentVariant();
 public slots:
     void addAction();
     void editAction();
     void deleteAction();
 
 private:
-    void setTheme(FileSearchDialog *fs);
-
     SearchXmlBuilder *builder;
+
 };
 
 #endif // SEARCHCOMBOBOX_H

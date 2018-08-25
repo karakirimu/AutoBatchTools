@@ -7,7 +7,7 @@ SearchXmlBuilder::SearchXmlBuilder(QObject *)
     dir.mkdir("./settings");
 
     //set new file
-    setFileName("./settings/.search");
+    setFileName("./settings/search");
 
     if(count() == 0){
         createDocument();
@@ -46,7 +46,7 @@ void SearchXmlBuilder::swapItem(int beforeitemid, int afteritemid)
 // this function needs to call setrowcount
 void SearchXmlBuilder::copyItem(int itemid)
 {
-    Xmlbuilder::copyItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, "name");
+    Xmlbuilder::copyItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, SEARCH_NAME);
 }
 
 bool SearchXmlBuilder::overwriteItem(int itemid, const QList<QStringList> *itemlist)
@@ -64,6 +64,26 @@ int SearchXmlBuilder::count()
     return getSpecifiedElementItemsCount(FIRSTLAYER);
 }
 
+QString SearchXmlBuilder::fetch(QString tag, QString attr, const QList<QStringList> *loadbase)
+{
+    int count = loadbase->count();
+    int i = 0;
+    int listnummax = 0;
+    while(i < count){
+        if(tag == loadbase->at(i).at(0)){
+            if(attr == SEARCH_NONE) return loadbase->at(i).at(1);
+
+            listnummax = loadbase->at(i).count();
+            if(listnummax > 3 && attr == loadbase->at(i).at(2)) return loadbase->at(i).at(3);
+            if(listnummax > 5 && attr == loadbase->at(i).at(4)) return loadbase->at(i).at(5);
+        }
+        i++;
+    }
+
+    //cannot find
+    return SEARCH_NONE;
+}
+
 /**
  * @brief SearchXmlBuilder::getItemData
  * @param element
@@ -79,53 +99,32 @@ int SearchXmlBuilder::count()
  */
 void SearchXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {
-    if(element == "name"
-            || element == "variant"
-            || element == "keyword"
-            || element == "dir"
-            || element == "recursive")
+    if(element == SEARCH_NAME
+            || element == SEARCH_KEYWORD
+            || element == SEARCH_DIR
+            || element == SEARCH_RECURSIVE)
     {
-        QStringList data;
         //add element and text
-        data.append(element);
-        data.append(rxml->readElementText());
-        list->append(data);
+        list->append(QStringList() << element << rxml->readElementText());
     }
 
-    if(element == "seconds")
+    if(element == SEARCH_SECONDS
+            || element == SEARCH_REGEX)
     {
-        QString enabled = rxml->attributes().value("enabled").toString();
-        QStringList data;
-        //add element and text
-        data.append(element);
-        data.append(rxml->readElementText());
-        //add attributes and data
-        data.append("enabled");
-        data.append(enabled);
-
-        //add to QList
-        list->append(data);
+        //add element and text, attributes and data
+        list->append(QStringList() << element << rxml->readElementText()
+                     << ENABLED << rxml->attributes().value(ENABLED).toString());
     }
 
-    if(element == "fsize_1"
-            || element == "fsize_2"
-            || element == "creation"
-            || element == "modified")
+    if(element == SEARCH_FSIZE_1
+            || element == SEARCH_FSIZE_2
+            || element == SEARCH_CREATION
+            || element == SEARCH_MODIFIED)
     {
-        QString enabled = rxml->attributes().value("enabled").toString();
-        QString order = rxml->attributes().value("combo").toString();
-        QStringList data;
-        //add element and text
-        data.append(element);
-        data.append(rxml->readElementText());
-        //add attributes and data
-        data.append("enabled");
-        data.append(enabled);
-        data.append("combo");
-        data.append(order);
-
-        //add to QList
-        list->append(data);
+        //add element and text, attributes and data
+        list->append(QStringList() << element << rxml->readElementText()
+                     << ENABLED << rxml->attributes().value(ENABLED).toString()
+                     << COMBO << rxml->attributes().value(COMBO).toString());
     }
 
     //qDebug() << "//" << element << "//";

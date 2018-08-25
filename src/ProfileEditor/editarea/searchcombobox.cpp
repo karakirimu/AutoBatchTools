@@ -19,7 +19,7 @@ void SearchComboBox::reloadComboBoxItem()
     int counter = builder->count();
     for(int i = 0; i < counter; i++){
         if(builder->readItem(i, &item)){
-            this->addItem(item.at(0).at(1));
+            this->addItem(builder->fetch(SEARCH_NAME,SEARCH_NONE, &item));
             item.clear();
         }
     }
@@ -30,7 +30,8 @@ void SearchComboBox::reloadComboBoxItem()
 void SearchComboBox::addAction()
 {
     FileSearchDialog *fs = new FileSearchDialog();
-    setTheme(fs);
+    fs->setStyleSheet(this->styleSheet());
+//    setTheme(fs);
     fs->setWindowTitle(tr("Edit - untitled*"));
     if(fs->exec() == QDialog::Accepted){
         reloadComboBoxItem();
@@ -44,7 +45,8 @@ void SearchComboBox::editAction()
     if(this->count() == 0) return;
 
     FileSearchDialog *fs = new FileSearchDialog();
-    setTheme(fs);
+    fs->setStyleSheet(this->styleSheet());
+//    setTheme(fs);
     QList<QStringList> list;
 
     int index = this->currentIndex();
@@ -81,37 +83,14 @@ void SearchComboBox::deleteAction()
     }
 }
 
-QString SearchComboBox::getCurrentVariant()
-{
-    int selected = this->currentIndex();
-    if(selected > -1){
-        QList<QStringList> item;
-        builder->readItem(selected, &item);
-        return item.at(1).at(1);
-    }
+//QString SearchComboBox::getCurrentVariant()
+//{
+//    int selected = this->currentIndex();
+//    if(selected > -1){
+//        QList<QStringList> item;
+//        builder->readItem(selected, &item);
+//        return item.at(1).at(1);
+//    }
 
-    return "";
-}
-
-//QSS_THEME
-void SearchComboBox::setTheme(FileSearchDialog *fs)
-{
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-
-    //theme settings
-    settings.beginGroup("pe_general");
-    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
-    settings.endGroup();
-
-    if(stylecolor != "Default"){
-#ifdef QT_DEBUG
-        QFile file(QString("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/%1.qss").arg(stylecolor));
-#else
-        QFile file(QString(":/themes/%1.qss").arg(stylecolor));
-#endif
-        if(file.open( QFile::ReadOnly | QFile::Text )){
-            QString data(QLatin1String(file.readAll()));
-            fs->setStyleSheet(data);
-        }
-    }
-}
+//    return "";
+//}

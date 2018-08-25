@@ -1,11 +1,29 @@
 #ifndef STRINGPROJECTDESCRIPTION_H
 #define STRINGPROJECTDESCRIPTION_H
 
+#include <QUndoCommand>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class StringProjectDescription : public QUndoCommand
 {
 public:
-    StringProjectDescription();
+    StringProjectDescription(const int &targetindex
+                             , QString newstring
+                             , QList<QList<QStringList> *> *cache
+                             , QUndoCommand *parent = nullptr);
+
+    void undo() override;
+    void redo() override;
+
+    int id() const override;
+    bool mergeWith(const QUndoCommand *other) override;
+
+    QString m_newstring;
+private:
+    int m_targetindex;
+    QString m_oldstring;
+    QList<QList<QStringList> *> *m_cache;
+    QHash<int, int> posinfo;
 };
 
 #endif // STRINGPROJECTDESCRIPTION_H

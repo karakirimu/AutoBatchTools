@@ -1,11 +1,14 @@
 #include "editoperator.h"
 #include "xmllistgenerator.h"
 
+#include <QMainWindow>
+
 EditOperator::EditOperator(QObject *parent)
     : QObject(parent)
 {
     undostack = new QUndoStack();
     cache = new QList<QList<QStringList>*>();
+    parentwid = qobject_cast<QMainWindow *>(parent);
 
     QSettings settings( "./settings.ini", QSettings::IniFormat );
     //init timer (ms)
@@ -16,9 +19,6 @@ EditOperator::EditOperator(QObject *parent)
 
 EditOperator::~EditOperator()
 {
-    delete undostack;
-    delete cache;
-
     if(autosavefile != ""){
         QFile file(autosavefile);
         if(!file.remove()){
@@ -26,6 +26,9 @@ EditOperator::~EditOperator()
 
         }
     }
+
+//    delete undostack;
+    delete cache;
 }
 
 bool EditOperator::isEdited()
@@ -47,6 +50,11 @@ bool EditOperator::read(int id, QList<QStringList> *list)
     }
 
     return true;
+}
+
+void EditOperator::readAll(QList<QList<QStringList> *> *list)
+{
+    *list = *cache;
 }
 
 void EditOperator::addAction()
@@ -115,7 +123,7 @@ void EditOperator::editTextAction(int id, QString mnew, QString obj)
     emit editUpdate(id);
 }
 
-void EditOperator::editComboBoxAction(int id, QString mnew)
+void EditOperator::comboboxLocalValAction(int id, QString mnew)
 {
     //localvariant combobox only
     EditComboBoxCommand *com = new EditComboBoxCommand(id, mnew, cache);
@@ -125,16 +133,20 @@ void EditOperator::editComboBoxAction(int id, QString mnew)
     emit editUpdate(id);
 }
 
-void EditOperator::editFileComboAction(int id, QString newstr, QString newfile, QString obj)
-{
-    EditFComboBoxCommand *com = new EditFComboBoxCommand(id, newstr, newfile, obj, cache);
 
-    undostack->push(com);
-//    emit edited(isEdited());
-    emit editUpdate(id);
-}
 
-void EditOperator::editSearchComboAction(int id, QString newstr, int newval)
+
+
+//void EditOperator::editFileComboAction(int id, QString newstr, QString newfile, QString obj)
+//{
+//    EditFComboBoxCommand *com = new EditFComboBoxCommand(id, newstr, newfile, obj, cache);
+
+//    undostack->push(com);
+////    emit edited(isEdited());
+//    emit editUpdate(id);
+//}
+
+void EditOperator::comboboxSearchAction(int id, QString newstr, int newval)
 {
     //search combobox only
     EditScomboBoxCommand *com = new EditScomboBoxCommand(id, newstr, newval, cache);
@@ -144,26 +156,116 @@ void EditOperator::editSearchComboAction(int id, QString newstr, int newval)
     emit editUpdate(id);
 }
 
-void EditOperator::editValueAction(int id, int newval, QString obj)
+void EditOperator::comboboxPluginAction(int id, QString newstr, QString newfile)
 {
-    EditValueCommand *com = new EditValueCommand(id, newval, obj, cache);
+    ComboPluginSelect *com = new ComboPluginSelect(id, newstr, newfile, cache);
 
     undostack->push(com);
-//    emit edited(isEdited());
     emit editUpdate(id);
 }
 
-void EditOperator::editCheckAction(int id, bool newcheck, QString obj)
+void EditOperator::comboboxProfileAction(int id, QString newstr, QString newfile)
 {
-    EditCheckCommand *com = new EditCheckCommand(id, newcheck, obj, cache);
+    ComboProfileSelect *com = new ComboProfileSelect(id, newstr, newfile, cache);
 
     undostack->push(com);
-//    emit edited(isEdited());
     emit editUpdate(id);
 }
+
+
+
+
+
+
+void EditOperator::spinTimeoutAction(int id, int newvalue)
+{
+    EditTimeout *com = new EditTimeout(id, newvalue, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::spinLoopMaxAction(int id, int newvalue)
+{
+    EditLoopMax *com = new EditLoopMax(id, newvalue, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::spinLoopArgumentsAction(int id, int newvalue)
+{
+    EditLoopArguments *com = new EditLoopArguments(id, newvalue, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::spinLoopRecursiveAction(int id, int newvalue)
+{
+    EditLoopRecursive *com = new EditLoopRecursive(id, newvalue, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::radioSearchOutputAction(int id, int newvalue)
+{
+    EditSearchOutput *com = new EditSearchOutput(id, newvalue, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+
+
+
+
+
+void EditOperator::tableSwapExecAction(int id, int beforeid, int afterid)
+{
+    SwapExecTable *com = new SwapExecTable(id, beforeid, afterid, cache);
+
+    undostack->push(com);
+
+    //TODO
+    emit editUpdate(id);
+}
+
+void EditOperator::tableSwapPluginAction(int id, int beforeid, int afterid)
+{
+    SwapPluginTable *com = new SwapPluginTable(id, beforeid, afterid, cache);
+
+    undostack->push(com);
+
+    //TODO
+    emit editUpdate(id);
+}
+
+
+
+
+
+//void EditOperator::editValueAction(int id, int newval, QString obj)
+//{
+//    EditValueCommand *com = new EditValueCommand(id, newval, obj, cache);
+
+//    undostack->push(com);
+////    emit edited(isEdited());
+//    emit editUpdate(id);
+//}
+
+//void EditOperator::editCheckAction(int id, bool newcheck, QString obj)
+//{
+//    EditCheckCommand *com = new EditCheckCommand(id, newcheck, obj, cache);
+
+//    undostack->push(com);
+////    emit edited(isEdited());
+//    emit editUpdate(id);
+//}
 
 //only temp data accepted
-void EditOperator::editVariantAction(int id, QList<QStringList> *xmlstruct)
+void EditOperator::tableEditVariantAction(int id, QList<QStringList> *xmlstruct)
 {
     //record all changes (not merge)
     EditFullCommand *com = new EditFullCommand(id, xmlstruct, cache);
@@ -183,6 +285,131 @@ void EditOperator::editTableAction(int id, int tableid, QString newstr, int oper
 //    emit edited(isEdited());
     emit editUpdate(id);
 }
+
+
+
+
+
+
+void EditOperator::textFileOutputAction(int id, QString newstr)
+{
+    StringFileOutput *com = new StringFileOutput(id, newstr, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::textProjectAuthorAction(int id, QString newstr)
+{
+    StringProjectAuthor *com = new StringProjectAuthor(id, newstr, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::textProjectDescriptAction(int id, QString newstr)
+{
+    StringProjectDescription *com = new StringProjectDescription(id, newstr, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::textProjectNameAction(int id, QString newstr)
+{
+    StringProjectName *com = new StringProjectName(id, newstr, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::textProjectVerAction(int id, QString newstr)
+{
+    StringProjectVersion *com = new StringProjectVersion(id, newstr, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::textSearchSeparateAction(int id, QString newstr)
+{
+    StringSearchSep *com = new StringSearchSep(id, newstr, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+
+
+
+
+void EditOperator::checkAllowInputAction(int id, bool newcheck)
+{
+    CheckEditAllowInput *com = new CheckEditAllowInput(id, newcheck, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::checkLoopInfAction(int id, bool newcheck)
+{
+    CheckEditLoopInf *com = new CheckEditLoopInf(id, newcheck, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::checkSearchInputAction(int id, bool newcheck)
+{
+    CheckEditSearchInput *com = new CheckEditSearchInput(id, newcheck, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::checkTimeoutAction(int id, bool newcheck)
+{
+    CheckEditTimeout *com = new CheckEditTimeout(id, newcheck, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::checkOnlyNormalAction(int id, bool newcheck)
+{
+    CheckOnlySchedulerNormal *com = new CheckOnlySchedulerNormal(id, newcheck, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::checkOnlySearchAction(int id, bool newcheck)
+{
+    CheckOnlySchedulerSearch *com = new CheckOnlySchedulerSearch(id, newcheck, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::checkOnlyPluginAction(int id, bool newcheck)
+{
+    CheckOnlySchedulerPlugin *com = new CheckOnlySchedulerPlugin(id, newcheck, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::checkOnlyOtherAction(int id, bool newcheck)
+{
+    CheckOnlySchedulerOther *com = new CheckOnlySchedulerOther(id, newcheck, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+
+
+
 
 void EditOperator::cutAction(int id)
 {
@@ -279,13 +506,13 @@ void EditOperator::swapAction(int before, int after)
 //    emit edited(isEdited());
 }
 
-void EditOperator::swapTableAction(int id, int beforeid, int afterid, QString objname)
-{
-    SwapTableCommand *com = new SwapTableCommand(id, beforeid, afterid, objname, cache);
+//void EditOperator::swapTableAction(int id, int beforeid, int afterid, QString objname)
+//{
+//    SwapTableCommand *com = new SwapTableCommand(id, beforeid, afterid, objname, cache);
 
-    undostack->push(com);
-//    emit edited(isEdited());
-}
+//    undostack->push(com);
+////    emit edited(isEdited());
+//}
 
 void EditOperator::newAction()
 {
@@ -470,9 +697,17 @@ void EditOperator::loadcache(int amount)
 //    }
 
 //    loadedxmlid = i - 1;
+#ifdef QT_DEBUG
+    QTime time;
+    time.start();
+#endif
 
     updater->readAllItem(cache);
     loadedxmlid = updater->count() - 1;
+
+#ifdef QT_DEBUG
+    qDebug() << "elapsed: " << time.elapsed() << "ms";
+#endif
 
     delete updater;
 }
@@ -506,6 +741,11 @@ int EditOperator::getCurrentCommandType()
 {
     qDebug() << "stack : " << undostack->index();
     return undostack->command(undostack->index())->id();
+}
+
+QRect EditOperator::getMainWindowGeometry()
+{
+    return parentwid->geometry();
 }
 
 QUndoStack *EditOperator::getUndostack() const

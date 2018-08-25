@@ -18,7 +18,7 @@ public:
     QStringList searchFromStrList(QList<QStringList> *list);
 private:
     SearchXmlBuilder *builder;
-    enum{NAME, KEYWORD, DIR, RECURSIVE, SECONDS, CREATION, MODIFIED, FSIZE_1, FSIZE_2};
+//    enum{NAME, KEYWORD, DIR, RECURSIVE, SECONDS, CREATION, MODIFIED, FSIZE_1, FSIZE_2};
 
 //    BaseFileSearch *finder;
     long long stringToLongLong(QString num);

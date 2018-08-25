@@ -67,7 +67,8 @@ bool EntryTask::getPause()
 
 void EntryTask::sendInput(QString message)
 {
-    if(executor->getWorking()) executor->processWrite(message);
+    if(executor->getWorking())
+        executor->processWrite(message);
 }
 
 void EntryTask::start()

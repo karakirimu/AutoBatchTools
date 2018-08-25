@@ -68,7 +68,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QFrame" name="frame_2">
+    <widget class="QFrame" name="AboutPEFrame">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>

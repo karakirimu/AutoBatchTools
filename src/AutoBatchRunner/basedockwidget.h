@@ -5,11 +5,8 @@
 #include <QDockWidget>
 #include <QEvent>
 #include <QDebug>
-#include <QThread>
-#include <QTime>
-#include <QMutex>
 
-#define Y_RANGE 10
+#define Y_RANGE 12
 
 class BaseDockWidget : public QDockWidget
 {

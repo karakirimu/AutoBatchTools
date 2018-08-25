@@ -5,27 +5,72 @@
 #include <QDateTime>
 #include <QFileInfo>
 #include <QObject>
+#include <QDebug>
 #include <QSettings>
 #include <QUndoCommand>
 #include <QApplication>
+#include <QClipboard>
+#include <QMainWindow>
+
+#include <listmimedata.h>
+
 #include <editfullcommand.h>
 #include <edittabcommand.h>
 #include <editvaluecommand.h>
 #include <edittextcommand.h>
 #include <editcheckcommand.h>
-#include <editcomboboxcommand.h>
-#include <editscomboboxcommand.h>
 #include <editfcomboboxcommand.h>
 #include <edittablecommand.h>
+
+//checkbox operation
+#include <checkeditallowinput.h>
+#include <checkeditloopinf.h>
+#include <checkeditsearchinput.h>
+#include <checkedittimeout.h>
+#include <checkonlyschedulernormal.h>
+#include <checkonlyschedulerother.h>
+#include <checkonlyschedulerplugin.h>
+#include <checkonlyschedulersearch.h>
+
+//combobox operation
+#include <combopluginselect.h>
+#include <comboprofileselect.h>
+//old
+#include <editcomboboxcommand.h>
+#include <editscomboboxcommand.h>
+
+//spinbox operation
+#include <editlooparguments.h>
+#include <editloopmax.h>
+#include <editlooprecursive.h>
+#include <edittimeout.h>
+
+//radiobutton operation
+#include <editsearchoutput.h>
+
+//table operation
+#include <swapexectable.h>
+#include <swapplugintable.h>
+//old
+#include <swaptablecommand.h>
+
+//textedit lineedit operation
+#include <stringfileoutput.h>
+#include <stringprojectauthor.h>
+#include <stringprojectdescription.h>
+#include <stringprojectname.h>
+#include <stringprojectversion.h>
+#include <stringsearchsep.h>
+
+//direct data operation
 #include <addcommand.h>
 #include <deletecommand.h>
 #include <editcommand.h>
 #include <insertcommand.h>
 #include <swapcommand.h>
-#include <swaptablecommand.h>
-#include <QClipboard>
+
+//xml operation
 #include <../processxmlbuilder/processxmlbuilder.h>
-#include "listmimedata.h"
 
 #define XML_MIN 2
 
@@ -40,6 +85,7 @@ public:
     bool isEdited();
 
     bool read(int id, QList<QStringList> *list);
+    void readAll(QList<QList<QStringList> *> *list);
     //editor editindex code (not contain tables)
 
     QUndoStack *getUndostack() const;
@@ -54,6 +100,9 @@ public:
          /*,EDITCHECK,EDITFCOMBO,EDITSCOMBO,EDITCOMBO,EDITFULL
          ,EDITTEXT,EDITVALUE,EDITTAB
          ,EDITTABLE,EDITEXTABLE,SWAPTABLE*/};
+
+    //gui functions
+    QRect getMainWindowGeometry();
 
 signals:
     void loadfileChanged(QString);
@@ -75,19 +124,60 @@ public slots:
 //    void editAction(int id, int innerid, int editcode, QList<QStringList> xmlstruct);
     void editTabAction(int id, int newindex);
     void editTextAction(int id, QString mnew, QString obj);
-    void editComboBoxAction(int id, QString mnew);
-    void editFileComboAction(int id, QString newstr, QString newfile, QString obj);
-    void editSearchComboAction(int id, QString newstr, int newval);
-    void editValueAction(int id, int newval, QString obj);
-    void editCheckAction(int id, bool newcheck, QString obj);
-    void editVariantAction(int id, QList<QStringList> *xmlstruct);
+//    void editValueAction(int id, int newval, QString obj);
+//    void editCheckAction(int id, bool newcheck, QString obj);
+
+    //checkbox operation
+    void checkAllowInputAction(int id, bool newcheck);
+    void checkLoopInfAction(int id, bool newcheck);
+    void checkSearchInputAction(int id, bool newcheck);
+
+    void checkTimeoutAction(int id, bool newcheck);
+    void checkOnlyNormalAction(int id, bool newcheck);
+    void checkOnlySearchAction(int id, bool newcheck);
+    void checkOnlyPluginAction(int id, bool newcheck);
+    void checkOnlyOtherAction(int id, bool newcheck);
+
+    //combobox operation
+    void comboboxLocalValAction(int id, QString mnew);
+    void comboboxSearchAction(int id, QString newstr, int newval);
+    void comboboxPluginAction(int id, QString newstr, QString newfile);
+    void comboboxProfileAction(int id, QString newstr, QString newfile);
+
+    //old
+//    void editFileComboAction(int id, QString newstr, QString newfile, QString obj);
+
+    //spinbox operation
+    void spinTimeoutAction(int id, int newvalue);
+    void spinLoopMaxAction(int id, int newvalue);
+    void spinLoopArgumentsAction(int id, int newvalue);
+    void spinLoopRecursiveAction(int id, int newvalue);
+
+    //radiobutton operation
+    void radioSearchOutputAction(int id, int newvalue);
+
+    //table operation
+    void tableSwapExecAction(int id, int beforeid, int afterid);
+    void tableSwapPluginAction(int id, int beforeid, int afterid);
+
+    void tableEditVariantAction(int id, QList<QStringList> *xmlstruct);
+
+    //old
+//    void swapTableAction(int id, int beforeid, int afterid, QString objname);
     void editTableAction(int id, int tableid, QString newstr, int operation, QString objname);
 
-    void cutAction(int id);
+    //textedit lineedit operation
+    void textFileOutputAction(int id, QString newstr);
+    void textProjectAuthorAction(int id, QString newstr);
+    void textProjectDescriptAction(int id, QString newstr);
+    void textProjectNameAction(int id, QString newstr);
+    void textProjectVerAction(int id, QString newstr);
+    void textSearchSeparateAction(int id, QString newstr);
+
     void copyAction(int id);
+    void cutAction(int id);
     void pasteAction(int id);
     void swapAction(int before, int after);
-    void swapTableAction(int id, int beforeid, int afterid, QString objname);
 
     //not relation undo stack
     void newAction();
@@ -123,6 +213,9 @@ private:
     //loaded
     QString loadfile;
     int loadedxmlid = 0;
+
+    //parent geometry
+    QMainWindow *parentwid;
 };
 
 #endif // EDITFILEOPERATOR_H

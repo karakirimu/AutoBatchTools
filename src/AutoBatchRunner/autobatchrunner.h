@@ -1,5 +1,28 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+/*****************************************************************************
+ * autobatchrunner.h: interfaces handling
+ *****************************************************************************
+ * Copyright (C) 2016-2018
+ * $Id$
+ *
+ * Author: k-vontade
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
+ *****************************************************************************/
+
+#ifndef AUTOBATCHRUNNER_H
+#define AUTOBATCHRUNNER_H
 
 #include <QMainWindow>
 #include <QSettings>
@@ -41,6 +64,7 @@ private slots:
     void on_editButton_clicked();
 
 private:
+    void setRunButtonState(bool run, bool pause, bool stop);
     void themeChangeAction();
     void initStatusBar();
 
@@ -53,4 +77,4 @@ private:
     QString key = "";
 };
 
-#endif // MAINWINDOW_H
+#endif // AUTOBATCHRUNNER_H

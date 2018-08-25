@@ -21,7 +21,7 @@ VariantTable::VariantTable(QWidget *)
     verticalHeader()->setVisible(false);
 
     //set header label
-    setHorizontalHeaderLabels((QStringList() << tr("Variant") << tr("Value")));
+    setHorizontalHeaderLabels((QStringList() << tr("File Variant") << tr("Value")));
 
     //set edit saving
     connect(this, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
@@ -49,7 +49,7 @@ void VariantTable::addAction()
     int row = this->rowCount();
     setRowCount(row + 1);
     getLocalList(newlist);
-    editop->editVariantAction(MAGIC, newlist);
+    editop->tableEditVariantAction(MAGIC, newlist);
 }
 
 //ALLOC MEMORY
@@ -57,7 +57,7 @@ void VariantTable::editAction()
 {
     QList<QStringList> *newlist = new QList<QStringList>;
     getLocalList(newlist);
-    editop->editVariantAction(MAGIC, newlist);
+    editop->tableEditVariantAction(MAGIC, newlist);
 }
 
 void VariantTable::deleteAction()
@@ -312,7 +312,7 @@ bool VariantTable::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 
-//DEPENDS_XML
+//DEPENDS_XML OUTPUT PROCESS
 bool VariantTable::setLocalListItem(int itemid)
 {
     QList<QStringList> *list = new QList<QStringList>();
@@ -356,7 +356,7 @@ void VariantTable::tableItemSwap(int from, int to)
     this->setItem(to, 1, new QTableWidgetItem(bku1));
 }
 
-//DEPENDS_XML
+//DEPENDS_XML INPUT PROCESS
 void VariantTable::getLocalList(QList<QStringList> *newlist)
 {
     QStringList list;

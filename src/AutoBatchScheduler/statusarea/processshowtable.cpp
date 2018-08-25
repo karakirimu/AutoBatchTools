@@ -205,9 +205,9 @@ void ProcessShowTable::onCheckStateChanged(bool checked)
             }
         }
     }else{
-        taskc->disableTask(objname);
         //change xml data
         changeXmlValidState(itemid);
+        taskc->disableTask(objname);
     }
 }
 
@@ -279,10 +279,8 @@ void ProcessShowTable::changeXmlValidState(int itemid)
         QString identifier = (list->at(StartupXmlBuilder::VALID).at(1) == "yes")? "no" : "yes";
 
         //change validation
-        QStringList tmp;
-        tmp << "valid" << identifier;
         list->removeAt(StartupXmlBuilder::VALID);
-        list->insert(StartupXmlBuilder::VALID, tmp);
+        list->insert(StartupXmlBuilder::VALID, QStringList() << "valid" << identifier);
 
         builder->editItem(itemid, list);
     }
@@ -352,3 +350,24 @@ void ProcessShowTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
 
     initCellWidgets();
 }
+
+
+//bool ProcessShowTable::eventFilter(QObject *obj, QEvent *event)
+//{
+//    if(event->type() == QEvent::Leave){
+//        this->horizontalScrollBar()->hide();
+//        this->verticalScrollBar()->hide();
+//    }
+
+//    if(event->type() == QEvent::ToolTip){
+//        if(this->mapFromGlobal(QCursor::pos()).y() > (this->height() - RANGE)){
+//            this->horizontalScrollBar()->show();
+//        }
+//        if(this->mapFromGlobal(QCursor::pos()).x() > (this->width() - RANGE)){
+//            this->verticalScrollBar()->show();
+//        }
+//    }
+
+//    // standard event processing
+//    return QObject::eventFilter(obj, event);
+//}

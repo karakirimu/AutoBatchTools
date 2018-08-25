@@ -14,6 +14,7 @@ public:
     ~CommandTable();
 
     QString getText(int row);
+    void insertItems(QStringList *item);
 
 signals:
     void updateTable(int index, QString newstr, int function);

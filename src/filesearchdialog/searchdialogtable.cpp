@@ -57,6 +57,7 @@ void SearchDialogTable::propertyAction()
 {
     if(this->rowCount() > 0){
         FileInfoDialog *dialog = new FileInfoDialog();
+        dialog->setStyleSheet(this->styleSheet());
         dialog->setFileInfo(this->selectedItems().at(0)->text());
         dialog->show();
     }

@@ -113,7 +113,8 @@ void ProcessXmlBuilder::createDocument()
     newlist.append((QStringList() << "ver" << ""));
     newlist.append((QStringList() << "author" << ""));
     newlist.append((QStringList() << "desc" << ""));
-    newlist.append((QStringList() << "finput" << "yes" << "sinput" << "no"));
+//    newlist.append((QStringList() << "finput" << "yes" << "sinput" << "no"));
+    newlist.append((QStringList() << "finput" << "yes"));
     newlist.append((QStringList() << "sinput" << "no"));
     newlist.append((QStringList() << "fsname" << "" << "id" << ""));
     newlist.append((QStringList() << "rloop" << "yes" << "max" << "1"));
@@ -134,6 +135,27 @@ void ProcessXmlBuilder::createDocument()
 int ProcessXmlBuilder::count()
 {
     return getSpecifiedElementItemsCount(FIRSTLAYER);
+}
+
+//If there is no element of "attr", assign PROCESS_NONE to "attr"
+QString ProcessXmlBuilder::fetch(QString tag, QString attr, const QList<QStringList> *loadbase)
+{
+    int count = loadbase->count();
+    int i = 0;
+    int listnummax = 0;
+    while(i < count){
+        if(tag == loadbase->at(i).at(0)){
+            if(attr == ATTR_NONE) return loadbase->at(i).at(1);
+
+            listnummax = loadbase->at(i).count();
+            if(listnummax > 3 && attr == loadbase->at(i).at(2)) return loadbase->at(i).at(3);
+            if(listnummax > 5 && attr == loadbase->at(i).at(4)) return loadbase->at(i).at(5);
+        }
+        i++;
+    }
+
+    //cannot find
+    return ATTR_NONE;
 }
 
 void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)

@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QDebug>
 #include <QDirIterator>
+#include <QRegularExpression>
 
 class FILESEARCHLOADERSHARED_EXPORT BaseFileSearch : public QObject
 {
@@ -15,6 +16,7 @@ public:
 
     QStringList listFiles(QString path, QStringList *searchword);
     QStringList listFilesRecursive(QString path, QStringList *searchword);
+    void setRegularExpressionCondition(QStringList *filelist, QString regexp);
     void setCurrentTimeCondition(QStringList *filelist, qint64 limitedtime);
     void setModifiedTimeCondition(QStringList *filelist, QDateTime basetime, int type);
     void setCreatedTimeCondition(QStringList *filelist, QDateTime basetime, int type);

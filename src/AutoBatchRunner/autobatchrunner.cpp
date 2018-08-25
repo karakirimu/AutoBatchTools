@@ -79,34 +79,38 @@ void AutoBatchRunner::taskStarted(QString objectname, int runfrom)
 {
     Q_UNUSED(objectname);
     Q_UNUSED(runfrom);
-    ui->actionRun->setEnabled(false);
-    ui->actionPause->setEnabled(true);
-    ui->actionStop->setEnabled(true);
+//    ui->actionRun->setEnabled(false);
+//    ui->actionPause->setEnabled(true);
+//    ui->actionStop->setEnabled(true);
+    setRunButtonState(false, true, true);
 }
 
 void AutoBatchRunner::taskPaused(QString objectname)
 {
     Q_UNUSED(objectname);
-    ui->actionRun->setEnabled(true);
-    ui->actionPause->setEnabled(false);
-    ui->actionStop->setEnabled(true);
+//    ui->actionRun->setEnabled(true);
+//    ui->actionPause->setEnabled(false);
+//    ui->actionStop->setEnabled(true);
+    setRunButtonState(true, false, true);
 }
 
 void AutoBatchRunner::taskStopped(QString objectname)
 {
     Q_UNUSED(objectname);
-    ui->actionRun->setEnabled(true);
-    ui->actionPause->setEnabled(false);
-    ui->actionStop->setEnabled(false);
+//    ui->actionRun->setEnabled(true);
+//    ui->actionPause->setEnabled(false);
+//    ui->actionStop->setEnabled(false);
+    setRunButtonState(true, false, false);
 }
 
 void AutoBatchRunner::taskEnd(QString objectname, int runfrom)
 {
     Q_UNUSED(objectname);
     Q_UNUSED(runfrom);
-    ui->actionRun->setEnabled(true);
-    ui->actionPause->setEnabled(false);
-    ui->actionStop->setEnabled(false);
+//    ui->actionRun->setEnabled(true);
+//    ui->actionPause->setEnabled(false);
+//    ui->actionStop->setEnabled(false);
+    setRunButtonState(true, false, false);
 
     mlTask->removeTask(key);
     key = "";
@@ -121,9 +125,10 @@ void AutoBatchRunner::on_actionOpen_triggered()
 
 void AutoBatchRunner::on_actionRun_triggered()
 {
-    ui->actionRun->setEnabled(false);
-    ui->actionPause->setEnabled(false);
-    ui->actionStop->setEnabled(false);
+//    ui->actionRun->setEnabled(false);
+//    ui->actionPause->setEnabled(false);
+//    ui->actionStop->setEnabled(false);
+    setRunButtonState(false, false, false);
 
     if(key == ""){
         key = mlTask->generateRandom(32);
@@ -147,18 +152,20 @@ void AutoBatchRunner::on_actionRun_triggered()
 
 void AutoBatchRunner::on_actionPause_triggered()
 {
-    ui->actionRun->setEnabled(false);
-    ui->actionPause->setEnabled(false);
-    ui->actionStop->setEnabled(false);
+//    ui->actionRun->setEnabled(false);
+//    ui->actionPause->setEnabled(false);
+//    ui->actionStop->setEnabled(false);
+    setRunButtonState(false, false, false);
 
     mlTask->processPause(key);
 }
 
 void AutoBatchRunner::on_actionStop_triggered()
 {
-    ui->actionRun->setEnabled(false);
-    ui->actionPause->setEnabled(false);
-    ui->actionStop->setEnabled(false);
+//    ui->actionRun->setEnabled(false);
+//    ui->actionPause->setEnabled(false);
+//    ui->actionStop->setEnabled(false);
+    setRunButtonState(false, false, false);
 
     mlTask->removeTask(key);
     key = "";
@@ -210,6 +217,13 @@ void AutoBatchRunner::on_editButton_clicked()
 #endif
 }
 
+void AutoBatchRunner::setRunButtonState(bool run, bool pause, bool stop)
+{
+    ui->actionRun->setEnabled(run);
+    ui->actionPause->setEnabled(pause);
+    ui->actionStop->setEnabled(stop);
+}
+
 //QSS_THEME
 void AutoBatchRunner::themeChangeAction()
 {
@@ -230,6 +244,7 @@ void AutoBatchRunner::themeChangeAction()
             QString data(QLatin1String(file.readAll()));
             this->setStyleSheet(data);
             opdialog->setStyleSheet(data);
+            ui->fileTable->setStyleSheet(data);
 //            settingdialog->setStyleSheet(data);
         }
     }

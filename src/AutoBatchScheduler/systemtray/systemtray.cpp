@@ -311,13 +311,11 @@ void SystemTray::changeXmlValidState(int itemid)
 
     if(builder->readItem(itemid, list)){
 
-        QString identifier = (list->at(2).at(1) == "yes")? "no" : "yes";
+        QString identifier = (list->at(StartupXmlBuilder::VALID).at(1) == "yes")? "no" : "yes";
 
         //change validation
-        QStringList tmp;
-        tmp << "valid" << identifier;
-        list->removeAt(2);
-        list->insert(2, tmp);
+        list->removeAt(StartupXmlBuilder::VALID);
+        list->insert(StartupXmlBuilder::VALID, QStringList() << "valid" << identifier);
 
         builder->editItem(itemid, list);
 

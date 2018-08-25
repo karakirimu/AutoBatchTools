@@ -64,11 +64,12 @@ include(settingdialog/settingdialog.pri)
 include(testarea/testarea.pri)
 include(editcore/editcore.pri)
 include(undocommand/undocommand.pri)
+include(undocommand_ui/undocommand_ui.pri)
 
 unix|win32:CONFIG(debug, debug|release) {
     LIBS += \
             -L$$PWD/../../build/debug/libs/ -lVariantConverter \
-            -L$$PWD/../../build/debug/libs/ -lconvertchecker \
+#            -L$$PWD/../../build/debug/libs/ -lconvertchecker \
             -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
             -L$$PWD/../../build/debug/libs/ -lstringxmlbuilder \
             -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder \
@@ -95,7 +96,7 @@ unix|win32:CONFIG(release, debug|release) {
     DEFINES += QT_NO_DEBUG_OUTPUT
     LIBS += \
             -L$$PWD/../../build/release/libs/ -lVariantConverter \
-            -L$$PWD/../../build/release/libs/ -lconvertchecker \
+#            -L$$PWD/../../build/release/libs/ -lconvertchecker \
             -L$$PWD/../../build/release/libs/ -lxmlbuilder \
             -L$$PWD/../../build/release/libs/ -lstringxmlbuilder \
             -L$$PWD/../../build/release/libs/ -lsearchxmlbuilder \

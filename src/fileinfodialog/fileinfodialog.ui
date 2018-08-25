@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>360</width>
     <height>281</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>プロパティ</string>
+   <string>Property</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -44,6 +44,21 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QLabel" name="label">
         <property name="sizePolicy">
@@ -59,14 +74,14 @@
          </size>
         </property>
         <property name="text">
-         <string>ファイル名</string>
+         <string>File name</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLineEdit" name="filename">
         <property name="styleSheet">
-         <string notr="true">border:0px;background-color: rgb(249, 249, 249);</string>
+         <string notr="true"/>
         </property>
         <property name="readOnly">
          <bool>true</bool>
@@ -85,6 +100,21 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QLabel" name="label_2">
         <property name="sizePolicy">
@@ -100,14 +130,14 @@
          </size>
         </property>
         <property name="text">
-         <string>場所</string>
+         <string>Location</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLineEdit" name="filepass">
         <property name="styleSheet">
-         <string notr="true">border:0px;background-color: rgb(249, 249, 249);</string>
+         <string notr="true"/>
         </property>
         <property name="readOnly">
          <bool>true</bool>
@@ -126,6 +156,21 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QLabel" name="label_3">
         <property name="sizePolicy">
@@ -141,14 +186,14 @@
          </size>
         </property>
         <property name="text">
-         <string>種類</string>
+         <string>Type of file</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLineEdit" name="extension">
         <property name="styleSheet">
-         <string notr="true">border:0px;background-color: rgb(249, 249, 249);</string>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -170,6 +215,21 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QLabel" name="label_4">
         <property name="sizePolicy">
@@ -185,14 +245,14 @@
          </size>
         </property>
         <property name="text">
-         <string>ファイルサイズ</string>
+         <string>Size</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLineEdit" name="filesize">
         <property name="styleSheet">
-         <string notr="true">border:0px;background-color: rgb(249, 249, 249);</string>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -214,6 +274,21 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QLabel" name="label_5">
         <property name="sizePolicy">
@@ -229,14 +304,14 @@
          </size>
         </property>
         <property name="text">
-         <string>作成日時</string>
+         <string>Created</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLineEdit" name="created">
         <property name="styleSheet">
-         <string notr="true">border:0px;background-color: rgb(249, 249, 249);</string>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -258,6 +333,21 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QLabel" name="label_6">
         <property name="sizePolicy">
@@ -273,14 +363,14 @@
          </size>
         </property>
         <property name="text">
-         <string>更新日時</string>
+         <string>Modified</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLineEdit" name="updated">
         <property name="styleSheet">
-         <string notr="true">border:0px;background-color: rgb(249, 249, 249);</string>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

@@ -103,6 +103,13 @@ private:
 //    FileOperationSignalBinder *binder;
 //    QString tmp;
 //    QString currentfile;
+
+    //for reduce read time
+    const QIcon exec_icon = QIcon(":/default_icons/terminal.png");
+    const QIcon search_icon = QIcon(":/default_icons/search.png");
+    const QIcon extra_icon = QIcon(":/default_icons/extras.png");
+    const QIcon other_icon = QIcon(":/default_icons/others.png");
+
 };
 
 #endif // PROFILETREEWIDGET_H

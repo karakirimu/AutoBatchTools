@@ -71,7 +71,7 @@ void InnerStackedWidget::moveStacked(int index, int sendfrom)
     }
 }
 
-//DEPENDS_XML
+///DEPENDS_XML DEPENDS_UI PROCESS
 void InnerStackedWidget::setInfoDataList(int index, int sendfrom)
 {
     Q_UNUSED(sendfrom);
@@ -83,17 +83,18 @@ void InnerStackedWidget::setInfoDataList(int index, int sendfrom)
     if(editop->read(index, list)){
 
         //discon
-        disconnect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-        disconnect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-        disconnect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-        disconnect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
-        disconnect(finput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-        disconnect(sinput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-        disconnect(fscombo, &SearchComboBox::currentTextChanged, this, &InnerStackedWidget::editTextAction);
-        disconnect(rloop, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-        disconnect(rloopmax, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
-        disconnect(rlargs, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
-        disconnect(reloop, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
+//        disconnect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+//        disconnect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+//        disconnect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+//        disconnect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
+//        disconnect(finput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
+//        disconnect(sinput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
+//        disconnect(fscombo, &SearchComboBox::currentTextChanged, this, &InnerStackedWidget::editTextAction);
+//        disconnect(rloop, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
+//        disconnect(rloopmax, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
+//        disconnect(rlargs, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
+//        disconnect(reloop, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
+        this->blockSignals(true);
 
         name->setText(list->at(1).at(1));
         ver->setText(list->at(2).at(1));
@@ -126,17 +127,18 @@ void InnerStackedWidget::setInfoDataList(int index, int sendfrom)
 //        rlabel->setText(list->at(5).at(1));
 
         //recon
-        connect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-        connect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-        connect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-        connect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
-        connect(finput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-        connect(sinput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-        connect(fscombo, &SearchComboBox::currentTextChanged, this, &InnerStackedWidget::editTextAction);
-        connect(rloop, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-        connect(rloopmax, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
-        connect(rlargs, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
-        connect(reloop, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
+//        connect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+//        connect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+//        connect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
+//        connect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
+//        connect(finput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
+//        connect(sinput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
+//        connect(fscombo, &SearchComboBox::currentTextChanged, this, &InnerStackedWidget::editTextAction);
+//        connect(rloop, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
+//        connect(rloopmax, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
+//        connect(rlargs, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
+//        connect(reloop, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
+        this->blockSignals(false);
     }
 
     delete list;
@@ -190,7 +192,7 @@ void InnerStackedWidget::editTextAction(QString text)
     qDebug() << "InnerStackedWidget::edittextaction : " << objname;
 #endif
     if(objname == "searchInputComboBox"){
-        editop->editSearchComboAction(0, text, fscombo->currentIndex());
+        editop->comboboxSearchAction(0, text, fscombo->currentIndex());
     }else{
         editop->editTextAction(0, text, objname);
     }
@@ -220,14 +222,19 @@ void InnerStackedWidget::editCheckAction(bool check)
         deletebutton->setVisible(check);
 
         this->repaint();
+        editop->checkSearchInputAction(0,check);
+
     }else if(objname == "loopCountInfCheckBox"){
         rlabel->setVisible(!check);
         rloopmax->setVisible(!check);
 
+        editop->checkLoopInfAction(0, check);
+    }else if(objname == "allowInputCheckBox"){
+        editop->checkAllowInputAction(0,check);
     }
 
     //searchInputCheckBox
-    editop->editCheckAction(0,check,objname);
+//    editop->editCheckAction(0,check,objname);
 }
 
 void InnerStackedWidget::editValueAction(int value)
@@ -236,7 +243,15 @@ void InnerStackedWidget::editValueAction(int value)
 #ifdef QT_DEBUG
     qDebug() << "InnerStackedWidget::editvalueaction : " << objname;
 #endif
-    editop->editValueAction(0, value, objname);
+
+    if(objname == "loopMaxSpinBox"){
+        editop->spinLoopMaxAction(0,value);
+    }else if(objname == "loopArgumentsSpinBox"){
+        editop->spinLoopArgumentsAction(0,value);
+    }else if(objname == "loopRecursiveSpinBox"){
+        editop->spinLoopRecursiveAction(0,value);
+    }
+//    editop->editValueAction(0, value, objname);
 }
 
 //void InnerStackedWidget::getInfoDataList(QStringList *list)

@@ -64,7 +64,7 @@ void ProfileComboBox::reloadComboBoxItem()
     }
 }
 
-//DEPENDS_XML
+//DEPENDS_XML INPUT PROFILE
 void ProfileComboBox::addItemAction()
 {
     //add empty item

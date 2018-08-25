@@ -12,8 +12,10 @@ FlowCellWidget::FlowCellWidget(QWidget *parent) :
 
     //set arrow icon
     arrowpixmap = QIcon(":/default_icons/flowarrow.png").pixmap(32,32);
-
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QPixmap icon(32,32);
+    icon.fill(Qt::transparent);
+    blankpixmap = icon;
+//    QSettings settings( "./settings.ini", QSettings::IniFormat );
 
 //    //theme settings
 //    settings.beginGroup("pe_general");
@@ -34,32 +36,46 @@ FlowCellWidget::~FlowCellWidget()
     delete ui;
 }
 
-void FlowCellWidget::setType(QString type)
+void FlowCellWidget::setTypeAll(const QString type, const QPixmap *pixmap, \
+                                const QString *colorCssText, const QString *frameCssText)
 {
     ui->typelabel->setText("<b>" + type + "</b>");
+    ui->pixlabel->setPixmap(*pixmap);
+
+    ui->pixlabel->setStyleSheet(*colorCssText);
+    ui->typelabel->setStyleSheet(*colorCssText);
+    ui->textEdit->setStyleSheet(*colorCssText);
+
+    framecolor = *frameCssText;
+    ui->innerFrame->setStyleSheet(*frameCssText);
 }
 
-void FlowCellWidget::setTypepixmap(QPixmap pixmap)
-{
-    ui->pixlabel->setPixmap(pixmap);
-}
+//void FlowCellWidget::setType(const QString type)
+//{
+//    ui->typelabel->setText("<b>" + type + "</b>");
+//}
 
-void FlowCellWidget::setTypecolor(QString cssText)
-{
-    ui->pixlabel->setStyleSheet(cssText);
-    ui->typelabel->setStyleSheet(cssText);
-    ui->textBrowser->setStyleSheet(cssText);
-}
+//void FlowCellWidget::setTypepixmap(const QPixmap *pixmap)
+//{
+//    ui->pixlabel->setPixmap(*pixmap);
+//}
 
-void FlowCellWidget::setFramecolor(QString cssText)
-{
-    framecolor = cssText;
-    ui->innerFrame->setStyleSheet(cssText);
-}
+//void FlowCellWidget::setLabelcolor(const QString *cssText)
+//{
+//    ui->pixlabel->setStyleSheet(*cssText);
+//    ui->typelabel->setStyleSheet(*cssText);
+//    ui->textBrowser->setStyleSheet(*cssText);
+//}
+
+//void FlowCellWidget::setFramecolor(const QString *cssText)
+//{
+//    framecolor = *cssText;
+//    ui->innerFrame->setStyleSheet(*cssText);
+//}
 
 void FlowCellWidget::setContent(QString htmlText)
 {
-    ui->textBrowser->setHtml(htmlText);
+    ui->textEdit->setHtml(htmlText);
 }
 
 //void FlowCellWidget::setCellData(FlowCellData data)
@@ -75,9 +91,7 @@ void FlowCellWidget::setContent(QString htmlText)
 void FlowCellWidget::hideArrow()
 {
 //    this->resize(this->width(), this->height() - ui->arrowBottom->height());
-    QPixmap icon(32,32);
-    icon.fill(Qt::transparent);
-    ui->arrowBottom->setPixmap(icon);
+    ui->arrowBottom->setPixmap(blankpixmap);
 }
 
 void FlowCellWidget::showArrow()
@@ -87,7 +101,7 @@ void FlowCellWidget::showArrow()
 
 void FlowCellWidget::selectedItem()
 {
-    ui->innerFrame->setStyleSheet("background-color: rgb(180, 180, 180);");
+    ui->innerFrame->setStyleSheet("background-color: #34504f;");
 }
 
 void FlowCellWidget::unSelectedItem()

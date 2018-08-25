@@ -51,8 +51,8 @@ FileSearchDialog::~FileSearchDialog()
  * Top  xmlelementname(StringListnum):
  * \    :        0:      1:      2:      3:      4:     5:
  * 0    :name     :text   :
- * 1    :variant  :text   :
- * 2    :keyword  :text   :
+ * 1    :keyword  :text   :
+ * 2    :regex    :text   :enabled:data   :
  * 3    :dir      :text   :
  * 4    :recursive:data   :
  * 5    :seconds  :text   :enabled:data   :
@@ -64,10 +64,10 @@ FileSearchDialog::~FileSearchDialog()
 void FileSearchDialog::loadSettingList(int index, const QList<QStringList> *data)
 {
     //qDebug() << data->toVector();
-    if(data->count() != 9) return;
+//    if(data->count() != 9) return;
 
     //window title
-    setWindowTitle(tr("Editing-") + data->at(NAME).at(1));
+    setWindowTitle(tr("Editing - ") + builder->fetch(SEARCH_NAME, SEARCH_NONE, data));
 
     //set edit flags
     editflag = true;
@@ -75,35 +75,41 @@ void FileSearchDialog::loadSettingList(int index, const QList<QStringList> *data
     editindex = index;
 
     //setting data
-    ui->nameLineEdit->setText(data->at(NAME).at(1));
+    ui->nameLineEdit->setText(builder->fetch(SEARCH_NAME, SEARCH_NONE, data));
 
 //    ui->variantLineEdit->setText(data->at(1).at(1));
 
-    ui->keywordLineEdit->setText(data->at(KEYWORD).at(1));
+    ui->keywordLineEdit->setText(builder->fetch(SEARCH_KEYWORD, SEARCH_NONE, data));
 
-    ui->directoryLineEdit->setText(data->at(DIR).at(1));
+    ui->regexLineEdit->setText(builder->fetch(SEARCH_REGEX, SEARCH_NONE, data));
+    ui->regexCheckBox->setChecked(VariantConverter::stringToBool(builder->fetch(SEARCH_RECURSIVE, SEARCH_NONE, data)));
 
-    ui->recursiveCheckBox->setChecked(VariantConverter::stringToBool(data->at(RECURSIVE).at(1)));
+    ui->directoryLineEdit->setText(builder->fetch(SEARCH_DIR, SEARCH_NONE, data));
 
-    ui->secondsLineEdit->setText(secondsToTime(data->at(SECONDS).at(1)));
-    ui->secondsCheckBox->setChecked(VariantConverter::stringToBool(data->at(SECONDS).at(3)));
+    ui->recursiveCheckBox->setChecked(VariantConverter::stringToBool(builder->fetch(SEARCH_RECURSIVE, SEARCH_NONE, data)));
 
-    QDateTime time = QDateTime::fromString(data->at(CREATION).at(1), "yyyy/MM/dd HH:mm:ss");
+    ui->secondsLineEdit->setText(secondsToTime(builder->fetch(SEARCH_SECONDS, SEARCH_NONE, data)));
+    ui->secondsCheckBox->setChecked(VariantConverter::stringToBool(builder->fetch(SEARCH_SECONDS, ENABLED, data)));
+
+    QDateTime time = QDateTime::fromString(builder->fetch(SEARCH_CREATION, SEARCH_NONE, data), "yyyy/MM/dd HH:mm:ss");
     ui->createDateTimeEdit->setDateTime(time);
-    ui->createCheckBox->setChecked(VariantConverter::stringToBool(data->at(CREATION).at(3)));
-    ui->createComboBox->setCurrentIndex(((QString)data->at(CREATION).at(5)).toInt());
+    ui->createCheckBox->setChecked(VariantConverter::stringToBool(builder->fetch(SEARCH_CREATION, ENABLED, data)));
+    ui->createComboBox->setCurrentIndex(builder->fetch(SEARCH_CREATION, COMBO, data).toInt());
 
-    QDateTime time2 = QDateTime::fromString(data->at(MODIFIED).at(1), "yyyy/MM/dd HH:mm:ss");
+    QDateTime time2 = QDateTime::fromString(builder->fetch(SEARCH_MODIFIED, SEARCH_NONE, data), "yyyy/MM/dd HH:mm:ss");
     ui->modifiedDateTimeEdit->setDateTime(time2);
-    ui->modifiedCheckBox->setChecked(VariantConverter::stringToBool(data->at(MODIFIED).at(3)));
-    ui->modifiedComboBox->setCurrentIndex(((QString)data->at(MODIFIED).at(5)).toInt());
+    ui->modifiedCheckBox->setChecked(VariantConverter::stringToBool(builder->fetch(SEARCH_MODIFIED, ENABLED, data)));
+    ui->modifiedComboBox->setCurrentIndex(builder->fetch(SEARCH_MODIFIED, COMBO, data).toInt());
 
-    ui->fsizeLineEdit1->setText(decodeFromBytes(data->at(FSIZE_1).at(1), 1));
-    ui->fsizeCheckBox->setChecked(VariantConverter::stringToBool(data->at(FSIZE_1).at(3)));
-    ui->fsizeComboBox1->setCurrentIndex(((QString)data->at(FSIZE_1).at(5)).toInt());
+    ui->fsizeLineEdit1->setText(decodeFromBytes(builder->fetch(SEARCH_FSIZE_1, SEARCH_NONE, data), 1));
+    ui->fsizeCheckBox->setChecked(VariantConverter::stringToBool(builder->fetch(SEARCH_FSIZE_1, ENABLED, data)));
+    ui->fsizeComboBox1->setCurrentIndex(builder->fetch(SEARCH_FSIZE_1, COMBO, data).toInt());
 
-    ui->fsizeLineEdit2->setText(decodeFromBytes(data->at(FSIZE_2).at(1), 2));
-    ui->fsizeComboBox2->setCurrentIndex(((QString)data->at(FSIZE_2).at(5)).toInt());
+    ui->fsizeLineEdit2->setText(decodeFromBytes(builder->fetch(SEARCH_FSIZE_2, SEARCH_NONE, data), 2));
+    ui->fsizeComboBox2->setCurrentIndex(builder->fetch(SEARCH_FSIZE_2, COMBO, data).toInt());
+
+    // To reflect the theme setting
+    ui->resultTableWidget->setStyleSheet(this->styleSheet());
 }
 
 void FileSearchDialog::onAccept(){
@@ -157,7 +163,6 @@ void FileSearchDialog::dirEditFinished(QString text)
 
 void FileSearchDialog::closeEvent(QCloseEvent *event)
 {
-    // ドキュメントが変更されている場合の警告
     QMessageBox::StandardButton res = QMessageBox::question(\
       this, tr("Alert"), tr("Overwrite this file ?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
 
@@ -188,9 +193,7 @@ void FileSearchDialog::createList(QList<QStringList> *newlist)
     QStringList tmp;
 
     //add title
-    tmp << "name" << ui->nameLineEdit->text();
-    newlist->append(tmp);
-    tmp.clear();
+    newlist->append(QStringList() << SEARCH_NAME << ui->nameLineEdit->text());
 
     //add variant
 //    tmp << "variant" << ui->variantLineEdit->text();
@@ -198,51 +201,52 @@ void FileSearchDialog::createList(QList<QStringList> *newlist)
 //    tmp.clear();
 
     //add keyword
-    tmp << "keyword" << ui->keywordLineEdit->text();
+    newlist->append(QStringList() << SEARCH_KEYWORD << ui->keywordLineEdit->text());
+
+    //add regex
+    tmp << SEARCH_REGEX << ui->regexLineEdit->text()
+        << ENABLED << VariantConverter::boolToString(ui->regexCheckBox->isChecked());
     newlist->append(tmp);
     tmp.clear();
 
     //add dir
-    tmp << "dir" << ui->directoryLineEdit->text();
-    newlist->append(tmp);
-    tmp.clear();
+    newlist->append(QStringList() << SEARCH_DIR << ui->directoryLineEdit->text());
 
     //add recursive
-    tmp << "recursive" << VariantConverter::boolToString(ui->recursiveCheckBox->isChecked());
-    newlist->append(tmp);
-    tmp.clear();
+    newlist->append(QStringList() << SEARCH_RECURSIVE \
+                    << VariantConverter::boolToString(ui->recursiveCheckBox->isChecked()));
 
     //add seconds
-    tmp << "seconds" << timeToSeconds(ui->secondsLineEdit->text())
-        << "enabled" << VariantConverter::boolToString(ui->secondsCheckBox->isChecked());
+    tmp << SEARCH_SECONDS << timeToSeconds(ui->secondsLineEdit->text())
+        << ENABLED << VariantConverter::boolToString(ui->secondsCheckBox->isChecked());
     newlist->append(tmp);
     tmp.clear();
 
     //add creation
-    tmp << "creation" << ui->createDateTimeEdit->text()
-        << "enabled" << VariantConverter::boolToString(ui->createCheckBox->isChecked())
-        << "combo" << QString::number(ui->createComboBox->currentIndex());
+    tmp << SEARCH_CREATION << ui->createDateTimeEdit->text()
+        << ENABLED << VariantConverter::boolToString(ui->createCheckBox->isChecked())
+        << COMBO << QString::number(ui->createComboBox->currentIndex());
     newlist->append(tmp);
     tmp.clear();
 
     //add modified
-    tmp << "modified" << ui->modifiedDateTimeEdit->text()
-        << "enabled" << VariantConverter::boolToString(ui->modifiedCheckBox->isChecked())
-        << "combo" << QString::number(ui->modifiedComboBox->currentIndex());
+    tmp << SEARCH_MODIFIED << ui->modifiedDateTimeEdit->text()
+        << ENABLED << VariantConverter::boolToString(ui->modifiedCheckBox->isChecked())
+        << COMBO << QString::number(ui->modifiedComboBox->currentIndex());
     newlist->append(tmp);
     tmp.clear();
 
     //add filesize_1(fsize_1)
-    tmp << "fsize_1" << encodeToBytes(ui->fsizeLineEdit1->text(), 1)
-        << "enabled" << VariantConverter::boolToString(ui->fsizeCheckBox->isChecked())
-        << "combo" << QString::number(ui->fsizeComboBox1->currentIndex());
+    tmp << SEARCH_FSIZE_1 << encodeToBytes(ui->fsizeLineEdit1->text(), 1)
+        << ENABLED << VariantConverter::boolToString(ui->fsizeCheckBox->isChecked())
+        << COMBO << QString::number(ui->fsizeComboBox1->currentIndex());
     newlist->append(tmp);
     tmp.clear();
 
     //add filesize_2(fsize_2)
-    tmp << "fsize_2" << encodeToBytes(ui->fsizeLineEdit2->text(), 2)
-        << "enabled" << VariantConverter::boolToString(ui->fsizeCheckBox->isChecked())
-        << "combo" << QString::number(ui->fsizeComboBox2->currentIndex());
+    tmp << SEARCH_FSIZE_2 << encodeToBytes(ui->fsizeLineEdit2->text(), 2)
+        << ENABLED << VariantConverter::boolToString(ui->fsizeCheckBox->isChecked())
+        << COMBO << QString::number(ui->fsizeComboBox2->currentIndex());
     newlist->append(tmp);
     tmp.clear();
 }
@@ -300,16 +304,16 @@ QString FileSearchDialog::encodeToBytes(QString bytes, int comboidx)
     case 0:
         break;
     case 1:
-        filesize *= 1024;
+        filesize *= KB;
         break;
     case 2:
-        filesize *= 1048576;
+        filesize *= MB;
         break;
     case 3:
-        filesize *= 1073741824;
+        filesize *= GB;
         break;
     case 4:
-        filesize *= 1099511627776;
+        filesize *= TB;
         break;
     default:
         break;
@@ -322,21 +326,21 @@ QString FileSearchDialog::decodeFromBytes(QString bytes, int comboidx)
 {
     long long bytesize = bytes.toLongLong();
 
-    if(bytesize % 1099511627776 == 0){
+    if(bytesize % TB == 0){
         setFsizeComboBox(4, comboidx);
-        return QString::number(bytesize / 1099511627776);
+        return QString::number(bytesize / TB);
 
-    }else if(bytesize % 1073741824 == 0 ){
+    }else if(bytesize % GB == 0 ){
         setFsizeComboBox(3, comboidx);
-        return QString::number(bytesize / 1073741824);
+        return QString::number(bytesize / GB);
 
-    }else if(bytesize % 1048576 == 0){
+    }else if(bytesize % MB == 0){
         setFsizeComboBox(2, comboidx);
-        return QString::number(bytesize / 1048576);
+        return QString::number(bytesize / MB);
 
-    }else if(bytesize % 1024 == 0){
+    }else if(bytesize % KB == 0){
         setFsizeComboBox(1, comboidx);
-        return QString::number(bytesize / 1024);
+        return QString::number(bytesize / KB);
 
     }else{
         setFsizeComboBox(0, comboidx);

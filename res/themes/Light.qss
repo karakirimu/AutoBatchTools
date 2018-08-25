@@ -32,7 +32,9 @@ QFrame {
     color: #c6c6c6;
 }
 
-QFrame#ScopeFrame {
+QFrame#ScopeFrame,
+QFrame#AboutPEFrame
+{
     border: none;
     background-color: #c2c2c2;
 }
@@ -309,9 +311,17 @@ QWidget#settingplugins,
 QWidget#baseSettingTab,
 QWidget#settingservice,
 QWidget#settingmessage,
-QWidget#StatusWidget
+QWidget#StatusWidget,
+QWidget#AboutPE,
+QWidget#information,
+QWidget#license,
+QWidget#changelog
 {
     background-color: #c2c2c2;
+}
+
+QTextBrowser {
+    color: #393939;
 }
 
 /* Style the tab using the tab sub-control. Note that
@@ -375,11 +385,17 @@ QCheckBox::indicator
     color: #e0e0e0;
 }
 
+QCheckBox#profileCheckBox::indicator:unchecked
+{
+    background-color: #c2c2c2;
+}
+
 QCheckBox::indicator:unchecked {
     background-color: #f5f5f5;
 }
 
-QCheckBox::indicator:unchecked:hover {
+QCheckBox::indicator:unchecked:hover,
+QCheckBox#profileCheckBox::indicator:unchecked:hover {
     background-color: #e0e0e0;
 }
 

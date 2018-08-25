@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>716</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,7 +59,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1024</width>
      <height>20</height>
     </rect>
    </property>
@@ -161,6 +161,12 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="BaseDockWidget" name="processDockWidget">
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>87</height>
+    </size>
+   </property>
    <property name="windowTitle">
     <string>Process</string>
    </property>
@@ -235,6 +241,12 @@
    </widget>
   </widget>
   <widget class="BaseDockWidget" name="localVariantDockWidget">
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>87</height>
+    </size>
+   </property>
    <property name="windowTitle">
     <string>File</string>
    </property>
@@ -299,6 +311,12 @@
    </widget>
   </widget>
   <widget class="BaseDockWidget" name="globalVariantDockWidget">
+   <property name="minimumSize">
+    <size>
+     <width>100</width>
+     <height>87</height>
+    </size>
+   </property>
    <property name="features">
     <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
@@ -498,7 +516,7 @@
              <bool>true</bool>
             </property>
             <attribute name="title">
-             <string>Loop Condition</string>
+             <string>File and Loop</string>
             </attribute>
             <layout class="QVBoxLayout" name="verticalLayout_20">
              <property name="leftMargin">
@@ -516,7 +534,7 @@
              <item>
               <widget class="QGroupBox" name="fileinput">
                <property name="title">
-                <string>ファイル入力</string>
+                <string>File variable</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_21">
                 <property name="leftMargin">
@@ -534,7 +552,7 @@
                 <item>
                  <widget class="QCheckBox" name="allowInputCheckBox">
                   <property name="text">
-                   <string>ファイル入力の許可</string>
+                   <string>Allow file input</string>
                   </property>
                   <property name="checked">
                    <bool>true</bool>
@@ -544,7 +562,7 @@
                 <item>
                  <widget class="QCheckBox" name="searchInputCheckBox">
                   <property name="text">
-                   <string>ファイル検索を入力に適用</string>
+                   <string>Enter search results as input</string>
                   </property>
                  </widget>
                 </item>
@@ -633,7 +651,7 @@
              <item>
               <widget class="QGroupBox" name="fileloop">
                <property name="title">
-                <string>ファイル・ループ</string>
+                <string>Loop condition</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_22">
                 <property name="leftMargin">
@@ -651,7 +669,7 @@
                 <item>
                  <widget class="QCheckBox" name="loopCountInfCheckBox">
                   <property name="text">
-                   <string>読み込みファイルが無くなるまで処理をループ</string>
+                   <string>Process all entered files</string>
                   </property>
                   <property name="checked">
                    <bool>true</bool>
@@ -688,7 +706,7 @@
                       <bool>true</bool>
                      </property>
                      <property name="text">
-                      <string>最大ループ回数</string>
+                      <string>Number of loops</string>
                      </property>
                     </widget>
                    </item>
@@ -704,6 +722,9 @@
                 </item>
                 <item>
                  <widget class="QFrame" name="loopInputPerOneTime">
+                  <property name="toolTip">
+                   <string>Number of arguments to use in one loop.</string>
+                  </property>
                   <property name="frameShape">
                    <enum>QFrame::NoFrame</enum>
                   </property>
@@ -726,7 +747,7 @@
                    <item>
                     <widget class="QLabel" name="label">
                      <property name="text">
-                      <string>1回分の引数の数</string>
+                      <string>Arguments in one loop</string>
                      </property>
                     </widget>
                    </item>
@@ -748,6 +769,9 @@
              </item>
              <item>
               <widget class="QFrame" name="looprecursive">
+               <property name="toolTip">
+                <string>This is used when you select this file (current file) on the [Other Projects] tab.</string>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
                </property>
@@ -770,7 +794,7 @@
                 <item>
                  <widget class="QLabel" name="label_2">
                   <property name="text">
-                   <string>再帰ループ回数(※注意)</string>
+                   <string>Number of recursive loops</string>
                   </property>
                  </widget>
                 </item>
@@ -1253,21 +1277,10 @@
                  </property>
                 </widget>
                </item>
-               <item row="0" column="2">
-                <widget class="QToolButton" name="extrafuncAddButton">
-                 <property name="text">
-                  <string>...</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../../res/resources.qrc">
-                   <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0" colspan="4">
+               <item row="2" column="0" colspan="5">
                 <widget class="CommandTable" name="extrafuncTableWidget"/>
                </item>
-               <item row="0" column="3">
+               <item row="0" column="4">
                 <widget class="QToolButton" name="extrafuncDeleteButton">
                  <property name="text">
                   <string>...</string>
@@ -1278,16 +1291,31 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0" colspan="4">
+               <item row="1" column="0" colspan="5">
                 <widget class="ExtraFunctionsComboBox" name="extrafuncComboBox"/>
                </item>
-               <item row="0" column="1">
+               <item row="0" column="3">
+                <widget class="QToolButton" name="extrafuncAddButton">
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../res/resources.qrc">
+                   <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1" colspan="2">
                 <widget class="QPushButton" name="pluginSettingButton">
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
                  <property name="text">
-                  <string>Plugin Settings</string>
+                  <string>Settings</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../res/resources.qrc">
+                   <normaloff>:/default_icons/settings.png</normaloff>:/default_icons/settings.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -1331,7 +1359,7 @@
              <bool>true</bool>
             </property>
             <attribute name="title">
-             <string>Other Project</string>
+             <string>Other Projects</string>
             </attribute>
             <layout class="QVBoxLayout" name="verticalLayout_12">
              <property name="leftMargin">
@@ -1423,6 +1451,12 @@
    </widget>
   </widget>
   <widget class="BaseDockWidget" name="setTestDockWidget">
+   <property name="minimumSize">
+    <size>
+     <width>102</width>
+     <height>119</height>
+    </size>
+   </property>
    <property name="acceptDrops">
     <bool>true</bool>
    </property>
@@ -1486,28 +1520,19 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QLabel" name="label_6">
-          <property name="toolTip">
-           <string>It can use: 0-7 0,1,2,3</string>
-          </property>
-          <property name="text">
-           <string>Scope</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="margin">
-           <number>2</number>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QLineEdit" name="rangeLineEdit">
+          <property name="toolTip">
+           <string>You can specify the execution range.
+Example: 0-7 0, 1, 2, 3</string>
+          </property>
           <property name="maxLength">
            <number>40</number>
           </property>
           <property name="frame">
            <bool>false</bool>
+          </property>
+          <property name="placeholderText">
+           <string>Execution range ...</string>
           </property>
          </widget>
         </item>
@@ -1680,6 +1705,9 @@ border: none;</string>
           </property>
           <property name="readOnly">
            <bool>true</bool>
+          </property>
+          <property name="cursorWidth">
+           <number>0</number>
           </property>
           <property name="textInteractionFlags">
            <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -2039,6 +2067,27 @@ border: none;</string>
    <header>../profilecombobox/profilecombobox.h</header>
   </customwidget>
   <customwidget>
+   <class>ConsoleView</class>
+   <extends>QTextEdit</extends>
+   <header>consoleview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>BaseDockWidget</class>
+   <extends>QDockWidget</extends>
+   <header>basedockwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FileQueueTable</class>
+   <extends>QTableWidget</extends>
+   <header>../filequeuetable/filequeuetable.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ConsoleEdit</class>
+   <extends>QLineEdit</extends>
+   <header>consoleedit.h</header>
+  </customwidget>
+  <customwidget>
    <class>StringTable</class>
    <extends>QTableWidget</extends>
    <header>../stringtable/stringtable.h</header>
@@ -2086,30 +2135,9 @@ border: none;</string>
    <header>extrafunctionscombobox.h</header>
   </customwidget>
   <customwidget>
-   <class>ConsoleView</class>
-   <extends>QTextEdit</extends>
-   <header>consoleview.h</header>
-  </customwidget>
-  <customwidget>
-   <class>BaseDockWidget</class>
-   <extends>QDockWidget</extends>
-   <header>basedockwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>FileQueueTable</class>
-   <extends>QTableWidget</extends>
-   <header>../filequeuetable/filequeuetable.h</header>
-  </customwidget>
-  <customwidget>
    <class>FlowTable</class>
    <extends>QTableWidget</extends>
    <header>flowtable.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ConsoleEdit</class>
-   <extends>QLineEdit</extends>
-   <header>consoleedit.h</header>
   </customwidget>
  </customwidgets>
  <resources>

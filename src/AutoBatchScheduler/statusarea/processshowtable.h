@@ -5,9 +5,12 @@
 #include <QTableWidget>
 #include <QWidget>
 #include <QHeaderView>
+//#include <QScrollBar>
 #include <taskschedulerconnector.h>
 #include "cellinfowidget.h"
 #include "consolewidget.h"
+
+#define RANGE 30
 
 class ProcessShowTable : public QTableWidget
 {
@@ -67,6 +70,7 @@ private slots:
     void onCheckStateChanged(bool checked);
 
 private:
+//    bool eventFilter(QObject *obj, QEvent *event);
     void initCellWidgets();
     void initCellWidget(int itemid);
     void changeXmlValidState(int itemid);
@@ -76,7 +80,6 @@ private:
 
     StartupXmlBuilder *builder;
     TaskSchedulerConnector *taskc;
-
 };
 
 #endif // PROCESSSHOWTABLE_H

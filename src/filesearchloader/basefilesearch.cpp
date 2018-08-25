@@ -39,6 +39,21 @@ QStringList BaseFileSearch::listFilesRecursive(QString path, QStringList *search
     return files;
 }
 
+void BaseFileSearch::setRegularExpressionCondition(QStringList *filelist, QString regexp)
+{
+    int filecount = filelist->count();
+    QList<int> deleteddata;
+
+    for(int i = 0; i < filecount; i++){
+        if(!((QString)filelist->at(i)).contains(QRegularExpression(regexp))){
+            //not match
+            deleteddata.append(i);
+        }
+    }
+
+    deleteLists(&deleteddata, filelist);
+}
+
 void BaseFileSearch::setCurrentTimeCondition(QStringList *filelist, qint64 limitedtime)
 {
     int filecount = filelist->count();
@@ -130,19 +145,19 @@ void BaseFileSearch::conditionFileSize(QList<int> *deleteddata
 {
     switch(type){
     case 0:
-        if(targetbytes <= basebytes) deleteddata->append(counter);
-        break;
-    case 1:
         if(targetbytes < basebytes) deleteddata->append(counter);
         break;
+    case 1:
+        if(targetbytes <= basebytes) deleteddata->append(counter);
+        break;
     case 2:
-        if(targetbytes != basebytes) deleteddata->append(counter);
+        if(targetbytes == basebytes) deleteddata->append(counter);
         break;
     case 3:
-        if(targetbytes > basebytes) deleteddata->append(counter);
+        if(targetbytes >= basebytes) deleteddata->append(counter);
         break;
     case 4:
-        if(targetbytes >= basebytes) deleteddata->append(counter);
+        if(targetbytes > basebytes) deleteddata->append(counter);
         break;
     default:
         break;
@@ -169,7 +184,7 @@ void BaseFileSearch::conditionTime(QList<int> *deleteddata, int counter, qint64 
         if(time <= 0) deleteddata->append(counter);
         break;
     case 1:
-        if(time != 0) deleteddata->append(counter);
+        if(time == 0) deleteddata->append(counter);
         break;
     case 2:
         if(time >= 0) deleteddata->append(counter);

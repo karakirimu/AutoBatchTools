@@ -15,16 +15,30 @@
  * Top  xmlelementname(StringListnum):
  * \    :        0:      1:      2:      3:      4:     5:
  * 0    :name     :text   :
- * 1    :variant  :text   :
- * 2    :keyword  :text   :
- * 3    :dir      :text   :
- * 4    :recursive:text   :
- * 5    :seconds  :text   :enabled:data   :
- * 6    :creation :text   :enabled:data   :combo   :data
- * 7    :modified :text   :enabled:data   :combo   :data
- * 8    :fsize_1  :text   :enabled:data   :combo   :data
- * 9    :fsize_2  :text   :enabled:data   :combo   :data
+ * 1    :keyword  :text   :
+ * 2    :dir      :text   :
+ * 3    :recursive:text   :
+ * 4    :seconds  :text   :enabled:data   :
+ * 5    :creation :text   :enabled:data   :combo   :data
+ * 6    :modified :text   :enabled:data   :combo   :data
+ * 7    :fsize_1  :text   :enabled:data   :combo   :data
+ * 8    :fsize_2  :text   :enabled:data   :combo   :data
  */
+
+#define SEARCH_NAME         "name"
+#define SEARCH_KEYWORD      "keyword"
+#define SEARCH_REGEX        "regex"
+#define SEARCH_DIR          "dir"
+#define SEARCH_RECURSIVE    "recursive"
+#define SEARCH_SECONDS      "seconds"
+#define SEARCH_CREATION     "creation"
+#define SEARCH_MODIFIED     "modified"
+#define SEARCH_FSIZE_1      "fsize_1"
+#define SEARCH_FSIZE_2      "fsize_2"
+
+#define ENABLED     "enabled"
+#define COMBO       "combo"
+#define SEARCH_NONE ""
 
 class SEARCHXMLBUILDERSHARED_EXPORT SearchXmlBuilder : public Xmlbuilder
 {
@@ -42,6 +56,7 @@ public:
    bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
    void createDocument();
    int count();
+   QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase);
 private:
 
     void setSearchItemData(QString element, QList<QStringList> *list);

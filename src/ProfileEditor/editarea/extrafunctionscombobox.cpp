@@ -1,6 +1,4 @@
 #include "extrafunctionscombobox.h"
-#include "../plugins/ExtraPluginInterface/extraplugininterface.h"
-#include <QFileDialog>
 
 ExtraFunctionsComboBox::ExtraFunctionsComboBox(QObject *)
 {
@@ -31,7 +29,7 @@ void ExtraFunctionsComboBox::reloadComboBoxItem()
         this->setCurrentIndex(tmp);
 }
 
-//DEPENDS_XML
+//DEPENDS_XML PLUGINS
 void ExtraFunctionsComboBox::addItemAction()
 {
     //add empty item
@@ -40,7 +38,8 @@ void ExtraFunctionsComboBox::addItemAction()
     //add file
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::ExistingFile);
-    QString file = dialog.getOpenFileName(this, tr("Select Extras"), "./", tr("dll (*.dll)"));
+    QString file = dialog.getOpenFileName(this, tr("Select Extras"), \
+                                          QDir::currentPath(), tr("dll (*.dll)"));
     QFileInfo info(file);
 
     if(info.exists()){

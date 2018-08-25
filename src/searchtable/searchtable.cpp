@@ -43,9 +43,9 @@ SearchTable::~SearchTable()
 void SearchTable::setPopupActionTop()
 {
     //set basic items
-    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("追加"));
+    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add"));
     m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
-    m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("削除"));
+    m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
     m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
     contextMenu->addSeparator();
 
@@ -61,7 +61,7 @@ void SearchTable::setPopupActionTop()
 void SearchTable::setPopupActionBottom()
 {
     contextMenu->addSeparator();
-    m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("テーブルの更新"));
+    m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
     m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
 
     connect(m_ref, SIGNAL(triggered()), this, SLOT(reloadAction()));
@@ -130,7 +130,8 @@ bool SearchTable::eventFilter(QObject *obj, QEvent *event)
 void SearchTable::addAction()
 {
     FileSearchDialog *fs = new FileSearchDialog();
-    fs->setWindowTitle(tr("編集-新規*"));
+    fs->setStyleSheet(this->styleSheet());
+    fs->setWindowTitle(tr("Editing - untitled*"));
     if(fs->exec() == QDialog::Accepted){
         int index = this->rowCount();
         setRowCount(index + 1);
@@ -144,6 +145,7 @@ void SearchTable::editAction()
     if(this->rowCount() == 0) return;
 
     FileSearchDialog *fs = new FileSearchDialog();
+    fs->setStyleSheet(this->styleSheet());
     QList<QStringList> list;
     int row = currentRow();
     if(builder->readItem(row, &list)){

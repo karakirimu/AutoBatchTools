@@ -603,7 +603,7 @@
     <string>Schedule</string>
    </property>
    <property name="toolTip">
-    <string>スケジュール</string>
+    <string>Schedule</string>
    </property>
   </action>
   <action name="actionOption">
@@ -618,7 +618,7 @@
     <string>Options</string>
    </property>
    <property name="toolTip">
-    <string>オプション</string>
+    <string>Options</string>
    </property>
   </action>
  </widget>

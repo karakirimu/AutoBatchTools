@@ -9,7 +9,8 @@ AboutPE::AboutPE(QWidget *parent) :
 {
     setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
-    ui->icon->setPixmap(QPixmap(":/app_icons/app_pe.ico").scaledToWidth(128));
+    QIcon icons(":/app_icons/app_pe.ico");
+    ui->icon->setPixmap(icons.pixmap(128,128));
 
     //textに変更
     QFile gplfile(":/license/gpl-3.0-standalone.html");

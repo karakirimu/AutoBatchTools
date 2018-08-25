@@ -24,7 +24,7 @@ void ConsoleEdit::sendMessage()
 #ifdef Q_OS_WIN
         mlTask->sendInput(this->objectName(), "\n");
 #else
-        binder->sendInput(this->objectName(), "\r\n");
+        mlTask->>sendInput(this->objectName(), "\r\n");
 #endif
     }else{
         mlTask->sendInput(this->objectName(), text);

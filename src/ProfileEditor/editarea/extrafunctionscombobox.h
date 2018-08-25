@@ -6,6 +6,8 @@
 #include <QPluginLoader>
 #include <QMessageBox>
 #include <../extrafunctionsxmlbuilder/extrafunctionsxmlbuilder.h>
+#include <../plugins/ExtraPluginInterface/extraplugininterface.h>
+#include <QFileDialog>
 
 class ExtraFunctionsComboBox : public QComboBox
 {

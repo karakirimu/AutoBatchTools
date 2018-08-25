@@ -16,10 +16,10 @@ EditorTab::~EditorTab()
 void EditorTab::setConnection()
 {
     widgetsearch = this->widget(ProcessXmlListGenerator::SEARCH);
-    addbutton = widgetsearch->findChild<QToolButton *>("searchAddButton");
-    editbutton = widgetsearch->findChild<QToolButton *>("searchEditButton");
-    deletebutton = widgetsearch->findChild<QToolButton *>("searchDeleteButton");
-    searchcombobox = widgetsearch->findChild<SearchComboBox *>("searchComboBox");
+    addbutton = widgetsearch->findChild<QToolButton *>(SEARCH_ADD);
+    editbutton = widgetsearch->findChild<QToolButton *>(SEARCH_EDIT);
+    deletebutton = widgetsearch->findChild<QToolButton *>(SEARCH_DELETE);
+    searchcombobox = widgetsearch->findChild<SearchComboBox *>(SEARCH_COMBO);
     openButton = widgetsearch->findChild<QToolButton *>("openToolButton");
 
     widgetextra = this->widget(ProcessXmlListGenerator::EXTRAFUNC);
@@ -43,6 +43,7 @@ void EditorTab::setConnection()
     connect(addbutton_e, &QAbstractButton::clicked, extrafunccombobox, &ExtraFunctionsComboBox::addItemAction);
     connect(deletebutton_e, &QAbstractButton::clicked, extrafunccombobox, &ExtraFunctionsComboBox::deleteAction);
     connect(extrafunccombobox, &ExtraFunctionsComboBox::pluginChanged, pluginsetting, &QPushButton::setEnabled);
+    connect(pluginsetting, &QPushButton::clicked, this, &EditorTab::pluginSettingsClicked);
 
     //connect action in profile widget
     connect(addbutton_o, &QToolButton::clicked, profilecombobox, &ProfileComboBox::addItemAction);
@@ -112,14 +113,16 @@ void EditorTab::setEditOperator(EditOperator *op)
     connect(extrafuncTableWidget, &CommandTable::swapTable, this, &EditorTab::editSwapTableAction);
 }
 
-//DEPENDS_XML
+///DEPENDS_XML DEPENDS_UI PROCESS
 void EditorTab::setNormalDataList(QList<QStringList> *list, int firstpos)
 {
-    disconnect(timeoutCheckBox, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
-    disconnect(tospin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged)
-            , this, &EditorTab::editValueAction);
-    disconnect(autoonly, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
-    disconnect(ctablenormal, &CommandTable::updateTable, this, &EditorTab::editTableAction);
+//    disconnect(timeoutCheckBox, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+//    disconnect(tospin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged)
+//            , this, &EditorTab::editValueAction);
+//    disconnect(autoonly, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+//    disconnect(ctablenormal, &CommandTable::updateTable, this, &EditorTab::editTableAction);
+
+    this->blockSignals(true);
 
     int counter = ((QString)list->at(firstpos + 2).at(1)).toInt();
     timeoutCheckBox->setChecked(VariantConverter::stringToBool(list->at(firstpos + 1).at(1)));
@@ -131,24 +134,28 @@ void EditorTab::setNormalDataList(QList<QStringList> *list, int firstpos)
 
     autoonly->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
 
-    connect(timeoutCheckBox, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
-    connect(tospin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged)
-            , this, &EditorTab::editValueAction);
-    connect(autoonly, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
-    connect(ctablenormal, &CommandTable::updateTable, this, &EditorTab::editTableAction);
+
+    this->blockSignals(false);
+//    connect(timeoutCheckBox, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+//    connect(tospin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged)
+//            , this, &EditorTab::editValueAction);
+//    connect(autoonly, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+//    connect(ctablenormal, &CommandTable::updateTable, this, &EditorTab::editTableAction);
 }
 
-//DEPENDS_XML
+///DEPENDS_XML DEPENDS_UI PROCESS
 void EditorTab::setSearchDataList(QList<QStringList> *list, int firstpos)
 {
     //reload combobox
-    disconnect(searchcombobox, &SearchComboBox::currentTextChanged, this, &EditorTab::editTextAction);
-    disconnect(separatorLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
-    disconnect(localVariantComboBox, &VariantComboBox::currentTextChanged, this, &EditorTab::editTextAction);
-    disconnect(outputLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
-    disconnect(autoonly_2, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
-    disconnect(vari, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
-    disconnect(file, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
+//    disconnect(searchcombobox, &SearchComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+//    disconnect(separatorLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
+//    disconnect(localVariantComboBox, &VariantComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+//    disconnect(outputLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
+//    disconnect(autoonly_2, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+//    disconnect(vari, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
+//    disconnect(file, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
+
+    this->blockSignals(true);
 
     searchcombobox->reloadComboBoxItem();
     searchcombobox->setCurrentText(list->at(firstpos + 1).at(1));
@@ -165,52 +172,62 @@ void EditorTab::setSearchDataList(QList<QStringList> *list, int firstpos)
 
     autoonly_2->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
 
-    connect(searchcombobox, &SearchComboBox::currentTextChanged, this, &EditorTab::editTextAction);
-    connect(separatorLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
-    connect(localVariantComboBox, &VariantComboBox::currentTextChanged, this, &EditorTab::editTextAction);
-    connect(outputLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
-    connect(autoonly_2, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
-    connect(vari, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
-    connect(file, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
+    this->blockSignals(false);
+
+//    connect(searchcombobox, &SearchComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+//    connect(separatorLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
+//    connect(localVariantComboBox, &VariantComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+//    connect(outputLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
+//    connect(autoonly_2, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+//    connect(vari, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
+//    connect(file, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
 
 }
 
-//DEPENDS_XML
+///DEPENDS_XML DEPENDS_UI PROCESS
 void EditorTab::setExtraFuncDataList(QList<QStringList> *list, int firstpos)
 {
+    this->blockSignals(true);
     //reset combobox
-    disconnect(extrafunccombobox, &ExtraFunctionsComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+//    disconnect(extrafunccombobox, &ExtraFunctionsComboBox::currentTextChanged, this, &EditorTab::editTextAction);
     extrafunccombobox->reloadComboBoxItem();
     extrafunccombobox->setCurrentText(list->at(firstpos + 1).at(1));
-    connect(extrafunccombobox, &ExtraFunctionsComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+//    connect(extrafunccombobox, &ExtraFunctionsComboBox::currentTextChanged, this, &EditorTab::editTextAction);
 
 //    vcb->insertItem(0,list->at(firstpos + 1).at(1));
     int counter = ((QString)list->at(firstpos + 3).at(1)).toInt();
-    disconnect(extrafuncTableWidget, &CommandTable::updateTable, this, &EditorTab::editTableAction);
+//    disconnect(extrafuncTableWidget, &CommandTable::updateTable, this, &EditorTab::editTableAction);
     extrafuncTableWidget->setRowCount(counter);
     for(int i = 0; i < counter; i++){
         extrafuncTableWidget->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 4 + i).at(1)));
     }
-    connect(extrafuncTableWidget, &CommandTable::updateTable, this, &EditorTab::editTableAction);
+//    connect(extrafuncTableWidget, &CommandTable::updateTable, this, &EditorTab::editTableAction);
 
-    disconnect(autoonly_3, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+//    disconnect(autoonly_3, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
     autoonly_3->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
-    connect(autoonly_3, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+//    connect(autoonly_3, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+
+    this->blockSignals(false);
 }
 
-//DEPENDS_XML
+///DEPENDS_XML DEPENDS_UI PROCESS
 void EditorTab::setOtherDataList(QList<QStringList> *list, int firstpos)
 {
-    disconnect(profilecombobox, &ProfileComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    this->blockSignals(true);
+
+//    disconnect(profilecombobox, &ProfileComboBox::currentTextChanged, this, &EditorTab::editTextAction);
     profilecombobox->reloadComboBoxItem();
     profilecombobox->setCurrentText(list->at(firstpos + 1).at(1));
-    connect(profilecombobox, &ProfileComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+//    connect(profilecombobox, &ProfileComboBox::currentTextChanged, this, &EditorTab::editTextAction);
 
-    disconnect(autoonly_4, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+//    disconnect(autoonly_4, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
     autoonly_4->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
-    connect(autoonly_4, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+//    connect(autoonly_4, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+
+    this->blockSignals(false);
 }
 
+///DEPENDS_XML DEPENDS_UI PROCESS
 void EditorTab::setCombinedDataList(int index, int selectfrom)
 {
     Q_UNUSED(selectfrom)
@@ -312,11 +329,29 @@ void EditorTab::editCheckAction(bool check)
     qDebug() << "EditorTab::editcheckaction : " << objname;
 
 //"timeoutCheckBox"
-//"autoOnlyCheckBox"
-//"autoOnlyCheckBox_2"
-//"autoOnlyCheckBox_3"
-//"autoOnlyCheckBox_4"
-    editop->editCheckAction(currentid, check, objname);
+//"autoOnlyCheckBox" normal
+//"autoOnlyCheckBox_2" search
+//"autoOnlyCheckBox_3" extrafunc
+//"autoOnlyCheckBox_4" other
+    if(objname == "timeoutCheckBox"){
+        editop->checkTimeoutAction(currentid, check);
+
+    }else if(objname == "autoOnlyCheckBox"){
+        editop->checkOnlyNormalAction(currentid, check);
+
+    }else if(objname == "autoOnlyCheckBox_2"){
+        editop->checkOnlySearchAction(currentid, check);
+
+    }else if(objname == "autoOnlyCheckBox_3"){
+        editop->checkOnlyPluginAction(currentid, check);
+
+    }else if(objname == "autoOnlyCheckBox_4"){
+        editop->checkOnlyOtherAction(currentid, check);
+
+    }
+
+
+//    editop->editCheckAction(currentid, check, objname);
 }
 
 void EditorTab::editRadioAction(bool)
@@ -325,9 +360,11 @@ void EditorTab::editRadioAction(bool)
     qDebug() << "EditorTab::editradioaction : " << objname;
 
     if(objname == "variRadioButton"){
-        editop->editValueAction(currentid, 0, objname);
+//        editop->editValueAction(currentid, 0, objname);
+        editop->radioSearchOutputAction(currentid, 0);
     }else if(objname == "fileRadioButton"){
-        editop->editValueAction(currentid, 1, objname);
+//        editop->editValueAction(currentid, 1, objname);
+        editop->radioSearchOutputAction(currentid, 1);
     }
 }
 
@@ -337,7 +374,8 @@ void EditorTab::editValueAction(int value)
     qDebug() << "EditorTab::editvalueaction : " << objname;
 
     if(objname == "timeoutSpinBox"){
-        editop->editValueAction(currentid, value, objname);
+//        editop->editValueAction(currentid, value, objname);
+        editop->spinTimeoutAction(currentid, value);
     }
 }
 
@@ -346,18 +384,24 @@ void EditorTab::editTextAction(QString text)
     QString objname = this->sender()->objectName();
     qDebug() << "EditorTab::edittextaction : " << objname;
 
-    if(objname == "searchComboBox"){
-        editop->editSearchComboAction(currentid, text, searchcombobox->currentIndex());
+    if(objname == SEARCH_COMBO){
+        editop->comboboxSearchAction(currentid, text, searchcombobox->currentIndex());
+
     }else if(objname == "separatorLineEdit"){
-        editop->editTextAction(currentid, text, objname);
+//        editop->editTextAction(currentid, text, objname);
+        editop->textSearchSeparateAction(currentid, text);
     }else if(objname == "outputLineEdit"){
-        editop->editTextAction(currentid, text, objname);
+//        editop->editTextAction(currentid, text, objname);
+        editop->textFileOutputAction(currentid, text);
     }else if(objname == "localVariantComboBox"){
-        editop->editComboBoxAction(currentid, text);
+
+        editop->comboboxLocalValAction(currentid, text);
     }else if(objname == "extrafuncComboBox"){
-        editop->editFileComboAction(currentid, text, extrafunccombobox->getCurrentExtraFile(), objname);
+//        editop->editFileComboAction(currentid, text, extrafunccombobox->getCurrentExtraFile(), objname);
+        editop->comboboxPluginAction(currentid, text, extrafunccombobox->getCurrentExtraFile());
     }else if(objname == "profileComboBox"){
-        editop->editFileComboAction(currentid, text, profilecombobox->getCurrentFileName(), objname);
+//        editop->editFileComboAction(currentid, text, profilecombobox->getCurrentFileName(), objname);
+        editop->comboboxProfileAction(currentid, text, profilecombobox->getCurrentFileName());
     }
 }
 
@@ -373,7 +417,38 @@ void EditorTab::editSwapTableAction(int indexbefore, int indexafter)
 {
     QString objname = this->sender()->objectName();
     qDebug() << "EditorTab::editswaptableaction : " << objname;
-    editop->swapTableAction(currentid, indexbefore, indexafter, objname);
+    if(objname == "cmdTableWidget"){
+        editop->tableSwapExecAction(currentid, indexbefore, indexafter);
+    }else if(objname == "extrafuncTableWidget"){
+        editop->tableSwapPluginAction(currentid, indexbefore, indexafter);
+    }
+//    editop->swapTableAction(currentid, indexbefore, indexafter, objname);
+}
+
+void EditorTab::pluginSettingsClicked()
+{
+    QPluginLoader loader(extrafunccombobox->getCurrentExtraFile());
+    if(loader.load()){
+        QObject *plugin = loader.instance();
+        ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
+        QStringList resultargs;
+
+        //read data
+        int excount = extrafuncTableWidget->rowCount();
+        QStringList currentargs;
+        for(int i = 0; i < excount; i++){
+            currentargs.append(extrafuncTableWidget->model()->index(i, 0).data().toString());
+        }
+
+        inter->launchSettingWidget(&currentargs, &resultargs, \
+                                   editop->getMainWindowGeometry().center(), \
+                                   extrafunccombobox->styleSheet());
+
+        //write data
+        extrafuncTableWidget->insertItems(&resultargs);
+
+        loader.unload();
+    }
 }
 
 void EditorTab::openSavefile()

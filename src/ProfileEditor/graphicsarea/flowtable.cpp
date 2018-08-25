@@ -201,9 +201,23 @@ void FlowTable::reloadAction()
     }
 
     setRowCount(fixedRowFromId(counter));
-    for(int i = 0; i < counter; i++){
-        setFlowItem(i, false);
-    }
+//    setRowCount(fixedRowFromId(editop->getCacheSize()));
+
+#ifdef QT_DEBUG
+    qDebug()<< "profileflow::setFlowItem::reloadaction";
+    QTime time;
+    time.start();
+#endif
+
+//    for(int i = 0; i < counter; i++){
+//        setFlowItem(i, false);
+//    }
+    setAllFlowItem();
+
+#ifdef QT_DEBUG
+    qDebug() << "FlowTable::reloadAction() || elapsed: " << time.elapsed() << "ms";
+#endif
+
     //hide last widget index arrow
     updateLastIndexItem(counter - 1);
 
@@ -462,57 +476,92 @@ void FlowTable::setFlowItem(int itemid, bool selector)
     //get type
     QString type = list->at(0).at(1);
 
+    //type local
+    if(type == "local") return;
+
     //set treeitem
     FlowCellWidget *cell = new FlowCellWidget();
-//    FlowCellData celldata;
 
-
-    //type local
-    if(type == "local"){
-//        delete celldata;
-        return;
-    }
-
-    if(type == "info"){
-//        setInfoItem(&celldata, list, 1);
-        setInfoItem(cell, list, 1);
-    }
-    if(type == "normal"){
-//        setNormalItem(&celldata, list, 1);
-        setNormalItem(cell, list, 1);
-    }
-    if(type == "search"){
-//        setSearchItem(&celldata, list, 1);
-        setSearchItem(cell, list, 1);
-    }
-    if(type == "script"){
-//        setExtraFuncItem(&celldata, list, 1);
-        setExtraFuncItem(cell, list, 1);
-    }
-    if(type == "other"){
-//        setOtherItem(&celldata, list, 1);
-        setOtherItem(cell, list, 1);
-    }
     if(type == "temp"){
-//        setTempItem(&celldata, list);
         setTempItem(cell, list);
-    }
 
-    //set new item
-//    QTableWidgetItem *flowitem = new QTableWidgetItem();
-//    flowitem->setData(0, QVariant::fromValue(celldata));
-//    setItem(fixedRowFromId(itemid), 0, flowitem);
+    }else if(type == "info"){
+        setInfoItem(cell, list, 1);
+
+    }else if(type == "normal"){
+        setNormalItem(cell, list, 1);
+
+    }else if(type == "search"){
+        setSearchItem(cell, list, 1);
+
+    }else if(type == "script"){
+        setPluginsItem(cell, list, 1);
+
+    }else if(type == "other"){
+        setOtherItem(cell, list, 1);
+
+    }
 
     this->setRowHeight(fixedRowFromId(itemid), cell->height());
     if(selector) cell->selectedItem();
     this->setCellWidget(fixedRowFromId(itemid), 0, cell);
     //cell->show();
-#ifdef QT_DEBUG
-    qDebug()<< "profileflow::setFlowItem";
-#endif
+
     delete list;
 }
 
+void FlowTable::setAllFlowItem()
+{
+    QList<QList<QStringList> *> *list = new QList<QList<QStringList> *>();
+    editop->readAll(list);
+
+    QMutableListIterator<QList<QStringList> *> i(*list);
+    QList<QStringList> *inner;
+    QString type = "";
+    FlowCellWidget *cell;
+    int n = 0;
+    while(i.hasNext()){
+        inner = i.next();
+
+        //get type
+        type = inner->at(0).at(1);
+
+        //set item
+        cell = new FlowCellWidget();
+
+        if(type == "temp"){
+            setTempItem(cell, inner);
+
+        }else if(type == "info"){
+            setInfoItem(cell, inner, 1);
+
+        }else if(type == "normal"){
+            setNormalItem(cell, inner, 1);
+
+        }else if(type == "search"){
+            setSearchItem(cell, inner, 1);
+
+        }else if(type == "script"){
+            setPluginsItem(cell, inner, 1);
+
+        }else if(type == "other"){
+            setOtherItem(cell, inner, 1);
+        }
+
+        if(type != "local"){
+            this->setRowHeight(fixedRowFromId(n), cell->height());
+            this->setCellWidget(fixedRowFromId(n), 0, cell);
+        }else{
+            delete cell;
+        }
+
+        n++;
+    }
+
+    delete list;
+}
+
+///DEPENDS_XML DEPENDS_UI PROCESS
 void FlowTable::setTempItem(FlowCellWidget *cell, QList<QStringList> *list)
 {
     int istack = QString(list->at(1).at(1)).toInt();
@@ -530,7 +579,7 @@ void FlowTable::setTempItem(FlowCellWidget *cell, QList<QStringList> *list)
         break;
 
     case ProcessXmlListGenerator::EXTRAFUNC:
-        setExtraFuncItem(cell, list, hlist.value(ProcessXmlListGenerator::EXTRAFUNC) + 1);
+        setPluginsItem(cell, list, hlist.value(ProcessXmlListGenerator::EXTRAFUNC) + 1);
         break;
 
     case ProcessXmlListGenerator::OTHER:
@@ -542,135 +591,138 @@ void FlowTable::setTempItem(FlowCellWidget *cell, QList<QStringList> *list)
     }
 }
 
+///DEPENDS_XML DEPENDS_UI PROCESS
 void FlowTable::setInfoItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
 {
-    QString curdata;
-    curdata = list->at(firstpos).at(1);
+    QString curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "(no name)" : curdata;
 //    cell->setType("info", QPixmap(":/default_icons/info.png"));
-    cell->setType("Information");
-    cell->setTypepixmap(QIcon(":/default_icons/info.png").pixmap(16,16));
-    cell->setTypecolor("color: black; background-color: rgb(230, 230, 230);");
-    cell->setFramecolor("background-color: rgb(120, 120, 120);");
-    cell->hideArrow();
-    //TODO:content
+//    cell->setType(QString("Information"));
+//    cell->setTypepixmap(&(QIcon(":/default_icons/info.png").pixmap(16,16)));
+//    cell->setLabelcolor(&QString("color: black; background-color: rgb(230, 230, 230);"));
+//    cell->setFramecolor(&QString("background-color: rgb(120, 120, 120);"));
 
-    QString tmp = getHtmlHeader("");
-    tmp.append(QString("project name : %1<br>").arg(list->at(1).at(1)));
-    tmp.append(QString("version      : %1<br>").arg(list->at(2).at(1)));
-    tmp.append(QString("author       : %1<br>").arg(list->at(3).at(1)));
-    tmp.append(QString("description  :<br>%1<br>").arg(list->at(4).at(1)));
+    cell->setTypeAll(info_title, &info_pixmap, &info_style, &info_frame);
+    cell->hideArrow();
+
+    QString tmp/* = getHtmlHeader("")*/;
+    tmp.append(QString("[project]     : %1<br>").arg(list->at(1).at(1)));
+    tmp.append(QString("[version]     : %1<br>").arg(list->at(2).at(1)));
+    tmp.append(QString("[author]      : %1<br>").arg(list->at(3).at(1)));
+    tmp.append(QString("[description] : %1<br>").arg(list->at(4).at(1)));
 //    tmp.append(QString("last updated : %1").arg(list->at(5).at(1)));
-    tmp.append(getHtmlFooter());
+//    tmp.append(getHtmlFooter());
 
     cell->setContent(tmp);
 //    node->addLines(QStringList() << "info" << "-----" << curdata);
 //    node->setPath(QColor(120,120,120), 2, QColor(230,230,230));
 }
 
+///DEPENDS_XML DEPENDS_UI PROCESS
 void FlowTable::setNormalItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
 {
     int cmdskip = QString(list->at(firstpos + 1).at(1)).toInt();
 
-    QString curdata;
-//    cell->setType("normal", QPixmap(":/default_icons/terminal.png"));
-    cell->setType("Executable");
-    cell->setTypepixmap(QIcon(":/default_icons/terminal.png").pixmap(16,16));
-    cell->setTypecolor("color: black; background-color: rgb(222, 235, 247);");
-    cell->setFramecolor("background-color: rgb(44, 70, 94);");
-    curdata = (cmdskip == 0)? "NewCommand" : list->at(firstpos + 2).at(1);
+//    QString curdata;
 
-    QString tmp = getHtmlHeader("");
+    //    cell->setType("normal", QPixmap(":/default_icons/terminal.png"));
+//    cell->setType("Executable");
+//    cell->setTypepixmap(&exec_pixmap);
+//    cell->setTypecolor(&exec_style);
+//    cell->setFramecolor(&exec_frame);
+
+    cell->setTypeAll(exec_title, &exec_pixmap, &exec_style, &exec_frame);
+
+    QString curdata = (cmdskip == 0)? "NewCommand" : list->at(firstpos + 2).at(1);
 
     QFileInfo info(curdata);
-    if(info.isFile()){
-        tmp.append(info.fileName());
-    }else{
-        tmp.append(curdata);
-    }
-    tmp.append("<br>");
+    QString tmp = /*getHtmlHeader("") + */(info.isFile() ? info.fileName() : curdata);
+
+//    tmp.append(info.isFile() ? info.fileName() : curdata);
+//    if(info.isFile()){
+//        tmp.append(info.fileName());
+//    }else{
+//        tmp.append(curdata);
+//    }
 
     for(int i = 1; i < cmdskip; i++){
-        tmp.append(list->at(firstpos + 2 + i).at(1));
-        if(i < cmdskip - 1){
-            tmp.append("<br>");
-        }
+//        tmp.append("<br>");
+        tmp.append("<br>" + list->at(firstpos + 2 + i).at(1));
     }
 
-    tmp.append(getHtmlFooter());
+//    tmp.append(getHtmlFooter());
 
     cell->setContent(tmp);
 }
 
+///DEPENDS_XML DEPENDS_UI PROCESS
 void FlowTable::setSearchItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
 {
     QString curdata;
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
-//    cell->setType("search", QPixmap(":/default_icons/search.png"));
-    cell->setType("File Search");
-    cell->setTypepixmap(QIcon(":/default_icons/search.png").pixmap(16,16));
-    cell->setTypecolor("color: black; background-color: rgb(226, 240, 217);");
-    cell->setFramecolor("background-color: rgb(56, 87, 35);");
+//    cell->setType("extra", QPixmap(":/default_icons/extra.png"));
+//    cell->setType(extra_title);
+//    cell->setTypepixmap(&extra_pixmap);
+//    cell->setLabelcolor(&extra_style);
+//    cell->setFramecolor(&extra_frame);
 
-    QString tmp = curdata;
-    tmp.append("<br>");
-    tmp.append(tr("Separator: %1").arg(list->at(firstpos + 1).at(1)));
-    tmp.append("<br>");
+    cell->setTypeAll(search_title, &search_pixmap, &search_style, &search_frame);
+
+    QString tmp = curdata + "<br>" \
+            + tr("[separator] : %1").arg(list->at(firstpos + 1).at(1)) + "<br>";
+//    tmp.append("<br>");
+//    tmp.append(tr("Separator: %1").arg(list->at(firstpos + 1).at(1)));
+//    tmp.append("<br>");
 
     //variant or output
     if(((QString)list->at(firstpos + 3).at(3)).toInt() == 0){
-        tmp.append(tr("Variant: %1").arg(list->at(firstpos + 2).at(1)));
+        tmp.append(tr("[variant]   : %1").arg(list->at(firstpos + 2).at(1)));
     }else{
-        tmp.append(tr("Filepath: %1").arg(list->at(firstpos + 3).at(1)));
+        tmp.append(tr("[filepath]  : %1").arg(list->at(firstpos + 3).at(1)));
     }
 
     cell->setContent(tmp);
 }
 
-void FlowTable::setExtraFuncItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
+///DEPENDS_XML DEPENDS_UI PROCESS
+void FlowTable::setPluginsItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
 {
-    QString curdata;
 //    cell->setType("script", QPixmap(":/default_icons/extras.png"));
-    cell->setType("External Function");
-    cell->setTypepixmap(QIcon(":/default_icons/extras.png").pixmap(16,16));
-    cell->setTypecolor("color: black; background-color: rgb(251, 215, 214);");
-    cell->setFramecolor("background-color: rgb(132, 12, 12);");
+//    cell->setType(extra_title);
+//    cell->setTypepixmap(&extra_pixmap);
+//    cell->setLabelcolor(&extra_style);
+//    cell->setFramecolor(&extra_frame);
 
-    QString tmp = "";
+    QString curdata = list->at(firstpos).at(1);
+    curdata = (curdata == "")? "Unknown" : curdata;
+
+    cell->setTypeAll(extra_title, &extra_pixmap, &extra_style, &extra_frame);
+
+    QFileInfo info(curdata);
+    QString tmp = (info.isFile() ? info.fileName() : curdata);
 
     int scrskip = QString(list->at(firstpos + 2).at(1)).toInt();
-    curdata = list->at(firstpos).at(1);
-    curdata = (curdata == "")? "Unknown" : curdata;
-    QFileInfo info(curdata);
-    if(info.isFile()){
-        tmp.append(info.fileName());
-    }else{
-        tmp.append(curdata);
-    }
-    tmp.append("<br>");
-
     for(int i = 0; i < scrskip; i++){
-        tmp.append(list->at(firstpos + 3 + i).at(1));
-        if(i < scrskip - 1){
-            tmp.append("<br>");
-        }
+        tmp.append("<br>" + list->at(firstpos + 3 + i).at(1));
     }
 
     cell->setContent(tmp);
 }
 
+///DEPENDS_XML DEPENDS_UI PROCESS
 void FlowTable::setOtherItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
 {
-    QString curdata;
 //    cell->setType("other", QPixmap(":/default_icons/others.png"));
-    cell->setType("Run Other Profile");
-    cell->setTypepixmap(QIcon(":/default_icons/others.png").pixmap(16,16));
-    cell->setTypecolor("color: black; background-color: rgb(255, 242, 204);");
-    cell->setFramecolor("background-color: rgb(132, 60, 12);");
-
-    curdata = list->at(firstpos).at(1);
+//    cell->setType(other_title);
+//    cell->setTypepixmap(&other_pixmap);
+//    cell->setLabelcolor(&other_style);
+//    cell->setFramecolor(&other_frame);
+    QString curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
+
+    cell->setTypeAll(other_title, &other_pixmap, &other_style, &other_frame);
+
     cell->setContent(curdata);
 }
 
@@ -685,14 +737,14 @@ void FlowTable::updateLastIndexItem(int lastindex)
     }
 }
 
-QString FlowTable::getHtmlHeader(QString headcssstr)
-{
-    QString result = QString("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
-                             "<html><head><style type=\"text/css\">%1</style></head><body>").arg(headcssstr);
-    return result;
-}
+//QString FlowTable::getHtmlHeader(QString headcssstr)
+//{
+//    QString result = QString("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
+//                             "<html><head><style type=\"text/css\">%1</style></head><body>").arg(headcssstr);
+//    return result;
+//}
 
-QString FlowTable::getHtmlFooter()
-{
-    return "</body></html>";
-}
+//QString FlowTable::getHtmlFooter()
+//{
+//    return "</body></html>";
+//}

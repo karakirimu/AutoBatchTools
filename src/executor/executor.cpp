@@ -60,7 +60,7 @@ void Executor::setEndnum(int end)
 void Executor::processWrite(QString code)
 {
     work->process->write(code.toLocal8Bit());
-    emit processMessage(code, INPUT);
+//    emit processMessage(code, INPUT);
 }
 
 void Executor::processKill()
@@ -362,7 +362,7 @@ bool Executor::runProcess()
         //Reduce the number of fileList and check lest file count
         if(fileinput && fileList.count() > 0){
             for(int i = 0; i < setting->argumentscount; i++) fileList.removeFirst();
-            if(fileList.count() == 0) loopcount = 0;
+            loopcount = (fileList.count() == 0)? 0 : -1;
         }
 
         if(loopcount > 0) loopcount--;
@@ -943,8 +943,8 @@ void Executor::setProcessSettings(bool *fileinput, int *loopcount)
             emit processMessage(tr("Input : ") + QString::number(fileList.count()) + tr(" files.\r\n"), SEARCH);
         }
 
-        //Whether to loop the read file to the end ( -1 : infinity loop or set max loop count )
-        *loopcount = VariantConverter::stringToBool(list.at(8).at(1)) ? -1 : ((QString)list.at(8).at(3)).toInt();
+        //Whether to loop the read file to the end ( 1 : no loop or set max loop count )
+        *loopcount = VariantConverter::stringToBool(list.at(8).at(1)) ? 1 : ((QString)list.at(8).at(3)).toInt();
 
         // Number of files used at one time
         setting->argumentscount = ((QString)list.at(9).at(1)).toInt();

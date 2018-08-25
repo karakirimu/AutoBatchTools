@@ -1,26 +1,25 @@
 #include "basedockwidget.h"
 
-#include <QApplication>
-
 BaseDockWidget::BaseDockWidget(QWidget *parent)
     : QDockWidget(parent), autohide(false)
 {
 
     installEventFilter(this);
+    def = titleBarWidget();
+    empty = new QWidget;
     setMouseTracking(true);
     setAttribute(Qt::WA_Hover);
     connect(this, &BaseDockWidget::topLevelChanged, this, &BaseDockWidget::showTitleBar);
-
 }
 
 BaseDockWidget::~BaseDockWidget()
 {
-    if(autohide) delete empty;
+    delete empty;
 }
 
 bool BaseDockWidget::eventFilter(QObject *watched, QEvent *event)
 {
-    if(!this->isFloating() && autohide){
+//    if(!this->isFloating() && autohide){
 //        qDebug() << "Dock" << event->type();
 //        if(event->type() == QEvent::Enter){
 //            wait = new QThread();
@@ -65,11 +64,11 @@ bool BaseDockWidget::eventFilter(QObject *watched, QEvent *event)
 //            }*/
 //        }
 
-        if(event->type() == QEvent::Leave){
+        if(!isFloating() && autohide && event->type() == QEvent::Leave){
              setTitleBarWidget(empty);
         }
 
-        if(event->type() == QEvent::ToolTip){
+        if(autohide && event->type() == QEvent::ToolTip){
             if(widget()->mapFromGlobal(QCursor::pos()).y() <= Y_RANGE){
     //            hTimer->setInarea(true);
 //                hTimer->setPoint(QCursor::pos());
@@ -80,7 +79,8 @@ bool BaseDockWidget::eventFilter(QObject *watched, QEvent *event)
             }*/
         }
 
-    }
+//    }
+
 //    qDebug() << "float" << this->isFloating();
 
     return QObject::eventFilter(watched, event);
@@ -98,13 +98,13 @@ void BaseDockWidget::setAutohide(bool value)
     }else{
         autohide = value;
 
-        if(autohide){
-            empty = new QWidget();
-            def = titleBarWidget();
+        if(!this->isFloating() && autohide){
+//            empty = new QWidget();
+//            def = titleBarWidget();
             setTitleBarWidget(empty);
         }else{
             setTitleBarWidget(def);
-            delete empty;
+//            delete empty;
         }
     }
 }

@@ -124,6 +124,7 @@ void SettingDialog::loadSettings()
 void SettingDialog::on_listWidget_currentRowChanged(int currentRow)
 {
     ui->stackedWidget->setCurrentIndex(currentRow);
+    if(currentRow == 2) ui->searchTableWidget->setStyleSheet(this->styleSheet());
 }
 
 void SettingDialog::onAccept()

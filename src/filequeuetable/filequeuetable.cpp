@@ -69,6 +69,7 @@ void FileQueueTable::propertyAction()
 {
     if(this->rowCount() > 0){
         FileInfoDialog *dialog = new FileInfoDialog();
+        dialog->setStyleSheet(this->styleSheet());
         dialog->setFileInfo(this->selectedItems().at(0)->text());
         dialog->show();
     }
@@ -98,7 +99,7 @@ void FileQueueTable::addFiles(const QStringList &filenames)
             // append row
             this->setRowCount(rcount+1);
 
-            //テーブルに読み込んだ情報を追加
+            //Add imported information to table
             QFileInfo file(filenames.at(i));
            this->setItem(rcount,0,new QTableWidgetItem(file.canonicalFilePath()));
             //test
@@ -144,6 +145,6 @@ void FileQueueTable::setPopupActionBottom()
 
 void FileQueueTable::addAction()
 {
-    QStringList selected = selectFiles("./");
+    QStringList selected = selectFiles(QDir::currentPath());
     addFiles(selected);
 }

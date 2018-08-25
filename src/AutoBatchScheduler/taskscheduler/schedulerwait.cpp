@@ -76,7 +76,7 @@ QDateTime SchedulerWait::getNextDateTime(qint64 addseconds)
     return result;
 }
 
-//DEPENDS_XML
+//DEPENDS_XML SEARCH
 QDateTime SchedulerWait::init_GetScheduledTimeFromXml(int itemid)
 {
     QList<QStringList> *list = new QList<QStringList>();

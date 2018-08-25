@@ -96,6 +96,7 @@ void CellInfoWidget::updateErrorText(QString message)
 void CellInfoWidget::setRunStatus(bool enabled)
 {
     ui->profileCheckBox->setChecked(enabled);
+    ui->nextTimeLabel->clear();
 }
 
 void CellInfoWidget::onRunStatusChange(bool enabled)

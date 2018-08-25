@@ -17,7 +17,7 @@ StringTable::StringTable(QWidget *parent) : BasicTable(parent)
     //adjust column
     horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     //set header label
-    setHorizontalHeaderLabels((QStringList() << tr("Variant") << tr("Value")));
+    setHorizontalHeaderLabels((QStringList() << tr("App Variant") << tr("Value")));
 
     //set new xml builder
     builder = new StringXmlBuilder();
