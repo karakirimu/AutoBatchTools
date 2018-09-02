@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QHash>
 #include <QDateTime>
+//#include "processxmlelement.h"
 
 /**
  * @brief The XmlListGenerator class
@@ -73,72 +74,206 @@
  *
  */
 
+//// tag define (index 0)
+//// all
+//#define TYPE                    "type"
+//#define CMDVALUE                "cmd"
+
+//// info
+//#define NAME_INFO               "name"
+//#define VERSION                 "ver"
+//#define AUTHOR                  "author"
+//#define DESCRIPTION             "desc"
+//#define FILEINPUT               "finput"
+//#define FILEINPUT_SEARCHCHECK   "sinput"
+//#define FILESEARCH_NAME         "fsname"
+//#define RECURSIVE_LOOP          "rloop"
+//#define RECURSIVE_LOOPARGCOUNT  "rlarg"
+//#define RECURSIVE_LOOPCOUNT     "reloop"
+
+//// search
+//#define NAME_SEARCH             "sname"
+//#define SEARCH_SEPARATOR        "sep"
+//#define SEARCH_VARIANT          "var"
+//#define SEARCH_OUTPUTFILE       "output"
+
+//// other
+//#define NAME_PROFILE            "name"
+//#define PROFILE_FILEPATH        "file"
+
+//// normal
+//#define EXEC_TIMEOUT            "timeout"
+//#define EXEC_CMDARGCOUNT        "cmdc"
+
+//// extrafunc
+//#define NAME_PLUGIN             "name"
+//#define PLUGIN_FILEPATH         "file"
+//#define PLUGIN_CMDARGCOUNT      "cmdc"
+
+//// temp
+//#define STACKEDWIDGET_POSITION  "istack"
+
+//// local
+//#define LOCAL_VARIANT           "lvar"
+//#define LOCAL_VAR_COUNT         "localc"
+
+//// value define (index 1)
+//#define TYPE_INFO               "info"
+//#define TYPE_EXEC               "normal"
+//#define TYPE_SEARCH             "search"
+//#define TYPE_SCRIPT             "script"
+//#define TYPE_ANOTHER            "other"
+
+//#define TYPE_ALLINCLUDE         "temp"
+//#define TYPE_LOCAL              "local"
+
+//// attribute define (index 2)
+//// all
+//#define ATTR_ONLY_SCHEDULER     "only"
+//#define ATTR_POSNUM             "id"
+//#define ATTR_RADIOBUTTONPOS     "radio"
+//#define ATTR_MAXCOUNT           "max"
+//#define ATTR_NONE               ""
+
+//// normal
+//#define ATTR_TIMEOUTMS          "dur"
+
+//// local
+//#define ATTR_LOCALVALUE         "lval"
+
+//// tag define (index 0)
+//// all
+//#define TYPE                    "type"
+//#define CMDVALUE                "cmd"
+
+//// info
+//#define NAME_INFO               "iname"
+//#define VERSION                 "ver"
+//#define AUTHOR                  "author"
+//#define DESCRIPTION             "desc"
+//#define FILEINPUT               "finput"
+//#define FILEINPUT_SEARCHCHECK   "sinput"
+//#define FILESEARCH_NAME         "fsname"
+//#define RECURSIVE_LOOP          "rloop"
+//#define RECURSIVE_LOOPARGCOUNT  "rlarg"
+//#define RECURSIVE_LOOPCOUNT     "reloop"
+
+//// search
+//#define NAME_SEARCH             "sname"
+//#define SEARCH_SEPARATOR        "sep"
+//#define SEARCH_VARIANT          "var"
+//#define SEARCH_OUTPUTFILE       "output"
+
+//// other
+//#define NAME_PROFILE            "prname"
+//#define PROFILE_FILEPATH        "prfile"
+
+//// normal
+//#define EXEC_TIMEOUT            "timeout"
+//#define EXEC_CMDARGCOUNT        "cmdc"
+
+//// extrafunc
+//#define NAME_PLUGIN             "plname"
+//#define PLUGIN_FILEPATH         "plfile"
+//#define PLUGIN_CMDARGCOUNT      "pcmdc"
+
+//// temp
+//#define STACKEDWIDGET_POSITION  "istack"
+
+//// local
+//#define LOCAL_VARIANT           "lvar"
+//#define LOCAL_VAR_COUNT         "localc"
+
+//// value define (index 1)
+//#define TYPE_INFO               "info"
+//#define TYPE_EXEC               "normal"
+//#define TYPE_SEARCH             "search"
+//#define TYPE_SCRIPT             "script"
+//#define TYPE_ANOTHER            "other"
+
+//#define TYPE_ALLINCLUDE         "temp"
+//#define TYPE_LOCAL              "local"
+
+//// attribute define (index 2)
+//// all
+//#define ATTR_ONLY_SCHEDULER     "only"
+//#define ATTR_POSNUM             "id"
+//#define ATTR_RADIOBUTTONPOS     "radio"
+//#define ATTR_MAXCOUNT           "max"
+//#define ATTR_NONE               ""
+
+//// normal
+//#define ATTR_TIMEOUTMS          "dur"
+
+//// local
+//#define ATTR_LOCALVALUE         "lval"
+
 // tag define (index 0)
 // all
-#define TYPE                    "type"
-#define CMDVALUE                "cmd"
+static const QString ALL_TYPE                  ;
+static const QString ALL_CMDVALUE              ;
 
 // info
-#define NAME_INFO               "name"
-#define VERSION                 "ver"
-#define AUTHOR                  "author"
-#define DESCRIPTION             "desc"
-#define FILEINPUT               "finput"
-#define FILEINPUT_SEARCHCHECK   "sinput"
-#define FILESEARCH_NAME         "fsname"
-#define RECURSIVE_LOOP          "rloop"
-#define RECURSIVE_LOOPARGCOUNT  "rlarg"
-#define RECURSIVE_LOOPCOUNT     "reloop"
+static const QString I_NAME                    ;
+static const QString I_VERSION                 ;
+static const QString I_AUTHOR                  ;
+static const QString I_DESCRIPTION             ;
+static const QString I_FILEINPUT               ;
+static const QString I_FILEINPUT_SEARCHCHECK   ;
+static const QString I_FILESEARCH_NAME         ;
+static const QString I_RECURSIVE_LOOP          ;
+static const QString I_RECURSIVE_LOOPARGCOUNT  ;
+static const QString I_RECURSIVE_LOOPCOUNT     ;
 
 // search
-#define NAME_SEARCH             "sname"
-#define SEARCH_SEPARATOR        "sep"
-#define SEARCH_VARIANT          "var"
-#define SEARCH_OUTPUTFILE       "output"
+static const QString S_NAME                    ;
+static const QString S_SEPARATOR               ;
+static const QString S_VARIANT                 ;
+static const QString S_OUTPUTFILE              ;
 
-// other
-#define NAME_PROFILE            "name"
-#define PROFILE_FILEPATH        "file"
+// profile(other)
+static const QString PR_NAME                   ;
+static const QString PR_FILEPATH               ;
 
-// normal
-#define EXEC_TIMEOUT            "timeout"
-#define EXEC_CMDARGCOUNT        "cmdc"
+// exec(normal)
+static const QString E_TIMEOUT                 ;
+static const QString E_CMDARGCOUNT             ;
 
-// extrafunc
-#define NAME_PLUGIN             "name"
-#define PLUGIN_FILEPATH         "file"
-#define PLUGIN_CMDARGCOUNT      "cmdc"
+// plugin(extrafunc)
+static const QString PL_NAME                   ;
+static const QString PL_FILEPATH               ;
+static const QString PL_CMDARGCOUNT            ;
 
 // temp
-#define STACKEDWIDGET_POSITION  "istack"
+static const QString TE_STACKEDWIDGET_POSITION ;
 
 // local
-#define LOCAL_VARIANT           "lvar"
-#define LOCAL_VAR_COUNT         "localc"
+static const QString L_VARIANT                 ;
+static const QString L_VAR_COUNT               ;
 
 // value define (index 1)
-#define TYPE_INFO               "info"
-#define TYPE_EXEC               "normal"
-#define TYPE_SEARCH             "search"
-#define TYPE_SCRIPT             "script"
-#define TYPE_ANOTHER            "other"
+static const QString TYPE_INFO                 ;
+static const QString TYPE_EXEC                 ;
+static const QString TYPE_SEARCH               ;
+static const QString TYPE_SCRIPT               ;
+static const QString TYPE_ANOTHER              ;
 
-#define TYPE_ALLINCLUDE         "temp"
-#define TYPE_LOCAL              "local"
+static const QString TYPE_ALLINCLUDE           ;
+static const QString TYPE_LOCAL                ;
 
 // attribute define (index 2)
 // all
-#define ATTR_ONLY_SCHEDULER     "only"
-#define ATTR_POSNUM             "id"
-#define ATTR_RADIOBUTTONPOS     "radio"
-#define ATTR_MAXCOUNT           "max"
-#define ATTR_NONE               ""
+static const QString ATTR_ONLY_SCHEDULER       ;
+static const QString ATTR_POSNUM               ;
+static const QString ATTR_RADIOBUTTONPOS       ;
+static const QString ATTR_MAXCOUNT             ;
+static const QString ATTR_NONE                 ;
 
 // normal
-#define ATTR_TIMEOUTMS          "dur"
+static const QString ATTR_TIMEOUTMS            ;
 
 // local
-#define ATTR_LOCALVALUE         "lval"
+static const QString ATTR_LOCALVALUE           ;
 
 class PROCESSXMLLISTGENERATORSHARED_EXPORT ProcessXmlListGenerator : public QObject
 {
@@ -185,6 +320,8 @@ public:
     //for change inner table structures
     static QStringList createCmdElement(QString value, int index);
 
+    QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase, int firstpos);
+
 //private:
     //separated list create function
 //    void createNormalList(QList<QStringList> *newlist, QStringList *list);
@@ -192,6 +329,11 @@ public:
 //    void createExtraFuncList(QList<QStringList> *newlist, QStringList *list);
 //    void createOtherList(QList<QStringList> *newlist, QStringList *list);
 
+    int getId(QString tag);
+
+private:
+    //keystore for undo or redo
+    QHash<QString, int> generateId;
 };
 
 #endif // PROCESSXMLLISTGENERATOR_H

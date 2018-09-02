@@ -957,13 +957,13 @@ void Executor::setProcessSettings(bool *fileinput, int *loopcount)
 
 int Executor::getReadType(QString type)
 {
-    if(type == "info") return INFO;
-    if(type == "normal") return NORMAL;
-    if(type == "search") return SEARCH;
-    if(type == "script") return SCRIPT;
-    if(type == "other") return OTHER;
-    if(type == "temp") return TEMP;
-    if(type == "local") return LOCAL;
+    if(type == TYPE_INFO) return INFO;
+    if(type == TYPE_EXEC) return NORMAL;
+    if(type == TYPE_SEARCH) return SEARCH;
+    if(type == TYPE_SCRIPT) return SCRIPT;
+    if(type == TYPE_ANOTHER) return OTHER;
+    if(type == TYPE_ALLINCLUDE) return TEMP;
+    if(type == TYPE_LOCAL) return LOCAL;
     return -1;
 }
 

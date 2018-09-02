@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QWidget>
 #include <QSettings>
+#include <QIcon>
 
 namespace Ui {
 class FlowCellWidget;
@@ -16,7 +17,7 @@ class FlowCellWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit FlowCellWidget(QWidget *parent = 0);
+    explicit FlowCellWidget(QWidget *parent = nullptr);
     ~FlowCellWidget();
 
     void setTypeTest(int type);

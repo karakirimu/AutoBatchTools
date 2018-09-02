@@ -460,9 +460,9 @@ void EditOperator::pasteAction(int id)
         int count = ilist.count();
         for(int i = 0; i < count - 1; i++){
             tmp.clear();
-            tmp = ((QString)ilist.at(i)).split("\\\" \\\"");
-            tmp.replace(0, ((QString)tmp.at(0)).remove(0,2));
-            QString inner = ((QString)tmp.at(tmp.count() - 1));
+            tmp = static_cast<QString>(ilist.at(i)).split("\\\" \\\"");
+            tmp.replace(0, static_cast<QString>(tmp.at(0)).remove(0,2));
+            QString inner = static_cast<QString>(tmp.at(tmp.count() - 1));
             tmp.replace(tmp.count() - 1, inner.left(inner.size() - 4));
             _list.append(tmp);
         }

@@ -29,53 +29,9 @@ HEADERS += \
         variantconverter.h \
         variantconverter_global.h 
 
-win32 {
-    Release:DESTDIR = $$PWD\..\..\build\release\libs
-    Release:OBJECTS_DIR = $$PWD\..\..\build\release\.obj
-    Release:MOC_DIR = $$PWD\..\..\build\release\.moc
-    Release:RCC_DIR = $$PWD\..\..\build\release\.rcc
-    Release:UI_DIR = $$PWD\..\..\build\release\.ui
-
-    Debug:DESTDIR = $$PWD\..\..\build\debug\libs
-    Debug:OBJECTS_DIR = $$PWD\..\..\build\debug\.obj
-    Debug:MOC_DIR = $$PWD\..\..\build\debug\.moc
-    Debug:RCC_DIR = $$PWD\..\..\build\debug\.rcc
-    Debug:UI_DIR = $$PWD\..\..\build\debug\.ui
-
-    CONFIG(debug, debug|release) {
-        INCLUDEPATH += $$PWD\..\..\build\debug\libs
-        DEPENDPATH += $$PWD\..\..\build\debug\libs
-    }
-
-    CONFIG(release, debug|release) {
-        INCLUDEPATH += $$PWD\..\..\build\release\libs
-        DEPENDPATH += $$PWD\..\..\build\release\libs
-    }
-}
+include($$PWD/../build_library_path.pri)
 
 unix {
-    Release:DESTDIR = $$PWD/../../build/release/libs
-    Release:OBJECTS_DIR = $$PWD/../../build/release/.obj
-    Release:MOC_DIR = $$PWD/../../build/release/.moc
-    Release:RCC_DIR = $$PWD/../../build/release/.rcc
-    Release:UI_DIR = $$PWD/../../build/release/.ui
-
-    Debug:DESTDIR = $$PWD/../../build/debug/libs
-    Debug:OBJECTS_DIR = $$PWD/../../build/debug/.obj
-    Debug:MOC_DIR = $$PWD/../../build/debug/.moc
-    Debug:RCC_DIR = $$PWD/../../build/debug/.rcc
-    Debug:UI_DIR = $$PWD/../../build/debug/.ui
-
     target.path = /usr/lib
     INSTALLS += target
-
-    CONFIG(debug, debug|release) {
-        INCLUDEPATH += $$PWD/../../build/debug/libs
-        DEPENDPATH += $$PWD/../../build/debug/libs
-    }
-
-    CONFIG(release, debug|release) {
-        INCLUDEPATH += $$PWD/../../build/release/libs
-        DEPENDPATH += $$PWD/../../build/release/libs
-    }
 }

@@ -17,17 +17,27 @@ win32 {
     RC_FILE = $$PWD/../../res/app_icons/app_pe.rc
 }
 
-Release:DESTDIR = $$PWD/../../build/release
-Release:OBJECTS_DIR = $$PWD/../../build/release/ProfileEditor/.obj
-Release:MOC_DIR = $$PWD/../../build/release/ProfileEditor/.moc
-Release:RCC_DIR = $$PWD/../../build/release/ProfileEditor/.rcc
-Release:UI_DIR = $$PWD/../../build/release/ProfileEditor/.ui
+#Release:DESTDIR = $$PWD/../../build/release
+#Release:OBJECTS_DIR = $$PWD/../../build/release/ProfileEditor/.obj
+#Release:MOC_DIR = $$PWD/../../build/release/ProfileEditor/.moc
+#Release:RCC_DIR = $$PWD/../../build/release/ProfileEditor/.rcc
+#Release:UI_DIR = $$PWD/../../build/release/ProfileEditor/.ui
 
-Debug:DESTDIR = $$PWD/../../build/debug
-Debug:OBJECTS_DIR = $$PWD/../../build/debug/ProfileEditor/.obj
-Debug:MOC_DIR = $$PWD/../../build/debug/ProfileEditor/.moc
-Debug:RCC_DIR = $$PWD/../../build/debug/ProfileEditor/.rcc
-Debug:UI_DIR = $$PWD/../../build/debug/ProfileEditor/.ui
+#Debug:DESTDIR = $$PWD/../../build/debug
+#Debug:OBJECTS_DIR = $$PWD/../../build/debug/ProfileEditor/.obj
+#Debug:MOC_DIR = $$PWD/../../build/debug/ProfileEditor/.moc
+#Debug:RCC_DIR = $$PWD/../../build/debug/ProfileEditor/.rcc
+#Debug:UI_DIR = $$PWD/../../build/debug/ProfileEditor/.ui
+
+DESTDIR = $$OUT_PWD/../../
+OBJECTS_DIR = $$OUT_PWD/../../pe/.obj
+MOC_DIR = $$OUT_PWD/../../pe/.moc
+RCC_DIR = $$OUT_PWD/../../pe/.rcc
+UI_DIR = $$OUT_PWD/../../pe/.ui
+
+INCLUDEPATH += $$OUT_PWD/../../library/
+DEPENDPATH += $$OUT_PWD/../../library/
+LIBRARYPATH = $$OUT_PWD/../../library/
 
 HEADERS  += $$PWD/profileeditor.h \
     $$PWD/profiletreewidget.h \
@@ -66,55 +76,75 @@ include(editcore/editcore.pri)
 include(undocommand/undocommand.pri)
 include(undocommand_ui/undocommand_ui.pri)
 
-unix|win32:CONFIG(debug, debug|release) {
-    LIBS += \
-            -L$$PWD/../../build/debug/libs/ -lVariantConverter \
-#            -L$$PWD/../../build/debug/libs/ -lconvertchecker \
-            -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
-            -L$$PWD/../../build/debug/libs/ -lstringxmlbuilder \
-            -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder \
-            -L$$PWD/../../build/debug/libs/ -lextrafunctionsxmlbuilder \
-            -L$$PWD/../../build/debug/libs/ -lprocessxmlbuilder \
-            -L$$PWD/../../build/debug/libs/ -lprocessxmllistgenerator \
-            -L$$PWD/../../build/debug/libs/ -lprofilexmlbuilder \
-            -L$$PWD/../../build/debug/libs/ -lprofilecombobox \
-            -L$$PWD/../../build/debug/libs/ -lbasictable \
-            -L$$PWD/../../build/debug/libs/ -lFileQueueTable \
-            -L$$PWD/../../build/debug/libs/ -lsearchtable \
-            -L$$PWD/../../build/debug/libs/ -lstringtable \
-            -L$$PWD/../../build/debug/libs/ -lfileinfodialog \
-            -L$$PWD/../../build/debug/libs/ -lfilesearchdialog \
-            -L$$PWD/../../build/debug/libs/ -lextrafunctionstable \
-            -L$$PWD/../../build/debug/libs/ -lexecutor \
-            -L$$PWD/../../build/debug/libs/ -lconsolebase
+LIBS += \
+        -L$$LIBRARYPATH -lVariantConverter \
+        -L$$LIBRARYPATH -lxmlbuilder \
+        -L$$LIBRARYPATH -lstringxmlbuilder \
+        -L$$LIBRARYPATH -lsearchxmlbuilder \
+        -L$$LIBRARYPATH -lextrafunctionsxmlbuilder \
+        -L$$LIBRARYPATH -lprocessxmlbuilder \
+        -L$$LIBRARYPATH -lprocessxmllistgenerator \
+        -L$$LIBRARYPATH -lprofilexmlbuilder \
+        -L$$LIBRARYPATH -lprofilecombobox \
+        -L$$LIBRARYPATH -lbasictable \
+        -L$$LIBRARYPATH -lFileQueueTable \
+        -L$$LIBRARYPATH -lsearchtable \
+        -L$$LIBRARYPATH -lstringtable \
+        -L$$LIBRARYPATH -lfileinfodialog \
+        -L$$LIBRARYPATH -lfilesearchdialog \
+        -L$$LIBRARYPATH -lextrafunctionstable \
+        -L$$LIBRARYPATH -lexecutor \
+        -L$$LIBRARYPATH -lconsolebase
 
-    INCLUDEPATH += $$PWD/../../build/debug/libs
-    DEPENDPATH += $$PWD/../../build/debug/libs
-}
+#unix|win32:CONFIG(debug, debug|release) {
+#    LIBS += \
+#            -L$$PWD/../../build/debug/libs/ -lVariantConverter \
+##            -L$$PWD/../../build/debug/libs/ -lconvertchecker \
+#            -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
+#            -L$$PWD/../../build/debug/libs/ -lstringxmlbuilder \
+#            -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder \
+#            -L$$PWD/../../build/debug/libs/ -lextrafunctionsxmlbuilder \
+#            -L$$PWD/../../build/debug/libs/ -lprocessxmlbuilder \
+#            -L$$PWD/../../build/debug/libs/ -lprocessxmllistgenerator \
+#            -L$$PWD/../../build/debug/libs/ -lprofilexmlbuilder \
+#            -L$$PWD/../../build/debug/libs/ -lprofilecombobox \
+#            -L$$PWD/../../build/debug/libs/ -lbasictable \
+#            -L$$PWD/../../build/debug/libs/ -lFileQueueTable \
+#            -L$$PWD/../../build/debug/libs/ -lsearchtable \
+#            -L$$PWD/../../build/debug/libs/ -lstringtable \
+#            -L$$PWD/../../build/debug/libs/ -lfileinfodialog \
+#            -L$$PWD/../../build/debug/libs/ -lfilesearchdialog \
+#            -L$$PWD/../../build/debug/libs/ -lextrafunctionstable \
+#            -L$$PWD/../../build/debug/libs/ -lexecutor \
+#            -L$$PWD/../../build/debug/libs/ -lconsolebase
 
-unix|win32:CONFIG(release, debug|release) {
-    DEFINES += QT_NO_DEBUG_OUTPUT
-    LIBS += \
-            -L$$PWD/../../build/release/libs/ -lVariantConverter \
-#            -L$$PWD/../../build/release/libs/ -lconvertchecker \
-            -L$$PWD/../../build/release/libs/ -lxmlbuilder \
-            -L$$PWD/../../build/release/libs/ -lstringxmlbuilder \
-            -L$$PWD/../../build/release/libs/ -lsearchxmlbuilder \
-            -L$$PWD/../../build/release/libs/ -lextrafunctionsxmlbuilder \
-            -L$$PWD/../../build/release/libs/ -lprocessxmlbuilder \
-            -L$$PWD/../../build/release/libs/ -lprocessxmllistgenerator \
-            -L$$PWD/../../build/release/libs/ -lprofilexmlbuilder \
-            -L$$PWD/../../build/release/libs/ -lprofilecombobox \
-            -L$$PWD/../../build/release/libs/ -lbasictable \
-            -L$$PWD/../../build/release/libs/ -lFileQueueTable \
-            -L$$PWD/../../build/release/libs/ -lsearchtable \
-            -L$$PWD/../../build/release/libs/ -lstringtable \
-            -L$$PWD/../../build/release/libs/ -lfileinfodialog \
-            -L$$PWD/../../build/release/libs/ -lfilesearchdialog \
-            -L$$PWD/../../build/release/libs/ -lextrafunctionstable \
-            -L$$PWD/../../build/release/libs/ -lexecutor \
-            -L$$PWD/../../build/release/libs/ -lconsolebase
+#    INCLUDEPATH += $$PWD/../../build/debug/libs
+#    DEPENDPATH += $$PWD/../../build/debug/libs
+#}
 
-    INCLUDEPATH += $$PWD/../../build/release/libs
-    DEPENDPATH += $$PWD/../../build/release/libs
-}
+#unix|win32:CONFIG(release, debug|release) {
+#    DEFINES += QT_NO_DEBUG_OUTPUT
+#    LIBS += \
+#            -L$$PWD/../../build/release/libs/ -lVariantConverter \
+##            -L$$PWD/../../build/release/libs/ -lconvertchecker \
+#            -L$$PWD/../../build/release/libs/ -lxmlbuilder \
+#            -L$$PWD/../../build/release/libs/ -lstringxmlbuilder \
+#            -L$$PWD/../../build/release/libs/ -lsearchxmlbuilder \
+#            -L$$PWD/../../build/release/libs/ -lextrafunctionsxmlbuilder \
+#            -L$$PWD/../../build/release/libs/ -lprocessxmlbuilder \
+#            -L$$PWD/../../build/release/libs/ -lprocessxmllistgenerator \
+#            -L$$PWD/../../build/release/libs/ -lprofilexmlbuilder \
+#            -L$$PWD/../../build/release/libs/ -lprofilecombobox \
+#            -L$$PWD/../../build/release/libs/ -lbasictable \
+#            -L$$PWD/../../build/release/libs/ -lFileQueueTable \
+#            -L$$PWD/../../build/release/libs/ -lsearchtable \
+#            -L$$PWD/../../build/release/libs/ -lstringtable \
+#            -L$$PWD/../../build/release/libs/ -lfileinfodialog \
+#            -L$$PWD/../../build/release/libs/ -lfilesearchdialog \
+#            -L$$PWD/../../build/release/libs/ -lextrafunctionstable \
+#            -L$$PWD/../../build/release/libs/ -lexecutor \
+#            -L$$PWD/../../build/release/libs/ -lconsolebase
+
+#    INCLUDEPATH += $$PWD/../../build/release/libs
+#    DEPENDPATH += $$PWD/../../build/release/libs
+#}

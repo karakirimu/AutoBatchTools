@@ -34,6 +34,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #Debug:RCC_DIR = $$PWD/../../build/debug/.rcc
 #Debug:UI_DIR = $$PWD/../../build/debug/.ui
 
+
+include($$PWD/../build_library_path.pri)
+
 SOURCES += \
         filesearchdialog.cpp \
         searchdialogtable.cpp
@@ -76,91 +79,102 @@ FORMS   += filesearchdialog.ui
 #        DEPENDPATH += $$PWD/../../build/release/libs
 #}
 
-win32 {
-    Release:DESTDIR = $$PWD\..\..\build\release\libs
-    Release:OBJECTS_DIR = $$PWD\..\..\build\release\.obj
-    Release:MOC_DIR = $$PWD\..\..\build\release\.moc
-    Release:RCC_DIR = $$PWD\..\..\build\release\.rcc
-    Release:UI_DIR = $$PWD\..\..\build\release\.ui
+RESOURCES += \
+    ..\..\res\resources.qrc
 
-    Debug:DESTDIR = $$PWD\..\..\build\debug\libs
-    Debug:OBJECTS_DIR = $$PWD\..\..\build\debug\.obj
-    Debug:MOC_DIR = $$PWD\..\..\build\debug\.moc
-    Debug:RCC_DIR = $$PWD\..\..\build\debug\.rcc
-    Debug:UI_DIR = $$PWD\..\..\build\debug\.ui
+LIBS += \
+    -L$$DESTDIR -lVariantConverter \
+    -L$$DESTDIR -lxmlbuilder \
+    -L$$DESTDIR -lsearchxmlbuilder \
+    -L$$DESTDIR -lbasictable \
+    -L$$DESTDIR -lfileinfodialog \
+    -L$$DESTDIR -lfilesearchloader
 
-    RESOURCES += \
-        ..\..\res\resources.qrc
+#win32 {
+##    Release:DESTDIR = $$PWD\..\..\build\release\libs
+##    Release:OBJECTS_DIR = $$PWD\..\..\build\release\.obj
+##    Release:MOC_DIR = $$PWD\..\..\build\release\.moc
+##    Release:RCC_DIR = $$PWD\..\..\build\release\.rcc
+##    Release:UI_DIR = $$PWD\..\..\build\release\.ui
 
-    CONFIG(debug, debug|release) {
-        LIBS += \
-            -L$$PWD\..\..\build\debug\libs\ -lVariantConverter \
-            -L$$PWD\..\..\build\debug\libs\ -lxmlbuilder \
-            -L$$PWD\..\..\build\debug\libs\ -lsearchxmlbuilder \
-            -L$$PWD\..\..\build\debug\libs\ -lbasictable \
-            -L$$PWD\..\..\build\debug\libs\ -lfileinfodialog \
-            -L$$PWD\..\..\build\debug\libs\ -lfilesearchloader
+##    Debug:DESTDIR = $$PWD\..\..\build\debug\libs
+##    Debug:OBJECTS_DIR = $$PWD\..\..\build\debug\.obj
+##    Debug:MOC_DIR = $$PWD\..\..\build\debug\.moc
+##    Debug:RCC_DIR = $$PWD\..\..\build\debug\.rcc
+##    Debug:UI_DIR = $$PWD\..\..\build\debug\.ui
 
-        INCLUDEPATH += $$PWD\..\..\build\debug\libs
-        DEPENDPATH += $$PWD\..\..\build\debug\libs
-    }
+#    RESOURCES += \
+#        ..\..\res\resources.qrc
 
-    CONFIG(release, debug|release) {
-        LIBS += \
-            -L$$PWD\..\..\build\release\libs\ -lVariantConverter \
-            -L$$PWD\..\..\build\release\libs\ -lxmlbuilder \
-            -L$$PWD\..\..\build\release\libs\ -lsearchxmlbuilder \
-            -L$$PWD\..\..\build\release\libs\ -lbasictable \
-            -L$$PWD\..\..\build\release\libs\ -lfileinfodialog \
-            -L$$PWD\..\..\build\release\libs\ -lfilesearchloader
+#    CONFIG(debug, debug|release) {
+#        LIBS += \
+#            -L$$PWD\..\..\build\debug\libs\ -lVariantConverter \
+#            -L$$PWD\..\..\build\debug\libs\ -lxmlbuilder \
+#            -L$$PWD\..\..\build\debug\libs\ -lsearchxmlbuilder \
+#            -L$$PWD\..\..\build\debug\libs\ -lbasictable \
+#            -L$$PWD\..\..\build\debug\libs\ -lfileinfodialog \
+#            -L$$PWD\..\..\build\debug\libs\ -lfilesearchloader
 
-        INCLUDEPATH += $$PWD\..\..\build\release\libs
-        DEPENDPATH += $$PWD\..\..\build\release\libs
-    }
-}
+##        INCLUDEPATH += $$PWD\..\..\build\debug\libs
+##        DEPENDPATH += $$PWD\..\..\build\debug\libs
+#    }
+
+#    CONFIG(release, debug|release) {
+#        LIBS += \
+#            -L$$PWD\..\..\build\release\libs\ -lVariantConverter \
+#            -L$$PWD\..\..\build\release\libs\ -lxmlbuilder \
+#            -L$$PWD\..\..\build\release\libs\ -lsearchxmlbuilder \
+#            -L$$PWD\..\..\build\release\libs\ -lbasictable \
+#            -L$$PWD\..\..\build\release\libs\ -lfileinfodialog \
+#            -L$$PWD\..\..\build\release\libs\ -lfilesearchloader
+
+##        INCLUDEPATH += $$PWD\..\..\build\release\libs
+##        DEPENDPATH += $$PWD\..\..\build\release\libs
+#    }
+#}
 
 unix {
-    Release:DESTDIR = $$PWD/../../build/release/libs
-    Release:OBJECTS_DIR = $$PWD/../../build/release/.obj
-    Release:MOC_DIR = $$PWD/../../build/release/.moc
-    Release:RCC_DIR = $$PWD/../../build/release/.rcc
-    Release:UI_DIR = $$PWD/../../build/release/.ui
+#    Release:DESTDIR = $$PWD/../../build/release/libs
+#    Release:OBJECTS_DIR = $$PWD/../../build/release/.obj
+#    Release:MOC_DIR = $$PWD/../../build/release/.moc
+#    Release:RCC_DIR = $$PWD/../../build/release/.rcc
+#    Release:UI_DIR = $$PWD/../../build/release/.ui
 
-    Debug:DESTDIR = $$PWD/../../build/debug/libs
-    Debug:OBJECTS_DIR = $$PWD/../../build/debug/.obj
-    Debug:MOC_DIR = $$PWD/../../build/debug/.moc
-    Debug:RCC_DIR = $$PWD/../../build/debug/.rcc
-    Debug:UI_DIR = $$PWD/../../build/debug/.ui
+#    Debug:DESTDIR = $$PWD/../../build/debug/libs
+#    Debug:OBJECTS_DIR = $$PWD/../../build/debug/.obj
+#    Debug:MOC_DIR = $$PWD/../../build/debug/.moc
+#    Debug:RCC_DIR = $$PWD/../../build/debug/.rcc
+#    Debug:UI_DIR = $$PWD/../../build/debug/.ui
 
-    RESOURCES += \
-        ../../res/resources.qrc
+#    RESOURCES += \
+#        ../../res/resources.qrc
 
     target.path = /usr/lib
     INSTALLS += target
 
-    CONFIG(debug, debug|release) {
-        LIBS += \
-            -L$$PWD/../../build/debug/libs/ -lVariantConverter \
-            -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
-            -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder \
-            -L$$PWD/../../build/debug/libs/ -lbasictable \
-            -L$$PWD/../../build/debug/libs/ -lfileinfodialog \
-            -L$$PWD/../../build/debug/libs/ -lfilesearchloader
+#    CONFIG(debug, debug|release) {
+#        LIBS += \
+#            -L$$PWD/../../build/debug/libs/ -lVariantConverter \
+#            -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
+#            -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder \
+#            -L$$PWD/../../build/debug/libs/ -lbasictable \
+#            -L$$PWD/../../build/debug/libs/ -lfileinfodialog \
+#            -L$$PWD/../../build/debug/libs/ -lfilesearchloader
 
-        INCLUDEPATH += $$PWD/../../build/debug/libs
-        DEPENDPATH += $$PWD/../../build/debug/libs
-    }
+##        INCLUDEPATH += $$PWD/../../build/debug/libs
+##        DEPENDPATH += $$PWD/../../build/debug/libs
+#    }
 
-    CONFIG(release, debug|release) {
-        LIBS += \
-            -L$$PWD/../../build/release/libs/ -lVariantConverter \
-            -L$$PWD/../../build/release/libs/ -lxmlbuilder \
-            -L$$PWD/../../build/release/libs/ -lsearchxmlbuilder \
-            -L$$PWD/../../build/release/libs/ -lbasictable \
-            -L$$PWD/../../build/release/libs/ -lfileinfodialog \
-            -L$$PWD/../../build/release/libs/ -lfilesearchloader
+#    CONFIG(release, debug|release) {
+#        LIBS += \
+#            -L$$PWD/../../build/release/libs/ -lVariantConverter \
+#            -L$$PWD/../../build/release/libs/ -lxmlbuilder \
+#            -L$$PWD/../../build/release/libs/ -lsearchxmlbuilder \
+#            -L$$PWD/../../build/release/libs/ -lbasictable \
+#            -L$$PWD/../../build/release/libs/ -lfileinfodialog \
+#            -L$$PWD/../../build/release/libs/ -lfilesearchloader
 
-        INCLUDEPATH += $$PWD/../../build/release/libs
-        DEPENDPATH += $$PWD/../../build/release/libs
-    }
+##        INCLUDEPATH += $$PWD/../../build/release/libs
+##        DEPENDPATH += $$PWD/../../build/release/libs
+#    }
 }

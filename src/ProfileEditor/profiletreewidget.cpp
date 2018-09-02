@@ -414,29 +414,29 @@ void ProfileTreeWidget::setTree(int itemid)
     QTreeWidgetItem *root = new QTreeWidgetItem(this);
 
     //type local
-    if(type == "local"){
+    if(type == TYPE_LOCAL){
         delete root;
         return;
     }else{
         root->setText(1, type);
     }
 
-    if(type == "info"){
+    if(type == TYPE_INFO){
         setInfoTree(root, list, 1);
     }
-    if(type == "normal"){
+    if(type == TYPE_EXEC){
         setNormalTree(root, list, 1);
     }
-    if(type == "search"){
+    if(type == TYPE_SEARCH){
         setSearchTree(root, list, 1);
     }
-    if(type == "script"){
+    if(type == TYPE_SCRIPT){
         setExtraFuncTree(root, list, 1);
     }
-    if(type == "other"){
+    if(type == TYPE_ANOTHER){
         setOtherTree(root, list, 1);
     }
-    if(type == "temp"){
+    if(type == TYPE_ALLINCLUDE){
         setTempTree(root, list);
     }
 
@@ -501,7 +501,7 @@ void ProfileTreeWidget::setSearchTree(QTreeWidgetItem *root, QList<QStringList> 
     //variant or output
     childitem = new QTreeWidgetItem(root);
 
-    if(((QString)list->at(firstpos + 3).at(3)).toInt() == 0){
+    if(static_cast<QString>(list->at(firstpos + 3).at(3)).toInt() == 0){
         childitem->setText(0, list->at(firstpos + 2).at(1));
         childitem->setText(1, tr("Variant"));
     }else{
@@ -533,7 +533,7 @@ void ProfileTreeWidget::setExtraFuncTree(QTreeWidgetItem *root, QList<QStringLis
         childitem->setText(0, list->at(firstpos + 3 + i).at(1));
 
         tmp = tr("arg %1")
-                .arg(QString::number(((QString)list->at(firstpos + 3 + i).at(3)).toInt() + 1));
+                .arg(QString::number(static_cast<QString>(list->at(firstpos + 3 + i).at(3)).toInt() + 1));
         childitem->setText(1, tmp);
     }
 }

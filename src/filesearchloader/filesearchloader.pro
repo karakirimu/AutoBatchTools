@@ -22,17 +22,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-Release:DESTDIR = $$PWD/../../build/release/libs
-Release:OBJECTS_DIR = $$PWD/../../build/release/.obj
-Release:MOC_DIR = $$PWD/../../build/release/.moc
-Release:RCC_DIR = $$PWD/../../build/release/.rcc
-Release:UI_DIR = $$PWD/../../build/release/.ui
+#Release:DESTDIR = $$PWD/../../build/release/libs
+#Release:OBJECTS_DIR = $$PWD/../../build/release/.obj
+#Release:MOC_DIR = $$PWD/../../build/release/.moc
+#Release:RCC_DIR = $$PWD/../../build/release/.rcc
+#Release:UI_DIR = $$PWD/../../build/release/.ui
 
-Debug:DESTDIR = $$PWD/../../build/debug/libs
-Debug:OBJECTS_DIR = $$PWD/../../build/debug/.obj
-Debug:MOC_DIR = $$PWD/../../build/debug/.moc
-Debug:RCC_DIR = $$PWD/../../build/debug/.rcc
-Debug:UI_DIR = $$PWD/../../build/debug/.ui
+#Debug:DESTDIR = $$PWD/../../build/debug/libs
+#Debug:OBJECTS_DIR = $$PWD/../../build/debug/.obj
+#Debug:MOC_DIR = $$PWD/../../build/debug/.moc
+#Debug:RCC_DIR = $$PWD/../../build/debug/.rcc
+#Debug:UI_DIR = $$PWD/../../build/debug/.ui
+
+include($$PWD/../build_library_path.pri)
 
 SOURCES += \
         filesearchloader.cpp \
@@ -43,11 +45,15 @@ HEADERS += \
         filesearchloader_global.h \
         basefilesearch.h
 
+LIBS += \
+    -L$$DESTDIR -lVariantConverter \
+    -L$$DESTDIR -lxmlbuilder \
+    -L$$DESTDIR -lsearchxmlbuilder
+
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
-
 
 #win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
 #else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../build/debug/libs/ -lxmlbuilder
@@ -68,20 +74,20 @@ unix {
 #INCLUDEPATH += $$PWD/../../build/debug/libs
 #DEPENDPATH += $$PWD/../../build/debug/libs
 
-unix|win32:CONFIG(debug, debug|release) {
-    LIBS += \
-        -L$$PWD/../../build/debug/libs/ -lVariantConverter \
-        -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
-        -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder
-    INCLUDEPATH += $$PWD/../../build/debug/libs
-    DEPENDPATH += $$PWD/../../build/debug/libs
-}
+#unix|win32:CONFIG(debug, debug|release) {
+#    LIBS += \
+#        -L$$PWD/../../build/debug/libs/ -lVariantConverter \
+#        -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
+#        -L$$PWD/../../build/debug/libs/ -lsearchxmlbuilder
+##    INCLUDEPATH += $$PWD/../../build/debug/libs
+##    DEPENDPATH += $$PWD/../../build/debug/libs
+#}
 
-unix|win32:CONFIG(release, debug|release) {
-    LIBS += \
-        -L$$PWD/../../build/release/libs/ -lVariantConverter \
-        -L$$PWD/../../build/release/libs/ -lxmlbuilder \
-        -L$$PWD/../../build/release/libs/ -lsearchxmlbuilder
-    INCLUDEPATH += $$PWD/../../build/release/libs
-    DEPENDPATH += $$PWD/../../build/release/libs
-}
+#unix|win32:CONFIG(release, debug|release) {
+#    LIBS += \
+#        -L$$PWD/../../build/release/libs/ -lVariantConverter \
+#        -L$$PWD/../../build/release/libs/ -lxmlbuilder \
+#        -L$$PWD/../../build/release/libs/ -lsearchxmlbuilder
+##    INCLUDEPATH += $$PWD/../../build/release/libs
+##    DEPENDPATH += $$PWD/../../build/release/libs
+#}

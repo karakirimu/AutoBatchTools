@@ -326,7 +326,7 @@ bool VariantTable::setLocalListItem(int itemid)
     QString type = list->at(0).at(1);
 
     //set root
-    if(type == "local"){
+    if(type == TYPE_LOCAL){
         int counter = QString(list->at(1).at(1)).toInt();
         setRowCount(counter);
         for(int i = 0; i < counter; i++){

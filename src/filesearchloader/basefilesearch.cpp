@@ -45,7 +45,7 @@ void BaseFileSearch::setRegularExpressionCondition(QStringList *filelist, QStrin
     QList<int> deleteddata;
 
     for(int i = 0; i < filecount; i++){
-        if(!((QString)filelist->at(i)).contains(QRegularExpression(regexp))){
+        if(!static_cast<QString>(filelist->at(i)).contains(QRegularExpression(regexp))){
             //not match
             deleteddata.append(i);
         }

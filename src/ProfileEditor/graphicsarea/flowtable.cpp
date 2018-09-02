@@ -477,27 +477,27 @@ void FlowTable::setFlowItem(int itemid, bool selector)
     QString type = list->at(0).at(1);
 
     //type local
-    if(type == "local") return;
+    if(type == TYPE_LOCAL) return;
 
     //set treeitem
     FlowCellWidget *cell = new FlowCellWidget();
 
-    if(type == "temp"){
+    if(type == TYPE_ALLINCLUDE){
         setTempItem(cell, list);
 
-    }else if(type == "info"){
+    }else if(type == TYPE_INFO){
         setInfoItem(cell, list, 1);
 
-    }else if(type == "normal"){
+    }else if(type == TYPE_EXEC){
         setNormalItem(cell, list, 1);
 
-    }else if(type == "search"){
+    }else if(type == TYPE_SEARCH){
         setSearchItem(cell, list, 1);
 
-    }else if(type == "script"){
+    }else if(type == TYPE_SCRIPT){
         setPluginsItem(cell, list, 1);
 
-    }else if(type == "other"){
+    }else if(type == TYPE_ANOTHER){
         setOtherItem(cell, list, 1);
 
     }
@@ -529,26 +529,26 @@ void FlowTable::setAllFlowItem()
         //set item
         cell = new FlowCellWidget();
 
-        if(type == "temp"){
+        if(type == TYPE_ALLINCLUDE){
             setTempItem(cell, inner);
 
-        }else if(type == "info"){
+        }else if(type == TYPE_INFO){
             setInfoItem(cell, inner, 1);
 
-        }else if(type == "normal"){
+        }else if(type == TYPE_EXEC){
             setNormalItem(cell, inner, 1);
 
-        }else if(type == "search"){
+        }else if(type == TYPE_SEARCH){
             setSearchItem(cell, inner, 1);
 
-        }else if(type == "script"){
+        }else if(type == TYPE_SCRIPT){
             setPluginsItem(cell, inner, 1);
 
-        }else if(type == "other"){
+        }else if(type == TYPE_ANOTHER){
             setOtherItem(cell, inner, 1);
         }
 
-        if(type != "local"){
+        if(type != TYPE_LOCAL){
             this->setRowHeight(fixedRowFromId(n), cell->height());
             this->setCellWidget(fixedRowFromId(n), 0, cell);
         }else{
@@ -596,7 +596,7 @@ void FlowTable::setInfoItem(FlowCellWidget *cell, QList<QStringList> *list, int 
 {
     QString curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "(no name)" : curdata;
-//    cell->setType("info", QPixmap(":/default_icons/info.png"));
+//    cell->setType(TYPE_INFO, QPixmap(":/default_icons/info.png"));
 //    cell->setType(QString("Information"));
 //    cell->setTypepixmap(&(QIcon(":/default_icons/info.png").pixmap(16,16)));
 //    cell->setLabelcolor(&QString("color: black; background-color: rgb(230, 230, 230);"));
@@ -614,7 +614,7 @@ void FlowTable::setInfoItem(FlowCellWidget *cell, QList<QStringList> *list, int 
 //    tmp.append(getHtmlFooter());
 
     cell->setContent(tmp);
-//    node->addLines(QStringList() << "info" << "-----" << curdata);
+//    node->addLines(QStringList() << TYPE_INFO << "-----" << curdata);
 //    node->setPath(QColor(120,120,120), 2, QColor(230,230,230));
 }
 
@@ -625,7 +625,7 @@ void FlowTable::setNormalItem(FlowCellWidget *cell, QList<QStringList> *list, in
 
 //    QString curdata;
 
-    //    cell->setType("normal", QPixmap(":/default_icons/terminal.png"));
+    //    cell->setType(TYPE_EXEC, QPixmap(":/default_icons/terminal.png"));
 //    cell->setType("Executable");
 //    cell->setTypepixmap(&exec_pixmap);
 //    cell->setTypecolor(&exec_style);
@@ -688,7 +688,7 @@ void FlowTable::setSearchItem(FlowCellWidget *cell, QList<QStringList> *list, in
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void FlowTable::setPluginsItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
 {
-//    cell->setType("script", QPixmap(":/default_icons/extras.png"));
+//    cell->setType(TYPE_SCRIPT, QPixmap(":/default_icons/extras.png"));
 //    cell->setType(extra_title);
 //    cell->setTypepixmap(&extra_pixmap);
 //    cell->setLabelcolor(&extra_style);
@@ -713,7 +713,7 @@ void FlowTable::setPluginsItem(FlowCellWidget *cell, QList<QStringList> *list, i
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void FlowTable::setOtherItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
 {
-//    cell->setType("other", QPixmap(":/default_icons/others.png"));
+//    cell->setType(TYPE_ANOTHER, QPixmap(":/default_icons/others.png"));
 //    cell->setType(other_title);
 //    cell->setTypepixmap(&other_pixmap);
 //    cell->setLabelcolor(&other_style);

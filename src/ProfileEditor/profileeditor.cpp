@@ -253,9 +253,9 @@ void ProfileEditor::undoAction()
         stack->undo();
 
         //TODO: not efficient
-        ui->runTreeWidget->reloadAction();
-        ui->variantTableWidget->reloadAction();
-        ui->flowTableWidget->reloadAction();
+//        ui->runTreeWidget->reloadAction();
+//        ui->variantTableWidget->reloadAction();
+//        ui->flowTableWidget->reloadAction();
 
     }
 }
@@ -265,9 +265,9 @@ void ProfileEditor::redoAction()
     if(editop->getUndostack()->canRedo()){
         editop->getUndostack()->redo();
         //TODO: not efficient
-        ui->runTreeWidget->reloadAction();
-        ui->variantTableWidget->reloadAction();
-        ui->flowTableWidget->reloadAction();
+//        ui->runTreeWidget->reloadAction();
+//        ui->variantTableWidget->reloadAction();
+//        ui->flowTableWidget->reloadAction();
     }
 }
 
@@ -422,6 +422,7 @@ void ProfileEditor::onTitleChanged(QString newload)
 
     //update filepath
     setLoadfile(newload);
+
 }
 
 void ProfileEditor::onFileEdited(bool edited)
@@ -646,10 +647,14 @@ void ProfileEditor::setLoadfile(const QString &value)
 void ProfileEditor::postResetUi()
 {
     //reload file
+    this->blockSignals(true);
+
     ui->runTreeWidget->reloadAction();
 //    ui->graphicsView->reloadAction();
     ui->flowTableWidget->reloadAction();
     ui->variantTableWidget->reloadAction();
+
+    this->blockSignals(false);
 
     //reset tree row position
     rowpos = 0;

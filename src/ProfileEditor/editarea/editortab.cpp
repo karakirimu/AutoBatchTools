@@ -118,15 +118,25 @@ void EditorTab::setNormalDataList(QList<QStringList> *list, int firstpos)
 {
     this->blockSignals(true);
 
-    int counter = ((QString)list->at(firstpos + 2).at(1)).toInt();
-    timeoutCheckBox->setChecked(VariantConverter::stringToBool(list->at(firstpos + 1).at(1)));
-    tospin->setValue(((QString)list->at(firstpos + 1).at(3)).toInt());
+//    int counter = static_cast<QString>(list->at(firstpos + 2).at(1)).toInt();
+//    timeoutCheckBox->setChecked(VariantConverter::stringToBool(list->at(firstpos + 1).at(1)));
+//    tospin->setValue(static_cast<QString>(list->at(firstpos + 1).at(3)).toInt());
+//    ctablenormal->setRowCount(counter);
+//    for(int i = 0; i < counter; i++){
+//        ctablenormal->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 3 + i).at(1)));
+//    }
+
+//    autoonly->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
+
+    int counter = xgen.fetch(E_CMDARGCOUNT,ATTR_NONE, list, firstpos).toInt();
+    timeoutCheckBox->setChecked(VariantConverter::stringToBool(xgen.fetch(E_TIMEOUT,ATTR_NONE, list, firstpos)));
+    tospin->setValue(xgen.fetch(E_TIMEOUT,ATTR_TIMEOUTMS, list, firstpos).toInt());
     ctablenormal->setRowCount(counter);
     for(int i = 0; i < counter; i++){
         ctablenormal->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 3 + i).at(1)));
     }
 
-    autoonly->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
+    autoonly->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_EXEC,ATTR_ONLY_SCHEDULER, list, firstpos)));
 
     this->blockSignals(false);
 
@@ -138,20 +148,35 @@ void EditorTab::setSearchDataList(QList<QStringList> *list, int firstpos)
     this->blockSignals(true);
 
     //reload combobox
+//    searchcombobox->reloadComboBoxItem();
+//    searchcombobox->setCurrentText(list->at(firstpos + 1).at(1));
+
+//    separatorLineEdit->setText(list->at(firstpos + 2).at(1));
+//    localVariantComboBox->insertItem(0,list->at(firstpos + 3).at(1));
+//    outputLineEdit->setText(list->at(firstpos + 4).at(1));
+
+//    if(list->at(firstpos + 4).at(3) == "0"){
+//        vari->setChecked(true);
+//    }else{
+//        file->setChecked(true);
+//    }
+
+//    autoonly_2->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
+
     searchcombobox->reloadComboBoxItem();
-    searchcombobox->setCurrentText(list->at(firstpos + 1).at(1));
+    searchcombobox->setCurrentText(xgen.fetch(S_NAME,ATTR_NONE, list, firstpos));
 
-    separatorLineEdit->setText(list->at(firstpos + 2).at(1));
-    localVariantComboBox->insertItem(0,list->at(firstpos + 3).at(1));
-    outputLineEdit->setText(list->at(firstpos + 4).at(1));
+    separatorLineEdit->setText(xgen.fetch(S_SEPARATOR,ATTR_NONE, list, firstpos));
+    localVariantComboBox->insertItem(0,xgen.fetch(S_VARIANT,ATTR_NONE, list, firstpos));
+    outputLineEdit->setText(xgen.fetch(S_OUTPUTFILE,ATTR_NONE, list, firstpos));
 
-    if(list->at(firstpos + 4).at(3) == "0"){
+    if(xgen.fetch(S_OUTPUTFILE,ATTR_RADIOBUTTONPOS, list, firstpos) == "0"){
         vari->setChecked(true);
     }else{
         file->setChecked(true);
     }
 
-    autoonly_2->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
+    autoonly_2->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_SEARCH,ATTR_ONLY_SCHEDULER, list, firstpos)));
 
     this->blockSignals(false);
 
@@ -161,17 +186,31 @@ void EditorTab::setSearchDataList(QList<QStringList> *list, int firstpos)
 void EditorTab::setExtraFuncDataList(QList<QStringList> *list, int firstpos)
 {
     this->blockSignals(true);
+//    //reset combobox
+//    extrafunccombobox->reloadComboBoxItem();
+//    extrafunccombobox->setCurrentText(list->at(firstpos + 1).at(1));
+
+//    int counter = static_cast<QString>(list->at(firstpos + 3).at(1)).toInt();
+//    extrafuncTableWidget->setRowCount(counter);
+//    for(int i = 0; i < counter; i++){
+//        extrafuncTableWidget->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 4 + i).at(1)));
+//    }
+
+//    autoonly_3->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
+
+    // TODO:動的検索に最初の要素を追加
+
     //reset combobox
     extrafunccombobox->reloadComboBoxItem();
-    extrafunccombobox->setCurrentText(list->at(firstpos + 1).at(1));
+    extrafunccombobox->setCurrentText(xgen.fetch(PL_NAME,ATTR_NONE, list, firstpos));
 
-    int counter = ((QString)list->at(firstpos + 3).at(1)).toInt();
+    int counter = xgen.fetch(PL_CMDARGCOUNT,ATTR_NONE, list, firstpos).toInt();
     extrafuncTableWidget->setRowCount(counter);
     for(int i = 0; i < counter; i++){
         extrafuncTableWidget->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 4 + i).at(1)));
     }
 
-    autoonly_3->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
+    autoonly_3->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_SCRIPT,ATTR_ONLY_SCHEDULER, list, firstpos)));
 
     this->blockSignals(false);
 }
@@ -181,10 +220,15 @@ void EditorTab::setOtherDataList(QList<QStringList> *list, int firstpos)
 {
     this->blockSignals(true);
 
-    profilecombobox->reloadComboBoxItem();
-    profilecombobox->setCurrentText(list->at(firstpos + 1).at(1));
+//    profilecombobox->reloadComboBoxItem();
+//    profilecombobox->setCurrentText(list->at(firstpos + 1).at(1));
 
-    autoonly_4->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
+//    autoonly_4->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
+
+    profilecombobox->reloadComboBoxItem();
+    profilecombobox->setCurrentText(xgen.fetch(PR_NAME,ATTR_NONE, list, firstpos));
+
+    autoonly_4->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_ANOTHER,ATTR_ONLY_SCHEDULER, list, firstpos)));
 
     this->blockSignals(false);
 }
@@ -200,7 +244,7 @@ void EditorTab::setCombinedDataList(int index, int selectfrom)
     if(editop->read(index, list) && currentid != index){
 
         //set current id
-        qDebug() << ((QString)("EditorTab : currentid update to %1")).arg(index);
+        qDebug() << QString("EditorTab : currentid update to %1").arg(index);
         currentid = index;
         xgen.getListStructure(list, &hlist);
 
@@ -210,7 +254,7 @@ void EditorTab::setCombinedDataList(int index, int selectfrom)
         //set widget selection
         if(hlist.count() > 1){
             disconnect(this, &EditorTab::currentChanged, this, &EditorTab::tabChanged);
-            setCurrentIndex(((QString)list->at(1).at(1)).toInt());
+            setCurrentIndex(static_cast<QString>(list->at(1).at(1)).toInt());
             connect(this, &EditorTab::currentChanged, this, &EditorTab::tabChanged);
         }
 
