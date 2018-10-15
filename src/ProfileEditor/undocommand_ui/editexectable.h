@@ -1,19 +1,18 @@
-#ifndef EDITTABLECOMMAND_H
-#define EDITTABLECOMMAND_H
+#ifndef EXECTABLEOPERATION_H
+#define EXECTABLEOPERATION_H
 
 #include <QUndoCommand>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
 
-class EditTableCommand : public QUndoCommand
+class EditExecTable : public QUndoCommand
 {
 public:
-    EditTableCommand(const int &targetindex
-                     ,const int &tableindex
-                     ,QString newstr
-                     ,const int operation
-                     ,const QString objname
-                     ,QList<QList<QStringList> *> *cache
-                     ,QUndoCommand *parent = nullptr);
+    EditExecTable(const int &targetindex
+                       ,const int &tableindex
+                       ,QString newstr
+                       ,const int operation
+                       ,QList<QList<QStringList> *> *cache
+                       ,QUndoCommand *parent = nullptr);
 
     void undo() override;
     void redo() override;
@@ -39,7 +38,6 @@ private:
     ProcessXmlListGenerator pxlg;
 
     int SKIP;
-
 };
 
-#endif // EDITTABLECOMMAND_H
+#endif // EXECTABLEOPERATION_H

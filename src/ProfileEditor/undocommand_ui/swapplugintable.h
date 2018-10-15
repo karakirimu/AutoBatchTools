@@ -25,6 +25,8 @@ private:
 
     QList<QList<QStringList> *> *m_cache;
 
+    ProcessXmlListGenerator pxlg;
+
     int SKIP;
 };
 

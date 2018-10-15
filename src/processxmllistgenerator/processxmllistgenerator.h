@@ -210,70 +210,71 @@
 
 // tag define (index 0)
 // all
-static const QString ALL_TYPE                  ;
-static const QString ALL_CMDVALUE              ;
+static const QString ALL_TYPE =                   "type";
+static const QString ALL_CMDVALUE =               "cmd";
 
 // info
-static const QString I_NAME                    ;
-static const QString I_VERSION                 ;
-static const QString I_AUTHOR                  ;
-static const QString I_DESCRIPTION             ;
-static const QString I_FILEINPUT               ;
-static const QString I_FILEINPUT_SEARCHCHECK   ;
-static const QString I_FILESEARCH_NAME         ;
-static const QString I_RECURSIVE_LOOP          ;
-static const QString I_RECURSIVE_LOOPARGCOUNT  ;
-static const QString I_RECURSIVE_LOOPCOUNT     ;
+static const QString I_NAME =                     "iname";
+static const QString I_VERSION =                  "ver";
+static const QString I_AUTHOR =                   "author";
+static const QString I_DESCRIPTION =              "desc";
+static const QString I_FILEINPUT =                "finput";
+static const QString I_FILEINPUT_SEARCHCHECK =    "sinput";
+static const QString I_FILESEARCH_NAME =          "fsname";
+static const QString I_RECURSIVE_LOOP =           "rloop";
+static const QString I_RECURSIVE_LOOPARGCOUNT =   "rlarg";
+static const QString I_RECURSIVE_LOOPCOUNT =      "reloop";
 
 // search
-static const QString S_NAME                    ;
-static const QString S_SEPARATOR               ;
-static const QString S_VARIANT                 ;
-static const QString S_OUTPUTFILE              ;
+static const QString S_NAME =                     "sname";
+static const QString S_SEPARATOR =                "sep";
+static const QString S_VARIANT =                  "var";
+static const QString S_OUTPUTFILE =               "output";
 
 // profile(other)
-static const QString PR_NAME                   ;
-static const QString PR_FILEPATH               ;
+static const QString PR_NAME =                    "prname";
+static const QString PR_FILEPATH =                "prfile";
 
 // exec(normal)
-static const QString E_TIMEOUT                 ;
-static const QString E_CMDARGCOUNT             ;
+static const QString E_TIMEOUT =                  "timeout";
+static const QString E_CMDARGCOUNT =              "cmdc";
 
 // plugin(extrafunc)
-static const QString PL_NAME                   ;
-static const QString PL_FILEPATH               ;
-static const QString PL_CMDARGCOUNT            ;
+static const QString PL_NAME =                    "plname";
+static const QString PL_FILEPATH =                "plfile";
+static const QString PL_CMDARGCOUNT =             "pcmdc";
 
 // temp
-static const QString TE_STACKEDWIDGET_POSITION ;
+static const QString TE_STACKEDWIDGET_POSITION =  "istack";
 
 // local
-static const QString L_VARIANT                 ;
-static const QString L_VAR_COUNT               ;
+static const QString L_VARIANT =                  "lvar";
+static const QString L_VAR_COUNT =                "localc";
 
 // value define (index 1)
-static const QString TYPE_INFO                 ;
-static const QString TYPE_EXEC                 ;
-static const QString TYPE_SEARCH               ;
-static const QString TYPE_SCRIPT               ;
-static const QString TYPE_ANOTHER              ;
+static const QString TYPE_INFO =                  "info";
+static const QString TYPE_EXEC =                  "normal";
+static const QString TYPE_SEARCH =                "search";
+static const QString TYPE_SCRIPT =                "script";
+static const QString TYPE_ANOTHER =               "other";
 
-static const QString TYPE_ALLINCLUDE           ;
-static const QString TYPE_LOCAL                ;
+static const QString TYPE_ALLINCLUDE =            "temp";
+static const QString TYPE_LOCAL =                 "local";
 
 // attribute define (index 2)
 // all
-static const QString ATTR_ONLY_SCHEDULER       ;
-static const QString ATTR_POSNUM               ;
-static const QString ATTR_RADIOBUTTONPOS       ;
-static const QString ATTR_MAXCOUNT             ;
-static const QString ATTR_NONE                 ;
+static const QString ATTR_ONLY_SCHEDULER =        "only";
+static const QString ATTR_POSNUM =                "id";
+static const QString ATTR_RADIOBUTTONPOS =        "radio";
+static const QString ATTR_MAXCOUNT =              "max";
+static const QString ATTR_NONE =                  "";
 
 // normal
-static const QString ATTR_TIMEOUTMS            ;
+static const QString ATTR_TIMEOUTMS =             "dur";
 
 // local
-static const QString ATTR_LOCALVALUE           ;
+static const QString ATTR_LOCALVALUE =            "lval";
+
 
 class PROCESSXMLLISTGENERATORSHARED_EXPORT ProcessXmlListGenerator : public QObject
 {
@@ -287,13 +288,13 @@ public:
 
     //inner list connection map // "_" means "and"
     //used in Undo Redo Command
-    enum{INFO_NAME,INFO_VER,INFO_AUTHOR,INFO_DESCRIPT,INFO_FINPUT,
-         INFO_SINPUT,INFO_RLOOP,INFO_RLARG,INFO_RELOOP,
-         LOCALVARIANT,CURRENTONLY,INNERSTACK,
-         SEARCHONLY,SEARCHNAME_ID,SEPARATOR,VARIANT,OUTPUTFILE,OUTPUT_RADIO,
-         OTHERONLY,OTHERNAME,OTHERFILEPATH,
-         NORMALONLY,TIMEOUT_DURITION,NCMDCOUNT,
-         EXTRAFUNCONLY,EXTRANAME,EXTRAFILE,ECMDCOUNT};
+//    enum{INFO_NAME,INFO_VER,INFO_AUTHOR,INFO_DESCRIPT,INFO_FINPUT,
+//         INFO_SINPUT,INFO_RLOOP,INFO_RLARG,INFO_RELOOP,
+//         LOCALVARIANT,CURRENTONLY,INNERSTACK,
+//         SEARCHONLY,SEARCHNAME_ID,SEPARATOR,VARIANT,OUTPUTFILE,OUTPUT_RADIO,
+//         OTHERONLY,OTHERNAME,OTHERFILEPATH,
+//         NORMALONLY,TIMEOUT_DURITION,NCMDCOUNT,
+//         EXTRAFUNCONLY,EXTRANAME,EXTRAFILE,ECMDCOUNT};
 
     //inner table operation
     enum{TABLE_ADD,TABLE_EDIT,TABLE_INSERT,TABLE_DELETE,TABLE_UP,TABLE_DOWN,TABLE_SWAP};
@@ -319,8 +320,15 @@ public:
 
     //for change inner table structures
     static QStringList createCmdElement(QString value, int index);
+    int fetchCmdFirstPos(QString tag, int firstpos, const QList<QStringList> *loadbase);
 
+    //take specific item string
+    QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase);
     QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase, int firstpos);
+
+    //replace xml element
+    void replaceElementList(QString tag, QString attr, int targetindex, QString replacestr, QList<QList<QStringList> *> *cache);
+    void replaceElementList(int tableindex, int targetindex, QString replacestr, int skip, QList<QList<QStringList> *> *cache);
 
 //private:
     //separated list create function

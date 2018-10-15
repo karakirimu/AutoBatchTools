@@ -676,7 +676,7 @@ void FlowTable::setSearchItem(FlowCellWidget *cell, QList<QStringList> *list, in
 //    tmp.append("<br>");
 
     //variant or output
-    if(((QString)list->at(firstpos + 3).at(3)).toInt() == 0){
+    if(static_cast<QString>(list->at(firstpos + 3).at(3)).toInt() == 0){
         tmp.append(tr("[variant]   : %1").arg(list->at(firstpos + 2).at(1)));
     }else{
         tmp.append(tr("[filepath]  : %1").arg(list->at(firstpos + 3).at(1)));

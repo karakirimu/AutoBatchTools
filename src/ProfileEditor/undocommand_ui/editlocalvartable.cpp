@@ -1,6 +1,6 @@
-#include "editfullcommand.h"
+#include "editlocalvartable.h"
 
-EditFullCommand::EditFullCommand(const int &targetindex
+EditLocalVarTable::EditLocalVarTable(const int &targetindex
                                  , QList<QStringList> *changed
                                  , QList<QList<QStringList> *> *cache
                                  , QUndoCommand *parent)
@@ -12,7 +12,7 @@ EditFullCommand::EditFullCommand(const int &targetindex
     m_cache = cache;
 }
 
-void EditFullCommand::undo()
+void EditLocalVarTable::undo()
 {
     if(m_cache->isEmpty()) return;
     m_cache->replace(m_targetindex, m_before);
@@ -25,7 +25,7 @@ void EditFullCommand::undo()
     }
 }
 
-void EditFullCommand::redo()
+void EditLocalVarTable::redo()
 {
     m_cache->replace(m_targetindex, m_changed);
 
@@ -37,15 +37,16 @@ void EditFullCommand::redo()
     }
 }
 
-int EditFullCommand::id() const
+int EditLocalVarTable::id() const
 {
-    return ProcessXmlListGenerator::LOCALVARIANT;
+    ProcessXmlListGenerator pxg;
+    return pxg.getId(L_VARIANT);
 }
 
-bool EditFullCommand::mergeWith(const QUndoCommand *other)
+bool EditLocalVarTable::mergeWith(const QUndoCommand *other)
 {
     if (other->id() != id()) return false;
-    const EditFullCommand *com = static_cast<const EditFullCommand *>(other);
+    const EditLocalVarTable *com = static_cast<const EditLocalVarTable *>(other);
     m_changed = com->m_changed;
     return true;
 }

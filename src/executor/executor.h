@@ -2,12 +2,12 @@
 #define EXECUTOR_H
 
 #include "executor_global.h"
-#include "../stringxmlbuilder/stringxmlbuilder.h"
-#include "../processxmlbuilder/processxmlbuilder.h"
-#include "../processxmllistgenerator/processxmllistgenerator.h"
-#include "../variantconverter/variantconverter.h"
-#include "../filesearchloader/filesearchloader.h"
-#include "../plugins/ExtraPluginInterface/extraplugininterface.h"
+#include <../stringxmlbuilder/stringxmlbuilder.h>
+#include <../processxmlbuilder/processxmlbuilder.h>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <../variantconverter/variantconverter.h>
+#include <../filesearchloader/filesearchloader.h>
+#include <../plugins/ExtraPluginInterface/extraplugininterface.h>
 
 #include <QObject>
 #include <QProcess>

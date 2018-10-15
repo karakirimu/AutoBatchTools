@@ -13,49 +13,89 @@ EditScomboBoxCommand::EditScomboBoxCommand(const int &targetindex
 
     m_newindex = newsearchindex;
 
+//    if(m_targetindex > 1){
+//        ProcessXmlListGenerator x;
+//        x.getListStructure(cache->at(m_targetindex), &posinfo);
+//        m_indexpos = posinfo.value(ProcessXmlListGenerator::SEARCH) + 1;
+//    }else {
+//        //info "fsname" position
+//        m_indexpos = 7;
+//    }
+
+//    m_oldstring = m_cache->at(m_targetindex)
+//                ->at(m_indexpos)
+//                .at(1);
+//    m_oldindex = static_cast<QString>((m_cache->at(m_targetindex)
+//                ->at(m_indexpos)
+//                .at(3))).toInt();
+
     if(m_targetindex > 1){
-        ProcessXmlListGenerator x;
-        x.getListStructure(cache->at(m_targetindex), &posinfo);
-        m_indexpos = posinfo.value(ProcessXmlListGenerator::SEARCH) + 1;
+        // sname
+        m_oldstring = pxlg.fetch(S_NAME, ATTR_NONE, m_cache->at(m_targetindex));
+        m_oldindex = static_cast<QString>(pxlg.fetch(S_NAME, ATTR_POSNUM, m_cache->at(m_targetindex))).toInt();
     }else {
         //info "fsname" position
-        m_indexpos = 7;
+        m_oldstring = pxlg.fetch(I_FILESEARCH_NAME, ATTR_NONE, m_cache->at(m_targetindex));
+        m_oldindex = static_cast<QString>(pxlg.fetch(I_FILESEARCH_NAME, ATTR_POSNUM, m_cache->at(m_targetindex))).toInt();
     }
-
-    m_oldstring = m_cache->at(m_targetindex)
-                ->at(m_indexpos)
-                .at(1);
-    m_oldindex = ((QString)(m_cache->at(m_targetindex)
-                ->at(m_indexpos)
-                .at(3))).toInt();
 }
 
 void EditScomboBoxCommand::undo()
 {
-    QStringList list;
-    list = m_cache->at(m_targetindex)->at(m_indexpos);
-    list.replace(1, m_oldstring);
-    list.replace(3, QString::number(m_oldindex));
-    m_cache->at(m_targetindex)->replace(m_indexpos, list);
+//    QStringList list;
+//    list = m_cache->at(m_targetindex)->at(m_indexpos);
+//    list.replace(1, m_oldstring);
+//    list.replace(3, QString::number(m_oldindex));
+//    m_cache->at(m_targetindex)->replace(m_indexpos, list);
+
 
     if(m_targetindex > 1){
-        setText(QObject::tr("Search profile to ") + m_oldstring);
+        pxlg.replaceElementList(S_NAME, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
+        pxlg.replaceElementList(S_NAME, ATTR_POSNUM, m_targetindex, QString::number(m_oldindex), m_cache);
+
+        setText(QObject::tr("Search profile to ") + m_oldstring \
+                + QString("^(%1)").arg(m_targetindex));
     }else{
-        setText(QObject::tr("Input search profile to ") + m_oldstring);
+        pxlg.replaceElementList(I_FILESEARCH_NAME, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
+        pxlg.replaceElementList(I_FILESEARCH_NAME, ATTR_POSNUM, m_targetindex, QString::number(m_oldindex), m_cache);
+
+        setText(QObject::tr("Input search profile to ") + m_oldstring \
+                + QString("^(%1)").arg(m_targetindex));
     }
 }
 
 void EditScomboBoxCommand::redo()
 {
-    QStringList list;
-    list = m_cache->at(m_targetindex)->at(m_indexpos);
-    list.replace(1, m_newstring);
-    list.replace(3, QString::number(m_newindex));
-    m_cache->at(m_targetindex)->replace(m_indexpos, list);
+//    QStringList list;
+//    list = m_cache->at(m_targetindex)->at(m_indexpos);
+//    list.replace(1, m_newstring);
+//    list.replace(3, QString::number(m_newindex));
+//    m_cache->at(m_targetindex)->replace(m_indexpos, list);
+
 
     if(m_targetindex > 1){
-        setText(QObject::tr("Search profile to ") + m_newstring);
+        pxlg.replaceElementList(S_NAME, ATTR_NONE, m_targetindex, m_newstring, m_cache);
+        pxlg.replaceElementList(S_NAME, ATTR_POSNUM, m_targetindex, QString::number(m_newindex), m_cache);
+
+        setText(QObject::tr("Search profile to ") + m_newstring \
+                + QString("^(%1)").arg(m_targetindex));
     }else{
-        setText(QObject::tr("Input search profile to ") + m_newstring);
+        pxlg.replaceElementList(I_FILESEARCH_NAME, ATTR_NONE, m_targetindex, m_newstring, m_cache);
+        pxlg.replaceElementList(I_FILESEARCH_NAME, ATTR_POSNUM, m_targetindex, QString::number(m_newindex), m_cache);
+
+        setText(QObject::tr("Input search profile to ") + m_newstring \
+                + QString("^(%1)").arg(m_targetindex));
+    }
+}
+
+int EditScomboBoxCommand::id() const
+{
+    ProcessXmlListGenerator pxg;
+    if(m_targetindex > 1){
+        // sname
+        return pxg.getId(S_NAME);
+    }else {
+        //info "fsname" position
+        return pxg.getId(I_FILESEARCH_NAME);
     }
 }

@@ -25,7 +25,7 @@ class FileSearchDialog : public QDialog
 {
     Q_OBJECT
 public:
-    FILESEARCHDIALOGSHARED_EXPORT explicit FileSearchDialog(QWidget *parent = 0);
+    FILESEARCHDIALOGSHARED_EXPORT explicit FileSearchDialog(QWidget *parent = nullptr);
     FILESEARCHDIALOGSHARED_EXPORT ~FileSearchDialog();
 
     FILESEARCHDIALOGSHARED_EXPORT void loadSettingList(int index, const QList<QStringList> *data);

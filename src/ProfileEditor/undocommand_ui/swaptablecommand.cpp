@@ -22,18 +22,29 @@ SwapTableCommand::SwapTableCommand(const int &targetindex
     QHash<int, int> posinfo;
     x.getListStructure(m_cache->at(m_targetindex), &posinfo);
 
-    switch (id()) {
-    case ProcessXmlListGenerator::NCMDCOUNT:
+    //TODO:untested
+
+    if(id() == x.getId(E_CMDARGCOUNT)){
+        //exec
         //define SKIP
         SKIP = posinfo.value(ProcessXmlListGenerator::NORMAL) + 3;
-        break;
-    case ProcessXmlListGenerator::ECMDCOUNT:
+    }else{
         //define SKIP
         SKIP = posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 4;
-        break;
-    default:
-        break;
     }
+
+//    switch (id()) {
+//    case normal_cmd:
+//        //define SKIP
+//        SKIP = posinfo.value(ProcessXmlListGenerator::NORMAL) + 3;
+//        break;
+//    case plugin_cmd:
+//        //define SKIP
+//        SKIP = posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 4;
+//        break;
+//    default:
+//        break;
+//    }
 
 //    m_oldstr = ((QString)m_cache->at(m_targetindex)->at(m_indexbefore + SKIP).at(1));
 }
@@ -94,10 +105,11 @@ void SwapTableCommand::redo()
 
 int SwapTableCommand::id() const
 {
+    ProcessXmlListGenerator pxg;
     if(m_objname == "cmdTableWidget"){
-        return ProcessXmlListGenerator::NCMDCOUNT;
+        return pxg.getId(E_CMDARGCOUNT);
     }else if(m_objname == "extrafuncTableWidget"){
-        return ProcessXmlListGenerator::ECMDCOUNT;
+        return pxg.getId(PL_CMDARGCOUNT);
     }else{
         return -1;
     }

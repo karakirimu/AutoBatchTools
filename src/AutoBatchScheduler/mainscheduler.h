@@ -17,7 +17,7 @@ class MainScheduler : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainScheduler(QWidget *parent = 0);
+    explicit MainScheduler(QWidget *parent = nullptr);
     ~MainScheduler();
 
 private slots:

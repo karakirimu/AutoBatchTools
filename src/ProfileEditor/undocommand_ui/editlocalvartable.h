@@ -5,19 +5,19 @@
 #include <QUndoCommand>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
 
-class EditFullCommand : public QUndoCommand
+class EditLocalVarTable : public QUndoCommand
 {
 public:
-    EditFullCommand(const int &targetindex
+    EditLocalVarTable(const int &targetindex
                     , QList<QStringList> *changed
                     , QList<QList<QStringList> *> *cache
                     , QUndoCommand *parent = nullptr);
 
-    void undo() Q_DECL_OVERRIDE;
-    void redo() Q_DECL_OVERRIDE;
+    void undo() override;
+    void redo() override;
 
-    int id() const Q_DECL_OVERRIDE;
-    bool mergeWith(const QUndoCommand *other) Q_DECL_OVERRIDE;
+    int id() const override;
+    bool mergeWith(const QUndoCommand *other) override;
 
     QList<QStringList> *m_changed;
 
@@ -26,6 +26,7 @@ private:
     QList<QStringList> *m_before;
     QList<QList<QStringList> *> *m_cache;
     static const int MAGIC = 1;
+
 };
 
 #endif // EDITFULLCOMMAND_H

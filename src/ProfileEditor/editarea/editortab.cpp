@@ -412,7 +412,12 @@ void EditorTab::editTableAction(int index, QString str, int function)
 {
     QString objname = this->sender()->objectName();
     qDebug() << "EditorTab::edittableaction : " << objname;
-    editop->editTableAction(currentid, index, str, function, objname);
+    if(objname == "cmdTableWidget"){
+        editop->tableEditExecAction(currentid, index, str, function);
+    }else if(objname == "extrafuncTableWidget"){
+        editop->tableEditPluginAction(currentid, index, str, function);
+    }
+//    editop->editTableAction(currentid, index, str, function, objname);
 
 }
 

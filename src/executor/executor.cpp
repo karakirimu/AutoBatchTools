@@ -185,7 +185,7 @@ void Executor::setLocalList()
 
     for(int i = 0; i < counter; i++){
         if(pbuilder->readItem(i, &list) && getReadType(list.at(0).at(1)) == 6){
-            int localc = ((QString)list.at(1).at(1)).toInt();
+            int localc = static_cast<QString>(list.at(1).at(1)).toInt();
 
             for(int i = 0; i < localc; i++){
                 localHash->insert(list.at(2 + i).at(0), list.at(2 + i).at(1));
@@ -509,7 +509,7 @@ bool Executor::loadInfo(QList<QStringList> *list, int firstpos)
     emit processMessage(result, INFO);
 
     //load other profile nest counter
-//    setting->othernestmax = ((QString)list->at(firstpos + 9).at(1)).toInt();
+//    setting->othernestmax = static_cast<QString>(list->at(firstpos + 9).at(1)).toInt();
 
     return true;
 }
@@ -520,7 +520,7 @@ bool Executor::loadNormal(QList<QStringList> *list, int firstpos)
     if(VariantConverter::stringToBool(list->at(firstpos).at(3))
             && setting->launched == DEFAULT) return true;
 
-    int cmdc = ((QString)list->at(firstpos + 2).at(1)).toInt();
+    int cmdc = static_cast<QString>(list->at(firstpos + 2).at(1)).toInt();
 
     if(cmdc == 0){
         emit processMessage(tr("No executable file. Skip."), ERROR);
@@ -563,7 +563,7 @@ bool Executor::loadNormal(QList<QStringList> *list, int firstpos)
 
     //wait commands
     if(VariantConverter::stringToBool(list->at(firstpos + 1).at(1))){
-        work->process->waitForFinished(((QString)list->at(firstpos + 1).at(3)).toInt());
+        work->process->waitForFinished(static_cast<QString>(list->at(firstpos + 1).at(3)).toInt());
     }else{
         work->process->waitForFinished(-1);
     }
@@ -578,7 +578,7 @@ bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
             && setting->launched == DEFAULT) return true;
 
     FileSearchLoader *loader = new FileSearchLoader();
-    QStringList result = loader->searchFromXml(((QString)list->at(firstpos + 1).at(3)).toInt());
+    QStringList result = loader->searchFromXml(static_cast<QString>(list->at(firstpos + 1).at(3)).toInt());
 
     emit processMessage(tr("Search : ") + QString::number(result.count()) + tr(" files found.\r\n"), SEARCH);
 
@@ -611,7 +611,7 @@ bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
         }
     }
 
-    int radiodata = ((QString)list->at(firstpos + 4).at(3)).toInt();
+    int radiodata = static_cast<QString>(list->at(firstpos + 4).at(3)).toInt();
 
     //save to variant
     if(radiodata == 0){
@@ -670,7 +670,7 @@ bool Executor::loadPlugins(QList<QStringList> *list, int firstpos)
 
 //            connect(plugin, SIGNAL(sendMessage()), this, &Executor::extrafuncInternalMessage);
 
-            int cmdc = ((QString)list->at(firstpos + 3).at(1)).toInt();
+            int cmdc = static_cast<QString>(list->at(firstpos + 3).at(1)).toInt();
 
             QStringList tmp;
             for(int i = 0; i < cmdc; i++){
@@ -819,7 +819,7 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
 bool Executor::loadTemp(QList<QStringList> *list)
 {
     //TODO: dynamic index update
-    int selected = ((QString)list->at(1).at(1)).toInt();
+    int selected = static_cast<QString>(list->at(1).at(1)).toInt();
 
     QHash<int, int> hlist;
     xgen.getListStructure(list, &hlist);
@@ -939,18 +939,18 @@ void Executor::setProcessSettings(bool *fileinput, int *loopcount)
         if(VariantConverter::stringToBool(list.at(6).at(1))){
             *fileinput = true;
             FileSearchLoader loader;
-            fileList.append(loader.searchFromXml(((QString)list.at(7).at(3)).toInt()));
+            fileList.append(loader.searchFromXml(static_cast<QString>(list.at(7).at(3)).toInt()));
             emit processMessage(tr("Input : ") + QString::number(fileList.count()) + tr(" files.\r\n"), SEARCH);
         }
 
         //Whether to loop the read file to the end ( 1 : no loop or set max loop count )
-        *loopcount = VariantConverter::stringToBool(list.at(8).at(1)) ? 1 : ((QString)list.at(8).at(3)).toInt();
+        *loopcount = VariantConverter::stringToBool(list.at(8).at(1)) ? 1 : static_cast<QString>(list.at(8).at(3)).toInt();
 
         // Number of files used at one time
-        setting->argumentscount = ((QString)list.at(9).at(1)).toInt();
+        setting->argumentscount = static_cast<QString>(list.at(9).at(1)).toInt();
 
         //load other profile nest counter
-        setting->othernestmax = ((QString)list.at(10).at(1)).toInt();
+        setting->othernestmax = static_cast<QString>(list.at(10).at(1)).toInt();
 
     }
 }

@@ -11,7 +11,6 @@ DeleteCommand::DeleteCommand(const int &targetindex
     m_delcopy.append(*deleted);
     m_cache = cache;
 
-
 }
 
 void DeleteCommand::undo()

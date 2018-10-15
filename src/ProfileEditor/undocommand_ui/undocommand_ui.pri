@@ -1,17 +1,15 @@
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    $$PWD/editfullcommand.h \
     $$PWD/edittabcommand.h \
-    $$PWD/editcheckcommand.h \
-    $$PWD/editvaluecommand.h \
+#    $$PWD/editcheckcommand.h \
+#    $$PWD/editvaluecommand.h \
     $$PWD/edittextcommand.h \
     $$PWD/editscomboboxcommand.h \
-    $$PWD/editfcomboboxcommand.h \
+#    $$PWD/editfcomboboxcommand.h \
     $$PWD/editcomboboxcommand.h \
-    $$PWD/edittablecommand.h \
-    $$PWD/extratablecommand.h \
-    $$PWD/swaptablecommand.h \
+#    $$PWD/edittablecommand.h \
+#    $$PWD/swaptablecommand.h \
     $$PWD/swapexectable.h \
     $$PWD/swapplugintable.h \
     $$PWD/editlooprecursive.h \
@@ -35,20 +33,23 @@ HEADERS += \
     $$PWD/stringprojectname.h \
     $$PWD/stringprojectversion.h \
     $$PWD/stringprojectauthor.h \
-    $$PWD/stringprojectdescription.h
+    $$PWD/stringprojectdescription.h \
+#    $$PWD/exectableswapoperation.h \
+#    $$PWD/plugintableswapoperation.h \
+    $$PWD/editexectable.h \
+    $$PWD/editplugintable.h \
+    $$PWD/editlocalvartable.h
 
 SOURCES += \
-    $$PWD/editfullcommand.cpp \
     $$PWD/edittabcommand.cpp \
-    $$PWD/editcheckcommand.cpp \
-    $$PWD/editvaluecommand.cpp \
+#    $$PWD/editcheckcommand.cpp \
+#    $$PWD/editvaluecommand.cpp \
     $$PWD/edittextcommand.cpp \
     $$PWD/editscomboboxcommand.cpp \
-    $$PWD/editfcomboboxcommand.cpp \
+#    $$PWD/editfcomboboxcommand.cpp \
     $$PWD/editcomboboxcommand.cpp \
-    $$PWD/edittablecommand.cpp \
-    $$PWD/extratablecommand.cpp \
-    $$PWD/swaptablecommand.cpp \
+#    $$PWD/edittablecommand.cpp \
+#    $$PWD/swaptablecommand.cpp \
     $$PWD/swapplugintable.cpp \
     $$PWD/swapexectable.cpp \
     $$PWD/editlooprecursive.cpp \
@@ -72,4 +73,9 @@ SOURCES += \
     $$PWD/stringprojectname.cpp \
     $$PWD/stringprojectversion.cpp \
     $$PWD/stringprojectauthor.cpp \
-    $$PWD/stringprojectdescription.cpp
+    $$PWD/stringprojectdescription.cpp \
+#    $$PWD/exectableswapoperation.cpp \
+#    $$PWD/plugintableswapoperation.cpp \
+    $$PWD/editexectable.cpp \
+    $$PWD/editplugintable.cpp \
+    $$PWD/editlocalvartable.cpp

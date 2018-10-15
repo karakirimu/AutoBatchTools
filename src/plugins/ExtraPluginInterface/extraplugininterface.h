@@ -1,11 +1,11 @@
 #ifndef EXTRAPLUGININTERFACE_H
 #define EXTRAPLUGININTERFACE_H
 
+//#include "extraplugininterface_global.h"
 #include <QHash>
 #include <QStringList>
 #include <QObject>
 #include <QtPlugin>
-//#include "extraplugininterface_global.h"
 
 class ExtraPluginInterface
 {

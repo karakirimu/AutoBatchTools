@@ -268,7 +268,7 @@ void EditOperator::tableSwapPluginAction(int id, int beforeid, int afterid)
 void EditOperator::tableEditVariantAction(int id, QList<QStringList> *xmlstruct)
 {
     //record all changes (not merge)
-    EditFullCommand *com = new EditFullCommand(id, xmlstruct, cache);
+    EditLocalVarTable *com = new EditLocalVarTable(id, xmlstruct, cache);
 //    cache->replace(id, xmlstruct);
 
     undostack->push(com);
@@ -277,12 +277,28 @@ void EditOperator::tableEditVariantAction(int id, QList<QStringList> *xmlstruct)
     //    emit editindexUpdate(id);
 }
 
-void EditOperator::editTableAction(int id, int tableid, QString newstr, int operation, QString objname)
+//void EditOperator::editTableAction(int id, int tableid, QString newstr, int operation, QString objname)
+//{
+//    EditTableCommand *com = new EditTableCommand(id, tableid, newstr, operation, objname, cache);
+
+//    undostack->push(com);
+////    emit edited(isEdited());
+//    emit editUpdate(id);
+//}
+
+void EditOperator::tableEditExecAction(int id, int tableid, QString newstr, int operation)
 {
-    EditTableCommand *com = new EditTableCommand(id, tableid, newstr, operation, objname, cache);
+    EditExecTable *com = new EditExecTable(id, tableid, newstr, operation, cache);
 
     undostack->push(com);
-//    emit edited(isEdited());
+    emit editUpdate(id);
+}
+
+void EditOperator::tableEditPluginAction(int id, int tableid, QString newstr, int operation)
+{
+    EditPluginTable *com = new EditPluginTable(id, tableid, newstr, operation, cache);
+
+    undostack->push(com);
     emit editUpdate(id);
 }
 

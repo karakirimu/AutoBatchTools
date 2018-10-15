@@ -10,11 +10,12 @@ StringProjectVersion::StringProjectVersion(const int &targetindex
     m_newstring = newstring;
 
     m_cache = cache;
-    ProcessXmlListGenerator x;
-    x.getListStructure(cache->at(m_targetindex), &posinfo);
+//    ProcessXmlListGenerator x;
+//    x.getListStructure(cache->at(m_targetindex), &posinfo);
 
     //info version
-    m_oldstring = m_cache->at(m_targetindex)->at(2).at(1);
+//    m_oldstring = m_cache->at(m_targetindex)->at(2).at(1);
+    m_oldstring = pxlg.fetch(I_VERSION, ATTR_NONE, m_cache->at(m_targetindex));
 
 }
 
@@ -22,23 +23,26 @@ void StringProjectVersion::undo()
 {
 //    if(m_cache->isEmpty()) return;
 
-    QStringList alist = m_cache->at(m_targetindex)->at(2);
-    alist.replace(1, m_oldstring);
-    m_cache->at(m_targetindex)->replace(2, alist);
-    setText(QObject::tr("Version"));
+//    QStringList alist = m_cache->at(m_targetindex)->at(2);
+//    alist.replace(1, m_oldstring);
+//    m_cache->at(m_targetindex)->replace(2, alist);
+    setText(QObject::tr("Version changed ") \
+            + QString("^(%1)").arg(m_targetindex));
 }
 
 void StringProjectVersion::redo()
 {
-    QStringList alist = m_cache->at(m_targetindex)->at(2);
-    alist.replace(1, m_newstring);
-    m_cache->at(m_targetindex)->replace(2, alist);
-    setText(QObject::tr("Version"));
+//    QStringList alist = m_cache->at(m_targetindex)->at(2);
+//    alist.replace(1, m_newstring);
+//    m_cache->at(m_targetindex)->replace(2, alist);
+    setText(QObject::tr("Version changed ") \
+            + QString("^(%1)").arg(m_targetindex));
 }
 
 int StringProjectVersion::id() const
 {
-    return ProcessXmlListGenerator::INFO_VER;
+    ProcessXmlListGenerator pxg;
+    return pxg.getId(I_VERSION);
 }
 
 bool StringProjectVersion::mergeWith(const QUndoCommand *other)

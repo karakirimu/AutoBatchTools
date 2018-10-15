@@ -11,33 +11,42 @@ StringProjectAuthor::StringProjectAuthor(const int &targetindex
 
     m_cache = cache;
 
-    ProcessXmlListGenerator x;
-    x.getListStructure(cache->at(m_targetindex), &posinfo);
+//    ProcessXmlListGenerator x;
+//    x.getListStructure(cache->at(m_targetindex), &posinfo);
 
-    m_oldstring = m_cache->at(m_targetindex)->at(3).at(1);
+//    m_oldstring = m_cache->at(m_targetindex)->at(3).at(1);
+    m_oldstring = pxlg.fetch(I_AUTHOR, ATTR_NONE, m_cache->at(m_targetindex));
+
 }
 
 void StringProjectAuthor::undo()
 {
 //    if(m_cache->isEmpty()) return;
 
-    QStringList alist = m_cache->at(m_targetindex)->at(3);
-    alist.replace(1, m_oldstring);
-    m_cache->at(m_targetindex)->replace(3, alist);
-    setText(QObject::tr("Change author"));
+//    QStringList alist = m_cache->at(m_targetindex)->at(3);
+//    alist.replace(1, m_oldstring);
+//    m_cache->at(m_targetindex)->replace(3, alist);
+    pxlg.replaceElementList(I_AUTHOR, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
+
+    setText(QObject::tr("Author changed ") \
+            + QString("^(%1)").arg(m_targetindex));
 }
 
 void StringProjectAuthor::redo()
 {
-    QStringList alist = m_cache->at(m_targetindex)->at(3);
-    alist.replace(1, m_newstring);
-    m_cache->at(m_targetindex)->replace(3, alist);
-    setText(QObject::tr("Change author"));
+//    QStringList alist = m_cache->at(m_targetindex)->at(3);
+//    alist.replace(1, m_newstring);
+//    m_cache->at(m_targetindex)->replace(3, alist);
+    pxlg.replaceElementList(I_AUTHOR, ATTR_NONE, m_targetindex, m_newstring, m_cache);
+
+    setText(QObject::tr("Author changed ") \
+            + QString("^(%1)").arg(m_targetindex));
 }
 
 int StringProjectAuthor::id() const
 {
-    return ProcessXmlListGenerator::INFO_AUTHOR;
+    ProcessXmlListGenerator pxg;
+    return pxg.getId(I_AUTHOR);
 }
 
 bool StringProjectAuthor::mergeWith(const QUndoCommand *other)

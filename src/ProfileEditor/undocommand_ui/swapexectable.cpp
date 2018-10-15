@@ -13,12 +13,14 @@ SwapExecTable::SwapExecTable(const int &targetindex
     m_cache = cache;
 
     //init generator
-    ProcessXmlListGenerator x;
-    QHash<int, int> posinfo;
-    x.getListStructure(m_cache->at(m_targetindex), &posinfo);
+//    ProcessXmlListGenerator x;
+//    QHash<int, int> posinfo;
+//    x.getListStructure(m_cache->at(m_targetindex), &posinfo);
 
     //define SKIP
-    SKIP = posinfo.value(ProcessXmlListGenerator::NORMAL) + 3;
+//    SKIP = posinfo.value(ProcessXmlListGenerator::NORMAL) + 3;
+    SKIP = pxlg.fetchCmdFirstPos(ALL_CMDVALUE,ProcessXmlListGenerator::NORMAL, m_cache->at(m_targetindex));
+
 }
 
 void SwapExecTable::undo()
@@ -35,15 +37,18 @@ void SwapExecTable::undo()
     switch (condition) {
     case 1:
         //UP
-        setText(QObject::tr("Up exec arg '%1'").arg(temp.at(1)));
+        setText(QObject::tr("Up exec arg '%1' ").arg(temp.at(1)) \
+                + QString("^(%1)").arg(m_targetindex));
         break;
     case -1:
         //DOWN
-        setText(QObject::tr("Down exec arg '%1'").arg(temp.at(1)));
+        setText(QObject::tr("Down exec arg '%1' ").arg(temp.at(1)) \
+                + QString("^(%1)").arg(m_targetindex));
         break;
     default:
         //SWAP
-        setText(QObject::tr("Swap exec arg '%1' at %2 to %3").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter));
+        setText(QObject::tr("Swap exec arg '%1' at %2 to %3 ").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter) \
+                + QString("^(%1)").arg(m_targetindex));
         break;
     }
 }
@@ -62,20 +67,24 @@ void SwapExecTable::redo()
     switch (condition) {
     case 1:
         //UP
-        setText(QObject::tr("Up exec arg '%1'").arg(temp.at(1)));
+        setText(QObject::tr("Up exec arg '%1'").arg(temp.at(1)) \
+                + QString("^(%1)").arg(m_targetindex));
         break;
     case -1:
         //DOWN
-        setText(QObject::tr("Down exec arg '%1'").arg(temp.at(1)));
+        setText(QObject::tr("Down exec arg '%1'").arg(temp.at(1)) \
+                + QString("^(%1)").arg(m_targetindex));
         break;
     default:
         //SWAP
-        setText(QObject::tr("Swap exec arg '%1' at %2 to %3").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter));
+        setText(QObject::tr("Swap exec arg '%1' at %2 to %3").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter) \
+                + QString("^(%1)").arg(m_targetindex));
         break;
     }
 }
 
 int SwapExecTable::id() const
 {
-    return ProcessXmlListGenerator::NCMDCOUNT;
+    ProcessXmlListGenerator pxg;
+    return pxg.getId(E_CMDARGCOUNT);
 }

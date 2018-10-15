@@ -15,7 +15,7 @@ class SystemTray : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SystemTray(QWidget *parent = 0);
+    explicit SystemTray(QWidget *parent = nullptr);
     ~SystemTray();
 
     void showNotCloseMessage();

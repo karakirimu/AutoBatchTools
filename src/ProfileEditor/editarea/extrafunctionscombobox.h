@@ -17,7 +17,7 @@ signals:
     void pluginChanged(bool);
 
 public:
-    explicit ExtraFunctionsComboBox(QObject *parent = 0);
+    explicit ExtraFunctionsComboBox(QObject *parent = nullptr);
     ~ExtraFunctionsComboBox();
 
     QString getCurrentExtraFile();

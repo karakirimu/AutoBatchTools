@@ -12,8 +12,10 @@ public:
                    , QList<QList<QStringList> *> *cache
                    , QUndoCommand *parent = nullptr);
 
-    void undo() Q_DECL_OVERRIDE;
-    void redo() Q_DECL_OVERRIDE;
+    void undo() override;
+    void redo() override;
+
+    int id() const override;
 
 private:
     void selectIndex(int index);
@@ -24,6 +26,9 @@ private:
     int m_newid;
     QString m_newauto;
     QList<QList<QStringList> *> *m_cache;
+
+    ProcessXmlListGenerator pxlg;
+
 };
 
 #endif // EDITTABCOMMAND_H

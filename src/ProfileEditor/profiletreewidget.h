@@ -21,7 +21,7 @@ class ProfileTreeWidget : public QTreeWidget
 {
     Q_OBJECT
 public:
-    explicit ProfileTreeWidget(QWidget *parent = 0);
+    explicit ProfileTreeWidget(QWidget *parent = nullptr);
     ~ProfileTreeWidget();
 
     //for order "1". it becomes to be unique order.

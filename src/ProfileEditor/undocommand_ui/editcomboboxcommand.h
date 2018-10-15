@@ -14,15 +14,20 @@ public:
                         , QList<QList<QStringList> *> *cache
                         , QUndoCommand *parent = nullptr);
 
-    void undo() Q_DECL_OVERRIDE;
-    void redo() Q_DECL_OVERRIDE;
+    void undo() override;
+    void redo() override;
 
+    int id() const override;
+    bool mergeWith(const QUndoCommand *other) override;
+
+    QString m_newstring;
 private:
     int m_targetindex;
     QString m_oldstring;
-    QString m_newstring;
     QList<QList<QStringList> *> *m_cache;
-    QHash<int, int> posinfo;
+//    QHash<int, int> posinfo;
+    ProcessXmlListGenerator pxlg;
+
 };
 
 #endif // EDITCOMBOBOXCOMMAND_H

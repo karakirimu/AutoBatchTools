@@ -14,7 +14,7 @@ class CellInfoWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit CellInfoWidget(QWidget *parent = 0);
+    explicit CellInfoWidget(QWidget *parent = nullptr);
     ~CellInfoWidget();
 
     int indicateHeight();

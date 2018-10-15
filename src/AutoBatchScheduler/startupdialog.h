@@ -19,7 +19,7 @@ class StartupDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit StartupDialog(QWidget *parent = 0);
+    explicit StartupDialog(QWidget *parent = nullptr);
     ~StartupDialog();
 
     void loadSettingList(int index, const QList<QStringList> *data);

@@ -14,11 +14,11 @@ public:
                     , QList<QList<QStringList> *> *cache
                     , QUndoCommand *parent = nullptr);
 
-    void undo() Q_DECL_OVERRIDE;
-    void redo() Q_DECL_OVERRIDE;
+    void undo() override;
+    void redo() override;
 
-    int id() const Q_DECL_OVERRIDE;
-    bool mergeWith(const QUndoCommand *other) Q_DECL_OVERRIDE;
+    int id() const override;
+    bool mergeWith(const QUndoCommand *other) override;
 
     QString m_newstring;
 private:

@@ -21,12 +21,15 @@ public:
 
    QString m_newstring;
    QString m_newfile;
+
 private:
    int m_targetindex;
    QString m_oldstring;
    QString m_oldfile;
    QList<QList<QStringList> *> *m_cache;
-   QHash<int, int> posinfo;
+//   QHash<int, int> posinfo;
+   ProcessXmlListGenerator pxlg;
+
 };
 
 #endif // COMBOPROFILESELECT_H

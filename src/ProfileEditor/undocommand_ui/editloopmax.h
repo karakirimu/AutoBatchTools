@@ -24,7 +24,8 @@ private:
     int m_targetindex;
     int m_oldvalue;
     QList<QList<QStringList> *> *m_cache;
-    QHash<int, int> posinfo;
+//    QHash<int, int> posinfo;
+    ProcessXmlListGenerator pxlg;
 };
 
 #endif // EDITLOOPMAX_H

@@ -13,11 +13,13 @@ SwapPluginTable::SwapPluginTable(const int &targetindex
     m_cache = cache;
 
     //init generator
-    ProcessXmlListGenerator x;
-    QHash<int, int> posinfo;
-    x.getListStructure(m_cache->at(m_targetindex), &posinfo);
+//    ProcessXmlListGenerator x;
+//    QHash<int, int> posinfo;
+//    x.getListStructure(m_cache->at(m_targetindex), &posinfo);
 
-    SKIP = posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 4;
+//    SKIP = posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 4;
+    SKIP = pxlg.fetchCmdFirstPos(ALL_CMDVALUE,ProcessXmlListGenerator::EXTRAFUNC, m_cache->at(m_targetindex));
+
 }
 
 void SwapPluginTable::undo()
@@ -34,15 +36,18 @@ void SwapPluginTable::undo()
     switch (condition) {
     case 1:
         //UP
-        setText(QObject::tr("Up plugin arg '%1'").arg(temp.at(1)));
+        setText(QObject::tr("Up plugin arg '%1' ").arg(temp.at(1)) \
+                + QString("^(%1)").arg(m_targetindex));
         break;
     case -1:
         //DOWN
-        setText(QObject::tr("Down plugin arg '%1'").arg(temp.at(1)));
+        setText(QObject::tr("Down plugin arg '%1' ").arg(temp.at(1)) \
+                + QString("^(%1)").arg(m_targetindex));
         break;
     default:
         //SWAP
-        setText(QObject::tr("Swap plugin arg '%1' at %2 to %3").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter));
+        setText(QObject::tr("Swap plugin arg '%1' at %2 to %3 ").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter) \
+                + QString("^(%1)").arg(m_targetindex));
         break;
     }
 }
@@ -61,20 +66,24 @@ void SwapPluginTable::redo()
     switch (condition) {
     case 1:
         //UP
-        setText(QObject::tr("Up plugin arg '%1'").arg(temp.at(1)));
+        setText(QObject::tr("Up plugin arg '%1' ").arg(temp.at(1)) \
+                + QString("^(%1)").arg(m_targetindex));
         break;
     case -1:
         //DOWN
-        setText(QObject::tr("Down plugin arg '%1'").arg(temp.at(1)));
+        setText(QObject::tr("Down plugin arg '%1' ").arg(temp.at(1)) \
+                + QString("^(%1)").arg(m_targetindex));
         break;
     default:
         //SWAP
-        setText(QObject::tr("Swap plugin arg '%1' at %2 to %3").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter));
+        setText(QObject::tr("Swap plugin arg '%1' at %2 to %3 ").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter) \
+                + QString("^(%1)").arg(m_targetindex));
         break;
     }
 }
 
 int SwapPluginTable::id() const
 {
-    return ProcessXmlListGenerator::ECMDCOUNT;
+    ProcessXmlListGenerator pxg;
+    return pxg.getId(PL_CMDARGCOUNT);
 }

@@ -13,7 +13,7 @@ class OptionDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit OptionDialog(QWidget *parent = 0);
+    explicit OptionDialog(QWidget *parent = nullptr);
     ~OptionDialog();
 
 private slots:

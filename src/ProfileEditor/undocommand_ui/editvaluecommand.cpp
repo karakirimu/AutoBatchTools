@@ -20,7 +20,7 @@ EditValueCommand::EditValueCommand(const int &targetindex
 
     //get old value
     switch (id()) {
-    case ProcessXmlListGenerator::TIMEOUT_DURITION:
+    case ProcessXmlListGenerator::getId(E_TIMEOUT):
         m_oldvalue = ((QString)m_cache->at(m_targetindex)
                 ->at(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1)
                 .at(3)).toInt();
@@ -52,7 +52,7 @@ void EditValueCommand::undo()
 {
     QStringList alist;
     switch (id()) {
-    case ProcessXmlListGenerator::TIMEOUT_DURITION:
+    case ProcessXmlListGenerator::getId(E_TIMEOUT):
         alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1);
         alist.replace(3, QString::number(m_oldvalue));
         m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1, alist);
@@ -96,7 +96,7 @@ void EditValueCommand::redo()
 {
     QStringList alist;
     switch (id()) {
-    case ProcessXmlListGenerator::TIMEOUT_DURITION:
+    case ProcessXmlListGenerator::getId(E_TIMEOUT):
         alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1);
         alist.replace(3, QString::number(m_newvalue));
         m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1, alist);
@@ -140,20 +140,20 @@ void EditValueCommand::redo()
 int EditValueCommand::id() const
 {
     if(m_objname == "timeoutSpinBox"){
-        return ProcessXmlListGenerator::TIMEOUT_DURITION;
+        return ProcessXmlListGenerator::getId(E_TIMEOUT);
 
     }else if(m_objname == "variRadioButton"
              || m_objname == "fileRadioButton"){
-        return ProcessXmlListGenerator::OUTPUT_RADIO;
+        return ProcessXmlListGenerator::getId(ATTR_RADIOBUTTONPOS);
 
     }else if(m_objname == "loopMaxSpinBox"){
-        return ProcessXmlListGenerator::INFO_RLOOP;
+        return ProcessXmlListGenerator::getId(I_RECURSIVE_LOOP);
 
     }else if(m_objname == "loopArgumentsSpinBox"){
-        return ProcessXmlListGenerator::INFO_RLARG;
+        return ProcessXmlListGenerator::getId(I_RECURSIVE_LOOPARGCOUNT);
 
     }else if(m_objname == "loopRecursiveSpinBox"){
-        return ProcessXmlListGenerator::INFO_RELOOP;
+        return ProcessXmlListGenerator::getId(I_RECURSIVE_LOOPCOUNT);
     }else{
         return -1;
     }

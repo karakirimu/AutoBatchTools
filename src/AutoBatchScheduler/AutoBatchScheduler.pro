@@ -28,18 +28,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-#Release:DESTDIR = $$PWD/../../build/release
-#Release:OBJECTS_DIR = $$PWD/../../build/release/AutoBatchScheduler/.obj
-#Release:MOC_DIR = $$PWD/../../build/release/AutoBatchScheduler/.moc
-#Release:RCC_DIR = $$PWD/../../build/release/AutoBatchScheduler/.rcc
-#Release:UI_DIR = $$PWD/../../build/release/AutoBatchScheduler/.ui
-
-#Debug:DESTDIR = $$PWD/../../build/debug
-#Debug:OBJECTS_DIR = $$PWD/../../build/debug/AutoBatchScheduler/.obj
-#Debug:MOC_DIR = $$PWD/../../build/debug/AutoBatchScheduler/.moc
-#Debug:RCC_DIR = $$PWD/../../build/debug/AutoBatchScheduler/.rcc
-#Debug:UI_DIR = $$PWD/../../build/debug/AutoBatchScheduler/.ui
-
 DESTDIR = $$OUT_PWD/../../
 OBJECTS_DIR = $$OUT_PWD/../../abs/.obj
 MOC_DIR = $$OUT_PWD/../../abs/.moc
@@ -82,31 +70,3 @@ LIBS += \
     -L$$LIBRARYPATH -lprofilecombobox \
     -L$$LIBRARYPATH -lexecutor \
     -L$$LIBRARYPATH -lconsolebase
-
-#unix|win32:CONFIG(debug, debug|release) {
-#    LIBS += \
-#        -L$$PWD/../../build/debug/libs/ -lVariantConverter \
-#        -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
-#        -L$$PWD/../../build/debug/libs/ -lbasictable \
-#        -L$$PWD/../../build/debug/libs/ -lprofilexmlbuilder \
-#        -L$$PWD/../../build/debug/libs/ -lprofilecombobox \
-#        -L$$PWD/../../build/debug/libs/ -lexecutor \
-#        -L$$PWD/../../build/debug/libs/ -lconsolebase
-
-#    INCLUDEPATH += $$PWD/../../build/debug/libs
-#    DEPENDPATH += $$PWD/../../build/debug/libs
-#}
-
-#unix|win32:CONFIG(release, debug|release) {
-#    LIBS += \
-#        -L$$PWD/../../build/release/libs/ -lVariantConverter \
-#        -L$$PWD/../../build/release/libs/ -lxmlbuilder \
-#        -L$$PWD/../../build/release/libs/ -lbasictable \
-#        -L$$PWD/../../build/release/libs/ -lprofilexmlbuilder \
-#        -L$$PWD/../../build/release/libs/ -lprofilecombobox \
-#        -L$$PWD/../../build/release/libs/ -lexecutor \
-#        -L$$PWD/../../build/release/libs/ -lconsolebase
-
-#    INCLUDEPATH += $$PWD/../../build/release/libs
-#    DEPENDPATH += $$PWD/../../build/release/libs
-#}

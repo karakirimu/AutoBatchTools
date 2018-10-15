@@ -5,23 +5,23 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
 {
     // tag define (index 0)
     // all
-    const QString ALL_TYPE =                   "type";
-    const QString ALL_CMDVALUE =               "cmd";
+//    const QString ALL_TYPE =                   "type";
+//    const QString ALL_CMDVALUE =               "cmd";
 
     generateId.insert(ALL_TYPE, 0);
     generateId.insert(ALL_CMDVALUE, 1);
 
     // info
-    const QString I_NAME =                     "iname";
-    const QString I_VERSION =                  "ver";
-    const QString I_AUTHOR =                   "author";
-    const QString I_DESCRIPTION =              "desc";
-    const QString I_FILEINPUT =                "finput";
-    const QString I_FILEINPUT_SEARCHCHECK =    "sinput";
-    const QString I_FILESEARCH_NAME =          "fsname";
-    const QString I_RECURSIVE_LOOP =           "rloop";
-    const QString I_RECURSIVE_LOOPARGCOUNT =   "rlarg";
-    const QString I_RECURSIVE_LOOPCOUNT =      "reloop";
+//    const QString I_NAME =                     "iname";
+//    const QString I_VERSION =                  "ver";
+//    const QString I_AUTHOR =                   "author";
+//    const QString I_DESCRIPTION =              "desc";
+//    const QString I_FILEINPUT =                "finput";
+//    const QString I_FILEINPUT_SEARCHCHECK =    "sinput";
+//    const QString I_FILESEARCH_NAME =          "fsname";
+//    const QString I_RECURSIVE_LOOP =           "rloop";
+//    const QString I_RECURSIVE_LOOPARGCOUNT =   "rlarg";
+//    const QString I_RECURSIVE_LOOPCOUNT =      "reloop";
 
     generateId.insert(I_NAME, 100);
     generateId.insert(I_VERSION, 101);
@@ -35,10 +35,10 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
     generateId.insert(I_RECURSIVE_LOOPCOUNT, 109);
 
     // search
-    const QString S_NAME =                     "sname";
-    const QString S_SEPARATOR =                "sep";
-    const QString S_VARIANT =                  "var";
-    const QString S_OUTPUTFILE =               "output";
+//    const QString S_NAME =                     "sname";
+//    const QString S_SEPARATOR =                "sep";
+//    const QString S_VARIANT =                  "var";
+//    const QString S_OUTPUTFILE =               "output";
 
     generateId.insert(S_NAME, 200);
     generateId.insert(S_SEPARATOR, 201);
@@ -46,49 +46,49 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
     generateId.insert(S_OUTPUTFILE, 203);
 
     // profile(other)
-    const QString PR_NAME =                    "prname";
-    const QString PR_FILEPATH =                "prfile";
+//    const QString PR_NAME =                    "prname";
+//    const QString PR_FILEPATH =                "prfile";
 
     generateId.insert(PR_NAME, 300);
     generateId.insert(PR_FILEPATH, 301);
 
     // exec(normal)
-    const QString E_TIMEOUT =                  "timeout";
-    const QString E_CMDARGCOUNT =              "cmdc";
+//    const QString E_TIMEOUT =                  "timeout";
+//    const QString E_CMDARGCOUNT =              "cmdc";
 
     generateId.insert(E_TIMEOUT, 400);
     generateId.insert(E_CMDARGCOUNT, 401);
 
     // plugin(extrafunc)
-    const QString PL_NAME =                    "plname";
-    const QString PL_FILEPATH =                "plfile";
-    const QString PL_CMDARGCOUNT =             "pcmdc";
+//    const QString PL_NAME =                    "plname";
+//    const QString PL_FILEPATH =                "plfile";
+//    const QString PL_CMDARGCOUNT =             "pcmdc";
 
     generateId.insert(PL_NAME, 500);
     generateId.insert(PL_FILEPATH, 501);
     generateId.insert(PL_CMDARGCOUNT, 502);
 
     // temp
-    const QString TE_STACKEDWIDGET_POSITION =  "istack";
+//    const QString TE_STACKEDWIDGET_POSITION =  "istack";
 
     generateId.insert(TE_STACKEDWIDGET_POSITION, 600);
 
     // local
-    const QString L_VARIANT =                  "lvar";
-    const QString L_VAR_COUNT =                "localc";
+//    const QString L_VARIANT =                  "lvar";
+//    const QString L_VAR_COUNT =                "localc";
 
     generateId.insert(L_VARIANT, 700);
     generateId.insert(L_VAR_COUNT, 701);
 
     // value define (index 1)
-    const QString TYPE_INFO =                  "info";
-    const QString TYPE_EXEC =                  "normal";
-    const QString TYPE_SEARCH =                "search";
-    const QString TYPE_SCRIPT =                "script";
-    const QString TYPE_ANOTHER =               "other";
+//    const QString TYPE_INFO =                  "info";
+//    const QString TYPE_EXEC =                  "normal";
+//    const QString TYPE_SEARCH =                "search";
+//    const QString TYPE_SCRIPT =                "script";
+//    const QString TYPE_ANOTHER =               "other";
 
-    const QString TYPE_ALLINCLUDE =            "temp";
-    const QString TYPE_LOCAL =                 "local";
+//    const QString TYPE_ALLINCLUDE =            "temp";
+//    const QString TYPE_LOCAL =                 "local";
 
     generateId.insert(TYPE_INFO, 800);
     generateId.insert(TYPE_EXEC, 801);
@@ -101,11 +101,11 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
 
     // attribute define (index 2)
     // all
-    const QString ATTR_ONLY_SCHEDULER =        "only";
-    const QString ATTR_POSNUM =                "id";
-    const QString ATTR_RADIOBUTTONPOS =        "radio";
-    const QString ATTR_MAXCOUNT =              "max";
-    const QString ATTR_NONE =                  "";
+//    const QString ATTR_ONLY_SCHEDULER =        "only";
+//    const QString ATTR_POSNUM =                "id";
+//    const QString ATTR_RADIOBUTTONPOS =        "radio";
+//    const QString ATTR_MAXCOUNT =              "max";
+//    const QString ATTR_NONE =                  "";
 
     generateId.insert(ATTR_ONLY_SCHEDULER, 900);
     generateId.insert(ATTR_POSNUM, 901);
@@ -114,12 +114,12 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
     generateId.insert(ATTR_NONE, 904);
 
     // normal
-    const QString ATTR_TIMEOUTMS =             "dur";
+//    const QString ATTR_TIMEOUTMS =             "dur";
 
     generateId.insert(ATTR_TIMEOUTMS, 905);
 
     // local
-    const QString ATTR_LOCALVALUE =            "lval";
+//    const QString ATTR_LOCALVALUE =            "lval";
 
     generateId.insert(ATTR_LOCALVALUE, 906);
 }
@@ -310,7 +310,27 @@ QStringList ProcessXmlListGenerator::createCmdElement(QString value, int index)
     return QStringList() << ALL_CMDVALUE << value << ATTR_POSNUM << QString::number(index);
 }
 
+int ProcessXmlListGenerator::fetchCmdFirstPos(QString tag, int firstpos, const QList<QStringList> *loadbase)
+{
+    int count = loadbase->count();
+    int i = firstpos;
+    while(i < count){
+        if(tag == loadbase->at(i).at(0)){
+            return i;
+        }
+        i++;
+    }
+
+    //cannot find
+    return -1;
+}
+
 // If there is no element of "attr", assign PROCESS_NONE to "attr"
+QString ProcessXmlListGenerator::fetch(QString tag, QString attr, const QList<QStringList> *loadbase)
+{
+    return this->fetch(tag, attr, loadbase, 0);
+}
+
 QString ProcessXmlListGenerator::fetch(QString tag, QString attr, const QList<QStringList> *loadbase, int firstpos)
 {
     int count = loadbase->count();
@@ -329,6 +349,49 @@ QString ProcessXmlListGenerator::fetch(QString tag, QString attr, const QList<QS
 
     //cannot find
     return ATTR_NONE;
+}
+
+void ProcessXmlListGenerator::replaceElementList(QString tag, QString attr, int targetindex \
+                                                 , QString replacestr, QList<QList<QStringList> *> *cache)
+{
+    QList<QStringList> *loadbase = cache->at(targetindex);
+    int count = loadbase->count();
+    int i = 0;
+    int listnummax = 0;
+    while(i < count){
+        if(tag == loadbase->at(i).at(0)){
+            if(attr == ATTR_NONE) {
+                QStringList alist = loadbase->at(i);
+                alist.replace(1, replacestr);
+                cache->at(targetindex)->replace(i, alist);
+            }
+
+            listnummax = loadbase->at(i).count();
+
+            if(listnummax > 3 && attr == loadbase->at(i).at(2)){
+                QStringList alist = loadbase->at(i);
+                alist.replace(3, replacestr);
+                cache->at(targetindex)->replace(i, alist);
+            }
+
+            if(listnummax > 5 && attr == loadbase->at(i).at(4)){
+                QStringList alist = loadbase->at(i);
+                alist.replace(5, replacestr);
+                cache->at(targetindex)->replace(i, alist);
+            }
+        }
+        i++;
+    }
+
+    return;
+}
+
+void ProcessXmlListGenerator::replaceElementList(int tableindex, int targetindex, QString replacestr, \
+                                                      int skip, QList<QList<QStringList> *> *cache)
+{
+    QStringList alist = cache->at(targetindex)->at(tableindex + skip);
+    alist.replace(1, replacestr);
+    cache->at(targetindex)->replace(tableindex + skip, alist);
 }
 
 int ProcessXmlListGenerator::getId(QString tag)

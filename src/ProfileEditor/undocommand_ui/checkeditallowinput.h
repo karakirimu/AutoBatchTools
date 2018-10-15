@@ -18,16 +18,19 @@ public:
     void undo() override;
     void redo() override;
 
+    int id() const override;
+
 private:
-    int getxmlpos();
+//    int getxmlpos();
 
     int m_targetindex;
     QString m_oldcheck;
     QString m_newcheck;
     QList<QList<QStringList> *> *m_cache;
-    QHash<int, int> xmlpos;
+//    QHash<int, int> xmlpos;
+    ProcessXmlListGenerator pxlg;
 
-    const static int SUBPOS = 1;
+//    const static int SUBPOS = 1;
 };
 
 #endif // EDITALLOWINPUT_H

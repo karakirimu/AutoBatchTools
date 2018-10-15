@@ -26,8 +26,10 @@ private:
    QString m_newcheck;
    QList<QList<QStringList> *> *m_cache;
    QHash<int, int> xmlpos;
+   //init generator
+   ProcessXmlListGenerator pxlg;
 
-   const static int SUBPOS = 1;
+//   const static int SUBPOS = 1;
 };
 
 #endif // EDITLOOPINFCHECK_H

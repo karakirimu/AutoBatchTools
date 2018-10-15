@@ -14,9 +14,10 @@ public:
                          , QList<QList<QStringList> *> *cache
                          , QUndoCommand *parent = nullptr);
 
-    void undo() Q_DECL_OVERRIDE;
-    void redo() Q_DECL_OVERRIDE;
+    void undo() override;
+    void redo() override;
 
+    int id() const override;
 private:
     int m_targetindex;
     QString m_oldstring;
@@ -24,8 +25,10 @@ private:
     int m_oldindex;
     int m_newindex;
     QList<QList<QStringList> *> *m_cache;
-    QHash<int, int> posinfo;
-    int m_indexpos = 0;
+//    QHash<int, int> posinfo;
+//    int m_indexpos = 0;
+    ProcessXmlListGenerator pxlg;
+
 };
 
 #endif // EDITSCOMBOBOXCOMMAND_H

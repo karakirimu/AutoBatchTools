@@ -4,6 +4,8 @@
 #include <QMouseEvent>
 #include <QWidget>
 #include <QDesktopWidget>
+#include <QItemDelegate>
+#include <QScreen>
 #include <taskschedulerconnector.h>
 
 namespace Ui {
@@ -15,7 +17,7 @@ class StatusWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit StatusWidget(QWidget *parent = 0);
+    explicit StatusWidget(QWidget *parent = nullptr);
     ~StatusWidget();
 
     void setTaskSchedulerConnector(TaskSchedulerConnector *task);

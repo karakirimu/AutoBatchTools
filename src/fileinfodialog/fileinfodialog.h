@@ -15,7 +15,7 @@ class FILEINFODIALOGSHARED_EXPORT FileInfoDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit FileInfoDialog(QWidget *parent = 0);
+    explicit FileInfoDialog(QWidget *parent = nullptr);
     ~FileInfoDialog();
 
     void setFileInfo(QString file);

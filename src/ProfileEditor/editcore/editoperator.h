@@ -14,7 +14,7 @@
 
 #include <listmimedata.h>
 
-#include <editfullcommand.h>
+#include <editlocalvartable.h>
 #include <edittabcommand.h>
 #include <editvaluecommand.h>
 #include <edittextcommand.h>
@@ -53,6 +53,8 @@
 #include <swapplugintable.h>
 //old
 #include <swaptablecommand.h>
+#include <editexectable.h>
+#include <editplugintable.h>
 
 //textedit lineedit operation
 #include <stringfileoutput.h>
@@ -164,7 +166,9 @@ public slots:
 
     //old
 //    void swapTableAction(int id, int beforeid, int afterid, QString objname);
-    void editTableAction(int id, int tableid, QString newstr, int operation, QString objname);
+//    void editTableAction(int id, int tableid, QString newstr, int operation, QString objname);
+    void tableEditExecAction(int id, int tableid, QString newstr, int operation);
+    void tableEditPluginAction(int id, int tableid, QString newstr, int operation);
 
     //textedit lineedit operation
     void textFileOutputAction(int id, QString newstr);

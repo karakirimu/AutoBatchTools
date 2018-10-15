@@ -1,7 +1,7 @@
 #ifndef PROFILEEDITOR_H
 #define PROFILEEDITOR_H
 
-#include "runtasksignalbinder.h"
+//#include "runtasksignalbinder.h"
 
 #include <QMainWindow>
 #include <QDateTime>
@@ -9,7 +9,7 @@
 #include <QFileDialog>
 #include <QProgressBar>
 
-#include <SettingDialog.h>
+#include <settingdialog.h>
 #include <editoperator.h>
 #include <multitaskp.h>
 #include <aboutpe.h>
@@ -23,8 +23,8 @@ class ProfileEditor : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ProfileEditor(QWidget *parent = 0);
-    explicit ProfileEditor(QStringList loadfile, QWidget *parent = 0);
+    explicit ProfileEditor(QWidget *parent = nullptr);
+    explicit ProfileEditor(QStringList loadfile, QWidget *parent = nullptr);
     ~ProfileEditor();
 
     void closeEvent(QCloseEvent *event);

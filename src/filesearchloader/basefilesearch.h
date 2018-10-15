@@ -11,7 +11,7 @@ class FILESEARCHLOADERSHARED_EXPORT BaseFileSearch : public QObject
 {
     Q_OBJECT
 public:
-    explicit BaseFileSearch(QObject *parent = 0);
+    explicit BaseFileSearch(QObject *parent = nullptr);
     ~BaseFileSearch();
 
     QStringList listFiles(QString path, QStringList *searchword);

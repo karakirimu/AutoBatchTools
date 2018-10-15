@@ -12,7 +12,7 @@ class AboutPE : public QWidget
     Q_OBJECT
 
 public:
-    explicit AboutPE(QWidget *parent = 0);
+    explicit AboutPE(QWidget *parent = nullptr);
     ~AboutPE();
 
 private:

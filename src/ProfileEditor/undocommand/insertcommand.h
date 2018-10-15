@@ -12,8 +12,8 @@ public:
                   , QList<QList<QStringList> *> *cache
                   , QUndoCommand *parent = nullptr);
 
-    void undo() Q_DECL_OVERRIDE;
-    void redo() Q_DECL_OVERRIDE;
+    void undo() override;
+    void redo() override;
 
 private:
     int m_targetindex;

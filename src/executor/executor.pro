@@ -24,18 +24,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 include($$PWD/../build_library_path.pri)
 
-#Release:DESTDIR = $$PWD/../../build/release/libs
-#Release:OBJECTS_DIR = $$PWD/../../build/release/.obj
-#Release:MOC_DIR = $$PWD/../../build/release/.moc
-#Release:RCC_DIR = $$PWD/../../build/release/.rcc
-#Release:UI_DIR = $$PWD/../../build/release/.ui
-
-#Debug:DESTDIR = $$PWD/../../build/debug/libs
-#Debug:OBJECTS_DIR = $$PWD/../../build/debug/.obj
-#Debug:MOC_DIR = $$PWD/../../build/debug/.moc
-#Debug:RCC_DIR = $$PWD/../../build/debug/.rcc
-#Debug:UI_DIR = $$PWD/../../build/debug/.ui
-
 SOURCES += \
         executor.cpp
 
@@ -56,31 +44,3 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
-
-#unix|win32:CONFIG(debug, debug|release) {
-#    LIBS += \
-#        -L$$PWD/../../build/debug/libs/ -lVariantConverter \
-#        -L$$PWD/../../build/debug/libs/ -lfilesearchloader \
-#        -L$$PWD/../../build/debug/libs/ -lxmlbuilder \
-#        -L$$PWD/../../build/debug/libs/ -lstringxmlbuilder \
-#        -L$$PWD/../../build/debug/libs/ -lfilesearchloader \
-#        -L$$PWD/../../build/debug/libs/ -lprocessxmlbuilder \
-#        -L$$PWD/../../build/debug/libs/ -lprocessxmllistgenerator
-
-#    INCLUDEPATH += $$PWD/../../build/debug/libs
-#    DEPENDPATH += $$PWD/../../build/debug/libs
-#}
-
-#unix|win32:CONFIG(release, debug|release) {
-#    LIBS += \
-#        -L$$PWD/../../build/release/libs/ -lVariantConverter \
-#        -L$$PWD/../../build/release/libs/ -lfilesearchloader \
-#        -L$$PWD/../../build/release/libs/ -lxmlbuilder \
-#        -L$$PWD/../../build/release/libs/ -lstringxmlbuilder \
-#        -L$$PWD/../../build/release/libs/ -lfilesearchloader \
-#        -L$$PWD/../../build/release/libs/ -lprocessxmlbuilder \
-#        -L$$PWD/../../build/release/libs/ -lprocessxmllistgenerator
-
-#    INCLUDEPATH += $$PWD/../../build/release/libs
-#    DEPENDPATH += $$PWD/../../build/release/libs
-#}

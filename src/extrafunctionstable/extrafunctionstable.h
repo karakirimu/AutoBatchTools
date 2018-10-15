@@ -5,7 +5,7 @@
 #include <QPluginLoader>
 #include <../basictable/basictable.h>
 #include <../extrafunctionsxmlbuilder/extrafunctionsxmlbuilder.h>
-#include "../plugins/ExtraPluginInterface/extraplugininterface.h"
+#include <../plugins/ExtraPluginInterface/extraplugininterface.h>
 
 class EXTRAFUNCTIONSTABLESHARED_EXPORT ExtraFunctionsTable : public BasicTable
 {
