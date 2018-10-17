@@ -18,7 +18,8 @@ void AddCommand::undo()
     delete m_added;
     m_cache->removeLast();
 
-    setText(QString("Add item at %1").arg(m_targetindex));
+    setText(QString("Add item at %1 ").arg(m_targetindex) \
+            + QString("^(%1)").arg(m_targetindex));
 }
 
 void AddCommand::redo()
@@ -26,5 +27,6 @@ void AddCommand::redo()
     m_added = new QList<QStringList>(m_addcopy);
     m_cache->append(m_added);
 
-    setText(QString("Add item at %1").arg(m_targetindex));
+    setText(QString("Add item at %1 ").arg(m_targetindex) \
+            + QString("^(%1)").arg(m_targetindex));
 }

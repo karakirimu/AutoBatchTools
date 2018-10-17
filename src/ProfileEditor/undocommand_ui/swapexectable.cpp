@@ -38,17 +38,17 @@ void SwapExecTable::undo()
     case 1:
         //UP
         setText(QObject::tr("Up exec arg '%1' ").arg(temp.at(1)) \
-                + QString("^(%1)").arg(m_targetindex));
+                + QString("^(%1,%2)").arg(m_indexbefore).arg(m_indexafter));
         break;
     case -1:
         //DOWN
         setText(QObject::tr("Down exec arg '%1' ").arg(temp.at(1)) \
-                + QString("^(%1)").arg(m_targetindex));
+                + QString("^(%1,%2)").arg(m_indexbefore).arg(m_indexafter));
         break;
     default:
         //SWAP
         setText(QObject::tr("Swap exec arg '%1' at %2 to %3 ").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter) \
-                + QString("^(%1)").arg(m_targetindex));
+                + QString("^(%1,%2)").arg(m_indexbefore).arg(m_indexafter));
         break;
     }
 }
@@ -67,18 +67,18 @@ void SwapExecTable::redo()
     switch (condition) {
     case 1:
         //UP
-        setText(QObject::tr("Up exec arg '%1'").arg(temp.at(1)) \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Up exec arg '%1' ").arg(temp.at(1)) \
+                + QString("^(%1,%2)").arg(m_indexbefore).arg(m_indexafter));
         break;
     case -1:
         //DOWN
-        setText(QObject::tr("Down exec arg '%1'").arg(temp.at(1)) \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Down exec arg '%1' ").arg(temp.at(1)) \
+                + QString("^(%1,%2)").arg(m_indexbefore).arg(m_indexafter));
         break;
     default:
         //SWAP
-        setText(QObject::tr("Swap exec arg '%1' at %2 to %3").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter) \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Swap exec arg '%1' at %2 to %3 ").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter) \
+                + QString("^(%1,%2)").arg(m_indexbefore).arg(m_indexafter));
         break;
     }
 }

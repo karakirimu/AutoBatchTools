@@ -18,7 +18,8 @@ void DeleteCommand::undo()
     m_deleted = new QList<QStringList>(m_delcopy);
     m_cache->insert(m_targetindex, m_deleted);
 
-    setText(QString("Remove item at %1").arg(m_targetindex));
+    setText(QString("Remove item at %1 ").arg(m_targetindex) \
+            + QString("^(%1)").arg(m_targetindex));
 }
 
 void DeleteCommand::redo()
@@ -28,5 +29,6 @@ void DeleteCommand::redo()
     delete m_deleted;
     m_cache->removeAt(m_targetindex);
 
-    setText(QString("Remove item at %1").arg(m_targetindex));
+    setText(QString("Remove item at %1 ").arg(m_targetindex) \
+            + QString("^(%1)").arg(m_targetindex));
 }

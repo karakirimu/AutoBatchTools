@@ -19,7 +19,8 @@ void InsertCommand::undo()
     delete m_inserted;
     m_cache->removeAt(m_targetindex);
 
-    setText(QString("Insert item at %1").arg(m_targetindex));
+    setText(QString("Insert item at %1 ").arg(m_targetindex) \
+            + QString("^(%1)").arg(m_targetindex));
 }
 
 void InsertCommand::redo()
@@ -27,5 +28,6 @@ void InsertCommand::redo()
     m_inserted = new QList<QStringList>(m_inscopy);
     m_cache->insert(m_targetindex, m_inserted);
 
-    setText(QString("Insert item at %1").arg(m_targetindex));
+    setText(QString("Insert item at %1 ").arg(m_targetindex) \
+            + QString("^(%1)").arg(m_targetindex));
 }
