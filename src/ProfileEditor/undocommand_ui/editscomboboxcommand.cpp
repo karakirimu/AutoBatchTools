@@ -13,22 +13,6 @@ EditScomboBoxCommand::EditScomboBoxCommand(const int &targetindex
 
     m_newindex = newsearchindex;
 
-//    if(m_targetindex > 1){
-//        ProcessXmlListGenerator x;
-//        x.getListStructure(cache->at(m_targetindex), &posinfo);
-//        m_indexpos = posinfo.value(ProcessXmlListGenerator::SEARCH) + 1;
-//    }else {
-//        //info "fsname" position
-//        m_indexpos = 7;
-//    }
-
-//    m_oldstring = m_cache->at(m_targetindex)
-//                ->at(m_indexpos)
-//                .at(1);
-//    m_oldindex = static_cast<QString>((m_cache->at(m_targetindex)
-//                ->at(m_indexpos)
-//                .at(3))).toInt();
-
     if(m_targetindex > 1){
         // sname
         m_oldstring = pxlg.fetch(S_NAME, ATTR_NONE, m_cache->at(m_targetindex));
@@ -42,13 +26,6 @@ EditScomboBoxCommand::EditScomboBoxCommand(const int &targetindex
 
 void EditScomboBoxCommand::undo()
 {
-//    QStringList list;
-//    list = m_cache->at(m_targetindex)->at(m_indexpos);
-//    list.replace(1, m_oldstring);
-//    list.replace(3, QString::number(m_oldindex));
-//    m_cache->at(m_targetindex)->replace(m_indexpos, list);
-
-
     if(m_targetindex > 1){
         pxlg.replaceElementList(S_NAME, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
         pxlg.replaceElementList(S_NAME, ATTR_POSNUM, m_targetindex, QString::number(m_oldindex), m_cache);
@@ -66,13 +43,6 @@ void EditScomboBoxCommand::undo()
 
 void EditScomboBoxCommand::redo()
 {
-//    QStringList list;
-//    list = m_cache->at(m_targetindex)->at(m_indexpos);
-//    list.replace(1, m_newstring);
-//    list.replace(3, QString::number(m_newindex));
-//    m_cache->at(m_targetindex)->replace(m_indexpos, list);
-
-
     if(m_targetindex > 1){
         pxlg.replaceElementList(S_NAME, ATTR_NONE, m_targetindex, m_newstring, m_cache);
         pxlg.replaceElementList(S_NAME, ATTR_POSNUM, m_targetindex, QString::number(m_newindex), m_cache);

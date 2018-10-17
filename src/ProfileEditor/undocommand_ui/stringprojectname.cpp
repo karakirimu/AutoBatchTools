@@ -10,21 +10,11 @@ StringProjectName::StringProjectName(const int &targetindex
     m_newstring = newstring;
 
     m_cache = cache;
-
-//    ProcessXmlListGenerator x;
-//    x.getListStructure(cache->at(m_targetindex), &posinfo);
-
-//    m_oldstring = m_cache->at(m_targetindex)->at(1).at(1);
     m_oldstring = pxlg.fetch(I_NAME, ATTR_NONE, m_cache->at(m_targetindex));
 }
 
 void StringProjectName::undo()
 {
-//    if(m_cache->isEmpty()) return;
-
-//    QStringList alist = m_cache->at(m_targetindex)->at(1);
-//    alist.replace(1, m_oldstring);
-//    m_cache->at(m_targetindex)->replace(1, alist);
     pxlg.replaceElementList(I_NAME, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
 
     setText(QObject::tr("Project name changed ") \
@@ -33,9 +23,6 @@ void StringProjectName::undo()
 
 void StringProjectName::redo()
 {
-//    QStringList alist = m_cache->at(m_targetindex)->at(1);
-//    alist.replace(1, m_newstring);
-//    m_cache->at(m_targetindex)->replace(1, alist);
     pxlg.replaceElementList(I_NAME, ATTR_NONE, m_targetindex, m_newstring, m_cache);
 
     setText(QObject::tr("Project name changed ") \

@@ -23,9 +23,8 @@ private:
     int m_targetindex;
     QString m_oldstring;
     QList<QList<QStringList> *> *m_cache;
-//    QHash<int, int> posinfo;
-
     ProcessXmlListGenerator pxlg;
+
 };
 
 #endif // STRINGPROJECTAUTHOR_H

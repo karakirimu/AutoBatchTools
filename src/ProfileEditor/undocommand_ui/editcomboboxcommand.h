@@ -9,7 +9,6 @@ class EditComboBoxCommand : public QUndoCommand
 {
 public:
     EditComboBoxCommand(const int &targetindex
-//                        , const QString oldstring
                         , const QString newstring
                         , QList<QList<QStringList> *> *cache
                         , QUndoCommand *parent = nullptr);
@@ -25,7 +24,6 @@ private:
     int m_targetindex;
     QString m_oldstring;
     QList<QList<QStringList> *> *m_cache;
-//    QHash<int, int> posinfo;
     ProcessXmlListGenerator pxlg;
 
 };

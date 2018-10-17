@@ -11,24 +11,12 @@ StringFileOutput::StringFileOutput(const int &targetindex
 
     m_cache = cache;
 
-//    ProcessXmlListGenerator x;
-//    x.getListStructure(cache->at(m_targetindex), &posinfo);
-
-//    m_oldstring = m_cache->at(m_targetindex)
-//            ->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4)
-//            .at(1);
-
     m_oldstring = pxlg.fetch(S_OUTPUTFILE, ATTR_NONE, m_cache->at(m_targetindex));
 
 }
 
 void StringFileOutput::undo()
 {
-//    if(m_cache->isEmpty()) return;
-
-//    QStringList alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4);
-//    alist.replace(1, m_oldstring);
-//    m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4, alist);
     pxlg.replaceElementList(S_OUTPUTFILE, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
 
     setText(QObject::tr("Search outputfile changed. ") \
@@ -37,9 +25,6 @@ void StringFileOutput::undo()
 
 void StringFileOutput::redo()
 {
-//    QStringList alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4);
-//    alist.replace(1, m_newstring);
-//    m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::SEARCH) + 4, alist);
     pxlg.replaceElementList(S_OUTPUTFILE, ATTR_NONE, m_targetindex, m_newstring, m_cache);
 
     setText(QObject::tr("Search outputfile changed. ") \

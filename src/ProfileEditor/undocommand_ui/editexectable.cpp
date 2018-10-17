@@ -15,13 +15,6 @@ EditExecTable::EditExecTable(const int &targetindex
     m_operation = operation;
     m_cache = cache;
 
-    //init generator
-//    ProcessXmlListGenerator x;
-//    QHash<int, int> posinfo;
-//    x.getListStructure(m_cache->at(m_targetindex), &posinfo);
-
-    //define SKIP
-//    SKIP = posinfo.value(ProcessXmlListGenerator::NORMAL) + 3;
     SKIP = pxlg.fetchCmdFirstPos(ALL_CMDVALUE,ProcessXmlListGenerator::NORMAL, m_cache->at(m_targetindex));
 
     if(m_operation == ProcessXmlListGenerator::TABLE_EDIT
@@ -46,9 +39,6 @@ void EditExecTable::undo()
                 + QString("^(%1)").arg(m_targetindex));
         break;
     case ProcessXmlListGenerator::TABLE_EDIT:
-//        alist = m_cache->at(m_targetindex)->at(m_tableindex + SKIP);
-//        alist.replace(1, m_oldstr);
-//        m_cache->at(m_targetindex)->replace(m_tableindex + SKIP, alist);
 
         pxlg.replaceElementList(m_tableindex, m_targetindex, m_oldstr, SKIP, m_cache);
 
@@ -98,10 +88,6 @@ void EditExecTable::redo()
                 + QString("^(%1)").arg(m_targetindex));
         break;
     case ProcessXmlListGenerator::TABLE_EDIT:
-//        alist = m_cache->at(m_targetindex)->at(m_tableindex + SKIP);
-//        alist.replace(1, m_newstr);
-//        m_cache->at(m_targetindex)->replace(m_tableindex + SKIP, alist);
-
         pxlg.replaceElementList(m_tableindex, m_targetindex, m_newstr, SKIP, m_cache);
 
         setText(QObject::tr("Edit exec arg \'%1\' at %2 ").arg(m_newstr).arg(QString::number(m_tableindex)) \

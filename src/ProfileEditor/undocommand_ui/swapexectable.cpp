@@ -12,13 +12,6 @@ SwapExecTable::SwapExecTable(const int &targetindex
     m_indexafter = tableafter;
     m_cache = cache;
 
-    //init generator
-//    ProcessXmlListGenerator x;
-//    QHash<int, int> posinfo;
-//    x.getListStructure(m_cache->at(m_targetindex), &posinfo);
-
-    //define SKIP
-//    SKIP = posinfo.value(ProcessXmlListGenerator::NORMAL) + 3;
     SKIP = pxlg.fetchCmdFirstPos(ALL_CMDVALUE,ProcessXmlListGenerator::NORMAL, m_cache->at(m_targetindex));
 
 }

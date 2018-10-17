@@ -26,6 +26,8 @@ void StringProjectVersion::undo()
 //    QStringList alist = m_cache->at(m_targetindex)->at(2);
 //    alist.replace(1, m_oldstring);
 //    m_cache->at(m_targetindex)->replace(2, alist);
+    pxlg.replaceElementList(I_VERSION, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
+
     setText(QObject::tr("Version changed ") \
             + QString("^(%1)").arg(m_targetindex));
 }
@@ -35,6 +37,8 @@ void StringProjectVersion::redo()
 //    QStringList alist = m_cache->at(m_targetindex)->at(2);
 //    alist.replace(1, m_newstring);
 //    m_cache->at(m_targetindex)->replace(2, alist);
+    pxlg.replaceElementList(I_VERSION, ATTR_NONE, m_targetindex, m_newstring, m_cache);
+
     setText(QObject::tr("Version changed ") \
             + QString("^(%1)").arg(m_targetindex));
 }

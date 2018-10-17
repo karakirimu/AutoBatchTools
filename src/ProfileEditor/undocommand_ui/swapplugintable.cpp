@@ -12,12 +12,6 @@ SwapPluginTable::SwapPluginTable(const int &targetindex
     m_indexafter = tableafter;
     m_cache = cache;
 
-    //init generator
-//    ProcessXmlListGenerator x;
-//    QHash<int, int> posinfo;
-//    x.getListStructure(m_cache->at(m_targetindex), &posinfo);
-
-//    SKIP = posinfo.value(ProcessXmlListGenerator::EXTRAFUNC) + 4;
     SKIP = pxlg.fetchCmdFirstPos(ALL_CMDVALUE,ProcessXmlListGenerator::EXTRAFUNC, m_cache->at(m_targetindex));
 
 }

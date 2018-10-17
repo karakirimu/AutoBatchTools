@@ -4,7 +4,7 @@ HEADERS += \
     $$PWD/edittabcommand.h \
 #    $$PWD/editcheckcommand.h \
 #    $$PWD/editvaluecommand.h \
-    $$PWD/edittextcommand.h \
+#    $$PWD/edittextcommand.h \
     $$PWD/editscomboboxcommand.h \
 #    $$PWD/editfcomboboxcommand.h \
     $$PWD/editcomboboxcommand.h \
@@ -44,7 +44,7 @@ SOURCES += \
     $$PWD/edittabcommand.cpp \
 #    $$PWD/editcheckcommand.cpp \
 #    $$PWD/editvaluecommand.cpp \
-    $$PWD/edittextcommand.cpp \
+#    $$PWD/edittextcommand.cpp \
     $$PWD/editscomboboxcommand.cpp \
 #    $$PWD/editfcomboboxcommand.cpp \
     $$PWD/editcomboboxcommand.cpp \

@@ -19,16 +19,11 @@ public:
     void redo() override;
 
 private:
-//    int getxmlpos();
-
     int m_targetindex;
     QString m_oldcheck;
     QString m_newcheck;
     QList<QList<QStringList> *> *m_cache;
-//    QHash<int, int> xmlpos;
     ProcessXmlListGenerator pxlg;
-
-//    const static int SUBPOS = 3;
 };
 
 #endif // CHECKONLYSCHEDULERSEARCH_H

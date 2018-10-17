@@ -10,24 +10,11 @@ EditTimeout::EditTimeout(const int &targetindex
     m_newvalue = newvalue;
     m_cache = cache;
 
-//    if(m_targetindex > 1){
-//        //init generator
-//        ProcessXmlListGenerator x;
-//        x.getListStructure(m_cache->at(m_targetindex), &posinfo);
-//    }
-
-    //get old value
-//    m_oldvalue = static_cast<QString>(m_cache->at(m_targetindex)
-//                ->at(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1)
-//                .at(3)).toInt();
     m_oldvalue = static_cast<QString>(pxlg.fetch(E_TIMEOUT, ATTR_TIMEOUTMS, m_cache->at(m_targetindex))).toInt();
 }
 
 void EditTimeout::undo()
 {
-//    QStringList alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1);
-//    alist.replace(3, QString::number(m_oldvalue));
-//    m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1, alist);
     pxlg.replaceElementList(E_TIMEOUT, ATTR_TIMEOUTMS, m_targetindex, QString::number(m_oldvalue), m_cache);
 
     setText(QObject::tr("Timeout value to %1").arg(m_oldvalue) \
@@ -36,11 +23,6 @@ void EditTimeout::undo()
 
 void EditTimeout::redo()
 {
-//    QStringList alist;
-//    alist = m_cache->at(m_targetindex)->at(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1);
-//    alist.replace(3, QString::number(m_newvalue));
-//    m_cache->at(m_targetindex)->replace(posinfo.value(ProcessXmlListGenerator::NORMAL) + 1, alist);
-
     pxlg.replaceElementList(E_TIMEOUT, ATTR_TIMEOUTMS, m_targetindex, QString::number(m_newvalue), m_cache);
 
     setText(QObject::tr("Timeout value to %1 ").arg(m_newvalue) \
