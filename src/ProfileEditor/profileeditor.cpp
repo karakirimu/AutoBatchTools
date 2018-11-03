@@ -59,7 +59,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 //    qDebug() << "profileeditor" << geometry().center();
 
     //update tree position
-    connect(editop, &EditOperator::ui_selectindexUpdate, this, &ProfileEditor::setTreerowpos_select);
+//    connect(editop, &EditOperator::ui_selectindexUpdate, this, &ProfileEditor::setTreerowpos_select);
     connect(editop, &EditOperator::ui_funcindexUpdate, this, &ProfileEditor::setTreerowpos_update);
     //provide function object
 
@@ -153,7 +153,9 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //end-----------------------------------------------------------------------------------------------
 
-    connect(editop, &EditOperator::ui_selectindexUpdate, this, &ProfileEditor::itemChangedAction);
+//    connect(editop, &EditOperator::ui_selectindexUpdate, this, &ProfileEditor::itemChangedAction);
+    connect(editop, &EditOperator::ui_funcindexUpdate, this, &ProfileEditor::itemChangedAction);
+
 //    connect(ui->graphicsView, &GraphicArea::selectChangedAction, this, &ProfileEditor::itemChangedAction);
 
     //Title * flag
@@ -175,8 +177,8 @@ ProfileEditor::ProfileEditor(QStringList cuiargs, QWidget *parent)
 
     if(cuiargs.count() == 2 && lfile.contains("apro")){
         editop->openAction(lfile);
+        postResetUi();
     }
-    postResetUi();
 }
 
 ProfileEditor::~ProfileEditor()
@@ -257,6 +259,17 @@ void ProfileEditor::undoAction()
 //        ui->variantTableWidget->reloadAction();
 //        ui->flowTableWidget->reloadAction();
 
+        // update ui element
+        QString text = editop->getUndostack()->redoText();
+
+        int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9](,|)(|[0-9]|[A-Z]+))\\)+$"));
+        QString rep = text.mid(0,lastindex);
+
+        // +3 means string of " ^(", -1 means string of ")";
+        QString updop = text.mid(lastindex + 3, text.length() - lastindex - 4);
+
+        ui->runTreeWidget->updateIndex(updop);
+        ui->flowTableWidget->updateIndex(updop);
     }
 }
 
@@ -268,6 +281,19 @@ void ProfileEditor::redoAction()
 //        ui->runTreeWidget->reloadAction();
 //        ui->variantTableWidget->reloadAction();
 //        ui->flowTableWidget->reloadAction();
+
+        // update ui element
+        QString text = editop->getUndostack()->undoText();
+
+        int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9](,|)(|[0-9]|[A-Z]+))\\)+$"));
+        QString rep = text.mid(0,lastindex);
+
+        // +3 means string of " ^(", -1 means string of ")";
+        QString updop = text.mid(lastindex + 3, text.length() - lastindex - 4);
+
+        ui->runTreeWidget->updateIndex(updop);
+        ui->flowTableWidget->updateIndex(updop);
+
     }
 }
 
@@ -275,7 +301,7 @@ void ProfileEditor::addAction()
 {
     editop->addAction();
 
-    emit editop->ui_selectindexUpdate(editop->getCacheSize() - 1, EditOperator::MAINEDITOR);
+//    emit editop->ui_selectindexUpdate(editop->getCacheSize() - 1, EditOperator::MAINEDITOR);
     emit editop->ui_funcindexUpdate(editop->getCacheSize() - 1, -1, EditOperator::ADD, EditOperator::MAINEDITOR);
 
 }
@@ -287,7 +313,7 @@ void ProfileEditor::deleteAction()
         editop->deleteAction(rowpos);
         //emit editop->ui_selectindexUpdate(, EditOperator::MAINEDITOR);
 
-        emit editop->ui_selectindexUpdate(rowpos -1, EditOperator::MAINEDITOR);
+//        emit editop->ui_selectindexUpdate(rowpos -1, EditOperator::MAINEDITOR);
         emit editop->ui_funcindexUpdate(rowpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
 
         rowpos--;
@@ -298,7 +324,7 @@ void ProfileEditor::cutAction()
 {
     if(rowpos > 1){
         editop->cutAction(rowpos);
-        emit editop->ui_selectindexUpdate(rowpos -1, EditOperator::MAINEDITOR);
+//        emit editop->ui_selectindexUpdate(rowpos -1, EditOperator::MAINEDITOR);
         emit editop->ui_funcindexUpdate(rowpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
 
         rowpos--;
@@ -317,7 +343,7 @@ void ProfileEditor::pasteAction()
 {
     if(rowpos > 1){
         editop->pasteAction(rowpos);
-        emit editop->ui_selectindexUpdate(rowpos, EditOperator::MAINEDITOR);
+//        emit editop->ui_selectindexUpdate(rowpos, EditOperator::MAINEDITOR);
         emit editop->ui_funcindexUpdate(rowpos, -1, EditOperator::INSERT, EditOperator::MAINEDITOR);
     }
 }
@@ -327,7 +353,7 @@ void ProfileEditor::upAction()
 //    binder->upItem(treerowpos);
     if(rowpos > 2){
         editop->swapAction(rowpos, rowpos - 1);
-        emit editop->ui_selectindexUpdate(rowpos - 1, EditOperator::MAINEDITOR);
+//        emit editop->ui_selectindexUpdate(rowpos - 1, EditOperator::MAINEDITOR);
         emit editop->ui_funcindexUpdate(rowpos - 1, rowpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
     }
 }
@@ -337,7 +363,7 @@ void ProfileEditor::downAction()
 //    binder->downItem(treerowpos);
     if(rowpos > 0){
         editop->swapAction(rowpos, rowpos + 1);
-        emit editop->ui_selectindexUpdate(rowpos + 1, EditOperator::MAINEDITOR);
+//        emit editop->ui_selectindexUpdate(rowpos + 1, EditOperator::MAINEDITOR);
         emit editop->ui_funcindexUpdate(rowpos + 1, rowpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
     }
 }
@@ -422,7 +448,6 @@ void ProfileEditor::onTitleChanged(QString newload)
 
     //update filepath
     setLoadfile(newload);
-
 }
 
 void ProfileEditor::onFileEdited(bool edited)
@@ -441,10 +466,19 @@ void ProfileEditor::onFileEdited(bool edited)
     }
 }
 
-void ProfileEditor::itemChangedAction(int index)
+void ProfileEditor::itemChangedAction(int after, int before, int function, int sendfrom)
 {
-    qDebug() << "itemChangedAction::treerowpos" << index;
-    emit rowPosChanged(tr("Process selected: No. ") + QString::number((index > 0)? index : 1));
+    Q_UNUSED(before); Q_UNUSED(function); Q_UNUSED(sendfrom);
+
+    qDebug() << "itemChangedAction::treerowpos" << after;
+    emit rowPosChanged(tr("Process selected: No. ") + QString::number((after > 0)? after : 1));
+
+    //reset undo command
+//    editop->getUndostack()->clear();
+//    ui->actionUndo->setText(tr("Undo"));
+//    ui->actionRedo->setText(tr("Redo"));
+    qDebug() << "IsClean : " << editop->getUndostack()->isClean();
+//    editop->getUndostack()->clear();
 }
 
 void ProfileEditor::about()
@@ -568,12 +602,16 @@ void ProfileEditor::setTreerowpos_update(int after, int before, int function, in
 
 void ProfileEditor::onUndoTextChanged(QString text)
 {
-    ui->actionUndo->setText(tr("Undo %1").arg(text));
+    //remove operation
+    QString rep = text.remove(QRegularExpression(".\\^\\(([0-9](,|)(|[0-9]|[A-Z]+))\\)+$"));
+    ui->actionUndo->setText(tr("Undo %1").arg(rep));
 }
 
 void ProfileEditor::onRedoTextChanged(QString text)
 {
-    ui->actionRedo->setText(tr("Redo %1").arg(text));
+    //remove operation
+    QString rep = text.remove(QRegularExpression(".\\^\\(([0-9](,|)(|[0-9]|[A-Z]+))\\)+$"));
+    ui->actionRedo->setText(tr("Redo %1").arg(rep));
 }
 
 void ProfileEditor::closeEvent(QCloseEvent *event)
@@ -606,6 +644,7 @@ void ProfileEditor::closeEvent(QCloseEvent *event)
     case QMessageBox::Cancel:
       // キャンセルして作業に戻る
       event->ignore();
+        break;
 
     default:
       break;
@@ -658,6 +697,7 @@ void ProfileEditor::postResetUi()
 
     //reset tree row position
     rowpos = 0;
+
 }
 
 void ProfileEditor::setRunButtonState(bool run, bool pause, bool stop)

@@ -2,6 +2,7 @@
 #define DELETECOMMAND_H
 
 #include <QUndoCommand>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class DeleteCommand : public QUndoCommand
 {

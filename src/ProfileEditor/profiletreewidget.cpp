@@ -32,13 +32,17 @@ ProfileTreeWidget::~ProfileTreeWidget()
 
 int ProfileTreeWidget::fixedCurrentRow()
 {
-    int current = currentRow();
-    return (current > 0)? current + 1 : 0;
+    return uiIndexToData(currentRow());
 }
 
-int ProfileTreeWidget::fixedRowFromId(int id)
+int ProfileTreeWidget::dataToUiIndex(int id)
 {
     return (id > 1)? id - 1 : 0;
+}
+
+int ProfileTreeWidget::uiIndexToData(int id)
+{
+    return (id > 0)? id + 1 : 0;
 }
 
 void ProfileTreeWidget::onCustomContextMenu(const QPoint &point)
@@ -61,7 +65,7 @@ void ProfileTreeWidget::onItemStatusChanged(int after, int before, int function,
         insertTree(after);
         break;
     case EditOperator::SWAP:
-        swapTree(fixedRowFromId(before), fixedRowFromId(after));
+        swapTree(dataToUiIndex(before), dataToUiIndex(after));
         break;
     default:
         break;
@@ -162,7 +166,7 @@ void ProfileTreeWidget::addAction()
     int count = editop->getCacheSize() - 1;
     count = (count >= 0) ? count : 0;
     addTree(count);
-    emit editop->ui_selectindexUpdate(count, EditOperator::TREE);
+//    emit editop->ui_selectindexUpdate(count, EditOperator::TREE);
     emit editop->ui_funcindexUpdate(count, -1, EditOperator::ADD, EditOperator::TREE);
 
 }
@@ -174,7 +178,7 @@ void ProfileTreeWidget::deleteAction()
     if(cur > 1){
         editop->deleteAction(cur);
         deleteTree(cur);
-        emit editop->ui_selectindexUpdate(cur, EditOperator::TREE);
+//        emit editop->ui_selectindexUpdate(cur, EditOperator::TREE);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::TREE);
 
     }
@@ -186,7 +190,7 @@ void ProfileTreeWidget::cutAction()
     if(cur > 1){
         editop->cutAction(cur);
         deleteTree(cur);
-        emit editop->ui_selectindexUpdate(cur, EditOperator::TREE);
+//        emit editop->ui_selectindexUpdate(cur, EditOperator::TREE);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::TREE);
     }
 }
@@ -208,7 +212,7 @@ void ProfileTreeWidget::pasteAction()
         cur++;
         editop->pasteAction(cur);
         insertTree(cur);
-        emit editop->ui_selectindexUpdate(cur, EditOperator::TREE);
+//        emit editop->ui_selectindexUpdate(cur, EditOperator::TREE);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::INSERT, EditOperator::TREE);
 
     }
@@ -222,7 +226,7 @@ void ProfileTreeWidget::upAction()
     if(uicur > 1){
         editop->swapAction(cur, cur - 1);
         swapTree(uicur, uicur - 1);
-        emit editop->ui_selectindexUpdate(cur - 1, EditOperator::TREE);
+//        emit editop->ui_selectindexUpdate(cur - 1, EditOperator::TREE);
         emit editop->ui_funcindexUpdate(cur - 1, cur, EditOperator::SWAP, EditOperator::TREE);
 
     }
@@ -236,7 +240,7 @@ void ProfileTreeWidget::downAction()
     if(uicur < topLevelItemCount() - 1){
         editop->swapAction(cur, cur + 1);
         swapTree(uicur, uicur + 1);
-        emit editop->ui_selectindexUpdate(cur + 1, EditOperator::TREE);
+//        emit editop->ui_selectindexUpdate(cur + 1, EditOperator::TREE);
         emit editop->ui_funcindexUpdate(cur + 1, cur, EditOperator::SWAP, EditOperator::TREE);
 
     }
@@ -265,12 +269,12 @@ void ProfileTreeWidget::reloadAction()
 void ProfileTreeWidget::addTree(int id)
 {
      setTree(id);
-     this->setCurrentItem(this->topLevelItem(fixedRowFromId(id)));
+     this->setCurrentItem(this->topLevelItem(dataToUiIndex(id)));
 }
 
 void ProfileTreeWidget::deleteTree(int id)
 {
-    int fid = fixedRowFromId(id);
+    int fid = dataToUiIndex(id);
     if(fid > 0){
         this->takeTopLevelItem(fid);
     }
@@ -281,7 +285,7 @@ void ProfileTreeWidget::insertTree(int id)
     setTree(id);
     int laindex = this->topLevelItemCount() - 1;
     QTreeWidgetItem *item = this->takeTopLevelItem(laindex);
-    this->insertTopLevelItem(fixedRowFromId(id), item);
+    this->insertTopLevelItem(dataToUiIndex(id), item);
 
     //reselect
 //    emit editop->ui_selectindexUpdate(id - 1, EditOperator::TREE);
@@ -336,7 +340,7 @@ void ProfileTreeWidget::replaceTree(int id)
     //todo:
     //settree xml based id, but this treewidget depends on fixed id.
     setTree(id);
-    int fid = fixedRowFromId(id);
+    int fid = dataToUiIndex(id);
     int laindex = this->topLevelItemCount() - 1;
     QTreeWidgetItem *item = this->takeTopLevelItem(laindex);
     delete this->takeTopLevelItem(fid);
@@ -346,7 +350,8 @@ void ProfileTreeWidget::replaceTree(int id)
 
 void ProfileTreeWidget::rowSelected()
 {
-    emit editop->ui_selectindexUpdate(fixedCurrentRow(), EditOperator::TREE);
+//    emit editop->ui_selectindexUpdate(fixedCurrentRow(), EditOperator::TREE);
+    emit editop->ui_funcindexUpdate(fixedCurrentRow(), -1, EditOperator::SELECT, EditOperator::TREE);
 //    emit indexChanged(currentRow());
 }
 
@@ -568,23 +573,23 @@ int ProfileTreeWidget::currentRow()
   return index;
 }
 
-int ProfileTreeWidget::rowFromItem(QTreeWidgetItem *item)
-{
-//    QTreeWidgetItem *first;
+//int ProfileTreeWidget::rowFromItem(QTreeWidgetItem *item)
+//{
+////    QTreeWidgetItem *first;
 
-    int index = -1;
-    int count = this->topLevelItemCount();
+//    int index = -1;
+//    int count = this->topLevelItemCount();
 
-    for(int i = 0; i < count; i++){
-//        first = this->topLevelItem(i);
-        if(this->topLevelItem(i) == item){
-            index = i;
-            break;
-        }
-    }
+//    for(int i = 0; i < count; i++){
+////        first = this->topLevelItem(i);
+//        if(this->topLevelItem(i) == item){
+//            index = i;
+//            break;
+//        }
+//    }
 
-    return index;
-}
+//    return index;
+//}
 
 //void ProfileTreeWidget::setSharedFunction(PESharedFunction *func)
 //{
@@ -612,6 +617,37 @@ void ProfileTreeWidget::setEditOperator(EditOperator *op)
 
     //set right click action
     popupAction();
+}
+
+//通常、Treeの引数はデータからの入力です。順番はInfo、LocalVariant,Process(Execなど)...となっています。
+//つまり、Processを追加する際の最初の要素は2となります。しかしこのupdateIndexはUndo,Redoによるユーザーの入力を
+//反映させた要素を返すため、引数の入力は0以外は通常のデータ入力より1小さい数字が入力されます。
+//Normally, Tree's argument is input from the data. The order is Info, LocalVariant, Process (Exec etc) ... and so on.
+//In other words, the first element when adding Process is 2.
+//However, since this updateIndex returns an element reflecting user's input by Undo, Redo,
+//a number smaller than normal data input is entered except for 0 for argument input.
+void ProfileTreeWidget::updateIndex(QString operation)
+{
+    QStringList sep = operation.split(",");
+
+    if(sep.count() < 2){
+        //edit
+        replaceTree(static_cast<QString>(sep.at(0)).toInt());
+    }else if(sep.at(1) == UNDOREDO_ADD){
+        //add
+        addTree(uiIndexToData(static_cast<QString>(sep.at(0)).toInt()));
+    }else if(sep.at(1) == UNDOREDO_DELETE){
+        //del
+        deleteTree(uiIndexToData(static_cast<QString>(sep.at(0)).toInt()));
+    }else if(sep.at(1) == UNDOREDO_INSERT){
+        //ins
+        insertTree(uiIndexToData(static_cast<QString>(sep.at(0)).toInt()));
+    }else{
+        //swap
+        int first = static_cast<QString>(sep.at(0)).toInt();
+        int second = static_cast<QString>(sep.at(1)).toInt();
+        swapTree(uiIndexToData(first), uiIndexToData(second));
+    }
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS

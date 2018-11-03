@@ -114,14 +114,14 @@ void EditOperator::editTabAction(int id, int newindex)
     emit editUpdate(id);
 }
 
-void EditOperator::editTextAction(int id, QString mnew, QString obj)
-{
-    EditTextCommand *com = new EditTextCommand(id, mnew, obj, cache);
+//void EditOperator::editTextAction(int id, QString mnew, QString obj)
+//{
+//    EditTextCommand *com = new EditTextCommand(id, mnew, obj, cache);
 
-    undostack->push(com);
-//    emit edited(isEdited());
-    emit editUpdate(id);
-}
+//    undostack->push(com);
+////    emit edited(isEdited());
+//    emit editUpdate(id);
+//}
 
 void EditOperator::comboboxLocalValAction(int id, QString mnew)
 {
@@ -532,6 +532,10 @@ void EditOperator::swapAction(int before, int after)
 
 void EditOperator::newAction()
 {
+#ifdef QT_DEBUG
+    qDebug() << endl << "void EditOperator::newAction()";
+#endif
+
     reset();
 #ifdef Q_OS_WIN
     autosavefile = ".\\.~$";
@@ -714,6 +718,7 @@ void EditOperator::loadcache(int amount)
 
 //    loadedxmlid = i - 1;
 #ifdef QT_DEBUG
+    qDebug() << endl << "void EditOperator::loadcache(int amount)";
     QTime time;
     time.start();
 #endif

@@ -95,10 +95,9 @@ public:
 
     int getCurrentCommandType();
 
-
     //detect called item
     enum{TREE, GRAPHICAREA, MAINEDITOR};
-    enum{ADD,DELETE,INSERT,SWAP
+    enum{ADD,DELETE,INSERT,SWAP,SELECT
          /*,EDITCHECK,EDITFCOMBO,EDITSCOMBO,EDITCOMBO,EDITFULL
          ,EDITTEXT,EDITVALUE,EDITTAB
          ,EDITTABLE,EDITEXTABLE,SWAPTABLE*/};
@@ -109,14 +108,17 @@ public:
 signals:
     void loadfileChanged(QString);
 //    void edited(bool);
+
+    // reflect user 'edit' operation (argument is edit index)
     void editUpdate(int);
-    void ui_selectindexUpdate(int, int);
-    void ui_funcindexUpdate(int after, int before, int function, int semder);
+
+//    void ui_selectindexUpdate(int, int);
+    void ui_funcindexUpdate(int after, int before, int function, int sender);
 //    void ui_scrollReachBottom();
 
 public slots:
     //selected index signal
-    void selectChange(int index, int from){emit ui_selectindexUpdate(index, from);}
+//    void selectChange(int index, int from){emit ui_selectindexUpdate(index, from);}
 
     //operate functions
     void addAction();
@@ -125,7 +127,7 @@ public slots:
 
 //    void editAction(int id, int innerid, int editcode, QList<QStringList> xmlstruct);
     void editTabAction(int id, int newindex);
-    void editTextAction(int id, QString mnew, QString obj);
+//    void editTextAction(int id, QString mnew, QString obj);
 //    void editValueAction(int id, int newval, QString obj);
 //    void editCheckAction(int id, bool newcheck, QString obj);
 

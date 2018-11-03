@@ -21,16 +21,25 @@ public:
     ~InnerStackedWidget();
 
     void setEditOperator(EditOperator *op);
-    void moveStacked(int index, int sendfrom);
+    void moveStacked(int after, int before, int function, int sendfrom);
 public slots:
-    void setInfoDataList(int index, int sendfrom);
+    void setInfoDataList(int after, int before, int function, int sendfrom);
 //    void updateInfoDataList(int index);
 //    void clearInfoDataListForm();
 //    void getInfoDataList(QStringList *list);
 
 private slots:
-    void editTextAction(QString text);
-    void editPlainTextAction();
+//    void editTextAction(QString text);
+
+//    void editFileOutputAction(QString text);
+    void editAuthorAction(QString text);
+    void editProjectNameAction(QString text);
+    void editVerAction(QString text);
+
+    void editDescriptionAction();
+
+    void editInitialSearch(QString text);
+
     void editCheckAction(bool check);
     void editValueAction(int value);
 

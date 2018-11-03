@@ -12,7 +12,10 @@ ProcessXmlBuilder::~ProcessXmlBuilder()
 
 void ProcessXmlBuilder::setLoadPath(QString filepath)
 {
+#ifdef QT_DEBUG
     qDebug() << "ProcessXmlBuilder: setLoadPath: " << filepath;
+#endif
+
     if(filepath != ""){
         //set new file
         setFileName(filepath);

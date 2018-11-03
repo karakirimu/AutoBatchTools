@@ -275,6 +275,11 @@ static const QString ATTR_TIMEOUTMS =             "dur";
 // local
 static const QString ATTR_LOCALVALUE =            "lval";
 
+// undo redo operation command
+static const QString UNDOREDO_ADD =               "ADD";
+static const QString UNDOREDO_DELETE =            "DEL";
+static const QString UNDOREDO_INSERT =            "INS";
+
 
 class PROCESSXMLLISTGENERATORSHARED_EXPORT ProcessXmlListGenerator : public QObject
 {

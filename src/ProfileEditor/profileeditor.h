@@ -56,7 +56,7 @@ private slots:
 
     void onTitleChanged(QString newload);
     void onFileEdited(bool edited);
-    void itemChangedAction(int index);
+    void itemChangedAction(int after, int before, int function, int sendfrom);
 
     //tree acesss
     void setTreerowpos_select(int value, int from);
@@ -97,9 +97,15 @@ private:
     enum{YES,NO,CANCEL,NOTNEED};
 
     Ui::ProfileEditor *ui;
+
+    //settindopen and save
     SettingDialog *settingdialog;
     QFileDialog *fdialog;
+
+    //current row position
     int rowpos;
+
+    //filename save
     QString loadfile;
     QString genfile;
     bool lastedited = false;

@@ -12,7 +12,6 @@ InsertCommand::InsertCommand(const int &targetindex
     m_cache = cache;
 }
 
-//WARNING : UNDELETE
 void InsertCommand::undo()
 {
     if(m_cache->isEmpty()) return;
@@ -20,7 +19,7 @@ void InsertCommand::undo()
     m_cache->removeAt(m_targetindex);
 
     setText(QString("Insert item at %1 ").arg(m_targetindex) \
-            + QString("^(%1)").arg(m_targetindex));
+            + QString("^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_DELETE));
 }
 
 void InsertCommand::redo()
@@ -29,5 +28,5 @@ void InsertCommand::redo()
     m_cache->insert(m_targetindex, m_inserted);
 
     setText(QString("Insert item at %1 ").arg(m_targetindex) \
-            + QString("^(%1)").arg(m_targetindex));
+            + QString("^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_INSERT));
 }

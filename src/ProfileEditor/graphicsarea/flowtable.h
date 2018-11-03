@@ -16,6 +16,8 @@ public:
 
     void reloadAction();
 
+    void updateIndex(QString operation);
+
 private slots:
     bool eventFilter(QObject *obj, QEvent *event);
 
@@ -44,7 +46,10 @@ private slots:
 private:
 //    void mousePressEvent(QMouseEvent *event);
     int fixedCurrentRow();
-    int fixedRowFromId(int id);
+    int dataToUiIndex(int id);
+
+    //from ui index to xml data
+    int uiIndexToData(int id);
 
     void setPopupActionTop();
     void setPopupActionDefault();
@@ -67,10 +72,10 @@ private:
     QAction *m_add;
     QAction *m_delete;
     QAction *m_cut;
-    QAction *m_copy;
+//    QAction *m_copy;
     QAction *m_paste;
-    QAction *m_up;
-    QAction *m_down;
+//    QAction *m_up;
+//    QAction *m_down;
     QAction *m_ref;
 
     EditOperator *editop;

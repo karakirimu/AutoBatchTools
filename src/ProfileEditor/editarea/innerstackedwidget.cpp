@@ -37,14 +37,16 @@ void InnerStackedWidget::setEditOperator(EditOperator *op)
 //    searchinput = stackwidget->findChild<QFrame *>("searchInput");
 //    loopcountmax = stackwidget->findChild<QFrame *>("loopCountMax");
 
-    connect(editop, &EditOperator::ui_selectindexUpdate, this, &InnerStackedWidget::setInfoDataList);
-    connect(editop, &EditOperator::ui_selectindexUpdate, this, &InnerStackedWidget::moveStacked);
-//    connect(editop, &EditOperator::editUpdate, this, &InnerStackedWidget::updateInfoDataList);
+//    connect(editop, &EditOperator::ui_selectindexUpdate, this, &InnerStackedWidget::setInfoDataList);
+//    connect(editop, &EditOperator::ui_selectindexUpdate, this, &InnerStackedWidget::moveStacked);
+    connect(editop, &EditOperator::ui_funcindexUpdate, this, &InnerStackedWidget::setInfoDataList);
+    connect(editop, &EditOperator::ui_funcindexUpdate, this, &InnerStackedWidget::moveStacked);
+    //    connect(editop, &EditOperator::editUpdate, this, &InnerStackedWidget::updateInfoDataList);
 
-    connect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-    connect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-    connect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-    connect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
+    connect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editProjectNameAction);
+    connect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editVerAction);
+    connect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editAuthorAction);
+    connect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editDescriptionAction);
 
     //connect action in search widget
     connect(addbutton, &QToolButton::clicked, fscombo, &SearchComboBox::addAction);
@@ -53,7 +55,7 @@ void InnerStackedWidget::setEditOperator(EditOperator *op)
 
     connect(finput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
     connect(sinput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-    connect(fscombo, &SearchComboBox::currentTextChanged, this, &InnerStackedWidget::editTextAction);
+    connect(fscombo, &SearchComboBox::currentTextChanged, this, &InnerStackedWidget::editInitialSearch);
     connect(rloop, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
     connect(rloopmax, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
     connect(rlargs, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
@@ -61,10 +63,10 @@ void InnerStackedWidget::setEditOperator(EditOperator *op)
 
 }
 
-void InnerStackedWidget::moveStacked(int index, int sendfrom)
+void InnerStackedWidget::moveStacked(int after, int before, int function, int sendfrom)
 {
-    Q_UNUSED(sendfrom);
-    if(index > 0){
+    Q_UNUSED(before); Q_UNUSED(function); Q_UNUSED(sendfrom);
+    if(after > 0){
         setCurrentIndex(1);
     }else{
         setCurrentIndex(0);
@@ -72,15 +74,15 @@ void InnerStackedWidget::moveStacked(int index, int sendfrom)
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
-void InnerStackedWidget::setInfoDataList(int index, int sendfrom)
+void InnerStackedWidget::setInfoDataList(int after, int before, int function, int sendfrom)
 {
-    Q_UNUSED(sendfrom);
+    Q_UNUSED(before); Q_UNUSED(function); Q_UNUSED(sendfrom);
 
-    if(index != 0) return;
+    if(after != 0) return;
 
     QList<QStringList> *list = new QList<QStringList>();
 
-    if(editop->read(index, list)){
+    if(editop->read(after, list)){
 
         //discon
 //        disconnect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
@@ -108,9 +110,9 @@ void InnerStackedWidget::setInfoDataList(int index, int sendfrom)
             fscombo->reloadComboBoxItem();
             fscombo->setCurrentText(list->at(7).at(1));
             rloop->setChecked(VariantConverter::stringToBool(list->at(8).at(1)));
-            rloopmax->setValue(((QString)list->at(8).at(3)).toInt());
-            rlargs->setValue(((QString)list->at(9).at(1)).toInt());
-            reloop->setValue(((QString)list->at(10).at(1)).toInt());
+            rloopmax->setValue(static_cast<QString>(list->at(8).at(3)).toInt());
+            rlargs->setValue(static_cast<QString>(list->at(9).at(1)).toInt());
+            reloop->setValue(static_cast<QString>(list->at(10).at(1)).toInt());
 
             bool check = VariantConverter::stringToBool(list->at(6).at(1));
             addbutton->setVisible(check);
@@ -185,26 +187,68 @@ void InnerStackedWidget::setInfoDataList(int index, int sendfrom)
 //    rlabel->setText("-");
 //}
 
-void InnerStackedWidget::editTextAction(QString text)
+//void InnerStackedWidget::editTextAction(QString text)
+//{
+//    QString objname = this->sender()->objectName();
+//#ifdef QT_DEBUG
+//    qDebug() << "InnerStackedWidget::edittextaction : " << objname;
+//#endif
+//    if(objname == "searchInputComboBox"){
+//        editop->comboboxSearchAction(0, text, fscombo->currentIndex());
+//    }else{
+//        editop->editTextAction(0, text, objname);
+//    }
+//}
+
+//void InnerStackedWidget::editFileOutputAction(QString text)
+//{
+//#ifdef QT_DEBUG
+//    qDebug() << "InnerStackedWidget::editFileOutputAction : ";
+//#endif
+////    editop->tex
+//}
+
+void InnerStackedWidget::editAuthorAction(QString text)
 {
-    QString objname = this->sender()->objectName();
 #ifdef QT_DEBUG
-    qDebug() << "InnerStackedWidget::edittextaction : " << objname;
+    qDebug() << "InnerStackedWidget::editAuthorAction : ";
 #endif
-    if(objname == "searchInputComboBox"){
-        editop->comboboxSearchAction(0, text, fscombo->currentIndex());
-    }else{
-        editop->editTextAction(0, text, objname);
-    }
+    editop->textProjectAuthorAction(0,text);
 }
 
-void InnerStackedWidget::editPlainTextAction()
+void InnerStackedWidget::editProjectNameAction(QString text)
 {
-    QString objname = this->sender()->objectName();
 #ifdef QT_DEBUG
-    qDebug() << "InnerStackedWidget::editplaintextaction : " << objname;
+    qDebug() << "InnerStackedWidget::editProjectNameAction : ";
 #endif
-    editop->editTextAction(0, desc->toPlainText(), objname);
+    editop->textProjectNameAction(0, text);
+}
+
+void InnerStackedWidget::editVerAction(QString text)
+{
+#ifdef QT_DEBUG
+    qDebug() << "InnerStackedWidget::editVerAction : ";
+#endif
+    editop->textProjectVerAction(0, text);
+}
+
+void InnerStackedWidget::editDescriptionAction()
+{
+//    QString objname = this->sender()->objectName();
+#ifdef QT_DEBUG
+    qDebug() << "InnerStackedWidget::editdescriptionaction : " /*<< objname*/;
+#endif
+//    editop->editTextAction(0, desc->toPlainText(), objname);
+    editop->textProjectDescriptAction(0, desc->toPlainText());
+}
+
+void InnerStackedWidget::editInitialSearch(QString text)
+{
+#ifdef QT_DEBUG
+    qDebug() << "InnerStackedWidget::editInitialSearch : ";
+#endif
+
+    editop->comboboxSearchAction(0,text, fscombo->currentIndex());
 }
 
 void InnerStackedWidget::editCheckAction(bool check)

@@ -1,8 +1,8 @@
 #ifndef INSERTCOMMAND_H
 #define INSERTCOMMAND_H
 
-#include <QHash>
 #include <QUndoCommand>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class InsertCommand : public QUndoCommand
 {

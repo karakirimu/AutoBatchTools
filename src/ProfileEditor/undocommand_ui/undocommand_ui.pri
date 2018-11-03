@@ -4,7 +4,7 @@ HEADERS += \
     $$PWD/edittabcommand.h \
 #    $$PWD/editcheckcommand.h \
 #    $$PWD/editvaluecommand.h \
-#    $$PWD/edittextcommand.h \
+    $$PWD/edittextcommand.h \
     $$PWD/editscomboboxcommand.h \
 #    $$PWD/editfcomboboxcommand.h \
     $$PWD/editcomboboxcommand.h \
@@ -38,13 +38,14 @@ HEADERS += \
 #    $$PWD/plugintableswapoperation.h \
     $$PWD/editexectable.h \
     $$PWD/editplugintable.h \
-    $$PWD/editlocalvartable.h
+    $$PWD/editlocalvartable.h \
+#    $$PWD/comboinitialsearchselect.h
 
 SOURCES += \
     $$PWD/edittabcommand.cpp \
 #    $$PWD/editcheckcommand.cpp \
 #    $$PWD/editvaluecommand.cpp \
-#    $$PWD/edittextcommand.cpp \
+    $$PWD/edittextcommand.cpp \
     $$PWD/editscomboboxcommand.cpp \
 #    $$PWD/editfcomboboxcommand.cpp \
     $$PWD/editcomboboxcommand.cpp \
@@ -78,4 +79,5 @@ SOURCES += \
 #    $$PWD/plugintableswapoperation.cpp \
     $$PWD/editexectable.cpp \
     $$PWD/editplugintable.cpp \
-    $$PWD/editlocalvartable.cpp
+    $$PWD/editlocalvartable.cpp \
+#    $$PWD/comboinitialsearchselect.cpp

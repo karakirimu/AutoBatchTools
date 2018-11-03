@@ -25,12 +25,13 @@ public:
     ~ProfileTreeWidget();
 
     //for order "1". it becomes to be unique order.
-    int fixedCurrentRow();
-    int fixedRowFromId(int id);
-    int rowFromItem(QTreeWidgetItem *item);
+//    int rowFromItem(QTreeWidgetItem *item);
 //    void setSharedFunction(PESharedFunction *func);
 //    void setWidgetsSignalBinder(FileOperationSignalBinder *bind);
     void setEditOperator(EditOperator *op);
+
+    //format : %1,%2
+    void updateIndex(QString operation);
 
 public slots:
     void addAction();
@@ -65,7 +66,7 @@ private slots:
     void onItemStatusChanged(int after, int before, int function, int sendfrom);
     bool eventFilter(QObject *obj, QEvent *event);
 
-    //tree data synchronize
+    //tree synchronize with data (from data index)
     void addTree(int id);
     void deleteTree(int id);
     void insertTree(int id);
@@ -75,6 +76,13 @@ private slots:
 private:
     void popupAction();
     int currentRow();
+
+    //from xml data to ui index
+    int fixedCurrentRow();
+    int dataToUiIndex(int id);
+
+    //from ui index to xml data
+    int uiIndexToData(int id);
 
     //tree set functions
     void setTree(int itemid);

@@ -11,7 +11,7 @@ class SearchComboBox : public QComboBox
 {
     Q_OBJECT
 public:
-    explicit SearchComboBox(QObject *parent= 0);
+    explicit SearchComboBox(QObject *parent= nullptr);
     ~SearchComboBox();
     void reloadComboBoxItem();
 

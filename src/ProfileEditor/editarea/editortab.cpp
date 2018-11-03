@@ -84,7 +84,9 @@ void EditorTab::setEditOperator(EditOperator *op)
     autoonly_4 = otherwidget->findChild<QCheckBox *>("autoOnlyCheckBox_4");
 
     //index update
-    connect(editop, &EditOperator::ui_selectindexUpdate, this, &EditorTab::setCombinedDataList);
+//    connect(editop, &EditOperator::ui_selectindexUpdate, this, &EditorTab::setCombinedDataList);
+    connect(editop, &EditOperator::ui_funcindexUpdate, this, &EditorTab::setCombinedDataList);
+
 
     //index edit (table is ignored)
     connect(timeoutCheckBox, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
@@ -234,18 +236,19 @@ void EditorTab::setOtherDataList(QList<QStringList> *list, int firstpos)
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
-void EditorTab::setCombinedDataList(int index, int selectfrom)
+void EditorTab::setCombinedDataList(int after, int before, int function, int sendfrom)
 {
-    Q_UNUSED(selectfrom)
+    Q_UNUSED(before); Q_UNUSED(function); Q_UNUSED(sendfrom);
+
     QList<QStringList> *list = new QList<QStringList>();
     QHash<int, int> hlist;
 
     //avoid multiple update
-    if(editop->read(index, list) && currentid != index){
+    if(editop->read(after, list) && currentid != after){
 
         //set current id
-        qDebug() << QString("EditorTab : currentid update to %1").arg(index);
-        currentid = index;
+        qDebug() << QString("EditorTab : currentid update to %1").arg(after);
+        currentid = after;
         xgen.getListStructure(list, &hlist);
 
         //no file showing module
@@ -278,28 +281,28 @@ void EditorTab::setCombinedDataList(int index, int selectfrom)
     delete list;
 }
 
-bool EditorTab::getCurrentIndexOnlyChecked()
-{
-    QCheckBox *autoonly;
-    switch (this->currentIndex()) {
-    case ProcessXmlListGenerator::NORMAL:
-        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox");
-        break;
-    case ProcessXmlListGenerator::SEARCH:
-        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_2");
-        break;
-    case ProcessXmlListGenerator::EXTRAFUNC:
-        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_3");
-        break;
-    case ProcessXmlListGenerator::OTHER:
-        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_4");
-        break;
-    default:
-        return false;
-    }
+//bool EditorTab::getCurrentIndexOnlyChecked()
+//{
+//    QCheckBox *autoonly;
+//    switch (this->currentIndex()) {
+//    case ProcessXmlListGenerator::NORMAL:
+//        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox");
+//        break;
+//    case ProcessXmlListGenerator::SEARCH:
+//        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_2");
+//        break;
+//    case ProcessXmlListGenerator::EXTRAFUNC:
+//        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_3");
+//        break;
+//    case ProcessXmlListGenerator::OTHER:
+//        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_4");
+//        break;
+//    default:
+//        return false;
+//    }
 
-    return autoonly->isChecked();
-}
+//    return autoonly->isChecked();
+//}
 
 void EditorTab::tabChanged(int index)
 {

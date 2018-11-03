@@ -40,17 +40,16 @@ public:
     void setConnection();
     void setEditOperator(EditOperator *op);
 
-public slots:
+private slots:
     //xml depends functions DEPENDS_XML
     void setNormalDataList(QList<QStringList> *list, int firstpos);
     void setSearchDataList(QList<QStringList> *list, int firstpos);
     void setExtraFuncDataList(QList<QStringList> *list, int firstpos);
     void setOtherDataList(QList<QStringList> *list, int firstpos);
-    void setCombinedDataList(int index, int selectfrom);
+    void setCombinedDataList(int after, int before, int function, int sendfrom);
 
-    bool getCurrentIndexOnlyChecked();
+//    bool getCurrentIndexOnlyChecked();
 
-private slots:
     void tabChanged(int index);
 
     void editCheckAction(bool check);
