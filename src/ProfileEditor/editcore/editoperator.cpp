@@ -11,6 +11,7 @@ EditOperator::EditOperator(QObject *parent)
     parentwid = qobject_cast<QMainWindow *>(parent);
 
     QSettings settings( "./settings.ini", QSettings::IniFormat );
+
     //init timer (ms)
     settings.beginGroup("pe_general");
     timerid = startTimer(settings.value("AUTOSAVEPERIOD", 5).toInt() * 60000);
@@ -23,7 +24,6 @@ EditOperator::~EditOperator()
         QFile file(autosavefile);
         if(!file.remove()){
             qDebug() << file.errorString() << file.isOpen();
-
         }
     }
 
@@ -31,10 +31,10 @@ EditOperator::~EditOperator()
     delete cache;
 }
 
-bool EditOperator::isEdited()
-{
-    return undostack->count() > 0 ? true : false;
-}
+//bool EditOperator::isEdited()
+//{
+//    return undostack->count() > 0 ? true : false;
+//}
 
 bool EditOperator::read(int id, QList<QStringList> *list)
 {
@@ -65,8 +65,6 @@ void EditOperator::addAction()
     xgen->createNewList(&xmlstruct);
     delete xgen;
 
-//    cache->append(xmlstruct);
-
     AddCommand *com = new AddCommand(cache->count()-1, &xmlstruct, cache);
     undostack->push(com);
 //    emit edited(isEdited());
@@ -93,35 +91,17 @@ void EditOperator::deleteAction(int id)
 //    emit editindexUpdate(id);
 }
 
-//only temp data accepted
-//void EditOperator::editAction(int id, int innerid, int editcode, QList<QStringList> xmlstruct)
-//{
-//     EditCommand *com = new EditCommand(id, innerid, editcode, xmlstruct.at(innerid), cache);
-////    cache->replace(id, xmlstruct);
 
-//    undostack->push(com);
-//    emit edited(isEdited());
-//    //    emit editindexUpdate(id);
-//    emit editUpdate(id);
-//}
+
+
 
 void EditOperator::editTabAction(int id, int newindex)
 {
     EditTabCommand *com = new EditTabCommand(id, newindex, cache);
 
     undostack->push(com);
-//    emit edited(isEdited());
     emit editUpdate(id);
 }
-
-//void EditOperator::editTextAction(int id, QString mnew, QString obj)
-//{
-//    EditTextCommand *com = new EditTextCommand(id, mnew, obj, cache);
-
-//    undostack->push(com);
-////    emit edited(isEdited());
-//    emit editUpdate(id);
-//}
 
 void EditOperator::comboboxLocalValAction(int id, QString mnew)
 {
@@ -129,7 +109,6 @@ void EditOperator::comboboxLocalValAction(int id, QString mnew)
     EditComboBoxCommand *com = new EditComboBoxCommand(id, mnew, cache);
 
     undostack->push(com);
-//    emit edited(isEdited());
     emit editUpdate(id);
 }
 
@@ -137,22 +116,12 @@ void EditOperator::comboboxLocalValAction(int id, QString mnew)
 
 
 
-//void EditOperator::editFileComboAction(int id, QString newstr, QString newfile, QString obj)
-//{
-//    EditFComboBoxCommand *com = new EditFComboBoxCommand(id, newstr, newfile, obj, cache);
-
-//    undostack->push(com);
-////    emit edited(isEdited());
-//    emit editUpdate(id);
-//}
-
 void EditOperator::comboboxSearchAction(int id, QString newstr, int newval)
 {
     //search combobox only
     EditScomboBoxCommand *com = new EditScomboBoxCommand(id, newstr, newval, cache);
 
     undostack->push(com);
-//    emit edited(isEdited());
     emit editUpdate(id);
 }
 
@@ -246,45 +215,14 @@ void EditOperator::tableSwapPluginAction(int id, int beforeid, int afterid)
 
 
 
-//void EditOperator::editValueAction(int id, int newval, QString obj)
-//{
-//    EditValueCommand *com = new EditValueCommand(id, newval, obj, cache);
-
-//    undostack->push(com);
-////    emit edited(isEdited());
-//    emit editUpdate(id);
-//}
-
-//void EditOperator::editCheckAction(int id, bool newcheck, QString obj)
-//{
-//    EditCheckCommand *com = new EditCheckCommand(id, newcheck, obj, cache);
-
-//    undostack->push(com);
-////    emit edited(isEdited());
-//    emit editUpdate(id);
-//}
-
 //only temp data accepted
 void EditOperator::tableEditVariantAction(int id, QList<QStringList> *xmlstruct)
 {
     //record all changes (not merge)
     EditLocalVarTable *com = new EditLocalVarTable(id, xmlstruct, cache);
-//    cache->replace(id, xmlstruct);
-
     undostack->push(com);
-//    emit edited(isEdited());
-//    emit editUpdate(id);
-    //    emit editindexUpdate(id);
+//    emit editUpdate(id);?
 }
-
-//void EditOperator::editTableAction(int id, int tableid, QString newstr, int operation, QString objname)
-//{
-//    EditTableCommand *com = new EditTableCommand(id, tableid, newstr, operation, objname, cache);
-
-//    undostack->push(com);
-////    emit edited(isEdited());
-//    emit editUpdate(id);
-//}
 
 void EditOperator::tableEditExecAction(int id, int tableid, QString newstr, int operation)
 {
@@ -438,9 +376,6 @@ void EditOperator::cutAction(int id)
     DeleteCommand *com = new DeleteCommand(id, cache->at(id), cache);
     undostack->push(com);
 
-//    cache->removeAt(id);
-//    emit edited(isEdited());
-//    emit editindexUpdate(id);
 }
 
 void EditOperator::copyAction(int id)
@@ -461,11 +396,6 @@ void EditOperator::pasteAction(int id)
             && clipboard->mimeData()->hasFormat(QLatin1String("application/x-qt-profilerlist"))){
         const ListMimeData *lmime = qobject_cast<const ListMimeData *>(clipboard->mimeData());
 
-//        const QList<QStringList> list = lmime->list();
-
-        //copy
-//        QList<QStringList> lst = const_cast<QList<QStringList>>(lmime->list());
-
         //encode
         QByteArray dat = lmime->data(QLatin1String("application/x-qt-profilerlist"));
         QString dats = QString::fromLocal8Bit(dat);
@@ -483,20 +413,7 @@ void EditOperator::pasteAction(int id)
             _list.append(tmp);
         }
 
-//        QVariant data(dat);
-//        QVariantList list = data.toList();
-//        QList<QStringList> _list;
-
-//        QMutableListIterator<QVariant> i(list);
-//        while(i.hasNext()){
-//            _list.append(i.next().toStringList());
-//        }
-
         insertAction(id, &_list);
-
-//        cache->insert(id, lmime->list());
-//        emit edited(isEdited());
-//        emit editindexUpdate(id);
     }
 }
 
@@ -511,24 +428,9 @@ void EditOperator::swapAction(int before, int after)
             || after > ccount)
         return;
 
-    //swap id
-//    QList<QStringList> tmp = cache->at(after);
-//    cache->replace(after, cache->at(before));
-//    cache->replace(before, tmp);
-
     SwapCommand *com = new SwapCommand(before, after, cache);
     undostack->push(com);
-
-//    emit edited(isEdited());
 }
-
-//void EditOperator::swapTableAction(int id, int beforeid, int afterid, QString objname)
-//{
-//    SwapTableCommand *com = new SwapTableCommand(id, beforeid, afterid, objname, cache);
-
-//    undostack->push(com);
-////    emit edited(isEdited());
-//}
 
 void EditOperator::newAction()
 {
@@ -751,6 +653,11 @@ void EditOperator::reset()
     //reset undo action
     undostack->clear();
 
+}
+
+QString EditOperator::getLoadfile() const
+{
+    return loadfile;
 }
 
 int EditOperator::getCacheSize() const

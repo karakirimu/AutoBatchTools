@@ -60,9 +60,9 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //update tree position
 //    connect(editop, &EditOperator::ui_selectindexUpdate, this, &ProfileEditor::setTreerowpos_select);
-    connect(editop, &EditOperator::ui_funcindexUpdate, this, &ProfileEditor::setTreerowpos_update);
-    //provide function object
+//    connect(editop, &EditOperator::ui_funcindexUpdate, this, &ProfileEditor::setTreerowpos_update);
 
+    //provide function object
     ui->console->setMultiTask(mlTask);
     ui->consolemessage->setMultiTask(mlTask);
 
@@ -94,7 +94,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->actionUndo, &QAction::triggered, this, &ProfileEditor::undoAction);
     connect(ui->actionRedo, &QAction::triggered, this, &ProfileEditor::redoAction);
     connect(ui->actionAddItem, &QAction::triggered, this, &ProfileEditor::addAction);
-    connect(ui->actionDeleteItem, SIGNAL(triggered()), this, SLOT(deleteAction()));
+    connect(ui->actionDeleteItem, &QAction::triggered, this, &ProfileEditor::deleteAction);
     connect(ui->actionCut, &QAction::triggered, this, &ProfileEditor::cutAction);
     connect(ui->actionCopy, &QAction::triggered, this, &ProfileEditor::copyAction);
     connect(ui->actionPaste, &QAction::triggered, this, &ProfileEditor::pasteAction);
@@ -161,7 +161,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     //Title * flag
 //    connect(editop, &EditOperator::edited, this, &ProfileEditor::onFileEdited);
     connect(editop->getUndostack(), &QUndoStack::canUndoChanged, this, &ProfileEditor::onFileEdited);
-    connect(editop->getUndostack(), &QUndoStack::canRedoChanged, this, &ProfileEditor::onFileEdited);
+//    connect(editop->getUndostack(), &QUndoStack::canRedoChanged, this, &ProfileEditor::onFileEdited);
 
     initStatusBar();
 
@@ -177,7 +177,7 @@ ProfileEditor::ProfileEditor(QStringList cuiargs, QWidget *parent)
 
     if(cuiargs.count() == 2 && lfile.contains("apro")){
         editop->openAction(lfile);
-        postResetUi();
+        initUi();
     }
 }
 
@@ -201,7 +201,7 @@ void ProfileEditor::newfileAction()
 
     // not save and newfile generate
     editop->newAction();
-    postResetUi();
+    initUi();
 
 }
 
@@ -211,17 +211,15 @@ void ProfileEditor::openAction()
     QSettings settings( "./settings.ini", QSettings::IniFormat );
 
     // open file
-    QString fileName =
-            fdialog->getOpenFileName(this,\
-                                     tr("Open file"),\
-                                     settings.value("profileeditor/lastopened",\
-                                                    QDir::currentPath()).toString(),\
-                                     tr("Profile (*.xml *.apro)"));
+    QString fileName = fdialog->getOpenFileName(this,\
+                                                tr("Open file"), settings.value("profileeditor/lastopened",\
+                                                    QDir::currentPath()).toString(), tr("Profile (*.xml *.apro)"));
+
     if(fileName != ""){
 //          preResetUi();
         settings.setValue("profileeditor/lastopened", QFileInfo(fileName).canonicalPath());
         editop->openAction(fileName);
-        postResetUi();
+        initUi();
     }
 
 }
@@ -409,7 +407,7 @@ void ProfileEditor::themeChangeAction()
 void ProfileEditor::overWriteSaveAction()
 {
 //     sfunction->saveEditOverWriteAction(this);
-    if(loadfile.contains(".autosave")) {
+    if(editop->getLoadfile().contains(".autosave")) {
         QString fileName =
                 fdialog->getSaveFileName(this,\
                                          tr("Save Edit file"),\
@@ -418,8 +416,9 @@ void ProfileEditor::overWriteSaveAction()
 
         editop->saveAction(fileName);
 //        loadfile = fileName;
+    }else{
+        editop->saveAction(editop->getLoadfile());
     }
-    editop->saveAction(loadfile);
 }
 
 void ProfileEditor::exportAction()
@@ -439,7 +438,7 @@ void ProfileEditor::onTitleChanged(QString newload)
     QFileInfo info(newload);
     if(info.suffix() == "autosave"){
         newtitle = tr("untitled");
-        genfile = newload;
+//        genfile = newload;
     }else{
         newtitle = info.fileName();
     }
@@ -447,7 +446,7 @@ void ProfileEditor::onTitleChanged(QString newload)
     setWindowTitle(newtitle + tr(" - ProfileEditor"));
 
     //update filepath
-    setLoadfile(newload);
+//    setLoadfile(newload);
 }
 
 void ProfileEditor::onFileEdited(bool edited)
@@ -470,14 +469,20 @@ void ProfileEditor::itemChangedAction(int after, int before, int function, int s
 {
     Q_UNUSED(before); Q_UNUSED(function); Q_UNUSED(sendfrom);
 
+    //update show
     qDebug() << "itemChangedAction::treerowpos" << after;
-    emit rowPosChanged(tr("Process selected: No. ") + QString::number((after > 0)? after : 1));
+    emit statusLabelChanged(tr("Process selected: No. ") + QString::number((after > 0)? after : 1));
+
+    //update row position
+//    if(sendfrom == EditOperator::MAINEDITOR) return;
+    rowpos = after;
 
     //reset undo command
 //    editop->getUndostack()->clear();
 //    ui->actionUndo->setText(tr("Undo"));
 //    ui->actionRedo->setText(tr("Redo"));
     qDebug() << "IsClean : " << editop->getUndostack()->isClean();
+//    if(!lastedited) editop->getUndostack()->clear();
 //    editop->getUndostack()->clear();
 }
 
@@ -494,8 +499,7 @@ void ProfileEditor::about()
 void ProfileEditor::taskStarted(QString objectname, int runfrom)
 {
     qDebug() << "profileeditor::taskstarted";
-    Q_UNUSED(objectname);
-    Q_UNUSED(runfrom);
+    Q_UNUSED(objectname); Q_UNUSED(runfrom);
     setRunButtonState(false, true, true);
 }
 
@@ -540,7 +544,7 @@ void ProfileEditor::runTriggered()
     if(key == ""){
         key = mlTask->generateRandom(32);
 
-        mlTask->addTask(key, loadfile);
+        mlTask->addTask(key, editop->getLoadfile());
         ui->console->setReadObjectName(key);
         ui->consolemessage->setObjectName(key);
 
@@ -566,7 +570,6 @@ void ProfileEditor::runTriggered()
 void ProfileEditor::pauseTriggered()
 {
     setRunButtonState(false, false, false);
-
     mlTask->processPause(key);
 }
 
@@ -586,19 +589,12 @@ void ProfileEditor::updateRangeText(QString range)
     mlTask->setRange(key, range);
 }
 
-void ProfileEditor::setTreerowpos_select(int value, int from)
-{
-    if(from == EditOperator::MAINEDITOR) return;
-    rowpos = value;
-}
-
-void ProfileEditor::setTreerowpos_update(int after, int before, int function, int sendfrom)
-{
-    Q_UNUSED(before);
-    Q_UNUSED(function);
-    Q_UNUSED(sendfrom);
-    rowpos = after;
-}
+//void ProfileEditor::setTreerowpos_update(int after, int before, int function, int sendfrom)
+//{
+//    Q_UNUSED(before); Q_UNUSED(function); Q_UNUSED(sendfrom);
+////    if(sendfrom == EditOperator::MAINEDITOR) return;
+//    rowpos = after;
+//}
 
 void ProfileEditor::onUndoTextChanged(QString text)
 {
@@ -623,40 +619,25 @@ void ProfileEditor::closeEvent(QCloseEvent *event)
     if(!lastedited) return;
 
     // ドキュメントが変更されている場合の警告
-    QMessageBox::StandardButton res
-            = QMessageBox::question(this,\
-                                    tr("Alert"),\
+    QMessageBox::StandardButton res = QMessageBox::question(this, tr("Alert"),\
                                     tr("File was edited.\nDo you want to save this file ?"),\
                                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
 
     switch( res )
     {
-    case QMessageBox::Yes:
-      // 保存できたなら、閉じてOK
-      overWriteSaveAction();
-      break;
-
-    case QMessageBox::No:
-      // 保存しなくて、そのまま閉じてOK
-      editop->abortAction();
-      break;
-
-    case QMessageBox::Cancel:
-      // キャンセルして作業に戻る
-      event->ignore();
-        break;
-
-    default:
-      break;
+    case QMessageBox::Yes:    overWriteSaveAction(); break;
+    case QMessageBox::No:     editop->abortAction(); break;
+    case QMessageBox::Cancel: event->ignore();       break;
+    default:                                         break;
     }
 }
 
 void ProfileEditor::initStatusBar()
 {
-    QLabel *label = new QLabel();
-    label->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
-    ui->statusBar->addPermanentWidget(label, 3);
-    connect(this, &ProfileEditor::rowPosChanged, label, &QLabel::setText);
+    QLabel *statusLabel = new QLabel();
+    statusLabel->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
+    ui->statusBar->addPermanentWidget(statusLabel, 3);
+    connect(this, &ProfileEditor::statusLabelChanged, statusLabel, &QLabel::setText);
 
     QProgressBar *progressbar = new QProgressBar();
     progressbar->setAlignment(Qt::AlignCenter);
@@ -665,25 +646,13 @@ void ProfileEditor::initStatusBar()
     connect(mlTask, &MultiTaskP::processCurrent, progressbar, &QProgressBar::setValue);
 }
 
-void ProfileEditor::setLoadfile(const QString &value)
-{
-    loadfile = value;
-}
-
-//void ProfileEditor::preResetUi()
+//void ProfileEditor::setLoadfile(const QString &value)
 //{
-//    //set current info ui
-////    ui->innerStackedWidget->setCurrentIndex(0);
-
-//    //temp disconnect slot
-////    disconnectEdit();
-
-//    //set firststacked to empty
-////    ui->innerStackedWidget->clearInfoDataListForm();
+//    loadfile = value;
 //}
 
 //when opening new file
-void ProfileEditor::postResetUi()
+void ProfileEditor::initUi()
 {
     //reload file
     this->blockSignals(true);
@@ -715,26 +684,16 @@ int ProfileEditor::checkOverWrite()
     if(!lastedited) return 3;
 
     // Warning if document is edited by user.
-    QMessageBox::StandardButton res
-            = QMessageBox::question(this,\
-                                    tr("Alert"),\
+    QMessageBox::StandardButton res = QMessageBox::question(this, tr("Alert"),\
                                     tr("File was edited.\nDo you want to save this file ?"),\
                                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 
 
     switch( res )
     {
-    case QMessageBox::Yes:
-      overWriteSaveAction();
-      return 0;
-
-    case QMessageBox::No:
-      return 1;
-
-    case QMessageBox::Cancel:
-      return 2;
-
-    default:
-      return 2;
+    case QMessageBox::Yes: overWriteSaveAction(); return 0;
+    case QMessageBox::No:                         return 1;
+    case QMessageBox::Cancel:                     return 2;
+    default:                                      return 2;
     }
 }

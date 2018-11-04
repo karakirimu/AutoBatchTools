@@ -84,7 +84,7 @@ public:
     ~EditOperator();
 
     //data edited or not
-    bool isEdited();
+//    bool isEdited();
 
     bool read(int id, QList<QStringList> *list);
     void readAll(QList<QList<QStringList> *> *list);
@@ -105,21 +105,17 @@ public:
     //gui functions
     QRect getMainWindowGeometry();
 
+    QString getLoadfile() const;
+
 signals:
     void loadfileChanged(QString);
-//    void edited(bool);
 
     // reflect user 'edit' operation (argument is edit index)
     void editUpdate(int);
-
-//    void ui_selectindexUpdate(int, int);
     void ui_funcindexUpdate(int after, int before, int function, int sender);
 //    void ui_scrollReachBottom();
 
 public slots:
-    //selected index signal
-//    void selectChange(int index, int from){emit ui_selectindexUpdate(index, from);}
-
     //operate functions
     void addAction();
     void insertAction(int id, QList<QStringList> *xmlstruct);
@@ -127,9 +123,6 @@ public slots:
 
 //    void editAction(int id, int innerid, int editcode, QList<QStringList> xmlstruct);
     void editTabAction(int id, int newindex);
-//    void editTextAction(int id, QString mnew, QString obj);
-//    void editValueAction(int id, int newval, QString obj);
-//    void editCheckAction(int id, bool newcheck, QString obj);
 
     //checkbox operation
     void checkAllowInputAction(int id, bool newcheck);
@@ -148,9 +141,6 @@ public slots:
     void comboboxPluginAction(int id, QString newstr, QString newfile);
     void comboboxProfileAction(int id, QString newstr, QString newfile);
 
-    //old
-//    void editFileComboAction(int id, QString newstr, QString newfile, QString obj);
-
     //spinbox operation
     void spinTimeoutAction(int id, int newvalue);
     void spinLoopMaxAction(int id, int newvalue);
@@ -163,12 +153,7 @@ public slots:
     //table operation
     void tableSwapExecAction(int id, int beforeid, int afterid);
     void tableSwapPluginAction(int id, int beforeid, int afterid);
-
     void tableEditVariantAction(int id, QList<QStringList> *xmlstruct);
-
-    //old
-//    void swapTableAction(int id, int beforeid, int afterid, QString objname);
-//    void editTableAction(int id, int tableid, QString newstr, int operation, QString objname);
     void tableEditExecAction(int id, int tableid, QString newstr, int operation);
     void tableEditPluginAction(int id, int tableid, QString newstr, int operation);
 

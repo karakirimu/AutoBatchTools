@@ -18,9 +18,6 @@ ProfileTreeWidget::ProfileTreeWidget(QWidget *)
     //init menu context
     contextMenu = new QMenu(this);
 
-    //set popup action -> move to set widgetssignalbinder
-//    popupAction();
-
     //row select action
     connect(this, &QAbstractItemView::clicked, this, &ProfileTreeWidget::rowSelected);
 }
@@ -148,11 +145,6 @@ bool ProfileTreeWidget::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 
-//void ProfileTreeWidget::addAction()
-//{
-//    binder->addItem();
-//}
-
 //void ProfileTreeWidget::editAction(int itemid, QList<QStringList> *itemlist)
 //{
 //    if(itemid < 0) return;
@@ -166,19 +158,16 @@ void ProfileTreeWidget::addAction()
     int count = editop->getCacheSize() - 1;
     count = (count >= 0) ? count : 0;
     addTree(count);
-//    emit editop->ui_selectindexUpdate(count, EditOperator::TREE);
     emit editop->ui_funcindexUpdate(count, -1, EditOperator::ADD, EditOperator::TREE);
 
 }
 
 void ProfileTreeWidget::deleteAction()
 {
-//    binder->deleteItem(fixedCurrentRow());
     int cur = fixedCurrentRow();
     if(cur > 1){
         editop->deleteAction(cur);
         deleteTree(cur);
-//        emit editop->ui_selectindexUpdate(cur, EditOperator::TREE);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::TREE);
 
     }
@@ -190,29 +179,23 @@ void ProfileTreeWidget::cutAction()
     if(cur > 1){
         editop->cutAction(cur);
         deleteTree(cur);
-//        emit editop->ui_selectindexUpdate(cur, EditOperator::TREE);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::TREE);
     }
 }
 
 void ProfileTreeWidget::copyAction()
 {
-//    binder->copyItem(fixedCurrentRow());
     int cur = fixedCurrentRow();
-    if(cur > 1){
-        editop->copyAction(cur);
-    }
+    if(cur > 1) editop->copyAction(cur);
 }
 
 void ProfileTreeWidget::pasteAction()
 {
     int cur = fixedCurrentRow();
-//    int uicur = currentRow();
     if(cur > 0){
         cur++;
         editop->pasteAction(cur);
         insertTree(cur);
-//        emit editop->ui_selectindexUpdate(cur, EditOperator::TREE);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::INSERT, EditOperator::TREE);
 
     }
@@ -226,23 +209,18 @@ void ProfileTreeWidget::upAction()
     if(uicur > 1){
         editop->swapAction(cur, cur - 1);
         swapTree(uicur, uicur - 1);
-//        emit editop->ui_selectindexUpdate(cur - 1, EditOperator::TREE);
         emit editop->ui_funcindexUpdate(cur - 1, cur, EditOperator::SWAP, EditOperator::TREE);
-
     }
 }
 
 void ProfileTreeWidget::downAction()
 {
-//    binder->downItem(fixedCurrentRow());
     int cur = fixedCurrentRow();
     int uicur = currentRow();
     if(uicur < topLevelItemCount() - 1){
         editop->swapAction(cur, cur + 1);
         swapTree(uicur, uicur + 1);
-//        emit editop->ui_selectindexUpdate(cur + 1, EditOperator::TREE);
         emit editop->ui_funcindexUpdate(cur + 1, cur, EditOperator::SWAP, EditOperator::TREE);
-
     }
 }
 
@@ -257,9 +235,7 @@ void ProfileTreeWidget::reloadAction()
     time.start();
 #endif
 
-    for(int i = 0; i < counter; i++){
-        setTree(i);
-    }
+    for(int i = 0; i < counter; i++) setTree(i);
 
 #ifdef QT_DEBUG
     qDebug() << "ProfileTreeWidget::reloadAction() || elapsed: " << time.elapsed() << "ms";
@@ -287,6 +263,7 @@ void ProfileTreeWidget::insertTree(int id)
     QTreeWidgetItem *item = this->takeTopLevelItem(laindex);
     this->insertTopLevelItem(dataToUiIndex(id), item);
 
+    //TODO:
     //reselect
 //    emit editop->ui_selectindexUpdate(id - 1, EditOperator::TREE);
 }
@@ -296,9 +273,6 @@ void ProfileTreeWidget::swapTree(int before, int after)
     QTreeWidgetItem *item_small;
     QTreeWidgetItem *item_big;
 
-//    QTreeWidgetItem *item_before;
-//    QTreeWidgetItem *item_after;
-
     //take bigger index first
     if(before < after){
         //down
@@ -307,8 +281,6 @@ void ProfileTreeWidget::swapTree(int before, int after)
 
         this->takeTopLevelItem(after);
         this->insertTopLevelItem(after, item_small);
-
-//        this->takeTopLevelItem(before);
         this->insertTopLevelItem(before, item_big);
 
     }else{
@@ -326,12 +298,6 @@ void ProfileTreeWidget::swapTree(int before, int after)
     }
     this->setItemSelected(this->topLevelItem(after), true);
 
-//    QTreeWidgetItem *item_before = this->topLevelItem(before);
-//    QTreeWidgetItem *item_after = this->topLevelItem(after);
-
-//    QTreeWidgetItem *item_before = this->topLevelItem(before);
-//    this->insertTopLevelItem(before, item_after);
-//    this->insertTopLevelItem(after, item_before);
 }
 
 void ProfileTreeWidget::replaceTree(int id)
@@ -350,9 +316,7 @@ void ProfileTreeWidget::replaceTree(int id)
 
 void ProfileTreeWidget::rowSelected()
 {
-//    emit editop->ui_selectindexUpdate(fixedCurrentRow(), EditOperator::TREE);
     emit editop->ui_funcindexUpdate(fixedCurrentRow(), -1, EditOperator::SELECT, EditOperator::TREE);
-//    emit indexChanged(currentRow());
 }
 
 void ProfileTreeWidget::popupAction()
@@ -557,13 +521,11 @@ void ProfileTreeWidget::setOtherTree(QTreeWidgetItem *root, QList<QStringList> *
 int ProfileTreeWidget::currentRow()
 {
   QTreeWidgetItem *current = this->currentItem();
-//  QTreeWidgetItem *first;
 
   int index = -1;
   int count = this->topLevelItemCount();
 
   for(int i = 0; i < count; i++){
-//      first = this->topLevelItem(i);
       if(this->topLevelItem(i) == current){
           index = i;
           break;
@@ -572,41 +534,6 @@ int ProfileTreeWidget::currentRow()
 
   return index;
 }
-
-//int ProfileTreeWidget::rowFromItem(QTreeWidgetItem *item)
-//{
-////    QTreeWidgetItem *first;
-
-//    int index = -1;
-//    int count = this->topLevelItemCount();
-
-//    for(int i = 0; i < count; i++){
-////        first = this->topLevelItem(i);
-//        if(this->topLevelItem(i) == item){
-//            index = i;
-//            break;
-//        }
-//    }
-
-//    return index;
-//}
-
-//void ProfileTreeWidget::setSharedFunction(PESharedFunction *func)
-//{
-//    sfunction = func;
-//}
-
-//void ProfileTreeWidget::setWidgetsSignalBinder(FileOperationSignalBinder *bind)
-//{
-//    binder = bind;
-
-//    connect(binder, SIGNAL(refreshFinished()), this, SLOT(reloadAction()));
-////    connect(this, SIGNAL(data_editread(int,QList<QStringList>*)), binder, SLOT(editRead(int,QList<QStringList>*)));
-//    connect(this, SIGNAL(data_editwrite(int,QList<QStringList>*)), binder, SLOT(editWrite(int,QList<QStringList>*)));
-
-//    //set right click action
-//    popupAction();
-//}
 
 void ProfileTreeWidget::setEditOperator(EditOperator *op)
 {
@@ -654,7 +581,6 @@ void ProfileTreeWidget::updateIndex(QString operation)
 void ProfileTreeWidget::setTempTree(QTreeWidgetItem *root, QList<QStringList> *list)
 {
     int istack = QString(list->at(1).at(1)).toInt();
-//    int cmdskip = VariantConverter::stringToInt(list->at(3).at(1));
 
     QHash<int, int> hlist;
     xgen.getListStructure(list, &hlist);

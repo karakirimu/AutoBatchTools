@@ -30,7 +30,7 @@ public:
     void closeEvent(QCloseEvent *event);
 
 signals:
-    void rowPosChanged(QString);
+    void statusLabelChanged(QString);
 
 private slots:
     //file
@@ -56,17 +56,15 @@ private slots:
 
     void onTitleChanged(QString newload);
     void onFileEdited(bool edited);
+
     void itemChangedAction(int after, int before, int function, int sendfrom);
 
     //tree acesss
-    void setTreerowpos_select(int value, int from);
-    void setTreerowpos_update(int after, int before, int function, int sendfrom);
+//    void setTreerowpos_update(int after, int before, int function, int sendfrom);
 
     //undo,redo command
     void onUndoTextChanged(QString text);
     void onRedoTextChanged(QString text);
-
-    void about();
 
     //received from task
     void taskStarted(QString objectname, int runfrom);
@@ -82,12 +80,14 @@ private slots:
     //text sender
     void updateRangeText(QString range);
 
-private:
-    void setLoadfile(const QString &value);
-    void initStatusBar();
+    //popup
+    void about();
 
-    //reset ui
-    void postResetUi();
+private:
+//    void setLoadfile(const QString &value);
+
+    void initStatusBar();
+    void initUi();
 
     //run pause stop button selection
     void setRunButtonState(bool run, bool pause, bool stop);
@@ -106,8 +106,8 @@ private:
     int rowpos;
 
     //filename save
-    QString loadfile;
-    QString genfile;
+//    QString loadfile;
+//    QString genfile;
     bool lastedited = false;
 
     EditOperator *editop;

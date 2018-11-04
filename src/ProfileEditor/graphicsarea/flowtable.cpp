@@ -22,9 +22,6 @@ FlowTable::FlowTable(QWidget *parent)
     horizontalHeader()->hide();
     verticalHeader()->hide();
 
-    //setdelegate
-//    /*setItemDelegate*/(new FlowDelegate());
-
     //set selection changed
     connect(this, &FlowTable::currentCellChanged, this, &FlowTable::selectChanged);
 
@@ -112,15 +109,7 @@ void FlowTable::addAction()
     addItem();
 
     int cache = editop->getCacheSize() - 1;
-//    emit editop->ui_selectindexUpdate(cache, EditOperator::GRAPHICAREA);
     emit editop->ui_funcindexUpdate(cache, -1, EditOperator::ADD, EditOperator::GRAPHICAREA);
-
-    //testing
-//    FlowCellWidget *cell = new FlowCellWidget();
-//    int hsize = cell->height();
-
-//    this->setRowHeight(row, hsize);
-//    this->setCellWidget(row, 0, cell);
 }
 
 void FlowTable::deleteAction()
@@ -129,9 +118,7 @@ void FlowTable::deleteAction()
     if(cur > 1){
         editop->deleteAction(cur);
         deleteItem(cur);
-//        emit editop->ui_selectindexUpdate(cur, EditOperator::GRAPHICAREA);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::GRAPHICAREA);
-
     }
 }
 
@@ -141,7 +128,6 @@ void FlowTable::cutAction()
     if(cur > 1){
         editop->cutAction(cur);
         deleteItem(cur);
-//        emit editop->ui_selectindexUpdate(cur, EditOperator::GRAPHICAREA);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::GRAPHICAREA);
     }
 }
@@ -161,7 +147,6 @@ void FlowTable::pasteAction()
         cur++;
         editop->pasteAction(cur);
         insertItem(cur);
-//        emit editop->ui_selectindexUpdate(cur, EditOperator::GRAPHICAREA);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::INSERT, EditOperator::GRAPHICAREA);
 
     }
@@ -173,7 +158,6 @@ void FlowTable::upAction()
     if(cur > 2){
         editop->swapAction(cur, cur - 1);
         swapItem(cur, cur - 1);
-//        emit editop->ui_selectindexUpdate(cur - 1, EditOperator::GRAPHICAREA);
         emit editop->ui_funcindexUpdate(cur - 1, cur, EditOperator::SWAP, EditOperator::GRAPHICAREA);
     }
 }
@@ -184,7 +168,6 @@ void FlowTable::downAction()
     if(cur < rowCount()){
         editop->swapAction(cur, cur + 1);
         swapItem(cur, cur + 1);
-//        emit editop->ui_selectindexUpdate(cur + 1, EditOperator::GRAPHICAREA);
         emit editop->ui_funcindexUpdate(cur + 1, cur, EditOperator::SWAP, EditOperator::GRAPHICAREA);
     }
 }
@@ -201,7 +184,6 @@ void FlowTable::reloadAction()
     }
 
     setRowCount(dataToUiIndex(counter));
-//    setRowCount(fixedRowFromId(editop->getCacheSize()));
 
 #ifdef QT_DEBUG
     qDebug()<< "profileflow::setFlowItem::reloadaction";
@@ -209,9 +191,6 @@ void FlowTable::reloadAction()
     time.start();
 #endif
 
-//    for(int i = 0; i < counter; i++){
-//        setFlowItem(i, false);
-//    }
     setAllFlowItem();
 
 #ifdef QT_DEBUG
@@ -220,11 +199,6 @@ void FlowTable::reloadAction()
 
     //hide last widget index arrow
     updateLastIndexItem(counter - 1);
-
-//    if(counter > 2){
-//        FlowCellWidget *cell = dynamic_cast<FlowCellWidget *>(this->cellWidget(counter - 1, 0));
-//        cell->hideArrow();
-    //    }
 }
 
 void FlowTable::updateIndex(QString operation)
@@ -254,42 +228,26 @@ void FlowTable::updateIndex(QString operation)
 void FlowTable::addItem()
 {
     int row = this->rowCount();
-//    this->setRowCount(row + 1);
     insertRow(row);
     setFlowItem(row + 1, false);
+
     updateLastIndexItem(row + 1);
-//    this->setCurrentCell(fixedRowFromId(id),0);
 }
 
 void FlowTable::deleteItem(int id)
 {
     int uid = dataToUiIndex(id);
     if(uid > 0){
-//        delete this->cellWidget(uid, 0);
         this->takeItem(uid, 0);
         this->removeCellWidget(uid, 0);
-//        delete this->takeItem(uid, 0);
-
         this->removeRow(uid);
-
-//        selectChanged(uid - 1, 0, -1, -1);
 
         //TODO:
         if(rowCount() == uid){
             updateLastIndexItem(uid);
         }
 
-//        this->setCurrentCell(uid-1, 0);
         this->selectRow(uid - 1);
-//        int rowc = this->rowCount();
-//        if(uid < (rowc - 1)){
-//            for(int i = uid + 1; i < rowc; i++){
-
-//            }
-//        }
-//        this->setItem(uid, 0, new QTableWidgetItem());
-//        this->removeRow(uid);
-//        this->setRowCount(uid);
     }
 }
 
@@ -297,35 +255,13 @@ void FlowTable::insertItem(int id)
 {
     int uid = dataToUiIndex(id);
     if(uid > 0){
-//        this->setRowCount(this->rowCount() + 1);
         this->insertRow(uid);
         replaceItem(id);
-
-//        this->takeItem(uid + 1, 0);
-//        this->removeCellWidget(uid + 1, 0);
-//        setFlowItem(id + 1, false);
-
-//        replaceItem(id);
     }
 }
 
 void FlowTable::swapItem(int before, int after)
 {
-//    int uibd = fixedRowFromId(before);
-//    int uiad = fixedRowFromId(after);
-
-//    FlowCellWidget *bef = qobject_cast<FlowCellWidget *>(this->cellWidget(uibd, 0));
-//    FlowCellWidget *aft = qobject_cast<FlowCellWidget *>(this->cellWidget(uiad, 0));
-
-//    this->takeItem(uibd, 0);
-//    this->takeItem(uiad, 0);
-
-//    this->removeCellWidget(before, 0);
-//    this->removeCellWidget(after, 0);
-
-//    this->setCellWidget(before, 0, aft);
-//    this->setCellWidget(after, 0, bef);
-
     this->takeItem(dataToUiIndex(before), 0);
     this->removeCellWidget(dataToUiIndex(before), 0);
     setFlowItem(before, false);
@@ -341,29 +277,11 @@ void FlowTable::swapItem(int before, int after)
         updateLastIndexItem(before);
     }
 
-//    selectRow(after);
-//    delete this->cellWidget(before,0);
-
-//    this->takeItem(uibd, 0);
-//    this->removeCellWidget(uibd, 0);
-//    setFlowItem(uibd, false);
-
-//    delete this->cellWidget(after,0);
-//    this->takeItem(uiad, 0);
-//    this->removeCellWidget(uiad, 0);
-//    setFlowItem(uiad, true);
-
-
-    //show widget
-//    this->selectRow(uibd);
-//    this->selectRow(uiad);
-//    setCurrentCell(after, 0);
 }
 
 void FlowTable::replaceItem(int id)
 {
     qDebug() << "EditorTab : replaceFlow";
-//    delete this->cellWidget(fixedRowFromId(id),0);
     this->takeItem(dataToUiIndex(id), 0);
     this->removeCellWidget(dataToUiIndex(id), 0);
     setFlowItem(id, true);
@@ -384,7 +302,6 @@ void FlowTable::selectChanged(int crow, int ccol, int prow, int pcol)
     cell = qobject_cast<FlowCellWidget *>(this->cellWidget(crow, ccol));
     if(cell != nullptr) cell->selectedItem();
 
-//    emit editop->ui_selectindexUpdate(fixedCurrentRow(), EditOperator::GRAPHICAREA);
     emit editop->ui_funcindexUpdate(fixedCurrentRow(), -1, EditOperator::SELECT, EditOperator::GRAPHICAREA);
 }
 
@@ -625,11 +542,6 @@ void FlowTable::setInfoItem(FlowCellWidget *cell, QList<QStringList> *list, int 
 {
     QString curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "(no name)" : curdata;
-//    cell->setType(TYPE_INFO, QPixmap(":/default_icons/info.png"));
-//    cell->setType(QString("Information"));
-//    cell->setTypepixmap(&(QIcon(":/default_icons/info.png").pixmap(16,16)));
-//    cell->setLabelcolor(&QString("color: black; background-color: rgb(230, 230, 230);"));
-//    cell->setFramecolor(&QString("background-color: rgb(120, 120, 120);"));
 
     cell->setTypeAll(info_title, &info_pixmap, &info_style, &info_frame);
     cell->hideArrow();
@@ -639,26 +551,14 @@ void FlowTable::setInfoItem(FlowCellWidget *cell, QList<QStringList> *list, int 
     tmp.append(QString("[version]     : %1<br>").arg(list->at(2).at(1)));
     tmp.append(QString("[author]      : %1<br>").arg(list->at(3).at(1)));
     tmp.append(QString("[description] : %1<br>").arg(list->at(4).at(1)));
-//    tmp.append(QString("last updated : %1").arg(list->at(5).at(1)));
-//    tmp.append(getHtmlFooter());
 
     cell->setContent(tmp);
-//    node->addLines(QStringList() << TYPE_INFO << "-----" << curdata);
-//    node->setPath(QColor(120,120,120), 2, QColor(230,230,230));
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void FlowTable::setNormalItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
 {
     int cmdskip = QString(list->at(firstpos + 1).at(1)).toInt();
-
-//    QString curdata;
-
-    //    cell->setType(TYPE_EXEC, QPixmap(":/default_icons/terminal.png"));
-//    cell->setType("Executable");
-//    cell->setTypepixmap(&exec_pixmap);
-//    cell->setTypecolor(&exec_style);
-//    cell->setFramecolor(&exec_frame);
 
     cell->setTypeAll(exec_title, &exec_pixmap, &exec_style, &exec_frame);
 
@@ -667,19 +567,9 @@ void FlowTable::setNormalItem(FlowCellWidget *cell, QList<QStringList> *list, in
     QFileInfo info(curdata);
     QString tmp = /*getHtmlHeader("") + */(info.isFile() ? info.fileName() : curdata);
 
-//    tmp.append(info.isFile() ? info.fileName() : curdata);
-//    if(info.isFile()){
-//        tmp.append(info.fileName());
-//    }else{
-//        tmp.append(curdata);
-//    }
-
     for(int i = 1; i < cmdskip; i++){
-//        tmp.append("<br>");
         tmp.append("<br>" + list->at(firstpos + 2 + i).at(1));
     }
-
-//    tmp.append(getHtmlFooter());
 
     cell->setContent(tmp);
 }
@@ -690,19 +580,11 @@ void FlowTable::setSearchItem(FlowCellWidget *cell, QList<QStringList> *list, in
     QString curdata;
     curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
-//    cell->setType("extra", QPixmap(":/default_icons/extra.png"));
-//    cell->setType(extra_title);
-//    cell->setTypepixmap(&extra_pixmap);
-//    cell->setLabelcolor(&extra_style);
-//    cell->setFramecolor(&extra_frame);
 
     cell->setTypeAll(search_title, &search_pixmap, &search_style, &search_frame);
 
     QString tmp = curdata + "<br>" \
             + tr("[separator] : %1").arg(list->at(firstpos + 1).at(1)) + "<br>";
-//    tmp.append("<br>");
-//    tmp.append(tr("Separator: %1").arg(list->at(firstpos + 1).at(1)));
-//    tmp.append("<br>");
 
     //variant or output
     if(static_cast<QString>(list->at(firstpos + 3).at(3)).toInt() == 0){
@@ -717,12 +599,6 @@ void FlowTable::setSearchItem(FlowCellWidget *cell, QList<QStringList> *list, in
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void FlowTable::setPluginsItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
 {
-//    cell->setType(TYPE_SCRIPT, QPixmap(":/default_icons/extras.png"));
-//    cell->setType(extra_title);
-//    cell->setTypepixmap(&extra_pixmap);
-//    cell->setLabelcolor(&extra_style);
-//    cell->setFramecolor(&extra_frame);
-
     QString curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
 
@@ -742,16 +618,10 @@ void FlowTable::setPluginsItem(FlowCellWidget *cell, QList<QStringList> *list, i
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void FlowTable::setOtherItem(FlowCellWidget *cell, QList<QStringList> *list, int firstpos)
 {
-//    cell->setType(TYPE_ANOTHER, QPixmap(":/default_icons/others.png"));
-//    cell->setType(other_title);
-//    cell->setTypepixmap(&other_pixmap);
-//    cell->setLabelcolor(&other_style);
-//    cell->setFramecolor(&other_frame);
     QString curdata = list->at(firstpos).at(1);
     curdata = (curdata == "")? "Unknown" : curdata;
 
     cell->setTypeAll(other_title, &other_pixmap, &other_style, &other_frame);
-
     cell->setContent(curdata);
 }
 
@@ -766,14 +636,3 @@ void FlowTable::updateLastIndexItem(int lastindex)
     }
 }
 
-//QString FlowTable::getHtmlHeader(QString headcssstr)
-//{
-//    QString result = QString("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
-//                             "<html><head><style type=\"text/css\">%1</style></head><body>").arg(headcssstr);
-//    return result;
-//}
-
-//QString FlowTable::getHtmlFooter()
-//{
-//    return "</body></html>";
-//}

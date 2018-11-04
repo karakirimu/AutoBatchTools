@@ -8,14 +8,10 @@
 #include <QWidget>
 #include <QObject>
 #include <QMenu>
+
 #include <editoperator.h>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
-//#include <../xmlbuilder/localloader/profileeditorxmlbuilder.h>
-//#include <pesharedfunction.h>
 #include <../variantconverter/variantconverter.h>
-//#include <fileoperationsignalbinder.h>
-
-//class FileOperationSignalBinder;
 
 class ProfileTreeWidget : public QTreeWidget
 {
@@ -24,10 +20,6 @@ public:
     explicit ProfileTreeWidget(QWidget *parent = nullptr);
     ~ProfileTreeWidget();
 
-    //for order "1". it becomes to be unique order.
-//    int rowFromItem(QTreeWidgetItem *item);
-//    void setSharedFunction(PESharedFunction *func);
-//    void setWidgetsSignalBinder(FileOperationSignalBinder *bind);
     void setEditOperator(EditOperator *op);
 
     //format : %1,%2
@@ -44,21 +36,8 @@ public slots:
     void downAction();
     void reloadAction();
 
-//    void readItem(int itemid, QList<QStringList> *itemlist);
-//    void saveAction();
-//    void saveOverWriteAction();
-
-//    void saveCurrentAction();
 signals:
     void editActionKeyPressed();
-//    void indexChanged(int);
-
-//    void data_add();
-//    void data_insert(int index);
-//    void data_delete(int index);
-//    void data_replace(int index, bool isup);
-//    void data_editread(int index, QList<QStringList> *indexlist);
-//    void data_editwrite(int index, QList<QStringList> *itemlist);
 
 private slots:
     void rowSelected();
@@ -106,11 +85,6 @@ private:
 
     EditOperator *editop;
     ProcessXmlListGenerator xgen;
-//    ProfileEditorXmlBuilder *builder;
-//    PESharedFunction *sfunction;
-//    FileOperationSignalBinder *binder;
-//    QString tmp;
-//    QString currentfile;
 
     //for reduce read time
     const QIcon exec_icon = QIcon(":/default_icons/terminal.png");
