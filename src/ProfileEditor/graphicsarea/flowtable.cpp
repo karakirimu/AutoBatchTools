@@ -213,10 +213,10 @@ void FlowTable::updateIndex(QString operation)
         addItem();
     }else if(sep.at(1) == UNDOREDO_DELETE){
         //del
-        deleteItem(uiIndexToData(static_cast<QString>(sep.at(0)).toInt()));
+        deleteItem(static_cast<QString>(sep.at(0)).toInt());
     }else if(sep.at(1) == UNDOREDO_INSERT){
         //ins
-        insertItem(uiIndexToData(static_cast<QString>(sep.at(0)).toInt()));
+        insertItem(static_cast<QString>(sep.at(0)).toInt());
     }else{
         //swap
         int first = static_cast<QString>(sep.at(0)).toInt();
@@ -229,9 +229,11 @@ void FlowTable::addItem()
 {
     int row = this->rowCount();
     insertRow(row);
-    setFlowItem(row + 1, false);
+    setFlowItem(uiIndexToData(row), false);
 
-    updateLastIndexItem(row + 1);
+    updateLastIndexItem(uiIndexToData(row));
+    excludeSelector(row, 0, this->currentRow(), 0);
+
 }
 
 void FlowTable::deleteItem(int id)
@@ -248,6 +250,9 @@ void FlowTable::deleteItem(int id)
         }
 
         this->selectRow(uid - 1);
+
+//        There may be no previous element
+        excludeSelector(uid - 1, 0, uid - 1, 0);
     }
 }
 
@@ -270,31 +275,65 @@ void FlowTable::swapItem(int before, int after)
 
     //arrow TODO:
     int cache = editop->getCacheSize() - 1;
-    if(cache == after){
-        updateLastIndexItem(after);
-    }
-    if(cache == before){
-        updateLastIndexItem(before);
-    }
-
+    if(cache == after)  updateLastIndexItem(after);
+    if(cache == before) updateLastIndexItem(before);
 }
 
 void FlowTable::replaceItem(int id)
 {
-    qDebug() << "EditorTab : replaceFlow";
+    qDebug() << "EditorTab : replaceItem : " << id;
     this->takeItem(dataToUiIndex(id), 0);
     this->removeCellWidget(dataToUiIndex(id), 0);
-    setFlowItem(id, true);
+    setFlowItem(id, false);
+
     if(dataToUiIndex(editop->getCacheSize()) == id){
         updateLastIndexItem(id);
     }
+
+    excludeSelector(dataToUiIndex(id), 0, this->currentRow(), 0);
 }
 
 void FlowTable::selectChanged(int crow, int ccol, int prow, int pcol)
 {
     qDebug() << "FlowTable::selectChanged";
+    excludeSelector(crow, ccol, prow, pcol);
+
+    emit editop->ui_funcindexUpdate(fixedCurrentRow(), -1, EditOperator::SELECT, EditOperator::GRAPHICAREA);
+}
+
+void FlowTable::onItemStatusChanged(int after, int before, int function, int sendfrom)
+{
+#ifdef QT_DEBUG
+    qDebug() << "FlowTable::onItemStatusChanged : index : " << after \
+             << " function : " << function;
+
+#endif
+    if(sendfrom == EditOperator::GRAPHICAREA) return;
+
+    switch (function) {
+    case EditOperator::ADD:
+    case EditOperator::INSERT:
+        insertItem(after);
+        break;
+    case EditOperator::DELETE:
+        deleteItem(after);
+        break;
+    case EditOperator::SWAP:
+        swapItem(before, after);
+        break;
+    case EditOperator::SELECT:
+        this->selectRow(dataToUiIndex(after));
+        break;
+    default:
+        break;
+    }
+}
+
+void FlowTable::excludeSelector(int crow, int ccol, int prow, int pcol)
+{
     FlowCellWidget *cell;
 
+    //cell color change
     //unselect prev
     cell = qobject_cast<FlowCellWidget *>(this->cellWidget(prow, pcol));
     if(cell != nullptr) cell->unSelectedItem();
@@ -302,29 +341,8 @@ void FlowTable::selectChanged(int crow, int ccol, int prow, int pcol)
     cell = qobject_cast<FlowCellWidget *>(this->cellWidget(crow, ccol));
     if(cell != nullptr) cell->selectedItem();
 
-    emit editop->ui_funcindexUpdate(fixedCurrentRow(), -1, EditOperator::SELECT, EditOperator::GRAPHICAREA);
-}
-
-void FlowTable::onItemStatusChanged(int after, int before, int function, int sendfrom)
-{
-    if(sendfrom == EditOperator::GRAPHICAREA) return;
-
-    switch (function) {
-    case EditOperator::ADD:
-        addItem();
-        break;
-    case EditOperator::DELETE:
-        deleteItem(after);
-        break;
-    case EditOperator::INSERT:
-        insertItem(after);
-        break;
-    case EditOperator::SWAP:
-        swapItem(before, after);
-        break;
-    default:
-        break;
-    }
+    //table select change
+    this->selectRow(crow);
 }
 
 int FlowTable::fixedCurrentRow()
@@ -371,8 +389,8 @@ void FlowTable::setPopupActionTop()
     contextMenu->addSeparator();
 
     //connect signals
-    connect(m_add, SIGNAL(triggered()), this, SLOT(addAction()));
-    connect(m_delete, SIGNAL(triggered()), this, SLOT(deleteAction()));
+    connect(m_add, &QAction::triggered, this, &FlowTable::addAction);
+    connect(m_delete, &QAction::triggered, this, &FlowTable::deleteAction);
 }
 
 void FlowTable::setPopupActionDefault()
@@ -497,6 +515,7 @@ void FlowTable::setAllFlowItem()
         if(type != TYPE_LOCAL){
             this->setRowHeight(dataToUiIndex(n), cell->height());
             this->setCellWidget(dataToUiIndex(n), 0, cell);
+
         }else{
             delete cell;
         }
@@ -510,7 +529,7 @@ void FlowTable::setAllFlowItem()
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void FlowTable::setTempItem(FlowCellWidget *cell, QList<QStringList> *list)
 {
-    int istack = QString(list->at(1).at(1)).toInt();
+    int istack = static_cast<QString>(list->at(1).at(1)).toInt();
 
     QHash<int, int> hlist;
     xgen.getListStructure(list, &hlist);

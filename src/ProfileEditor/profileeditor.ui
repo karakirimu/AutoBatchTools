@@ -486,17 +486,31 @@
              </item>
              <item>
               <widget class="QPlainTextEdit" name="descTextEdit">
+               <property name="font">
+                <font>
+                 <kerning>true</kerning>
+                </font>
+               </property>
                <property name="cursor" stdset="0">
                 <cursorShape>IBeamCursor</cursorShape>
                </property>
                <property name="mouseTracking">
                 <bool>true</bool>
                </property>
+               <property name="contextMenuPolicy">
+                <enum>Qt::DefaultContextMenu</enum>
+               </property>
                <property name="frameShape">
                 <enum>QFrame::NoFrame</enum>
                </property>
                <property name="lineWidth">
                 <number>0</number>
+               </property>
+               <property name="undoRedoEnabled">
+                <bool>true</bool>
+               </property>
+               <property name="lineWrapMode">
+                <enum>QPlainTextEdit::WidgetWidth</enum>
                </property>
                <property name="cursorWidth">
                 <number>1</number>

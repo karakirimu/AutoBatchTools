@@ -44,12 +44,15 @@ private slots:
     void onItemStatusChanged(int after, int before, int function, int sendfrom);
 
 private:
+    // argument is ui index
+    void excludeSelector(int crow, int ccol, int prow, int pcol);
+
 //    void mousePressEvent(QMouseEvent *event);
     int fixedCurrentRow();
-    int dataToUiIndex(int id);
+    inline int dataToUiIndex(int id);
 
     //from ui index to xml data
-    int uiIndexToData(int id);
+    inline int uiIndexToData(int id);
 
     void setPopupActionTop();
     void setPopupActionDefault();

@@ -1,7 +1,4 @@
 #include "editoperator.h"
-#include "xmllistgenerator.h"
-
-#include <QMainWindow>
 
 EditOperator::EditOperator(QObject *parent)
     : QObject(parent)

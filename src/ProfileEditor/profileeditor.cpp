@@ -216,7 +216,6 @@ void ProfileEditor::openAction()
                                                     QDir::currentPath()).toString(), tr("Profile (*.xml *.apro)"));
 
     if(fileName != ""){
-//          preResetUi();
         settings.setValue("profileeditor/lastopened", QFileInfo(fileName).canonicalPath());
         editop->openAction(fileName);
         initUi();
@@ -248,122 +247,95 @@ bool ProfileEditor::saveAction()
 
 void ProfileEditor::undoAction()
 {
-    if(editop->getUndostack()->canUndo()){
-        QUndoStack *stack = editop->getUndostack();
-        stack->undo();
+    if(!editop->getUndostack()->canUndo()) return;
 
-        //TODO: not efficient
-//        ui->runTreeWidget->reloadAction();
-//        ui->variantTableWidget->reloadAction();
-//        ui->flowTableWidget->reloadAction();
+    editop->getUndostack()->undo();
 
-        // update ui element
-        QString text = editop->getUndostack()->redoText();
+    // update ui element
+    QString text = editop->getUndostack()->redoText();
 
-        int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9](,|)(|[0-9]|[A-Z]+))\\)+$"));
-        QString rep = text.mid(0,lastindex);
+    int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9](,|)(|[0-9]|[A-Z]+))\\)+$"));
+    QString rep = text.mid(0,lastindex);
 
-        // +3 means string of " ^(", -1 means string of ")";
-        QString updop = text.mid(lastindex + 3, text.length() - lastindex - 4);
+    // +3 means string of " ^(", -1 means string of ")";
+    QString updop = text.mid(lastindex + 3, text.length() - lastindex - 4);
 
-        ui->runTreeWidget->updateIndex(updop);
-        ui->flowTableWidget->updateIndex(updop);
-    }
+    ui->runTreeWidget->updateIndex(updop);
+    ui->flowTableWidget->updateIndex(updop);
+    ui->editorTab->updateIndex(updop);
+    ui->innerStackedWidget->updateIndex(updop);
 }
 
 void ProfileEditor::redoAction()
 {
-    if(editop->getUndostack()->canRedo()){
-        editop->getUndostack()->redo();
-        //TODO: not efficient
-//        ui->runTreeWidget->reloadAction();
-//        ui->variantTableWidget->reloadAction();
-//        ui->flowTableWidget->reloadAction();
+    if(!editop->getUndostack()->canRedo()) return;
 
-        // update ui element
-        QString text = editop->getUndostack()->undoText();
+    editop->getUndostack()->redo();
 
-        int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9](,|)(|[0-9]|[A-Z]+))\\)+$"));
-        QString rep = text.mid(0,lastindex);
+    // update ui element
+    QString text = editop->getUndostack()->undoText();
 
-        // +3 means string of " ^(", -1 means string of ")";
-        QString updop = text.mid(lastindex + 3, text.length() - lastindex - 4);
+    int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9](,|)(|[0-9]|[A-Z]+))\\)+$"));
+    QString rep = text.mid(0,lastindex);
 
-        ui->runTreeWidget->updateIndex(updop);
-        ui->flowTableWidget->updateIndex(updop);
+    // +3 means string of " ^(", -1 means string of ")";
+    QString updop = text.mid(lastindex + 3, text.length() - lastindex - 4);
 
-    }
+    ui->runTreeWidget->updateIndex(updop);
+    ui->flowTableWidget->updateIndex(updop);
+    ui->editorTab->updateIndex(updop);
+    ui->innerStackedWidget->updateIndex(updop);
 }
 
 void ProfileEditor::addAction()
 {
     editop->addAction();
-
-//    emit editop->ui_selectindexUpdate(editop->getCacheSize() - 1, EditOperator::MAINEDITOR);
     emit editop->ui_funcindexUpdate(editop->getCacheSize() - 1, -1, EditOperator::ADD, EditOperator::MAINEDITOR);
 
 }
 
 void ProfileEditor::deleteAction()
 {
-    if(rowpos > 1){
-    //    binder->deleteItem(treerowpos);
-        editop->deleteAction(rowpos);
-        //emit editop->ui_selectindexUpdate(, EditOperator::MAINEDITOR);
+    if(dataindexpos <= 1) return;
+    editop->deleteAction(dataindexpos);
+    emit editop->ui_funcindexUpdate(dataindexpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
 
-//        emit editop->ui_selectindexUpdate(rowpos -1, EditOperator::MAINEDITOR);
-        emit editop->ui_funcindexUpdate(rowpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
-
-        rowpos--;
-    }
+    dataindexpos--;
 }
 
 void ProfileEditor::cutAction()
 {
-    if(rowpos > 1){
-        editop->cutAction(rowpos);
-//        emit editop->ui_selectindexUpdate(rowpos -1, EditOperator::MAINEDITOR);
-        emit editop->ui_funcindexUpdate(rowpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
+    if(dataindexpos <= 1) return;
+    editop->cutAction(dataindexpos);
+    emit editop->ui_funcindexUpdate(dataindexpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
 
-        rowpos--;
-    }
+    dataindexpos--;
 }
 
 void ProfileEditor::copyAction()
 {
-//    ui->runTreeWidget->copyAction();
-    if(rowpos > 1){
-        editop->copyAction(rowpos);
-    }
+    if(dataindexpos > 1) editop->copyAction(dataindexpos);
 }
 
 void ProfileEditor::pasteAction()
 {
-    if(rowpos > 1){
-        editop->pasteAction(rowpos);
-//        emit editop->ui_selectindexUpdate(rowpos, EditOperator::MAINEDITOR);
-        emit editop->ui_funcindexUpdate(rowpos, -1, EditOperator::INSERT, EditOperator::MAINEDITOR);
-    }
+    if(dataindexpos <= 1) return;
+    editop->pasteAction(dataindexpos);
+    emit editop->ui_funcindexUpdate(dataindexpos, -1, EditOperator::INSERT, EditOperator::MAINEDITOR);
 }
 
 void ProfileEditor::upAction()
 {
-//    binder->upItem(treerowpos);
-    if(rowpos > 2){
-        editop->swapAction(rowpos, rowpos - 1);
-//        emit editop->ui_selectindexUpdate(rowpos - 1, EditOperator::MAINEDITOR);
-        emit editop->ui_funcindexUpdate(rowpos - 1, rowpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
-    }
+    if(dataindexpos <= 2) return;
+    editop->swapAction(dataindexpos, dataindexpos - 1);
+    emit editop->ui_funcindexUpdate(dataindexpos - 1, dataindexpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
 }
 
 void ProfileEditor::downAction()
 {
-//    binder->downItem(treerowpos);
-    if(rowpos > 0){
-        editop->swapAction(rowpos, rowpos + 1);
-//        emit editop->ui_selectindexUpdate(rowpos + 1, EditOperator::MAINEDITOR);
-        emit editop->ui_funcindexUpdate(rowpos + 1, rowpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
-    }
+    if(dataindexpos <= 0) return;
+    editop->swapAction(dataindexpos, dataindexpos + 1);
+    emit editop->ui_funcindexUpdate(dataindexpos + 1, dataindexpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
 }
 
 void ProfileEditor::launchSettingAction()
@@ -406,7 +378,6 @@ void ProfileEditor::themeChangeAction()
 
 void ProfileEditor::overWriteSaveAction()
 {
-//     sfunction->saveEditOverWriteAction(this);
     if(editop->getLoadfile().contains(".autosave")) {
         QString fileName =
                 fdialog->getSaveFileName(this,\
@@ -415,7 +386,6 @@ void ProfileEditor::overWriteSaveAction()
                                          tr("APRO Files (*.apro)"));
 
         editop->saveAction(fileName);
-//        loadfile = fileName;
     }else{
         editop->saveAction(editop->getLoadfile());
     }
@@ -423,7 +393,6 @@ void ProfileEditor::overWriteSaveAction()
 
 void ProfileEditor::exportAction()
 {
-//    sfunction->exportData(this);
     QString fileName =
             fdialog->getSaveFileName(this,\
                                      tr("Export XML file"),\
@@ -438,15 +407,12 @@ void ProfileEditor::onTitleChanged(QString newload)
     QFileInfo info(newload);
     if(info.suffix() == "autosave"){
         newtitle = tr("untitled");
-//        genfile = newload;
     }else{
         newtitle = info.fileName();
     }
 
     setWindowTitle(newtitle + tr(" - ProfileEditor"));
 
-    //update filepath
-//    setLoadfile(newload);
 }
 
 void ProfileEditor::onFileEdited(bool edited)
@@ -459,9 +425,7 @@ void ProfileEditor::onFileEdited(bool edited)
 
     }else{
         //remove first *
-        if(title.at(0) == "*"){
-            setWindowTitle(title.remove(0,1));
-        }
+        if(title.at(0) == "*") setWindowTitle(title.remove(0,1));
     }
 }
 
@@ -475,15 +439,14 @@ void ProfileEditor::itemChangedAction(int after, int before, int function, int s
 
     //update row position
 //    if(sendfrom == EditOperator::MAINEDITOR) return;
-    rowpos = after;
+    dataindexpos = after;
 
     //reset undo command
 //    editop->getUndostack()->clear();
 //    ui->actionUndo->setText(tr("Undo"));
 //    ui->actionRedo->setText(tr("Redo"));
-    qDebug() << "IsClean : " << editop->getUndostack()->isClean();
-//    if(!lastedited) editop->getUndostack()->clear();
-//    editop->getUndostack()->clear();
+//    qDebug() << "IsClean : " << editop->getUndostack()->isClean();
+//    initUndo();
 }
 
 void ProfileEditor::about()
@@ -589,13 +552,6 @@ void ProfileEditor::updateRangeText(QString range)
     mlTask->setRange(key, range);
 }
 
-//void ProfileEditor::setTreerowpos_update(int after, int before, int function, int sendfrom)
-//{
-//    Q_UNUSED(before); Q_UNUSED(function); Q_UNUSED(sendfrom);
-////    if(sendfrom == EditOperator::MAINEDITOR) return;
-//    rowpos = after;
-//}
-
 void ProfileEditor::onUndoTextChanged(QString text)
 {
     //remove operation
@@ -646,11 +602,6 @@ void ProfileEditor::initStatusBar()
     connect(mlTask, &MultiTaskP::processCurrent, progressbar, &QProgressBar::setValue);
 }
 
-//void ProfileEditor::setLoadfile(const QString &value)
-//{
-//    loadfile = value;
-//}
-
 //when opening new file
 void ProfileEditor::initUi()
 {
@@ -665,8 +616,20 @@ void ProfileEditor::initUi()
     this->blockSignals(false);
 
     //reset tree row position
-    rowpos = 0;
+    dataindexpos = 0;
 
+    //first undo redo clean
+    firstclean = true;
+
+}
+
+void ProfileEditor::initUndo()
+{
+    if(!firstclean) return;
+
+    //enable undocommand
+    editop->getUndostack()->clear();
+    firstclean = false;
 }
 
 void ProfileEditor::setRunButtonState(bool run, bool pause, bool stop)

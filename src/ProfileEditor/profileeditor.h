@@ -57,10 +57,8 @@ private slots:
     void onTitleChanged(QString newload);
     void onFileEdited(bool edited);
 
+    //item select change
     void itemChangedAction(int after, int before, int function, int sendfrom);
-
-    //tree acesss
-//    void setTreerowpos_update(int after, int before, int function, int sendfrom);
 
     //undo,redo command
     void onUndoTextChanged(QString text);
@@ -84,10 +82,9 @@ private slots:
     void about();
 
 private:
-//    void setLoadfile(const QString &value);
-
     void initStatusBar();
     void initUi();
+    void initUndo();
 
     //run pause stop button selection
     void setRunButtonState(bool run, bool pause, bool stop);
@@ -102,14 +99,16 @@ private:
     SettingDialog *settingdialog;
     QFileDialog *fdialog;
 
-    //current row position
-    int rowpos;
+    //current data position
+    int dataindexpos;
 
     //filename save
-//    QString loadfile;
-//    QString genfile;
     bool lastedited = false;
 
+    //initial process
+    bool firstclean = false;
+
+    //function manage
     EditOperator *editop;
 
     //key is thread name

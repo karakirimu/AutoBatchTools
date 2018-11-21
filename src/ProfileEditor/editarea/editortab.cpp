@@ -115,6 +115,29 @@ void EditorTab::setEditOperator(EditOperator *op)
     connect(extrafuncTableWidget, &CommandTable::swapTable, this, &EditorTab::editSwapTableAction);
 }
 
+void EditorTab::updateIndex(QString operation)
+{
+    QStringList sep = operation.split(",");
+
+    if(sep.count() < 2){
+        //edit
+        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
+                            EditOperator::SELECT, EditOperator::MAINEDITOR);
+
+    }else if(sep.at(1) == UNDOREDO_ADD){
+        //add
+//        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
+//                            EditOperator::SELECT, EditOperator::MAINEDITOR);
+    }else if(sep.at(1) == UNDOREDO_DELETE){
+        //del
+
+    }else if(sep.at(1) == UNDOREDO_INSERT){
+        //ins
+        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
+                            EditOperator::SELECT, EditOperator::MAINEDITOR);
+    }
+}
+
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void EditorTab::setNormalDataList(QList<QStringList> *list, int firstpos)
 {
@@ -251,14 +274,11 @@ void EditorTab::setCombinedDataList(int after, int before, int function, int sen
         currentid = after;
         xgen.getListStructure(list, &hlist);
 
-        //no file showing module
-    //    int cmdskip = (QString)(list->at(sfunction->firstPosNormal() + 1).at(1)).toInt();
-
         //set widget selection
         if(hlist.count() > 1){
-            disconnect(this, &EditorTab::currentChanged, this, &EditorTab::tabChanged);
+            this->blockSignals(true);
             setCurrentIndex(static_cast<QString>(list->at(1).at(1)).toInt());
-            connect(this, &EditorTab::currentChanged, this, &EditorTab::tabChanged);
+            this->blockSignals(false);
         }
 
         //load type=normal
@@ -420,7 +440,6 @@ void EditorTab::editTableAction(int index, QString str, int function)
     }else if(objname == "extrafuncTableWidget"){
         editop->tableEditPluginAction(currentid, index, str, function);
     }
-//    editop->editTableAction(currentid, index, str, function, objname);
 
 }
 

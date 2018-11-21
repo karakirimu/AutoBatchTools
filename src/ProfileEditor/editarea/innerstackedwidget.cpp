@@ -1,9 +1,5 @@
 #include "innerstackedwidget.h"
 
-#include <QLabel>
-#include <QLineEdit>
-#include <QPlainTextEdit>
-
 InnerStackedWidget::InnerStackedWidget(QWidget *parent) : QStackedWidget(parent)
 {
 }
@@ -34,14 +30,9 @@ void InnerStackedWidget::setEditOperator(EditOperator *op)
     rlargs = stackwidget->findChild<QSpinBox *>("loopArgumentsSpinBox");
     reloop = stackwidget->findChild<QSpinBox *>("loopRecursiveSpinBox");
     rlabel = stackwidget->findChild<QLabel *>("loopMaxLabel");
-//    searchinput = stackwidget->findChild<QFrame *>("searchInput");
-//    loopcountmax = stackwidget->findChild<QFrame *>("loopCountMax");
 
-//    connect(editop, &EditOperator::ui_selectindexUpdate, this, &InnerStackedWidget::setInfoDataList);
-//    connect(editop, &EditOperator::ui_selectindexUpdate, this, &InnerStackedWidget::moveStacked);
     connect(editop, &EditOperator::ui_funcindexUpdate, this, &InnerStackedWidget::setInfoDataList);
     connect(editop, &EditOperator::ui_funcindexUpdate, this, &InnerStackedWidget::moveStacked);
-    //    connect(editop, &EditOperator::editUpdate, this, &InnerStackedWidget::updateInfoDataList);
 
     connect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editProjectNameAction);
     connect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editVerAction);
@@ -73,146 +64,112 @@ void InnerStackedWidget::moveStacked(int after, int before, int function, int se
     }
 }
 
+void InnerStackedWidget::updateIndex(QString operation)
+{
+    QStringList sep = operation.split(",");
+
+    if(sep.count() < 2){
+        //edit
+        setInfoDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
+                            EditOperator::SELECT, EditOperator::MAINEDITOR);
+    }else if(sep.at(0) == "1" && sep.at(1) == UNDOREDO_DELETE){
+        //change stack
+        moveStacked(0, -1, EditOperator::SELECT, EditOperator::MAINEDITOR);
+
+    }else if(sep.at(0) == "1" && sep.at(1) == UNDOREDO_ADD){
+        //change stack
+        moveStacked(1, -1, EditOperator::SELECT, EditOperator::MAINEDITOR);
+
+    }
+}
+
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void InnerStackedWidget::setInfoDataList(int after, int before, int function, int sendfrom)
 {
-    Q_UNUSED(before); Q_UNUSED(function); Q_UNUSED(sendfrom);
+    Q_UNUSED(before); Q_UNUSED(sendfrom);
 
+    // If the erased element is 1 and there are no subsequent elements.
+    if(editop->getCacheSize() < 4
+            && function == EditOperator::DELETE){
+        //change stack
+        moveStacked(0, -1, EditOperator::SELECT, EditOperator::MAINEDITOR);
+    }
+
+    // update information ui
     if(after != 0) return;
 
     QList<QStringList> *list = new QList<QStringList>();
 
     if(editop->read(after, list)){
+        ProcessXmlListGenerator pxlg;
 
-        //discon
-//        disconnect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-//        disconnect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-//        disconnect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-//        disconnect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
-//        disconnect(finput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-//        disconnect(sinput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-//        disconnect(fscombo, &SearchComboBox::currentTextChanged, this, &InnerStackedWidget::editTextAction);
-//        disconnect(rloop, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-//        disconnect(rloopmax, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
-//        disconnect(rlargs, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
-//        disconnect(reloop, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
         this->blockSignals(true);
 
-        name->setText(list->at(1).at(1));
-        ver->setText(list->at(2).at(1));
-        author->setText(list->at(3).at(1));
-        desc->setPlainText(list->at(4).at(1));
+//        name->setText(list->at(1).at(1));
+//        ver->setText(list->at(2).at(1));
+//        author->setText(list->at(3).at(1));
+//        desc->setPlainText(list->at(4).at(1));
+        name->setText(pxlg.fetch(I_NAME, ATTR_NONE, list));
+        ver->setText(pxlg.fetch(I_VERSION, ATTR_NONE, list));
+        author->setText(pxlg.fetch(I_AUTHOR, ATTR_NONE, list));
+        desc->setPlainText(pxlg.fetch(I_DESCRIPTION, ATTR_NONE, list));
 
         // versionup step
-        if(list->count() > 5){
-            finput->setChecked(VariantConverter::stringToBool(list->at(5).at(1)));
-            sinput->setChecked(VariantConverter::stringToBool(list->at(6).at(1)));
-            fscombo->reloadComboBoxItem();
-            fscombo->setCurrentText(list->at(7).at(1));
-            rloop->setChecked(VariantConverter::stringToBool(list->at(8).at(1)));
-            rloopmax->setValue(static_cast<QString>(list->at(8).at(3)).toInt());
-            rlargs->setValue(static_cast<QString>(list->at(9).at(1)).toInt());
-            reloop->setValue(static_cast<QString>(list->at(10).at(1)).toInt());
+//        if(list->count() > 5){
+//            finput->setChecked(VariantConverter::stringToBool(list->at(5).at(1)));
+//            sinput->setChecked(VariantConverter::stringToBool(list->at(6).at(1)));
+//            fscombo->reloadComboBoxItem();
+//            fscombo->setCurrentText(list->at(7).at(1));
+//            rloop->setChecked(VariantConverter::stringToBool(list->at(8).at(1)));
+//            rloopmax->setValue(static_cast<QString>(list->at(8).at(3)).toInt());
+//            rlargs->setValue(static_cast<QString>(list->at(9).at(1)).toInt());
+//            reloop->setValue(static_cast<QString>(list->at(10).at(1)).toInt());
 
-            bool check = VariantConverter::stringToBool(list->at(6).at(1));
-            addbutton->setVisible(check);
-            editbutton->setVisible(check);
-            deletebutton->setVisible(check);
-            fscombo->setVisible(check);
+//            bool check = VariantConverter::stringToBool(list->at(6).at(1));
+//            addbutton->setVisible(check);
+//            editbutton->setVisible(check);
+//            deletebutton->setVisible(check);
+//            fscombo->setVisible(check);
 
-            check = VariantConverter::stringToBool(list->at(8).at(1));
-            rlabel->setVisible(!check);
-            rloopmax->setVisible(!check);
+//            check = VariantConverter::stringToBool(list->at(8).at(1));
+//            rlabel->setVisible(!check);
+//            rloopmax->setVisible(!check);
 
-        }
+//        }
 
-//        rlabel->setText(list->at(5).at(1));
+        finput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT, ATTR_NONE, list)));
+        sinput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list)));
+        fscombo->reloadComboBoxItem();
+        fscombo->setCurrentText(pxlg.fetch(I_FILESEARCH_NAME, ATTR_NONE, list));
+        rloop->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list)));
+        rloopmax->setValue(static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_MAXCOUNT, list)).toInt());
+        rlargs->setValue(static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, list)).toInt());
+        reloop->setValue(static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOPCOUNT, ATTR_NONE, list)).toInt());
 
-        //recon
-//        connect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-//        connect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-//        connect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-//        connect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
-//        connect(finput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-//        connect(sinput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-//        connect(fscombo, &SearchComboBox::currentTextChanged, this, &InnerStackedWidget::editTextAction);
-//        connect(rloop, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-//        connect(rloopmax, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
-//        connect(rlargs, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
-//        connect(reloop, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
+        bool check = VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list));
+        addbutton->setVisible(check);
+        editbutton->setVisible(check);
+        deletebutton->setVisible(check);
+        fscombo->setVisible(check);
+
+        check = VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list));
+        rlabel->setVisible(!check);
+        rloopmax->setVisible(!check);
+
         this->blockSignals(false);
     }
 
     delete list;
 }
 
-//void InnerStackedWidget::updateInfoDataList(int index)
-//{
-//    if(index != 0) return;
-
-//    QList<QStringList> *list = new QList<QStringList>();
-
-//    if(editop->read(index, list)){
-
-//        //discon
-//        disconnect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-//        disconnect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-//        disconnect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-//        disconnect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
-
-//        name->setText(list->at(1).at(1));
-//        ver->setText(list->at(2).at(1));
-//        author->setText(list->at(3).at(1));
-//        desc->setPlainText(list->at(4).at(1));
-//        rlabel->setText(list->at(5).at(1));
-
-//        //recon
-//        connect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-//        connect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-//        connect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editTextAction);
-//        connect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editPlainTextAction);
-//    }
-
-//    delete list;
-//}
-
-//void InnerStackedWidget::clearInfoDataListForm()
-//{
-//    QList<QLineEdit *> menber = currentWidget()->findChildren<QLineEdit *>();
-//    foreach(QLineEdit *edit, menber){
-//        edit->clear();
-//    }
-
-//    QLabel *rlabel = currentWidget()->findChild<QLabel *>("refreshDateLabel");
-//    rlabel->setText("-");
-//}
-
-//void InnerStackedWidget::editTextAction(QString text)
-//{
-//    QString objname = this->sender()->objectName();
-//#ifdef QT_DEBUG
-//    qDebug() << "InnerStackedWidget::edittextaction : " << objname;
-//#endif
-//    if(objname == "searchInputComboBox"){
-//        editop->comboboxSearchAction(0, text, fscombo->currentIndex());
-//    }else{
-//        editop->editTextAction(0, text, objname);
-//    }
-//}
-
-//void InnerStackedWidget::editFileOutputAction(QString text)
-//{
-//#ifdef QT_DEBUG
-//    qDebug() << "InnerStackedWidget::editFileOutputAction : ";
-//#endif
-////    editop->tex
-//}
-
 void InnerStackedWidget::editAuthorAction(QString text)
 {
 #ifdef QT_DEBUG
     qDebug() << "InnerStackedWidget::editAuthorAction : ";
 #endif
+
+    // textChanged will also be called if the text changes to empty.
+    if(text == "") return;
     editop->textProjectAuthorAction(0,text);
 }
 
@@ -221,6 +178,9 @@ void InnerStackedWidget::editProjectNameAction(QString text)
 #ifdef QT_DEBUG
     qDebug() << "InnerStackedWidget::editProjectNameAction : ";
 #endif
+
+    // textChanged will also be called if the text changes to empty.
+    if(text == "") return;
     editop->textProjectNameAction(0, text);
 }
 
@@ -229,17 +189,22 @@ void InnerStackedWidget::editVerAction(QString text)
 #ifdef QT_DEBUG
     qDebug() << "InnerStackedWidget::editVerAction : ";
 #endif
+
+    // textChanged will also be called if the text changes to empty.
+    if(text == "") return;
     editop->textProjectVerAction(0, text);
 }
 
 void InnerStackedWidget::editDescriptionAction()
 {
-//    QString objname = this->sender()->objectName();
 #ifdef QT_DEBUG
-    qDebug() << "InnerStackedWidget::editdescriptionaction : " /*<< objname*/;
+    qDebug() << "InnerStackedWidget::editdescriptionaction : " << this->sender()->objectName();
 #endif
-//    editop->editTextAction(0, desc->toPlainText(), objname);
-    editop->textProjectDescriptAction(0, desc->toPlainText());
+
+    // textChanged will also be called if the text changes to empty.
+    QString text = desc->toPlainText();
+    if(text == "") return;
+    editop->textProjectDescriptAction(0, text);
 }
 
 void InnerStackedWidget::editInitialSearch(QString text)
@@ -288,27 +253,13 @@ void InnerStackedWidget::editValueAction(int value)
     qDebug() << "InnerStackedWidget::editvalueaction : " << objname;
 #endif
 
-    if(objname == "loopMaxSpinBox"){
+    //Compare it with the previous value and execute if there is a change.
+    if(objname == "loopMaxSpinBox" && rloopmax->value() != value){
         editop->spinLoopMaxAction(0,value);
-    }else if(objname == "loopArgumentsSpinBox"){
+    }else if(objname == "loopArgumentsSpinBox" && rlargs->value() != value){
         editop->spinLoopArgumentsAction(0,value);
-    }else if(objname == "loopRecursiveSpinBox"){
+    }else if(objname == "loopRecursiveSpinBox" && reloop->value() != value){
         editop->spinLoopRecursiveAction(0,value);
     }
 //    editop->editValueAction(0, value, objname);
 }
-
-//void InnerStackedWidget::getInfoDataList(QStringList *list)
-//{
-//    if(currentIndex() == 1) return;
-//    QWidget *widget = currentWidget();
-//    QLineEdit *name = widget->findChild<QLineEdit *>("nameLineEdit");
-//    QLineEdit *ver = widget->findChild<QLineEdit *>("verLineEdit");
-//    QLineEdit *author = widget->findChild<QLineEdit *>("authorLineEdit");
-//    QPlainTextEdit *desc = widget->findChild<QPlainTextEdit *>("descTextEdit");
-
-//    list->append(name->text());
-//    list->append(ver->text());
-//    list->append(author->text());
-//    list->append(desc->toPlainText());
-//}

@@ -12,6 +12,10 @@
 #include <QStackedWidget>
 #include <QToolButton>
 #include <QWidget>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPlainTextEdit>
+
 #include <editoperator.h>
 
 class InnerStackedWidget : public QStackedWidget
@@ -22,16 +26,13 @@ public:
 
     void setEditOperator(EditOperator *op);
     void moveStacked(int after, int before, int function, int sendfrom);
+
+    void updateIndex(QString operation);
+
 public slots:
     void setInfoDataList(int after, int before, int function, int sendfrom);
-//    void updateInfoDataList(int index);
-//    void clearInfoDataListForm();
-//    void getInfoDataList(QStringList *list);
 
 private slots:
-//    void editTextAction(QString text);
-
-//    void editFileOutputAction(QString text);
     void editAuthorAction(QString text);
     void editProjectNameAction(QString text);
     void editVerAction(QString text);
@@ -46,6 +47,7 @@ private slots:
 private:
 
     EditOperator *editop;
+
     QWidget *stackwidget;
     QLineEdit *name;
     QLineEdit *ver;

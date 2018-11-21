@@ -64,6 +64,9 @@ void ProfileTreeWidget::onItemStatusChanged(int after, int before, int function,
     case EditOperator::SWAP:
         swapTree(dataToUiIndex(before), dataToUiIndex(after));
         break;
+    case EditOperator::SELECT:
+        this->replaceTree(after);
+        break;
     default:
         break;
     }

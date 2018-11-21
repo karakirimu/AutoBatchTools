@@ -39,6 +39,7 @@ public:
 
     void setConnection();
     void setEditOperator(EditOperator *op);
+    void updateIndex(QString operation);
 
 private slots:
     //xml depends functions DEPENDS_XML
