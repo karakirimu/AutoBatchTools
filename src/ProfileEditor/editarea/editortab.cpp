@@ -23,7 +23,7 @@ void EditorTab::setConnection()
     openButton = widgetsearch->findChild<QToolButton *>("openToolButton");
 
     widgetextra = this->widget(ProcessXmlListGenerator::EXTRAFUNC);
-    extrafunccombobox = widgetextra->findChild<ExtraFunctionsComboBox *>("extrafuncComboBox");
+    extrafunccombobox = widgetextra->findChild<PluginsComboBox *>("extrafuncComboBox");
     addbutton_e = widgetextra->findChild<QToolButton *>("extrafuncAddButton");
     deletebutton_e = widgetextra->findChild<QToolButton *>("extrafuncDeleteButton");
     pluginsetting = widgetextra->findChild<QPushButton *>("pluginSettingButton");
@@ -40,9 +40,9 @@ void EditorTab::setConnection()
     connect(openButton, &QToolButton::clicked, this, &EditorTab::openSavefile); 
 
     //connect action in extrafunc widget
-    connect(addbutton_e, &QAbstractButton::clicked, extrafunccombobox, &ExtraFunctionsComboBox::addItemAction);
-    connect(deletebutton_e, &QAbstractButton::clicked, extrafunccombobox, &ExtraFunctionsComboBox::deleteAction);
-    connect(extrafunccombobox, &ExtraFunctionsComboBox::pluginChanged, pluginsetting, &QPushButton::setEnabled);
+    connect(addbutton_e, &QAbstractButton::clicked, extrafunccombobox, &PluginsComboBox::addItemAction);
+    connect(deletebutton_e, &QAbstractButton::clicked, extrafunccombobox, &PluginsComboBox::deleteAction);
+    connect(extrafunccombobox, &PluginsComboBox::pluginChanged, pluginsetting, &QPushButton::setEnabled);
     connect(pluginsetting, &QPushButton::clicked, this, &EditorTab::pluginSettingsClicked);
 
     //connect action in profile widget
@@ -102,7 +102,7 @@ void EditorTab::setEditOperator(EditOperator *op)
     connect(vari, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
     connect(file, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
 
-    connect(extrafunccombobox, &ExtraFunctionsComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    connect(extrafunccombobox, &PluginsComboBox::currentTextChanged, this, &EditorTab::editTextAction);
     connect(autoonly_3, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
 
     connect(profilecombobox, &ProfileComboBox::currentTextChanged, this, &EditorTab::editTextAction);

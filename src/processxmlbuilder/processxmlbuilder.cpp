@@ -190,7 +190,9 @@ void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *l
                      << ATTR_MAXCOUNT << rxml->attributes().value(ATTR_MAXCOUNT).toString());
     }
 
-    if(element == ALL_CMDVALUE
+    if(/*element == ALL_CMDVALUE*/
+            element == E_CMD
+            || element == PL_CMD
             || element == S_NAME
             || element == I_FILESEARCH_NAME)
     {

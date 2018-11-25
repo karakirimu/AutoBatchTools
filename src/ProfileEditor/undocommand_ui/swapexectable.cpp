@@ -12,7 +12,7 @@ SwapExecTable::SwapExecTable(const int &targetindex
     m_indexafter = tableafter;
     m_cache = cache;
 
-    SKIP = pxlg.fetchCmdFirstPos(ALL_CMDVALUE,ProcessXmlListGenerator::NORMAL, m_cache->at(m_targetindex));
+    SKIP = pxlg.fetchCmdFirstPos(E_CMD, m_cache->at(m_targetindex));
 
 }
 

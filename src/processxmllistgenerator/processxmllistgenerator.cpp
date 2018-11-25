@@ -9,7 +9,7 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
 //    const QString ALL_CMDVALUE =               "cmd";
 
     generateId.insert(ALL_TYPE, 0);
-    generateId.insert(ALL_CMDVALUE, 1);
+//    generateId.insert(ALL_CMDVALUE, 1);
 
     // info
 //    const QString I_NAME =                     "iname";
@@ -57,7 +57,8 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
 //    const QString E_CMDARGCOUNT =              "cmdc";
 
     generateId.insert(E_TIMEOUT, 400);
-    generateId.insert(E_CMDARGCOUNT, 401);
+    generateId.insert(E_CMD, 401);
+    generateId.insert(E_CMDARGCOUNT, 402);
 
     // plugin(extrafunc)
 //    const QString PL_NAME =                    "plname";
@@ -66,7 +67,8 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
 
     generateId.insert(PL_NAME, 500);
     generateId.insert(PL_FILEPATH, 501);
-    generateId.insert(PL_CMDARGCOUNT, 502);
+    generateId.insert(PL_CMD, 502);
+    generateId.insert(PL_CMDARGCOUNT, 503);
 
     // temp
 //    const QString TE_STACKEDWIDGET_POSITION =  "istack";
@@ -305,24 +307,39 @@ int ProcessXmlListGenerator::getType(QString type)
     return -1;
 }
 
-QStringList ProcessXmlListGenerator::createCmdElement(QString value, int index)
+//QStringList ProcessXmlListGenerator::createCmdElement(QString value, int index)
+//{
+//    return QStringList() << ALL_CMDVALUE << value << ATTR_POSNUM << QString::number(index);
+//}
+
+QStringList ProcessXmlListGenerator::createCmdExecElement(QString value, int index)
 {
-    return QStringList() << ALL_CMDVALUE << value << ATTR_POSNUM << QString::number(index);
+    return QStringList() << E_CMD << value << ATTR_POSNUM << QString::number(index);
 }
 
-int ProcessXmlListGenerator::fetchCmdFirstPos(QString tag, int firstpos, const QList<QStringList> *loadbase)
+QStringList ProcessXmlListGenerator::createCmdPluginElement(QString value, int index)
+{
+    return QStringList() << PL_CMD << value << ATTR_POSNUM << QString::number(index);
+}
+
+int ProcessXmlListGenerator::fetchCmdFirstPos(QString tag, const QList<QStringList> *loadbase)
 {
     int count = loadbase->count();
-    int i = firstpos;
+    int i = 0;
+
+    if(tag == E_CMD)  tag = E_CMDARGCOUNT;
+    if(tag == PL_CMD) tag = PL_CMDARGCOUNT;
+
     while(i < count){
         if(tag == loadbase->at(i).at(0)){
-            return i;
+            return i + 1;
         }
         i++;
     }
 
     //cannot find
     return -1;
+
 }
 
 // If there is no element of "attr", assign PROCESS_NONE to "attr"

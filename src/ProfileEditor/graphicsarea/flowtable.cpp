@@ -135,9 +135,7 @@ void FlowTable::cutAction()
 void FlowTable::copyAction()
 {
     int cur = fixedCurrentRow();
-    if(cur > 1){
-        editop->copyAction(cur);
-    }
+    if(cur > 1) editop->copyAction(cur);
 }
 
 void FlowTable::pasteAction()

@@ -54,7 +54,7 @@ void XmlListGenerator::createInfoList(QList<QStringList> *newlist, QStringList *
 ///DEPENDS_XML
 void XmlListGenerator::createLocalList(QList<QStringList> *newlist, QStringList *list)
 {
-    int rcount = ((QString)list->at(0)).toInt() * 2;
+    int rcount = static_cast<QString>(list->at(0)).toInt() * 2;
     newlist->append((QStringList() << "type" << "local"));
     newlist->append((QStringList() << "localc" << list->at(0)));
     for(int i = 0; i < rcount; i+=2){
@@ -66,7 +66,7 @@ void XmlListGenerator::createLocalList(QList<QStringList> *newlist, QStringList 
 ///DEPENDS_XML
 void XmlListGenerator::createNormalList(QList<QStringList> *newlist, QStringList *list)
 {
-    int rcount = ((QString)list->at(3)).toInt();
+    int rcount = static_cast<QString>(list->at(3)).toInt();
     newlist->append((QStringList() << "type" << "normal" << "only" << list->at(0)));
     newlist->append((QStringList() << "timeout" << list->at(1) << "dur" << list->at(2)));
     newlist->append((QStringList() << "cmdc" << list->at(3)));
@@ -89,7 +89,7 @@ void XmlListGenerator::createSearchList(QList<QStringList> *newlist, QStringList
 ///DEPENDS_XML
 void XmlListGenerator::createExtraFuncList(QList<QStringList> *newlist, QStringList *list)
 {
-    int rcount = ((QString)list->at(3)).toInt();
+    int rcount = static_cast<QString>(list->at(3)).toInt();
     newlist->append((QStringList() << "type" << "script" << "only" << list->at(0)));
     newlist->append((QStringList() << "name" << list->at(1)));
     newlist->append((QStringList() << "file" << list->at(2)));
@@ -132,7 +132,7 @@ void XmlListGenerator::createCombineList(QList<QStringList> *newlist, int index,
 void XmlListGenerator::createSeparateList(QList<QStringList> *ctos)
 {
     //get selected index
-    int index = ((QString)ctos->at(1).at(1)).toInt();
+    int index = static_cast<QString>(ctos->at(1).at(1)).toInt();
 
     //remove till first header
     while(!ctos->empty()){

@@ -1,5 +1,5 @@
-#ifndef EXTRAFUNCTIONSCOMBOBOX_H
-#define EXTRAFUNCTIONSCOMBOBOX_H
+#ifndef PLUGINSCOMBOBOX_H
+#define PLUGINSCOMBOBOX_H
 
 #include <QComboBox>
 #include <QWidget>
@@ -9,7 +9,7 @@
 #include <../plugins/ExtraPluginInterface/extraplugininterface.h>
 #include <QFileDialog>
 
-class ExtraFunctionsComboBox : public QComboBox
+class PluginsComboBox : public QComboBox
 {
     Q_OBJECT
 
@@ -17,8 +17,8 @@ signals:
     void pluginChanged(bool);
 
 public:
-    explicit ExtraFunctionsComboBox(QObject *parent = nullptr);
-    ~ExtraFunctionsComboBox();
+    explicit PluginsComboBox(QObject *parent = nullptr);
+    ~PluginsComboBox();
 
     QString getCurrentExtraFile();
     void reloadComboBoxItem();
@@ -31,4 +31,4 @@ private:
     ExtrafunctionsXmlBuilder *builder;
 };
 
-#endif // EXTRAFUNCTIONSCOMBOBOX_H
+#endif // PLUGINSCOMBOBOX_H

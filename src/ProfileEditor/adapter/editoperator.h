@@ -16,11 +16,11 @@
 
 #include <editlocalvartable.h>
 #include <edittabcommand.h>
-#include <editvaluecommand.h>
+//#include <editvaluecommand.h>
 #include <edittextcommand.h>
-#include <editcheckcommand.h>
-#include <editfcomboboxcommand.h>
-#include <edittablecommand.h>
+//#include <editcheckcommand.h>
+//#include <editfcomboboxcommand.h>
+//#include <edittablecommand.h>
 
 //checkbox operation
 #include <checkeditallowinput.h>
@@ -52,7 +52,7 @@
 #include <swapexectable.h>
 #include <swapplugintable.h>
 //old
-#include <swaptablecommand.h>
+//#include <swaptablecommand.h>
 #include <editexectable.h>
 #include <editplugintable.h>
 
@@ -67,7 +67,7 @@
 //direct data operation
 #include <addcommand.h>
 #include <deletecommand.h>
-#include <editcommand.h>
+//#include <editcommand.h>
 #include <insertcommand.h>
 #include <swapcommand.h>
 
@@ -96,7 +96,7 @@ public:
     int getCurrentCommandType();
 
     //detect called item
-    enum{TREE, GRAPHICAREA, MAINEDITOR};
+    enum{TREE, FLOWTABLE,GRAPHICAREA, MAINEDITOR};
     enum{ADD,DELETE,INSERT,SWAP,SELECT
          /*,EDITCHECK,EDITFCOMBO,EDITSCOMBO,EDITCOMBO,EDITFULL
          ,EDITTEXT,EDITVALUE,EDITTAB

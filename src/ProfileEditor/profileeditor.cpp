@@ -438,15 +438,8 @@ void ProfileEditor::itemChangedAction(int after, int before, int function, int s
     emit statusLabelChanged(tr("Process selected: No. ") + QString::number((after > 0)? after : 1));
 
     //update row position
-//    if(sendfrom == EditOperator::MAINEDITOR) return;
     dataindexpos = after;
 
-    //reset undo command
-//    editop->getUndostack()->clear();
-//    ui->actionUndo->setText(tr("Undo"));
-//    ui->actionRedo->setText(tr("Redo"));
-//    qDebug() << "IsClean : " << editop->getUndostack()->isClean();
-//    initUndo();
 }
 
 void ProfileEditor::about()
@@ -618,18 +611,6 @@ void ProfileEditor::initUi()
     //reset tree row position
     dataindexpos = 0;
 
-    //first undo redo clean
-    firstclean = true;
-
-}
-
-void ProfileEditor::initUndo()
-{
-    if(!firstclean) return;
-
-    //enable undocommand
-    editop->getUndostack()->clear();
-    firstclean = false;
 }
 
 void ProfileEditor::setRunButtonState(bool run, bool pause, bool stop)

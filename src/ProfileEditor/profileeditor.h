@@ -9,7 +9,7 @@
 #include <QFileDialog>
 #include <QProgressBar>
 
-#include <settingdialog.h>
+#include <settingdialog/settingdialog.h>
 #include <editoperator.h>
 #include <multitaskp.h>
 #include <aboutpe.h>
@@ -84,7 +84,6 @@ private slots:
 private:
     void initStatusBar();
     void initUi();
-    void initUndo();
 
     //run pause stop button selection
     void setRunButtonState(bool run, bool pause, bool stop);
@@ -104,9 +103,6 @@ private:
 
     //filename save
     bool lastedited = false;
-
-    //initial process
-    bool firstclean = false;
 
     //function manage
     EditOperator *editop;

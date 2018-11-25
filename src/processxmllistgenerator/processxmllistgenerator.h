@@ -78,7 +78,7 @@
 // tag define (index 0)
 // all
 static const QString ALL_TYPE =                   "type";
-static const QString ALL_CMDVALUE =               "cmd";
+//static const QString ALL_CMDVALUE =               "cmd";
 
 // info
 static const QString I_NAME =                     "iname";
@@ -104,11 +104,13 @@ static const QString PR_FILEPATH =                "prfile";
 
 // exec(normal)
 static const QString E_TIMEOUT =                  "timeout";
+static const QString E_CMD =                      "exc";
 static const QString E_CMDARGCOUNT =              "cmdc";
 
 // plugin(extrafunc)
 static const QString PL_NAME =                    "plname";
 static const QString PL_FILEPATH =                "plfile";
+static const QString PL_CMD =                     "plc";
 static const QString PL_CMDARGCOUNT =             "pcmdc";
 
 // temp
@@ -191,8 +193,10 @@ public:
     int getType(QString type);
 
     //for change inner table structures
-    static QStringList createCmdElement(QString value, int index);
-    int fetchCmdFirstPos(QString tag, int firstpos, const QList<QStringList> *loadbase);
+//    static QStringList createCmdElement(QString value, int index);
+    static QStringList createCmdExecElement(QString value, int index);
+    static QStringList createCmdPluginElement(QString value, int index);
+    int fetchCmdFirstPos(QString tag, const QList<QStringList> *loadbase);
 
     //take specific item string
     QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase);

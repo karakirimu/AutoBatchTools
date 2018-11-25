@@ -296,8 +296,6 @@ void ProfileTreeWidget::swapTree(int before, int after)
 void ProfileTreeWidget::replaceTree(int id)
 {
     qDebug() << "EditorTab : replaceTree";
-    //todo:
-    //settree xml based id, but this treewidget depends on fixed id.
     setTree(id);
     int fid = dataToUiIndex(id);
     int laindex = this->topLevelItemCount() - 1;
@@ -370,7 +368,8 @@ void ProfileTreeWidget::setTree(int itemid)
     }
 
     //get type
-    QString type = list->at(0).at(1);
+//    QString type = list->at(0).at(1);
+    QString type = pxlg.fetch(ALL_TYPE, ATTR_NONE, list);
 
     //set treeitem
     QTreeWidgetItem *root = new QTreeWidgetItem(this);
@@ -393,10 +392,10 @@ void ProfileTreeWidget::setTree(int itemid)
         setSearchTree(root, list, 1);
     }
     if(type == TYPE_SCRIPT){
-        setExtraFuncTree(root, list, 1);
+        setPluginsTree(root, list, 1);
     }
     if(type == TYPE_ANOTHER){
-        setOtherTree(root, list, 1);
+        setOtherProfileTree(root, list, 1);
     }
     if(type == TYPE_ALLINCLUDE){
         setTempTree(root, list);
@@ -411,41 +410,45 @@ void ProfileTreeWidget::setTree(int itemid)
 void ProfileTreeWidget::setInfoTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
 {
     QString curdata;
+    curdata = pxlg.fetch(I_NAME, ATTR_NONE, list);
+    curdata = (curdata == "")? "(no name)" : curdata;
+
     QColor color;
-    color.setNamedColor("#606060");
+    color.setNamedColor(tr("#e8e8e8"));
+
+    root->setText(0, curdata);
     root->setText(1,"Info");
     root->setBackground(1, QBrush(color));
     root->setIcon(1, QIcon(":/default_icons/info.png"));
-
-    curdata = list->at(firstpos).at(1);
-    curdata = (curdata == "")? "(no name)" : curdata;
-    root->setText(0, curdata);
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void ProfileTreeWidget::setNormalTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
 {
-    int cmdskip = QString(list->at(firstpos + 1).at(1)).toInt();
+    int cmdcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, list)).toInt();
+    int cmdfirst = pxlg.fetchCmdFirstPos(E_CMD, list);
+
+    QColor color;
+    color.setNamedColor(tr("#e2f6ff"));
 
     root->setText(1,"Exec");
     root->setIcon(1, exec_icon);
-    QColor color;
-    color.setNamedColor("#e2f6ff");
     root->setBackground(1, QBrush(color));
 
-    QString curdata = (cmdskip == 0)? "NewCommand" : list->at(firstpos + 2).at(1);
+    QString curdata = (cmdcount == 0)? "NewCommand" : list->at(cmdfirst).at(1);
 
+    //first row
     QFileInfo info(curdata);
     root->setText(0, (info.isFile() ? info.fileName() : curdata));
 
     QString tmp = "";
     QTreeWidgetItem *childitem;
 
-    for(int i = 1; i < cmdskip; i++){
+    for(int i = 1; i < cmdcount; i++){
         childitem = new QTreeWidgetItem(root);
-        childitem->setText(0, list->at(firstpos + 2 + i).at(1));
+        childitem->setText(0, list->at(cmdfirst + i).at(1));
 
-        tmp = (list->at(firstpos + 2 + i).at(3) == "0")? \
+        tmp = (list->at(cmdfirst + i).at(3) == "0")? \
                             tr("program") : tr("arg %1").arg(i);
 
         childitem->setText(1, tmp);
@@ -456,40 +459,49 @@ void ProfileTreeWidget::setNormalTree(QTreeWidgetItem *root, QList<QStringList> 
 void ProfileTreeWidget::setSearchTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
 {
     QTreeWidgetItem *childitem;
-    QString curdata = list->at(firstpos).at(1);
+    QString curdata = pxlg.fetch(S_NAME, ATTR_NONE, list);
     curdata = (curdata == "")? "Unknown" : curdata;
+
+    QColor color;
+    color.setNamedColor(tr("#dcedc8"));
 
     root->setText(0, curdata);
     root->setText(1,"Search");
     root->setIcon(1, search_icon);
+    root->setBackground(1, QBrush(color));
 
     childitem = new QTreeWidgetItem(root);
-    childitem->setText(0, list->at(firstpos + 1).at(1));
+    childitem->setText(0, pxlg.fetch(S_SEPARATOR, ATTR_NONE, list));
     childitem->setText(1, tr("Separator"));
 
     //variant or output
     childitem = new QTreeWidgetItem(root);
 
-    if(static_cast<QString>(list->at(firstpos + 3).at(3)).toInt() == 0){
-        childitem->setText(0, list->at(firstpos + 2).at(1));
+    if(static_cast<QString>(pxlg.fetch(S_OUTPUTFILE, ATTR_RADIOBUTTONPOS, list)).toInt() == 0){
+        childitem->setText(0, pxlg.fetch(S_VARIANT, ATTR_NONE, list));
         childitem->setText(1, tr("Variant"));
     }else{
-        childitem->setText(0, list->at(firstpos + 3).at(1));
+        childitem->setText(0, pxlg.fetch(S_OUTPUTFILE, ATTR_NONE, list));
         childitem->setText(1, tr("Filepath"));
     }
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
-void ProfileTreeWidget::setExtraFuncTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
+void ProfileTreeWidget::setPluginsTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
 {
     QTreeWidgetItem *childitem;
 
+    QColor color;
+    color.setNamedColor(tr("#ffcdd2"));
+
     root->setText(1,"External");
     root->setIcon(1, extra_icon);
+    root->setBackground(1, QBrush(color));
 
-    int scrskip = QString(list->at(firstpos + 2).at(1)).toInt();
+    int plgcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, list)).toInt();
+    int plgfirst = pxlg.fetchCmdFirstPos(PL_CMD, list);
 
-    QString curdata = list->at(firstpos).at(1);
+    QString curdata = pxlg.fetch(PL_NAME, ATTR_NONE, list);
     curdata = (curdata == "")? "Unknown" : curdata;
 
     QFileInfo info(curdata);   
@@ -497,25 +509,30 @@ void ProfileTreeWidget::setExtraFuncTree(QTreeWidgetItem *root, QList<QStringLis
 
     QString tmp;
 
-    for(int i = 0; i < scrskip; i++){
+    for(int i = 0; i < plgcount; i++){
         childitem = new QTreeWidgetItem(root);
-        childitem->setText(0, list->at(firstpos + 3 + i).at(1));
+        childitem->setText(0, list->at(plgfirst + i).at(1));
 
-        tmp = tr("arg %1")
-                .arg(QString::number(static_cast<QString>(list->at(firstpos + 3 + i).at(3)).toInt() + 1));
+        tmp = tr("arg %1").arg(i + 1);
+
         childitem->setText(1, tmp);
     }
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
-void ProfileTreeWidget::setOtherTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
+void ProfileTreeWidget::setOtherProfileTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos)
 {
     QString curdata;
-    root->setText(1,"Profile");
-    curdata = list->at(firstpos).at(1);
+    curdata = pxlg.fetch(PR_NAME, ATTR_NONE, list);
     curdata = (curdata == "")? "Unknown" : curdata;
+
+    QColor color;
+    color.setNamedColor(tr("#ffecb3"));
+
     root->setText(0, curdata);
+    root->setText(1,"Profile");
     root->setIcon(1, other_icon);
+    root->setBackground(1, QBrush(color));
 }
 
 int ProfileTreeWidget::currentRow()
@@ -580,10 +597,10 @@ void ProfileTreeWidget::updateIndex(QString operation)
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void ProfileTreeWidget::setTempTree(QTreeWidgetItem *root, QList<QStringList> *list)
 {
-    int istack = QString(list->at(1).at(1)).toInt();
+    int istack = QString(pxlg.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt();
 
     QHash<int, int> hlist;
-    xgen.getListStructure(list, &hlist);
+    pxlg.getListStructure(list, &hlist);
 
     switch (istack) {
     case ProcessXmlListGenerator::NORMAL:
@@ -595,11 +612,11 @@ void ProfileTreeWidget::setTempTree(QTreeWidgetItem *root, QList<QStringList> *l
         break;
 
     case ProcessXmlListGenerator::EXTRAFUNC:
-        setExtraFuncTree(root, list, hlist.value(ProcessXmlListGenerator::EXTRAFUNC) + 1);
+        setPluginsTree(root, list, hlist.value(ProcessXmlListGenerator::EXTRAFUNC) + 1);
         break;
 
     case ProcessXmlListGenerator::OTHER:
-        setOtherTree(root, list, hlist.value(ProcessXmlListGenerator::OTHER) + 1);
+        setOtherProfileTree(root, list, hlist.value(ProcessXmlListGenerator::OTHER) + 1);
         break;
 
     default:

@@ -15,7 +15,7 @@ EditExecTable::EditExecTable(const int &targetindex
     m_operation = operation;
     m_cache = cache;
 
-    SKIP = pxlg.fetchCmdFirstPos(ALL_CMDVALUE,ProcessXmlListGenerator::NORMAL, m_cache->at(m_targetindex));
+    SKIP = pxlg.fetchCmdFirstPos(E_CMD, m_cache->at(m_targetindex));
 
     if(m_operation == ProcessXmlListGenerator::TABLE_EDIT
             || m_operation == ProcessXmlListGenerator::TABLE_DELETE){
@@ -58,7 +58,7 @@ void EditExecTable::undo()
         break;
     case ProcessXmlListGenerator::TABLE_DELETE:
         rcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
-        alist = ProcessXmlListGenerator::createCmdElement(m_oldstr, m_tableindex);
+        alist = ProcessXmlListGenerator::createCmdExecElement(m_oldstr, m_tableindex);
         m_cache->at(m_targetindex)->insert(m_tableindex + SKIP, alist);
 
         updateCounter(true);
@@ -79,7 +79,7 @@ void EditExecTable::redo()
     int rcount = -1;
     switch (m_operation) {
     case ProcessXmlListGenerator::TABLE_ADD:
-        alist = ProcessXmlListGenerator::createCmdElement(m_newstr, m_tableindex);
+        alist = ProcessXmlListGenerator::createCmdExecElement(m_newstr, m_tableindex);
         m_cache->at(m_targetindex)->insert(m_tableindex + SKIP, alist);
 
         updateCounter(true);
@@ -95,7 +95,7 @@ void EditExecTable::redo()
         break;
     case ProcessXmlListGenerator::TABLE_INSERT:
         rcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
-        alist = ProcessXmlListGenerator::createCmdElement(m_newstr, m_tableindex);
+        alist = ProcessXmlListGenerator::createCmdExecElement(m_newstr, m_tableindex);
         m_cache->at(m_targetindex)->insert(m_tableindex + SKIP, alist);
 
         updateCounter(true);

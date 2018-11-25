@@ -9,7 +9,7 @@
 #include <QObject>
 #include <QMenu>
 
-#include <editcore/editoperator.h>
+#include <editoperator.h>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <../variantconverter/variantconverter.h>
 
@@ -69,8 +69,8 @@ private:
     void setInfoTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos);
     void setNormalTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos);
     void setSearchTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos);
-    void setExtraFuncTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos);
-    void setOtherTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos);
+    void setPluginsTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos);
+    void setOtherProfileTree(QTreeWidgetItem *root, QList<QStringList> *list, int firstpos);
 
     QMenu *contextMenu;
     QAction *m_add;
@@ -84,7 +84,7 @@ private:
     QAction *m_ref;
 
     EditOperator *editop;
-    ProcessXmlListGenerator xgen;
+    ProcessXmlListGenerator pxlg;
 
     //for reduce read time
     const QIcon exec_icon = QIcon(":/default_icons/terminal.png");

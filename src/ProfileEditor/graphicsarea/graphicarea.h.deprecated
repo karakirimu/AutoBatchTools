@@ -7,7 +7,7 @@
 #include <QGraphicsView>
 #include <QMenu>
 #include <QMouseEvent>
-#include <editoperator.h>
+#include <editcore/editoperator.h>
 //#include <fileoperationsignalbinder.h>
 #include <xmllistgenerator.h>
 

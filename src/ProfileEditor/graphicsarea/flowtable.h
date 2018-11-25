@@ -3,7 +3,7 @@
 
 #include <../basictable/basictable.h>
 #include <editoperator.h>
-#include <flowcellwidget.h>
+#include <graphicsarea/flowcellwidget.h>
 
 class FlowTable : public BasicTable
 {

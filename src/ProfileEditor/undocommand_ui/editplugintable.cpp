@@ -15,7 +15,7 @@ EditPluginTable::EditPluginTable(const int &targetindex
     m_operation = operation;
     m_cache = cache;
 
-    SKIP = pxlg.fetchCmdFirstPos(ALL_CMDVALUE,ProcessXmlListGenerator::EXTRAFUNC, m_cache->at(m_targetindex));
+    SKIP = pxlg.fetchCmdFirstPos(PL_CMD, m_cache->at(m_targetindex));
 
     if(m_operation == ProcessXmlListGenerator::TABLE_EDIT
             || m_operation == ProcessXmlListGenerator::TABLE_DELETE){
@@ -60,7 +60,7 @@ void EditPluginTable::undo()
 
     case ProcessXmlListGenerator::TABLE_DELETE:
         rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
-        alist = ProcessXmlListGenerator::createCmdElement(m_oldstr, m_tableindex);
+        alist = ProcessXmlListGenerator::createCmdPluginElement(m_oldstr, m_tableindex);
         m_cache->at(m_targetindex)->insert(m_tableindex + SKIP, alist);
 
         updateCounter(true);
@@ -82,7 +82,7 @@ void EditPluginTable::redo()
     int rcount = -1;
     switch (m_operation) {
     case ProcessXmlListGenerator::TABLE_ADD:
-        alist = ProcessXmlListGenerator::createCmdElement(m_newstr, m_tableindex);
+        alist = ProcessXmlListGenerator::createCmdPluginElement(m_newstr, m_tableindex);
         m_cache->at(m_targetindex)->insert(m_tableindex + SKIP, alist);
 
         updateCounter(true);
@@ -100,7 +100,7 @@ void EditPluginTable::redo()
     case ProcessXmlListGenerator::TABLE_INSERT:
 
         rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
-        alist = ProcessXmlListGenerator::createCmdElement(m_newstr, m_tableindex);
+        alist = ProcessXmlListGenerator::createCmdPluginElement(m_newstr, m_tableindex);
         m_cache->at(m_targetindex)->insert(m_tableindex + SKIP, alist);
 
         updateCounter(true);

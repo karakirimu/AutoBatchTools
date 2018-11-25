@@ -1,18 +1,18 @@
-#include "extrafunctionscombobox.h"
+#include "pluginscombobox.h"
 
-ExtraFunctionsComboBox::ExtraFunctionsComboBox(QObject *)
+PluginsComboBox::PluginsComboBox(QObject *)
 {
     //set new xml builder
     builder = new ExtrafunctionsXmlBuilder();
     connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(pluginCheckAction(int)));
 }
 
-ExtraFunctionsComboBox::~ExtraFunctionsComboBox()
+PluginsComboBox::~PluginsComboBox()
 {
     delete builder;
 }
 
-void ExtraFunctionsComboBox::reloadComboBoxItem()
+void PluginsComboBox::reloadComboBoxItem()
 {
     int tmp = this->currentIndex();
     this->clear();
@@ -30,7 +30,7 @@ void ExtraFunctionsComboBox::reloadComboBoxItem()
 }
 
 //DEPENDS_XML PLUGINS
-void ExtraFunctionsComboBox::addItemAction()
+void PluginsComboBox::addItemAction()
 {
     //add empty item
     QList<QStringList> list;
@@ -38,7 +38,7 @@ void ExtraFunctionsComboBox::addItemAction()
     //add file
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::ExistingFile);
-    QString file = dialog.getOpenFileName(this, tr("Select Extras"), \
+    QString file = dialog.getOpenFileName(this, tr("Select Plugin"), \
                                           QDir::currentPath(), tr("dll (*.dll)"));
     QFileInfo info(file);
 
@@ -88,7 +88,7 @@ void ExtraFunctionsComboBox::addItemAction()
 //    }
 //}
 
-void ExtraFunctionsComboBox::deleteAction()
+void PluginsComboBox::deleteAction()
 {
     //if rowcount is zero.
     if(builder->count() == 0) return;
@@ -110,7 +110,7 @@ void ExtraFunctionsComboBox::deleteAction()
     }
 }
 
-void ExtraFunctionsComboBox::pluginCheckAction(int index)
+void PluginsComboBox::pluginCheckAction(int index)
 {
     Q_UNUSED(index)
 
@@ -135,7 +135,7 @@ void ExtraFunctionsComboBox::pluginCheckAction(int index)
     }
 }
 
-QString ExtraFunctionsComboBox::getCurrentExtraFile()
+QString PluginsComboBox::getCurrentExtraFile()
 {
     int selected = this->currentIndex();
     if(selected > -1){

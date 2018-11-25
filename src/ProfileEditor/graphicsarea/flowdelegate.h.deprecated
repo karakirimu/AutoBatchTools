@@ -3,7 +3,7 @@
 
 #include <QStyledItemDelegate>
 #include <flowcelldata.h>
-#include <flowcellwidget.h>
+#include <graphicsarea/flowcellwidget.h>
 #include <QPaintEngine>
 #include <QPainter>
 

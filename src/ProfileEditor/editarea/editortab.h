@@ -2,7 +2,7 @@
 #define EDITORTAB_H
 
 #include "commandtable.h"
-#include "extrafunctionscombobox.h"
+#include "pluginscombobox.h"
 #include "../profilecombobox/profilecombobox.h"
 #include "searchcombobox.h"
 #include "variantcombobox.h"
@@ -94,7 +94,7 @@ private:
 
     //extrafunc
     QWidget *widgetextra;
-    ExtraFunctionsComboBox *extrafunccombobox;
+    PluginsComboBox *extrafunccombobox;
     QCheckBox *autoonly_3;
     CommandTable *extrafuncTableWidget;
     QToolButton *addbutton_e;

@@ -31,15 +31,22 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="FlowTable" name="flowTableWidget">
+     <widget class="ProcessFlowTable" name="flowTableWidget">
       <property name="styleSheet">
-       <string notr="true">selection-background-color:  transparent;</string>
+       <string notr="true">selection-background-color:  #d0d0d0;
+selection-color: rgb(0, 0, 0);</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
       <property name="editTriggers">
-       <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::CurrentChanged|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <property name="dragDropMode">
+       <enum>QAbstractItemView::NoDragDrop</enum>
+      </property>
+      <property name="alternatingRowColors">
+       <bool>false</bool>
       </property>
       <property name="selectionMode">
        <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -48,7 +55,7 @@
        <enum>QAbstractItemView::SelectRows</enum>
       </property>
       <property name="showGrid">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -1306,7 +1313,7 @@
                 </widget>
                </item>
                <item row="1" column="0" colspan="5">
-                <widget class="ExtraFunctionsComboBox" name="extrafuncComboBox"/>
+                <widget class="PluginsComboBox" name="extrafuncComboBox"/>
                </item>
                <item row="0" column="3">
                 <widget class="QToolButton" name="extrafuncAddButton">
@@ -2083,7 +2090,7 @@ border: none;</string>
   <customwidget>
    <class>ConsoleView</class>
    <extends>QTextEdit</extends>
-   <header>consoleview.h</header>
+   <header>./console/consoleview.h</header>
   </customwidget>
   <customwidget>
    <class>BaseDockWidget</class>
@@ -2099,7 +2106,7 @@ border: none;</string>
   <customwidget>
    <class>ConsoleEdit</class>
    <extends>QLineEdit</extends>
-   <header>consoleedit.h</header>
+   <header>./console/consoleedit.h</header>
   </customwidget>
   <customwidget>
    <class>StringTable</class>
@@ -2109,49 +2116,49 @@ border: none;</string>
   <customwidget>
    <class>ProfileTreeWidget</class>
    <extends>QTreeWidget</extends>
-   <header>profiletreewidget.h</header>
+   <header>./processlistarea/profiletreewidget.h</header>
   </customwidget>
   <customwidget>
    <class>CommandTable</class>
    <extends>QTableWidget</extends>
-   <header>commandtable.h</header>
+   <header>./editarea/commandtable.h</header>
   </customwidget>
   <customwidget>
    <class>SearchComboBox</class>
    <extends>QComboBox</extends>
-   <header>searchcombobox.h</header>
+   <header>./editarea/searchcombobox.h</header>
   </customwidget>
   <customwidget>
    <class>VariantTable</class>
    <extends>QTableWidget</extends>
-   <header>varianttable.h</header>
+   <header>./variantarea/varianttable.h</header>
   </customwidget>
   <customwidget>
    <class>VariantComboBox</class>
    <extends>QComboBox</extends>
-   <header>variantcombobox.h</header>
+   <header>./editarea/variantcombobox.h</header>
   </customwidget>
   <customwidget>
    <class>InnerStackedWidget</class>
    <extends>QStackedWidget</extends>
-   <header>innerstackedwidget.h</header>
+   <header>./editarea/innerstackedwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>EditorTab</class>
    <extends>QTabWidget</extends>
-   <header>editortab.h</header>
+   <header>./editarea/editortab.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>ExtraFunctionsComboBox</class>
+   <class>PluginsComboBox</class>
    <extends>QComboBox</extends>
-   <header>extrafunctionscombobox.h</header>
+   <header>./editarea/pluginscombobox.h</header>
   </customwidget>
   <customwidget>
-   <class>FlowTable</class>
+   <class>ProcessFlowTable</class>
    <extends>QTableWidget</extends>
-   <header>flowtable.h</header>
+   <header>./graphicsarea/processflowtable.h</header>
   </customwidget>
  </customwidgets>
  <resources>
