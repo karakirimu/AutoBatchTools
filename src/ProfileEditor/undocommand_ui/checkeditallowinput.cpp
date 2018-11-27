@@ -26,7 +26,7 @@ void CheckEditAllowInput::redo()
     pxlg.replaceElementList(I_FILEINPUT, ATTR_NONE, m_targetindex, m_newcheck, m_cache);
 
     setText(QObject::tr("Allow input %1 ").arg(m_newcheck) \
-            + QString("^(%1)"));
+            + QString("^(%1)").arg(m_targetindex));
 }
 
 int CheckEditAllowInput::id() const

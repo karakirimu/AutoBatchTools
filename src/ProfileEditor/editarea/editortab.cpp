@@ -26,7 +26,7 @@ void EditorTab::setConnection()
     extrafunccombobox = widgetextra->findChild<PluginsComboBox *>("extrafuncComboBox");
     addbutton_e = widgetextra->findChild<QToolButton *>("extrafuncAddButton");
     deletebutton_e = widgetextra->findChild<QToolButton *>("extrafuncDeleteButton");
-    pluginsetting = widgetextra->findChild<QPushButton *>("pluginSettingButton");
+    pluginsetting = widgetextra->findChild<QToolButton *>("pluginSettingButton");
 
     otherwidget = this->widget(ProcessXmlListGenerator::OTHER);
     profilecombobox = otherwidget->findChild<ProfileComboBox *>("profileComboBox");
@@ -266,6 +266,7 @@ void EditorTab::setCombinedDataList(int after, int before, int function, int sen
     QList<QStringList> *list = new QList<QStringList>();
     QHash<int, int> hlist;
 
+    this->blockSignals(true);
     //avoid multiple update
     if(editop->read(after, list) && currentid != after){
 
@@ -273,12 +274,9 @@ void EditorTab::setCombinedDataList(int after, int before, int function, int sen
         qDebug() << QString("EditorTab : currentid update to %1").arg(after);
         currentid = after;
         xgen.getListStructure(list, &hlist);
-
         //set widget selection
         if(hlist.count() > 1){
-            this->blockSignals(true);
-            setCurrentIndex(static_cast<QString>(list->at(1).at(1)).toInt());
-            this->blockSignals(false);
+            setCurrentIndex(static_cast<QString>(xgen.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt());
         }
 
         //load type=normal
@@ -299,6 +297,8 @@ void EditorTab::setCombinedDataList(int after, int before, int function, int sen
     }
 
     delete list;
+
+    this->blockSignals(false);
 }
 
 //bool EditorTab::getCurrentIndexOnlyChecked()

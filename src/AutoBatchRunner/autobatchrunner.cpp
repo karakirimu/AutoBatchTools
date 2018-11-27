@@ -120,7 +120,7 @@ void AutoBatchRunner::taskEnd(QString objectname, int runfrom)
 
 void AutoBatchRunner::on_actionOpen_triggered()
 {
-    ui->fileTable->addAction();
+    ui->fileTable->addFilesAction();
 }
 
 void AutoBatchRunner::on_actionRun_triggered()

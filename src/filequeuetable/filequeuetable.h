@@ -14,7 +14,8 @@ public:
 
     void addFiles(const QStringList &filenames);
 
-    void addAction();
+    void addFilesAction();
+    void addFolderAction();
 
 protected slots:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -32,7 +33,8 @@ private slots:
     void propertyAction();
 
 private:
-    QAction *m_add;
+    QAction *m_addfile;
+    QAction *m_adddir;
     QAction *m_deleteitems;
     QAction *m_deleteAll;
     QAction *m_property;

@@ -99,7 +99,7 @@ private:
     CommandTable *extrafuncTableWidget;
     QToolButton *addbutton_e;
     QToolButton *deletebutton_e;
-    QPushButton *pluginsetting;
+    QToolButton *pluginsetting;
 
     //other
     QWidget *otherwidget;

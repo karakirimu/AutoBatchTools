@@ -28,6 +28,7 @@ public:
     void moveStacked(int after, int before, int function, int sendfrom);
 
     void updateIndex(QString operation);
+    void reloadAction();
 
 public slots:
     void setInfoDataList(int after, int before, int function, int sendfrom);

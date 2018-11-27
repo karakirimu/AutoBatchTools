@@ -293,9 +293,9 @@ void ProcessFlowTable::replaceItem(int id)
 
 void ProcessFlowTable::selectChanged(int crow, int ccol, int prow, int pcol)
 {
-    qDebug() << "FlowTable::selectChanged";
-//    excludeSelector(crow, ccol, prow, pcol);
+    Q_UNUSED(crow); Q_UNUSED(ccol); Q_UNUSED(prow); Q_UNUSED(pcol);
 
+    qDebug() << "FlowTable::selectChanged";
     emit editop->ui_funcindexUpdate(fixedCurrentRow(), -1, EditOperator::SELECT, EditOperator::FLOWTABLE);
 }
 
@@ -576,6 +576,7 @@ void ProcessFlowTable::setInfoItem(QList<QStringList> *list, int dataid)
 
     QTableWidgetItem *item = new QTableWidgetItem(QIcon(info_pixmap), info_title);
     item->setBackground(QBrush(color));
+    item->setTextColor(QColor(Qt::black));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 }
 
@@ -603,6 +604,7 @@ void ProcessFlowTable::setNormalItem(QList<QStringList> *list, int dataid)
 
     QTableWidgetItem *item = new QTableWidgetItem(QIcon(exec_pixmap), exec_title);
     item->setBackground(QBrush(color));
+    item->setTextColor(QColor(Qt::black));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 
 //    cell->setContent(tmp);
@@ -646,6 +648,7 @@ void ProcessFlowTable::setSearchItem(QList<QStringList> *list, int dataid)
 
     QTableWidgetItem *item = new QTableWidgetItem(QIcon(search_pixmap), search_title);
     item->setBackground(QBrush(color));
+    item->setTextColor(QColor(Qt::black));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 //    cell->setContent(tmp);
 }
@@ -675,6 +678,7 @@ void ProcessFlowTable::setPluginsItem(QList<QStringList> *list, int dataid)
 
     QTableWidgetItem *item = new QTableWidgetItem(QIcon(plugin_pixmap), plugin_title);
     item->setBackground(QBrush(color));
+    item->setTextColor(QColor(Qt::black));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 //    cell->setContent(tmp);
 }
@@ -692,6 +696,7 @@ void ProcessFlowTable::setOtherItem(QList<QStringList> *list, int dataid)
 
     QTableWidgetItem *item = new QTableWidgetItem(QIcon(other_pixmap), other_title);
     item->setBackground(QBrush(color));
+    item->setTextColor(QColor(Qt::black));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 }
 

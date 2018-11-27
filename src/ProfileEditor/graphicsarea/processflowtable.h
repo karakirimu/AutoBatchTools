@@ -94,17 +94,17 @@ private:
     const QString exec_style = "color: black; background-color: #e2f6ff;";
     const QString exec_frame = "background-color: #b0c3cc;";
 
-    const QString search_title = "File Search";
+    const QString search_title = "FileSearch";
     const QPixmap search_pixmap = QIcon(":/default_icons/search.png").pixmap(16,16);
     const QString search_style = "color: black; background-color: #dcedc8;";
     const QString search_frame = "background-color: #aabb97;";
 
-    const QString plugin_title = "External Plugins";
+    const QString plugin_title = "Plugins";
     const QPixmap plugin_pixmap = QIcon(":/default_icons/extras.png").pixmap(16,16);
     const QString plugin_style = "color: black; background-color: #ffcdd2;";
     const QString plugin_frame = "background-color: #cb9ca1;";
 
-    const QString other_title = "Other Projects";
+    const QString other_title = "ProjectLoad";
     const QPixmap other_pixmap = QIcon(":/default_icons/others.png").pixmap(16,16);
     const QString other_style = "color: black; background-color: #ffecb3;";
     const QString other_frame = "background-color: #cbba83;";

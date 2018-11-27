@@ -22,13 +22,13 @@ FileQueueTable::FileQueueTable(QWidget *parent)
     setRowCount(0);
 
     //set header label
-    setHorizontalHeaderLabels((QStringList() << tr("FilePath")));
+    setHorizontalHeaderLabels((QStringList() << tr("File/Folder Path")));
 
     //adjust column
     horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 
     //set header sort settings
-    connect(horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(horizontalHeaderClicked(int)));
+    connect(horizontalHeader(), &QHeaderView::sectionClicked, this, &FileQueueTable::horizontalHeaderClicked);
 
 }
 
@@ -53,6 +53,20 @@ void FileQueueTable::dropEvent(QDropEvent *event)
     }
 }
 
+void FileQueueTable::addFilesAction()
+{
+    QStringList selected = selectFiles(QDir::currentPath());
+    addFiles(selected);
+}
+
+void FileQueueTable::addFolderAction()
+{
+    QString selected = selectFolder(QDir::currentPath());
+    int rcount = this->rowCount();
+    this->setRowCount(rcount+1);
+    this->setItem(rcount,0,new QTableWidgetItem(selected));
+}
+
 void FileQueueTable::deleteAciton()
 {
     deleteTableRecursive();
@@ -62,7 +76,6 @@ void FileQueueTable::clearAction()
 {
     this->selectAll();
     deleteTableRecursive();
-//    this->setRowCount(0);
 }
 
 void FileQueueTable::propertyAction()
@@ -113,15 +126,17 @@ void FileQueueTable::setPopupActionTop()
 {
     //init menu context
     contextMenu->setStyleSheet("border:1px;");
-    m_add = contextMenu->addAction(QIcon(":/default_icons/file.png"), tr("Add Files"));
-    m_deleteitems = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Clear this Item"));
+    m_addfile = contextMenu->addAction(QIcon(":/default_icons/file.png"), tr("Add Files ..."));
+    m_adddir = contextMenu->addAction(QIcon(":/default_icons/folder.png"), tr("Add Folder ..."));
+    m_deleteitems = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
     contextMenu->addSeparator();
-    m_deleteAll = contextMenu->addAction(tr("Clear All Items"));
+    m_deleteAll = contextMenu->addAction(tr("Clear"));
 
     //connect signals
-    connect(m_add, SIGNAL(triggered()), this, SLOT(addAction()));
-    connect(m_deleteitems, SIGNAL(triggered()), this, SLOT(deleteAciton()));
-    connect(m_deleteAll, SIGNAL(triggered()), this, SLOT(clearAction()));
+    connect(m_addfile, &QAction::triggered, this, &FileQueueTable::addFilesAction);
+    connect(m_adddir, &QAction::triggered, this, &FileQueueTable::addFolderAction);
+    connect(m_deleteitems, &QAction::triggered, this, &FileQueueTable::deleteAciton);
+    connect(m_deleteAll, &QAction::triggered, this, &FileQueueTable::clearAction);
 }
 
 void FileQueueTable::setPopupActionDefault()
@@ -139,12 +154,6 @@ void FileQueueTable::setPopupActionDefault()
 void FileQueueTable::setPopupActionBottom()
 {
     contextMenu->addSeparator();
-    m_property = contextMenu->addAction(tr("File Info"));
-    connect(m_property, SIGNAL(triggered()), this, SLOT(propertyAction()));
-}
-
-void FileQueueTable::addAction()
-{
-    QStringList selected = selectFiles(QDir::currentPath());
-    addFiles(selected);
+    m_property = contextMenu->addAction(QIcon(":/default_icons/info.png"), tr("File Info"));
+    connect(m_property, &QAction::triggered, this, &FileQueueTable::propertyAction);
 }

@@ -4,6 +4,8 @@ EditOperator::EditOperator(QObject *parent)
     : QObject(parent)
 {
     undostack = new QUndoStack();
+//    undostack->setUndoLimit(0);
+
     cache = new QList<QList<QStringList>*>();
     parentwid = qobject_cast<QMainWindow *>(parent);
 
@@ -62,7 +64,7 @@ void EditOperator::addAction()
     xgen->createNewList(&xmlstruct);
     delete xgen;
 
-    AddCommand *com = new AddCommand(cache->count()-1, &xmlstruct, cache);
+    AddCommand *com = new AddCommand(cache->count(), &xmlstruct, cache);
     undostack->push(com);
 //    emit edited(isEdited());
 //    emit editindexUpdate(cache->count() - 1);

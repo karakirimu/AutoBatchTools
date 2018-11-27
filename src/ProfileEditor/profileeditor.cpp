@@ -33,7 +33,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //set dock autohide TODO: not saved menu
     ui->processDockWidget->setAutohide(ui->actionAutohide->isChecked());
-    ui->editorDockWidget->setAutohide(ui->actionAutohide->isChecked());
+//    ui->editorDockWidget->setAutohide(ui->actionAutohide->isChecked());
     ui->globalVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
     ui->localVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
     ui->setTestDockWidget->setAutohide(ui->actionAutohide->isChecked());
@@ -47,7 +47,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     ui->editorTab->setConnection();
 
     //provide operator
-    ui->runTreeWidget->setEditOperator(editop);
+//    ui->runTreeWidget->setEditOperator(editop);
 //    ui->graphicsView->setEditOperator(editop);
     ui->flowTableWidget->setEditOperator(editop);
     ui->variantTableWidget->setEditOperator(editop);
@@ -126,7 +126,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     //Window
     connect(ui->actionToolBar, &QAction::triggered, ui->mainToolBar, &QWidget::setVisible);
     connect(ui->actionProcess, &QAction::triggered, ui->processDockWidget, &QWidget::setVisible);
-    connect(ui->actionEditor, &QAction::triggered, ui->editorDockWidget, &QWidget::setVisible);
+//    connect(ui->actionEditor, &QAction::triggered, ui->editorDockWidget, &QWidget::setVisible);
     connect(ui->actionFileVariant, &QAction::triggered, ui->localVariantDockWidget, &QWidget::setVisible);
     connect(ui->actionAppVariant, &QAction::triggered, ui->globalVariantDockWidget, &QWidget::setVisible);
     connect(ui->actionRunSetting, &QAction::triggered, ui->setTestDockWidget, &BaseDockWidget::setVisible);
@@ -135,7 +135,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->processDockWidget, &QDockWidget::visibilityChanged, ui->actionProcess, &QAction::setChecked);
     connect(ui->localVariantDockWidget, &QDockWidget::visibilityChanged, ui->actionFileVariant, &QAction::setChecked);
     connect(ui->globalVariantDockWidget, &QDockWidget::visibilityChanged, ui->actionAppVariant, &QAction::setChecked);
-    connect(ui->editorDockWidget, &QDockWidget::visibilityChanged, ui->actionEditor, &QAction::setChecked);
+//    connect(ui->editorDockWidget, &QDockWidget::visibilityChanged, ui->actionEditor, &QAction::setChecked);
     connect(ui->mainToolBar, &QToolBar::visibilityChanged, ui->actionToolBar, &QAction::setChecked);
     connect(ui->setTestDockWidget, &BaseDockWidget::visibilityChanged, ui->actionRunSetting, &QAction::setChecked);
     connect(ui->consoleDockWidget, &BaseDockWidget::visibilityChanged, ui->actionRunConsole, &QAction::setChecked);
@@ -143,7 +143,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->actionAutohide, &QAction::triggered, ui->processDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->setTestDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->consoleDockWidget, &BaseDockWidget::setAutohide);
-    connect(ui->actionAutohide, &QAction::triggered, ui->editorDockWidget, &BaseDockWidget::setAutohide);
+//    connect(ui->actionAutohide, &QAction::triggered, ui->editorDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->globalVariantDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->localVariantDockWidget, &BaseDockWidget::setAutohide);
 
@@ -254,16 +254,16 @@ void ProfileEditor::undoAction()
     // update ui element
     QString text = editop->getUndostack()->redoText();
 
-    int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9](,|)(|[0-9]|[A-Z]+))\\)+$"));
+    int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\((([0-9]+)(,|)(|[0-9]|[A-Z]+))\\)+$"));
     QString rep = text.mid(0,lastindex);
 
     // +3 means string of " ^(", -1 means string of ")";
     QString updop = text.mid(lastindex + 3, text.length() - lastindex - 4);
 
-    ui->runTreeWidget->updateIndex(updop);
+//    ui->runTreeWidget->updateIndex(updop);
+    ui->innerStackedWidget->updateIndex(updop);
     ui->flowTableWidget->updateIndex(updop);
     ui->editorTab->updateIndex(updop);
-    ui->innerStackedWidget->updateIndex(updop);
 }
 
 void ProfileEditor::redoAction()
@@ -275,13 +275,13 @@ void ProfileEditor::redoAction()
     // update ui element
     QString text = editop->getUndostack()->undoText();
 
-    int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9](,|)(|[0-9]|[A-Z]+))\\)+$"));
+    int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\((([0-9]+)(,|)(|[0-9]|[A-Z]+))\\)+$"));
     QString rep = text.mid(0,lastindex);
 
     // +3 means string of " ^(", -1 means string of ")";
     QString updop = text.mid(lastindex + 3, text.length() - lastindex - 4);
 
-    ui->runTreeWidget->updateIndex(updop);
+//    ui->runTreeWidget->updateIndex(updop);
     ui->flowTableWidget->updateIndex(updop);
     ui->editorTab->updateIndex(updop);
     ui->innerStackedWidget->updateIndex(updop);
@@ -548,14 +548,22 @@ void ProfileEditor::updateRangeText(QString range)
 void ProfileEditor::onUndoTextChanged(QString text)
 {
     //remove operation
-    QString rep = text.remove(QRegularExpression(".\\^\\(([0-9](,|)(|[0-9]|[A-Z]+))\\)+$"));
+#ifdef QT_DEBUG
+    qDebug() << "undo count : " << editop->getUndostack()->count();
+#endif
+
+    QString rep = text.remove(QRegularExpression(".\\^\\((([0-9]+)(,|)(|[0-9]|[A-Z]+))\\)+$"));
     ui->actionUndo->setText(tr("Undo %1").arg(rep));
 }
 
 void ProfileEditor::onRedoTextChanged(QString text)
 {
     //remove operation
-    QString rep = text.remove(QRegularExpression(".\\^\\(([0-9](,|)(|[0-9]|[A-Z]+))\\)+$"));
+#ifdef QT_DEBUG
+    qDebug() << "redo count : " << editop->getUndostack()->count();
+#endif
+
+    QString rep = text.remove(QRegularExpression(".\\^\\((([0-9]+)(,|)(|[0-9]|[A-Z]+))\\)+$"));
     ui->actionRedo->setText(tr("Redo %1").arg(rep));
 }
 
@@ -601,8 +609,9 @@ void ProfileEditor::initUi()
     //reload file
     this->blockSignals(true);
 
-    ui->runTreeWidget->reloadAction();
+//    ui->runTreeWidget->reloadAction();
 //    ui->graphicsView->reloadAction();
+    ui->innerStackedWidget->reloadAction();
     ui->flowTableWidget->reloadAction();
     ui->variantTableWidget->reloadAction();
 

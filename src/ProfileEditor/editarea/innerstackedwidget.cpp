@@ -83,6 +83,11 @@ void InnerStackedWidget::updateIndex(QString operation)
     }
 }
 
+void InnerStackedWidget::reloadAction()
+{
+    setInfoDataList(0, -1, EditOperator::SELECT, EditOperator::MAINEDITOR);
+}
+
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void InnerStackedWidget::setInfoDataList(int after, int before, int function, int sendfrom)
 {
