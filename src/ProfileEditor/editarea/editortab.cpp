@@ -139,121 +139,82 @@ void EditorTab::updateIndex(QString operation)
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
-void EditorTab::setNormalDataList(QList<QStringList> *list, int firstpos)
+void EditorTab::setNormalDataList(QList<QStringList> *list)
 {
     this->blockSignals(true);
 
-//    int counter = static_cast<QString>(list->at(firstpos + 2).at(1)).toInt();
-//    timeoutCheckBox->setChecked(VariantConverter::stringToBool(list->at(firstpos + 1).at(1)));
-//    tospin->setValue(static_cast<QString>(list->at(firstpos + 1).at(3)).toInt());
-//    ctablenormal->setRowCount(counter);
-//    for(int i = 0; i < counter; i++){
-//        ctablenormal->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 3 + i).at(1)));
-//    }
+    int counter = xgen.fetch(E_CMDARGCOUNT,ATTR_NONE, list).toInt();
+    timeoutCheckBox->setChecked(VariantConverter::stringToBool(xgen.fetch(E_TIMEOUT,ATTR_NONE, list)));
+    tospin->setValue(xgen.fetch(E_TIMEOUT,ATTR_TIMEOUTMS, list).toInt());
 
-//    autoonly->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
-
-    int counter = xgen.fetch(E_CMDARGCOUNT,ATTR_NONE, list, firstpos).toInt();
-    timeoutCheckBox->setChecked(VariantConverter::stringToBool(xgen.fetch(E_TIMEOUT,ATTR_NONE, list, firstpos)));
-    tospin->setValue(xgen.fetch(E_TIMEOUT,ATTR_TIMEOUTMS, list, firstpos).toInt());
+    int cmdfirst = xgen.fetchCmdFirstPos(E_CMD, list);
     ctablenormal->setRowCount(counter);
     for(int i = 0; i < counter; i++){
-        ctablenormal->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 3 + i).at(1)));
+        ctablenormal->setItem(i, 0, new QTableWidgetItem(list->at(cmdfirst + i).at(1)));
     }
 
-    autoonly->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_EXEC,ATTR_ONLY_SCHEDULER, list, firstpos)));
+    autoonly->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_EXEC,ATTR_ONLY_SCHEDULER, list)));
 
     this->blockSignals(false);
 
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
-void EditorTab::setSearchDataList(QList<QStringList> *list, int firstpos)
+void EditorTab::setSearchDataList(QList<QStringList> *list)
 {
     this->blockSignals(true);
 
-    //reload combobox
-//    searchcombobox->reloadComboBoxItem();
-//    searchcombobox->setCurrentText(list->at(firstpos + 1).at(1));
-
-//    separatorLineEdit->setText(list->at(firstpos + 2).at(1));
-//    localVariantComboBox->insertItem(0,list->at(firstpos + 3).at(1));
-//    outputLineEdit->setText(list->at(firstpos + 4).at(1));
-
-//    if(list->at(firstpos + 4).at(3) == "0"){
-//        vari->setChecked(true);
-//    }else{
-//        file->setChecked(true);
-//    }
-
-//    autoonly_2->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
-
     searchcombobox->reloadComboBoxItem();
-    searchcombobox->setCurrentText(xgen.fetch(S_NAME,ATTR_NONE, list, firstpos));
+    searchcombobox->setCurrentText(xgen.fetch(S_NAME,ATTR_NONE, list));
 
-    separatorLineEdit->setText(xgen.fetch(S_SEPARATOR,ATTR_NONE, list, firstpos));
-    localVariantComboBox->insertItem(0,xgen.fetch(S_VARIANT,ATTR_NONE, list, firstpos));
-    outputLineEdit->setText(xgen.fetch(S_OUTPUTFILE,ATTR_NONE, list, firstpos));
+    separatorLineEdit->setText(xgen.fetch(S_SEPARATOR,ATTR_NONE, list));
+    localVariantComboBox->insertItem(0,xgen.fetch(S_VARIANT,ATTR_NONE, list));
+    outputLineEdit->setText(xgen.fetch(S_OUTPUTFILE,ATTR_NONE, list));
 
-    if(xgen.fetch(S_OUTPUTFILE,ATTR_RADIOBUTTONPOS, list, firstpos) == "0"){
+    if(xgen.fetch(S_OUTPUTFILE,ATTR_RADIOBUTTONPOS, list) == "0"){
         vari->setChecked(true);
     }else{
         file->setChecked(true);
     }
 
-    autoonly_2->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_SEARCH,ATTR_ONLY_SCHEDULER, list, firstpos)));
+    autoonly_2->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_SEARCH,ATTR_ONLY_SCHEDULER, list)));
 
     this->blockSignals(false);
 
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
-void EditorTab::setExtraFuncDataList(QList<QStringList> *list, int firstpos)
+void EditorTab::setExtraFuncDataList(QList<QStringList> *list)
 {
     this->blockSignals(true);
-//    //reset combobox
-//    extrafunccombobox->reloadComboBoxItem();
-//    extrafunccombobox->setCurrentText(list->at(firstpos + 1).at(1));
-
-//    int counter = static_cast<QString>(list->at(firstpos + 3).at(1)).toInt();
-//    extrafuncTableWidget->setRowCount(counter);
-//    for(int i = 0; i < counter; i++){
-//        extrafuncTableWidget->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 4 + i).at(1)));
-//    }
-
-//    autoonly_3->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
 
     // TODO:動的検索に最初の要素を追加
 
     //reset combobox
     extrafunccombobox->reloadComboBoxItem();
-    extrafunccombobox->setCurrentText(xgen.fetch(PL_NAME,ATTR_NONE, list, firstpos));
+    extrafunccombobox->setCurrentText(xgen.fetch(PL_NAME,ATTR_NONE, list));
 
-    int counter = xgen.fetch(PL_CMDARGCOUNT,ATTR_NONE, list, firstpos).toInt();
+    int counter = xgen.fetch(PL_CMDARGCOUNT,ATTR_NONE, list).toInt();
+    int ecmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
     extrafuncTableWidget->setRowCount(counter);
     for(int i = 0; i < counter; i++){
-        extrafuncTableWidget->setItem(i, 0, new QTableWidgetItem(list->at(firstpos + 4 + i).at(1)));
+        extrafuncTableWidget->setItem(i, 0, new QTableWidgetItem(list->at(ecmdfirst + i).at(1)));
     }
 
-    autoonly_3->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_SCRIPT,ATTR_ONLY_SCHEDULER, list, firstpos)));
+    autoonly_3->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_SCRIPT,ATTR_ONLY_SCHEDULER, list)));
 
     this->blockSignals(false);
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
-void EditorTab::setOtherDataList(QList<QStringList> *list, int firstpos)
+void EditorTab::setOtherDataList(QList<QStringList> *list)
 {
     this->blockSignals(true);
 
-//    profilecombobox->reloadComboBoxItem();
-//    profilecombobox->setCurrentText(list->at(firstpos + 1).at(1));
-
-//    autoonly_4->setChecked(VariantConverter::stringToBool(list->at(firstpos).at(3)));
-
     profilecombobox->reloadComboBoxItem();
-    profilecombobox->setCurrentText(xgen.fetch(PR_NAME,ATTR_NONE, list, firstpos));
+    profilecombobox->setCurrentText(xgen.fetch(PR_NAME,ATTR_NONE, list));
 
-    autoonly_4->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_ANOTHER,ATTR_ONLY_SCHEDULER, list, firstpos)));
+    autoonly_4->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_ANOTHER,ATTR_ONLY_SCHEDULER, list)));
 
     this->blockSignals(false);
 }
@@ -266,9 +227,8 @@ void EditorTab::setCombinedDataList(int after, int before, int function, int sen
     QList<QStringList> *list = new QList<QStringList>();
     QHash<int, int> hlist;
 
-    this->blockSignals(true);
     //avoid multiple update
-    if(editop->read(after, list) && currentid != after){
+    if(editop->read(after, list) && currentid != after && after > 1){
 
         //set current id
         qDebug() << QString("EditorTab : currentid update to %1").arg(after);
@@ -276,29 +236,25 @@ void EditorTab::setCombinedDataList(int after, int before, int function, int sen
         xgen.getListStructure(list, &hlist);
         //set widget selection
         if(hlist.count() > 1){
+            this->blockSignals(true);
             setCurrentIndex(static_cast<QString>(xgen.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt());
+            this->blockSignals(false);
         }
 
         //load type=normal
-        if(hlist.contains(ProcessXmlListGenerator::NORMAL))
-            setNormalDataList(list, hlist.value(ProcessXmlListGenerator::NORMAL));
+        if(hlist.contains(ProcessXmlListGenerator::NORMAL))    setNormalDataList(list);
 
         //load type=search
-        if(hlist.contains(ProcessXmlListGenerator::SEARCH))
-            setSearchDataList(list, hlist.value(ProcessXmlListGenerator::SEARCH));
+        if(hlist.contains(ProcessXmlListGenerator::SEARCH))    setSearchDataList(list);
 
         //load type=extrafunc
-        if(hlist.contains(ProcessXmlListGenerator::EXTRAFUNC))
-            setExtraFuncDataList(list, hlist.value(ProcessXmlListGenerator::EXTRAFUNC));
+        if(hlist.contains(ProcessXmlListGenerator::EXTRAFUNC)) setExtraFuncDataList(list);
 
         //load type=other
-        if(hlist.contains(ProcessXmlListGenerator::OTHER))
-            setOtherDataList(list, hlist.value(ProcessXmlListGenerator::OTHER));
+        if(hlist.contains(ProcessXmlListGenerator::OTHER))     setOtherDataList(list);
     }
 
     delete list;
-
-    this->blockSignals(false);
 }
 
 //bool EditorTab::getCurrentIndexOnlyChecked()
@@ -324,25 +280,37 @@ void EditorTab::setCombinedDataList(int after, int before, int function, int sen
 //    return autoonly->isChecked();
 //}
 
+// DOUBT
 void EditorTab::tabChanged(int index)
 {
     switch(index){
     case ProcessXmlListGenerator::NORMAL:
+
         editop->editTabAction(currentid, index);
         break;
+
     case ProcessXmlListGenerator::SEARCH:
+        this->blockSignals(true);
         searchcombobox->reloadComboBoxItem();
         localVariantComboBox->reloadComboBoxItem();
+        this->blockSignals(false);
+
         editop->editTabAction(currentid, index);
         break;
 
     case ProcessXmlListGenerator::EXTRAFUNC:
+        this->blockSignals(true);
         extrafunccombobox->reloadComboBoxItem();
+        this->blockSignals(false);
+
         editop->editTabAction(currentid, index);
         break;
 
     case ProcessXmlListGenerator::OTHER:
+        this->blockSignals(true);
         profilecombobox->reloadComboBoxItem();
+        this->blockSignals(false);
+
         editop->editTabAction(currentid, index);
         break;
 
@@ -437,8 +405,10 @@ void EditorTab::editTableAction(int index, QString str, int function)
     qDebug() << "EditorTab::edittableaction : " << objname;
     if(objname == "cmdTableWidget"){
         editop->tableEditExecAction(currentid, index, str, function);
+
     }else if(objname == "extrafuncTableWidget"){
         editop->tableEditPluginAction(currentid, index, str, function);
+
     }
 
 }
@@ -449,8 +419,10 @@ void EditorTab::editSwapTableAction(int indexbefore, int indexafter)
     qDebug() << "EditorTab::editswaptableaction : " << objname;
     if(objname == "cmdTableWidget"){
         editop->tableSwapExecAction(currentid, indexbefore, indexafter);
+
     }else if(objname == "extrafuncTableWidget"){
         editop->tableSwapPluginAction(currentid, indexbefore, indexafter);
+
     }
 }
 

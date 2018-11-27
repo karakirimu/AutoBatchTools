@@ -43,10 +43,10 @@ public:
 
 private slots:
     //xml depends functions DEPENDS_XML
-    void setNormalDataList(QList<QStringList> *list, int firstpos);
-    void setSearchDataList(QList<QStringList> *list, int firstpos);
-    void setExtraFuncDataList(QList<QStringList> *list, int firstpos);
-    void setOtherDataList(QList<QStringList> *list, int firstpos);
+    void setNormalDataList(QList<QStringList> *list);
+    void setSearchDataList(QList<QStringList> *list);
+    void setExtraFuncDataList(QList<QStringList> *list);
+    void setOtherDataList(QList<QStringList> *list);
     void setCombinedDataList(int after, int before, int function, int sendfrom);
 
 //    bool getCurrentIndexOnlyChecked();

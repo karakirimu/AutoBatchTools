@@ -93,22 +93,21 @@ void InnerStackedWidget::setInfoDataList(int after, int before, int function, in
 {
     Q_UNUSED(before); Q_UNUSED(sendfrom);
 
-    // If the erased element is 1 and there are no subsequent elements.
-    if(editop->getCacheSize() < 4
-            && function == EditOperator::DELETE){
-        //change stack
-        moveStacked(0, -1, EditOperator::SELECT, EditOperator::MAINEDITOR);
-    }
-
     // update information ui
     if(after != 0) return;
+
+    this->blockSignals(true);
+
+    // If the erased element is 1 and there are no subsequent elements.
+//    if(editop->getCacheSize() < 4 && function == EditOperator::DELETE){
+    //change stack
+    moveStacked(0, -1, EditOperator::SELECT, EditOperator::MAINEDITOR);
+//    }
 
     QList<QStringList> *list = new QList<QStringList>();
 
     if(editop->read(after, list)){
         ProcessXmlListGenerator pxlg;
-
-        this->blockSignals(true);
 
 //        name->setText(list->at(1).at(1));
 //        ver->setText(list->at(2).at(1));
@@ -144,6 +143,7 @@ void InnerStackedWidget::setInfoDataList(int after, int before, int function, in
 
         finput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT, ATTR_NONE, list)));
         sinput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list)));
+
         fscombo->reloadComboBoxItem();
         fscombo->setCurrentText(pxlg.fetch(I_FILESEARCH_NAME, ATTR_NONE, list));
         rloop->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list)));
@@ -160,11 +160,11 @@ void InnerStackedWidget::setInfoDataList(int after, int before, int function, in
         check = VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list));
         rlabel->setVisible(!check);
         rloopmax->setVisible(!check);
-
-        this->blockSignals(false);
     }
 
     delete list;
+
+    this->blockSignals(false);
 }
 
 void InnerStackedWidget::editAuthorAction(QString text)
@@ -261,10 +261,13 @@ void InnerStackedWidget::editValueAction(int value)
     //Compare it with the previous value and execute if there is a change.
     if(objname == "loopMaxSpinBox" && rloopmax->value() != value){
         editop->spinLoopMaxAction(0,value);
+
     }else if(objname == "loopArgumentsSpinBox" && rlargs->value() != value){
         editop->spinLoopArgumentsAction(0,value);
+
     }else if(objname == "loopRecursiveSpinBox" && reloop->value() != value){
         editop->spinLoopRecursiveAction(0,value);
+
     }
 //    editop->editValueAction(0, value, objname);
 }

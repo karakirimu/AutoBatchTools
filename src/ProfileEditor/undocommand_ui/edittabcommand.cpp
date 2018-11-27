@@ -33,19 +33,19 @@ void EditTabCommand::undo()
         pxlg.replaceElementList(TE_STACKEDWIDGET_POSITION, ATTR_NONE, m_targetindex, QString::number(m_oldid), m_cache);
     }
 
-    setText(QObject::tr("Type change ") + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Type change") + QString(" ^(%1)").arg(m_targetindex));
 }
 
 void EditTabCommand::redo()
 {
     pxlg.replaceElementList(ALL_TYPE, ATTR_ONLY_SCHEDULER, m_targetindex, m_newauto, m_cache);
 
-    if(m_cache->at(m_targetindex)->at(1).at(0) == "istack"){
+    if(m_cache->at(m_targetindex)->at(1).at(0) == TE_STACKEDWIDGET_POSITION){
         //temp index
         pxlg.replaceElementList(TE_STACKEDWIDGET_POSITION, ATTR_NONE, m_targetindex, QString::number(m_newid), m_cache);
     }
 
-    setText(QObject::tr("Type change ") + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Type change") + QString(" ^(%1)").arg(m_targetindex));
 }
 
 int EditTabCommand::id() const
