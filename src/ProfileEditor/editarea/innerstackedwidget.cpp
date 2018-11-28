@@ -16,7 +16,7 @@ void InnerStackedWidget::setEditOperator(EditOperator *op)
     name = stackwidget->findChild<QLineEdit *>("nameLineEdit");
     ver = stackwidget->findChild<QLineEdit *>("verLineEdit");
     author = stackwidget->findChild<QLineEdit *>("authorLineEdit");
-    desc = stackwidget->findChild<QPlainTextEdit *>("descTextEdit");
+    desc = stackwidget->findChild<QLineEdit *>("descLineEdit");
 
     addbutton = stackwidget->findChild<QToolButton *>("addInputToolButton");
     editbutton = stackwidget->findChild<QToolButton *>("editInputToolButton");
@@ -34,10 +34,10 @@ void InnerStackedWidget::setEditOperator(EditOperator *op)
     connect(editop, &EditOperator::ui_funcindexUpdate, this, &InnerStackedWidget::setInfoDataList);
     connect(editop, &EditOperator::ui_funcindexUpdate, this, &InnerStackedWidget::moveStacked);
 
-    connect(name, &QLineEdit::textChanged, this, &InnerStackedWidget::editProjectNameAction);
-    connect(ver, &QLineEdit::textChanged, this, &InnerStackedWidget::editVerAction);
-    connect(author, &QLineEdit::textChanged, this, &InnerStackedWidget::editAuthorAction);
-    connect(desc, &QPlainTextEdit::textChanged, this, &InnerStackedWidget::editDescriptionAction);
+    connect(name, &QLineEdit::textEdited, this, &InnerStackedWidget::editProjectNameAction);
+    connect(ver, &QLineEdit::textEdited, this, &InnerStackedWidget::editVerAction);
+    connect(author, &QLineEdit::textEdited, this, &InnerStackedWidget::editAuthorAction);
+    connect(desc, &QLineEdit::textEdited, this, &InnerStackedWidget::editDescriptionAction);
 
     //connect action in search widget
     connect(addbutton, &QToolButton::clicked, fscombo, &SearchComboBox::addAction);
@@ -91,55 +91,25 @@ void InnerStackedWidget::reloadAction()
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void InnerStackedWidget::setInfoDataList(int after, int before, int function, int sendfrom)
 {
-    Q_UNUSED(before); Q_UNUSED(sendfrom);
+    Q_UNUSED(before); Q_UNUSED(sendfrom); Q_UNUSED(function);
 
     // update information ui
     if(after != 0) return;
 
     this->blockSignals(true);
 
-    // If the erased element is 1 and there are no subsequent elements.
-//    if(editop->getCacheSize() < 4 && function == EditOperator::DELETE){
     //change stack
     moveStacked(0, -1, EditOperator::SELECT, EditOperator::MAINEDITOR);
-//    }
 
     QList<QStringList> *list = new QList<QStringList>();
 
     if(editop->read(after, list)){
         ProcessXmlListGenerator pxlg;
 
-//        name->setText(list->at(1).at(1));
-//        ver->setText(list->at(2).at(1));
-//        author->setText(list->at(3).at(1));
-//        desc->setPlainText(list->at(4).at(1));
         name->setText(pxlg.fetch(I_NAME, ATTR_NONE, list));
         ver->setText(pxlg.fetch(I_VERSION, ATTR_NONE, list));
         author->setText(pxlg.fetch(I_AUTHOR, ATTR_NONE, list));
-        desc->setPlainText(pxlg.fetch(I_DESCRIPTION, ATTR_NONE, list));
-
-        // versionup step
-//        if(list->count() > 5){
-//            finput->setChecked(VariantConverter::stringToBool(list->at(5).at(1)));
-//            sinput->setChecked(VariantConverter::stringToBool(list->at(6).at(1)));
-//            fscombo->reloadComboBoxItem();
-//            fscombo->setCurrentText(list->at(7).at(1));
-//            rloop->setChecked(VariantConverter::stringToBool(list->at(8).at(1)));
-//            rloopmax->setValue(static_cast<QString>(list->at(8).at(3)).toInt());
-//            rlargs->setValue(static_cast<QString>(list->at(9).at(1)).toInt());
-//            reloop->setValue(static_cast<QString>(list->at(10).at(1)).toInt());
-
-//            bool check = VariantConverter::stringToBool(list->at(6).at(1));
-//            addbutton->setVisible(check);
-//            editbutton->setVisible(check);
-//            deletebutton->setVisible(check);
-//            fscombo->setVisible(check);
-
-//            check = VariantConverter::stringToBool(list->at(8).at(1));
-//            rlabel->setVisible(!check);
-//            rloopmax->setVisible(!check);
-
-//        }
+        desc->setText(pxlg.fetch(I_DESCRIPTION, ATTR_NONE, list));
 
         finput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT, ATTR_NONE, list)));
         sinput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list)));
@@ -200,14 +170,13 @@ void InnerStackedWidget::editVerAction(QString text)
     editop->textProjectVerAction(0, text);
 }
 
-void InnerStackedWidget::editDescriptionAction()
+void InnerStackedWidget::editDescriptionAction(QString text)
 {
 #ifdef QT_DEBUG
     qDebug() << "InnerStackedWidget::editdescriptionaction : " << this->sender()->objectName();
 #endif
 
     // textChanged will also be called if the text changes to empty.
-    QString text = desc->toPlainText();
     if(text == "") return;
     editop->textProjectDescriptAction(0, text);
 }

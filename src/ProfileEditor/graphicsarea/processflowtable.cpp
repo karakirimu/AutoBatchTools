@@ -260,6 +260,7 @@ void ProcessFlowTable::insertItem(int id)
     if(uid > 0){
         this->insertRow(uid);
         replaceItem(id);
+        this->selectRow(uid);
     }
 }
 

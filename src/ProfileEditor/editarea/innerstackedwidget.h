@@ -38,7 +38,7 @@ private slots:
     void editProjectNameAction(QString text);
     void editVerAction(QString text);
 
-    void editDescriptionAction();
+    void editDescriptionAction(QString text);
 
     void editInitialSearch(QString text);
 
@@ -53,7 +53,7 @@ private:
     QLineEdit *name;
     QLineEdit *ver;
     QLineEdit *author;
-    QPlainTextEdit *desc;
+    QLineEdit *desc;
 
     QToolButton *addbutton;
     QToolButton *editbutton;
