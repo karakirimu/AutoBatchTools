@@ -33,6 +33,40 @@ QString CommandTable::getText(int row)
     return this->model()->index(row, 0).data().toString();
 }
 
+void CommandTable::insertItem(int row)
+{
+    this->insertRow(row);
+    this->setCurrentItem(itemAt(row,0));
+    this->selectRow(row);
+}
+
+void CommandTable::deleteItem(int row)
+{
+    //if rowcount is zero.
+    if(this->rowCount() == 0) return;
+    this->removeRow(row);
+}
+
+void CommandTable::replaceItem(int row, QString str)
+{
+    this->blockSignals(true);
+    this->setItem(row, 0, new QTableWidgetItem(str));
+    this->clearSelection();
+    selectRow(row);
+    this->blockSignals(false);
+}
+
+void CommandTable::swapItem(int before, int after)
+{
+    //swap item
+    QString tmp = this->model()->index(before, 0).data().toString();
+    this->setItem(before, 0, new QTableWidgetItem(this->model()->index(after, 0).data().toString()));
+    this->setItem(after, 0, new QTableWidgetItem(tmp));
+
+    this->clearSelection();
+    selectRow(after);
+}
+
 void CommandTable::insertItems(QStringList *item)
 {
     int counter = item->count();
@@ -71,14 +105,14 @@ void CommandTable::deleteAction()
     if(this->rowCount() == 0) return;
 
     //check delete warning message
-    if(deleteCheckMessage()){
-        QModelIndexList lists = this->selectedIndexes();
-        int rows = lists.count();
-        for(int i = 0; i < rows; i++){
-            emit updateTable(lists.at(i).row(), "", ProcessXmlListGenerator::TABLE_DELETE);
-        }
-        BaseTable::deleteTableRecursive();
+    if(!deleteCheckMessage()) return;
+
+    QModelIndexList lists = this->selectedIndexes();
+    int rows = lists.count();
+    for(int i = 0; i < rows; i++){
+        emit updateTable(lists.at(i).row(), "", ProcessXmlListGenerator::TABLE_DELETE);
     }
+    BaseTable::deleteTableRecursive();
 }
 
 //FIXME : multiple select (it msy be not so good ...)
@@ -109,15 +143,6 @@ void CommandTable::copyAction()
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
 
-//    int current = this->currentRow();
-//    QString tmp = this->model()->index(current, 0).data().toString();
-//    this->insertRow(current);
-//    this->setRowCount(this->rowCount() + 1);
-//    this->setItem(current, 0, new QTableWidgetItem(tmp));
-//    selectRow(current + 1);
-//    QClipboard *clipboard = QApplication::clipboard();
-//    clipboard->setText(tmp);
-
     QString tmp;
     QModelIndexList mlist = this->selectedIndexes();
     int rows = mlist.count();
@@ -145,7 +170,9 @@ void CommandTable::pasteAction()
     for(int i = 0; i < txcount; i++){
        if(row > 0) row = this->currentRow();
        insertRow(row);
+       this->blockSignals(true);
        this->setItem(row, 0, new QTableWidgetItem(text.at(i)));
+       this->blockSignals(false);
        emit updateTable(row, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
     }
 }
@@ -182,20 +209,6 @@ void CommandTable::pasteEnterAction()
     QStringList text = clipboard->text().split(QRegularExpression("\\t|\\n|\\r\\n"));
 
     //last lests unknown ""
-//    text.removeLast();
-
-//    int row = this->rowCount();
-//    int txcount = text.count();
-
-//    for(int i = 0; i < txcount; i++){
-//        if(text.at(i) != "\n" || text.at(i) != "\r\n"){
-//            if(row > 0) row = this->currentRow();
-//            insertRow(row);
-//            this->setItem(row, 0, new QTableWidgetItem(text.at(i)));
-//            emit updateTable(row, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
-//        }
-//    }
-
     if(text.last() == "") text.removeLast();
     if(text.first() == "") text.removeFirst();
 
@@ -253,7 +266,7 @@ void CommandTable::openFileAction()
 {
     int current = this->currentRow();
     if(rowCount() == 0 || current < 0) return;
-    QString str = selectFile("./");
+    QString str = selectFile(QDir::currentPath());
     //this->in
     this->setItem(current, 0, new QTableWidgetItem(str));
     if(str != ""){
@@ -265,7 +278,7 @@ void CommandTable::openDirectoryAction()
 {
     int current = this->currentRow();
     if(rowCount() == 0 || current < 0) return;
-    QString str = selectFolder("./");
+    QString str = selectFolder(QDir::currentPath());
     this->setItem(current, 0, new QTableWidgetItem(str));
     if(str != ""){
         editedAction(current, 0);
@@ -294,12 +307,12 @@ void CommandTable::setPopupActionTop()
     contextMenu->addSeparator();
 
     //connect signals
-    connect(m_add, SIGNAL(triggered()), this, SLOT(addAction()));
-    connect(m_delete, SIGNAL(triggered()), this, SLOT(deleteAction()));
-    connect(m_edit, SIGNAL(triggered()), this, SLOT(editAction()));
+    connect(m_add, &QAction::triggered, this, &CommandTable::addAction);
+    connect(m_delete, &QAction::triggered, this, &CommandTable::deleteAction);
+    connect(m_edit, &QAction::triggered, this, &CommandTable::editAction);
 
-    connect(m_file, SIGNAL(triggered()), this, SLOT(openFileAction()));
-    connect(m_dir, SIGNAL(triggered()), this, SLOT(openDirectoryAction()));
+    connect(m_file, &QAction::triggered, this, &CommandTable::openFileAction);
+    connect(m_dir, &QAction::triggered, this, &CommandTable::openDirectoryAction);
 }
 
 void CommandTable::setPopupActionDefault()
@@ -328,13 +341,13 @@ void CommandTable::setPopupActionDefault()
     m_down->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Down));
 
     //connect signals
-    connect(m_cut, SIGNAL(triggered()), this, SLOT(cutAction()));
-    connect(m_copy, SIGNAL(triggered()), this, SLOT(copyAction()));
-    connect(m_paste, SIGNAL(triggered()), this, SLOT(pasteAction()));
-    connect(m_pastespace, SIGNAL(triggered()), this, SLOT(pasteSpaceAction()));
-    connect(m_pasteenter, SIGNAL(triggered()), this, SLOT(pasteEnterAction()));
-    connect(m_up, SIGNAL(triggered()), this, SLOT(upAction()));
-    connect(m_down, SIGNAL(triggered()), this, SLOT(downAction()));
+    connect(m_cut, &QAction::triggered, this, &CommandTable::cutAction);
+    connect(m_copy, &QAction::triggered, this, &CommandTable::copyAction);
+    connect(m_paste, &QAction::triggered, this, &CommandTable::pasteAction);
+    connect(m_pastespace, &QAction::triggered, this, &CommandTable::pasteSpaceAction);
+    connect(m_pasteenter, &QAction::triggered, this, &CommandTable::pasteEnterAction);
+    connect(m_up, &QAction::triggered, this, &CommandTable::upAction);
+    connect(m_down, &QAction::triggered, this, &CommandTable::downAction);
 }
 
 bool CommandTable::eventFilter(QObject *obj, QEvent *event)

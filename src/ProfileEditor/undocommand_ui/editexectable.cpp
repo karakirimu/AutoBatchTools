@@ -35,15 +35,15 @@ void EditExecTable::undo()
 
         updateCounter(false);
 
-        setText(QObject::tr("Add exec arg \'%1\' at %2").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString(" ^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Add exec at %1").arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_E_TABLEDEL));
         break;
     case ProcessXmlListGenerator::TABLE_EDIT:
 
         pxlg.replaceElementList(m_tableindex, m_targetindex, m_oldstr, SKIP, m_cache);
 
-        setText(QObject::tr("Edit exec arg \'%1\' at %2").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString(" ^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Edit exec at %2 arg \'%1\'").arg(m_newstr).arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_E_TABLEEDIT));
         break;
     case ProcessXmlListGenerator::TABLE_INSERT:
         rcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
@@ -53,8 +53,8 @@ void EditExecTable::undo()
 
         if(m_tableindex < (rcount-1)) updateIndex(rcount-1);
 
-        setText(QObject::tr("Insert exec arg \'%1\' at %2").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString(" ^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Insert exec at %2 arg \'%1\'").arg(m_newstr).arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_E_TABLEDEL));
         break;
     case ProcessXmlListGenerator::TABLE_DELETE:
         rcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
@@ -65,8 +65,8 @@ void EditExecTable::undo()
 
         if(m_tableindex < rcount) updateIndex(rcount);
 
-        setText(QObject::tr("Delete exec arg \'%1\' at %2").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString(" ^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Delete exec at %1").arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_E_TABLEINS));
         break;
     default:
         break;
@@ -84,14 +84,15 @@ void EditExecTable::redo()
 
         updateCounter(true);
 
-        setText(QObject::tr("Add exec arg at %1").arg(QString::number(m_tableindex)) \
-                + QString(" ^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Add exec at %1").arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_E_TABLEADD));
         break;
     case ProcessXmlListGenerator::TABLE_EDIT:
         pxlg.replaceElementList(m_tableindex, m_targetindex, m_newstr, SKIP, m_cache);
 
-        setText(QObject::tr("Edit exec arg \'%1\' at %2").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString(" ^(%1)").arg(m_targetindex));
+        // this is only all update
+        setText(QObject::tr("Edit exec at %2 arg \'%1\'").arg(m_newstr).arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_E_TABLEEDIT));
         break;
     case ProcessXmlListGenerator::TABLE_INSERT:
         rcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
@@ -102,8 +103,8 @@ void EditExecTable::redo()
 
         if(m_tableindex < rcount) updateIndex(rcount);
 
-        setText(QObject::tr("Insert exec arg \'%1\' at %2").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString(" ^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Insert exec at %2 arg \'%1\'").arg(m_newstr).arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_E_TABLEINS));
         break;
     case ProcessXmlListGenerator::TABLE_DELETE:
         rcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
@@ -113,8 +114,8 @@ void EditExecTable::redo()
 
         if(m_tableindex < (rcount-1)) updateIndex(rcount-1);
 
-        setText(QObject::tr("Delete exec arg \'%1\' at %2").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString(" ^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Delete exec at %1").arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_E_TABLEDEL));
         break;
     default:
         break;
@@ -124,6 +125,22 @@ void EditExecTable::redo()
 int EditExecTable::id() const
 {
     ProcessXmlListGenerator pxg;
+
+    switch (m_operation) {
+    case ProcessXmlListGenerator::TABLE_ADD:
+        return pxg.getId(E_ADD_TABLE);
+
+    case ProcessXmlListGenerator::TABLE_EDIT:
+        return pxg.getId(E_EDIT_TABLE);
+
+    case ProcessXmlListGenerator::TABLE_INSERT:
+        return pxg.getId(E_INSERT_TABLE);
+
+    case ProcessXmlListGenerator::TABLE_DELETE:
+        return pxg.getId(E_DELETE_TABLE);
+
+    }
+
     return pxg.getId(E_CMDARGCOUNT);
 }
 
@@ -131,9 +148,13 @@ bool EditExecTable::mergeWith(const QUndoCommand *other)
 {
     if (other->id() != id()) return false;
     const EditExecTable *com = static_cast<const EditExecTable *>(other);
+
     if(operation() == ProcessXmlListGenerator::TABLE_EDIT){
         m_newstr = com->m_newstr;
+    }else{
+        return false;
     }
+
     return true;
 }
 

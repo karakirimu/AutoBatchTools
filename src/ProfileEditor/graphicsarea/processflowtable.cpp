@@ -218,8 +218,11 @@ void ProcessFlowTable::updateIndex(QString operation)
     }else{
         //swap
         int first = static_cast<QString>(sep.at(0)).toInt();
-        int second = static_cast<QString>(sep.at(1)).toInt();
-        swapItem(uiIndexToData(first), uiIndexToData(second));
+
+        bool ok = false;
+        int second = static_cast<QString>(sep.at(1)).toInt(&ok);
+
+        if(ok) swapItem(uiIndexToData(first), uiIndexToData(second));
     }
 }
 

@@ -42,9 +42,9 @@ HEADERS  += editarea/commandtable.h \
     adapter/editoperator.h \
     adapter/listmimedata.h \
 #    adapter/xmllistgenerator.h \
-    graphicsarea/flowcellwidget.h \
-    graphicsarea/flowtable.h \
-    processlistarea/profiletreewidget.h \
+#    graphicsarea/flowcellwidget.h \
+#    graphicsarea/flowtable.h \
+#    processlistarea/profiletreewidget.h \
     settingdialog/settingdialog.h \
     console/consoleedit.h \
     console/consoleview.h \
@@ -106,9 +106,9 @@ SOURCES += editarea/commandtable.cpp \
     adapter/editoperator.cpp \
     adapter/listmimedata.cpp \
 #    adapter/xmllistgenerator.cpp \
-    graphicsarea/flowcellwidget.cpp \
-    graphicsarea/flowtable.cpp \
-    processlistarea/profiletreewidget.cpp \
+#    graphicsarea/flowcellwidget.cpp \
+#    graphicsarea/flowtable.cpp \
+#    processlistarea/profiletreewidget.cpp \
     settingdialog/settingdialog.cpp \
     console/consoleedit.cpp \
     console/consoleview.cpp \
@@ -166,7 +166,7 @@ SOURCES += main.cpp
 
 FORMS    += $$PWD/profileeditor.ui \
     aboutpe.ui \
-    graphicsarea/flowcellwidget.ui \
+#    graphicsarea/flowcellwidget.ui \
     settingdialog/settingdialog.ui
 
 RESOURCES += \

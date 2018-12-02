@@ -78,7 +78,6 @@
 // tag define (index 0)
 // all
 static const QString ALL_TYPE =                   "type";
-//static const QString ALL_CMDVALUE =               "cmd";
 
 // info
 static const QString I_NAME =                     "iname";
@@ -149,6 +148,31 @@ static const QString UNDOREDO_ADD =               "ADD";
 static const QString UNDOREDO_DELETE =            "DEL";
 static const QString UNDOREDO_INSERT =            "INS";
 
+static const QString UNDOREDO_E_TABLEADD =        "ET_ADD";
+static const QString UNDOREDO_E_TABLEEDIT =       "ET_EDIT";
+static const QString UNDOREDO_E_TABLEDEL =        "ET_DEL";
+static const QString UNDOREDO_E_TABLEINS =        "ET_INS";
+static const QString UNDOREDO_E_TABLESWAP =       "ET_SWAP";
+
+static const QString UNDOREDO_PL_TABLEADD =       "PLT_ADD";
+static const QString UNDOREDO_PL_TABLEEDIT =      "PLT_EDIT";
+static const QString UNDOREDO_PL_TABLEDEL =       "PLT_DEL";
+static const QString UNDOREDO_PL_TABLEINS =       "PLT_INS";
+static const QString UNDOREDO_PL_TABLESWAP =      "PLT_SWAP";
+
+//undo redo table operation id value. It is no means.
+static const QString E_ADD_TABLE    = "{(I*9g-v";
+static const QString E_INSERT_TABLE = "M$7>O/Qb";
+static const QString E_EDIT_TABLE   = "d/%o'q9l";
+static const QString E_DELETE_TABLE = "ht9!YQ(:";
+static const QString E_SWAP_TABLE   = ",5Dm&y/R";
+
+static const QString PL_ADD_TABLE    = ")r]&mwqn";
+static const QString PL_INSERT_TABLE = "8NGM:Yv3";
+static const QString PL_EDIT_TABLE   = "UOq:>~`c";
+static const QString PL_DELETE_TABLE = "/=gx79d,";
+static const QString PL_SWAP_TABLE   = "[FX@!%Nb";
+
 
 class PROCESSXMLLISTGENERATORSHARED_EXPORT ProcessXmlListGenerator : public QObject
 {
@@ -160,16 +184,6 @@ public:
     //tab and list connection map
     enum{NORMAL, SEARCH, EXTRAFUNC, OTHER};
 
-    //inner list connection map // "_" means "and"
-    //used in Undo Redo Command
-//    enum{INFO_NAME,INFO_VER,INFO_AUTHOR,INFO_DESCRIPT,INFO_FINPUT,
-//         INFO_SINPUT,INFO_RLOOP,INFO_RLARG,INFO_RELOOP,
-//         LOCALVARIANT,CURRENTONLY,INNERSTACK,
-//         SEARCHONLY,SEARCHNAME_ID,SEPARATOR,VARIANT,OUTPUTFILE,OUTPUT_RADIO,
-//         OTHERONLY,OTHERNAME,OTHERFILEPATH,
-//         NORMALONLY,TIMEOUT_DURITION,NCMDCOUNT,
-//         EXTRAFUNCONLY,EXTRANAME,EXTRAFILE,ECMDCOUNT};
-
     //inner table operation
     enum{TABLE_ADD,TABLE_EDIT,TABLE_INSERT,TABLE_DELETE,TABLE_UP,TABLE_DOWN,TABLE_SWAP};
 
@@ -177,11 +191,7 @@ public:
     void createNewList(QList<QStringList> *newlist);
 
     //list create function
-//    void createInfoList(QList<QStringList> *newlist, QStringList *list);
     void createLocalList(QList<QStringList> *newlist, QStringList *list);
-
-    //combined above list
-//    void createCombineList(QList<QStringList> *newlist, int index, QHash<int, QStringList *> *combine);
 
     //change combined structure to separated structure
     void createSeparateList(QList<QStringList> *ctos);
@@ -193,7 +203,6 @@ public:
     int getType(QString type);
 
     //for change inner table structures
-//    static QStringList createCmdElement(QString value, int index);
     static QStringList createCmdExecElement(QString value, int index);
     static QStringList createCmdPluginElement(QString value, int index);
     int fetchCmdFirstPos(QString tag, const QList<QStringList> *loadbase);
@@ -205,13 +214,6 @@ public:
     //replace xml element
     void replaceElementList(QString tag, QString attr, int targetindex, QString replacestr, QList<QList<QStringList> *> *cache);
     void replaceElementList(int tableindex, int targetindex, QString replacestr, int skip, QList<QList<QStringList> *> *cache);
-
-//private:
-    //separated list create function
-//    void createNormalList(QList<QStringList> *newlist, QStringList *list);
-//    void createSearchList(QList<QStringList> *newlist, QStringList *list);
-//    void createExtraFuncList(QList<QStringList> *newlist, QStringList *list);
-//    void createOtherList(QList<QStringList> *newlist, QStringList *list);
 
     int getId(QString tag);
 

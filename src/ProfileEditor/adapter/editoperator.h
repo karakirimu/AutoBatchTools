@@ -96,11 +96,8 @@ public:
     int getCurrentCommandType();
 
     //detect called item
-    enum{TREE, FLOWTABLE,GRAPHICAREA, MAINEDITOR};
-    enum{ADD,DELETE,INSERT,SWAP,SELECT
-         /*,EDITCHECK,EDITFCOMBO,EDITSCOMBO,EDITCOMBO,EDITFULL
-         ,EDITTEXT,EDITVALUE,EDITTAB
-         ,EDITTABLE,EDITEXTABLE,SWAPTABLE*/};
+    enum{FLOWTABLE, MAINEDITOR};
+    enum{ADD,DELETE,INSERT,SWAP,SELECT};
 
     //gui functions
     QRect getMainWindowGeometry();

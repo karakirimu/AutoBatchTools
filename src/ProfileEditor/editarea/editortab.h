@@ -37,20 +37,25 @@ public:
     explicit EditorTab(QWidget *parent = Q_NULLPTR);
     ~EditorTab();
 
+    // ui <-> data communication functions
     void setConnection();
     void setEditOperator(EditOperator *op);
+
+    //undo redo functions
     void updateIndex(QString operation);
 
 private slots:
-    //xml depends functions DEPENDS_XML
+    //DEPENDS_XML data -> ui functions
     void setNormalDataList(QList<QStringList> *list);
     void setSearchDataList(QList<QStringList> *list);
-    void setExtraFuncDataList(QList<QStringList> *list);
+    void setPluginDataList(QList<QStringList> *list);
     void setOtherDataList(QList<QStringList> *list);
     void setCombinedDataList(int after, int before, int function, int sendfrom);
 
-//    bool getCurrentIndexOnlyChecked();
+    // DEPENDS_XML undo redo functions
+    QString getTableData(int targetrow, int tablerow, QString loadtype);
 
+    // DEPENDS_XML ui -> data functions
     void tabChanged(int index);
 
     void editCheckAction(bool check);
@@ -92,11 +97,11 @@ private:
     QRadioButton *vari;
     QRadioButton *file;
 
-    //extrafunc
+    //plugins
     QWidget *widgetextra;
     PluginsComboBox *extrafunccombobox;
     QCheckBox *autoonly_3;
-    CommandTable *extrafuncTableWidget;
+    CommandTable *ctableplugins;
     QToolButton *addbutton_e;
     QToolButton *deletebutton_e;
     QToolButton *pluginsetting;

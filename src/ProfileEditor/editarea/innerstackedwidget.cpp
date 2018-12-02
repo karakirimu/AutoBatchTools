@@ -72,11 +72,11 @@ void InnerStackedWidget::updateIndex(QString operation)
         //edit
         setInfoDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
                             EditOperator::SELECT, EditOperator::MAINEDITOR);
-    }else if(sep.at(0) == "1" && sep.at(1) == UNDOREDO_DELETE){
+    }else if(sep.at(0) == "2" && sep.at(1) == UNDOREDO_DELETE){
         //change stack
         moveStacked(0, -1, EditOperator::SELECT, EditOperator::MAINEDITOR);
 
-    }else if(sep.at(0) == "1" && sep.at(1) == UNDOREDO_ADD){
+    }else if(sep.at(0) == "2" && sep.at(1) == UNDOREDO_ADD){
         //change stack
         moveStacked(1, -1, EditOperator::SELECT, EditOperator::MAINEDITOR);
 

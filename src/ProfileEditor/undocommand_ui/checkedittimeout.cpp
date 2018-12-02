@@ -17,14 +17,14 @@ void CheckEditTimeout::undo()
 {
     pxlg.replaceElementList(E_TIMEOUT, ATTR_NONE, m_targetindex, m_oldcheck, m_cache);
 
-    setText(QObject::tr("Timeout %1 ").arg(m_oldcheck) \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Timeout %1").arg(m_oldcheck) \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 void CheckEditTimeout::redo()
 {
     pxlg.replaceElementList(E_TIMEOUT, ATTR_NONE, m_targetindex, m_newcheck, m_cache);
 
-    setText(QObject::tr("Timeout %1 ").arg(m_newcheck) \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Timeout %1").arg(m_newcheck) \
+            + QString(" ^(%1)").arg(m_targetindex));
 }

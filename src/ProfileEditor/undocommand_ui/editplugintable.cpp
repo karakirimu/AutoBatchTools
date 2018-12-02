@@ -34,16 +34,16 @@ void EditPluginTable::undo()
 
         updateCounter(false);
 
-        setText(QObject::tr("Add plugin arg \'%1\' at %2 ").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Add plugin at %1").arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_PL_TABLEDEL));
 
         break;
 
     case ProcessXmlListGenerator::TABLE_EDIT:
         pxlg.replaceElementList(m_tableindex, m_targetindex, m_oldstr, SKIP, m_cache);
 
-        setText(QObject::tr("Edit plugin arg \'%1\' at %2 ").arg(m_oldstr).arg(QString::number(m_tableindex)) \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Edit plugin at %2 arg \'%1\'").arg(m_oldstr).arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_PL_TABLEEDIT));
         break;
 
     case ProcessXmlListGenerator::TABLE_INSERT:
@@ -54,8 +54,8 @@ void EditPluginTable::undo()
 
         if(m_tableindex < (rcount-1)) updateIndex(rcount-1);
 
-        setText(QObject::tr("Insert plugin arg \'%1\' at %2 ").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Insert plugin at %2 arg \'%1\'").arg(m_newstr).arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_PL_TABLEDEL));
         break;
 
     case ProcessXmlListGenerator::TABLE_DELETE:
@@ -67,8 +67,8 @@ void EditPluginTable::undo()
 
         if(m_tableindex < rcount) updateIndex(rcount);
 
-        setText(QObject::tr("Delete plugin arg \'%1\' at %2 ").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Delete plugin at %1").arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_PL_TABLEINS));
         break;
 
     default:
@@ -87,15 +87,15 @@ void EditPluginTable::redo()
 
         updateCounter(true);
 
-        setText(QObject::tr("Add plugin arg at %1 ").arg(QString::number(m_tableindex)) \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Add plugin %1").arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_PL_TABLEADD));
 
         break;
     case ProcessXmlListGenerator::TABLE_EDIT:
         pxlg.replaceElementList(m_tableindex, m_targetindex, m_newstr, SKIP, m_cache);
 
-        setText(QObject::tr("Edit plugin arg \'%1\' at %2 ").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Edit plugin at %2 arg \'%1\'").arg(m_newstr).arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_PL_TABLEEDIT));
         break;
     case ProcessXmlListGenerator::TABLE_INSERT:
 
@@ -107,8 +107,8 @@ void EditPluginTable::redo()
 
         if(m_tableindex < rcount) updateIndex(rcount);
 
-        setText(QObject::tr("Insert plugin arg \'%1\' at %2 ").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Insert plugin at %2 arg \'%1\'").arg(m_newstr).arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_PL_TABLEINS));
         break;
     case ProcessXmlListGenerator::TABLE_DELETE:
         //add
@@ -119,8 +119,8 @@ void EditPluginTable::redo()
 
         if(m_tableindex < (rcount-1)) updateIndex(rcount-1);
 
-        setText(QObject::tr("Delete plugin arg \'%1\' at %2 ").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Delete plugin at %1").arg(QString::number(m_tableindex)) \
+                + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_PL_TABLEDEL));
         break;
     default:
         break;
@@ -129,8 +129,27 @@ void EditPluginTable::redo()
 
 int EditPluginTable::id() const
 {
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(PL_CMDARGCOUNT);
     ProcessXmlListGenerator pxg;
+
+    switch (m_operation) {
+    case ProcessXmlListGenerator::TABLE_ADD:
+        return pxg.getId(PL_ADD_TABLE);
+
+    case ProcessXmlListGenerator::TABLE_EDIT:
+        return pxg.getId(PL_EDIT_TABLE);
+
+    case ProcessXmlListGenerator::TABLE_INSERT:
+        return pxg.getId(PL_INSERT_TABLE);
+
+    case ProcessXmlListGenerator::TABLE_DELETE:
+        return pxg.getId(PL_DELETE_TABLE);
+
+    }
+
     return pxg.getId(PL_CMDARGCOUNT);
+
 }
 
 bool EditPluginTable::mergeWith(const QUndoCommand *other)
@@ -139,6 +158,8 @@ bool EditPluginTable::mergeWith(const QUndoCommand *other)
     const EditPluginTable *com = static_cast<const EditPluginTable *>(other);
     if(m_operation == ProcessXmlListGenerator::TABLE_EDIT){
         m_newstr = com->m_newstr;
+    }else{
+        return false;
     }
     return true;
 }

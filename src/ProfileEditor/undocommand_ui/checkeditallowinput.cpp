@@ -17,16 +17,16 @@ void CheckEditAllowInput::undo()
 {
     pxlg.replaceElementList(I_FILEINPUT, ATTR_NONE, m_targetindex, m_oldcheck, m_cache);
 
-    setText(QObject::tr("Allow input %1 ").arg(m_oldcheck) \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Allow input %1").arg(m_oldcheck) \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 void CheckEditAllowInput::redo()
 {
     pxlg.replaceElementList(I_FILEINPUT, ATTR_NONE, m_targetindex, m_newcheck, m_cache);
 
-    setText(QObject::tr("Allow input %1 ").arg(m_newcheck) \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Allow input %1").arg(m_newcheck) \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 int CheckEditAllowInput::id() const

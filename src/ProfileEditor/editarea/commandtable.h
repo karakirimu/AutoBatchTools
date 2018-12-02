@@ -14,6 +14,14 @@ public:
     ~CommandTable();
 
     QString getText(int row);
+
+    // undo redo no emit operation
+    void insertItem(int row);
+    void deleteItem(int row);
+    void replaceItem(int row, QString str);
+    void swapItem(int before, int after);
+
+    //pluginstable -> settingsclicked
     void insertItems(QStringList *item);
 
 signals:

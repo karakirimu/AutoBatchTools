@@ -77,7 +77,7 @@ void EditorTab::setEditOperator(EditOperator *op)
 
     // load extrafunc widget ui objects
     autoonly_3 = widgetextra->findChild<QCheckBox *>("autoOnlyCheckBox_3");
-    extrafuncTableWidget = widgetextra->findChild<CommandTable *>("extrafuncTableWidget");
+    ctableplugins = widgetextra->findChild<CommandTable *>("extrafuncTableWidget");
 
     // load other widget ui objects
     profilecombobox = otherwidget->findChild<ProfileComboBox *>("profileComboBox");
@@ -111,8 +111,8 @@ void EditorTab::setEditOperator(EditOperator *op)
     //index edit (table only)
     connect(ctablenormal, &CommandTable::updateTable, this, &EditorTab::editTableAction);
     connect(ctablenormal, &CommandTable::swapTable, this, &EditorTab::editSwapTableAction);
-    connect(extrafuncTableWidget, &CommandTable::updateTable, this, &EditorTab::editTableAction);
-    connect(extrafuncTableWidget, &CommandTable::swapTable, this, &EditorTab::editSwapTableAction);
+    connect(ctableplugins, &CommandTable::updateTable, this, &EditorTab::editTableAction);
+    connect(ctableplugins, &CommandTable::swapTable, this, &EditorTab::editSwapTableAction);
 }
 
 void EditorTab::updateIndex(QString operation)
@@ -124,17 +124,75 @@ void EditorTab::updateIndex(QString operation)
         setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
                             EditOperator::SELECT, EditOperator::MAINEDITOR);
 
-    }else if(sep.at(1) == UNDOREDO_ADD){
-        //add
-//        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
-//                            EditOperator::SELECT, EditOperator::MAINEDITOR);
-    }else if(sep.at(1) == UNDOREDO_DELETE){
-        //del
+//    }else if(sep.at(1) == UNDOREDO_ADD){
+//        //add
+
+//    }else if(sep.at(1) == UNDOREDO_DELETE){
+//        //del
 
     }else if(sep.at(1) == UNDOREDO_INSERT){
         //ins
         setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
                             EditOperator::SELECT, EditOperator::MAINEDITOR);
+
+    }else if(sep.at(1) == UNDOREDO_E_TABLEADD){
+        //exectableadd
+        ctablenormal->insertItem(static_cast<QString>(sep.at(0)).toInt());
+
+    }else if(sep.count() == 3
+             && sep.at(2) == UNDOREDO_E_TABLEINS){
+        //exectableins
+        ctablenormal->insertItem(static_cast<QString>(sep.at(1)).toInt());
+        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+        ctablenormal->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos, UNDOREDO_E_TABLEEDIT));
+
+    }else if(sep.count() == 3
+             && sep.at(2) == UNDOREDO_E_TABLEEDIT){
+        //exectableedit
+        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+        ctablenormal->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos, UNDOREDO_E_TABLEEDIT));
+
+    }else if(sep.at(1) == UNDOREDO_E_TABLEDEL){
+        //exectabledel
+        ctablenormal->deleteItem(static_cast<QString>(sep.at(0)).toInt());
+
+    }else if(sep.count() == 3
+             && sep.at(2) == UNDOREDO_E_TABLESWAP){
+        //exectableswap
+        ctablenormal->swapItem(static_cast<QString>(sep.at(0)).toInt()
+                               , static_cast<QString>(sep.at(1)).toInt());
+
+    }else if(sep.at(1) == UNDOREDO_PL_TABLEADD){
+        //exectableadd
+        ctableplugins->insertItem(static_cast<QString>(sep.at(0)).toInt());
+
+    }else if(sep.count() == 3
+             && sep.at(2) == UNDOREDO_PL_TABLEINS){
+        //exectableins
+        ctableplugins->insertItem(static_cast<QString>(sep.at(1)).toInt());
+        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+        ctableplugins->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos, UNDOREDO_PL_TABLEEDIT));
+
+    }else if(sep.count() == 3
+             && sep.at(2) == UNDOREDO_PL_TABLEEDIT){
+        //exectableedit
+        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+        ctableplugins->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos, UNDOREDO_PL_TABLEEDIT));
+
+    }else if(sep.at(1) == UNDOREDO_PL_TABLEDEL){
+        //exectabledel
+        ctableplugins->deleteItem(static_cast<QString>(sep.at(0)).toInt());
+
+    }else if(sep.count() == 3
+             && sep.at(2) == UNDOREDO_PL_TABLESWAP){
+        //exectableswap
+        ctableplugins->swapItem(static_cast<QString>(sep.at(0)).toInt()
+                               , static_cast<QString>(sep.at(1)).toInt());
+
     }
 }
 
@@ -148,6 +206,7 @@ void EditorTab::setNormalDataList(QList<QStringList> *list)
     tospin->setValue(xgen.fetch(E_TIMEOUT,ATTR_TIMEOUTMS, list).toInt());
 
     int cmdfirst = xgen.fetchCmdFirstPos(E_CMD, list);
+
     ctablenormal->setRowCount(counter);
     for(int i = 0; i < counter; i++){
         ctablenormal->setItem(i, 0, new QTableWidgetItem(list->at(cmdfirst + i).at(1)));
@@ -184,7 +243,7 @@ void EditorTab::setSearchDataList(QList<QStringList> *list)
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
-void EditorTab::setExtraFuncDataList(QList<QStringList> *list)
+void EditorTab::setPluginDataList(QList<QStringList> *list)
 {
     this->blockSignals(true);
 
@@ -196,9 +255,9 @@ void EditorTab::setExtraFuncDataList(QList<QStringList> *list)
 
     int counter = xgen.fetch(PL_CMDARGCOUNT,ATTR_NONE, list).toInt();
     int ecmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
-    extrafuncTableWidget->setRowCount(counter);
+    ctableplugins->setRowCount(counter);
     for(int i = 0; i < counter; i++){
-        extrafuncTableWidget->setItem(i, 0, new QTableWidgetItem(list->at(ecmdfirst + i).at(1)));
+        ctableplugins->setItem(i, 0, new QTableWidgetItem(list->at(ecmdfirst + i).at(1)));
     }
 
     autoonly_3->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_SCRIPT,ATTR_ONLY_SCHEDULER, list)));
@@ -222,39 +281,94 @@ void EditorTab::setOtherDataList(QList<QStringList> *list)
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void EditorTab::setCombinedDataList(int after, int before, int function, int sendfrom)
 {
-    Q_UNUSED(before); Q_UNUSED(function); Q_UNUSED(sendfrom);
+    Q_UNUSED(before); Q_UNUSED(sendfrom); Q_UNUSED(function)
 
     QList<QStringList> *list = new QList<QStringList>();
-    QHash<int, int> hlist;
+//    QHash<int, int> hlist;
+
+//    if(function == EditOperator::EDIT){
+//        if(after < 2 || !editop->read(after, list)){
+//            delete list;
+//            return;
+//        }
+//    }else{
+        if(/*currentid == after ||*/ after < 2 || !editop->read(after, list)){
+            delete list;
+            return;
+        }
+//    }
 
     //avoid multiple update
-    if(editop->read(after, list) && currentid != after && after > 1){
+//    if(editop->read(after, list) && currentid != after && after > 1){
 
-        //set current id
-        qDebug() << QString("EditorTab : currentid update to %1").arg(after);
-        currentid = after;
-        xgen.getListStructure(list, &hlist);
-        //set widget selection
-        if(hlist.count() > 1){
-            this->blockSignals(true);
-            setCurrentIndex(static_cast<QString>(xgen.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt());
-            this->blockSignals(false);
-        }
+    //set current id
+    qDebug() << QString("EditorTab : currentid update to %1").arg(after);
+    currentid = after;
+//    xgen.getListStructure(list, &hlist);
+    //set widget selection
+    this->blockSignals(true);
 
-        //load type=normal
-        if(hlist.contains(ProcessXmlListGenerator::NORMAL))    setNormalDataList(list);
+    QString type = xgen.fetch(ALL_TYPE, ATTR_NONE, list);
+    if(type == TYPE_ALLINCLUDE){
+        setCurrentIndex(static_cast<QString>(xgen.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt());
+        setNormalDataList(list);
+        setSearchDataList(list);
+        setPluginDataList(list);
+        setOtherDataList(list);
 
-        //load type=search
-        if(hlist.contains(ProcessXmlListGenerator::SEARCH))    setSearchDataList(list);
+    }else if(type == TYPE_EXEC){
+        setNormalDataList(list);
 
-        //load type=extrafunc
-        if(hlist.contains(ProcessXmlListGenerator::EXTRAFUNC)) setExtraFuncDataList(list);
+    }else if(type == TYPE_SEARCH){
+        setSearchDataList(list);
 
-        //load type=other
-        if(hlist.contains(ProcessXmlListGenerator::OTHER))     setOtherDataList(list);
+    }else if(type == TYPE_SCRIPT){
+        setPluginDataList(list);
+
+    }else if(type == TYPE_ANOTHER){
+        setOtherDataList(list);
+
     }
 
+//    if(hlist.count() > 1){
+//        setCurrentIndex(static_cast<QString>(xgen.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt());
+//    }
+    this->blockSignals(false);
+
+    //load type=normal
+//    if(hlist.contains(ProcessXmlListGenerator::NORMAL))    setNormalDataList(list);
+
+//    //load type=search
+//    if(hlist.contains(ProcessXmlListGenerator::SEARCH))    setSearchDataList(list);
+
+//    //load type=plugins
+//    if(hlist.contains(ProcessXmlListGenerator::EXTRAFUNC)) setPluginDataList(list);
+
+//    //load type=other
+//    if(hlist.contains(ProcessXmlListGenerator::OTHER))     setOtherDataList(list);
+//    }
+
     delete list;
+}
+
+QString EditorTab::getTableData(int targetrow, int tablerow, QString loadtype)
+{
+    QList<QStringList> *list = new QList<QStringList>();
+
+    if(targetrow < 2 || !editop->read(targetrow, list)){
+        delete list;
+        return "";
+    }
+
+    int cmdfirst = 0;
+
+    if(loadtype == UNDOREDO_E_TABLEEDIT){
+        cmdfirst = xgen.fetchCmdFirstPos(E_CMD, list);
+    }else{
+        cmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
+    }
+
+    return list->at(cmdfirst + tablerow).at(1);
 }
 
 //bool EditorTab::getCurrentIndexOnlyChecked()
@@ -406,7 +520,7 @@ void EditorTab::editTableAction(int index, QString str, int function)
     if(objname == "cmdTableWidget"){
         editop->tableEditExecAction(currentid, index, str, function);
 
-    }else if(objname == "extrafuncTableWidget"){
+    }else if(objname == "ctableplugins"){
         editop->tableEditPluginAction(currentid, index, str, function);
 
     }
@@ -420,7 +534,7 @@ void EditorTab::editSwapTableAction(int indexbefore, int indexafter)
     if(objname == "cmdTableWidget"){
         editop->tableSwapExecAction(currentid, indexbefore, indexafter);
 
-    }else if(objname == "extrafuncTableWidget"){
+    }else if(objname == "ctableplugins"){
         editop->tableSwapPluginAction(currentid, indexbefore, indexafter);
 
     }
@@ -435,10 +549,10 @@ void EditorTab::pluginSettingsClicked()
         QStringList resultargs;
 
         //read data
-        int excount = extrafuncTableWidget->rowCount();
+        int excount = ctableplugins->rowCount();
         QStringList currentargs;
         for(int i = 0; i < excount; i++){
-            currentargs.append(extrafuncTableWidget->model()->index(i, 0).data().toString());
+            currentargs.append(ctableplugins->model()->index(i, 0).data().toString());
         }
 
         inter->launchSettingWidget(&currentargs, &resultargs, \
@@ -446,7 +560,7 @@ void EditorTab::pluginSettingsClicked()
                                    extrafunccombobox->styleSheet());
 
         //write data
-        extrafuncTableWidget->insertItems(&resultargs);
+        ctableplugins->insertItems(&resultargs);
 
         loader.unload();
     }

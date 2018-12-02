@@ -6,10 +6,7 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
     // tag define (index 0)
     // all
 //    const QString ALL_TYPE =                   "type";
-//    const QString ALL_CMDVALUE =               "cmd";
-
     generateId.insert(ALL_TYPE, 0);
-//    generateId.insert(ALL_CMDVALUE, 1);
 
     // info
 //    const QString I_NAME =                     "iname";
@@ -124,6 +121,33 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
 //    const QString ATTR_LOCALVALUE =            "lval";
 
     generateId.insert(ATTR_LOCALVALUE, 906);
+
+//    //undo redo table operation command value is no means.
+//    static const QString E_ADD_TABLE    = "{(I*9g-v";
+//    static const QString E_INSERT_TABLE = "M$7>O/Qb";
+//    static const QString E_EDIT_TABLE   = "d/%o'q9l";
+//    static const QString E_DELETE_TABLE = "ht9!YQ(:";
+//    static const QString E_SWAP_TABLE   = ",5Dm&y/R";
+
+    generateId.insert(E_ADD_TABLE, 1000);
+    generateId.insert(E_INSERT_TABLE, 1001);
+    generateId.insert(E_EDIT_TABLE, 1002);
+    generateId.insert(E_DELETE_TABLE, 1003);
+    generateId.insert(E_SWAP_TABLE, 1004);
+
+//    static const QString PL_ADD_TABLE    = ")r]&mwqn";
+//    static const QString PL_INSERT_TABLE = "8NGM:Yv3";
+//    static const QString PL_EDIT_TABLE   = "UOq:>~`c";
+//    static const QString PL_DELETE_TABLE = "/=gx79d,";
+//    static const QString PL_SWAP_TABLE   = "[FX@!%Nb";
+
+    generateId.insert(PL_ADD_TABLE, 1005);
+    generateId.insert(PL_INSERT_TABLE, 1006);
+    generateId.insert(PL_EDIT_TABLE, 1007);
+    generateId.insert(PL_DELETE_TABLE, 1008);
+    generateId.insert(PL_SWAP_TABLE, 1009);
+
+
 }
 
 ProcessXmlListGenerator::~ProcessXmlListGenerator()
@@ -160,23 +184,6 @@ void ProcessXmlListGenerator::createNewList(QList<QStringList> *newlist)
 }
 
 ///DEPENDS_XML
-//void ProcessXmlListGenerator::createInfoList(QList<QStringList> *newlist, QStringList *list)
-//{
-//    newlist->append((QStringList() << TYPE << TYPE_INFO));
-//    newlist->append((QStringList() << "name" << list->at(0)));
-//    newlist->append((QStringList() << VERSION << list->at(1)));
-//    newlist->append((QStringList() << AUTHOR << list->at(2)));
-//    newlist->append((QStringList() << DESCRIPTION << list->at(3)));
-//    newlist->append((QStringList() << FILEINPUT << list->at(4)));
-//    newlist->append((QStringList() << FILEINPUT_SEARCHCHECK << list->at(5)));
-//    newlist->append((QStringList() << RECURSIVE_LOOP << list->at(6) << ATTR_POSNUM << list->at(7)));
-//    newlist->append((QStringList() << RECURSIVE_LOOP << list->at(8) << ATTR_MAXCOUNT << list->at(9)));
-//    newlist->append((QStringList() << RECURSIVE_LOOPARGCOUNT << list->at(10)));
-//    newlist->append((QStringList() << RECURSIVE_LOOPCOUNT << list->at(11)));
-
-//}
-
-///DEPENDS_XML
 void ProcessXmlListGenerator::createLocalList(QList<QStringList> *newlist, QStringList *list)
 {
     int rcount = static_cast<QString>(list->at(0)).toInt() * 2;
@@ -187,71 +194,6 @@ void ProcessXmlListGenerator::createLocalList(QList<QStringList> *newlist, QStri
                          << list->at(i + 1) << ATTR_LOCALVALUE << list->at(i + 2)));
     }
 }
-
-/////DEPENDS_XML
-//void ProcessXmlListGenerator::createNormalList(QList<QStringList> *newlist, QStringList *list)
-//{
-//    int rcount = static_cast<QString>(list->at(3)).toInt();
-//    newlist->append((QStringList() << TYPE << TYPE_EXEC << ATTR_ONLY_SCHEDULER << list->at(0)));
-//    newlist->append((QStringList() << EXEC_TIMEOUT << list->at(1) << ATTR_TIMEOUTMS << list->at(2)));
-//    newlist->append((QStringList() << EXEC_CMDARGCOUNT << list->at(3)));
-//    for(int i = 0; i < rcount; i++){
-//        newlist->append((QStringList() << CMDVALUE
-//                         << list->at(i + 4) << ATTR_POSNUM << QString::number(i)));
-//    }
-//}
-
-/////DEPENDS_XML
-//void ProcessXmlListGenerator::createSearchList(QList<QStringList> *newlist, QStringList *list)
-//{
-//    newlist->append((QStringList() << TYPE << TYPE_SEARCH << ATTR_ONLY_SCHEDULER << list->at(0)));
-//    newlist->append((QStringList() << NAME_SEARCH << list->at(1) << ATTR_POSNUM << list->at(2)));
-//    newlist->append((QStringList() << SEARCH_SEPARATOR << list->at(3)));
-//    newlist->append((QStringList() << SEARCH_VARIANT << list->at(4)));
-//    newlist->append((QStringList() << SEARCH_OUTPUTFILE << list->at(5) << ATTR_RADIOBUTTONPOS << list->at(6)));
-//}
-
-/////DEPENDS_XML
-//void ProcessXmlListGenerator::createExtraFuncList(QList<QStringList> *newlist, QStringList *list)
-//{
-//    int rcount = static_cast<QString>(list->at(3)).toInt();
-//    newlist->append((QStringList() << TYPE << TYPE_SCRIPT << ATTR_ONLY_SCHEDULER << list->at(0)));
-//    newlist->append((QStringList() << "name" << list->at(1)));
-//    newlist->append((QStringList() << PLUGIN_FILEPATH << list->at(2)));
-//    newlist->append((QStringList() << EXEC_CMDARGCOUNT << list->at(3)));
-//    for(int i = 0; i < rcount; i++){
-//        newlist->append((QStringList() << CMDVALUE
-//                         << list->at(i + 4) << ATTR_POSNUM << QString::number(i)));
-//    }
-//}
-
-/////DEPENDS_XML
-//void ProcessXmlListGenerator::createOtherList(QList<QStringList> *newlist, QStringList *list)
-//{
-//    newlist->append((QStringList() << TYPE << TYPE_ANOTHER << ATTR_ONLY_SCHEDULER << list->at(0)));
-//    newlist->append((QStringList() << "name" << list->at(1)));
-//    newlist->append((QStringList() << PROFILE_FILEPATH << list->at(2)));
-//}
-
-///DEPENDS_XML
-//void ProcessXmlListGenerator::createCombineList(QList<QStringList> *newlist, int index, QHash<int, QStringList *> *combine)
-//{
-//    // basic infomation
-//    newlist->append((QStringList() << TYPE << TYPE_ALLINCLUDE << ATTR_ONLY_SCHEDULER << combine->value(index)->at(0)));
-//    newlist->append((QStringList() << STACKEDWIDGET_POSITION << QString::number(index)));
-
-//    // TYPE << TYPE_SEARCH;
-//    createSearchList(newlist, combine->value(SEARCH));
-
-//    // TYPE << TYPE_ANOTHER;
-//    createOtherList(newlist, combine->value(OTHER));
-
-//    // TYPE << TYPE_EXEC;
-//    createNormalList(newlist, combine->value(NORMAL));
-
-//    // TYPE << TYPE_SCRIPT;
-//    createExtraFuncList(newlist, combine->value(EXTRAFUNC));
-//}
 
 ///DEPENDS_XML
 void ProcessXmlListGenerator::createSeparateList(QList<QStringList> *ctos)
@@ -306,11 +248,6 @@ int ProcessXmlListGenerator::getType(QString type)
     if(type == TYPE_ANOTHER) return OTHER;
     return -1;
 }
-
-//QStringList ProcessXmlListGenerator::createCmdElement(QString value, int index)
-//{
-//    return QStringList() << ALL_CMDVALUE << value << ATTR_POSNUM << QString::number(index);
-//}
 
 QStringList ProcessXmlListGenerator::createCmdExecElement(QString value, int index)
 {
