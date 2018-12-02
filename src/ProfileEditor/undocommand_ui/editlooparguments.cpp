@@ -17,16 +17,16 @@ void EditLoopArguments::undo()
 {
     pxlg.replaceElementList(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, m_targetindex, QString::number(m_oldvalue), m_cache);
 
-    setText(QObject::tr("Arguments count to %1 ").arg(m_oldvalue) \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Arguments count to %1").arg(m_newvalue) \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 void EditLoopArguments::redo()
 {
     pxlg.replaceElementList(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, m_targetindex, QString::number(m_newvalue), m_cache);
 
-    setText(QObject::tr("Arguments count to %1 ").arg(m_newvalue) \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Arguments count to %1").arg(m_oldvalue) \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 int EditLoopArguments::id() const

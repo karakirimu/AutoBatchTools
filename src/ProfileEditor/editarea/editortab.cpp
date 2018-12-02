@@ -60,7 +60,7 @@ void EditorTab::setEditOperator(EditOperator *op)
     // load normal widget ui objects
     widgetnormal = this->widget(ProcessXmlListGenerator::NORMAL);
     timeoutCheckBox = widgetnormal->findChild<QCheckBox *>("timeoutCheckBox");
-    tospin = widgetnormal->findChild<QSpinBox *>("timeoutSpinBox");
+    timeoutLineEdit = widgetnormal->findChild<QLineEdit *>("timeoutLineEdit");
     autoonly = widgetnormal->findChild<QCheckBox *>("autoOnlyCheckBox");
     ctablenormal = widgetnormal->findChild<CommandTable *>("cmdTableWidget");
 
@@ -89,24 +89,32 @@ void EditorTab::setEditOperator(EditOperator *op)
 
 
     //index edit (table is ignored)
-    connect(timeoutCheckBox, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
-    connect(tospin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged)
-            , this, &EditorTab::editValueAction);
-    connect(autoonly, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+    connect(timeoutCheckBox, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
 
-    connect(searchcombobox, &SearchComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    connect(timeoutLineEdit, &QLineEdit::textEdited, this, &EditorTab::editTextAction);
+    timeoutLineEdit->setValidator(new QIntValidator(0, INT_FAST32_MAX, this));
+
+    connect(autoonly, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
+
+    connect(searchcombobox, QOverload<const QString &>::of(&SearchComboBox::activated) \
+            , this, &EditorTab::editTextAction);
+
     connect(separatorLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
-    connect(localVariantComboBox, &VariantComboBox::currentTextChanged, this, &EditorTab::editTextAction);
-    connect(outputLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
-    connect(autoonly_2, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
-    connect(vari, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
-    connect(file, &QRadioButton::toggled, this, &EditorTab::editRadioAction);
+    connect(localVariantComboBox, QOverload<const QString &>::of(&VariantComboBox::activated) \
+            , this, &EditorTab::editTextAction);
 
-    connect(extrafunccombobox, &PluginsComboBox::currentTextChanged, this, &EditorTab::editTextAction);
-    connect(autoonly_3, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+    connect(outputLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
+    connect(autoonly_2, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
+    connect(vari, &QRadioButton::clicked, this, &EditorTab::editRadioAction);
+    connect(file, &QRadioButton::clicked, this, &EditorTab::editRadioAction);
+
+    connect(extrafunccombobox, QOverload<const QString &>::of(&PluginsComboBox::activated) \
+            , this, &EditorTab::editTextAction);
+
+    connect(autoonly_3, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
 
     connect(profilecombobox, &ProfileComboBox::currentTextChanged, this, &EditorTab::editTextAction);
-    connect(autoonly_4, &QCheckBox::toggled, this, &EditorTab::editCheckAction);
+    connect(autoonly_4, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
 
     //index edit (table only)
     connect(ctablenormal, &CommandTable::updateTable, this, &EditorTab::editTableAction);
@@ -199,11 +207,13 @@ void EditorTab::updateIndex(QString operation)
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void EditorTab::setNormalDataList(QList<QStringList> *list)
 {
+    int counter = xgen.fetch(E_CMDARGCOUNT,ATTR_NONE, list).toInt();
     this->blockSignals(true);
 
-    int counter = xgen.fetch(E_CMDARGCOUNT,ATTR_NONE, list).toInt();
     timeoutCheckBox->setChecked(VariantConverter::stringToBool(xgen.fetch(E_TIMEOUT,ATTR_NONE, list)));
-    tospin->setValue(xgen.fetch(E_TIMEOUT,ATTR_TIMEOUTMS, list).toInt());
+
+
+    timeoutLineEdit->setText(xgen.fetch(E_TIMEOUT,ATTR_TIMEOUTMS, list));
 
     int cmdfirst = xgen.fetchCmdFirstPos(E_CMD, list);
 
@@ -247,8 +257,6 @@ void EditorTab::setPluginDataList(QList<QStringList> *list)
 {
     this->blockSignals(true);
 
-    // TODO:動的検索に最初の要素を追加
-
     //reset combobox
     extrafunccombobox->reloadComboBoxItem();
     extrafunccombobox->setCurrentText(xgen.fetch(PL_NAME,ATTR_NONE, list));
@@ -256,6 +264,7 @@ void EditorTab::setPluginDataList(QList<QStringList> *list)
     int counter = xgen.fetch(PL_CMDARGCOUNT,ATTR_NONE, list).toInt();
     int ecmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
     ctableplugins->setRowCount(counter);
+
     for(int i = 0; i < counter; i++){
         ctableplugins->setItem(i, 0, new QTableWidgetItem(list->at(ecmdfirst + i).at(1)));
     }
@@ -284,8 +293,8 @@ void EditorTab::setCombinedDataList(int after, int before, int function, int sen
     Q_UNUSED(before); Q_UNUSED(sendfrom); Q_UNUSED(function)
 
     QList<QStringList> *list = new QList<QStringList>();
-//    QHash<int, int> hlist;
 
+    //avoid multiple update
 //    if(function == EditOperator::EDIT){
 //        if(after < 2 || !editop->read(after, list)){
 //            delete list;
@@ -298,19 +307,17 @@ void EditorTab::setCombinedDataList(int after, int before, int function, int sen
         }
 //    }
 
-    //avoid multiple update
-//    if(editop->read(after, list) && currentid != after && after > 1){
-
     //set current id
     qDebug() << QString("EditorTab : currentid update to %1").arg(after);
     currentid = after;
-//    xgen.getListStructure(list, &hlist);
+
     //set widget selection
     this->blockSignals(true);
 
     QString type = xgen.fetch(ALL_TYPE, ATTR_NONE, list);
     if(type == TYPE_ALLINCLUDE){
         setCurrentIndex(static_cast<QString>(xgen.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt());
+
         setNormalDataList(list);
         setSearchDataList(list);
         setPluginDataList(list);
@@ -327,26 +334,9 @@ void EditorTab::setCombinedDataList(int after, int before, int function, int sen
 
     }else if(type == TYPE_ANOTHER){
         setOtherDataList(list);
-
     }
 
-//    if(hlist.count() > 1){
-//        setCurrentIndex(static_cast<QString>(xgen.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt());
-//    }
     this->blockSignals(false);
-
-    //load type=normal
-//    if(hlist.contains(ProcessXmlListGenerator::NORMAL))    setNormalDataList(list);
-
-//    //load type=search
-//    if(hlist.contains(ProcessXmlListGenerator::SEARCH))    setSearchDataList(list);
-
-//    //load type=plugins
-//    if(hlist.contains(ProcessXmlListGenerator::EXTRAFUNC)) setPluginDataList(list);
-
-//    //load type=other
-//    if(hlist.contains(ProcessXmlListGenerator::OTHER))     setOtherDataList(list);
-//    }
 
     delete list;
 }
@@ -370,29 +360,6 @@ QString EditorTab::getTableData(int targetrow, int tablerow, QString loadtype)
 
     return list->at(cmdfirst + tablerow).at(1);
 }
-
-//bool EditorTab::getCurrentIndexOnlyChecked()
-//{
-//    QCheckBox *autoonly;
-//    switch (this->currentIndex()) {
-//    case ProcessXmlListGenerator::NORMAL:
-//        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox");
-//        break;
-//    case ProcessXmlListGenerator::SEARCH:
-//        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_2");
-//        break;
-//    case ProcessXmlListGenerator::EXTRAFUNC:
-//        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_3");
-//        break;
-//    case ProcessXmlListGenerator::OTHER:
-//        autoonly = currentWidget()->findChild<QCheckBox *>("autoOnlyCheckBox_4");
-//        break;
-//    default:
-//        return false;
-//    }
-
-//    return autoonly->isChecked();
-//}
 
 // DOUBT
 void EditorTab::tabChanged(int index)
@@ -476,16 +443,16 @@ void EditorTab::editRadioAction(bool)
     }
 }
 
-void EditorTab::editValueAction(int value)
-{
-    QString objname = this->sender()->objectName();
-    qDebug() << "EditorTab::editvalueaction : " << objname;
+//void EditorTab::editValueAction(QString value)
+//{
+//    QString objname = this->sender()->objectName();
+//    qDebug() << "EditorTab::editvalueaction : " << objname;
 
-    if(objname == "timeoutSpinBox"){
-        editop->spinTimeoutAction(currentid, value);
+//    if(objname == "timeoutLineEdit"){
+//        editop->spinTimeoutAction(currentid, value.toInt());
 
-    }
-}
+//    }
+//}
 
 void EditorTab::editTextAction(QString text)
 {
@@ -510,6 +477,8 @@ void EditorTab::editTextAction(QString text)
     }else if(objname == "profileComboBox"){
         editop->comboboxProfileAction(currentid, text, profilecombobox->getCurrentFileName());
 
+    }else if(objname == "timeoutLineEdit"){
+        editop->spinTimeoutAction(currentid, text.toInt());
     }
 }
 
@@ -520,7 +489,7 @@ void EditorTab::editTableAction(int index, QString str, int function)
     if(objname == "cmdTableWidget"){
         editop->tableEditExecAction(currentid, index, str, function);
 
-    }else if(objname == "ctableplugins"){
+    }else if(objname == "extrafuncTableWidget"){
         editop->tableEditPluginAction(currentid, index, str, function);
 
     }

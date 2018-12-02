@@ -35,9 +35,11 @@ QString CommandTable::getText(int row)
 
 void CommandTable::insertItem(int row)
 {
+    this->blockSignals(true);
     this->insertRow(row);
     this->setCurrentItem(itemAt(row,0));
     this->selectRow(row);
+    this->blockSignals(false);
 }
 
 void CommandTable::deleteItem(int row)

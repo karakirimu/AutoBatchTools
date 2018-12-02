@@ -26,9 +26,16 @@ void InnerStackedWidget::setEditOperator(EditOperator *op)
     sinput = stackwidget->findChild<QCheckBox *>("searchInputCheckBox");
     fscombo = stackwidget->findChild<SearchComboBox *>("searchInputComboBox");
     rloop = stackwidget->findChild<QCheckBox *>("loopCountInfCheckBox");
-    rloopmax = stackwidget->findChild<QSpinBox *>("loopMaxSpinBox");
-    rlargs = stackwidget->findChild<QSpinBox *>("loopArgumentsSpinBox");
-    reloop = stackwidget->findChild<QSpinBox *>("loopRecursiveSpinBox");
+
+    rloopmax = stackwidget->findChild<QLineEdit *>("loopMaxLineEdit");
+    rlargs = stackwidget->findChild<QLineEdit *>("loopArgumentsLineEdit");
+    reloop = stackwidget->findChild<QLineEdit *>("loopRecursiveLineEdit");
+
+    rloopmax->setValidator(new QIntValidator(0, 100000000, this));
+    rlargs->setValidator(new QIntValidator(0, 100000000, this));
+    reloop->setValidator(new QIntValidator(0, 100000000, this));
+
+
     rlabel = stackwidget->findChild<QLabel *>("loopMaxLabel");
 
     connect(editop, &EditOperator::ui_funcindexUpdate, this, &InnerStackedWidget::setInfoDataList);
@@ -44,13 +51,16 @@ void InnerStackedWidget::setEditOperator(EditOperator *op)
     connect(editbutton, &QToolButton::clicked, fscombo, &SearchComboBox::editAction);
     connect(deletebutton, &QToolButton::clicked, fscombo, &SearchComboBox::deleteAction);
 
-    connect(finput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-    connect(sinput, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-    connect(fscombo, &SearchComboBox::currentTextChanged, this, &InnerStackedWidget::editInitialSearch);
-    connect(rloop, &QCheckBox::toggled, this, &InnerStackedWidget::editCheckAction);
-    connect(rloopmax, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
-    connect(rlargs, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
-    connect(reloop, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &InnerStackedWidget::editValueAction);
+    connect(finput, &QCheckBox::clicked, this, &InnerStackedWidget::editCheckAction);
+    connect(sinput, &QCheckBox::clicked, this, &InnerStackedWidget::editCheckAction);
+    connect(fscombo, QOverload<const QString &>::of(&SearchComboBox::activated), \
+                                        this, &InnerStackedWidget::editInitialSearch);
+
+    connect(rloop, &QCheckBox::clicked, this, &InnerStackedWidget::editCheckAction);
+
+    connect(rloopmax, &QLineEdit::textEdited, this, &InnerStackedWidget::editValueAction);
+    connect(rlargs, &QLineEdit::textEdited, this, &InnerStackedWidget::editValueAction);
+    connect(reloop, &QLineEdit::textEdited, this, &InnerStackedWidget::editValueAction);
 
 }
 
@@ -117,9 +127,9 @@ void InnerStackedWidget::setInfoDataList(int after, int before, int function, in
         fscombo->reloadComboBoxItem();
         fscombo->setCurrentText(pxlg.fetch(I_FILESEARCH_NAME, ATTR_NONE, list));
         rloop->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list)));
-        rloopmax->setValue(static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_MAXCOUNT, list)).toInt());
-        rlargs->setValue(static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, list)).toInt());
-        reloop->setValue(static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOPCOUNT, ATTR_NONE, list)).toInt());
+        rloopmax->setText(static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_MAXCOUNT, list)));
+        rlargs->setText(static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, list)));
+        reloop->setText(static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOPCOUNT, ATTR_NONE, list)));
 
         bool check = VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list));
         addbutton->setVisible(check);
@@ -128,8 +138,8 @@ void InnerStackedWidget::setInfoDataList(int after, int before, int function, in
         fscombo->setVisible(check);
 
         check = VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list));
-        rlabel->setVisible(!check);
-        rloopmax->setVisible(!check);
+        rlabel->setEnabled(!check);
+        rloopmax->setEnabled(!check);
     }
 
     delete list;
@@ -208,8 +218,8 @@ void InnerStackedWidget::editCheckAction(bool check)
         editop->checkSearchInputAction(0,check);
 
     }else if(objname == "loopCountInfCheckBox"){
-        rlabel->setVisible(!check);
-        rloopmax->setVisible(!check);
+        rlabel->setEnabled(!check);
+        rloopmax->setEnabled(!check);
 
         editop->checkLoopInfAction(0, check);
     }else if(objname == "allowInputCheckBox"){
@@ -220,7 +230,7 @@ void InnerStackedWidget::editCheckAction(bool check)
 //    editop->editCheckAction(0,check,objname);
 }
 
-void InnerStackedWidget::editValueAction(int value)
+void InnerStackedWidget::editValueAction(QString value)
 {
     QString objname = this->sender()->objectName();
 #ifdef QT_DEBUG
@@ -228,14 +238,14 @@ void InnerStackedWidget::editValueAction(int value)
 #endif
 
     //Compare it with the previous value and execute if there is a change.
-    if(objname == "loopMaxSpinBox" && rloopmax->value() != value){
-        editop->spinLoopMaxAction(0,value);
+    if(objname == "loopMaxLineEdit" /*&& rloopmax->value() != value*/){
+        editop->spinLoopMaxAction(0,value.toInt());
 
-    }else if(objname == "loopArgumentsSpinBox" && rlargs->value() != value){
-        editop->spinLoopArgumentsAction(0,value);
+    }else if(objname == "loopArgumentsLineEdit" /*&& rlargs->value() != value*/){
+        editop->spinLoopArgumentsAction(0,value.toInt());
 
-    }else if(objname == "loopRecursiveSpinBox" && reloop->value() != value){
-        editop->spinLoopRecursiveAction(0,value);
+    }else if(objname == "loopRecursiveLineEdit" /*&& reloop->value() != value*/){
+        editop->spinLoopRecursiveAction(0,value.toInt());
 
     }
 //    editop->editValueAction(0, value, objname);

@@ -28,3 +28,9 @@ void CheckEditTimeout::redo()
     setText(QObject::tr("Timeout %1").arg(m_newcheck) \
             + QString(" ^(%1)").arg(m_targetindex));
 }
+
+int CheckEditTimeout::id() const
+{
+    ProcessXmlListGenerator pxg;
+    return pxg.getId(E_TIMEOUT);
+}

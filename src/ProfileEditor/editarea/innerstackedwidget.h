@@ -43,7 +43,7 @@ private slots:
     void editInitialSearch(QString text);
 
     void editCheckAction(bool check);
-    void editValueAction(int value);
+    void editValueAction(QString value);
 
 private:
 
@@ -63,9 +63,9 @@ private:
     QCheckBox *sinput;
     SearchComboBox *fscombo;
     QCheckBox *rloop;
-    QSpinBox *rloopmax;
-    QSpinBox *rlargs;
-    QSpinBox *reloop;
+    QLineEdit *rloopmax;
+    QLineEdit *rlargs;
+    QLineEdit *reloop;
     QLabel *rlabel;
 };
 

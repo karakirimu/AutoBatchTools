@@ -60,7 +60,7 @@ private slots:
 
     void editCheckAction(bool check);
     void editRadioAction(bool);
-    void editValueAction(int value);
+//    void editValueAction(QString value);
     void editTextAction(QString text);
     void editTableAction(int index, QString str, int function);
     void editSwapTableAction(int indexbefore, int indexafter);
@@ -79,7 +79,7 @@ private:
     //normal
     QWidget *widgetnormal;
     QCheckBox *timeoutCheckBox;
-    QSpinBox *tospin;
+    QLineEdit *timeoutLineEdit;
     QCheckBox *autoonly;
     CommandTable *ctablenormal;
 
