@@ -317,7 +317,7 @@ bool Executor::runProcess()
 
     //file input existing check
     if(setting->initFilename == ""){
-        emit processCheckError(tr("xmlfile not loaded!"));
+        emit processCheckError(tr("FILE IS NOT LOADED!!"));
         emit processStopped();
         return false;
 

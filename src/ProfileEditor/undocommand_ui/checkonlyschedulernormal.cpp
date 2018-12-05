@@ -10,21 +10,27 @@ CheckOnlySchedulerNormal::CheckOnlySchedulerNormal(const int &targetindex
     m_newcheck = VariantConverter::boolToString(newcheck);
     m_cache = cache;
 
-    m_oldcheck = pxlg.fetch(TYPE_EXEC, ATTR_ONLY_SCHEDULER, m_cache->at(m_targetindex));
+    m_oldcheck = pxlg.fetch(ALL_TYPE, TYPE_EXEC, ATTR_ONLY_SCHEDULER, m_cache->at(m_targetindex));
 }
 
 void CheckOnlySchedulerNormal::undo()
 {
-    pxlg.replaceElementList(TYPE_EXEC, ATTR_ONLY_SCHEDULER, m_targetindex, m_oldcheck, m_cache);
+    pxlg.replaceTypeElement(TYPE_EXEC, ATTR_ONLY_SCHEDULER, m_targetindex, m_oldcheck, m_cache);
 
-    setText(QObject::tr("Scheduler only %1 ").arg(m_oldcheck) \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Scheduler only %1").arg(m_newcheck) \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 void CheckOnlySchedulerNormal::redo()
 {
-    pxlg.replaceElementList(TYPE_EXEC, ATTR_ONLY_SCHEDULER, m_targetindex, m_newcheck, m_cache);
+    pxlg.replaceTypeElement(TYPE_EXEC, ATTR_ONLY_SCHEDULER, m_targetindex, m_newcheck, m_cache);
 
-    setText(QObject::tr("Scheduler only %1 ").arg(m_newcheck) \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Scheduler only %1").arg(m_newcheck) \
+            + QString(" ^(%1)").arg(m_targetindex));
+}
+
+int CheckOnlySchedulerNormal::id() const
+{
+    ProcessXmlListGenerator pxg;
+    return pxg.getId(E_ONLY_SCHEDULER);
 }

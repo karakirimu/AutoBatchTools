@@ -66,11 +66,10 @@ void VariantTable::deleteAction()
     if(this->rowCount() == 0) return;
 
     //check delete warning message
-    if(deleteCheckMessage())
-    {
-        //delete file item
-        this->deleteTableRecursive();
-    }
+    if(!deleteCheckMessage()) return;
+
+    //delete file item
+    this->deleteTableRecursive();
 }
 
 void VariantTable::cutAction()
@@ -140,7 +139,7 @@ void VariantTable::pasteAction()
     for(int i = 0; i < txcount; i++){
        if(row > 0) row = this->currentRow();
        insertRow(row);
-       QStringList intext = ((QString)text.at(i)).split(QRegularExpression("\\t|,"));
+       QStringList intext = (static_cast<QString>(text.at(i))).split(QRegularExpression("\\t|,"));
 
        int intxt = intext.count();
        if(intxt > 0){
@@ -183,10 +182,12 @@ void VariantTable::downAction()
 void VariantTable::reloadAction()
 {
     qDebug() << "VariantTable::reloadaction";
-    disconnect(this, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
+//    disconnect(this, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
+    this->blockSignals(true);
     setRowCount(0);
     setLocalListItem(MAGIC);
-    connect(this, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
+    this->blockSignals(false);
+//    connect(this, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
 }
 
 void VariantTable::setPopupActionTop()
@@ -202,9 +203,9 @@ void VariantTable::setPopupActionTop()
     contextMenu->addSeparator();
 
     //connect signals
-    connect(m_add, SIGNAL(triggered()), this, SLOT(addAction()));
-    connect(m_delete, SIGNAL(triggered()), this, SLOT(deleteAction()));
-    connect(m_edit, SIGNAL(triggered()), this, SLOT(editAction()));
+    connect(m_add, &QAction::triggered, this, &VariantTable::addAction);
+    connect(m_delete, &QAction::triggered, this, &VariantTable::deleteAction);
+    connect(m_edit, &QAction::triggered, this, &VariantTable::editAction);
 }
 
 void VariantTable::setPopupActionDefault()
@@ -228,11 +229,11 @@ void VariantTable::setPopupActionDefault()
     m_down->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
 
     //connect signals
-    connect(m_cut, SIGNAL(triggered()), this, SLOT(cutAction()));
-    connect(m_copy, SIGNAL(triggered()), this, SLOT(copyAction()));
-    connect(m_paste, SIGNAL(triggered()), this, SLOT(pasteAction()));
-    connect(m_up, SIGNAL(triggered()), this, SLOT(upAction()));
-    connect(m_down, SIGNAL(triggered()), this, SLOT(downAction()));
+    connect(m_cut, &QAction::triggered, this, &VariantTable::cutAction);
+    connect(m_copy, &QAction::triggered, this, &VariantTable::copyAction);
+    connect(m_paste, &QAction::triggered, this, &VariantTable::pasteAction);
+    connect(m_up, &QAction::triggered, this, &VariantTable::upAction);
+    connect(m_down, &QAction::triggered, this, &VariantTable::downAction);
 }
 
 void VariantTable::setPopupActionBottom()
@@ -241,7 +242,7 @@ void VariantTable::setPopupActionBottom()
     m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
     m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
 
-    connect(m_ref, SIGNAL(triggered()), this, SLOT(reloadAction()));
+    connect(m_ref, &QAction::triggered, this, &VariantTable::reloadAction);
 }
 
 bool VariantTable::eventFilter(QObject *obj, QEvent *event)
@@ -331,8 +332,8 @@ bool VariantTable::setLocalListItem(int itemid)
         setRowCount(counter);
         for(int i = 0; i < counter; i++){
             //set tableitem
-            this->setItem(i, 0, new QTableWidgetItem(list->at(i+2).at(1)));
-            this->setItem(i, 1, new QTableWidgetItem(list->at(i+2).at(3)));
+            this->setItem(i, 0, new QTableWidgetItem(list->at(i + 2).at(1)));
+            this->setItem(i, 1, new QTableWidgetItem(list->at(i + 2).at(3)));
         }
 
         qDebug()<< "VariantTable::setTreeItem";

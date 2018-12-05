@@ -18,14 +18,16 @@ void StringSearchSep::undo()
 {
     pxlg.replaceElementList(S_SEPARATOR, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
 
-    setText(QObject::tr("Search separator changed "));
+    setText(QObject::tr("Search Sep '%1'").arg(m_newstring) \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 void StringSearchSep::redo()
 {
     pxlg.replaceElementList(S_SEPARATOR, ATTR_NONE, m_targetindex, m_newstring, m_cache);
 
-    setText(QObject::tr("Search separator changed "));
+    setText(QObject::tr("Search Sep '%1'").arg(m_oldstring) \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 int StringSearchSep::id() const

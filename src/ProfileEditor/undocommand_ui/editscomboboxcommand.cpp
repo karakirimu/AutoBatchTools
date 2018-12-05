@@ -30,14 +30,14 @@ void EditScomboBoxCommand::undo()
         pxlg.replaceElementList(S_NAME, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
         pxlg.replaceElementList(S_NAME, ATTR_POSNUM, m_targetindex, QString::number(m_oldindex), m_cache);
 
-        setText(QObject::tr("Search profile to ") + m_oldstring \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Search profile to") + m_oldstring \
+                + QString(" ^(%1)").arg(m_targetindex));
     }else{
         pxlg.replaceElementList(I_FILESEARCH_NAME, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
         pxlg.replaceElementList(I_FILESEARCH_NAME, ATTR_POSNUM, m_targetindex, QString::number(m_oldindex), m_cache);
 
-        setText(QObject::tr("Input search profile to ") + m_oldstring \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Input search profile to") + m_oldstring \
+                + QString(" ^(%1)").arg(m_targetindex));
     }
 }
 
@@ -47,14 +47,14 @@ void EditScomboBoxCommand::redo()
         pxlg.replaceElementList(S_NAME, ATTR_NONE, m_targetindex, m_newstring, m_cache);
         pxlg.replaceElementList(S_NAME, ATTR_POSNUM, m_targetindex, QString::number(m_newindex), m_cache);
 
-        setText(QObject::tr("Search profile to ") + m_newstring \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Search profile to") + m_newstring \
+                + QString(" ^(%1)").arg(m_targetindex));
     }else{
         pxlg.replaceElementList(I_FILESEARCH_NAME, ATTR_NONE, m_targetindex, m_newstring, m_cache);
         pxlg.replaceElementList(I_FILESEARCH_NAME, ATTR_POSNUM, m_targetindex, QString::number(m_newindex), m_cache);
 
-        setText(QObject::tr("Input search profile to ") + m_newstring \
-                + QString("^(%1)").arg(m_targetindex));
+        setText(QObject::tr("Input search profile to") + m_newstring \
+                + QString(" ^(%1)").arg(m_targetindex));
     }
 }
 

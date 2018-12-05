@@ -24,7 +24,7 @@ void EditLoopRecursive::undo()
 
 void EditLoopRecursive::redo()
 {
-    pxlg.replaceElementList(I_RECURSIVE_LOOPCOUNT, ATTR_NONE, m_targetindex, QString::number(m_oldvalue), m_cache);
+    pxlg.replaceElementList(I_RECURSIVE_LOOPCOUNT, ATTR_NONE, m_targetindex, QString::number(m_newvalue), m_cache);
 
     setText(QObject::tr("Loop recursive count to %1").arg(m_oldvalue) \
             + QString(" ^(%1)").arg(m_targetindex));

@@ -17,16 +17,16 @@ void StringProjectName::undo()
 {
     pxlg.replaceElementList(I_NAME, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
 
-    setText(QObject::tr("Project name changed ") \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Project name change") \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 void StringProjectName::redo()
 {
     pxlg.replaceElementList(I_NAME, ATTR_NONE, m_targetindex, m_newstring, m_cache);
 
-    setText(QObject::tr("Project name changed ") \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Project name change") \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 int StringProjectName::id() const

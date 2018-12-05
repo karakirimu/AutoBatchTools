@@ -592,7 +592,7 @@ void ProcessFlowTable::setNormalItem(QList<QStringList> *list, int dataid)
 
 //    cell->setTypeAll(exec_title, &exec_pixmap, &exec_style, &exec_frame);
 
-    QString curdata = (cmdcount == 0)? "NewCommand" : list->at(cmdfirst).at(1);
+    QString curdata = (cmdcount == 0)? "(new command)" : list->at(cmdfirst).at(1);
 
     QFileInfo info(curdata);
     QString tmp = /*getHtmlHeader("") + */(info.isFile() ? info.fileName() : curdata);

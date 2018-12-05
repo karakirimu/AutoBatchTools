@@ -17,7 +17,7 @@ void CheckEditSearchInput::undo()
 {
     pxlg.replaceElementList(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, m_targetindex, m_oldcheck, m_cache);
 
-    setText(QObject::tr("Search input %1 ").arg(m_oldcheck) \
+    setText(QObject::tr("Search input %1 ").arg(m_newcheck) \
             + QString("^(%1)").arg(m_targetindex));
 }
 

@@ -19,16 +19,16 @@ void StringFileOutput::undo()
 {
     pxlg.replaceElementList(S_OUTPUTFILE, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
 
-    setText(QObject::tr("Search outputfile changed. ") \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Change Search outputfile at %1").arg(m_targetindex) \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 void StringFileOutput::redo()
 {
     pxlg.replaceElementList(S_OUTPUTFILE, ATTR_NONE, m_targetindex, m_newstring, m_cache);
 
-    setText(QObject::tr("Search outputfile changed. ") \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Change Search outputfile at %1").arg(m_targetindex) \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 int StringFileOutput::id() const

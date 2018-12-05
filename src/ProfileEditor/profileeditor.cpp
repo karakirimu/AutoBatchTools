@@ -385,7 +385,7 @@ void ProfileEditor::overWriteSaveAction()
                                          QDir::currentPath(),\
                                          tr("APRO Files (*.apro)"));
 
-        editop->saveAction(fileName);
+        if(fileName != "") editop->saveAction(fileName);
     }else{
         editop->saveAction(editop->getLoadfile());
     }

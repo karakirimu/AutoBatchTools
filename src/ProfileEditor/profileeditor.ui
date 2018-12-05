@@ -225,7 +225,7 @@
                      <string>0</string>
                     </property>
                     <property name="cursorPosition">
-                     <number>0</number>
+                     <number>1</number>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -291,7 +291,7 @@
                      <string>0</string>
                     </property>
                     <property name="cursorPosition">
-                     <number>0</number>
+                     <number>1</number>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -376,7 +376,7 @@
                      <number>32767</number>
                     </property>
                     <property name="cursorPosition">
-                     <number>0</number>
+                     <number>1</number>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -731,7 +731,11 @@
                 <number>0</number>
                </property>
                <item>
-                <widget class="SearchComboBox" name="searchComboBox"/>
+                <widget class="SearchComboBox" name="searchComboBox">
+                 <property name="currentText">
+                  <string/>
+                 </property>
+                </widget>
                </item>
                <item>
                 <widget class="QToolButton" name="searchAddButton">
@@ -858,7 +862,7 @@
                      <string>variable name</string>
                     </property>
                     <property name="editable">
-                     <bool>true</bool>
+                     <bool>false</bool>
                     </property>
                     <property name="currentText">
                      <string/>
@@ -1055,7 +1059,11 @@
                </widget>
               </item>
               <item row="0" column="2" colspan="2">
-               <widget class="PluginsComboBox" name="extrafuncComboBox"/>
+               <widget class="PluginsComboBox" name="extrafuncComboBox">
+                <property name="currentText">
+                 <string/>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -1170,7 +1178,11 @@
                </spacer>
               </item>
               <item row="0" column="1">
-               <widget class="ProfileComboBox" name="profileComboBox"/>
+               <widget class="ProfileComboBox" name="profileComboBox">
+                <property name="currentText">
+                 <string/>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>

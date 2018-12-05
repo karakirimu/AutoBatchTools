@@ -99,7 +99,7 @@ void EditorTab::setEditOperator(EditOperator *op)
     connect(searchcombobox, QOverload<const QString &>::of(&SearchComboBox::activated) \
             , this, &EditorTab::editTextAction);
 
-    connect(separatorLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
+    connect(separatorLineEdit, &QLineEdit::textEdited, this, &EditorTab::editTextAction);
     connect(localVariantComboBox, QOverload<const QString &>::of(&VariantComboBox::activated) \
             , this, &EditorTab::editTextAction);
 
@@ -212,7 +212,6 @@ void EditorTab::setNormalDataList(QList<QStringList> *list)
 
     timeoutCheckBox->setChecked(VariantConverter::stringToBool(xgen.fetch(E_TIMEOUT,ATTR_NONE, list)));
 
-
     timeoutLineEdit->setText(xgen.fetch(E_TIMEOUT,ATTR_TIMEOUTMS, list));
 
     int cmdfirst = xgen.fetchCmdFirstPos(E_CMD, list);
@@ -222,7 +221,8 @@ void EditorTab::setNormalDataList(QList<QStringList> *list)
         ctablenormal->setItem(i, 0, new QTableWidgetItem(list->at(cmdfirst + i).at(1)));
     }
 
-    autoonly->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_EXEC,ATTR_ONLY_SCHEDULER, list)));
+    autoonly->setChecked(VariantConverter::stringToBool( \
+                             xgen.fetch(ALL_TYPE,TYPE_EXEC,ATTR_ONLY_SCHEDULER, list)));
 
     this->blockSignals(false);
 
@@ -246,7 +246,8 @@ void EditorTab::setSearchDataList(QList<QStringList> *list)
         file->setChecked(true);
     }
 
-    autoonly_2->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_SEARCH,ATTR_ONLY_SCHEDULER, list)));
+    autoonly_2->setChecked(VariantConverter::stringToBool( \
+                               xgen.fetch(ALL_TYPE,TYPE_SEARCH,ATTR_ONLY_SCHEDULER, list)));
 
     this->blockSignals(false);
 
@@ -269,7 +270,8 @@ void EditorTab::setPluginDataList(QList<QStringList> *list)
         ctableplugins->setItem(i, 0, new QTableWidgetItem(list->at(ecmdfirst + i).at(1)));
     }
 
-    autoonly_3->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_SCRIPT,ATTR_ONLY_SCHEDULER, list)));
+    autoonly_3->setChecked(VariantConverter::stringToBool( \
+                               xgen.fetch(ALL_TYPE,TYPE_SCRIPT,ATTR_ONLY_SCHEDULER, list)));
 
     this->blockSignals(false);
 }
@@ -282,7 +284,8 @@ void EditorTab::setOtherDataList(QList<QStringList> *list)
     profilecombobox->reloadComboBoxItem();
     profilecombobox->setCurrentText(xgen.fetch(PR_NAME,ATTR_NONE, list));
 
-    autoonly_4->setChecked(VariantConverter::stringToBool(xgen.fetch(TYPE_ANOTHER,ATTR_ONLY_SCHEDULER, list)));
+    autoonly_4->setChecked(VariantConverter::stringToBool( \
+                               xgen.fetch(ALL_TYPE,TYPE_ANOTHER,ATTR_ONLY_SCHEDULER, list)));
 
     this->blockSignals(false);
 }
@@ -408,7 +411,7 @@ void EditorTab::editCheckAction(bool check)
 //"timeoutCheckBox"
 //"autoOnlyCheckBox" normal
 //"autoOnlyCheckBox_2" search
-//"autoOnlyCheckBox_3" extrafunc
+//"autoOnlyCheckBox_3" plugin
 //"autoOnlyCheckBox_4" other
     if(objname == "timeoutCheckBox"){
         editop->checkTimeoutAction(currentid, check);

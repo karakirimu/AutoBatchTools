@@ -21,7 +21,7 @@ void EditSearchOutput::undo()
     pxlg.replaceElementList(S_OUTPUTFILE, ATTR_RADIOBUTTONPOS, m_targetindex, QString::number(m_oldvalue), m_cache);
 
     setText(QObject::tr("Output Select") \
-            + QString("^(%1)").arg(m_targetindex));
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 void EditSearchOutput::redo()
@@ -29,7 +29,7 @@ void EditSearchOutput::redo()
     pxlg.replaceElementList(S_OUTPUTFILE, ATTR_RADIOBUTTONPOS, m_targetindex, QString::number(m_newvalue), m_cache);
 
     setText(QObject::tr("Output Select") \
-            + QString("^(%1)").arg(m_targetindex));
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 int EditSearchOutput::id() const

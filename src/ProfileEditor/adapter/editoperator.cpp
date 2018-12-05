@@ -453,7 +453,7 @@ void EditOperator::newAction()
     //temp loadfile change
     loadfile = autosavefile;
     loadcache(XML_MIN);
-    loadfile = "";
+//    loadfile = "";
 
     emit loadfileChanged(autosavefile);
 //    emit edited(false);

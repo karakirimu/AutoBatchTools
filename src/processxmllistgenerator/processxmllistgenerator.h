@@ -160,6 +160,12 @@ static const QString UNDOREDO_PL_TABLEDEL =       "PLT_DEL";
 static const QString UNDOREDO_PL_TABLEINS =       "PLT_INS";
 static const QString UNDOREDO_PL_TABLESWAP =      "PLT_SWAP";
 
+static const QString UNDOREDO_L_TABLEADD =       "LT_ADD";
+static const QString UNDOREDO_L_TABLEEDIT =      "LT_EDIT";
+static const QString UNDOREDO_L_TABLEDEL =       "LT_DEL";
+static const QString UNDOREDO_L_TABLEINS =       "LT_INS";
+static const QString UNDOREDO_L_TABLESWAP =      "LT_SWAP";
+
 //undo redo table operation id value. It is no means.
 static const QString E_ADD_TABLE    = "{(I*9g-v";
 static const QString E_INSERT_TABLE = "M$7>O/Qb";
@@ -173,6 +179,17 @@ static const QString PL_EDIT_TABLE   = "UOq:>~`c";
 static const QString PL_DELETE_TABLE = "/=gx79d,";
 static const QString PL_SWAP_TABLE   = "[FX@!%Nb";
 
+static const QString L_ADD_TABLE    = "gh%j~w+x";
+static const QString L_INSERT_TABLE = "EjE;Z)PX";
+static const QString L_EDIT_TABLE   = "VngH68T:";
+static const QString L_DELETE_TABLE = "[u}iS63'";
+static const QString L_SWAP_TABLE   = "1yJ2VDbs";
+
+//undo redo only check operation id value. It is no means.
+static const QString E_ONLY_SCHEDULER  = "krMQk[Me";
+static const QString S_ONLY_SCHEDULER  = "YW)5K?g9";
+static const QString PL_ONLY_SCHEDULER = "d:&Dp<HB";
+static const QString PR_ONLY_SCHEDULER = "y0Dl)ZXR";
 
 class PROCESSXMLLISTGENERATORSHARED_EXPORT ProcessXmlListGenerator : public QObject
 {
@@ -210,10 +227,12 @@ public:
     //take specific item string
     QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase);
     QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase, int firstpos);
+    QString fetch(QString tag, QString value, QString attr,const QList<QStringList> *loadbase);
 
     //replace xml element
     void replaceElementList(QString tag, QString attr, int targetindex, QString replacestr, QList<QList<QStringList> *> *cache);
     void replaceElementList(int tableindex, int targetindex, QString replacestr, int skip, QList<QList<QStringList> *> *cache);
+    void replaceTypeElement(QString edittype, QString attr, int targetindex, QString replacestr, QList<QList<QStringList> *> *cache);
 
     int getId(QString tag);
 

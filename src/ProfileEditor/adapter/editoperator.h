@@ -17,7 +17,7 @@
 #include <editlocalvartable.h>
 #include <edittabcommand.h>
 //#include <editvaluecommand.h>
-#include <edittextcommand.h>
+//#include <edittextcommand.h>
 //#include <editcheckcommand.h>
 //#include <editfcomboboxcommand.h>
 //#include <edittablecommand.h>

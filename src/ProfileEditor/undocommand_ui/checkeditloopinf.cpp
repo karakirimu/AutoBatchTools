@@ -17,7 +17,7 @@ void CheckEditLoopInf::undo()
 {
     pxlg.replaceElementList(I_RECURSIVE_LOOP, ATTR_NONE, m_targetindex, m_oldcheck, m_cache);
 
-    setText(QObject::tr("Loop infinity %1 ").arg(m_oldcheck) \
+    setText(QObject::tr("Loop infinity %1 ").arg(m_newcheck) \
             + QString("^(%1)").arg(m_targetindex));
 }
 

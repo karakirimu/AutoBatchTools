@@ -17,7 +17,7 @@ void CheckEditAllowInput::undo()
 {
     pxlg.replaceElementList(I_FILEINPUT, ATTR_NONE, m_targetindex, m_oldcheck, m_cache);
 
-    setText(QObject::tr("Allow input %1").arg(m_oldcheck) \
+    setText(QObject::tr("Allow input %1").arg(m_newcheck) \
             + QString(" ^(%1)").arg(m_targetindex));
 }
 

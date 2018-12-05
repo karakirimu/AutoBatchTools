@@ -43,7 +43,7 @@ private slots:
     void editInitialSearch(QString text);
 
     void editCheckAction(bool check);
-    void editValueAction(QString value);
+    void editTextValueAction(QString value);
 
 private:
 

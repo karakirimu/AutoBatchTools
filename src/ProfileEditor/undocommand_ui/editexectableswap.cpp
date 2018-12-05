@@ -1,6 +1,6 @@
-#include "exectableswapoperation.h"
+#include "editexectableswap.h"
 
-ExecTableSwapOperation::ExecTableSwapOperation(const int &targetindex
+EditExecTableSwap::EditExecTableSwap(const int &targetindex
                                                , const int &tablebefore
                                                , const int &tableafter
                                                , QList<QList<QStringList> *> *cache
@@ -19,7 +19,7 @@ ExecTableSwapOperation::ExecTableSwapOperation(const int &targetindex
     SKIP = posinfo.value(ProcessXmlListGenerator::NORMAL) + 3;
 }
 
-void ExecTableSwapOperation::undo()
+void EditExecTableSwap::undo()
 {
     QStringList temp;
     temp = m_cache->at(m_targetindex)->at(m_indexbefore + SKIP);
@@ -46,7 +46,7 @@ void ExecTableSwapOperation::undo()
     }
 }
 
-void ExecTableSwapOperation::redo()
+void EditExecTableSwap::redo()
 {
     QStringList temp;
     temp = m_cache->at(m_targetindex)->at(m_indexafter + SKIP);
@@ -73,7 +73,7 @@ void ExecTableSwapOperation::redo()
     }
 }
 
-int ExecTableSwapOperation::id() const
+int EditExecTableSwap::id() const
 {
     ProcessXmlListGenerator pxg;
     return pxg.getId(E_CMDARGCOUNT);

@@ -4,10 +4,10 @@
 #include <QUndoCommand>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
 
-class ExecTableSwapOperation : public QUndoCommand
+class EditExecTableSwap : public QUndoCommand
 {
 public:
-    ExecTableSwapOperation(const int &targetindex
+    EditExecTableSwap(const int &targetindex
                            , const int &tablebefore
                            , const int &tableafter
                            , QList<QList<QStringList> *> *cache

@@ -1,6 +1,6 @@
-#include "plugintableswapoperation.h"
+#include "editplugintableswap.h"
 
-PluginTableSwapOperation::PluginTableSwapOperation(const int &targetindex
+EditPluginTableSwap::EditPluginTableSwap(const int &targetindex
                                                    , const int &tablebefore
                                                    , const int &tableafter
                                                    , QList<QList<QStringList> *> *cache
@@ -21,7 +21,7 @@ PluginTableSwapOperation::PluginTableSwapOperation(const int &targetindex
 
 }
 
-void PluginTableSwapOperation::undo()
+void EditPluginTableSwap::undo()
 {
     QStringList temp;
     temp = m_cache->at(m_targetindex)->at(m_indexbefore + SKIP);
@@ -43,12 +43,13 @@ void PluginTableSwapOperation::undo()
         break;
     default:
         //SWAP
-        setText(QObject::tr("Swap table value '%1' at %2 to %3").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter));
+        setText(QObject::tr("Swap table value '%1' at %2 to %3").arg(temp.at(1)) \
+                .arg(m_indexbefore).arg(m_indexafter));
         break;
     }
 }
 
-void PluginTableSwapOperation::redo()
+void EditPluginTableSwap::redo()
 {
     QStringList temp;
     temp = m_cache->at(m_targetindex)->at(m_indexafter + SKIP);
@@ -70,12 +71,13 @@ void PluginTableSwapOperation::redo()
         break;
     default:
         //SWAP
-        setText(QObject::tr("Swap table value '%1' at %2 to %3").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter));
+        setText(QObject::tr("Swap table value '%1' at %2 to %3").arg(temp.at(1)) \
+                .arg(m_indexbefore).arg(m_indexafter));
         break;
     }
 }
 
-int PluginTableSwapOperation::id() const
+int EditPluginTableSwap::id() const
 {
     ProcessXmlListGenerator pxg;
     return pxg.getId(PL_CMDARGCOUNT);

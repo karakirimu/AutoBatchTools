@@ -147,6 +147,15 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
     generateId.insert(PL_DELETE_TABLE, 1008);
     generateId.insert(PL_SWAP_TABLE, 1009);
 
+    //undo redo only check operation id value. It is no means.
+//    static const QString E_ONLY_SCHEDULER = "non";
+//    static const QString S_ONLY_SCHEDULER = "son";
+//    static const QString PL_ONLY_SCHEDULER = "plon";
+//    static const QString PR_ONLY_SCHEDULER = "pron";
+    generateId.insert(E_ONLY_SCHEDULER, 1010);
+    generateId.insert(S_ONLY_SCHEDULER, 1011);
+    generateId.insert(PL_ONLY_SCHEDULER, 1012);
+    generateId.insert(PR_ONLY_SCHEDULER, 1013);
 
 }
 
@@ -305,6 +314,27 @@ QString ProcessXmlListGenerator::fetch(QString tag, QString attr, const QList<QS
     return ATTR_NONE;
 }
 
+QString ProcessXmlListGenerator::fetch(QString tag, QString value, QString attr, const QList<QStringList> *loadbase)
+{
+    int count = loadbase->count();
+    int i = 0;
+    int listnummax = 0;
+    while(i < count){
+        if(tag == loadbase->at(i).at(0)
+                && value == loadbase->at(i).at(1)){
+            if(attr == ATTR_NONE) return loadbase->at(i).at(1);
+
+            listnummax = loadbase->at(i).count();
+            if(listnummax > 3 && attr == loadbase->at(i).at(2)) return loadbase->at(i).at(3);
+            if(listnummax > 5 && attr == loadbase->at(i).at(4)) return loadbase->at(i).at(5);
+        }
+        i++;
+    }
+
+    //cannot find
+    return ATTR_NONE;
+}
+
 void ProcessXmlListGenerator::replaceElementList(QString tag, QString attr, int targetindex \
                                                  , QString replacestr, QList<QList<QStringList> *> *cache)
 {
@@ -346,6 +376,35 @@ void ProcessXmlListGenerator::replaceElementList(int tableindex, int targetindex
     QStringList alist = cache->at(targetindex)->at(tableindex + skip);
     alist.replace(1, replacestr);
     cache->at(targetindex)->replace(tableindex + skip, alist);
+}
+
+void ProcessXmlListGenerator::replaceTypeElement(QString edittype, QString attr, int targetindex, QString replacestr, QList<QList<QStringList> *> *cache)
+{
+    QList<QStringList> *loadbase = cache->at(targetindex);
+    int count = loadbase->count();
+    int i = 0;
+    int listnummax = 0;
+    while(i < count){
+        if(loadbase->at(i).at(0) == ALL_TYPE
+                && loadbase->at(i).at(1) == edittype){
+            if(attr == ATTR_NONE) {
+                QStringList alist = loadbase->at(i);
+                alist.replace(1, replacestr);
+                cache->at(targetindex)->replace(i, alist);
+            }
+
+            listnummax = loadbase->at(i).count();
+
+            if(listnummax > 3 && attr == loadbase->at(i).at(2)){
+                QStringList alist = loadbase->at(i);
+                alist.replace(3, replacestr);
+                cache->at(targetindex)->replace(i, alist);
+            }
+        }
+        i++;
+    }
+
+    return;
 }
 
 int ProcessXmlListGenerator::getId(QString tag)

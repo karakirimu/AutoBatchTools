@@ -58,9 +58,9 @@ void InnerStackedWidget::setEditOperator(EditOperator *op)
 
     connect(rloop, &QCheckBox::clicked, this, &InnerStackedWidget::editCheckAction);
 
-    connect(rloopmax, &QLineEdit::textEdited, this, &InnerStackedWidget::editValueAction);
-    connect(rlargs, &QLineEdit::textEdited, this, &InnerStackedWidget::editValueAction);
-    connect(reloop, &QLineEdit::textEdited, this, &InnerStackedWidget::editValueAction);
+    connect(rloopmax, &QLineEdit::textEdited, this, &InnerStackedWidget::editTextValueAction);
+    connect(rlargs, &QLineEdit::textEdited, this, &InnerStackedWidget::editTextValueAction);
+    connect(reloop, &QLineEdit::textEdited, this, &InnerStackedWidget::editTextValueAction);
 
 }
 
@@ -113,34 +113,37 @@ void InnerStackedWidget::setInfoDataList(int after, int before, int function, in
 
     QList<QStringList> *list = new QList<QStringList>();
 
-    if(editop->read(after, list)){
-        ProcessXmlListGenerator pxlg;
-
-        name->setText(pxlg.fetch(I_NAME, ATTR_NONE, list));
-        ver->setText(pxlg.fetch(I_VERSION, ATTR_NONE, list));
-        author->setText(pxlg.fetch(I_AUTHOR, ATTR_NONE, list));
-        desc->setText(pxlg.fetch(I_DESCRIPTION, ATTR_NONE, list));
-
-        finput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT, ATTR_NONE, list)));
-        sinput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list)));
-
-        fscombo->reloadComboBoxItem();
-        fscombo->setCurrentText(pxlg.fetch(I_FILESEARCH_NAME, ATTR_NONE, list));
-        rloop->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list)));
-        rloopmax->setText(static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_MAXCOUNT, list)));
-        rlargs->setText(static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, list)));
-        reloop->setText(static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOPCOUNT, ATTR_NONE, list)));
-
-        bool check = VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list));
-        addbutton->setVisible(check);
-        editbutton->setVisible(check);
-        deletebutton->setVisible(check);
-        fscombo->setVisible(check);
-
-        check = VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list));
-        rlabel->setEnabled(!check);
-        rloopmax->setEnabled(!check);
+    if(!editop->read(after, list)){
+        delete list;
+        return;
     }
+
+    ProcessXmlListGenerator pxlg;
+
+    name->setText(pxlg.fetch(I_NAME, ATTR_NONE, list));
+    ver->setText(pxlg.fetch(I_VERSION, ATTR_NONE, list));
+    author->setText(pxlg.fetch(I_AUTHOR, ATTR_NONE, list));
+    desc->setText(pxlg.fetch(I_DESCRIPTION, ATTR_NONE, list));
+
+    finput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT, ATTR_NONE, list)));
+    sinput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list)));
+
+    fscombo->reloadComboBoxItem();
+    fscombo->setCurrentText(pxlg.fetch(I_FILESEARCH_NAME, ATTR_NONE, list));
+    rloop->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list)));
+    rloopmax->setText(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_MAXCOUNT, list));
+    rlargs->setText(pxlg.fetch(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, list));
+    reloop->setText(pxlg.fetch(I_RECURSIVE_LOOPCOUNT, ATTR_NONE, list));
+
+    bool check = VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list));
+    addbutton->setVisible(check);
+    editbutton->setVisible(check);
+    deletebutton->setVisible(check);
+    fscombo->setVisible(check);
+
+    check = VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list));
+    rlabel->setEnabled(!check);
+    rloopmax->setEnabled(!check);
 
     delete list;
 
@@ -154,7 +157,7 @@ void InnerStackedWidget::editAuthorAction(QString text)
 #endif
 
     // textChanged will also be called if the text changes to empty.
-    if(text == "") return;
+//    if(text == "") return;
     editop->textProjectAuthorAction(0,text);
 }
 
@@ -165,7 +168,7 @@ void InnerStackedWidget::editProjectNameAction(QString text)
 #endif
 
     // textChanged will also be called if the text changes to empty.
-    if(text == "") return;
+//    if(text == "") return;
     editop->textProjectNameAction(0, text);
 }
 
@@ -176,7 +179,7 @@ void InnerStackedWidget::editVerAction(QString text)
 #endif
 
     // textChanged will also be called if the text changes to empty.
-    if(text == "") return;
+//    if(text == "") return;
     editop->textProjectVerAction(0, text);
 }
 
@@ -187,7 +190,7 @@ void InnerStackedWidget::editDescriptionAction(QString text)
 #endif
 
     // textChanged will also be called if the text changes to empty.
-    if(text == "") return;
+//    if(text == "") return;
     editop->textProjectDescriptAction(0, text);
 }
 
@@ -230,7 +233,7 @@ void InnerStackedWidget::editCheckAction(bool check)
 //    editop->editCheckAction(0,check,objname);
 }
 
-void InnerStackedWidget::editValueAction(QString value)
+void InnerStackedWidget::editTextValueAction(QString value)
 {
     QString objname = this->sender()->objectName();
 #ifdef QT_DEBUG

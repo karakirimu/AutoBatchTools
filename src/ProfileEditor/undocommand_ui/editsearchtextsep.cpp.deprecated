@@ -19,16 +19,16 @@ void EditSearchTextSep::undo()
 {
     pxlg.replaceElementList(S_SEPARATOR, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
 
-    setText(QObject::tr("Change text at Search Separator") \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Search Sep '%1'").arg(m_oldstring) \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 void EditSearchTextSep::redo()
 {
     pxlg.replaceElementList(S_SEPARATOR, ATTR_NONE, m_targetindex, m_newstring, m_cache);
 
-    setText(QObject::tr("Change text at Search Separator") \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Search Sep '%1'").arg(m_newstring) \
+            + QString(" ^(%1)").arg(m_targetindex));
 }
 
 int EditSearchTextSep::id() const

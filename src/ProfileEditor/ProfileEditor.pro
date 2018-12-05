@@ -60,10 +60,10 @@ HEADERS  += editarea/commandtable.h \
     undocommand_ui/checkonlyschedulerother.h \
     undocommand_ui/checkonlyschedulerplugin.h \
     undocommand_ui/checkonlyschedulersearch.h \
-    undocommand_ui/comboinitialsearchselect.h \
+#    undocommand_ui/comboinitialsearchselect.h \
     undocommand_ui/combopluginselect.h \
     undocommand_ui/comboprofileselect.h \
-    undocommand_ui/editcheckcommand.h \
+#    undocommand_ui/editcheckcommand.h \
     undocommand_ui/editcomboboxcommand.h \
     undocommand_ui/editexectable.h \
     undocommand_ui/editlocalvartable.h \
@@ -73,12 +73,10 @@ HEADERS  += editarea/commandtable.h \
     undocommand_ui/editplugintable.h \
     undocommand_ui/editscomboboxcommand.h \
     undocommand_ui/editsearchoutput.h \
-    undocommand_ui/editsearchtextsep.h \
+#    undocommand_ui/editsearchtextsep.h \
     undocommand_ui/edittabcommand.h \
-    undocommand_ui/edittextcommand.h \
+#    undocommand_ui/edittextcommand.h \
     undocommand_ui/edittimeout.h \
-    undocommand_ui/exectableswapoperation.h \
-    undocommand_ui/plugintableswapoperation.h \
     undocommand_ui/stringfileoutput.h \
     undocommand_ui/stringprojectauthor.h \
     undocommand_ui/stringprojectdescription.h \
@@ -95,7 +93,9 @@ HEADERS  += editarea/commandtable.h \
     profilexmlbuilder.h \
     runtasksignalbinder.h \
     editarea/pluginscombobox.h \
-    graphicsarea/processflowtable.h
+    graphicsarea/processflowtable.h \
+    undocommand_ui/editexectableswap.h \
+    undocommand_ui/editplugintableswap.h
 
 SOURCES += editarea/commandtable.cpp \
     editarea/editortab.cpp \
@@ -124,10 +124,10 @@ SOURCES += editarea/commandtable.cpp \
     undocommand_ui/checkonlyschedulerother.cpp \
     undocommand_ui/checkonlyschedulerplugin.cpp \
     undocommand_ui/checkonlyschedulersearch.cpp \
-    undocommand_ui/comboinitialsearchselect.cpp \
+#    undocommand_ui/comboinitialsearchselect.cpp \
     undocommand_ui/combopluginselect.cpp \
     undocommand_ui/comboprofileselect.cpp \
-    undocommand_ui/editcheckcommand.cpp \
+#    undocommand_ui/editcheckcommand.cpp \
     undocommand_ui/editcomboboxcommand.cpp \
     undocommand_ui/editexectable.cpp \
     undocommand_ui/editlocalvartable.cpp \
@@ -137,12 +137,10 @@ SOURCES += editarea/commandtable.cpp \
     undocommand_ui/editplugintable.cpp \
     undocommand_ui/editscomboboxcommand.cpp \
     undocommand_ui/editsearchoutput.cpp \
-    undocommand_ui/editsearchtextsep.cpp \
+#    undocommand_ui/editsearchtextsep.cpp \
     undocommand_ui/edittabcommand.cpp \
-    undocommand_ui/edittextcommand.cpp \
+#    undocommand_ui/edittextcommand.cpp \
     undocommand_ui/edittimeout.cpp \
-    undocommand_ui/exectableswapoperation.cpp \
-    undocommand_ui/plugintableswapoperation.cpp \
     undocommand_ui/stringfileoutput.cpp \
     undocommand_ui/stringprojectauthor.cpp \
     undocommand_ui/stringprojectdescription.cpp \
@@ -160,7 +158,9 @@ SOURCES += editarea/commandtable.cpp \
     profilexmlbuilder.cpp \
     runtasksignalbinder.cpp \
     editarea/pluginscombobox.cpp \
-    graphicsarea/processflowtable.cpp
+    graphicsarea/processflowtable.cpp \
+    undocommand_ui/editexectableswap.cpp \
+    undocommand_ui/editplugintableswap.cpp
 
 SOURCES += main.cpp
 

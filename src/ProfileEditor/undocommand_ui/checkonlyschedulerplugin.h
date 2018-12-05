@@ -18,6 +18,8 @@ public:
     void undo() override;
     void redo() override;
 
+    int id() const override;
+
 private:
     int m_targetindex;
     QString m_oldcheck;
