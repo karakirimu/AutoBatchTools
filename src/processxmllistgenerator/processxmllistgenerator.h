@@ -222,6 +222,8 @@ public:
     //for change inner table structures
     static QStringList createCmdExecElement(QString value, int index);
     static QStringList createCmdPluginElement(QString value, int index);
+    static QStringList createVariantElement(QStringList variants);
+
     int fetchCmdFirstPos(QString tag, const QList<QStringList> *loadbase);
 
     //take specific item string
@@ -232,6 +234,7 @@ public:
     //replace xml element
     void replaceElementList(QString tag, QString attr, int targetindex, QString replacestr, QList<QList<QStringList> *> *cache);
     void replaceElementList(int tableindex, int targetindex, QString replacestr, int skip, QList<QList<QStringList> *> *cache);
+    void replaceElementList(int tableindex, int targetindex, QStringList replace, int skip, QList<QList<QStringList> *> *cache);
     void replaceTypeElement(QString edittype, QString attr, int targetindex, QString replacestr, QList<QList<QStringList> *> *cache);
 
     int getId(QString tag);

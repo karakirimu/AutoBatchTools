@@ -34,7 +34,7 @@ class EditorTab : public QTabWidget
 {
     Q_OBJECT
 public:
-    explicit EditorTab(QWidget *parent = Q_NULLPTR);
+    explicit EditorTab(QWidget *parent = nullptr);
     ~EditorTab();
 
     // ui <-> data communication functions

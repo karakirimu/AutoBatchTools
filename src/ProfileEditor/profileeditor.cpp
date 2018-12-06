@@ -263,6 +263,7 @@ void ProfileEditor::undoAction()
 //    ui->runTreeWidget->updateIndex(updop);
     ui->innerStackedWidget->updateIndex(updop);
     ui->flowTableWidget->updateIndex(updop);
+    ui->variantTableWidget->updateIndex(updop);
     ui->editorTab->updateIndex(updop);
 }
 
@@ -282,9 +283,10 @@ void ProfileEditor::redoAction()
     QString updop = text.mid(lastindex + 3, text.length() - lastindex - 4);
 
 //    ui->runTreeWidget->updateIndex(updop);
-    ui->flowTableWidget->updateIndex(updop);
-    ui->editorTab->updateIndex(updop);
     ui->innerStackedWidget->updateIndex(updop);
+    ui->flowTableWidget->updateIndex(updop);
+    ui->variantTableWidget->updateIndex(updop);
+    ui->editorTab->updateIndex(updop);
 }
 
 void ProfileEditor::addAction()

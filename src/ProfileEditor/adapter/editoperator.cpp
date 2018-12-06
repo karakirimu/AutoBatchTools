@@ -214,13 +214,11 @@ void EditOperator::tableSwapPluginAction(int id, int beforeid, int afterid)
 
 
 
-//only temp data accepted
-void EditOperator::tableEditVariantAction(int id, QList<QStringList> *xmlstruct)
+void EditOperator::tableEditVariantAction(int id, int tableid, QStringList variants, int operation)
 {
-    //record all changes (not merge)
-    EditLocalVarTable *com = new EditLocalVarTable(id, xmlstruct, cache);
+    EditLocalVarTable *com = new EditLocalVarTable(id, tableid, variants, operation, cache);
     undostack->push(com);
-//    emit editUpdate(id);?
+//    emit editUpdate(id);? no need to update
 }
 
 void EditOperator::tableEditExecAction(int id, int tableid, QString newstr, int operation)

@@ -24,7 +24,7 @@ VariantTable::VariantTable(QWidget *)
     setHorizontalHeaderLabels((QStringList() << tr("File Variant") << tr("Value")));
 
     //set edit saving
-    connect(this, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
+    connect(this, &QTableWidget::cellChanged, this, &VariantTable::textEditedAction);
 }
 
 VariantTable::~VariantTable()
@@ -42,22 +42,69 @@ void VariantTable::setEditOperator(EditOperator *op)
     editop = op;
 }
 
+void VariantTable::updateIndex(QString operation)
+{
+    QStringList sep = operation.split(",");
+
+    if(sep.at(1) == UNDOREDO_L_TABLEADD){
+        //exectableadd
+        this->insertItem(static_cast<QString>(sep.at(0)).toInt());
+
+    }else if(sep.count() == 3
+             && sep.at(2) == UNDOREDO_L_TABLEINS){
+        //exectableins
+        this->insertItem(static_cast<QString>(sep.at(1)).toInt());
+        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+        this->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos));
+
+    }else if(sep.count() == 3
+             && sep.at(2) == UNDOREDO_L_TABLEEDIT){
+        //exectableedit
+        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+        this->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos));
+
+    }else if(sep.at(1) == UNDOREDO_L_TABLEDEL){
+        //exectabledel
+        this->deleteItem(static_cast<QString>(sep.at(0)).toInt());
+
+    }else if(sep.count() == 3
+             && sep.at(2) == UNDOREDO_L_TABLESWAP){
+        //exectableswap
+        this->swapItem(static_cast<QString>(sep.at(0)).toInt()
+                               , static_cast<QString>(sep.at(1)).toInt());
+
+    }
+}
+
 //ALLOC MEMORY
 void VariantTable::addAction()
 {
-    QList<QStringList> *newlist = new QList<QStringList>;
+//    QList<QStringList> *newlist = new QList<QStringList>;
     int row = this->rowCount();
     setRowCount(row + 1);
-    getLocalList(newlist);
-    editop->tableEditVariantAction(MAGIC, newlist);
+//    getLocalList(newlist);
+    editop->tableEditVariantAction(MAGIC, row, getLocalVariants(row), ProcessXmlListGenerator::TABLE_ADD);
+
+    //for useability
+    this->setCurrentItem(itemAt(row,0));
+    this->selectRow(row);
+
+    editAction();
 }
 
 //ALLOC MEMORY
 void VariantTable::editAction()
 {
-    QList<QStringList> *newlist = new QList<QStringList>;
-    getLocalList(newlist);
-    editop->tableEditVariantAction(MAGIC, newlist);
+//    QList<QStringList> *newlist = new QList<QStringList>;
+//    getLocalList(newlist);
+//    editop->tableEditVariantAction(MAGIC, newlist);
+    this->clearSelection();
+    this->edit(currentIndex());
+
+//    int row = this->currentRow();
+//    editop->tableEditVariantAction(MAGIC, row, getLocalVariants(row), ProcessXmlListGenerator::TABLE_ADD);
 }
 
 void VariantTable::deleteAction()
@@ -68,7 +115,13 @@ void VariantTable::deleteAction()
     //check delete warning message
     if(!deleteCheckMessage()) return;
 
-    //delete file item
+    QModelIndexList lists = this->selectedIndexes();
+    int rows = lists.count();
+    for(int i = 0; i < rows; i++){
+        editop->tableEditVariantAction(MAGIC, i, getLocalVariants(-1), ProcessXmlListGenerator::TABLE_DELETE);
+    }
+
+    //delete file items
     this->deleteTableRecursive();
 }
 
@@ -77,13 +130,31 @@ void VariantTable::cutAction()
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
 
-    copyAction();
+    QString tmp;
+    QModelIndexList mlist = this->selectedIndexes();
+
+    int rows = mlist.count();
+    for(int i = 0; i < rows; i++){
+        tmp.append(this->model()->index(i, 0).data().toString());
+        tmp.append("\t");
+        tmp.append(this->model()->index(i, 1).data().toString());
+        tmp.append("\n");
+
+        editop->tableEditVariantAction(MAGIC, i, getLocalVariants(-1), ProcessXmlListGenerator::TABLE_DELETE);
+    }
+//    copyAction();
+
+//    //force delete
+//    BaseTable::deleteTableRecursive();
+
+//    //save to backup file
+//    editAction();
 
     //force delete
     BaseTable::deleteTableRecursive();
 
-    //save to backup file
-    editAction();
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setText(tmp);
 }
 
 void VariantTable::copyAction()
@@ -106,15 +177,10 @@ void VariantTable::copyAction()
     // 2 column
     int counter = mlist.count();
     for(int i = 0; i < counter; i++){
-        int crow = mlist.at(i).row();
-
-        tmp.append(mlist.at(i).model()->index(crow, i%2).data().toString());
-
-        if(i%2 == 0){
-            tmp.append("\t");
-        }else{
-            tmp.append("\n");
-        }
+        tmp.append(this->model()->index(i, 0).data().toString());
+        tmp.append("\t");
+        tmp.append(this->model()->index(i, 1).data().toString());
+        tmp.append("\n");
     }
 
     QClipboard *clipboard = QApplication::clipboard();
@@ -128,7 +194,7 @@ void VariantTable::pasteAction()
 {
     //modified CommandTable::pasteEnterAction()
     QClipboard *clipboard = QApplication::clipboard();
-    QStringList text = clipboard->text().split(QRegularExpression("\\n|\\r\\n"));
+    QStringList text = clipboard->text().split(QRegularExpression("\\t|\\n|\\r\\n"));
 
     //last lests unknown ""
     if(text.count() > 1) text.removeLast();
@@ -149,6 +215,7 @@ void VariantTable::pasteAction()
            }
        }
 //       emit updateTable(row, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
+       editop->tableEditVariantAction(MAGIC, i, intext, ProcessXmlListGenerator::TABLE_INSERT);
     }
 
     //save to backup file
@@ -162,7 +229,7 @@ void VariantTable::upAction()
 
     tableItemSwap(current, current-1);
 
-    reloadAction();
+//    reloadAction();
     selectRow(current - 1);
 }
 
@@ -175,7 +242,7 @@ void VariantTable::downAction()
 
     tableItemSwap(current, current+1);
 
-    reloadAction();
+//    reloadAction();
     selectRow(current + 1);
 }
 
@@ -187,7 +254,47 @@ void VariantTable::reloadAction()
     setRowCount(0);
     setLocalListItem(MAGIC);
     this->blockSignals(false);
-//    connect(this, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
+    //    connect(this, SIGNAL(cellChanged(int,int)), this, SLOT(editAction()));
+}
+
+void VariantTable::textEditedAction(int row, int column)
+{
+    Q_UNUSED(column);
+    editop->tableEditVariantAction(MAGIC, row, getLocalVariants(row), ProcessXmlListGenerator::TABLE_EDIT);
+}
+
+void VariantTable::insertItem(int row)
+{
+    this->blockSignals(true);
+    this->insertRow(row);
+    this->setCurrentItem(itemAt(row,0));
+    this->selectRow(row);
+    this->blockSignals(false);
+}
+
+void VariantTable::deleteItem(int row)
+{
+    //if rowcount is zero.
+    if(this->rowCount() == 0) return;
+    this->removeRow(row);
+}
+
+void VariantTable::replaceItem(int row, QStringList strlist)
+{
+    this->blockSignals(true);
+    this->setItem(row, 0, new QTableWidgetItem(strlist.at(0)));
+    this->setItem(row, 1, new QTableWidgetItem(strlist.at(1)));
+    this->clearSelection();
+    selectRow(row);
+    this->blockSignals(false);
+}
+
+void VariantTable::swapItem(int before, int after)
+{
+    tableItemSwap(before, after);
+
+    this->clearSelection();
+    selectRow(after);
 }
 
 void VariantTable::setPopupActionTop()
@@ -357,6 +464,22 @@ void VariantTable::tableItemSwap(int from, int to)
     this->setItem(to, 1, new QTableWidgetItem(bku1));
 }
 
+QStringList VariantTable::getTableData(int targetrow, int tablerow)
+{
+    QList<QStringList> list;
+
+    if(targetrow != 1 || !editop->read(targetrow, &list)){
+        return QStringList() << "" << "";
+    }
+
+    int cmdfirst = 0;
+    cmdfirst = xgen.fetchCmdFirstPos(L_VAR_COUNT, &list);
+
+
+    return QStringList() << list.at(cmdfirst + tablerow).at(1) \
+                         << list.at(cmdfirst + tablerow).at(3);
+}
+
 //DEPENDS_XML INPUT PROCESS
 void VariantTable::getLocalList(QList<QStringList> *newlist)
 {
@@ -370,4 +493,19 @@ void VariantTable::getLocalList(QList<QStringList> *newlist)
     }
 
     xgen.createLocalList(newlist, &list);
+}
+
+QStringList VariantTable::getLocalVariants(int index)
+{
+    QStringList list;
+
+    if(index > -1 && index < this->rowCount()){
+        list.append(this->model()->index(index, 0).data().toString());
+        list.append(this->model()->index(index, 1).data().toString());
+    }else{
+        list.append("");
+        list.append("");
+    }
+
+    return list;
 }

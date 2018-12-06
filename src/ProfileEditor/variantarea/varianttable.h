@@ -5,20 +5,21 @@
 #include <QWidget>
 #include <editoperator.h>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
-//#include <optiontable.h>
 #include <../basictable/basictable.h>
-//#include <pesharedfunction.h>
 
 class VariantTable : public BasicTable
 {
     Q_OBJECT
 public:
-    explicit VariantTable(QWidget *parent = Q_NULLPTR);
+    explicit VariantTable(QWidget *parent = nullptr);
     ~VariantTable();
 
-//    void setSharedFunction(PESharedFunction *func);
     void setEditOperator(EditOperator *op);
-public slots:
+    void updateIndex(QString operation);
+
+    void reloadAction();
+
+private slots:
     void addAction();
     void editAction();
     void deleteAction();
@@ -27,19 +28,31 @@ public slots:
     void pasteAction();
     void upAction();
     void downAction();
-    void reloadAction();
+
+    void textEditedAction(int row, int column);
 
 private:
+    // undo redo no emit operation
+    void insertItem(int row);
+    void deleteItem(int row);
+    void replaceItem(int row, QStringList strlist);
+    void swapItem(int before, int after);
+
+    // popup
     void setPopupActionTop();
     void setPopupActionDefault();
     void setPopupActionBottom();
+
+    // keyboard shortcut
     bool eventFilter(QObject *obj, QEvent *event);
+
     bool setLocalListItem(int itemid);
     void tableItemSwap(int from , int to);
+    QStringList getTableData(int targetrow, int tablerow);
 
     void getLocalList(QList<QStringList> *newlist);
+    QStringList getLocalVariants(int index);
 
-//    PESharedFunction *sfunction;
     EditOperator *editop;
     ProcessXmlListGenerator xgen;
 

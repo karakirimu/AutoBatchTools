@@ -150,7 +150,7 @@ public slots:
     //table operation
     void tableSwapExecAction(int id, int beforeid, int afterid);
     void tableSwapPluginAction(int id, int beforeid, int afterid);
-    void tableEditVariantAction(int id, QList<QStringList> *xmlstruct);
+    void tableEditVariantAction(int id, int tableid, QStringList variants, int operationt);
     void tableEditExecAction(int id, int tableid, QString newstr, int operation);
     void tableEditPluginAction(int id, int tableid, QString newstr, int operation);
 

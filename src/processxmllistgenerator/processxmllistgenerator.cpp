@@ -268,6 +268,11 @@ QStringList ProcessXmlListGenerator::createCmdPluginElement(QString value, int i
     return QStringList() << PL_CMD << value << ATTR_POSNUM << QString::number(index);
 }
 
+QStringList ProcessXmlListGenerator::createVariantElement(QStringList variants)
+{
+    return QStringList() << L_VARIANT << variants.at(0) << ATTR_LOCALVALUE << variants.at(1);
+}
+
 int ProcessXmlListGenerator::fetchCmdFirstPos(QString tag, const QList<QStringList> *loadbase)
 {
     int count = loadbase->count();
@@ -373,8 +378,19 @@ void ProcessXmlListGenerator::replaceElementList(QString tag, QString attr, int 
 void ProcessXmlListGenerator::replaceElementList(int tableindex, int targetindex, QString replacestr, \
                                                       int skip, QList<QList<QStringList> *> *cache)
 {
+//    QStringList alist = cache->at(targetindex)->at(tableindex + skip);
+//    alist.replace(1, replacestr);
+//    cache->at(targetindex)->replace(tableindex + skip, alist);
+    replaceElementList(tableindex,targetindex,QStringList() << replacestr, skip, cache);
+
+}
+
+void ProcessXmlListGenerator::replaceElementList(int tableindex, int targetindex, QStringList replace, \
+                                                 int skip, QList<QList<QStringList> *> *cache)
+{
     QStringList alist = cache->at(targetindex)->at(tableindex + skip);
-    alist.replace(1, replacestr);
+    alist.replace(1, replace.at(0));
+    if(alist.count() > 2) alist.replace(3, replace.at(1));
     cache->at(targetindex)->replace(tableindex + skip, alist);
 }
 

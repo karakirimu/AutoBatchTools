@@ -94,8 +94,8 @@ HEADERS  += editarea/commandtable.h \
     runtasksignalbinder.h \
     editarea/pluginscombobox.h \
     graphicsarea/processflowtable.h \
-    undocommand_ui/editexectableswap.h \
-    undocommand_ui/editplugintableswap.h
+#    undocommand_ui/editexectableswap.h \
+#    undocommand_ui/editplugintableswap.h
 
 SOURCES += editarea/commandtable.cpp \
     editarea/editortab.cpp \
@@ -159,8 +159,8 @@ SOURCES += editarea/commandtable.cpp \
     runtasksignalbinder.cpp \
     editarea/pluginscombobox.cpp \
     graphicsarea/processflowtable.cpp \
-    undocommand_ui/editexectableswap.cpp \
-    undocommand_ui/editplugintableswap.cpp
+#    undocommand_ui/editexectableswap.cpp \
+#    undocommand_ui/editplugintableswap.cpp
 
 SOURCES += main.cpp
 

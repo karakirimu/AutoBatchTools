@@ -30,7 +30,6 @@ private:
 
     int m_targetindex;
     int m_tableindex;
-    QString m_objname;
     QString m_oldstr;
     int m_operation;
     QList<QList<QStringList> *> *m_cache;
