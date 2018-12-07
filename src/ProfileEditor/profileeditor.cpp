@@ -98,8 +98,8 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->actionCut, &QAction::triggered, this, &ProfileEditor::cutAction);
     connect(ui->actionCopy, &QAction::triggered, this, &ProfileEditor::copyAction);
     connect(ui->actionPaste, &QAction::triggered, this, &ProfileEditor::pasteAction);
-    connect(ui->actionUpItem, SIGNAL(triggered()), this, SLOT(upAction()));
-    connect(ui->actionDownItem, SIGNAL(triggered()), this, SLOT(downAction()));
+    connect(ui->actionUpItem, &QAction::triggered, this, &ProfileEditor::upAction);
+    connect(ui->actionDownItem, &QAction::triggered, this, &ProfileEditor::downAction);
 
     //Edit (Undo,Redo)
     connect(editop->getUndostack(), &QUndoStack::canUndoChanged, ui->actionUndo, &QAction::setEnabled);
@@ -335,7 +335,7 @@ void ProfileEditor::upAction()
 
 void ProfileEditor::downAction()
 {
-    if(dataindexpos <= 0) return;
+    if(dataindexpos < 2 || dataindexpos >= (editop->getCacheSize() - 1)) return;
     editop->swapAction(dataindexpos, dataindexpos + 1);
     emit editop->ui_funcindexUpdate(dataindexpos + 1, dataindexpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
 }
@@ -385,7 +385,7 @@ void ProfileEditor::overWriteSaveAction()
                 fdialog->getSaveFileName(this,\
                                          tr("Save Edit file"),\
                                          QDir::currentPath(),\
-                                         tr("APRO Files (*.apro)"));
+                                         "APRO Files (*.apro)");
 
         if(fileName != "") editop->saveAction(fileName);
     }else{
@@ -399,7 +399,7 @@ void ProfileEditor::exportAction()
             fdialog->getSaveFileName(this,\
                                      tr("Export XML file"),\
                                      QDir::currentPath(),\
-                                     tr("XML Files (*.xml)"));
+                                     "XML Files (*.xml)");
     editop->exportAction(fileName);
 }
 
@@ -433,15 +433,24 @@ void ProfileEditor::onFileEdited(bool edited)
 
 void ProfileEditor::itemChangedAction(int after, int before, int function, int sendfrom)
 {
-    Q_UNUSED(before); Q_UNUSED(function); Q_UNUSED(sendfrom);
+    Q_UNUSED(before); Q_UNUSED(sendfrom);
+
+    int showdata = 1;
+
+    if(function == EditOperator::DELETE){
+        showdata = (after > 1)? after - 1 : 1;
+
+    }else {
+        showdata = (after > 1)? after : 1;
+    }
+
+    qDebug() << "[ProfileEditor::itemChangedAction]   rowpos :" << after;
 
     //update show
-    qDebug() << "itemChangedAction::treerowpos" << after;
-    emit statusLabelChanged(tr("Process selected: No. ") + QString::number((after > 0)? after : 1));
+    emit statusLabelChanged(tr("Process selected: No. %1").arg(showdata));
 
     //update row position
     dataindexpos = after;
-
 }
 
 void ProfileEditor::about()
@@ -456,14 +465,14 @@ void ProfileEditor::about()
 
 void ProfileEditor::taskStarted(QString objectname, int runfrom)
 {
-    qDebug() << "profileeditor::taskstarted";
+    qDebug() << "[ProfileEditor::taskStarted]";
     Q_UNUSED(objectname); Q_UNUSED(runfrom);
     setRunButtonState(false, true, true);
 }
 
 void ProfileEditor::taskPaused(QString objectname)
 {
-    qDebug() << "profileeditor::taskpaused";
+    qDebug() << "[ProfileEditor::taskPaused]";
     Q_UNUSED(objectname);
     setRunButtonState(true, false, true);
 }
@@ -471,14 +480,14 @@ void ProfileEditor::taskPaused(QString objectname)
 // deleting target
 void ProfileEditor::taskStopped(QString objectname)
 {
-    qDebug() << "profileeditor::taskstopped";
+    qDebug() << "[ProfileEditor::taskStopped]";
     Q_UNUSED(objectname);
     setRunButtonState(true, false, false);
 }
 
 void ProfileEditor::taskEnd(QString objectname, int runfrom)
 {
-    qDebug() << "profileeditor::taskend";
+    qDebug() << "[ProfileEditor::taskEnd]";
     Q_UNUSED(runfrom);
     setRunButtonState(true, false, false);
 
@@ -497,7 +506,7 @@ void ProfileEditor::runTriggered()
     setRunButtonState(false, false, false);
 
 
-    qDebug() << "profileeditor::run triggered";
+    qDebug() << "[ProfileEditor::runTriggered]";
 
     if(key == ""){
         key = mlTask->generateRandom(32);

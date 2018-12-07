@@ -50,7 +50,7 @@ private:
     void tableItemSwap(int from , int to);
     QStringList getTableData(int targetrow, int tablerow);
 
-    void getLocalList(QList<QStringList> *newlist);
+//    void getLocalList(QList<QStringList> *newlist);
     QStringList getLocalVariants(int index);
 
     EditOperator *editop;

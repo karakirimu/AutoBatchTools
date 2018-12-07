@@ -114,12 +114,10 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
 
     // normal
 //    const QString ATTR_TIMEOUTMS =             "dur";
-
     generateId.insert(ATTR_TIMEOUTMS, 905);
 
     // local
 //    const QString ATTR_LOCALVALUE =            "lval";
-
     generateId.insert(ATTR_LOCALVALUE, 906);
 
 //    //undo redo table operation command value is no means.
@@ -147,15 +145,27 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
     generateId.insert(PL_DELETE_TABLE, 1008);
     generateId.insert(PL_SWAP_TABLE, 1009);
 
+//    static const QString L_ADD_TABLE    = "gh%j~w+x";
+//    static const QString L_INSERT_TABLE = "EjE;Z)PX";
+//    static const QString L_EDIT_TABLE   = "VngH68T:";
+//    static const QString L_DELETE_TABLE = "[u}iS63'";
+//    static const QString L_SWAP_TABLE   = "1yJ2VDbs";
+
+    generateId.insert(L_ADD_TABLE, 1010);
+    generateId.insert(L_INSERT_TABLE, 1011);
+    generateId.insert(L_EDIT_TABLE, 1012);
+    generateId.insert(L_DELETE_TABLE, 1013);
+    generateId.insert(L_SWAP_TABLE, 1014);
+
     //undo redo only check operation id value. It is no means.
 //    static const QString E_ONLY_SCHEDULER = "non";
 //    static const QString S_ONLY_SCHEDULER = "son";
 //    static const QString PL_ONLY_SCHEDULER = "plon";
 //    static const QString PR_ONLY_SCHEDULER = "pron";
-    generateId.insert(E_ONLY_SCHEDULER, 1010);
-    generateId.insert(S_ONLY_SCHEDULER, 1011);
-    generateId.insert(PL_ONLY_SCHEDULER, 1012);
-    generateId.insert(PR_ONLY_SCHEDULER, 1013);
+    generateId.insert(E_ONLY_SCHEDULER, 1015);
+    generateId.insert(S_ONLY_SCHEDULER, 1016);
+    generateId.insert(PL_ONLY_SCHEDULER, 1017);
+    generateId.insert(PR_ONLY_SCHEDULER, 1018);
 
 }
 
@@ -390,7 +400,7 @@ void ProcessXmlListGenerator::replaceElementList(int tableindex, int targetindex
 {
     QStringList alist = cache->at(targetindex)->at(tableindex + skip);
     alist.replace(1, replace.at(0));
-    if(alist.count() > 2) alist.replace(3, replace.at(1));
+    if(replace.count() > 2) alist.replace(3, replace.at(1));
     cache->at(targetindex)->replace(tableindex + skip, alist);
 }
 

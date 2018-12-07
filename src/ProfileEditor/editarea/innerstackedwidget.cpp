@@ -39,7 +39,7 @@ void InnerStackedWidget::setEditOperator(EditOperator *op)
     rlabel = stackwidget->findChild<QLabel *>("loopMaxLabel");
 
     connect(editop, &EditOperator::ui_funcindexUpdate, this, &InnerStackedWidget::setInfoDataList);
-    connect(editop, &EditOperator::ui_funcindexUpdate, this, &InnerStackedWidget::moveStacked);
+//    connect(editop, &EditOperator::ui_funcindexUpdate, this, &InnerStackedWidget::moveStacked);
 
     connect(name, &QLineEdit::textEdited, this, &InnerStackedWidget::editProjectNameAction);
     connect(ver, &QLineEdit::textEdited, this, &InnerStackedWidget::editVerAction);
@@ -64,13 +64,17 @@ void InnerStackedWidget::setEditOperator(EditOperator *op)
 
 }
 
-void InnerStackedWidget::moveStacked(int after, int before, int function, int sendfrom)
+bool InnerStackedWidget::moveStacked(int after, int function)
 {
-    Q_UNUSED(before); Q_UNUSED(function); Q_UNUSED(sendfrom);
-    if(after > 0){
-        setCurrentIndex(1);
-    }else{
+    if((after == 2 && function == EditOperator::DELETE)
+            || after == 0){
+
         setCurrentIndex(0);
+        return true;
+
+    }else{
+        setCurrentIndex(1);
+        return false;
     }
 }
 
@@ -84,11 +88,11 @@ void InnerStackedWidget::updateIndex(QString operation)
                             EditOperator::SELECT, EditOperator::MAINEDITOR);
     }else if(sep.at(0) == "2" && sep.at(1) == UNDOREDO_DELETE){
         //change stack
-        moveStacked(0, -1, EditOperator::SELECT, EditOperator::MAINEDITOR);
+        moveStacked(0, EditOperator::SELECT);
 
     }else if(sep.at(0) == "2" && sep.at(1) == UNDOREDO_ADD){
         //change stack
-        moveStacked(1, -1, EditOperator::SELECT, EditOperator::MAINEDITOR);
+        moveStacked(1, EditOperator::SELECT);
 
     }
 }
@@ -101,15 +105,13 @@ void InnerStackedWidget::reloadAction()
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void InnerStackedWidget::setInfoDataList(int after, int before, int function, int sendfrom)
 {
-    Q_UNUSED(before); Q_UNUSED(sendfrom); Q_UNUSED(function);
+    Q_UNUSED(before); Q_UNUSED(sendfrom);
+
+    // change stack and check loading is need or not.
+    if(!moveStacked(after, function)) return;
 
     // update information ui
-    if(after != 0) return;
-
     this->blockSignals(true);
-
-    //change stack
-    moveStacked(0, -1, EditOperator::SELECT, EditOperator::MAINEDITOR);
 
     QList<QStringList> *list = new QList<QStringList>();
 

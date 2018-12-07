@@ -3,6 +3,7 @@
 
 #include <QUndoCommand>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <QDebug>
 
 /**
  * @brief The EditLocalVarTable class
@@ -30,7 +31,7 @@ public:
     QStringList m_newvar;
 //    QString m_newval;
 
-    int operation() const;
+//    int operation() const;
 private:
 //    void updateIndex(int count);
     void updateCounter(bool ascend);

@@ -1,8 +1,8 @@
 #ifndef SWAPCOMMAND_H
 #define SWAPCOMMAND_H
 
-#include <QHash>
 #include <QUndoCommand>
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class SwapCommand : public QUndoCommand
 {

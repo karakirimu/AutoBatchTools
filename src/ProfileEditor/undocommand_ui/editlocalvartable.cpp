@@ -28,16 +28,8 @@ EditLocalVarTable::EditLocalVarTable(const int &targetindex
 
 void EditLocalVarTable::undo()
 {
-//    if(m_cache->isEmpty()) return;
-//    m_cache->replace(m_targetindex, m_before);
+    qDebug() << "VariantTable: Undo: tableindex : " << m_tableindex;
 
-//    //locallist
-//    if(m_targetindex == MAGIC){
-//        setText(QString("Change table text in Local Variant"));
-//    }else{
-//        setText(QString("Change table text at %1").arg(m_targetindex));
-//    }
-//    int rcount = -1;
     QStringList alist;
     switch (m_operation) {
     case ProcessXmlListGenerator::TABLE_ADD:
@@ -59,25 +51,19 @@ void EditLocalVarTable::undo()
         break;
 
     case ProcessXmlListGenerator::TABLE_INSERT:
-//        rcount = static_cast<QString>(pxlg.fetch(L_VAR_COUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
         m_cache->at(m_targetindex)->removeAt(m_tableindex + SKIP);
 
         updateCounter(false);
-
-//        if(m_tableindex < (rcount-1)) updateIndex(rcount-1);
 
         setText(QObject::tr("Insert local at %1 \'%2\'").arg(m_tableindex).arg(m_newvar.at(0)) \
                 + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_L_TABLEDEL));
         break;
 
     case ProcessXmlListGenerator::TABLE_DELETE:
-//        rcount = static_cast<QString>(pxlg.fetch(L_VAR_COUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
         alist = ProcessXmlListGenerator::createVariantElement(m_oldvar);
         m_cache->at(m_targetindex)->insert(m_tableindex + SKIP, alist);
 
         updateCounter(true);
-
-//        if(m_tableindex < rcount) updateIndex(rcount);
 
         setText(QObject::tr("Delete local at %1").arg(m_tableindex) \
                 + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_L_TABLEINS));
@@ -91,7 +77,9 @@ void EditLocalVarTable::undo()
 void EditLocalVarTable::redo()
 {
     QStringList alist;
-//    int rcount = -1;
+    qDebug() << "VariantTable: Redo: tableindex : " << m_tableindex;
+
+
     switch (m_operation) {
     case ProcessXmlListGenerator::TABLE_ADD:
         alist = ProcessXmlListGenerator::createVariantElement(m_newvar);
@@ -111,25 +99,19 @@ void EditLocalVarTable::redo()
         break;
     case ProcessXmlListGenerator::TABLE_INSERT:
 
-//        rcount = static_cast<QString>(pxlg.fetch(L_VAR_COUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
         alist = ProcessXmlListGenerator::createVariantElement(m_newvar);
         m_cache->at(m_targetindex)->insert(m_tableindex + SKIP, alist);
 
         updateCounter(true);
-
-//        if(m_tableindex < rcount) updateIndex(rcount);
 
         setText(QObject::tr("Insert local at %1 \'%2\'").arg(m_tableindex).arg(m_newvar.at(0)) \
                 + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_L_TABLEINS));
         break;
     case ProcessXmlListGenerator::TABLE_DELETE:
         //add
-//        rcount = static_cast<QString>(pxlg.fetch(L_VAR_COUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
         m_cache->at(m_targetindex)->removeAt(m_tableindex + SKIP);
 
         updateCounter(false);
-
-//        if(m_tableindex < (rcount-1)) updateIndex(rcount-1);
 
         setText(QObject::tr("Delete local at %1").arg(m_tableindex) \
                 + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_L_TABLEDEL));
@@ -138,14 +120,6 @@ void EditLocalVarTable::redo()
         break;
     }
 
-//    m_cache->replace(m_targetindex, m_changed);
-
-//    //locallist
-//    if(m_targetindex == MAGIC){
-//        setText(QString("Change table text in Local Variant"));
-//    }else{
-//        setText(QString("Change table text at %1").arg(m_targetindex));
-//    }
 }
 
 int EditLocalVarTable::id() const
@@ -172,31 +146,21 @@ int EditLocalVarTable::id() const
 
 bool EditLocalVarTable::mergeWith(const QUndoCommand *other)
 {
-    if (other->id() != id()) return false;
-    const EditLocalVarTable *com = static_cast<const EditLocalVarTable *>(other);
-//    m_newval = com->m_newval;
-    if(operation() == ProcessXmlListGenerator::TABLE_EDIT){
-        m_newvar = com->m_newvar;
-    }else{
-        return false;
-    }
-    return true;
-}
-
-int EditLocalVarTable::operation() const
-{
-    return m_operation;
-}
-
-//void EditLocalVarTable::updateIndex(int count)
-//{
-//    QStringList alist;
-//    for(int i = m_tableindex; i < count; i++){
-//        alist = m_cache->at(m_targetindex)->at(i + SKIP);
-//        alist.replace(3, QString::number(i));
-//        m_cache->at(m_targetindex)->replace(i + SKIP, alist);
-
+    Q_UNUSED(other);
+//    if (other->id() != id()) return false;
+//    const EditLocalVarTable *com = static_cast<const EditLocalVarTable *>(other);
+//    if(operation() == ProcessXmlListGenerator::TABLE_EDIT){
+//        m_newvar = com->m_newvar;
+//    }else{
+//        return false;
 //    }
+//    return true;
+    return false;
+}
+
+//int EditLocalVarTable::operation() const
+//{
+//    return m_operation;
 //}
 
 void EditLocalVarTable::updateCounter(bool ascend)

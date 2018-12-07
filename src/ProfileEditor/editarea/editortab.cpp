@@ -311,7 +311,7 @@ void EditorTab::setCombinedDataList(int after, int before, int function, int sen
 //    }
 
     //set current id
-    qDebug() << QString("EditorTab : currentid update to %1").arg(after);
+    qDebug() << "[EditorTab::setCombinedDataList]     currentid update : " << after;
     currentid = after;
 
     //set widget selection
@@ -488,7 +488,8 @@ void EditorTab::editTextAction(QString text)
 void EditorTab::editTableAction(int index, QString str, int function)
 {
     QString objname = this->sender()->objectName();
-    qDebug() << "EditorTab::edittableaction : " << objname;
+    qDebug() << "[EditorTab::edittableaction] object : " << objname;
+
     if(objname == "cmdTableWidget"){
         editop->tableEditExecAction(currentid, index, str, function);
 
@@ -502,7 +503,8 @@ void EditorTab::editTableAction(int index, QString str, int function)
 void EditorTab::editSwapTableAction(int indexbefore, int indexafter)
 {
     QString objname = this->sender()->objectName();
-    qDebug() << "EditorTab::editswaptableaction : " << objname;
+    qDebug() << "[EditorTab::editswaptableaction] object : " << objname;
+
     if(objname == "cmdTableWidget"){
         editop->tableSwapExecAction(currentid, indexbefore, indexafter);
 
@@ -542,7 +544,7 @@ void EditorTab::openSavefile()
 {
     QLineEdit *outputLineEdit = this->widget(ProcessXmlListGenerator::SEARCH)->findChild<QLineEdit *>("outputLineEdit");
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Search file"),\
-                                         QDir::currentPath(), tr("File (*.*)"));
+                                         QDir::currentPath(), "File (*.*)");
 
     outputLineEdit->setText(fileName);
 }

@@ -25,7 +25,6 @@ public:
     ~InnerStackedWidget();
 
     void setEditOperator(EditOperator *op);
-    void moveStacked(int after, int before, int function, int sendfrom);
 
     void updateIndex(QString operation);
     void reloadAction();
@@ -46,6 +45,7 @@ private slots:
     void editTextValueAction(QString value);
 
 private:
+    bool moveStacked(int after, int function);
 
     EditOperator *editop;
 

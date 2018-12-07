@@ -147,6 +147,7 @@ static const QString ATTR_LOCALVALUE =            "lval";
 static const QString UNDOREDO_ADD =               "ADD";
 static const QString UNDOREDO_DELETE =            "DEL";
 static const QString UNDOREDO_INSERT =            "INS";
+static const QString UNDOREDO_SWAP =              "SWA";
 
 static const QString UNDOREDO_E_TABLEADD =        "ET_ADD";
 static const QString UNDOREDO_E_TABLEEDIT =       "ET_EDIT";

@@ -49,7 +49,6 @@ bool ProcessFlowTable::eventFilter(QObject *obj, QEvent *event)
            case Qt::Key_Enter:
              if (keyEvent->modifiers() & Qt::ControlModifier)
                addAction();
-             //todo
              break;
 
            case Qt::Key_Delete:
@@ -108,6 +107,7 @@ void ProcessFlowTable::addAction()
 
     int cache = editop->getCacheSize() - 1;
     emit editop->ui_funcindexUpdate(cache, -1, EditOperator::ADD, EditOperator::FLOWTABLE);
+
 }
 
 void ProcessFlowTable::deleteAction()
@@ -173,18 +173,19 @@ void ProcessFlowTable::downAction()
 void ProcessFlowTable::reloadAction()
 {
     int counter = editop->getCacheSize();
-    qDebug() << "flowtable :: reloadaction";
+
     //can't clear, delete all objects
     while(this->rowCount() > 0){
-        this->cellWidget(0, 0);
-        this->removeCellWidget(0,0);
+//        this->cellWidget(0, 0);
+//        this->removeCellWidget(0,0);
+//        this->removeCellWidget(0,1);
         this->removeRow(0);
     }
 
     setRowCount(dataToUiIndex(counter));
 
 #ifdef QT_DEBUG
-    qDebug()<< "profileflow::setFlowItem::reloadaction";
+    qDebug()<< "[ProcessFlowTable::reloadAction] Timer start";
     QTime time;
     time.start();
 #endif
@@ -192,11 +193,9 @@ void ProcessFlowTable::reloadAction()
     setAllFlowItem();
 
 #ifdef QT_DEBUG
-    qDebug() << "FlowTable::reloadAction() || elapsed: " << time.elapsed() << "ms";
+    qDebug() << "[ProcessFlowTable::reloadAction] elapsed : " << time.elapsed() << "ms";
 #endif
 
-    //hide last widget index arrow
-//    updateLastIndexItem(counter - 1);
 }
 
 void ProcessFlowTable::updateIndex(QString operation)
@@ -215,65 +214,60 @@ void ProcessFlowTable::updateIndex(QString operation)
     }else if(sep.at(1) == UNDOREDO_INSERT){
         //ins
         insertItem(static_cast<QString>(sep.at(0)).toInt());
-    }else{
+    }else if(sep.count() == 3
+             && sep.at(2) == UNDOREDO_SWAP){
         //swap
         int first = static_cast<QString>(sep.at(0)).toInt();
+        int second = static_cast<QString>(sep.at(1)).toInt();
 
-        bool ok = false;
-        int second = static_cast<QString>(sep.at(1)).toInt(&ok);
-
-        if(ok) swapItem(uiIndexToData(first), uiIndexToData(second));
+        swapItem(uiIndexToData(first), uiIndexToData(second));
     }
 }
 
 void ProcessFlowTable::addItem()
 {
     int row = this->rowCount();
+
     insertRow(row);
     setFlowItem(uiIndexToData(row));
 
-//    updateLastIndexItem(uiIndexToData(row));
-//    excludeSelector(row, 0, this->currentRow(), 0);
-
+    this->selectRow(row);
 }
 
 void ProcessFlowTable::deleteItem(int id)
 {
     int uid = dataToUiIndex(id);
-    if(uid > 0){
-        this->takeItem(uid, 0);
-        this->removeCellWidget(uid, 0);
-        this->removeRow(uid);
+    if(uid < 1) return;
 
-        //TODO:
-//        if(rowCount() == uid){
-//            updateLastIndexItem(uid);
-//        }
+    this->takeItem(uid, 0);
+    this->removeCellWidget(uid, 0);
+    this->removeRow(uid);
 
-        this->selectRow(uid - 1);
-
-//        There may be no previous element
-//        excludeSelector(uid - 1, 0, uid - 1, 0);
-    }
+    this->selectRow(uid - 1);
 }
 
 void ProcessFlowTable::insertItem(int id)
 {
     int uid = dataToUiIndex(id);
-    if(uid > 0){
-        this->insertRow(uid);
-        replaceItem(id);
-        this->selectRow(uid);
-    }
+    if(uid < 1) return;
+
+    this->clearSelection();
+
+    this->insertRow(uid);
+    replaceItem(id);
+    this->selectRow(uid);
 }
 
 void ProcessFlowTable::swapItem(int before, int after)
 {
-    this->takeItem(dataToUiIndex(before), 0);
-    this->removeCellWidget(dataToUiIndex(before), 0);
-    setFlowItem(before);
-
+//    this->takeItem(dataToUiIndex(before), 0);
+//    this->removeCellWidget(dataToUiIndex(before), 0);
+//    setFlowItem(before);
+    replaceItem(before);
     replaceItem(after);
+
+    this->clearSelection();
+    this->selectRow(dataToUiIndex(after));
 
     //arrow TODO:
 //    int cache = editop->getCacheSize() - 1;
@@ -283,34 +277,32 @@ void ProcessFlowTable::swapItem(int before, int after)
 
 void ProcessFlowTable::replaceItem(int id)
 {
-    qDebug() << "EditorTab : replaceItem : " << id;
+    qDebug() << "[ProcessFlowTable::replaceItem] : " << id;
+
     this->takeItem(dataToUiIndex(id), 0);
     this->removeCellWidget(dataToUiIndex(id), 0);
+
     setFlowItem(id);
-
-//    if(dataToUiIndex(editop->getCacheSize()) == id){
-//        updateLastIndexItem(id);
-//    }
-
-//    excludeSelector(dataToUiIndex(id), 0, this->currentRow(), 0);
 }
 
 void ProcessFlowTable::selectChanged(int crow, int ccol, int prow, int pcol)
 {
-    Q_UNUSED(crow); Q_UNUSED(ccol); Q_UNUSED(prow); Q_UNUSED(pcol);
+    Q_UNUSED(ccol); Q_UNUSED(pcol);
+    if(crow == prow) return;
 
-    qDebug() << "FlowTable::selectChanged";
+    qDebug() << "[ProcessFlowTable::selectChanged]    rowpos : " << fixedCurrentRow();
     emit editop->ui_funcindexUpdate(fixedCurrentRow(), -1, EditOperator::SELECT, EditOperator::FLOWTABLE);
 }
 
 void ProcessFlowTable::onItemStatusChanged(int after, int before, int function, int sendfrom)
 {
+    if(sendfrom == EditOperator::FLOWTABLE) return;
+
 #ifdef QT_DEBUG
-    qDebug() << "FlowTable::onItemStatusChanged : index : " << after \
+    qDebug() << "[ProcessFlowTable::onItemStatusChanged] index : " << after \
              << " function : " << function;
 
 #endif
-    if(sendfrom == EditOperator::FLOWTABLE) return;
 
     switch (function) {
     case EditOperator::ADD:
@@ -324,7 +316,7 @@ void ProcessFlowTable::onItemStatusChanged(int after, int before, int function, 
         swapItem(before, after);
         break;
     case EditOperator::SELECT:
-        this->selectRow(dataToUiIndex(after));
+//        this->selectRow(dataToUiIndex(after));
         break;
     default:
         break;
@@ -440,38 +432,24 @@ void ProcessFlowTable::setFlowItem(int itemid)
     }
 
     //get type
-    QString type = list->at(0).at(1);
+    QString type = pxlg.fetch(ALL_TYPE, ATTR_NONE, list);
 
     //type local
     if(type == TYPE_LOCAL) return;
 
-    //set treeitem
-//    FlowCellWidget *cell = new FlowCellWidget();
+    if(type == TYPE_ALLINCLUDE){    setTempItem(list, itemid);
 
-    if(type == TYPE_ALLINCLUDE){
-        setTempItem(list, itemid);
+    }else if(type == TYPE_INFO){    setInfoItem(list, itemid);
 
-    }else if(type == TYPE_INFO){
-        setInfoItem(list, itemid);
+    }else if(type == TYPE_EXEC){    setNormalItem(list, itemid);
 
-    }else if(type == TYPE_EXEC){
-        setNormalItem(list, itemid);
+    }else if(type == TYPE_SEARCH){  setSearchItem(list, itemid);
 
-    }else if(type == TYPE_SEARCH){
-        setSearchItem(list, itemid);
+    }else if(type == TYPE_SCRIPT){  setPluginsItem(list, itemid);
 
-    }else if(type == TYPE_SCRIPT){
-        setPluginsItem(list, itemid);
-
-    }else if(type == TYPE_ANOTHER){
-        setOtherItem(list, itemid);
+    }else if(type == TYPE_ANOTHER){ setOtherItem(list, itemid);
 
     }
-
-//    this->setRowHeight(dataToUiIndex(itemid), cell->height());
-//    if(selector) cell->selectedItem();
-//    this->setCellWidget(dataToUiIndex(itemid), 0, cell);
-    //cell->show();
 
     delete list;
 }
@@ -484,43 +462,28 @@ void ProcessFlowTable::setAllFlowItem()
     QMutableListIterator<QList<QStringList> *> i(*list);
     QList<QStringList> *inner;
     QString type = "";
-//    FlowCellWidget *cell;
+
     int n = 0;
     while(i.hasNext()){
+
         inner = i.next();
 
         //get type
         type = pxlg.fetch(ALL_TYPE, ATTR_NONE, inner);
 
-        //set item
-//        cell = new FlowCellWidget();
+        if(type == TYPE_ALLINCLUDE){    setTempItem(inner, n);
 
-        if(type == TYPE_ALLINCLUDE){
-            setTempItem(inner, n);
+        }else if(type == TYPE_INFO){    setInfoItem(inner, n);
 
-        }else if(type == TYPE_INFO){
-            setInfoItem(inner, n);
+        }else if(type == TYPE_EXEC){    setNormalItem(inner, n);
 
-        }else if(type == TYPE_EXEC){
-            setNormalItem(inner, n);
+        }else if(type == TYPE_SEARCH){  setSearchItem(inner, n);
 
-        }else if(type == TYPE_SEARCH){
-            setSearchItem(inner, n);
+        }else if(type == TYPE_SCRIPT){  setPluginsItem(inner, n);
 
-        }else if(type == TYPE_SCRIPT){
-            setPluginsItem(inner, n);
+        }else if(type == TYPE_ANOTHER){ setOtherItem(inner, n);
 
-        }else if(type == TYPE_ANOTHER){
-            setOtherItem(inner, n);
         }
-
-//        if(type != TYPE_LOCAL){
-//            this->setRowHeight(dataToUiIndex(n), cell->height());
-//            this->setCellWidget(dataToUiIndex(n), 0, cell);
-
-//        }else{
-//            delete cell;
-//        }
 
         n++;
     }

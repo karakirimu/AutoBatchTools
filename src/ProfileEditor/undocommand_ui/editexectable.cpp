@@ -42,7 +42,7 @@ void EditExecTable::undo()
 
         pxlg.replaceElementList(m_tableindex, m_targetindex, m_oldstr, SKIP, m_cache);
 
-        setText(QObject::tr("Edit exec at %2 arg \'%1\'").arg(m_newstr).arg(QString::number(m_tableindex)) \
+        setText(QObject::tr("Edit exec at %1 arg \'%2\'").arg(QString::number(m_tableindex)).arg(m_newstr) \
                 + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_E_TABLEEDIT));
         break;
     case ProcessXmlListGenerator::TABLE_INSERT:
@@ -53,7 +53,7 @@ void EditExecTable::undo()
 
         if(m_tableindex < (rcount-1)) updateIndex(rcount-1);
 
-        setText(QObject::tr("Insert exec at %2 arg \'%1\'").arg(m_newstr).arg(QString::number(m_tableindex)) \
+        setText(QObject::tr("Insert exec at %1 arg \'%2\'").arg(QString::number(m_tableindex)).arg(m_newstr) \
                 + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_E_TABLEDEL));
         break;
     case ProcessXmlListGenerator::TABLE_DELETE:
@@ -91,7 +91,7 @@ void EditExecTable::redo()
         pxlg.replaceElementList(m_tableindex, m_targetindex, m_newstr, SKIP, m_cache);
 
         // this is only all update
-        setText(QObject::tr("Edit exec at %2 arg \'%1\'").arg(m_newstr).arg(QString::number(m_tableindex)) \
+        setText(QObject::tr("Edit exec at %1 arg \'%2\'").arg(QString::number(m_tableindex)).arg(m_newstr) \
                 + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_E_TABLEEDIT));
         break;
     case ProcessXmlListGenerator::TABLE_INSERT:
@@ -103,7 +103,7 @@ void EditExecTable::redo()
 
         if(m_tableindex < rcount) updateIndex(rcount);
 
-        setText(QObject::tr("Insert exec at %2 arg \'%1\'").arg(m_newstr).arg(QString::number(m_tableindex)) \
+        setText(QObject::tr("Insert exec at %1 arg \'%2\'").arg(QString::number(m_tableindex).arg(m_newstr)) \
                 + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_E_TABLEINS));
         break;
     case ProcessXmlListGenerator::TABLE_DELETE:
