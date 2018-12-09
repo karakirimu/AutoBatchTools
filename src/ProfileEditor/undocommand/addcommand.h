@@ -17,7 +17,7 @@ public:
 
 private:
     int m_targetindex;
-    QList<QStringList> *m_added;
+//    QList<QStringList> *m_added;
     QList<QStringList> m_addcopy;
     QList<QList<QStringList> *> *m_cache;
 };

@@ -16,11 +16,6 @@
 
 #include <editlocalvartable.h>
 #include <edittabcommand.h>
-//#include <editvaluecommand.h>
-//#include <edittextcommand.h>
-//#include <editcheckcommand.h>
-//#include <editfcomboboxcommand.h>
-//#include <edittablecommand.h>
 
 //checkbox operation
 #include <checkeditallowinput.h>
@@ -51,8 +46,6 @@
 //table operation
 #include <swapexectable.h>
 #include <swapplugintable.h>
-//old
-//#include <swaptablecommand.h>
 #include <editexectable.h>
 #include <editplugintable.h>
 
@@ -67,7 +60,6 @@
 //direct data operation
 #include <addcommand.h>
 #include <deletecommand.h>
-//#include <editcommand.h>
 #include <insertcommand.h>
 #include <swapcommand.h>
 
@@ -82,9 +74,6 @@ class EditOperator : public QObject
 public:
     explicit EditOperator(QObject *parent = nullptr);
     ~EditOperator();
-
-    //data edited or not
-//    bool isEdited();
 
     bool read(int id, QList<QStringList> *list);
     void readAll(QList<QList<QStringList> *> *list);

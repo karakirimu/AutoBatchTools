@@ -45,47 +45,47 @@ bool ProcessFlowTable::eventFilter(QObject *obj, QEvent *event)
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         switch (keyEvent->key())
          {
-           case Qt::Key_Return:
-           case Qt::Key_Enter:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-               addAction();
-             break;
+//           case Qt::Key_Return:
+//           case Qt::Key_Enter:
+//             if (keyEvent->modifiers() & Qt::ControlModifier)
+//               addAction();
+//             break;
 
-           case Qt::Key_Delete:
-             deleteAction();
-             break;
+//           case Qt::Key_Delete:
+//             deleteAction();
+//             break;
 
            case Qt::Key_Up:
-             if (keyEvent->modifiers() & Qt::ControlModifier){
-                 upAction();
-             }else{
+//             if (keyEvent->modifiers() & Qt::ControlModifier){
+//                 upAction();
+//             }else{
                  if(this->currentRow() != 0)
                      selectRow(this->currentRow() - 1);
-             }
+//             }
              break;
 
            case Qt::Key_Down:
-             if (keyEvent->modifiers() & Qt::ControlModifier){
-                 downAction();
-             }else{
+//             if (keyEvent->modifiers() & Qt::ControlModifier){
+//                 downAction();
+//             }else{
                  if(this->rowCount() - 1 != this->currentRow())
                      selectRow(this->currentRow() + 1);
-             }
+//             }
             break;
-           case Qt::Key_X:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 cutAction();
-             break;
+//           case Qt::Key_X:
+//             if (keyEvent->modifiers() & Qt::ControlModifier)
+//                 cutAction();
+//             break;
 
-           case Qt::Key_C:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 copyAction();
-             break;
+//           case Qt::Key_C:
+//             if (keyEvent->modifiers() & Qt::ControlModifier)
+//                 copyAction();
+//             break;
 
-           case Qt::Key_V:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 pasteAction();
-             break;
+//           case Qt::Key_V:
+//             if (keyEvent->modifiers() & Qt::ControlModifier)
+//                 pasteAction();
+//             break;
            case Qt::Key_R:
              if (keyEvent->modifiers() & Qt::ControlModifier)
                  reloadAction();
@@ -103,7 +103,7 @@ bool ProcessFlowTable::eventFilter(QObject *obj, QEvent *event)
 void ProcessFlowTable::addAction()
 {
     editop->addAction();
-    addItem();
+//    addItem();
 
     int cache = editop->getCacheSize() - 1;
     emit editop->ui_funcindexUpdate(cache, -1, EditOperator::ADD, EditOperator::FLOWTABLE);
@@ -115,7 +115,7 @@ void ProcessFlowTable::deleteAction()
     int cur = fixedCurrentRow();
     if(cur > 1){
         editop->deleteAction(cur);
-        deleteItem(cur);
+//        deleteItem(cur);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::FLOWTABLE);
     }
 }
@@ -125,7 +125,7 @@ void ProcessFlowTable::cutAction()
     int cur = fixedCurrentRow();
     if(cur > 1){
         editop->cutAction(cur);
-        deleteItem(cur);
+//        deleteItem(cur);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::FLOWTABLE);
     }
 }
@@ -144,7 +144,7 @@ void ProcessFlowTable::pasteAction()
     if(cur > 0){
         cur++;
         editop->pasteAction(cur);
-        insertItem(cur);
+//        insertItem(cur);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::INSERT, EditOperator::FLOWTABLE);
 
     }
@@ -155,7 +155,7 @@ void ProcessFlowTable::upAction()
     int cur = fixedCurrentRow();
     if(cur > 2){
         editop->swapAction(cur, cur - 1);
-        swapItem(cur, cur - 1);
+//        swapItem(cur, cur - 1);
         emit editop->ui_funcindexUpdate(cur - 1, cur, EditOperator::SWAP, EditOperator::FLOWTABLE);
     }
 }
@@ -165,7 +165,7 @@ void ProcessFlowTable::downAction()
     int cur = fixedCurrentRow();
     if(cur < rowCount()){
         editop->swapAction(cur, cur + 1);
-        swapItem(cur, cur + 1);
+//        swapItem(cur, cur + 1);
         emit editop->ui_funcindexUpdate(cur + 1, cur, EditOperator::SWAP, EditOperator::FLOWTABLE);
     }
 }
@@ -176,9 +176,6 @@ void ProcessFlowTable::reloadAction()
 
     //can't clear, delete all objects
     while(this->rowCount() > 0){
-//        this->cellWidget(0, 0);
-//        this->removeCellWidget(0,0);
-//        this->removeCellWidget(0,1);
         this->removeRow(0);
     }
 
@@ -220,7 +217,7 @@ void ProcessFlowTable::updateIndex(QString operation)
         int first = static_cast<QString>(sep.at(0)).toInt();
         int second = static_cast<QString>(sep.at(1)).toInt();
 
-        swapItem(uiIndexToData(first), uiIndexToData(second));
+        swapItem(first, second);
     }
 }
 
@@ -260,24 +257,18 @@ void ProcessFlowTable::insertItem(int id)
 
 void ProcessFlowTable::swapItem(int before, int after)
 {
-//    this->takeItem(dataToUiIndex(before), 0);
-//    this->removeCellWidget(dataToUiIndex(before), 0);
-//    setFlowItem(before);
+    this->clearSelection();
+
     replaceItem(before);
     replaceItem(after);
 
-    this->clearSelection();
     this->selectRow(dataToUiIndex(after));
 
-    //arrow TODO:
-//    int cache = editop->getCacheSize() - 1;
-//    if(cache == after)  updateLastIndexItem(after);
-//    if(cache == before) updateLastIndexItem(before);
 }
 
 void ProcessFlowTable::replaceItem(int id)
 {
-    qDebug() << "[ProcessFlowTable::replaceItem] : " << id;
+    qDebug() << "[ProcessFlowTable::replaceItem] rowpos " << id;
 
     this->takeItem(dataToUiIndex(id), 0);
     this->removeCellWidget(dataToUiIndex(id), 0);
@@ -296,10 +287,18 @@ void ProcessFlowTable::selectChanged(int crow, int ccol, int prow, int pcol)
 
 void ProcessFlowTable::onItemStatusChanged(int after, int before, int function, int sendfrom)
 {
-    if(sendfrom == EditOperator::FLOWTABLE) return;
+    Q_UNUSED(sendfrom);
+//    if(sendfrom == EditOperator::FLOWTABLE){
+//        switch (function) {
+//        case EditOperator::SWAP:
+//            swapItem(before, after);
+//            break;
+//        }
+//        return;
+//    }
 
 #ifdef QT_DEBUG
-    qDebug() << "[ProcessFlowTable::onItemStatusChanged] index : " << after \
+    qDebug() << "[ProcessFlowTable::onItemStatusChanged] rowpos : " << after \
              << " function : " << function;
 
 #endif
@@ -316,28 +315,11 @@ void ProcessFlowTable::onItemStatusChanged(int after, int before, int function, 
         swapItem(before, after);
         break;
     case EditOperator::SELECT:
-//        this->selectRow(dataToUiIndex(after));
         break;
     default:
         break;
     }
 }
-
-//void ProcessFlowTable::excludeSelector(int crow, int ccol, int prow, int pcol)
-//{
-//    FlowCellWidget *cell;
-
-//    //cell color change
-//    //unselect prev
-//    cell = qobject_cast<FlowCellWidget *>(this->cellWidget(prow, pcol));
-//    if(cell != nullptr) cell->unSelectedItem();
-
-//    cell = qobject_cast<FlowCellWidget *>(this->cellWidget(crow, ccol));
-//    if(cell != nullptr) cell->selectedItem();
-
-//    //table select change
-//    this->selectRow(crow);
-//}
 
 int ProcessFlowTable::fixedCurrentRow()
 {
@@ -354,7 +336,7 @@ int ProcessFlowTable::uiIndexToData(int id)
     return (id > 0)? id + 1 : 0;
 }
 
-//void FlowTable::mousePressEvent(QMouseEvent *event)
+//void ProcessFlowTable::mousePressEvent(QMouseEvent *event)
 //{
 //    QModelIndexList list = this->selectedIndexes();
 
@@ -537,7 +519,7 @@ void ProcessFlowTable::setInfoItem(QList<QStringList> *list, int dataid)
 //    tmp.append(QString("[description]: %1\n").arg(pxlg.fetch(I_DESCRIPTION, ATTR_NONE, list)));
 
     QColor color;
-    color.setNamedColor(tr("#e8e8e8"));
+    color.setNamedColor(tr("#f8f8f8"));
 
     this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(tmp));
 
@@ -666,15 +648,3 @@ void ProcessFlowTable::setOtherItem(QList<QStringList> *list, int dataid)
     item->setTextColor(QColor(Qt::black));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 }
-
-//void ProcessFlowTable::updateLastIndexItem(int lastindex)
-//{
-//    FlowCellWidget *cell = qobject_cast<FlowCellWidget *>(this->cellWidget(dataToUiIndex(lastindex), 0));
-//    if(cell != nullptr) cell->hideArrow();
-
-//    if((lastindex - 1) > 1){
-//        cell = qobject_cast<FlowCellWidget *>(this->cellWidget(dataToUiIndex(lastindex - 1), 0));
-//        if(cell != nullptr) cell->showArrow();
-//    }
-//}
-

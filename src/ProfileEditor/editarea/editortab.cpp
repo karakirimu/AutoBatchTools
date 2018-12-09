@@ -84,7 +84,6 @@ void EditorTab::setEditOperator(EditOperator *op)
     autoonly_4 = otherwidget->findChild<QCheckBox *>("autoOnlyCheckBox_4");
 
     //index update
-//    connect(editop, &EditOperator::ui_selectindexUpdate, this, &EditorTab::setCombinedDataList);
     connect(editop, &EditOperator::ui_funcindexUpdate, this, &EditorTab::setCombinedDataList);
 
 
@@ -218,7 +217,7 @@ void EditorTab::setNormalDataList(QList<QStringList> *list)
 
     ctablenormal->setRowCount(counter);
     for(int i = 0; i < counter; i++){
-        ctablenormal->setItem(i, 0, new QTableWidgetItem(list->at(cmdfirst + i).at(1)));
+        ctablenormal->replaceItem(i, list->at(cmdfirst + i).at(1));
     }
 
     autoonly->setChecked(VariantConverter::stringToBool( \
@@ -264,10 +263,10 @@ void EditorTab::setPluginDataList(QList<QStringList> *list)
 
     int counter = xgen.fetch(PL_CMDARGCOUNT,ATTR_NONE, list).toInt();
     int ecmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
-    ctableplugins->setRowCount(counter);
 
+    ctableplugins->setRowCount(counter);
     for(int i = 0; i < counter; i++){
-        ctableplugins->setItem(i, 0, new QTableWidgetItem(list->at(ecmdfirst + i).at(1)));
+        ctableplugins->replaceItem(i, list->at(ecmdfirst + i).at(1));
     }
 
     autoonly_3->setChecked(VariantConverter::stringToBool( \
@@ -546,5 +545,5 @@ void EditorTab::openSavefile()
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Search file"),\
                                          QDir::currentPath(), "File (*.*)");
 
-    outputLineEdit->setText(fileName);
+    if(fileName != "") outputLineEdit->setText(fileName);
 }

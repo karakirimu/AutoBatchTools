@@ -26,14 +26,8 @@ EditOperator::~EditOperator()
         }
     }
 
-//    delete undostack;
     delete cache;
 }
-
-//bool EditOperator::isEdited()
-//{
-//    return undostack->count() > 0 ? true : false;
-//}
 
 bool EditOperator::read(int id, QList<QStringList> *list)
 {
@@ -66,28 +60,21 @@ void EditOperator::addAction()
 
     AddCommand *com = new AddCommand(cache->count(), &xmlstruct, cache);
     undostack->push(com);
-//    emit edited(isEdited());
-//    emit editindexUpdate(cache->count() - 1);
+
 }
 
 void EditOperator::insertAction(int id, QList<QStringList> *xmlstruct)
 {
-//    cache->insert(id, xmlstruct);
-
     InsertCommand *com = new InsertCommand(id,xmlstruct,cache);
     undostack->push(com);
-//    emit edited(isEdited());
-//    emit editindexUpdate(id);
+
 }
 
 void EditOperator::deleteAction(int id)
 {
     DeleteCommand *com = new DeleteCommand(id,cache->at(id), cache);
-//    cache->removeAt(id);
-
     undostack->push(com);
-//    emit edited(isEdited());
-//    emit editindexUpdate(id);
+
 }
 
 
@@ -432,7 +419,7 @@ void EditOperator::swapAction(int before, int after)
 void EditOperator::newAction()
 {
 #ifdef QT_DEBUG
-    qDebug() << endl << "void EditOperator::newAction()";
+    qDebug() << endl << "[EditOperator::newAction]";
 #endif
 
     reset();
@@ -451,10 +438,8 @@ void EditOperator::newAction()
     //temp loadfile change
     loadfile = autosavefile;
     loadcache(XML_MIN);
-//    loadfile = "";
 
     emit loadfileChanged(autosavefile);
-//    emit edited(false);
 }
 
 void EditOperator::openAction(QString filepath)
@@ -477,7 +462,6 @@ void EditOperator::openAction(QString filepath)
     loadcache(0);
 
     emit loadfileChanged(loadfile);
-//    emit edited(false);
 }
 
 void EditOperator::saveAction(QString filepath)
@@ -496,7 +480,6 @@ void EditOperator::saveAction(QString filepath)
     loadfile = filepath;
 
     emit loadfileChanged(loadfile);
-//    emit edited(false);
 }
 
 void EditOperator::exportAction(QString filepath)
@@ -541,7 +524,6 @@ void EditOperator::exportAction(QString filepath)
     delete xgen;
     delete tempcache;
 
-//    emit edited(false);
 }
 
 void EditOperator::abortAction()
@@ -617,7 +599,7 @@ void EditOperator::loadcache(int amount)
 
 //    loadedxmlid = i - 1;
 #ifdef QT_DEBUG
-    qDebug() << endl << "void EditOperator::loadcache(int amount)";
+    qDebug() << endl << "[EditOperator::loadcache] Timer start";
     QTime time;
     time.start();
 #endif
@@ -626,7 +608,7 @@ void EditOperator::loadcache(int amount)
     loadedxmlid = updater->count() - 1;
 
 #ifdef QT_DEBUG
-    qDebug() << "elapsed: " << time.elapsed() << "ms";
+    qDebug() << "[EditOperator::loadcache] elapsed: " << time.elapsed() << "ms";
 #endif
 
     delete updater;
@@ -664,7 +646,7 @@ int EditOperator::getCacheSize() const
 
 int EditOperator::getCurrentCommandType()
 {
-    qDebug() << "stack : " << undostack->index();
+    qDebug() << "[EditOperator::getCurrentCommandType] stack : " << undostack->index();
     return undostack->command(undostack->index())->id();
 }
 
@@ -682,7 +664,7 @@ void EditOperator::timerEvent(QTimerEvent *event)
 {
     if(event->timerId() == timerid){
         //autosave commands
-        qDebug() << "EditOperator::save()";
+        qDebug() << "[EditOperator::timerEvent] save()";
         save();
     }
 }

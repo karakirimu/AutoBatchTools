@@ -203,22 +203,23 @@ void ProcessXmlListGenerator::createNewList(QList<QStringList> *newlist)
 }
 
 ///DEPENDS_XML
-void ProcessXmlListGenerator::createLocalList(QList<QStringList> *newlist, QStringList *list)
-{
-    int rcount = static_cast<QString>(list->at(0)).toInt() * 2;
-    newlist->append((QStringList() << ALL_TYPE << TYPE_LOCAL));
-    newlist->append((QStringList() << L_VAR_COUNT << list->at(0)));
-    for(int i = 0; i < rcount; i+=2){
-        newlist->append((QStringList() << L_VARIANT
-                         << list->at(i + 1) << ATTR_LOCALVALUE << list->at(i + 2)));
-    }
-}
+//void ProcessXmlListGenerator::createLocalList(QList<QStringList> *newlist, QStringList *list)
+//{
+//    int rcount = static_cast<QString>(list->at(0)).toInt() * 2;
+//    newlist->append((QStringList() << ALL_TYPE << TYPE_LOCAL));
+//    newlist->append((QStringList() << L_VAR_COUNT << list->at(0)));
+//    for(int i = 0; i < rcount; i+=2){
+//        newlist->append((QStringList() << L_VARIANT
+//                         << list->at(i + 1) << ATTR_LOCALVALUE << list->at(i + 2)));
+//    }
+//}
 
 ///DEPENDS_XML
 void ProcessXmlListGenerator::createSeparateList(QList<QStringList> *ctos)
 {
     //get selected index
     int index = static_cast<QString>(ctos->at(1).at(1)).toInt();
+//    int index = static_cast<QString>(fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, ctos)).toInt();
 
     //remove till first header
     while(!ctos->empty()){
@@ -268,12 +269,12 @@ int ProcessXmlListGenerator::getType(QString type)
     return -1;
 }
 
-QStringList ProcessXmlListGenerator::createCmdExecElement(QString value, int index)
+QStringList ProcessXmlListGenerator::createExecElement(QString value, int index)
 {
     return QStringList() << E_CMD << value << ATTR_POSNUM << QString::number(index);
 }
 
-QStringList ProcessXmlListGenerator::createCmdPluginElement(QString value, int index)
+QStringList ProcessXmlListGenerator::createPluginElement(QString value, int index)
 {
     return QStringList() << PL_CMD << value << ATTR_POSNUM << QString::number(index);
 }
@@ -398,6 +399,9 @@ void ProcessXmlListGenerator::replaceElementList(int tableindex, int targetindex
 void ProcessXmlListGenerator::replaceElementList(int tableindex, int targetindex, QStringList replace, \
                                                  int skip, QList<QList<QStringList> *> *cache)
 {
+    qDebug() << "[ProcessXmlListGenerator::replaceElementList] table : " << tableindex \
+             << "target " << targetindex;
+
     QStringList alist = cache->at(targetindex)->at(tableindex + skip);
     alist.replace(1, replace.at(0));
     if(replace.count() > 2) alist.replace(3, replace.at(1));

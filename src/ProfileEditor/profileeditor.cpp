@@ -47,8 +47,6 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     ui->editorTab->setConnection();
 
     //provide operator
-//    ui->runTreeWidget->setEditOperator(editop);
-//    ui->graphicsView->setEditOperator(editop);
     ui->flowTableWidget->setEditOperator(editop);
     ui->variantTableWidget->setEditOperator(editop);
     ui->editorTab->setEditOperator(editop);
@@ -57,10 +55,6 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     //test
 //    ui->graphicsView->hide();
 //    qDebug() << "profileeditor" << geometry().center();
-
-    //update tree position
-//    connect(editop, &EditOperator::ui_selectindexUpdate, this, &ProfileEditor::setTreerowpos_select);
-//    connect(editop, &EditOperator::ui_funcindexUpdate, this, &ProfileEditor::setTreerowpos_update);
 
     //provide function object
     ui->console->setMultiTask(mlTask);
@@ -153,10 +147,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //end-----------------------------------------------------------------------------------------------
 
-//    connect(editop, &EditOperator::ui_selectindexUpdate, this, &ProfileEditor::itemChangedAction);
     connect(editop, &EditOperator::ui_funcindexUpdate, this, &ProfileEditor::itemChangedAction);
-
-//    connect(ui->graphicsView, &GraphicArea::selectChangedAction, this, &ProfileEditor::itemChangedAction);
 
     //Title * flag
 //    connect(editop, &EditOperator::edited, this, &ProfileEditor::onFileEdited);
@@ -213,7 +204,7 @@ void ProfileEditor::openAction()
     // open file
     QString fileName = fdialog->getOpenFileName(this,\
                                                 tr("Open file"), settings.value("profileeditor/lastopened",\
-                                                    QDir::currentPath()).toString(), tr("Profile (*.xml *.apro)"));
+                                                    QDir::currentPath()).toString(), "Profile (*.xml *.apro)");
 
     if(fileName != ""){
         settings.setValue("profileeditor/lastopened", QFileInfo(fileName).canonicalPath());
@@ -234,7 +225,7 @@ bool ProfileEditor::saveAction()
             fdialog->getSaveFileName(this,\
                                      tr("Save Edit file"),\
                                      settings.value("profileeditor/lastsaved", QDir::currentPath()).toString(),\
-                                     tr("APRO Files (*.apro)"));
+                                     "APRO Files (*.apro)");
 
     if(fileName != ""){
         settings.setValue("profileeditor/lastsaved", QFileInfo(fileName).canonicalPath());
@@ -260,7 +251,6 @@ void ProfileEditor::undoAction()
     // +3 means string of " ^(", -1 means string of ")";
     QString updop = text.mid(lastindex + 3, text.length() - lastindex - 4);
 
-//    ui->runTreeWidget->updateIndex(updop);
     ui->innerStackedWidget->updateIndex(updop);
     ui->flowTableWidget->updateIndex(updop);
     ui->variantTableWidget->updateIndex(updop);
@@ -282,7 +272,6 @@ void ProfileEditor::redoAction()
     // +3 means string of " ^(", -1 means string of ")";
     QString updop = text.mid(lastindex + 3, text.length() - lastindex - 4);
 
-//    ui->runTreeWidget->updateIndex(updop);
     ui->innerStackedWidget->updateIndex(updop);
     ui->flowTableWidget->updateIndex(updop);
     ui->variantTableWidget->updateIndex(updop);
@@ -413,13 +402,15 @@ void ProfileEditor::onTitleChanged(QString newload)
         newtitle = info.fileName();
     }
 
-    setWindowTitle(newtitle + tr(" - ProfileEditor"));
+    setWindowTitle(newtitle + " - ProfileEditor");
 
 }
 
 void ProfileEditor::onFileEdited(bool edited)
 {
     QString title = this->windowTitle();
+//    editop->getUndostack()->index()
+
     lastedited = edited;
     if(edited){
         //add * first

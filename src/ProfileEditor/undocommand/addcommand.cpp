@@ -7,26 +7,27 @@ AddCommand::AddCommand(const int &targetindex
     :QUndoCommand(parent)
 {
     m_targetindex = targetindex;
-    m_added = added;
+//    m_added = added;
     m_cache = cache;
-    m_addcopy.append(*m_added);
+    m_addcopy.append(*added);
 }
 
 void AddCommand::undo()
 {
     if(m_cache->isEmpty()) return;
-    delete m_added;
-    m_cache->removeLast();
 
-    setText(QString("Add item at %1 ").arg(m_targetindex) \
-            + QString("^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_DELETE));
+//    delete m_added;
+    m_cache->removeAt(m_targetindex);
+
+    setText(QObject::tr("Add item at %1").arg(m_targetindex) \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_DELETE));
 }
 
 void AddCommand::redo()
 {
-    m_added = new QList<QStringList>(m_addcopy);
-    m_cache->append(m_added);
+//    m_added = ;
+    m_cache->append(new QList<QStringList>(m_addcopy));
 
-    setText(QString("Add item at %1 ").arg(m_targetindex) \
-            + QString("^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_ADD));
+    setText(QObject::tr("Add item at %1").arg(m_targetindex) \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_ADD));
 }

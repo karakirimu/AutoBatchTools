@@ -19,7 +19,7 @@ void SwapCommand::undo()
     m_cache->replace(m_beforeindex, tmp);
 
     setText(QString("Swap item at %1 and %2").arg(m_beforeindex).arg(m_afterindex) \
-            + QString(" ^(%1,%2,%3)").arg(m_beforeindex).arg(m_afterindex).arg(UNDOREDO_SWAP));
+            + QString(" ^(%1,%2,%3)").arg(m_afterindex).arg(m_beforeindex).arg(UNDOREDO_SWAP));
 }
 
 void SwapCommand::redo()

@@ -17,7 +17,7 @@ public:
 
 private:
     int m_targetindex;
-    QList<QStringList> *m_deleted;
+//    QList<QStringList> *m_deleted;
     QList<QStringList> m_delcopy;
     QList<QList<QStringList> *> *m_cache;
 };

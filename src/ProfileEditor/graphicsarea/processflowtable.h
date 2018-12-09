@@ -18,6 +18,9 @@ public:
 
     void updateIndex(QString operation);
 
+//protected:
+//    void mousePressEvent(QMouseEvent *event);
+
 private slots:
     bool eventFilter(QObject *obj, QEvent *event);
 

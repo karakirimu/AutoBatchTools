@@ -31,17 +31,17 @@ void SwapPluginTable::undo()
     case 1:
         //UP
         setText(QObject::tr("Up plugin arg '%1'").arg(temp.at(1)) \
-                + QString(" ^(%1,%2,%3)").arg(m_indexbefore).arg(m_indexafter).arg(UNDOREDO_PL_TABLESWAP));
+                + QString(" ^(%1,%2,%3)").arg(m_indexafter).arg(m_indexbefore).arg(UNDOREDO_PL_TABLESWAP));
         break;
     case -1:
         //DOWN
         setText(QObject::tr("Down plugin arg '%1'").arg(temp.at(1)) \
-                + QString(" ^(%1,%2,%3)").arg(m_indexbefore).arg(m_indexafter).arg(UNDOREDO_PL_TABLESWAP));
+                + QString(" ^(%1,%2,%3)").arg(m_indexafter).arg(m_indexbefore).arg(UNDOREDO_PL_TABLESWAP));
         break;
     default:
         //SWAP
         setText(QObject::tr("Swap plugin arg '%1' at %2 to %3").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter) \
-                + QString(" ^(%1,%2,%3)").arg(m_indexbefore).arg(m_indexafter).arg(UNDOREDO_PL_TABLESWAP));
+                + QString(" ^(%1,%2,%3)").arg(m_indexafter).arg(m_indexbefore).arg(UNDOREDO_PL_TABLESWAP));
         break;
     }
 }

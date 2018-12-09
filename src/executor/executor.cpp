@@ -340,7 +340,7 @@ bool Executor::runProcess()
     connect(work->process, &QIODevice::readyRead, this, &Executor::loadNormalStandardOutput);
 
     #ifdef QT_DEBUG
-        qDebug() << "Executor:: execlist count" << execlist->count();
+        qDebug() << "[Executor::runProcess] execlist count :" << execlist->count();
     #endif
 
     //Read profile information (Info data must index 0)
@@ -970,7 +970,7 @@ int Executor::getReadType(QString type)
 void Executor::resetdata()
 {
 #ifdef QT_DEBUG
-    qDebug() << "Executor::resetdata";
+    qDebug() << "[Executor::resetdata]";
 #endif
 
     //reset flags

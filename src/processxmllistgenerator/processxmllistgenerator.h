@@ -5,6 +5,9 @@
 #include <QObject>
 #include <QHash>
 #include <QDateTime>
+
+#include <QDebug>
+
 //#include "processxmlelement.h"
 
 /**
@@ -35,42 +38,6 @@
  * -           *
  * -           *
  * - They follow to the end by turns.
- *
- * QStringList structure createNormalList
- * 0    :only_bool   :
- * 1    :timeout_bool:
- * 2    :timeout_ms  :
- * 3    :cmdc_counts :
- * 4    :cmd_text    :
- * -          *
- * -          *
- * -          *
- * - it follows to the end.
- *
- * QStringList structure createSearchList
- * 0    :only_bool   :
- * 1    :name_text   :
- * 2    :name_id_data:
- * 3    :sep_text    :
- * 4    :variant_text:
- * 5    :output_text :
- * 6    :radio_data  :
- *
- * QStringList structure createScriptList
- * 0    :only_bool  :
- * 1    :name_text  :
- * 2    :var_text   :
- * 3    :cmdc_counts:
- * 4    :cmd_text   :
- * -          *
- * -          *
- * -          *
- * - it follows to the end.
- *
- * QStringList structure createOtherList
- * 0    :only_bool   :
- * 1    :name_text   :
- * 2    :file_text   :
  *
  */
 
@@ -209,7 +176,7 @@ public:
     void createNewList(QList<QStringList> *newlist);
 
     //list create function
-    void createLocalList(QList<QStringList> *newlist, QStringList *list);
+//    void createLocalList(QList<QStringList> *newlist, QStringList *list);
 
     //change combined structure to separated structure
     void createSeparateList(QList<QStringList> *ctos);
@@ -221,8 +188,8 @@ public:
     int getType(QString type);
 
     //for change inner table structures
-    static QStringList createCmdExecElement(QString value, int index);
-    static QStringList createCmdPluginElement(QString value, int index);
+    static QStringList createExecElement(QString value, int index);
+    static QStringList createPluginElement(QString value, int index);
     static QStringList createVariantElement(QStringList variants);
 
     int fetchCmdFirstPos(QString tag, const QList<QStringList> *loadbase);

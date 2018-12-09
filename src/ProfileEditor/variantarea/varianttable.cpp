@@ -40,6 +40,7 @@ void VariantTable::setEditOperator(EditOperator *op)
 void VariantTable::updateIndex(QString operation)
 {
     QStringList sep = operation.split(",");
+    if(sep.count() < 2) return;
 
     if(sep.at(1) == UNDOREDO_L_TABLEADD){
         //exectableadd

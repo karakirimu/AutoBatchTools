@@ -13,7 +13,7 @@ class TakeLineDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit TakeLineDialog(QStringList *current, QWidget *parent = 0);
+    explicit TakeLineDialog(QStringList *current, QWidget *parent = nullptr);
     ~TakeLineDialog();
 
     QStringList getargs();

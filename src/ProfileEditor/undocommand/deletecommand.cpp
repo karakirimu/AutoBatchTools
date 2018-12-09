@@ -7,7 +7,7 @@ DeleteCommand::DeleteCommand(const int &targetindex
     :QUndoCommand(parent)
 {
     m_targetindex = targetindex;
-    m_deleted = deleted;
+//    m_deleted = deleted;
     m_delcopy.append(*deleted);
     m_cache = cache;
 
@@ -15,20 +15,20 @@ DeleteCommand::DeleteCommand(const int &targetindex
 
 void DeleteCommand::undo()
 {
-    m_deleted = new QList<QStringList>(m_delcopy);
-    m_cache->insert(m_targetindex, m_deleted);
+//    m_deleted = new QList<QStringList>(m_delcopy);
+    m_cache->insert(m_targetindex, new QList<QStringList>(m_delcopy));
 
-    setText(QString("Remove item at %1 ").arg(m_targetindex) \
-            + QString("^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_INSERT));
+    setText(QObject::tr("Remove item at %1").arg(m_targetindex) \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_INSERT));
 }
 
 void DeleteCommand::redo()
 {
     if(m_cache->isEmpty()) return;
 
-    delete m_deleted;
+//    delete m_deleted;
     m_cache->removeAt(m_targetindex);
 
-    setText(QString("Remove item at %1 ").arg(m_targetindex) \
-            + QString("^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_DELETE));
+    setText(QObject::tr("Remove item at %1").arg(m_targetindex) \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_DELETE));
 }
