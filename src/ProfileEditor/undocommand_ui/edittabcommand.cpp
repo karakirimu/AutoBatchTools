@@ -18,15 +18,15 @@ EditTabCommand::EditTabCommand(const int &targetindex
         m_oldid = pxlg.getType(pxlg.fetch(ALL_TYPE, ATTR_NONE, m_cache->at(m_targetindex)));
     }
 
-    m_oldauto = pxlg.fetch(ALL_TYPE, ATTR_ONLY_SCHEDULER, m_cache->at(m_targetindex));
+//    m_oldauto = pxlg.fetch(ALL_TYPE, ATTR_ONLY_SCHEDULER, m_cache->at(m_targetindex));
 
-    selectIndex(m_newid);
+//    selectIndex(m_newid);
 
 }
 
 void EditTabCommand::undo()
 {    
-    pxlg.replaceElementList(ALL_TYPE, ATTR_ONLY_SCHEDULER, m_targetindex, m_oldauto, m_cache);
+//    pxlg.replaceElementList(ALL_TYPE, ATTR_ONLY_SCHEDULER, m_targetindex, m_oldauto, m_cache);
 
     if(m_cache->at(m_targetindex)->at(1).at(0) == TE_STACKEDWIDGET_POSITION){
         //temp index
@@ -38,7 +38,7 @@ void EditTabCommand::undo()
 
 void EditTabCommand::redo()
 {
-    pxlg.replaceElementList(ALL_TYPE, ATTR_ONLY_SCHEDULER, m_targetindex, m_newauto, m_cache);
+//    pxlg.replaceElementList(ALL_TYPE, ATTR_ONLY_SCHEDULER, m_targetindex, m_newauto, m_cache);
 
     if(m_cache->at(m_targetindex)->at(1).at(0) == TE_STACKEDWIDGET_POSITION){
         //temp index
@@ -54,22 +54,22 @@ int EditTabCommand::id() const
     return pxg.getId(TE_STACKEDWIDGET_POSITION);
 }
 
-void EditTabCommand::selectIndex(int index)
-{
-    switch (index) {
-    case ProcessXmlListGenerator::NORMAL:
-        m_newauto = pxlg.fetch(ALL_TYPE, ATTR_NONE, m_cache->at(m_targetindex), ProcessXmlListGenerator::NORMAL);
-        break;
-    case ProcessXmlListGenerator::SEARCH:
-        m_newauto = pxlg.fetch(ALL_TYPE, ATTR_NONE, m_cache->at(m_targetindex), ProcessXmlListGenerator::SEARCH);
-        break;
-    case ProcessXmlListGenerator::EXTRAFUNC:
-        m_newauto = pxlg.fetch(ALL_TYPE, ATTR_NONE, m_cache->at(m_targetindex), ProcessXmlListGenerator::EXTRAFUNC);
-        break;
-    case ProcessXmlListGenerator::OTHER:
-        m_newauto = pxlg.fetch(ALL_TYPE, ATTR_NONE, m_cache->at(m_targetindex), ProcessXmlListGenerator::OTHER);
-        break;
-    default:
-        break;
-    }
-}
+//void EditTabCommand::selectIndex(int index)
+//{
+//    switch (index) {
+//    case ProcessXmlListGenerator::NORMAL:
+//        m_newauto = pxlg.fetch(ALL_TYPE, ATTR_NONE, m_cache->at(m_targetindex), ProcessXmlListGenerator::NORMAL);
+//        break;
+//    case ProcessXmlListGenerator::SEARCH:
+//        m_newauto = pxlg.fetch(ALL_TYPE, ATTR_NONE, m_cache->at(m_targetindex), ProcessXmlListGenerator::SEARCH);
+//        break;
+//    case ProcessXmlListGenerator::EXTRAFUNC:
+//        m_newauto = pxlg.fetch(ALL_TYPE, ATTR_NONE, m_cache->at(m_targetindex), ProcessXmlListGenerator::EXTRAFUNC);
+//        break;
+//    case ProcessXmlListGenerator::OTHER:
+//        m_newauto = pxlg.fetch(ALL_TYPE, ATTR_NONE, m_cache->at(m_targetindex), ProcessXmlListGenerator::OTHER);
+//        break;
+//    default:
+//        break;
+//    }
+//}

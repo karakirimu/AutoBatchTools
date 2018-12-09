@@ -18,13 +18,13 @@ public:
     int id() const override;
 
 private:
-    void selectIndex(int index);
+//    void selectIndex(int index);
 
     int m_targetindex;
     int m_oldid;
-    QString m_oldauto;
+//    QString m_oldauto;
     int m_newid;
-    QString m_newauto;
+//    QString m_newauto;
     QList<QList<QStringList> *> *m_cache;
 
     ProcessXmlListGenerator pxlg;

@@ -177,7 +177,7 @@ void Executor::setLocalList()
     if(!localHash->empty()) localHash->clear();
 
 #ifdef QT_DEBUG
-    qDebug() << "Executor::setLocalList";
+    qDebug() << "[Executor::setLocalList]";
 #endif
 
     int counter = pbuilder->count();
@@ -317,7 +317,7 @@ bool Executor::runProcess()
 
     //file input existing check
     if(setting->initFilename == ""){
-        emit processCheckError(tr("FILE IS NOT LOADED!!"));
+        emit processCheckError(tr("FILE IS NOT LOADED !!"));
         emit processStopped();
         return false;
 
@@ -339,9 +339,9 @@ bool Executor::runProcess()
     //Preparing to communicate with the console
     connect(work->process, &QIODevice::readyRead, this, &Executor::loadNormalStandardOutput);
 
-    #ifdef QT_DEBUG
-        qDebug() << "[Executor::runProcess] execlist count :" << execlist->count();
-    #endif
+#ifdef QT_DEBUG
+    qDebug() << "[Executor::runProcess] execlist count :" << execlist->count();
+#endif
 
     //Read profile information (Info data must index 0)
     setProcessSettings(&fileinput, &loopcount);
@@ -401,30 +401,12 @@ bool Executor::Execute()
         if(pbuilder->readItem(execlist->at(i), list)){
 
             switch (getReadType(list->at(0).at(1))) {
-            case INFO:
-                checker = loadInfo(list, 1);
-                break;
-
-            case NORMAL:
-                checker = loadNormal(list, 0);
-                break;
-
-            case SEARCH:
-                checker = loadSearch(list, 0);
-                break;
-
-            case SCRIPT:
-                checker = loadPlugins(list, 0);
-                break;
-
-            case OTHER:
-                checker = loadOther(list, 0);
-                break;
-
-            case TEMP:
-                checker = loadTemp(list);
-                break;
-
+            case INFO:    checker = loadInfo(list);    break;
+            case NORMAL:  checker = loadNormal(list);  break;
+            case SEARCH:  checker = loadSearch(list);  break;
+            case PLUGINS: checker = loadPlugins(list); break;
+            case OTHER:   checker = loadOther(list);   break;
+            case TEMP:    checker = loadTemp(list);    break;
             case LOCAL:
             default:
                 break;
@@ -475,28 +457,26 @@ void Executor::loadNormalStandardOutput()
 //}
 
 //Think kinds of text
-bool Executor::loadInfo(QList<QStringList> *list, int firstpos)
+bool Executor::loadInfo(QList<QStringList> *list)
 {
     QString curdata;
     QString result = "";
-    curdata = list->at(firstpos).at(1);
+    curdata = xgen.fetch(I_NAME, ATTR_NONE, list);
     curdata = (curdata == "")? "(no name)" : curdata;
 
     // line 1
     result.append(tr("Project : "));
     result.append(curdata);
-    result.append(" : ver.");
+    result.append(tr(" : Version."));
 
-    curdata = list->at(firstpos + 1).at(1);
-    curdata = (curdata == "")? "test" : curdata;
+    curdata = xgen.fetch(I_VERSION, ATTR_NONE, list);
+    curdata = (curdata == "")? "(test)" : curdata;
     result.append(curdata);
-//    result.append(" - last update ");
-//    result.append(list->at(firstpos + 4).at(1));
     result.append(tr("\r\n"));
 
     // line 2
-    curdata = list->at(firstpos + 2).at(1);
-    curdata = (curdata == "")? "Anonymous" : curdata;
+    curdata = xgen.fetch(I_AUTHOR, ATTR_NONE, list);
+    curdata = (curdata == "")? "(anonymous)" : curdata;
 
     result.append(tr("This process is created by "));
     result.append(curdata);
@@ -508,33 +488,31 @@ bool Executor::loadInfo(QList<QStringList> *list, int firstpos)
 
     emit processMessage(result, INFO);
 
-    //load other profile nest counter
-//    setting->othernestmax = static_cast<QString>(list->at(firstpos + 9).at(1)).toInt();
-
     return true;
 }
 
-bool Executor::loadNormal(QList<QStringList> *list, int firstpos)
+bool Executor::loadNormal(QList<QStringList> *list)
 {
     //scheduler only or not
-    if(VariantConverter::stringToBool(list->at(firstpos).at(3))
+    if(VariantConverter::stringToBool(xgen.fetch(ALL_TYPE,TYPE_EXEC,ATTR_ONLY_SCHEDULER, list))
             && setting->launched == DEFAULT) return true;
 
-    int cmdc = static_cast<QString>(list->at(firstpos + 2).at(1)).toInt();
+    int cmdc = static_cast<QString>(xgen.fetch(E_CMDARGCOUNT, ATTR_NONE, list)).toInt();
 
     if(cmdc == 0){
-        emit processMessage(tr("No executable file. Skip."), ERROR);
+        emit processMessage(tr("There is no execution command, it skips."), ERROR);
         return true;
     }
 
     //set args
     QString app;
     QStringList arguments;
+    int cmdfirst = xgen.fetchCmdFirstPos(E_CMD, list);
 
-    app = macroConvert(list->at(firstpos + 3).at(1));
+    app = macroConvert(list->at(cmdfirst).at(1));
 
     for(int i = 1; i < cmdc; i++){
-        arguments.append(macroConvert(list->at(firstpos + 3 + i).at(1)));
+        arguments.append(macroConvert(list->at(cmdfirst + i).at(1)));
     }
 
     //show cmd lists
@@ -562,8 +540,9 @@ bool Executor::loadNormal(QList<QStringList> *list, int firstpos)
     }
 
     //wait commands
-    if(VariantConverter::stringToBool(list->at(firstpos + 1).at(1))){
-        work->process->waitForFinished(static_cast<QString>(list->at(firstpos + 1).at(3)).toInt());
+    if(VariantConverter::stringToBool(xgen.fetch(E_TIMEOUT,ATTR_NONE, list))){
+        work->process->waitForFinished( \
+                    static_cast<QString>(xgen.fetch(E_TIMEOUT,ATTR_TIMEOUTMS, list)).toInt());
     }else{
         work->process->waitForFinished(-1);
     }
@@ -571,21 +550,22 @@ bool Executor::loadNormal(QList<QStringList> *list, int firstpos)
     return true;
 }
 
-bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
+bool Executor::loadSearch(QList<QStringList> *list)
 {
     //scheduler only or not
-    if(VariantConverter::stringToBool(list->at(firstpos).at(3))
+    if(VariantConverter::stringToBool(xgen.fetch(ALL_TYPE,TYPE_SEARCH,ATTR_ONLY_SCHEDULER, list))
             && setting->launched == DEFAULT) return true;
 
     FileSearchLoader *loader = new FileSearchLoader();
-    QStringList result = loader->searchFromXml(static_cast<QString>(list->at(firstpos + 1).at(3)).toInt());
+    QStringList result = loader->searchFromXml( \
+                static_cast<QString>(xgen.fetch(S_NAME,ATTR_POSNUM, list)).toInt());
 
     emit processMessage(tr("Search : ") + QString::number(result.count()) + tr(" files found.\r\n"), SEARCH);
 
     //TODO : separation data detection ?
     //combine search result
     QString combineresult;
-    QString sepdata = list->at(firstpos + 2).at(1);
+    QString sepdata = xgen.fetch(S_SEPARATOR, ATTR_NONE, list);
     int cre = result.count();
     for(int i = 0; i < cre; i++){
         emit processMessage(tr("%1").arg(result.at(i)), SEARCH);
@@ -611,11 +591,12 @@ bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
         }
     }
 
-    int radiodata = static_cast<QString>(list->at(firstpos + 4).at(3)).toInt();
+    int radiodata = static_cast<QString>( \
+                xgen.fetch(S_OUTPUTFILE, ATTR_RADIOBUTTONPOS, list)).toInt();
 
     //save to variant
     if(radiodata == 0){
-        QString selectvar = list->at(firstpos + 3).at(1);
+        QString selectvar = xgen.fetch(S_VARIANT, ATTR_NONE, list);
 
         if(selectvar != ""){
             //set data to variant
@@ -626,9 +607,9 @@ bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
 
     }else{
         //TODO: create data to File
-        QString outputfile = list->at(firstpos + 4).at(1);
+        QString outputfile = xgen.fetch(S_OUTPUTFILE, ATTR_NONE, list);
 
-        if(outputfile != ""){
+        if(outputfile == ""){
             QFile file(outputfile);
 
             //TODO: add overwrite permission (2017/09/02 updated)
@@ -650,70 +631,67 @@ bool Executor::loadSearch(QList<QStringList> *list, int firstpos)
     return true;
 }
 
-bool Executor::loadPlugins(QList<QStringList> *list, int firstpos)
+bool Executor::loadPlugins(QList<QStringList> *list)
 {
     //scheduler only or not
-    if(VariantConverter::stringToBool(list->at(firstpos).at(3))
+    if(VariantConverter::stringToBool(xgen.fetch(ALL_TYPE,TYPE_SCRIPT,ATTR_ONLY_SCHEDULER, list))
             && setting->launched == DEFAULT) return true;
 
-    QString file = list->at(firstpos + 2).at(1);
+    QString file = xgen.fetch(PL_FILEPATH,ATTR_NONE, list);
     QFileInfo info(file);
-    bool result = true;
 
-    if(info.exists()){
-        //check plugin can use
-        QPluginLoader loader(file);
+    if(!info.exists()) return false;
 
-        if(loader.load()){
-            QObject *plugin = loader.instance();
-            ext = qobject_cast<ExtraPluginInterface *>(plugin);
+    //check plugin can use
+    QPluginLoader loader(file);
+
+    if(!loader.load()) return false;
+
+    QObject *plugin = loader.instance();
+    ext = qobject_cast<ExtraPluginInterface *>(plugin);
 
 //            connect(plugin, SIGNAL(sendMessage()), this, &Executor::extrafuncInternalMessage);
 
-            int cmdc = static_cast<QString>(list->at(firstpos + 3).at(1)).toInt();
+    int cmdc = static_cast<QString>(xgen.fetch(PL_CMDARGCOUNT, ATTR_NONE, list)).toInt();
+    int ecmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
 
-            QStringList tmp;
-            for(int i = 0; i < cmdc; i++){
-                tmp.append(macroConvert(list->at(firstpos + 4 + i).at(1)));
-            }
+    QStringList tmp;
+    for(int i = 0; i < cmdc; i++){
+        tmp.append(macroConvert(list->at(ecmdfirst + i).at(1)));
+    }
 
-            ext->setInputFileData(fileList);
-            ext->setGlobalValue(globalHash);
-            ext->setLocalValue(localHash);
+    ext->setInputFileData(fileList);
+    ext->setGlobalValue(globalHash);
+    ext->setLocalValue(localHash);
 
 //            plugin->disconnect(ext, &ExtraPluginInterface::sendMessage
 //                       , this, &Executor::extrafuncInternalMessage);
 
-            if(!ext->functionMain(cmdc, &tmp)){
-                emit processMessage(plugin->metaObject()->className() + tr(" : function sucessful.\r\n"), SCRIPT);
+    bool result = true;
 
-            }else{
-                emit processMessage(tr("Plugin function failed.\r\n"), SCRIPT);
-                result = false;
-            }
-            loader.unload();
-
-        }else{
-            result = false;
-        }
+    if(!ext->functionMain(cmdc, &tmp)){
+        emit processMessage(plugin->metaObject()->className() + tr(" : function sucessful.\r\n"), PLUGINS);
 
     }else{
+        emit processMessage(tr("Plugin function failed.\r\n"), PLUGINS);
         result = false;
-
     }
+
+    loader.unload();
+
     return result;
 }
 
-bool Executor::loadOther(QList<QStringList> *list, int firstpos)
+bool Executor::loadOther(QList<QStringList> *list)
 {
 //    emit processStarted(OTHERPROCESS);
     //scheduler only or not
-    if(VariantConverter::stringToBool(list->at(firstpos).at(3))
+    if(VariantConverter::stringToBool(xgen.fetch(ALL_TYPE,TYPE_ANOTHER,ATTR_ONLY_SCHEDULER, list))
             && setting->launched == DEFAULT) return true;
 
-    QFileInfo info(list->at(firstpos + 2).at(1));
+    QFileInfo info(xgen.fetch(PR_FILEPATH,ATTR_NONE, list));
     if(!info.exists()){
-        emit processMessage(tr("Other Process : %1 is not existed.")
+        emit processMessage(tr("Project file %1 is not existed.")
                             .arg(info.fileName()), ERROR);
         return false;
     }
@@ -728,7 +706,7 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
 
     //alternate data
     pbuilder = new ProcessXmlBuilder();
-    pbuilder->setLoadPath(list->at(firstpos + 2).at(1));
+    pbuilder->setLoadPath(xgen.fetch(PR_FILEPATH,ATTR_NONE, list));
 
     execlist = new QList<int>();
     checkExecList(execlist);
@@ -739,8 +717,8 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
     //set counter
     int counter = execlist->count();
 
-    emit processMessage(tr("Other Process : %1 (loop %2)")
-                        .arg(list->at(firstpos + 1).at(1))
+    emit processMessage(tr("Other Project Load : %1 (loop %2)")
+                        .arg(xgen.fetch(PR_NAME,ATTR_NONE, list))
                         .arg(QString::number(builderstack.count()))
                         , OTHER);
 
@@ -751,7 +729,7 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
     for(int i = 0; i < counter; i++){
         ilist->clear();
 
-        qDebug() << "HINT :: Executor:: otherexeclist count" << counter;
+        qDebug() << "[Executor::loadOther] otherexeclist count : " << counter;
 
         //read each list
         if(pbuilder->readItem(execlist->at(i), ilist)){
@@ -761,23 +739,23 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
 
             switch (getReadType(ilist->at(0).at(1))) {
             case INFO:
-                checker = loadInfo(ilist, 1);
+                checker = loadInfo(ilist);
                 break;
 
             case NORMAL:
-                checker = loadNormal(ilist, 0);
+                checker = loadNormal(ilist);
                 break;
 
             case SEARCH:
-                checker = loadSearch(ilist, 0);
+                checker = loadSearch(ilist);
                 break;
 
-            case SCRIPT:
-                checker = loadPlugins(ilist, 0);
+            case PLUGINS:
+                checker = loadPlugins(ilist);
                 break;
 
             case OTHER:
-                checker = neststop ? false : loadOther(ilist, 0);
+                checker = neststop ? false : loadOther(ilist);
                 break;
 
             case TEMP:
@@ -819,25 +797,22 @@ bool Executor::loadOther(QList<QStringList> *list, int firstpos)
 bool Executor::loadTemp(QList<QStringList> *list)
 {
     //TODO: dynamic index update
-    int selected = static_cast<QString>(list->at(1).at(1)).toInt();
+    int selected = static_cast<QString>(xgen.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt();
 
     QHash<int, int> hlist;
     xgen.getListStructure(list, &hlist);
 
     switch (selected) {
-    case ProcessXmlListGenerator::NORMAL/*normal*/: return loadNormal(list, hlist.value(ProcessXmlListGenerator::NORMAL));
-
-    case ProcessXmlListGenerator::SEARCH/*search*/: return loadSearch(list, hlist.value(ProcessXmlListGenerator::SEARCH));
-
-    case ProcessXmlListGenerator::EXTRAFUNC/*script*/: return loadPlugins(list, hlist.value(ProcessXmlListGenerator::EXTRAFUNC));
-
-    case ProcessXmlListGenerator::OTHER/*other*/:
-        if(neststop){
-            return false;
-        }else{
-            return loadOther(list, hlist.value(ProcessXmlListGenerator::OTHER));
-        }
-    default:          return true;
+    case ProcessXmlListGenerator::NORMAL:  return loadNormal(list);
+    case ProcessXmlListGenerator::SEARCH:  return loadSearch(list);
+    case ProcessXmlListGenerator::PLUGINS: return loadPlugins(list);
+    case ProcessXmlListGenerator::OTHER:   return ((neststop)? false : loadOther(list));
+//        if(neststop){
+//            return false;
+//        }else{
+//            return loadOther(list);
+//        }
+    default: return true;
     }
 }
 
@@ -851,9 +826,12 @@ QString Executor::replaceInputMacro(QString original)
 {
     QString pre = "$input_";
     QString result = original;
+
     int maxcount = fileList.count();
+
     for(int i = 0; i < maxcount; i++){
         QFileInfo info(fileList.at(i));
+
         result.replace(pre + QString::number(i) + "_full$", info.canonicalFilePath());
         result.replace(pre + QString::number(i) + "_dir$", info.canonicalPath());
         result.replace(pre + QString::number(i) + "_name$", info.fileName());
@@ -929,41 +907,49 @@ void Executor::checkExecList(QList<int> *elist)
 void Executor::setProcessSettings(bool *fileinput, int *loopcount)
 {
     QList<QStringList> list;
-    if(pbuilder->readItem(0, &list)){
-        //File reading setting (manual file input)
-        if(VariantConverter::stringToBool(list.at(5).at(1))){
-            *fileinput = true;
-        }
+    if(!pbuilder->readItem(0, &list)) return;
 
-        //search file input
-        if(VariantConverter::stringToBool(list.at(6).at(1))){
-            *fileinput = true;
-            FileSearchLoader loader;
-            fileList.append(loader.searchFromXml(static_cast<QString>(list.at(7).at(3)).toInt()));
-            emit processMessage(tr("Input : ") + QString::number(fileList.count()) + tr(" files.\r\n"), SEARCH);
-        }
-
-        //Whether to loop the read file to the end ( 1 : no loop or set max loop count )
-        *loopcount = VariantConverter::stringToBool(list.at(8).at(1)) ? 1 : static_cast<QString>(list.at(8).at(3)).toInt();
-
-        // Number of files used at one time
-        setting->argumentscount = static_cast<QString>(list.at(9).at(1)).toInt();
-
-        //load other profile nest counter
-        setting->othernestmax = static_cast<QString>(list.at(10).at(1)).toInt();
-
+    //File reading setting (manual file input)
+    if(VariantConverter::stringToBool( \
+                xgen.fetch(I_FILEINPUT, ATTR_NONE, &list))){
+        *fileinput = true;
     }
+
+    //search file input
+    if(VariantConverter::stringToBool( \
+                xgen.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, &list))){
+        *fileinput = true;
+        FileSearchLoader loader;
+        fileList.append(loader.searchFromXml( \
+                        static_cast<QString>(xgen.fetch(I_FILESEARCH_NAME, ATTR_POSNUM, &list)).toInt()));
+        emit processMessage(tr("Input : ") + QString::number(fileList.count()) + tr(" files.\r\n"), SEARCH);
+    }
+
+    //Whether to loop the read file to the end ( 1 : no loop or set max loop count )
+    *loopcount = VariantConverter::stringToBool(xgen.fetch(I_RECURSIVE_LOOP, ATTR_NONE, &list)) ? \
+                1 : static_cast<QString>(xgen.fetch(I_RECURSIVE_LOOP, ATTR_MAXCOUNT, &list)).toInt();
+
+    // Number of files used at one time
+    setting->argumentscount = static_cast<QString>( \
+                xgen.fetch(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, &list)).toInt();
+
+    //load other profile nest counter
+    setting->othernestmax = static_cast<QString>( \
+                xgen.fetch(I_RECURSIVE_LOOPCOUNT, ATTR_NONE, &list)).toInt();
+
+
+    qDebug() << "[Executor::setProcessSettings] Settings loaded";
 }
 
 int Executor::getReadType(QString type)
 {
-    if(type == TYPE_INFO) return INFO;
-    if(type == TYPE_EXEC) return NORMAL;
-    if(type == TYPE_SEARCH) return SEARCH;
-    if(type == TYPE_SCRIPT) return SCRIPT;
-    if(type == TYPE_ANOTHER) return OTHER;
+    if(type == TYPE_INFO)       return INFO;
+    if(type == TYPE_EXEC)       return NORMAL;
+    if(type == TYPE_SEARCH)     return SEARCH;
+    if(type == TYPE_SCRIPT)     return PLUGINS;
+    if(type == TYPE_ANOTHER)    return OTHER;
     if(type == TYPE_ALLINCLUDE) return TEMP;
-    if(type == TYPE_LOCAL) return LOCAL;
+    if(type == TYPE_LOCAL)      return LOCAL;
     return -1;
 }
 

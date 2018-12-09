@@ -91,7 +91,7 @@ void ConsoleBase::updateText(QString data, int type)
         setTextColor(QColor(Qt::darkGray));
         append(data);
         break;
-    case Executor::SCRIPT:
+    case Executor::PLUGINS:
         setTextColor(QColor(Qt::darkGray));
         append(data);
         break;

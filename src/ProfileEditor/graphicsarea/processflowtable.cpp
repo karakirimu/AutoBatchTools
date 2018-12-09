@@ -490,7 +490,7 @@ void ProcessFlowTable::setTempItem(QList<QStringList> *list, int dataid)
         setSearchItem(list, dataid);
         break;
 
-    case ProcessXmlListGenerator::EXTRAFUNC:
+    case ProcessXmlListGenerator::PLUGINS:
         setPluginsItem(list, dataid);
         break;
 

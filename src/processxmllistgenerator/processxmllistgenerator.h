@@ -167,7 +167,7 @@ public:
     ~ProcessXmlListGenerator();
 
     //tab and list connection map
-    enum{NORMAL, SEARCH, EXTRAFUNC, OTHER};
+    enum{NORMAL, SEARCH, PLUGINS, OTHER};
 
     //inner table operation
     enum{TABLE_ADD,TABLE_EDIT,TABLE_INSERT,TABLE_DELETE,TABLE_UP,TABLE_DOWN,TABLE_SWAP};

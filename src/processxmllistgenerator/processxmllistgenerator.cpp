@@ -264,7 +264,7 @@ int ProcessXmlListGenerator::getType(QString type)
 {
     if(type == TYPE_EXEC) return NORMAL;
     if(type == TYPE_SEARCH) return SEARCH;
-    if(type == TYPE_SCRIPT) return EXTRAFUNC;
+    if(type == TYPE_SCRIPT) return PLUGINS;
     if(type == TYPE_ANOTHER) return OTHER;
     return -1;
 }

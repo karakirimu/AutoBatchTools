@@ -64,7 +64,7 @@ public:
 //    int getOthernestmax() const;
 //    void setOthernestmax(int nest = 10);
 
-    enum {INFO, NORMAL, SEARCH, SCRIPT, OTHER, TEMP, LOCAL, WARNING, ERROR, INPUT};
+    enum {INFO, NORMAL, SEARCH, PLUGINS, OTHER, TEMP, LOCAL, WARNING, ERROR, INPUT};
     enum {DEFAULT, SCHEDULER};
 //    enum {MAINPROCESS, OTHERPROCESS};
 signals:
@@ -107,11 +107,11 @@ private slots:
 
 private:
     //runprocess core
-    bool loadInfo(QList<QStringList> *list, int firstpos);
-    bool loadNormal(QList<QStringList> *list, int firstpos);
-    bool loadSearch(QList<QStringList> *list, int firstpos);
-    bool loadPlugins(QList<QStringList> *list, int firstpos);
-    bool loadOther(QList<QStringList> *list, int firstpos);
+    bool loadInfo(QList<QStringList> *list);
+    bool loadNormal(QList<QStringList> *list);
+    bool loadSearch(QList<QStringList> *list);
+    bool loadPlugins(QList<QStringList> *list);
+    bool loadOther(QList<QStringList> *list);
     bool loadTemp(QList<QStringList> *list);
 
     bool Execute();

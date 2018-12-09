@@ -22,7 +22,7 @@ void EditorTab::setConnection()
     searchcombobox = widgetsearch->findChild<SearchComboBox *>(SEARCH_COMBO);
     openButton = widgetsearch->findChild<QToolButton *>("openToolButton");
 
-    widgetextra = this->widget(ProcessXmlListGenerator::EXTRAFUNC);
+    widgetextra = this->widget(ProcessXmlListGenerator::PLUGINS);
     extrafunccombobox = widgetextra->findChild<PluginsComboBox *>("extrafuncComboBox");
     addbutton_e = widgetextra->findChild<QToolButton *>("extrafuncAddButton");
     deletebutton_e = widgetextra->findChild<QToolButton *>("extrafuncDeleteButton");
@@ -297,17 +297,10 @@ void EditorTab::setCombinedDataList(int after, int before, int function, int sen
     QList<QStringList> *list = new QList<QStringList>();
 
     //avoid multiple update
-//    if(function == EditOperator::EDIT){
-//        if(after < 2 || !editop->read(after, list)){
-//            delete list;
-//            return;
-//        }
-//    }else{
-        if(/*currentid == after ||*/ after < 2 || !editop->read(after, list)){
-            delete list;
-            return;
-        }
-//    }
+    if(after < 2 || !editop->read(after, list)){
+        delete list;
+        return;
+    }
 
     //set current id
     qDebug() << "[EditorTab::setCombinedDataList]     currentid update : " << after;
@@ -381,7 +374,7 @@ void EditorTab::tabChanged(int index)
         editop->editTabAction(currentid, index);
         break;
 
-    case ProcessXmlListGenerator::EXTRAFUNC:
+    case ProcessXmlListGenerator::PLUGINS:
         this->blockSignals(true);
         extrafunccombobox->reloadComboBoxItem();
         this->blockSignals(false);
