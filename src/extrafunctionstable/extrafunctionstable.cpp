@@ -52,11 +52,11 @@ void ExtraFunctionsTable::setPopupActionTop()
     contextMenu->addSeparator();
 
     //connect signals
-    connect(m_add, SIGNAL(triggered()), this, SLOT(addAction()));
-    connect(m_delete, SIGNAL(triggered()), this, SLOT(deleteAction()));
-    connect(m_edit, SIGNAL(triggered()), this, SLOT(editAction()));
+    connect(m_add, &QAction::triggered, this, &ExtraFunctionsTable::addAction);
+    connect(m_delete, &QAction::triggered, this, &ExtraFunctionsTable::deleteAction);
+    connect(m_edit, &QAction::triggered, this, &ExtraFunctionsTable::editAction);
 
-    connect(m_file, SIGNAL(triggered()), this, SLOT(openFileAction()));
+    connect(m_file, &QAction::triggered, this, &ExtraFunctionsTable::openFileAction);
 }
 
 void ExtraFunctionsTable::setPopupActionBottom()
@@ -66,7 +66,7 @@ void ExtraFunctionsTable::setPopupActionBottom()
     m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
     m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
 
-    connect(m_ref, SIGNAL(triggered()), this, SLOT(reloadAction()));
+    connect(m_ref, &QAction::triggered, this, &ExtraFunctionsTable::reloadAction);
 }
 
 void ExtraFunctionsTable::addAction()

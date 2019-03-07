@@ -49,6 +49,13 @@
 #include <editexectable.h>
 #include <editplugintable.h>
 
+//tree variant operation
+#include <editglobalvartree.h>
+#include <swapglobalvartree.h>
+
+#include <editlocalvarianttree.h>
+#include <swaplocalvarianttree.h>
+
 //textedit lineedit operation
 #include <stringfileoutput.h>
 #include <stringprojectauthor.h>
@@ -97,15 +104,23 @@ signals:
     void loadfileChanged(QString);
 
     // reflect user 'edit' operation (argument is edit index)
+    // It is necessary to implement it if it relates to flowtable
     void editUpdate(int);
+
+    //Communication from profileeditor or flowtable widget to editortab
     void ui_funcindexUpdate(int after, int before, int function, int sender);
 //    void ui_scrollReachBottom();
 
 public slots:
-    //operate functions
+    //operate main process editor functions
     void addAction();
     void insertAction(int id, QList<QStringList> *xmlstruct);
     void deleteAction(int id);
+    void newAction();
+    void openAction(QString filepath);
+    void saveAction(QString filepath);
+    void exportAction(QString filepath);
+    void abortAction();
 
 //    void editAction(int id, int innerid, int editcode, QList<QStringList> xmlstruct);
     void editTabAction(int id, int newindex);
@@ -139,9 +154,16 @@ public slots:
     //table operation
     void tableSwapExecAction(int id, int beforeid, int afterid);
     void tableSwapPluginAction(int id, int beforeid, int afterid);
-    void tableEditVariantAction(int id, int tableid, QStringList variants, int operationt);
+    void tableEditVariantAction(int id, int tableid, QStringList variants, int operation);
     void tableEditExecAction(int id, int tableid, QString newstr, int operation);
     void tableEditPluginAction(int id, int tableid, QString newstr, int operation);
+
+    //tree operation
+    void treeEditGVariantAction(int id, QStringList variants, int operation);
+    void treeSwapGVariantAction(int beforeid, int afterid);
+
+    void treeEditLVariantAction(int id, QStringList variants, int operation, int localindex);
+    void treeSwapLVariantAction(int beforeid, int afterid, int localindex = 1);
 
     //textedit lineedit operation
     void textFileOutputAction(int id, QString newstr);
@@ -151,18 +173,13 @@ public slots:
     void textProjectVerAction(int id, QString newstr);
     void textSearchSeparateAction(int id, QString newstr);
 
+    //process functions
     void copyAction(int id);
     void cutAction(int id);
     void pasteAction(int id);
     void swapAction(int before, int after);
 
-    //not relation undo stack
-    void newAction();
-    void openAction(QString filepath);
-    void saveAction(QString filepath);
-    void exportAction(QString filepath);
-    void abortAction();
-
+    //internal function
     void loadcache(int amount);
 
 protected:

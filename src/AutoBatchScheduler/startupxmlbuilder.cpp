@@ -60,7 +60,7 @@ void StartupXmlBuilder::createDocument()
 
 int StartupXmlBuilder::count()
 {
-    return getSpecifiedElementItemsCount(FIRSTLAYER);
+    return getElementItemsCount(FIRSTLAYER);
 }
 
 void StartupXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)

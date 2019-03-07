@@ -128,13 +128,20 @@ static const QString UNDOREDO_PL_TABLEDEL =       "PLT_DEL";
 static const QString UNDOREDO_PL_TABLEINS =       "PLT_INS";
 static const QString UNDOREDO_PL_TABLESWAP =      "PLT_SWAP";
 
-static const QString UNDOREDO_L_TABLEADD =       "LT_ADD";
-static const QString UNDOREDO_L_TABLEEDIT =      "LT_EDIT";
-static const QString UNDOREDO_L_TABLEDEL =       "LT_DEL";
-static const QString UNDOREDO_L_TABLEINS =       "LT_INS";
-static const QString UNDOREDO_L_TABLESWAP =      "LT_SWAP";
+static const QString UNDOREDO_LV_ADD =            "LV_ADD";
+static const QString UNDOREDO_LV_EDIT =           "LV_EDIT";
+static const QString UNDOREDO_LV_DEL =            "LV_DEL";
+static const QString UNDOREDO_LV_INS =            "LV_INS";
+static const QString UNDOREDO_LV_SWAP =           "LV_SWAP";
+
+static const QString UNDOREDO_GV_ADD =            "GV_ADD";
+static const QString UNDOREDO_GV_EDIT =           "GV_EDIT";
+static const QString UNDOREDO_GV_DEL =            "GV_DEL";
+static const QString UNDOREDO_GV_INS =            "GV_INS";
+static const QString UNDOREDO_GV_SWAP =           "GV_SWAP";
 
 //undo redo table operation id value. It is no means.
+//?
 static const QString E_ADD_TABLE    = "{(I*9g-v";
 static const QString E_INSERT_TABLE = "M$7>O/Qb";
 static const QString E_EDIT_TABLE   = "d/%o'q9l";
@@ -171,6 +178,7 @@ public:
 
     //inner table operation
     enum{TABLE_ADD,TABLE_EDIT,TABLE_INSERT,TABLE_DELETE,TABLE_UP,TABLE_DOWN,TABLE_SWAP};
+    enum{TREE_ADD,TREE_EDIT,TREE_INSERT,TREE_DELETE,TREE_UP,TREE_DOWN,TREE_SWAP};
 
     //list add structure
     void createNewList(QList<QStringList> *newlist);

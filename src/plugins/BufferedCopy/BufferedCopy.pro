@@ -4,10 +4,14 @@
 #
 #-------------------------------------------------
 
-QT       -= gui
+QT       += core gui \
+            widgets
 
 TARGET = BufferedCopy
 TEMPLATE = lib
+CONFIG += plugin
+
+VERSION = 1.0.0.0
 
 DEFINES += BUFFEREDCOPY_LIBRARY
 
@@ -23,13 +27,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        bufferedcopy.cpp
+        bufferedcopy.cpp \
+    bufferedcopydialog.cpp
 
 HEADERS += \
         bufferedcopy.h \
-        bufferedcopy_global.h 
+        bufferedcopy_global.h \ 
+    bufferedcopydialog.h
 
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
+DISTFILES += \
+    bufferedcopy.json
+
+FORMS += \
+    bufferedcopydialog.ui

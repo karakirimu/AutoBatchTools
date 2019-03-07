@@ -61,7 +61,7 @@ void SearchXmlBuilder::createDocument()
 
 int SearchXmlBuilder::count()
 {
-    return getSpecifiedElementItemsCount(FIRSTLAYER);
+    return getElementItemsCount(FIRSTLAYER);
 }
 
 QString SearchXmlBuilder::fetch(QString tag, QString attr, const QList<QStringList> *loadbase)

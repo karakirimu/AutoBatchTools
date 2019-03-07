@@ -43,5 +43,5 @@ SUBDIRS += \
           $$PWD\src\extrafunctionstable \
 #6
           $$PWD\src\AutoBatchRunner \
-          $$PWD\src\ProfileEditor \
-          $$PWD\src\AutoBatchScheduler
+          $$PWD\src\AutoBatchScheduler \
+          $$PWD\src\ProfileEditor

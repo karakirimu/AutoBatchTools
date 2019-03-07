@@ -5,7 +5,7 @@ int TakeLinePlugin::functionMain(int argc, QStringList *args)
     if(argc != 3) return 1;
 
     QFile file(args->at(FILEORSTRING));
-    int targetline = ((QString)args->at(LINENUM)).toInt();
+    int targetline = static_cast<QString>(args->at(LINENUM)).toInt();
     QString str;
 
     if(file.exists() && file.open(QFile::ReadOnly)){
@@ -25,7 +25,7 @@ int TakeLinePlugin::functionMain(int argc, QStringList *args)
 
     }else{
         //string take mode
-        QStringList data = ((QString)args->at(FILEORSTRING)).split('\n');
+        QStringList data = static_cast<QString>(args->at(FILEORSTRING)).split('\n');
         if(data.count() < targetline){
             str = "";
         }else{
@@ -37,11 +37,11 @@ int TakeLinePlugin::functionMain(int argc, QStringList *args)
 
     if(str != ""){
         if(local->contains(args->at(VAR))) local->insert(args->at(VAR), str);
-        emit sendMessage(tr("Take line ") + QString::number(targetline) + tr("."));
+            setSuccessMessage(tr("Take line ") + QString::number(targetline) + tr("."));
         return 0;
 
     }else{
-        emit sendMessage(tr("Can't take line."));
+            setErrorMessage(tr("Can't take line."));
         return 1;
 
     }

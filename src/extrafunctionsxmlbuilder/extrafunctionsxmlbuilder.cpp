@@ -63,7 +63,7 @@ void ExtrafunctionsXmlBuilder::createDocument()
 
 int ExtrafunctionsXmlBuilder::count()
 {
-    return getSpecifiedElementItemsCount(FIRSTLAYER);
+    return getElementItemsCount(FIRSTLAYER);
 }
 
 void ExtrafunctionsXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)

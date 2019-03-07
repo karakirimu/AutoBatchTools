@@ -52,7 +52,7 @@ void ProfileXmlBuilder::createDocument()
 
 int ProfileXmlBuilder::count()
 {
-    return getSpecifiedElementItemsCount(FIRSTLAYER);
+    return getElementItemsCount(FIRSTLAYER);
 }
 
 void ProfileXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)

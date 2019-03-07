@@ -178,26 +178,6 @@ void SystemTray::showTimerStopped(QString objectname, int type)
 
 void SystemTray::showProcessStart(QString objectname, int runfrom)
 {
-//    switch (runfrom) {
-//    case Executor::DEFAULT:
-//        break;
-//    case Executor::SCHEDULER:
-//        //show message
-//        QSettings settings( "./settings.ini", QSettings::IniFormat );
-//        settings.beginGroup("scheduler_startup");
-//        if(settings.value("TASKSTART", true).toBool()){
-//            trayIcon->showMessage(tr("タスクを開始しました"),\
-//                                  getNameByActions(objectname),\
-//                                  QSystemTrayIcon::Information,\
-//                                  settings.value("TASKSTOPMS", 2500).toInt());
-//        }
-//        settings.endGroup();
-
-//        break;
-//    default:
-//        break;
-//    }
-
     if(runfrom == Executor::SCHEDULER){
         //show message
         QSettings settings( "./settings.ini", QSettings::IniFormat );
@@ -232,26 +212,6 @@ void SystemTray::showProcessStopped(QString objectname)
 
 void SystemTray::showProcessEnded(QString objectname, int type)
 {
-//    switch (type) {
-//    case Executor::MAINPROCESS:
-//        //show message
-//        QSettings settings( "./settings.ini", QSettings::IniFormat );
-//        settings.beginGroup("scheduler_startup");
-//        if(settings.value("TASKEND", true).toBool()){
-//            trayIcon->showMessage(tr("タスクは正常終了しました"),\
-//                                  getNameByActions(objectname),\
-//                                  QSystemTrayIcon::Information,\
-//                                  settings.value("TASKENDMS", 2500).toInt());
-//        }
-//        settings.endGroup();
-//        break;
-//// obsolete
-////    case Executor::OTHERPROCESS:
-////        break;
-//    default:
-//        break;
-//    }
-
     if(type == Executor::SCHEDULER){
         //show message
         QSettings settings( "./settings.ini", QSettings::IniFormat );

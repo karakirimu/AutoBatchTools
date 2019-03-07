@@ -182,8 +182,6 @@ void EditOperator::tableSwapExecAction(int id, int beforeid, int afterid)
     SwapExecTable *com = new SwapExecTable(id, beforeid, afterid, cache);
 
     undostack->push(com);
-
-    //TODO
     emit editUpdate(id);
 }
 
@@ -192,8 +190,6 @@ void EditOperator::tableSwapPluginAction(int id, int beforeid, int afterid)
     SwapPluginTable *com = new SwapPluginTable(id, beforeid, afterid, cache);
 
     undostack->push(com);
-
-    //TODO
     emit editUpdate(id);
 }
 
@@ -222,6 +218,30 @@ void EditOperator::tableEditPluginAction(int id, int tableid, QString newstr, in
 
     undostack->push(com);
     emit editUpdate(id);
+}
+
+void EditOperator::treeEditGVariantAction(int id, QStringList variants, int operation)
+{
+    EditGlobalVarTree *com = new EditGlobalVarTree(id, variants, operation);
+    undostack->push(com);
+}
+
+void EditOperator::treeSwapGVariantAction(int beforeid, int afterid)
+{
+    SwapGlobalVarTree *com = new SwapGlobalVarTree(beforeid, afterid);
+    undostack->push(com);
+}
+
+void EditOperator::treeEditLVariantAction(int id, QStringList variants, int operation, int localindex)
+{
+    EditLocalVariantTree *com = new EditLocalVariantTree(localindex, id, variants, operation, cache);
+    undostack->push(com);
+}
+
+void EditOperator::treeSwapLVariantAction(int beforeid, int afterid, int localindex)
+{
+    SwapLocalVariantTree *com = new SwapLocalVariantTree(localindex, beforeid, afterid, cache);
+    undostack->push(com);
 }
 
 

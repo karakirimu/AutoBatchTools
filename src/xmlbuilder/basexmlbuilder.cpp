@@ -17,9 +17,7 @@ BaseXmlBuilder::BaseXmlBuilder(QObject *parent) : QObject(parent)
 
 BaseXmlBuilder::~BaseXmlBuilder()
 {
-    if(file->isOpen()){
-        file->close();
-    }
+    closeFile();
     delete file;
     delete rxml;
     delete wxml;
@@ -32,7 +30,7 @@ void BaseXmlBuilder::setFileName(QString filename){
         file->close();
 //        qDebug() << "file opened.";
     }else{
-        qDebug() << "BaseXmlBuilder::make newfile";
+        qDebug() << "[BaseXmlBuilder::setFileName] : make newfile";
         //create new file
         QFile tmpfilemake(filename);
         if(tmpfilemake.open(QIODevice::WriteOnly)){
@@ -56,27 +54,24 @@ void BaseXmlBuilder::createXmlBaseDocument(QString rootelement)
 
     //set 1 tabs
     wxml->setAutoFormattingIndent(-1);
+
     wxml->writeStartDocument();
-#ifdef Q_OS_WIN
-    wxml->writeTextElement(rootelement, "\n");
-#else
-    wxml->writeTextElement(rootelement, "\r\n");
-#endif
+    wxml->writeTextElement(rootelement, endLineStr());
     wxml->writeEndDocument();
 
     closeFile();
 }
 
 //if it can't get specified element, this function does nothing.
-bool BaseXmlBuilder::deleteSpecifiedElementGroup(QString element, QString attr, int value, bool withparent)
+bool BaseXmlBuilder::deleteElementGroup(QString element, QString attr, int value, bool withparent)
 {
     bool hasid = false;
-    int firstline = 0;
-    int endline = 0;
+    qint64 firstline = 0;
+    qint64 endline = 0;
     QString deletedText;
 
     openFile(QIODevice::ReadWrite);
-    readFileReset();
+    openedFileReset();
 
     //get start and end line counter
     while (!(rxml->atEnd() || rxml->hasError()))
@@ -86,12 +81,8 @@ bool BaseXmlBuilder::deleteSpecifiedElementGroup(QString element, QString attr, 
                 && rxml->name().toString() == element
                 && rxml->attributes().value(attr).toInt() == value)
         {
-//            QString val = rxml->attributes().value(attr).toString();
-
-//            if(rxml->attributes().value(attr).toInt() == value){
-                hasid = true;
-                firstline = rxml->lineNumber();
-//            }
+            hasid = true;
+            firstline = rxml->lineNumber();
         }
 
         if(rxml->isEndElement() && hasid && rxml->name() == element){
@@ -112,6 +103,7 @@ bool BaseXmlBuilder::deleteSpecifiedElementGroup(QString element, QString attr, 
     QTextStream del(file);
 
     int linecount = 0;
+
     QString tmp;
     //read forword data set
     while(!del.atEnd()){
@@ -120,22 +112,13 @@ bool BaseXmlBuilder::deleteSpecifiedElementGroup(QString element, QString attr, 
         //外のタグは残らない
         if(withparent && (linecount < firstline || linecount > endline)){
             deletedText.append(tmp);
-            //WARNING:hard coding
-#ifdef Q_OS_WIN
-            deletedText.append("\n");
-#else
-            deletedText.append("\r\n");
-#endif
+            deletedText.append(endLineStr());
         }
+
         //以上以下にすると外のタグだけは残る
         if(!withparent && (linecount <= firstline || linecount >= endline)){
             deletedText.append(tmp);
-            //WARNING:hard coding
-#ifdef Q_OS_WIN
-            deletedText.append("\n");
-#else
-            deletedText.append("\r\n");
-#endif
+            deletedText.append(endLineStr());
         }
     }
 
@@ -152,37 +135,38 @@ bool BaseXmlBuilder::deleteSpecifiedElementGroup(QString element, QString attr, 
 }
 
 // get first line in multiple specified element.
-int BaseXmlBuilder::getSpecifiedElementLineFirst(QString element)
+qint64 BaseXmlBuilder::getElementFirstLineNumber(QString element)
 {
-    int line = 0;
+    qint64 line = 0;
 
     openFile(QIODevice::ReadOnly);
-    readFileReset();
+    openedFileReset();
 
     while (!(rxml->atEnd() || rxml->hasError()))
     {
         rxml->readNext();
-        if (rxml->isStartElement() && rxml->name().toString() == element)
+        if (rxml->isStartElement()
+                && rxml->name().toString() == element)
         {
             line = rxml->lineNumber();
             break;
         }
     }
 
-//    qDebug() << "BaseXmlBuilder: " << element;
+//    qDebug() << "[BaseXmlBuilder::getElementFirstLineNumber (1)] : " << element \
+//                                    << attr << attrvalue << "linenum : " << line;
     checkXmlError();
-//    qDebug() << line << ":linefirst";
     closeFile();
     return line;
 }
 
 // it is not have any elements, then returns -1.
-int BaseXmlBuilder::getSpecifiedElementLineFirst(QString element, QString attr, QString attrvalue)
+qint64 BaseXmlBuilder::getElementFirstLineNumber(QString element, QString attr, QString attrvalue)
 {
-    int line = -1;
+    qint64 line = -1;
 
     openFile(QIODevice::ReadOnly);
-    readFileReset();
+    openedFileReset();
 
     while (!(rxml->atEnd() || rxml->hasError()))
     {
@@ -196,20 +180,20 @@ int BaseXmlBuilder::getSpecifiedElementLineFirst(QString element, QString attr, 
         }
     }
 
-//    qDebug() << "BaseXmlBuilder: " << element << attr << attrvalue;
+//    qDebug() << "[BaseXmlBuilder::getElementFirstLineNumber (3)] : " << element \
+//                                    << attr << attrvalue << "linenum : " << line;
     checkXmlError();
-    //qDebug() << line << ":line";
     closeFile();
     return line;
 }
 
-int BaseXmlBuilder::getSpecifiedElementLineEnd(QString element, QString attr, int value)
+qint64 BaseXmlBuilder::getElementEndLineNumber(QString element, QString attr, int value)
 {
-    int line = 0;
+    qint64 line = 0;
     bool flags = false;
 
     openFile(QIODevice::ReadOnly);
-    readFileReset();
+    openedFileReset();
 
     while (!(rxml->atEnd() || rxml->hasError()))
     {
@@ -233,12 +217,12 @@ int BaseXmlBuilder::getSpecifiedElementLineEnd(QString element, QString attr, in
     return line;
 }
 
-int BaseXmlBuilder::getSpecifiedElementItemsCount(QString element)
+int BaseXmlBuilder::getElementItemsCount(QString element)
 {
     int count = 0;
     //reset
     openFile(QIODevice::ReadOnly);
-    readFileReset();
+    openedFileReset();
 
     while (!(rxml->atEnd() || rxml->hasError()))
     {
@@ -257,7 +241,6 @@ int BaseXmlBuilder::getSpecifiedElementItemsCount(QString element)
 }
 
 // return numbers of tab sequence
-// Windows:
 QString BaseXmlBuilder::appendTabIndent(int num)
 {
     QString indent;
@@ -267,21 +250,16 @@ QString BaseXmlBuilder::appendTabIndent(int num)
     return indent;
 }
 
-void BaseXmlBuilder::checkXmlError()
-{
-    if (rxml->hasError())
-    {
-        qDebug() << "XML read error: " << rxml->errorString();
-    }
+QString BaseXmlBuilder::endLineStr(){
+    return "\n";
 }
 
-void BaseXmlBuilder::readFileReset()
-{
-    //rxml devicereset ?
-//    if(rxml->atEnd()){
-//        qDebug() << "Reached end, done";
-//        rxml->device()->reset();
-//    }
+void BaseXmlBuilder::checkXmlError(){
+    if (rxml->hasError())
+        qDebug() << "[BaseXmlBuilder::checkXmlError] : XML read error: " << rxml->errorString();
+}
+
+void BaseXmlBuilder::openedFileReset(){
 
     //file seek to first point
     file->reset();
@@ -290,29 +268,21 @@ void BaseXmlBuilder::readFileReset()
     rxml->setDevice(file);
 }
 
-void BaseXmlBuilder::clearFileText()
-{
-    file->resize(0);
-}
+void BaseXmlBuilder::clearFileText(){ file->resize(0); }
+
 
 bool BaseXmlBuilder::openFile(QFlags<QIODevice::OpenModeFlag> flags)
 {
     //fileopen check
     if (!file->open(flags | QFile::Text)) {
-        qDebug() << "Cannot read file.";
+        qDebug() << "[BaseXmlBuilder::openFile] : Cannot read file.";
         return false;
     }
 
     return true;
 }
 
-void BaseXmlBuilder::closeFile()
-{
-    //check file is opened
-    if(file->isOpen()){
-        file->close();
-    }
-}
+void BaseXmlBuilder::closeFile(){ if(file->isOpen()) file->close(); }
 
 
 /**
@@ -322,36 +292,27 @@ void BaseXmlBuilder::closeFile()
  * @return
  * @details adjust code formatting. it becomes able to insert created xml.
  */
-QString BaseXmlBuilder::getAdjustedXmlDataString(QTemporaryFile *tmp, int indent)
+QString BaseXmlBuilder::getTabbedXmlString(QTemporaryFile *tmp, int indent)
 {
     if(tmp->open()){
         QTextStream in(tmp);
-
+        QString endline = endLineStr();
         QString appenddata = in.readAll();
+
         QRegularExpression re;
+        re.setPattern(endline);
 
-        //Windows
-#ifdef Q_OS_WIN
-        re.setPattern("\n");
-        appenddata.replace( re, "\n" + appendTabIndent(indent));
-#else
-        //other
-        re.setPattern("\r\n");
-        appenddata.replace( re, "\r\n" + appendTabIndent(indent));
-#endif
+        appenddata.replace( re, endline + appendTabIndent(indent));
+
         //qDebug() << appenddata;
-
         tmp->close();
 
-        //delete first \n code
+        //delete first position \n code
         appenddata.remove(0,1);
 
         //append to last character
-#ifdef Q_OS_WIN
-        appenddata.append("\n");
-#else
-        appenddata.append("\r\n");
-#endif
+        appenddata.append(endline);
+
         return appenddata;
     }
 

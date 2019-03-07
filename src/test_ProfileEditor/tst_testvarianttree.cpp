@@ -2,6 +2,7 @@
 #include <QCoreApplication>
 
 // add necessary includes here
+#include <../ProfileEditor/profileeditor.h>
 
 class testVariantTree : public QObject
 {
@@ -15,6 +16,9 @@ private slots:
     void initTestCase();
     void cleanupTestCase();
     void test_case1();
+
+private:
+    ProfileEditor *profile;
 
 };
 
@@ -30,7 +34,9 @@ testVariantTree::~testVariantTree()
 
 void testVariantTree::initTestCase()
 {
-
+    profile = new ProfileEditor();
+    profile->show();
+    QTest::qWait(1000);
 }
 
 void testVariantTree::cleanupTestCase()

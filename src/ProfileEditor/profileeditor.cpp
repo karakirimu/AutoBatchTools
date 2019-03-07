@@ -38,6 +38,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     ui->localVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
     ui->setTestDockWidget->setAutohide(ui->actionAutohide->isChecked());
     ui->consoleDockWidget->setAutohide(ui->actionAutohide->isChecked());
+    ui->variantDockWidget->setAutohide(ui->actionAutohide->isChecked());
 
     //init sharedfunction
     editop = new EditOperator(this);
@@ -51,6 +52,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     ui->variantTableWidget->setEditOperator(editop);
     ui->editorTab->setEditOperator(editop);
     ui->innerStackedWidget->setEditOperator(editop);
+    ui->variantTreeWidget->setEditOperator(editop);
 
     //test
 //    ui->graphicsView->hide();
@@ -123,6 +125,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 //    connect(ui->actionEditor, &QAction::triggered, ui->editorDockWidget, &QWidget::setVisible);
     connect(ui->actionFileVariant, &QAction::triggered, ui->localVariantDockWidget, &QWidget::setVisible);
     connect(ui->actionAppVariant, &QAction::triggered, ui->globalVariantDockWidget, &QWidget::setVisible);
+    connect(ui->actionVariant, &QAction::triggered, ui->variantDockWidget, &QWidget::setVisible);
     connect(ui->actionRunSetting, &QAction::triggered, ui->setTestDockWidget, &BaseDockWidget::setVisible);
     connect(ui->actionRunConsole, &QAction::triggered, ui->consoleDockWidget, &BaseDockWidget::setVisible);
 
@@ -140,6 +143,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 //    connect(ui->actionAutohide, &QAction::triggered, ui->editorDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->globalVariantDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->localVariantDockWidget, &BaseDockWidget::setAutohide);
+    connect(ui->actionAutohide, &QAction::triggered, ui->variantDockWidget, &BaseDockWidget::setAutohide);
 
     //Infomation
     connect(ui->actionAbout, &QAction::triggered, this, &ProfileEditor::about);
@@ -255,6 +259,7 @@ void ProfileEditor::undoAction()
     ui->flowTableWidget->updateIndex(updop);
     ui->variantTableWidget->updateIndex(updop);
     ui->editorTab->updateIndex(updop);
+    ui->variantTreeWidget->updateIndex(updop);
 }
 
 void ProfileEditor::redoAction()
@@ -276,6 +281,8 @@ void ProfileEditor::redoAction()
     ui->flowTableWidget->updateIndex(updop);
     ui->variantTableWidget->updateIndex(updop);
     ui->editorTab->updateIndex(updop);
+    ui->variantTreeWidget->updateIndex(updop);
+
 }
 
 void ProfileEditor::addAction()
@@ -616,6 +623,7 @@ void ProfileEditor::initUi()
     ui->innerStackedWidget->reloadAction();
     ui->flowTableWidget->reloadAction();
     ui->variantTableWidget->reloadAction();
+    ui->variantTreeWidget->reloadAction();
 
     this->blockSignals(false);
 

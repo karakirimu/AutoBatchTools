@@ -65,16 +65,10 @@ public slots:
     void updateRange(QString str);
     void updateFileList(QStringList *data); /*int indicates status*/
 
-//    void updateEditFile(QString editfile);
-
-    //for test
-//    void testMessage();
-
 private:
     QMutex *mutex;
     Executor *executor;
     QThread *worker;
-//    QString editingfile;
 
 };
 

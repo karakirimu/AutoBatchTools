@@ -7,24 +7,17 @@
 #include <QObject>
 #include <QtPlugin>
 
-class ExtraPluginInterface
+class ExtraPluginInterface : public QObject
 {
-
 public:
     virtual ~ExtraPluginInterface(){}
 
-
-    //This is signal. It can send message to main console view
-    virtual void sendMessage(QString) = 0;
-
     //This is plugin main function. return number 0 stands for success
-    //other number stands for failure.
+    //Other numbers (e.g. -1) stands for failure.
     virtual int functionMain(int argc, QStringList *args) = 0;
 
-
     //This function sets explain string.
-    virtual QString getDetailString() = 0;
-
+    virtual QString tooltipString() = 0;
 
     //This function set true if you use setting widget function
     virtual bool existsSettingWidget() = 0;
@@ -42,13 +35,28 @@ public:
     void setGlobalValue(QHash<QString, QString> global){this->global= global;}
     void setInputFileData(QStringList file){this->file  = file;  }
 
+    //This is signal. It can send message to main console view
+//    virtual void sendMessage(const QString message) = 0;
+
+    //In case of error termination, call this function and get the set character string.
+    QString functionErrorMessage(){ return errorMessage; }
+
+
+    QString functionSuccessMessage(){ return successMessage; }
+
 protected:
+    void setErrorMessage(const QString message){ errorMessage = message; }
+    void setSuccessMessage(const QString message){ successMessage = message; }
+
+    QString errorMessage = "";
+    QString successMessage = "";
+
     QHash<QString, QString> *local;
     QHash<QString, QString> global;
     QStringList file;
 
 };
 
-Q_DECLARE_INTERFACE(ExtraPluginInterface, "autobatch.ExtraPluginInterface/1.0")
+Q_DECLARE_INTERFACE(ExtraPluginInterface, "abr.ExtraPluginInterface/1.0")
 
 #endif // EXTRAPLUGININTERFACE_H

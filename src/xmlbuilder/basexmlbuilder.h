@@ -17,26 +17,32 @@ class XMLBUILDERSHARED_EXPORT BaseXmlBuilder : public QObject
 {
     Q_OBJECT
 public:
-    explicit BaseXmlBuilder(QObject *parent = 0);
+    explicit BaseXmlBuilder(QObject *parent = nullptr);
     virtual ~BaseXmlBuilder();
 
     void createXmlBaseDocument(QString rootelement);
-    int getSpecifiedElementItemsCount(QString element);
+    int getElementItemsCount(QString element);
 
 protected:
 
     void setFileName(QString filename);
-    bool deleteSpecifiedElementGroup(QString element, QString attr, int value, bool withparent);
-    int getSpecifiedElementLineFirst(QString element);
-    int getSpecifiedElementLineFirst(QString element, QString attr, QString attrvalue);
-    int getSpecifiedElementLineEnd(QString element, QString attr, int value);
-    void readFileReset();
+    bool deleteElementGroup(QString element, QString attr, int value, bool withparent);
+    qint64 getElementFirstLineNumber(QString element);
+    qint64 getElementFirstLineNumber(QString element, QString attr, QString attrvalue);
+    qint64 getElementEndLineNumber(QString element, QString attr, int value);
+    void openedFileReset();
     void clearFileText();
     bool openFile(QFlags<QIODevice::OpenModeFlag> flags);
+
+    //close file if it is opened
     void closeFile();
+
     void checkXmlError();
-    QString getAdjustedXmlDataString(QTemporaryFile *tmp, int indent);
+    QString getTabbedXmlString(QTemporaryFile *tmp, int indent);
     QString appendTabIndent(int num);
+
+    //All unified with LF (Unix style)
+    QString endLineStr();
 
     QXmlStreamReader *rxml;
     QXmlStreamWriter *wxml;

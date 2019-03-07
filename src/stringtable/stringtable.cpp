@@ -50,12 +50,12 @@ void StringTable::setPopupActionTop()
     contextMenu->addSeparator();
 
     //connect signals
-    connect(m_add, SIGNAL(triggered()), this, SLOT(addAction()));
-    connect(m_delete, SIGNAL(triggered()), this, SLOT(deleteAction()));
-    connect(m_edit, SIGNAL(triggered()), this, SLOT(editAction()));
+    connect(m_add, &QAction::triggered, this, &StringTable::addAction);
+    connect(m_delete, &QAction::triggered, this, &StringTable::deleteAction);
+    connect(m_edit, &QAction::triggered, this, &StringTable::editAction);
 
-    connect(m_file, SIGNAL(triggered()), this, SLOT(openFileAction()));
-    connect(m_dir, SIGNAL(triggered()), this, SLOT(openDirectoryAction()));
+    connect(m_file, &QAction::triggered, this, &StringTable::openFileAction);
+    connect(m_dir, &QAction::triggered, this, &StringTable::openDirectoryAction);
 }
 
 void StringTable::setPopupActionDefault()
@@ -79,11 +79,11 @@ void StringTable::setPopupActionDefault()
     m_down->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
 
     //connect signals
-    connect(m_cut, SIGNAL(triggered()), this, SLOT(cutAction()));
-    connect(m_copy, SIGNAL(triggered()), this, SLOT(copyAction()));
-    connect(m_paste, SIGNAL(triggered()), this, SLOT(pasteAction()));
-    connect(m_up, SIGNAL(triggered()), this, SLOT(upAction()));
-    connect(m_down, SIGNAL(triggered()), this, SLOT(downAction()));
+    connect(m_cut, &QAction::triggered, this, &StringTable::cutAction);
+    connect(m_copy, &QAction::triggered, this, &StringTable::copyAction);
+    connect(m_paste, &QAction::triggered, this, &StringTable::pasteAction);
+    connect(m_up, &QAction::triggered, this, &StringTable::upAction);
+    connect(m_down, &QAction::triggered, this, &StringTable::downAction);
 }
 
 void StringTable::setPopupActionBottom()
@@ -92,7 +92,7 @@ void StringTable::setPopupActionBottom()
     m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
     m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
 
-    connect(m_ref, SIGNAL(triggered()), this, SLOT(reloadAction()));
+    connect(m_ref, &QAction::triggered, this, &StringTable::reloadAction);
 }
 
 bool StringTable::eventFilter(QObject *obj, QEvent *event)
@@ -296,7 +296,7 @@ void StringTable::pasteAction()
        insertRow(row);
 
        // One row table
-       QStringList intext = ((QString)text.at(i)).split(QRegularExpression("\\t|,"));
+       QStringList intext = (text.at(i)).split(QRegularExpression("\\t|,"));
 
        int intxt = intext.count();
        if(intxt > 0){
@@ -350,7 +350,7 @@ void StringTable::openFileAction()
 {
     int current = this->currentRow();
     if(rowCount() == 0 || current < 0) return;
-    QString str = selectFile("./");
+    QString str = selectFile(QDir::currentPath());
     this->setItem(current, 1, new QTableWidgetItem(str));
 }
 
@@ -358,7 +358,7 @@ void StringTable::openDirectoryAction()
 {
     int current = this->currentRow();
     if(rowCount() == 0 || current < 0) return;
-    QString str = selectFolder("./");
+    QString str = selectFolder(QDir::currentPath());
     this->setItem(current, 1, new QTableWidgetItem(str));
 }
 

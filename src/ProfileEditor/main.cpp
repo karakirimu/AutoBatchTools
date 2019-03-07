@@ -1,6 +1,7 @@
-#include "profileeditor.h"
 #include <QApplication>
 #include <QTranslator>
+#include <QTextCodec>
+#include "profileeditor.h"
 
 int main(int argc, char *argv[])
 {

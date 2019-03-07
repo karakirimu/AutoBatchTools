@@ -42,31 +42,32 @@ void VariantTable::updateIndex(QString operation)
     QStringList sep = operation.split(",");
     if(sep.count() < 2) return;
 
-    if(sep.at(1) == UNDOREDO_L_TABLEADD){
+    if(sep.at(1) == UNDOREDO_LV_ADD){
         //exectableadd
         this->insertItem(static_cast<QString>(sep.at(0)).toInt());
 
     }else if(sep.count() == 3
-             && sep.at(2) == UNDOREDO_L_TABLEINS){
+             && sep.at(2) == UNDOREDO_LV_INS){
         //exectableins
         this->insertItem(static_cast<QString>(sep.at(1)).toInt());
         int rowpos = static_cast<QString>(sep.at(0)).toInt();
         int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
         this->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos));
 
+
     }else if(sep.count() == 3
-             && sep.at(2) == UNDOREDO_L_TABLEEDIT){
+             && sep.at(2) == UNDOREDO_LV_EDIT){
         //exectableedit
         int rowpos = static_cast<QString>(sep.at(0)).toInt();
         int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
         this->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos));
 
-    }else if(sep.at(1) == UNDOREDO_L_TABLEDEL){
+    }else if(sep.at(1) == UNDOREDO_LV_DEL){
         //exectabledel
         this->deleteItem(static_cast<QString>(sep.at(0)).toInt());
 
     }else if(sep.count() == 3
-             && sep.at(2) == UNDOREDO_L_TABLESWAP){
+             && sep.at(2) == UNDOREDO_LV_SWAP){
         //exectableswap
         this->swapItem(static_cast<QString>(sep.at(0)).toInt()
                                , static_cast<QString>(sep.at(1)).toInt());
@@ -80,7 +81,7 @@ void VariantTable::addAction()
     setRowCount(row + 1);
     editop->tableEditVariantAction(MAGIC, row, getLocalVariants(row), ProcessXmlListGenerator::TABLE_ADD);
 
-    //for useability
+    //for usability
     this->setCurrentItem(itemAt(row,0));
     this->selectRow(row);
 

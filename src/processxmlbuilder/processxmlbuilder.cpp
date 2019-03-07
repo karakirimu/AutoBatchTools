@@ -13,7 +13,7 @@ ProcessXmlBuilder::~ProcessXmlBuilder()
 void ProcessXmlBuilder::setLoadPath(QString filepath)
 {
 #ifdef QT_DEBUG
-    qDebug() << "ProcessXmlBuilder: setLoadPath: " << filepath;
+    qDebug() << "[ProcessXmlBuilder::setLoadPath] : " << filepath;
 #endif
 
     if(filepath != ""){
@@ -58,7 +58,7 @@ void ProcessXmlBuilder::setLoadBlankPath(QString filepath)
 bool ProcessXmlBuilder::readItem(int itemid, QList<QStringList> *itemlist)
 {
 #ifdef QT_DEBUG
-    qDebug() << "ProcessXmlBuilder: readItem :" << itemid;
+    qDebug() << "[ProcessXmlBuilder::readItem] :" << itemid;
 #endif
     return Xmlbuilder::readItem(itemid, FIRSTLAYER, ATTR, itemlist);
 }
@@ -66,7 +66,7 @@ bool ProcessXmlBuilder::readItem(int itemid, QList<QStringList> *itemlist)
 bool ProcessXmlBuilder::readAllItem(QList<QList<QStringList> *> *itemlist)
 {
 #ifdef QT_DEBUG
-    qDebug() << "ProcessXmlBuilder: readAllItem :";
+    qDebug() << "[ProcessXmlBuilder::readAllItem]";
 #endif
     return Xmlbuilder::readAllItem(FIRSTLAYER, ATTR, itemlist);
 }
@@ -137,7 +137,7 @@ void ProcessXmlBuilder::createDocument()
 
 int ProcessXmlBuilder::count()
 {
-    return getSpecifiedElementItemsCount(FIRSTLAYER);
+    return getElementItemsCount(FIRSTLAYER);
 }
 
 void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)

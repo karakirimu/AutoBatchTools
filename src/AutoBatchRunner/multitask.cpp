@@ -8,7 +8,7 @@ MultiTask::MultiTask(QObject *parent)
 
     //time based seed set
     QTime *ti = new QTime();
-    qsrand(ti->currentTime().msecsSinceStartOfDay() ^ 123456789);
+    qsrand(static_cast<uint>(ti->currentTime().msecsSinceStartOfDay() ^ 123456789));
     delete ti;
 }
 

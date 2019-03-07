@@ -15,7 +15,6 @@ RunTaskSignalBinder::RunTaskSignalBinder(QObject *parent)
     connect(worker, &QThread::started, executor, &Executor::runProcess);
     connect(executor, &Executor::processEnded, worker, &QThread::quit);
     connect(executor, &Executor::processStopped, worker, &QThread::quit);
-//    connect(worker, &QThread::finished, this, &RunTaskSignalBinder::testMessage);
 
     //connect executor
     connect(executor, &Executor::processStarted, this, &RunTaskSignalBinder::receiveStarted);
@@ -81,10 +80,8 @@ void RunTaskSignalBinder::start()
 //        executor->setDetached(settings.value("DETACH", false).toBool());
         executor->setLaunchedfrom(settings.value("FAKERES", false).toInt());
         executor->setSearchfileoverwrite(settings.value("FSUPDATE", true).toBool());
-//        executor->setForcequittime(settings.value("TIMEOUT", 30000).toInt());
         settings.endGroup();
 
-//        executor->setProcessFile(editingfile);
         executor->setGlobalList();
         executor->setLocalList();
 
@@ -115,8 +112,8 @@ void RunTaskSignalBinder::updateRange(QString str)
             tmp.clear();
             tmp = var.split("-");
 
-            tmpstart = ((QString)tmp.at(0)).toInt() - 1;
-            tmpend = ((QString)tmp.at(1)).toInt();
+            tmpstart = static_cast<QString>(tmp.at(0)).toInt() - 1;
+            tmpend = static_cast<QString>(tmp.at(1)).toInt();
 
             for(; tmpstart <= tmpend; tmpstart++){
                 result.append(tmpstart);
@@ -133,27 +130,6 @@ void RunTaskSignalBinder::updateRange(QString str)
 void RunTaskSignalBinder::updateFileList(QStringList *data)
 {
     if(data->empty()) return;
-//    QStringList need;
-
-//    QHash<QString, int>::iterator i = data->begin();
-//    while (i != data->end() && i.value() == 0) {
-//        need.append(i.key());
-//        ++i;
-//    }
-
-//    QSettings settings( "./settings.ini", QSettings::IniFormat );
-//    settings.beginGroup("pe_testexec");
-//    executor->addInputFiles(*data, settings.value("FILELOADMAX", -1).toInt());
     executor->addInputFiles(*data, -1);
-//    settings.endGroup();
+
 }
-
-//void RunTaskSignalBinder::updateEditFile(QString editfile)
-//{
-//    editingfile = editfile;
-//}
-
-//void RunTaskSignalBinder::testMessage()
-//{
-//    qDebug() << "process completed";
-//}

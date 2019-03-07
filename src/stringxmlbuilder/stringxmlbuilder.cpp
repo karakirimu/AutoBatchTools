@@ -28,6 +28,11 @@ bool StringXmlBuilder::addItem(const QList<QStringList> *itemlist)
     return Xmlbuilder::overwriteItem(count(), ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
 }
 
+bool StringXmlBuilder::insertItem(int itemid, QList<QStringList> *itemlist)
+{
+    return Xmlbuilder::insertItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+}
+
 bool StringXmlBuilder::deleteItem(int itemid)
 {
     return Xmlbuilder::deleteItem(itemid, FIRSTLAYER, ATTR);
@@ -60,7 +65,13 @@ void StringXmlBuilder::createDocument()
 
 int StringXmlBuilder::count()
 {
-    return getSpecifiedElementItemsCount(FIRSTLAYER);
+    return getElementItemsCount(FIRSTLAYER);
+}
+
+void StringXmlBuilder::createVarElement(QList<QStringList> *internal, QStringList *var)
+{
+    internal->append(QStringList() << "variant" << var->at(0));
+    internal->append(QStringList() << "value" << var->at(1));
 }
 
 void StringXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)

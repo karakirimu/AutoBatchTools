@@ -605,13 +605,14 @@ void ProcessFlowTable::setSearchItem(QList<QStringList> *list, int dataid)
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void ProcessFlowTable::setPluginsItem(QList<QStringList> *list, int dataid)
 {
-    QString curdata = pxlg.fetch(PL_NAME, ATTR_NONE, list);
-    curdata = (curdata == "")? "(not selected)" : curdata;
+    QString curdata = pxlg.fetch(PL_FILEPATH, ATTR_NONE, list);
 
 //    cell->setTypeAll(extra_title, &extra_pixmap, &extra_style, &extra_frame);
 
     QFileInfo info(curdata);
-    QString tmp = (info.isFile() ? info.fileName() : curdata);
+    QString tmp = (info.isFile() ? info.baseName() : curdata);
+
+    curdata = (curdata == "")? "(not selected)" : tmp;
 
     int plgcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, list)).toInt();
     int plgfirst = pxlg.fetchCmdFirstPos(PL_CMD, list);

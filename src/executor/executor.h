@@ -103,7 +103,7 @@ public slots:
 private slots:
     void loadNormalStandardOutput();
 //    void processEndLastStatus(int maxcount);
-//    void extrafuncInternalMessage(QString str){ emit processMessage(str, SCRIPT);}
+    void sendPluginMessage(QString str){ emit processMessage(str, PLUGINS);}
 
 private:
     //runprocess core
@@ -111,7 +111,7 @@ private:
     bool loadNormal(QList<QStringList> *list);
     bool loadSearch(QList<QStringList> *list);
     bool loadPlugins(QList<QStringList> *list);
-    bool loadOther(QList<QStringList> *list);
+    bool loadProject(QList<QStringList> *list);
     bool loadTemp(QList<QStringList> *list);
 
     bool Execute();

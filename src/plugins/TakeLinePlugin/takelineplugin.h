@@ -9,22 +9,18 @@
 #include <QTextStream>
 
 class TAKELINEPLUGINSHARED_EXPORT TakeLinePlugin
-        : public QObject, public ExtraPluginInterface
+        : public ExtraPluginInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "autobatch.TakeLinePlugin" FILE "takelineplugin.json")
+    Q_PLUGIN_METADATA(IID "abr.ExtraPluginInterface.TakeLinePlugin" FILE "takelineplugin.json")
     Q_INTERFACES(ExtraPluginInterface)
 
-signals:
-     void sendMessage(QString);
-
 public:
-//    TakeLinePlugin(){}
     ~TakeLinePlugin(){}
 
     int functionMain(int argc, QStringList *args);
 
-    QString getDetailString(){
+    QString tooltipString(){
         return tr("This function can take line 'n'.\n"
                   "arguments 1 : filename or string with '\\n'\n"
                   "arguments 2 : line number(it starts 0)\n"

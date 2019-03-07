@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>360</width>
-    <height>281</height>
+    <height>188</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -81,7 +81,10 @@
       <item>
        <widget class="QLineEdit" name="filename">
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">border: none;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
         <property name="readOnly">
          <bool>true</bool>
@@ -137,7 +140,10 @@
       <item>
        <widget class="QLineEdit" name="filepass">
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">border: none;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
         <property name="readOnly">
          <bool>true</bool>
@@ -193,7 +199,7 @@
       <item>
        <widget class="QLineEdit" name="extension">
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">border: none;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -252,7 +258,7 @@
       <item>
        <widget class="QLineEdit" name="filesize">
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">border: none;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -311,7 +317,7 @@
       <item>
        <widget class="QLineEdit" name="created">
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">border: none;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -370,7 +376,7 @@
       <item>
        <widget class="QLineEdit" name="updated">
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">border: none;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

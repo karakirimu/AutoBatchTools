@@ -39,7 +39,7 @@ void EditLocalVarTable::undo()
         updateCounter(false);
 
         setText(QObject::tr("Add local at %1").arg(m_tableindex) \
-                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_L_TABLEDEL));
+                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_LV_DEL));
 
         break;
 
@@ -47,7 +47,7 @@ void EditLocalVarTable::undo()
         pxlg.replaceElementList(m_tableindex, m_targetindex, m_oldvar, SKIP, m_cache);
 
         setText(QObject::tr("Edit local at %1").arg(m_tableindex) \
-                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_L_TABLEEDIT));
+                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_LV_EDIT));
         break;
 
     case ProcessXmlListGenerator::TABLE_INSERT:
@@ -56,7 +56,7 @@ void EditLocalVarTable::undo()
         updateCounter(false);
 
         setText(QObject::tr("Insert local at %1 \'%2\'").arg(m_tableindex).arg(m_newvar.at(0)) \
-                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_L_TABLEDEL));
+                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_LV_DEL));
         break;
 
     case ProcessXmlListGenerator::TABLE_DELETE:
@@ -66,7 +66,7 @@ void EditLocalVarTable::undo()
         updateCounter(true);
 
         setText(QObject::tr("Delete local at %1").arg(m_tableindex) \
-                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_L_TABLEINS));
+                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_LV_INS));
         break;
 
     default:
@@ -88,14 +88,14 @@ void EditLocalVarTable::redo()
         updateCounter(true);
 
         setText(QObject::tr("Add local %1").arg(m_tableindex) \
-                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_L_TABLEADD));
+                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_LV_ADD));
 
         break;
     case ProcessXmlListGenerator::TABLE_EDIT:
         pxlg.replaceElementList(m_tableindex, m_targetindex, m_newvar, SKIP, m_cache);
 
         setText(QObject::tr("Edit local at %1").arg(m_tableindex) \
-                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_L_TABLEEDIT));
+                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_LV_EDIT));
         break;
     case ProcessXmlListGenerator::TABLE_INSERT:
 
@@ -105,7 +105,7 @@ void EditLocalVarTable::redo()
         updateCounter(true);
 
         setText(QObject::tr("Insert local at %1 \'%2\'").arg(m_tableindex).arg(m_newvar.at(0)) \
-                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_L_TABLEINS));
+                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_LV_INS));
         break;
     case ProcessXmlListGenerator::TABLE_DELETE:
         //add
@@ -114,7 +114,7 @@ void EditLocalVarTable::redo()
         updateCounter(false);
 
         setText(QObject::tr("Delete local at %1").arg(m_tableindex) \
-                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_L_TABLEDEL));
+                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_LV_DEL));
         break;
     default:
         break;

@@ -19,38 +19,21 @@ bool Xmlbuilder::readItem(int itemid,
     QString name = "";
 
     openFile(QFile::ReadOnly);
-    readFileReset();
+    openedFileReset();
 
-    while (!(rxml->atEnd() || rxml->hasError()))
-    {
-//        rxml->readNext();
+    while (!(rxml->atEnd() || rxml->hasError())){
         rxml->readNextStartElement();
-
-//        if (rxml->isStartElement())
-//        {
-//            QString name = rxml->name().toString();
-
-//            if(name == firstlayername && !hasid)
-//            {
-//                QString val = rxml->attributes().value(attr).toString();
-
-//                if(val == QString::number(itemid)) hasid = true;
-//            }
         name = rxml->name().toString();
 
         if(name == firstlayername && !hasid
-                && rxml->attributes().value(attr).toInt() == itemid)
-        {
+                && rxml->attributes().value(attr).toInt() == itemid){
             hasid = true;
         }
 
-
         if(hasid) setSearchItemData(name, itemlist);
-//        }
 
         if(name == firstlayername && hasid
-                && rxml->isEndElement()/*rxml->name()*/)
-        {
+                && rxml->isEndElement()/*rxml->name()*/){
             hasid = false;
             break;
         }
@@ -69,19 +52,17 @@ bool Xmlbuilder::readAllItem(QString firstlayername, QString attr, QList<QList<Q
 {
     bool hasid = false;
     QString name = "";
-    QList<QStringList> *tmplist;
+    QList<QStringList> *tmplist = nullptr;
 
     openFile(QFile::ReadOnly);
-    readFileReset();
+    openedFileReset();
 
-    while (!(rxml->atEnd() || rxml->hasError()))
-    {
+    while (!(rxml->atEnd() || rxml->hasError())){
         rxml->readNextStartElement();
         name = rxml->name().toString();
 
         if(name == firstlayername && !hasid
-                && rxml->attributes().hasAttribute(attr))
-        {
+                && rxml->attributes().hasAttribute(attr)){
             tmplist = new QList<QStringList>();
             hasid = true;
         }
@@ -91,8 +72,7 @@ bool Xmlbuilder::readAllItem(QString firstlayername, QString attr, QList<QList<Q
         }
 
         if(name == firstlayername && hasid
-                && rxml->isEndElement())
-        {
+                && rxml->isEndElement()){
             hasid = false;
             itemlist->append(tmplist);
         }
@@ -127,8 +107,7 @@ void Xmlbuilder::copyItem(int itemid,
                                    QString rootelement,
                                    QString firstlayername,
                                    QString attr,
-                                   QString exchangedata)
-{
+                                   QString exchangedata){
     QList<QStringList> tmp;
     readItem(itemid, firstlayername, attr, &tmp);
 
@@ -155,43 +134,37 @@ bool Xmlbuilder::overwriteItem(int itemid,
                                         const QList<QStringList> *itemlist)
 {
     if(count(firstlayername) < itemid){
-        qDebug() << "overwriteItem() : counter fault. :" << rootelement;
+        qDebug() << "[Xmlbuilder::overwriteItem] : counter fault : " << rootelement;
         return false;
     }
 
     //delete specified index
-    deleteSpecifiedElementGroup(firstlayername, attr, itemid, true);
+    deleteElementGroup(firstlayername, attr, itemid, true);
 
     //get item line end
-    int specifiedline;
+    qint64 specifiedline;
 
     //check item count
     if(itemid == 0){
-        specifiedline = getSpecifiedElementLineFirst(rootelement);
+        specifiedline = getElementFirstLineNumber(rootelement);
     }else{
-        specifiedline = getSpecifiedElementLineEnd(firstlayername, attr, (itemid - 1));
+        specifiedline = getElementEndLineNumber(firstlayername, attr, (itemid - 1));
     }
 
-    int linecount = 0;
+    qint64 linecount = 0;
 
     QString forward;
-    QString append = getAppendData(itemid, firstlayername, attr, 1, itemlist, true);
+    QString append = getStructureStr(itemid, firstlayername, attr, 1, itemlist, true);
     QString lest;
 
     //please load file readwritemode
     openFile(QFile::ReadWrite);
-    readFileReset();
+    openedFileReset();
     QTextStream add(file);
 
     //read forword data set
     while(!add.atEnd() && linecount != specifiedline){
-        //WARNING:hard coding
-        //Windows
-#ifdef Q_OS_WIN
-        forward.append(add.readLine()).append("\n");
-#else
-        forward.append(add.readLine()).append("\r\n");
-#endif
+        forward.append(add.readLine()).append(BaseXmlBuilder::endLineStr());
         linecount++;
     }
 
@@ -207,9 +180,14 @@ bool Xmlbuilder::overwriteItem(int itemid,
     return true;
 }
 
+bool Xmlbuilder::insertItem(int itemid, QString rootelement, QString firstlayername, QString attr, const QList<QStringList> *itemlist)
+{
+    return insertItemId(itemid, rootelement, firstlayername, attr, itemlist);
+}
+
 int Xmlbuilder::count(QString firstlayername)
 {
-    return getSpecifiedElementItemsCount(firstlayername);
+    return getElementItemsCount(firstlayername);
 }
 
 bool Xmlbuilder::deleteItem(int itemid, QString firstlayername, QString attr)
@@ -217,13 +195,13 @@ bool Xmlbuilder::deleteItem(int itemid, QString firstlayername, QString attr)
     int lastindex = count(firstlayername) - 1;
     if(lastindex == itemid){
         //last item
-        return deleteSpecifiedElementGroup(firstlayername, attr, itemid, true);
+        return deleteElementGroup(firstlayername, attr, itemid, true);
     }else{
         //get table last id
         //copy other items
-        shiftXmlDataRecursive(itemid, firstlayername, attr);
+        deleteItemIdRecursive(itemid, firstlayername, attr);
         //delete other items
-        return deleteSpecifiedElementGroup(firstlayername, attr, lastindex, true);
+        return deleteElementGroup(firstlayername, attr, lastindex, true);
     }
 }
 
@@ -233,17 +211,16 @@ void Xmlbuilder::setSearchItemData(QString, QList<QStringList> *)
     return;
 }
 
-QString Xmlbuilder::getAppendData(int itemid,
-                                           QString firstlayername,
-                                           QString attr,
-                                           int indentnum,
-                                           const QList<QStringList> *list,
-                                           bool withparent)
+QString Xmlbuilder::getStructureStr(int itemid,
+                                  QString firstlayername,
+                                  QString attr,
+                                  int indentnum,
+                                  const QList<QStringList> *list,
+                                  bool withparent)
 {
     //create new tags
     QTemporaryFile tmp;
-    if (tmp.open())
-    {
+    if (tmp.open()){
         // init write devices
         //set device
         wxml->setDevice(&tmp);
@@ -264,12 +241,19 @@ QString Xmlbuilder::getAppendData(int itemid,
         tmp.close();
     }
 
-    return getAdjustedXmlDataString(&tmp, indentnum);
+    return getTabbedXmlString(&tmp, indentnum);
 }
 
-int Xmlbuilder::getItemFirstLine(int tablenum, QString firstlayername, QString attr)
+//QString Xmlbuilder::getIdLine(int itemid, QString firstlayername, QString attr, int indentnum)
+//{
+//    QString line = BaseXmlBuilder::appendTabIndent(indentnum);
+//    line.append("<%1 %2=\"%3\">").arg(firstlayername).arg(attr).arg(QString::number(itemid));
+//    return line;
+//}
+
+qint64 Xmlbuilder::getItemFirstLine(int tablenum, QString firstlayername, QString attr)
 {
-    return getSpecifiedElementLineFirst(firstlayername, attr, QString::number(tablenum));
+    return getElementFirstLineNumber(firstlayername, attr, QString::number(tablenum));
 }
 
 void Xmlbuilder::writeXmlItem(int itemid,
@@ -305,33 +289,102 @@ void Xmlbuilder::writeElementData(const QList<QStringList> *list)
     }
 }
 
-bool Xmlbuilder::shiftXmlData(int destitemid,
+bool Xmlbuilder::insertItemId(int itemid
+                            , QString rootelement
+                            , QString firstlayername
+                            , QString attr
+                            , const QList<QStringList> *itemlist)
+{
+    int counter = count(firstlayername);
+    if(counter < itemid){
+        qDebug() << "[Xmlbuilder::insertItemId] : counter fault.";
+        return false;
+    }
+
+    qint64 sline;
+
+    //check item count
+    if(itemid == 0){
+        //add
+        sline = getElementFirstLineNumber(rootelement);
+    }else{
+        //insert
+        sline = getElementEndLineNumber(firstlayername, attr, (itemid - 1));
+    }
+
+    qint64 linecount = 0;
+
+    QString forward;
+    QString append = getStructureStr(itemid, firstlayername, attr, 1, itemlist, true);
+    QString lest;
+
+    //please load file readwritemode
+    openFile(QFile::ReadWrite);
+    openedFileReset();
+    QTextStream add(file);
+
+    //read forword data set
+    while(linecount < sline){
+        forward.append(add.readLine()).append(BaseXmlBuilder::endLineStr());
+        linecount++;
+    }
+
+    //read lest data set
+    //update dataset
+    QString curline;
+    QString tmp;
+    QRegularExpression re("<\\w+( \\w+=\"(\\w+)\")");
+    int newid = itemid;
+
+    while(!add.atEnd()){
+        curline = add.readLine();
+
+        if(curline.contains(re)){
+            newid++;
+            lest.append(curline.replace(re, QString("<%1 %2=\"%3\"").arg(firstlayername).arg(attr).arg(newid)));
+        }else{
+            lest.append(curline);
+        }
+
+        lest.append(BaseXmlBuilder::endLineStr());
+    }
+
+    //clear filetext
+    clearFileText();
+
+    add << forward.append(append).append(lest);
+
+    closeFile();
+    return true;
+}
+
+bool Xmlbuilder::deleteItemId(int destitemid,
                                        int fromitemid,
                                        QString firstlayername,
                                        QString attr)
 {
     int counter = count(firstlayername);
     if(counter < fromitemid || counter < destitemid){
-        qDebug() << "shiftXmlData() : counter fault.";
+        qDebug() << "[Xmlbuilder::shiftXmlData] : counter fault.";
         return false;
     }
 
     //delete specified index
-    deleteSpecifiedElementGroup(firstlayername, attr, destitemid, false);
+    deleteElementGroup(firstlayername, attr, destitemid, false);
 
     //get item line start
-    int specifiedline = getItemFirstLine(destitemid, firstlayername, attr);
+    qint64 specifiedline = getItemFirstLine(destitemid, firstlayername, attr);
     int linecount = 0;
 
     QString forward;
     QList<QStringList> data;
     readItem(fromitemid, firstlayername, attr, &data);
-    QString append = getAppendData(destitemid, firstlayername, attr, 2, &data, false);
+    QString append = getStructureStr(destitemid, firstlayername, attr, 2, &data, false);
     QString lest;
 
     //please load file readwritemode
     openFile(QFile::ReadWrite);
-    readFileReset();
+    openedFileReset();
 
     //set file to stream
     QTextStream add(file);
@@ -339,13 +392,7 @@ bool Xmlbuilder::shiftXmlData(int destitemid,
     //read forword data set
     while(!add.atEnd() && linecount != specifiedline){
         forward.append(add.readLine());
-        //WARNING:hard coding
-        //Windows
-#ifdef Q_OS_WIN
-        forward.append("\n");
-#else
-        forward.append("\r\n");
-#endif
+        forward.append(BaseXmlBuilder::endLineStr());
         linecount++;
     }
 
@@ -361,7 +408,7 @@ bool Xmlbuilder::shiftXmlData(int destitemid,
     return true;
 }
 
-bool Xmlbuilder::shiftXmlDataRecursive(int deleteitemid,
+bool Xmlbuilder::deleteItemIdRecursive(int deleteitemid,
                                                 QString firstlayername,
                                                 QString attr)
 {
@@ -369,12 +416,12 @@ bool Xmlbuilder::shiftXmlDataRecursive(int deleteitemid,
     int tableid = count(firstlayername);
 
     if(tableid < deleteitemid){
-        qDebug() << "shiftXmlDataRecursive() : counter fault.";
+        qDebug() << "[Xmlbuilder::shiftXmlDataRecursive] : counter fault.";
         return false;
     }
 
     for(int i = deleteitemid; i < tableid; i++){
-        shiftXmlData(i, i+1, firstlayername, attr);
+        deleteItemId(i, i+1, firstlayername, attr);
     }
     return true;
 }

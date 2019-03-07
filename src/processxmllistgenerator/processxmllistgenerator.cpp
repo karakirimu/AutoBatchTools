@@ -399,12 +399,12 @@ void ProcessXmlListGenerator::replaceElementList(int tableindex, int targetindex
 void ProcessXmlListGenerator::replaceElementList(int tableindex, int targetindex, QStringList replace, \
                                                  int skip, QList<QList<QStringList> *> *cache)
 {
-    qDebug() << "[ProcessXmlListGenerator::replaceElementList] table : " << tableindex \
+    qDebug() << "[ProcessXmlListGenerator::replaceElementList] index : " << tableindex \
              << "target " << targetindex;
 
     QStringList alist = cache->at(targetindex)->at(tableindex + skip);
     alist.replace(1, replace.at(0));
-    if(replace.count() > 2) alist.replace(3, replace.at(1));
+    if(replace.count() > 1) alist.replace(3, replace.at(1));
     cache->at(targetindex)->replace(tableindex + skip, alist);
 }
 

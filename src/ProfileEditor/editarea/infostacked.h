@@ -18,11 +18,11 @@
 
 #include <editoperator.h>
 
-class InnerStackedWidget : public QStackedWidget
+class InfoStacked : public QStackedWidget
 {
 public:
-    explicit InnerStackedWidget(QWidget *parent = nullptr);
-    ~InnerStackedWidget();
+    explicit InfoStacked(QWidget *parent = nullptr);
+    ~InfoStacked();
 
     void setEditOperator(EditOperator *op);
 

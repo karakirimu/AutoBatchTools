@@ -35,7 +35,6 @@ LIBRARYPATH = $$OUT_PWD/../../library/
 
 HEADERS  += editarea/commandtable.h \
     editarea/editortab.h \
-    editarea/innerstackedwidget.h \
 #    editarea/profilecombobox.h \
     editarea/searchcombobox.h \
     editarea/variantcombobox.h \
@@ -96,10 +95,15 @@ HEADERS  += editarea/commandtable.h \
     graphicsarea/processflowtable.h \
 #    undocommand_ui/editexectableswap.h \
 #    undocommand_ui/editplugintableswap.h
+    editarea/infostacked.h \
+    variantarea/varianttree.h \
+    undocommand_ui/editlocalvarianttree.h \
+    undocommand_ui/swaplocalvarianttree.h \
+    undocommand_ui/editglobalvartree.h \
+    undocommand_ui/swapglobalvartree.h
 
 SOURCES += editarea/commandtable.cpp \
     editarea/editortab.cpp \
-    editarea/innerstackedwidget.cpp \
 #    editarea/profilecombobox.cpp \
     editarea/searchcombobox.cpp \
     editarea/variantcombobox.cpp \
@@ -161,6 +165,12 @@ SOURCES += editarea/commandtable.cpp \
     graphicsarea/processflowtable.cpp \
 #    undocommand_ui/editexectableswap.cpp \
 #    undocommand_ui/editplugintableswap.cpp
+    editarea/infostacked.cpp \
+    variantarea/varianttree.cpp \
+    undocommand_ui/editlocalvarianttree.cpp \
+    undocommand_ui/swaplocalvarianttree.cpp \
+    undocommand_ui/editglobalvartree.cpp \
+    undocommand_ui/swapglobalvartree.cpp
 
 SOURCES += main.cpp
 

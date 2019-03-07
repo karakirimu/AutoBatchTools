@@ -124,7 +124,7 @@ void PluginsComboBox::pluginCheckAction(int index)
             emit pluginChanged(false);
         }
 
-        QString desc = inter->getDetailString();
+        QString desc = inter->tooltipString();
 
         if(desc != ""){
             this->setToolTip(desc);

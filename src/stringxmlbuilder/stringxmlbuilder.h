@@ -21,18 +21,22 @@ class STRINGXMLBUILDERSHARED_EXPORT StringXmlBuilder : public Xmlbuilder
 {
     Q_OBJECT
 public:
-    explicit StringXmlBuilder(QObject *parent = 0);
+    explicit StringXmlBuilder(QObject *parent = nullptr);
     ~StringXmlBuilder();
 
     bool readItem(int itemid, QList<QStringList> *itemlist);
     bool addItem(const QList<QStringList> *itemlist);
+    bool insertItem(int itemid, QList<QStringList> *itemlist);
     bool deleteItem(int itemid);
     bool editItem(int itemid, const QList<QStringList> *itemlist);
     void swapItem(int beforeitemid, int afteritemid);
     void copyItem(int itemid);
     bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
     void createDocument();
+
     int count();
+    void createVarElement(QList<QStringList> *internal, QStringList *var);
+
 private:
 
     void setSearchItemData(QString element, QList<QStringList> *list);

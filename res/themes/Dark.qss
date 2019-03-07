@@ -113,7 +113,7 @@ QToolButton#runToolButton
 , QToolButton#stopToolButton
 , QToolButton#pauseToolButton
 , QToolButton#settingToolButton {
-    background-color: #616161;
+    background-color: #373737;
     border: none;
 }
 
@@ -122,7 +122,7 @@ QToolButton:hover
 , QToolButton#stopToolButton:hover
 , QToolButton#pauseToolButton:hover
 , QToolButton#settingToolButton:hover {
-    background-color: #8e8e8e;
+    background-color: #616161;
     border: none;
 }
 

@@ -1,7 +1,9 @@
 #ifndef PROFILEEDITOR_H
 #define PROFILEEDITOR_H
 
-//#include "runtasksignalbinder.h"
+#ifndef Q_TEST_OBJECT
+#define Q_TEST_OBJECT
+#endif
 
 #include <QMainWindow>
 #include <QDateTime>
@@ -21,6 +23,7 @@ class ProfileEditor;
 class ProfileEditor : public QMainWindow
 {
     Q_OBJECT
+    Q_TEST_OBJECT
 
 public:
     explicit ProfileEditor(QWidget *parent = nullptr);
