@@ -19,6 +19,12 @@ public:
     //This function sets explain string.
     virtual QString tooltipString() = 0;
 
+    //set your function's version　(preffered: v X.X.X)
+    virtual QString version() = 0;
+
+    //set your displayed name
+    virtual QString vendor() = 0;
+
     //This function set true if you use setting widget function
     virtual bool existsSettingWidget() = 0;
 

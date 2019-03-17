@@ -14,16 +14,15 @@ SettingDialog::SettingDialog(QWidget *parent) :
 
     //connect action
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(onAccept()));
-//    connect( ui->buttonBox, SIGNAL(rejected()), this, SLOT(onReject()));
     connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onButtonBoxClicked(QAbstractButton*)));
     connect(ui->openButton, &QToolButton::clicked, this, &SettingDialog::openDir);
 
     //global variant
-    connect(ui->gAddButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::addAction);
-    connect(ui->gCopyButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::copyAction);
-    connect(ui->gDeleteButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::deleteAction);
-    connect(ui->gUpButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::upAction);
-    connect(ui->gDownButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::downAction);
+//    connect(ui->gAddButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::addAction);
+//    connect(ui->gCopyButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::copyAction);
+//    connect(ui->gDeleteButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::deleteAction);
+//    connect(ui->gUpButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::upAction);
+//    connect(ui->gDownButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::downAction);
 
     //search variant
     connect(ui->seAddButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::addAction);
@@ -45,14 +44,24 @@ SettingDialog::~SettingDialog()
     delete ui;
 }
 
+void SettingDialog::setListPos(int num)
+{
+    //todo: whether slot is run or not.
+    ui->listWidget->item(num)->setSelected(true);
+    ui->stackedWidget->setCurrentIndex(num);
+    ui->stackedWidget->setFocus();
+    if(num == 2) ui->searchTableWidget->setStyleSheet(this->styleSheet());
+}
+
 void SettingDialog::setupItem(){
     ui->listWidget->addItem(tr("General"));
-    ui->listWidget->addItem(tr("Variant"));
+//    ui->listWidget->addItem(tr("Variant"));
+    ui->listWidget->addItem(tr("Test"));
     ui->listWidget->addItem(tr("Search"));
-    ui->listWidget->addItem(tr("Extra Function"));
+    ui->listWidget->addItem(tr("Plugins"));
 //    ui->listWidget->addItem(tr("Theme"));
 
-    ui->listWidget->item(0)->setSelected(true);
+//    ui->listWidget->item(0)->setSelected(true);
     ui->listWidget->setIconSize(QSize(32,32));
 
     ui->listWidget->item(0)->setIcon(QIcon(":/default_icons/settings.png"));
@@ -76,8 +85,6 @@ void SettingDialog::setSettings()
     settings.setValue("DETACH", ui->detachCheckBox->isChecked());
     settings.setValue("FAKERES", ui->fakeresidentCheckBox->isChecked());
     settings.setValue("FSUPDATE", ui->fsupdateCheckBox->isChecked());
-//    settings.setValue("TIMEOUT", ui->timeoutSpinBox->value());
-//    settings.setValue("FILELOADMAX", ui->fileloadSpinBox->value());
     settings.endGroup();
 
 //    settings.beginGroup("scheduler_startup");
@@ -105,8 +112,6 @@ void SettingDialog::loadSettings()
     ui->detachCheckBox->setChecked(settings.value("DETACH", false).toBool());
     ui->fakeresidentCheckBox->setChecked(settings.value("FAKERES", false).toBool());
     ui->fsupdateCheckBox->setChecked(settings.value("FSUPDATE", true).toBool());
-//    ui->timeoutSpinBox->setValue(settings.value("TIMEOUT", 30000).toInt());
-//    ui->fileloadSpinBox->setValue(settings.value("FILELOADMAX", 10).toInt());
     settings.endGroup();
 
 //    settings.beginGroup("scheduler_startup");
@@ -134,7 +139,7 @@ void SettingDialog::onAccept()
 
 void SettingDialog::onButtonBoxClicked(QAbstractButton *button)
 {
-    if(button->text() == tr("Apply")){
+    if(button->text() == "Apply"){
         setSettings();
     }
 }
@@ -147,32 +152,8 @@ void SettingDialog::openDir()
     ui->tempEdit->setText(res);
 }
 
-//void SettingDialog::onReject()
-//{
-////    systemTraySelect();
-//}
-
 void SettingDialog::closeEvent(QCloseEvent *event)
 {
     Q_UNUSED(event)
     this->hide();
-//    systemTraySelect() ? event->ignore() : event->accept();
 }
-
-//bool SettingDialog::systemTraySelect()
-//{
-//#ifdef Q_OS_OSX
-//    if (!event->spontaneous() || !isVisible()) {
-//        return;
-//    }
-//#endif
-//    //when startup action selected, hide window.
-//    QSettings settings( "./settings.ini", QSettings::IniFormat );
-//    settings.beginGroup("scheduler_startup");
-//    bool isstartup = settings.value("ENABLED", false).toBool();
-//    settings.endGroup();
-
-//    if(isstartup) this->hide();
-
-//    return isstartup;
-//}

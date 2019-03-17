@@ -112,6 +112,8 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->pauseToolButton, &QToolButton::clicked, this, &ProfileEditor::pauseTriggered);
     connect(ui->stopToolButton, &QToolButton::clicked, this, &ProfileEditor::stopTriggered);
 
+    connect(ui->testSettingToolButton, &QToolButton::clicked, this, &ProfileEditor::testSettingTriggered);
+
     connect(mlTask, &MultiTaskP::processStarted, this, &ProfileEditor::taskStarted);
     connect(mlTask, &MultiTaskP::processPaused, this, &ProfileEditor::taskPaused);
     connect(mlTask, &MultiTaskP::processStopped, this, &ProfileEditor::taskStopped);
@@ -340,6 +342,7 @@ void ProfileEditor::launchSettingAction()
 {
     //setup settingdialog
     settingdialog->move(this->geometry().center() - settingdialog->rect().center());
+    settingdialog->setListPos(SettingDialog::GENERAL);
     settingdialog->show();
 }
 
@@ -453,7 +456,6 @@ void ProfileEditor::itemChangedAction(int after, int before, int function, int s
 
 void ProfileEditor::about()
 {
-    //setup settingdialog
     AboutPE *ab = new AboutPE;
     ab->setStyleSheet(this->styleSheet());
     ab->move(this->geometry().center() - ab->rect().center());
@@ -546,6 +548,14 @@ void ProfileEditor::stopTriggered()
     key = "";
     ui->console->setReadObjectName(key);
     ui->consolemessage->setObjectName(key);
+}
+
+void ProfileEditor::testSettingTriggered()
+{
+    //setup settingdialog
+    settingdialog->move(this->geometry().center() - settingdialog->rect().center());
+    settingdialog->setListPos(SettingDialog::TEST);
+    settingdialog->show();
 }
 
 void ProfileEditor::updateRangeText(QString range)

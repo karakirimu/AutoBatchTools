@@ -40,9 +40,8 @@ private slots:
     void openDirAction();
     void upAction();
     void downAction();
-#ifdef QT_DEBUG
+
     void itemSelectUpdate();
-#endif
     void itemDataUpdate(const QModelIndex &topLeft, const QModelIndex &bottomRight);
 
 private:

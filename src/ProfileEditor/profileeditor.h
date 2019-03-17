@@ -78,6 +78,9 @@ private slots:
     void pauseTriggered();
     void stopTriggered();
 
+    //launch test setting in direct
+    void testSettingTriggered();
+
     //text sender
     void updateRangeText(QString range);
 

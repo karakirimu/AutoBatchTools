@@ -284,36 +284,6 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QGroupBox" name="groupBox">
-                    <property name="title">
-                     <string>Run project</string>
-                    </property>
-                    <layout class="QVBoxLayout" name="verticalLayout_3">
-                     <item>
-                      <widget class="QCheckBox" name="detachCheckBox">
-                       <property name="text">
-                        <string>[Exec] Execute as an external process</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QCheckBox" name="fsupdateCheckBox">
-                       <property name="text">
-                        <string>[Search] Allow overwriting of output file</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QCheckBox" name="fakeresidentCheckBox">
-                       <property name="text">
-                        <string>Run with the scheduler as the source</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item>
                    <spacer name="verticalSpacer_2">
                     <property name="orientation">
                      <enum>Qt::Vertical</enum>
@@ -332,90 +302,32 @@
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="settingstring">
-             <layout class="QVBoxLayout" name="verticalLayout_7">
-              <property name="spacing">
-               <number>3</number>
-              </property>
+            <widget class="QWidget" name="settingtest">
+             <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
-               <widget class="QFrame" name="frame_5">
-                <property name="enabled">
-                 <bool>true</bool>
+               <widget class="QGroupBox" name="groupBox">
+                <property name="title">
+                 <string>Run project</string>
                 </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_2">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
+                <layout class="QVBoxLayout" name="verticalLayout_3">
                  <item>
-                  <widget class="QPushButton" name="gAddButton">
+                  <widget class="QCheckBox" name="detachCheckBox">
                    <property name="text">
-                    <string>Add</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
+                    <string>[Exec] Execute as an external process</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="gDeleteButton">
+                  <widget class="QCheckBox" name="fsupdateCheckBox">
                    <property name="text">
-                    <string>Delete</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
+                    <string>[Search] Allow overwriting of output file</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="gCopyButton">
+                  <widget class="QCheckBox" name="fakeresidentCheckBox">
                    <property name="text">
-                    <string>Copy</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/copy.png</normaloff>:/default_icons/copy.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="gUpButton">
-                   <property name="text">
-                    <string>Up</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="gDownButton">
-                   <property name="text">
-                    <string>Down</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
+                    <string>Run with the scheduler as the source</string>
                    </property>
                   </widget>
                  </item>
@@ -423,17 +335,17 @@
                </widget>
               </item>
               <item>
-               <widget class="StringTable" name="stringTableWidget">
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
                 </property>
-                <property name="selectionMode">
-                 <enum>QAbstractItemView::SingleSelection</enum>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
                 </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
-                </property>
-               </widget>
+               </spacer>
               </item>
              </layout>
             </widget>
@@ -652,11 +564,6 @@
   </layout>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>StringTable</class>
-   <extends>QTableWidget</extends>
-   <header>../stringtable/stringtable.h</header>
-  </customwidget>
   <customwidget>
    <class>SearchTable</class>
    <extends>QTableWidget</extends>

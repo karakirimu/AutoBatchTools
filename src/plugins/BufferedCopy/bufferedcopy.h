@@ -22,6 +22,9 @@ public:
 
      QString tooltipString(){ return ""; }
 
+     QString version(){ return "v 1.0.0"; }
+     QString vendor(){ return "karakirimu"; }
+
      bool existsSettingWidget(){return true;}
 
      int launchSettingWidget(QStringList *currentargs, QStringList *resultargs \

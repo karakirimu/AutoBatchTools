@@ -25,9 +25,7 @@ VariantTree::VariantTree(QWidget *)
     builder = new StringXmlBuilder();
 
     //row select action
-#ifdef QT_DEBUG
     connect(this, &QAbstractItemView::clicked, this, &VariantTree::itemSelectUpdate);
-#endif
     connect(this->model(), &QAbstractItemModel::dataChanged, this, &VariantTree::itemDataUpdate);
 
 }
@@ -398,17 +396,20 @@ void VariantTree::downAction()
 }
 
 
-#ifdef QT_DEBUG
 void VariantTree::itemSelectUpdate()
 {
     int row = this->selectionModel()->currentIndex().row();
     int column = this->selectionModel()->currentIndex().column();
-    if (this->selectionModel()->currentIndex().parent().isValid())
+
+    if (this->selectionModel()->currentIndex().parent().isValid()){
         qDebug() << QString("[VariantTree::itemSelectUpdate] Position: (%1,%2)").arg(row).arg(column);
-    else
+        QTreeWidgetItem *item = this->currentItem();
+        item->setToolTip(column, item->data(column, Qt::DisplayRole).toString());
+
+    }else{
         qDebug() << QString("[VariantTree::itemSelectUpdate] Position: (%1,%2) in top level").arg(row).arg(column);
+    }
 }
-#endif
 
 //tested
 void VariantTree::itemDataUpdate(const QModelIndex &topLeft, const QModelIndex &bottomRight)
@@ -514,6 +515,7 @@ void VariantTree::replaceItem(int row, QStringList strlist, int section)
 
     for (int column = 0; column < model->columnCount(index.parent()); ++column) {
         child->setData(column, Qt::EditRole, QVariant(strlist.at(column)));
+//        child->setToolTip(column, strlist.at(column));
     }
 
     ignoreDataChangedSignal(false);
@@ -782,6 +784,7 @@ bool VariantTree::setLocalListItems(QTreeWidgetItem *parent)
             //set item
             for (int column = 0; column < this->header()->count(); ++column) {
                 item->setData(column, Qt::EditRole, QVariant(list->at(cmdfirst + i).at(2 * column + 1)));
+//                item->setToolTip(column, list->at(cmdfirst + i).at(2 * column + 1));
             }
         }
 
@@ -807,6 +810,7 @@ bool VariantTree::setGlobalListItems(QTreeWidgetItem *parent)
                            | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
             for (int column = 0; column < this->header()->count(); ++column) {
                 item->setData(column, Qt::EditRole, QVariant(list->at(column).at(1)));
+//                item->setToolTip(column, list->at(column).at(1));
             }
         }
     }
@@ -815,7 +819,6 @@ bool VariantTree::setGlobalListItems(QTreeWidgetItem *parent)
     return true;
 }
 
-//can't work
 QStringList VariantTree::getLocalRowElement(int targetrow, int tablerow)
 {
     //parent
@@ -854,7 +857,6 @@ QStringList VariantTree::getVariants(QTreeWidgetItem *childitem)
 
     if(child.parent().isValid()){
         int row = child.row();
-
         list.append(child.parent().child(row, 0).data().toString());
         list.append(child.parent().child(row, 1).data().toString());
 

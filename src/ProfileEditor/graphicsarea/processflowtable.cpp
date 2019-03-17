@@ -103,7 +103,6 @@ bool ProcessFlowTable::eventFilter(QObject *obj, QEvent *event)
 void ProcessFlowTable::addAction()
 {
     editop->addAction();
-//    addItem();
 
     int cache = editop->getCacheSize() - 1;
     emit editop->ui_funcindexUpdate(cache, -1, EditOperator::ADD, EditOperator::FLOWTABLE);
@@ -115,7 +114,6 @@ void ProcessFlowTable::deleteAction()
     int cur = fixedCurrentRow();
     if(cur > 1){
         editop->deleteAction(cur);
-//        deleteItem(cur);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::FLOWTABLE);
     }
 }
@@ -125,7 +123,6 @@ void ProcessFlowTable::cutAction()
     int cur = fixedCurrentRow();
     if(cur > 1){
         editop->cutAction(cur);
-//        deleteItem(cur);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::FLOWTABLE);
     }
 }
@@ -144,7 +141,6 @@ void ProcessFlowTable::pasteAction()
     if(cur > 0){
         cur++;
         editop->pasteAction(cur);
-//        insertItem(cur);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::INSERT, EditOperator::FLOWTABLE);
 
     }
@@ -155,7 +151,6 @@ void ProcessFlowTable::upAction()
     int cur = fixedCurrentRow();
     if(cur > 2){
         editop->swapAction(cur, cur - 1);
-//        swapItem(cur, cur - 1);
         emit editop->ui_funcindexUpdate(cur - 1, cur, EditOperator::SWAP, EditOperator::FLOWTABLE);
     }
 }
@@ -165,7 +160,6 @@ void ProcessFlowTable::downAction()
     int cur = fixedCurrentRow();
     if(cur < rowCount()){
         editop->swapAction(cur, cur + 1);
-//        swapItem(cur, cur + 1);
         emit editop->ui_funcindexUpdate(cur + 1, cur, EditOperator::SWAP, EditOperator::FLOWTABLE);
     }
 }
@@ -282,23 +276,18 @@ void ProcessFlowTable::selectChanged(int crow, int ccol, int prow, int pcol)
     if(crow == prow) return;
 
     qDebug() << "[ProcessFlowTable::selectChanged]    rowpos : " << fixedCurrentRow();
+    this->currentItem()->setToolTip(this->currentItem()->text());
+
     emit editop->ui_funcindexUpdate(fixedCurrentRow(), -1, EditOperator::SELECT, EditOperator::FLOWTABLE);
 }
 
 void ProcessFlowTable::onItemStatusChanged(int after, int before, int function, int sendfrom)
 {
     Q_UNUSED(sendfrom);
-//    if(sendfrom == EditOperator::FLOWTABLE){
-//        switch (function) {
-//        case EditOperator::SWAP:
-//            swapItem(before, after);
-//            break;
-//        }
-//        return;
-//    }
 
 #ifdef QT_DEBUG
-    qDebug() << "[ProcessFlowTable::onItemStatusChanged] rowpos : " << after \
+    qDebug() << "[ProcessFlowTable::onItemStatusChanged] rowpos : after : " << after \
+             << " before : " << before \
              << " function : " << function;
 
 #endif

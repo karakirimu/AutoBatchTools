@@ -17,6 +17,10 @@ public:
     explicit SettingDialog(QWidget *parent = nullptr);
     ~SettingDialog();
 
+    //set listwidget to open
+    void setListPos(int num);
+    enum{GENERAL,TEST,SEARCH,PLUGINS};
+
 private slots:
     void on_listWidget_currentRowChanged(int currentRow);
     void onAccept();
