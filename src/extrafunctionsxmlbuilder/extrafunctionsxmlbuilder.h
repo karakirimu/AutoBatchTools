@@ -33,10 +33,14 @@ public:
     bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
     void createDocument();
     int count();
+
+    const QString PL_NAME = "manual";
+    const QString PL_ATTR_FILE = "file";
+
 private:
 
     void setSearchItemData(QString element, QList<QStringList> *list);
-    const QString ROOTELEMENT = "exfunc";
+    const QString ROOTELEMENT = "plugins";
     const QString FIRSTLAYER = "item";
     const QString ATTR = "id";
 };

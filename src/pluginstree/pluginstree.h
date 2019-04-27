@@ -3,12 +3,14 @@
 
 #include "pluginstree_global.h"
 #include <QPluginLoader>
+#include <QFileDialog>
 #include <QTreeWidget>
 #include <QHeaderView>
 #include <QFileInfo>
 #include <QMenu>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <../filesearchloader/filesearchloader.h>
 #include <../extrafunctionsxmlbuilder/extrafunctionsxmlbuilder.h>
 #include <../plugins/ExtraPluginInterface/extraplugininterface.h>
 
@@ -33,12 +35,12 @@ public slots:
 
 private slots:
     void itemSelectUpdate();
-    void itemDataUpdate(const QModelIndex &topLeft, const QModelIndex &bottomRight);
+//    void itemDataUpdate(const QModelIndex &topLeft, const QModelIndex &bottomRight);
 
 private:
     // undo redo no emit operation
-    void insertRow(int row); //ui
-    void insertRow(int row, QModelIndex *index); //internal function
+    void insertRow(int row, QStringList *data); //ui
+    void insertRow(int row, QStringList *data, QModelIndex *index); //internal function
 
     void deleteRowItems();
 
@@ -57,16 +59,19 @@ private:
     void onCustomContextMenu(const QPoint &point);
 
     // drag and drop
-    void dropEvent(QDropEvent *event);
-
     bool setAutoDetectPlugins(QTreeWidgetItem *parent);
     bool setManualPlugins(QTreeWidgetItem *parent);
 
-    QStringList getLocalRowElement(int targetrow, int tablerow);
-    QStringList getGlobalRowElement(int row);
+    // unique variant of xml files
     QStringList getEmptyVariants();
     QStringList getVariants(QTreeWidgetItem *childitem);
+    QList<QStringList> createXmlVariants(QStringList *uitext);
 
+    //load plugin checking and return ui texts
+    QStringList loadPluginUiText(const QStringList *xmltext);
+    bool isPluginValid(const QStringList *xmltext);
+
+    //for tree ui management
     void closeEditState();
 
     bool isParentValid();
@@ -77,7 +82,10 @@ private:
 
     //model()->datachanged
     //like blocksignals
-    void ignoreDataChangedSignal(bool valid);
+//    void ignoreDataChangedSignal(bool valid);
+
+    //file open (copy of basetable::selectfiles)
+    QStringList selectFiles(QString basedir);
 
     ExtrafunctionsXmlBuilder *builder;
 
@@ -91,6 +99,12 @@ private:
 
     // order of root element
     enum{TREE_AUTO,TREE_MANUAL};
+
+    // An order of QStringList for ui
+    enum{NAME_UI,VERSION_UI,VENDOR_UI,PATH_UI,DESC_UI};
+
+    const int NAME_XML = 1;
+    const int PATH_XML = 3;
 };
 
 #endif // PLUGINSTREE_H

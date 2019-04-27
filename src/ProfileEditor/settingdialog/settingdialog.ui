@@ -127,7 +127,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="settinggeneral">
              <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -481,7 +481,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="exAddButton">
+                  <widget class="QPushButton" name="plAddButton">
                    <property name="text">
                     <string>Add</string>
                    </property>
@@ -492,18 +492,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="exCopyButton">
-                   <property name="text">
-                    <string>Copy</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/copy.png</normaloff>:/default_icons/copy.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="exDeleteButton">
+                  <widget class="QPushButton" name="plDeleteButton">
                    <property name="text">
                     <string>Delete</string>
                    </property>
@@ -514,13 +503,24 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="exOpenButton">
+                  <widget class="QPushButton" name="plUpButton">
                    <property name="text">
-                    <string>Open plugin</string>
+                    <string>Up</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/folder.png</normaloff>:/default_icons/folder.png</iconset>
+                     <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="plDownButton">
+                   <property name="text">
+                    <string>Down</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../../../res/resources.qrc">
+                     <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
                    </property>
                   </widget>
                  </item>
@@ -528,15 +528,9 @@
                </widget>
               </item>
               <item>
-               <widget class="ExtraFunctionsTable" name="extrasTableWidget">
+               <widget class="PluginsTree" name="pluginsTreeWidget">
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="selectionMode">
-                 <enum>QAbstractItemView::SingleSelection</enum>
-                </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
                 </property>
                </widget>
               </item>
@@ -570,9 +564,9 @@
    <header>../searchtable/searchtable.h</header>
   </customwidget>
   <customwidget>
-   <class>ExtraFunctionsTable</class>
-   <extends>QTableWidget</extends>
-   <header>../extrafunctionstable/extrafunctionstable.h</header>
+   <class>PluginsTree</class>
+   <extends>QTreeWidget</extends>
+   <header>../pluginstree/pluginstree.h</header>
   </customwidget>
  </customwidgets>
  <resources>

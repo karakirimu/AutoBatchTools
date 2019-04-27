@@ -32,10 +32,10 @@ SettingDialog::SettingDialog(QWidget *parent) :
     connect(ui->seUpButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::downAction);
 
     //extrafunc variant
-    connect(ui->exAddButton, &QPushButton::clicked, ui->extrasTableWidget, &ExtraFunctionsTable::addAction);
-    connect(ui->exDeleteButton, &QPushButton::clicked, ui->extrasTableWidget, &ExtraFunctionsTable::deleteAction);
-    connect(ui->exCopyButton, &QPushButton::clicked, ui->extrasTableWidget, &ExtraFunctionsTable::copyAction);
-    connect(ui->exOpenButton, &QPushButton::clicked, ui->extrasTableWidget, &ExtraFunctionsTable::openFileAction);
+    connect(ui->plAddButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::addAction);
+    connect(ui->plDeleteButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::deleteAction);
+    connect(ui->plUpButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::upAction);
+    connect(ui->plDownButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::downAction);
 
 }
 

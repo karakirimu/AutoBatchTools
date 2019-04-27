@@ -208,5 +208,6 @@ LIBS += \
         -L$$LIBRARYPATH -lfileinfodialog \
         -L$$LIBRARYPATH -lfilesearchdialog \
         -L$$LIBRARYPATH -lextrafunctionstable \
+        -L$$LIBRARYPATH -lpluginstree \
         -L$$LIBRARYPATH -lexecutor \
         -L$$LIBRARYPATH -lconsolebase

@@ -44,7 +44,7 @@ class SEARCHXMLBUILDERSHARED_EXPORT SearchXmlBuilder : public Xmlbuilder
 {
     Q_OBJECT
 public:
-   explicit SearchXmlBuilder(QObject *parent = 0);
+   explicit SearchXmlBuilder(QObject *parent = nullptr);
    ~SearchXmlBuilder();
 
    bool readItem(int itemid, QList<QStringList> *itemlist);

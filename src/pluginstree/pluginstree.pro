@@ -5,7 +5,6 @@
 #-------------------------------------------------
 
 QT       += widgets
-QT       -= gui
 
 TARGET = pluginstree
 TEMPLATE = lib
@@ -31,6 +30,10 @@ SOURCES += \
 HEADERS += \
         pluginstree.h \
         pluginstree_global.h 
+
+LIBS += \
+    -L$$DESTDIR -lfilesearchloader \
+    -L$$DESTDIR -lextrafunctionsxmlbuilder
 
 unix {
     target.path = /usr/lib

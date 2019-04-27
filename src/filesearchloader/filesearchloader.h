@@ -11,7 +11,7 @@
 class FILESEARCHLOADERSHARED_EXPORT FileSearchLoader : public BaseFileSearch
 {
 public:
-    explicit FileSearchLoader(QObject *parent = 0);
+    explicit FileSearchLoader(QObject *parent = nullptr);
     ~FileSearchLoader();
 
     QStringList searchFromXml(int itemid);

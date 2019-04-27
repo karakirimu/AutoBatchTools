@@ -9,7 +9,7 @@ ExtrafunctionsXmlBuilder::ExtrafunctionsXmlBuilder(QObject *parent)
     dir.mkdir("./plugins");
 
     //set new file
-    setFileName("./plugins/.extralist");
+    setFileName("./plugins/.plist");
 
     if(count() == 0){
         createDocument();
@@ -48,7 +48,7 @@ void ExtrafunctionsXmlBuilder::swapItem(int beforeitemid, int afteritemid)
 
 void ExtrafunctionsXmlBuilder::copyItem(int itemid)
 {
-    Xmlbuilder::copyItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, "extras");
+    Xmlbuilder::copyItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, PL_NAME);
 }
 
 bool ExtrafunctionsXmlBuilder::overwriteItem(int itemid, const QList<QStringList> *itemlist)
@@ -68,12 +68,15 @@ int ExtrafunctionsXmlBuilder::count()
 
 void ExtrafunctionsXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {
-    if(element == "extras")
+    if(element == PL_NAME)
     {
-        QStringList data;
-        //add element and text
-        data.append(element);
-        data.append(rxml->readElementText());
-        list->append(data);
+//        QStringList data;
+//        //add element and text
+//        data.append(element);
+//        data.append(rxml->readElementText());
+//        list->append(data);
+
+        list->append(QStringList() << element << rxml->readElementText()
+                     << PL_ATTR_FILE << rxml->attributes().value(PL_ATTR_FILE).toString());
     }
 }
