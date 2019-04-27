@@ -13,8 +13,8 @@ SettingDialog::SettingDialog(QWidget *parent) :
     loadSettings();
 
     //connect action
-    connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(onAccept()));
-    connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onButtonBoxClicked(QAbstractButton*)));
+    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingDialog::onAccept);
+    connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &SettingDialog::onButtonBoxClicked);
     connect(ui->openButton, &QToolButton::clicked, this, &SettingDialog::openDir);
 
     //global variant
