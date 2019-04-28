@@ -35,7 +35,6 @@ public slots:
 
 private slots:
     void itemSelectUpdate();
-//    void itemDataUpdate(const QModelIndex &topLeft, const QModelIndex &bottomRight);
 
 private:
     // undo redo no emit operation
@@ -79,10 +78,6 @@ private:
 
     //copied from BasicTable
     bool deleteCheckMessage();
-
-    //model()->datachanged
-    //like blocksignals
-//    void ignoreDataChangedSignal(bool valid);
 
     //file open (copy of basetable::selectfiles)
     QStringList selectFiles(QString basedir);

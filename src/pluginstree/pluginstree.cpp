@@ -19,7 +19,7 @@ PluginsTree::PluginsTree(QWidget *parent)
     setPopupActionBottom();
 
     //set header
-    this->header()->setSectionResizeMode(QHeaderView::Stretch);
+    this->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     this->setHeaderLabels((QStringList() << tr("Name") << tr("Version") \
                                             << tr("Author") << tr("Path")));
 
@@ -30,7 +30,6 @@ PluginsTree::PluginsTree(QWidget *parent)
 
     //row select action
     connect(this, &QAbstractItemView::clicked, this, &PluginsTree::itemSelectUpdate);
-//    connect(this->model(), &QAbstractItemModel::dataChanged, this, &PluginsTree::itemDataUpdate);
 }
 
 PluginsTree::~PluginsTree()
@@ -40,8 +39,6 @@ PluginsTree::~PluginsTree()
 
 void PluginsTree::reloadAction()
 {
-    //ignoreDataChangedSignal(true);
-
 #ifdef QT_DEBUG
     QTime time;
     time.start();
@@ -60,18 +57,13 @@ void PluginsTree::reloadAction()
     setAutoDetectPlugins(root_auto);
     setManualPlugins(root_manual);
 
-
 #ifdef QT_DEBUG
     qDebug() << "[PluginsTree::reloadAction] elapsed: " << time.elapsed() << "ms";
 #endif
-
-    //ignoreDataChangedSignal(false);
 }
 
 void PluginsTree::addAction()
 {
-    //ignoreDataChangedSignal(true);
-
     QModelIndex index = getSectionFromUi();
     QTreeWidgetItem *top = itemFromIndex(index);
     int rootindex = index.row();
@@ -93,14 +85,10 @@ void PluginsTree::addAction()
             this->insertRow(count + i, &tmp);
         }
     }
-
-    //ignoreDataChangedSignal(false);
 }
 
 void PluginsTree::deleteAction()
 {
-    //ignoreDataChangedSignal(true);
-
     //check delete warning message
     if(!deleteCheckMessage()) return;
 
@@ -121,15 +109,11 @@ void PluginsTree::deleteAction()
 
         }
     }
-
-    //ignoreDataChangedSignal(false);
 }
 
 void PluginsTree::upAction()
 {
     if(!isParentValid()) return;
-
-    //ignoreDataChangedSignal(true);
 
     QTreeWidgetItem *top = itemFromIndex(getSectionFromUi());
 
@@ -141,15 +125,11 @@ void PluginsTree::upAction()
                                    QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 
     builder->swapItem(cur, cur - 1);
-
-    //ignoreDataChangedSignal(false);
 }
 
 void PluginsTree::downAction()
 {
     if(!isParentValid()) return;
-
-    //ignoreDataChangedSignal(true);
 
     QTreeWidgetItem *top = itemFromIndex(getSectionFromUi());
 
@@ -162,8 +142,6 @@ void PluginsTree::downAction()
                                    QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 
     builder->swapItem(cur, cur + 1);
-
-    //ignoreDataChangedSignal(false);
 }
 
 void PluginsTree::itemSelectUpdate()
@@ -181,22 +159,6 @@ void PluginsTree::itemSelectUpdate()
     }
 }
 
-//void PluginsTree::itemDataUpdate(const QModelIndex &topLeft, const QModelIndex &bottomRight)
-//{
-//    Q_UNUSED(topLeft);
-//    Q_UNUSED(bottomRight);
-
-//    qDebug() << "[PluginsTree::itemDataUpdate] currentindex : " \
-//             << this->currentIndex().data().toString();
-
-//    int rootindex = this->currentIndex().parent().row();
-//    if(rootindex == TREE_MANUAL){
-//        QList<QStringList> tlist;
-//        tlist.append(getVariants(this->currentItem()));
-//        builder->editItem(this->currentIndex().row(), &tlist);
-//    }
-//}
-
 void PluginsTree::insertRow(int row, QStringList *data)
 {
     qDebug() << "[PluginsTree::insertRow] row : " << row;
@@ -207,8 +169,6 @@ void PluginsTree::insertRow(int row, QStringList *data)
 
 void PluginsTree::insertRow(int row, QStringList *data, QModelIndex *index)
 {
-    //ignoreDataChangedSignal(true);
-
     QAbstractItemModel *model = this->model();
     if (!model->insertRow(row, *index))
         return;
@@ -221,14 +181,10 @@ void PluginsTree::insertRow(int row, QStringList *data, QModelIndex *index)
         this->itemFromIndex(child)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsUserCheckable \
                                            | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
     }
-
-    //ignoreDataChangedSignal(false);
 }
 
 void PluginsTree::replaceItem(int row, QStringList strlist, int section)
 {
-    //ignoreDataChangedSignal(true);
-
     QModelIndex index = this->indexFromItem(this->topLevelItem(section));
     QAbstractItemModel *model = this->model();
 
@@ -239,7 +195,6 @@ void PluginsTree::replaceItem(int row, QStringList strlist, int section)
 //        child->setToolTip(column, strlist.at(column));
     }
 
-    //ignoreDataChangedSignal(false);
 }
 
 void PluginsTree::swapRow(int before, int after)
@@ -373,67 +328,6 @@ void PluginsTree::onCustomContextMenu(const QPoint &point)
     contextMenu->popup(mapToGlobal(point));
 }
 
-//bool PluginsTree::setAutoDetectPlugins(QTreeWidgetItem *parent)
-//{
-//    // file search settings
-//    QList<QStringList> searchitem;
-//    searchitem.append(QStringList() << "name" << "autoplug");
-//    searchitem.append(QStringList() << "keyword" << "*.dll");
-//    searchitem.append(QStringList() << "dir" << "./plugins");
-
-//    QStringList *list = new QStringList();
-
-//    //file search
-//    FileSearchLoader fsload;
-//    *list = fsload.searchFromStrList(&searchitem);
-
-//    int count = list->count();
-
-//    for(int i = 0; i < count; i++){
-//        QTreeWidgetItem *item = new QTreeWidgetItem(parent);
-//        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsUserCheckable \
-//                       | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
-
-//        QPluginLoader loader(list->at(i));
-
-//        if(loader.load()){
-//            QObject *plugin = loader.instance();
-//            ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
-
-//            QString desc = inter->tooltipString();
-
-//            if(desc != ""){
-//                item->setToolTip(0, desc);
-//            }
-
-//            //name
-//            QFileInfo info(list->at(i));
-//            item->setData(0, Qt::DisplayRole, QVariant(info.baseName()));
-
-//            //version
-//            item->setData(1, Qt::DisplayRole, QVariant(inter->version()));
-
-//            //vendor
-//            item->setData(2, Qt::DisplayRole, QVariant(inter->vendor()));
-
-//            //path
-//            item->setData(3, Qt::DisplayRole, QVariant(list->at(i)));
-
-//            loader.unload();
-
-//        }else{
-//            //name
-//            item->setData(0, Qt::DisplayRole, QVariant(tr("File is invalid.")));
-
-//            //path
-//            item->setData(3, Qt::DisplayRole, QVariant(list->at(i)));
-//        }
-//    }
-
-//    delete list;
-//    return true;
-//}
-
 bool PluginsTree::setAutoDetectPlugins(QTreeWidgetItem *parent)
 {
     // file search settings
@@ -477,59 +371,6 @@ bool PluginsTree::setAutoDetectPlugins(QTreeWidgetItem *parent)
 
     return true;
 }
-
-//bool PluginsTree::setManualPlugins(QTreeWidgetItem *parent)
-//{
-//    int count = builder->count();
-//    QList<QStringList> *list = new QList<QStringList>();
-
-//    for(int i = 0; i < count; i++){
-//        list->clear();
-//        if(builder->readItem(i, list)){
-//            QTreeWidgetItem *item = new QTreeWidgetItem(parent);
-//            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsUserCheckable \
-//                           | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
-
-//            QPluginLoader loader(list->at(0).at(1));
-
-//            if(loader.load()){
-//                QObject *plugin = loader.instance();
-//                ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
-
-//                QString desc = inter->tooltipString();
-
-//                if(desc != ""){
-//                    item->setToolTip(0, desc);
-//                }
-
-//                //name
-//                QFileInfo info(list->at(0).at(1));
-//                item->setData(0, Qt::DisplayRole, QVariant(info.baseName()));
-
-//                //version
-//                item->setData(1, Qt::DisplayRole, QVariant(inter->version()));
-
-//                //vendor
-//                item->setData(2, Qt::DisplayRole, QVariant(inter->vendor()));
-
-//                //path
-//                item->setData(3, Qt::DisplayRole, QVariant(list->at(0).at(1)));
-
-//                loader.unload();
-
-//            }else{
-//                //name
-//                item->setData(0, Qt::DisplayRole, QVariant(tr("File is invalid.")));
-
-//                //path
-//                item->setData(3, Qt::DisplayRole, QVariant(list->at(0).at(1)));
-//            }
-//        }
-//    }
-
-//    delete list;
-//    return true;
-//}
 
 bool PluginsTree::setManualPlugins(QTreeWidgetItem *parent)
 {
@@ -598,6 +439,7 @@ QList<QStringList> PluginsTree::createXmlVariants(QStringList *uitext)
     return listdata;
 }
 
+//todo: name
 QStringList PluginsTree::loadPluginUiText(const QStringList *xmltext)
 {
     QPluginLoader loader(xmltext->at(PATH_XML));
@@ -669,15 +511,6 @@ bool PluginsTree::deleteCheckMessage()
         return false;
     }
 }
-
-//void PluginsTree:://ignoreDataChangedSignal(bool valid)
-//{
-//    if(valid){
-//        disconnect(this->model(), &QAbstractItemModel::dataChanged, this, &PluginsTree::itemDataUpdate);
-//    }else{
-//        connect(this->model(), &QAbstractItemModel::dataChanged, this, &PluginsTree::itemDataUpdate);
-//    }
-//}
 
 QStringList PluginsTree::selectFiles(QString basedir)
 {
