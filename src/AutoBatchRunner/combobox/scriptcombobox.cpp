@@ -3,7 +3,7 @@
 ExtraFunctionsComboBox::ExtraFunctionsComboBox(QObject *)
 {
     //set new xml builder
-    builder = new ExtrafunctionsXmlBuilder();
+    builder = new PluginsXmlBuilder();
 }
 
 ExtraFunctionsComboBox::~ExtraFunctionsComboBox()

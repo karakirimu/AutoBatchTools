@@ -33,7 +33,7 @@ HEADERS += \
 
 LIBS += \
     -L$$DESTDIR -lfilesearchloader \
-    -L$$DESTDIR -lextrafunctionsxmlbuilder
+    -L$$DESTDIR -lpluginsxmlbuilder
 
 unix {
     target.path = /usr/lib

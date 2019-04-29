@@ -548,7 +548,8 @@ bool Executor::loadPlugins(QList<QStringList> *list)
     QTime time;
     time.start();
 
-    const char *plname = plugin->metaObject()->className();
+//    const char *plname = plugin->metaObject()->className();
+    const QString plname = ext->pluginInfo().name;
 
     emit processMessage(tr("[%1] started").arg(plname), PLUGINS);
 

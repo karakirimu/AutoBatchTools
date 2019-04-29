@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <QPluginLoader>
 #include <QMessageBox>
-#include <../extrafunctionsxmlbuilder/extrafunctionsxmlbuilder.h>
+#include <../pluginsxmlbuilder/pluginsxmlbuilder.h>
 #include <../plugins/ExtraPluginInterface/extraplugininterface.h>
 #include <QFileDialog>
 
@@ -28,7 +28,9 @@ public slots:
     void deleteAction();
     void pluginCheckAction(int index);
 private:
-    ExtrafunctionsXmlBuilder *builder;
+    PluginsXmlBuilder *builder;
+    const int NAME_XML = 1;
+    const int PATH_XML = 3;
 };
 
 #endif // PLUGINSCOMBOBOX_H

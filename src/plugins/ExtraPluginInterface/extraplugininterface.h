@@ -3,9 +3,19 @@
 
 //#include "extraplugininterface_global.h"
 #include <QHash>
+#include <QString>
 #include <QStringList>
 #include <QObject>
 #include <QtPlugin>
+
+typedef struct {
+    QString name;           //set plugin name
+    QString version;        //set function's version　(preffered: v X.X.X)
+    QString author;         //set yours name
+    QString tooltip;        //This function sets explain string.
+    bool issettingwidget;   //This function set true if you use setting widget function
+
+} PLUGININFO;
 
 class ExtraPluginInterface : public QObject
 {
@@ -17,17 +27,16 @@ public:
     virtual int functionMain(int argc, QStringList *args) = 0;
 
     //This function sets explain string.
-    virtual QString tooltipString() = 0;
+//    virtual QString tooltipString() = 0;
 
     //set your function's version　(preffered: v X.X.X)
-    virtual QString version() = 0;
+//    virtual QString version() = 0;
 
     //set your displayed name
-    virtual QString vendor() = 0;
+//    virtual QString vendor() = 0;
 
     //This function set true if you use setting widget function
-    virtual bool existsSettingWidget() = 0;
-
+//    virtual bool existsSettingWidget() = 0;
 
     //This function is called above function returns true.
     //currentargs represents input, and resultargs represents output.
@@ -47,8 +56,9 @@ public:
     //In case of error termination, call this function and get the set character string.
     QString functionErrorMessage(){ return errorMessage; }
 
-
     QString functionSuccessMessage(){ return successMessage; }
+
+    const PLUGININFO pluginInfo(){return pinfo;}
 
 protected:
     void setErrorMessage(const QString message){ errorMessage = message; }
@@ -60,6 +70,9 @@ protected:
     QHash<QString, QString> *local;
     QHash<QString, QString> global;
     QStringList file;
+
+    // Describe the name, version, etc. in this structure after interface inheritance.
+    PLUGININFO pinfo;
 
 };
 

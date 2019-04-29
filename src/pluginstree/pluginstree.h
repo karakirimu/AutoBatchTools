@@ -11,7 +11,7 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 #include <../filesearchloader/filesearchloader.h>
-#include <../extrafunctionsxmlbuilder/extrafunctionsxmlbuilder.h>
+#include <../pluginsxmlbuilder/pluginsxmlbuilder.h>
 #include <../plugins/ExtraPluginInterface/extraplugininterface.h>
 
 #ifdef QT_DEBUG
@@ -82,7 +82,7 @@ private:
     //file open (copy of basetable::selectfiles)
     QStringList selectFiles(QString basedir);
 
-    ExtrafunctionsXmlBuilder *builder;
+    PluginsXmlBuilder *builder;
 
     QAction *m_add;
     QAction *m_delete;

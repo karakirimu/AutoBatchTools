@@ -23,7 +23,7 @@ SUBDIRS += \
           $$PWD\src\processxmllistgenerator \
           $$PWD\src\processxmlbuilder \
           $$PWD\src\stringxmlbuilder \
-          $$PWD\src\extrafunctionsxmlbuilder \
+          $$PWD\src\pluginsxmlbuilder \
           $$PWD\src\profilexmlbuilder \
 #2
           $$PWD\src\filesearchloader \

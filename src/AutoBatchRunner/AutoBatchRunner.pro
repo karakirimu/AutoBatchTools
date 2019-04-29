@@ -57,7 +57,7 @@ LIBS += \
     -L$$LIBRARYPATH -lxmlbuilder \
     -L$$LIBRARYPATH -lstringxmlbuilder \
     -L$$LIBRARYPATH -lsearchxmlbuilder \
-    -L$$LIBRARYPATH -lextrafunctionsxmlbuilder \
+    -L$$LIBRARYPATH -lpluginsxmlbuilder \
     -L$$LIBRARYPATH -lprocessxmlbuilder \
     -L$$LIBRARYPATH -lprofilexmlbuilder \
     -L$$LIBRARYPATH -lprofilecombobox \
@@ -70,4 +70,5 @@ LIBS += \
     -L$$LIBRARYPATH -lfilesearchdialog \
     -L$$LIBRARYPATH -lfilesearchloader \
     -L$$LIBRARYPATH -lconsolebase \
+    -L$$LIBRARYPATH -lpluginstree \
     -L$$LIBRARYPATH -lexecutor

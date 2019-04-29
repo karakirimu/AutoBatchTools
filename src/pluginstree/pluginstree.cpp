@@ -23,7 +23,7 @@ PluginsTree::PluginsTree(QWidget *parent)
     this->setHeaderLabels((QStringList() << tr("Name") << tr("Version") \
                                             << tr("Author") << tr("Path")));
 
-    builder = new ExtrafunctionsXmlBuilder();
+    builder = new PluginsXmlBuilder();
 
     //init tree
     reloadAction();
@@ -67,9 +67,9 @@ void PluginsTree::addAction()
     QModelIndex index = getSectionFromUi();
     QTreeWidgetItem *top = itemFromIndex(index);
     int rootindex = index.row();
-    int count = top->childCount();
 
     if(rootindex == TREE_MANUAL){
+        int count = top->childCount();
         QList<QStringList> tlist;
         QStringList tmp;
         // open files
@@ -89,11 +89,11 @@ void PluginsTree::addAction()
 
 void PluginsTree::deleteAction()
 {
-    //check delete warning message
-    if(!deleteCheckMessage()) return;
-
     // selecteditems is const
     QList<QTreeWidgetItem *> top = this->selectedItems();
+
+    //check delete warning message
+    if(top.count() == 0 || !deleteCheckMessage()) return;
 
     // ItemWidget based delete
     QTreeWidgetItem *tmp;
@@ -451,8 +451,10 @@ QStringList PluginsTree::loadPluginUiText(const QStringList *xmltext)
         QObject *plugin = loader.instance();
         ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
 
-        hlist << info.baseName() << inter->version()
-              << inter->vendor() << xmltext->at(PATH_XML) << inter->tooltipString();
+        PLUGININFO pinfo = inter->pluginInfo();
+
+        hlist << pinfo.name << pinfo.version
+              << pinfo.author << xmltext->at(PATH_XML) << pinfo.tooltip;
 
         loader.unload();
 

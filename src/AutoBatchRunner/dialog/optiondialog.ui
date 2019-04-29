@@ -574,24 +574,24 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="eCopyButton">
+                  <widget class="QPushButton" name="eUpButton">
                    <property name="text">
-                    <string>Copy</string>
+                    <string>Up</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/copy.png</normaloff>:/default_icons/copy.png</iconset>
+                     <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="eOpenButton">
+                  <widget class="QPushButton" name="eDownButton">
                    <property name="text">
-                    <string>Open ...</string>
+                    <string>Down</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/file.png</normaloff>:/default_icons/file.png</iconset>
+                     <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
                    </property>
                   </widget>
                  </item>
@@ -599,15 +599,9 @@
                </widget>
               </item>
               <item>
-               <widget class="ExtraFunctionsTable" name="extendTableWidget">
+               <widget class="PluginsTree" name="pluginsTreeWidget">
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="selectionMode">
-                 <enum>QAbstractItemView::SingleSelection</enum>
-                </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
                 </property>
                </widget>
               </item>
@@ -636,19 +630,19 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>StringTable</class>
-   <extends>QTableWidget</extends>
-   <header>../stringtable/stringtable.h</header>
-  </customwidget>
-  <customwidget>
    <class>SearchTable</class>
    <extends>QTableWidget</extends>
    <header>../searchtable/searchtable.h</header>
   </customwidget>
   <customwidget>
-   <class>ExtraFunctionsTable</class>
+   <class>PluginsTree</class>
+   <extends>QTreeWidget</extends>
+   <header>../pluginstree/pluginstree.h</header>
+  </customwidget>
+  <customwidget>
+   <class>StringTable</class>
    <extends>QTableWidget</extends>
-   <header>../extrafunctionstable/extrafunctionstable.h</header>
+   <header>../stringtable/stringtable.h</header>
   </customwidget>
   <customwidget>
    <class>ProfileTable</class>

@@ -22,7 +22,7 @@ ExtraFunctionsTable::ExtraFunctionsTable(QWidget *parent)
 //    setHorizontalHeaderLabels((QStringList() << ));
 
     //set new xml builder
-    builder = new ExtrafunctionsXmlBuilder();
+    builder = new PluginsXmlBuilder();
 
     //init table (reload read file.)
     reloadAction();

@@ -36,7 +36,7 @@ RESOURCES += \
 
 LIBS += \
     -L$$DESTDIR -lxmlbuilder \
-    -L$$DESTDIR -lextrafunctionsxmlbuilder \
+    -L$$DESTDIR -lpluginsxmlbuilder \
     -L$$DESTDIR -lbasictable
 
 unix {

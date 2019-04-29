@@ -36,10 +36,10 @@ OptionDialog::OptionDialog(QWidget *parent) :
     connect(ui->sUpButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::downAction);
 
     //extend variant
-    connect(ui->eAddButton, &QPushButton::clicked, ui->extendTableWidget, &ExtraFunctionsTable::addAction);
-    connect(ui->eDeleteButton, &QPushButton::clicked, ui->extendTableWidget, &ExtraFunctionsTable::deleteAction);
-    connect(ui->eCopyButton, &QPushButton::clicked, ui->extendTableWidget, &ExtraFunctionsTable::copyAction);
-    connect(ui->eOpenButton, &QPushButton::clicked, ui->extendTableWidget, &ExtraFunctionsTable::openFileAction);
+    connect(ui->eAddButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::addAction);
+    connect(ui->eDeleteButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::deleteAction);
+    connect(ui->eUpButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::upAction);
+    connect(ui->eDownButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::downAction);
 
 }
 
@@ -50,11 +50,11 @@ OptionDialog::~OptionDialog()
 
 void OptionDialog::setupItem(){
     ui->listWidget->addItem(tr("General"));
-    ui->listWidget->addItem(tr("Project files"));
+    ui->listWidget->addItem(tr("Project"));
 //    ui->listWidget->addItem(tr("Resident"));
-    ui->listWidget->addItem(tr("App Variant"));
+    ui->listWidget->addItem(tr("Global Variant"));
     ui->listWidget->addItem(tr("Search"));
-    ui->listWidget->addItem(tr("Extend Functions"));
+    ui->listWidget->addItem(tr("Plugins"));
 //    ui->listWidget->addItem(tr("Theme"));
 
     ui->listWidget->item(0)->setSelected(true);

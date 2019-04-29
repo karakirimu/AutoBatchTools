@@ -3,7 +3,7 @@
 
 #include <QComboBox>
 #include <QWidget>
-#include <../extrafunctionsxmlbuilder/extrafunctionsxmlbuilder.h>
+#include <../pluginsxmlbuilder/pluginsxmlbuilder.h>
 
 class ExtraFunctionsComboBox : public QComboBox
 {
@@ -17,7 +17,7 @@ public:
 public slots:
     void editAction(QString variant);
 private:
-    ExtrafunctionsXmlBuilder *builder;
+    PluginsXmlBuilder *builder;
 };
 
 #endif // EXTRAFUNCTIONSCOMBOBOX_H

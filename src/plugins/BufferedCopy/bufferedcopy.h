@@ -16,16 +16,24 @@ class BUFFEREDCOPYSHARED_EXPORT BufferedCopy
     Q_INTERFACES(ExtraPluginInterface)
 
 public:
+    BufferedCopy(){
+        pinfo.name = "BufferedCopy";
+        pinfo.version = "v 1.0.0";
+        pinfo.author = "karakirimu";
+        pinfo.tooltip = "";
+        pinfo.issettingwidget = true;
+    }
+
      ~BufferedCopy(){}
 
      int functionMain(int argc, QStringList *args);
 
-     QString tooltipString(){ return ""; }
+//     QString tooltipString(){ return ""; }
 
-     QString version(){ return "v 1.0.0"; }
-     QString vendor(){ return "karakirimu"; }
+//     QString version(){ return "v 1.0.0"; }
+//     QString vendor(){ return "karakirimu"; }
 
-     bool existsSettingWidget(){return true;}
+//     bool existsSettingWidget(){return true;}
 
      int launchSettingWidget(QStringList *currentargs, QStringList *resultargs \
                              , QPoint parentpos, QString parentstylesheet);

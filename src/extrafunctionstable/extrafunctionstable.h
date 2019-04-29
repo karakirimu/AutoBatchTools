@@ -4,7 +4,7 @@
 #include "extrafunctionstable_global.h"
 #include <QPluginLoader>
 #include <../basictable/basictable.h>
-#include <../extrafunctionsxmlbuilder/extrafunctionsxmlbuilder.h>
+#include <../pluginsxmlbuilder/pluginsxmlbuilder.h>
 #include <../plugins/ExtraPluginInterface/extraplugininterface.h>
 
 class EXTRAFUNCTIONSTABLESHARED_EXPORT ExtraFunctionsTable : public BasicTable
@@ -39,7 +39,7 @@ private:
     QAction *m_edit;
     QAction *m_ref;
 
-    ExtrafunctionsXmlBuilder *builder;
+    PluginsXmlBuilder *builder;
 };
 
 #endif // EXTRAFUNCTIONSTABLE_H
