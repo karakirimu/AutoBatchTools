@@ -202,6 +202,7 @@ LIBS += \
         -L$$LIBRARYPATH -lprofilexmlbuilder \
         -L$$LIBRARYPATH -lprofilecombobox \
         -L$$LIBRARYPATH -lbasictable \
+        -L$$LIBRARYPATH -lfilesearchloader \
         -L$$LIBRARYPATH -lFileQueueTable \
         -L$$LIBRARYPATH -lsearchtable \
         -L$$LIBRARYPATH -lstringtable \

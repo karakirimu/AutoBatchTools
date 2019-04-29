@@ -5,6 +5,11 @@ PluginsComboBox::PluginsComboBox(QObject *)
     //set new xml builder
     builder = new PluginsXmlBuilder();
     connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(pluginCheckAction(int)));
+
+    searchsettings.append(QStringList() << "name" << "autoplug");
+    searchsettings.append(QStringList() << "keyword" << "*.dll");
+    searchsettings.append(QStringList() << "dir" << "./plugins");
+
 }
 
 PluginsComboBox::~PluginsComboBox()
@@ -12,19 +17,63 @@ PluginsComboBox::~PluginsComboBox()
     delete builder;
 }
 
+//void PluginsComboBox::reloadComboBoxItem()
+//{
+//    int tmp = this->currentIndex();
+//    this->clear();
+//    QList<QStringList> item;
+//    QFileInfo info;
+//    int counter = builder->count();
+//    for(int i = 0; i < counter; i++){
+//        builder->readItem(i, &item);
+//        info.setFile(item.at(0).at(NAME_XML));
+
+//        // set combobox item
+//        this->addItem(info.baseName());
+//        item.clear();
+//    }
+//    if(-1 < tmp && tmp < counter)
+//        this->setCurrentIndex(tmp);
+//}
+
 void PluginsComboBox::reloadComboBoxItem()
 {
+    // save selected position
     int tmp = this->currentIndex();
+
+    //clear lists
     this->clear();
+    buffer.clear();
+
+    //read all auto list items
+    FileSearchLoader fsload;
+    buffer = fsload.searchFromStrList(&searchsettings);
+
+    //read all manual list items
     QList<QStringList> item;
-    QFileInfo info;
     int counter = builder->count();
     for(int i = 0; i < counter; i++){
         builder->readItem(i, &item);
-        info.setFile(item.at(0).at(NAME_XML));
-        this->addItem(info.baseName());
+        buffer.append(item.at(0).at(NAME_XML));
         item.clear();
     }
+
+    //add item to list
+    QMutableListIterator<QString> i(buffer);
+    ExtraPluginInterface *inter;
+
+    while(i.hasNext()){
+        QPluginLoader loader(i.next());
+
+        if(loader.load()){
+            inter = qobject_cast<ExtraPluginInterface *>(loader.instance());
+            this->addItem(inter->pluginInfo().name);
+            loader.unload();
+
+        }
+    }
+
+    //reload selected position
     if(-1 < tmp && tmp < counter)
         this->setCurrentIndex(tmp);
 }
@@ -136,13 +185,23 @@ void PluginsComboBox::pluginCheckAction(int index)
     }
 }
 
+//QString PluginsComboBox::getCurrentExtraFile()
+//{
+//    int selected = this->currentIndex();
+//    if(selected > -1){
+//        QList<QStringList> item;
+//        builder->readItem(selected, &item);
+//        return item.at(0).at(PATH_XML);
+//    }
+
+//    return "";
+//}
+
 QString PluginsComboBox::getCurrentExtraFile()
 {
     int selected = this->currentIndex();
     if(selected > -1){
-        QList<QStringList> item;
-        builder->readItem(selected, &item);
-        return item.at(0).at(PATH_XML);
+        return buffer.at(selected);
     }
 
     return "";
