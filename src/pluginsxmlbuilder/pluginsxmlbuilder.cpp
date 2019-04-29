@@ -1,7 +1,7 @@
-#include "extrafunctionsxmlbuilder.h"
+#include "pluginsxmlbuilder.h"
 
 
-ExtrafunctionsXmlBuilder::ExtrafunctionsXmlBuilder(QObject *parent)
+PluginsXmlBuilder::PluginsXmlBuilder(QObject *parent)
     : Xmlbuilder(parent)
 {
     //set new folder
@@ -16,57 +16,57 @@ ExtrafunctionsXmlBuilder::ExtrafunctionsXmlBuilder(QObject *parent)
     }
 }
 
-ExtrafunctionsXmlBuilder::~ExtrafunctionsXmlBuilder()
+PluginsXmlBuilder::~PluginsXmlBuilder()
 {
 
 }
 
-bool ExtrafunctionsXmlBuilder::readItem(int itemid, QList<QStringList> *itemlist)
+bool PluginsXmlBuilder::readItem(int itemid, QList<QStringList> *itemlist)
 {
     return Xmlbuilder::readItem(itemid, FIRSTLAYER, ATTR, itemlist);
 }
 
-bool ExtrafunctionsXmlBuilder::addItem(const QList<QStringList> *itemlist)
+bool PluginsXmlBuilder::addItem(const QList<QStringList> *itemlist)
 {
     return Xmlbuilder::overwriteItem(count(), ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
 }
 
-bool ExtrafunctionsXmlBuilder::deleteItem(int itemid)
+bool PluginsXmlBuilder::deleteItem(int itemid)
 {
     return Xmlbuilder::deleteItem(itemid, FIRSTLAYER, ATTR);
 }
 
-bool ExtrafunctionsXmlBuilder::editItem(int itemid, const QList<QStringList> *itemlist)
+bool PluginsXmlBuilder::editItem(int itemid, const QList<QStringList> *itemlist)
 {
     return Xmlbuilder::overwriteItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
 }
 
-void ExtrafunctionsXmlBuilder::swapItem(int beforeitemid, int afteritemid)
+void PluginsXmlBuilder::swapItem(int beforeitemid, int afteritemid)
 {
     Xmlbuilder::swapItem(beforeitemid, afteritemid, ROOTELEMENT, FIRSTLAYER, ATTR);
 }
 
-void ExtrafunctionsXmlBuilder::copyItem(int itemid)
+void PluginsXmlBuilder::copyItem(int itemid)
 {
     Xmlbuilder::copyItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, PL_NAME);
 }
 
-bool ExtrafunctionsXmlBuilder::overwriteItem(int itemid, const QList<QStringList> *itemlist)
+bool PluginsXmlBuilder::overwriteItem(int itemid, const QList<QStringList> *itemlist)
 {
     return Xmlbuilder::overwriteItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
 }
 
-void ExtrafunctionsXmlBuilder::createDocument()
+void PluginsXmlBuilder::createDocument()
 {
     createXmlBaseDocument(ROOTELEMENT);
 }
 
-int ExtrafunctionsXmlBuilder::count()
+int PluginsXmlBuilder::count()
 {
     return getElementItemsCount(FIRSTLAYER);
 }
 
-void ExtrafunctionsXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
+void PluginsXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {
     if(element == PL_NAME)
     {

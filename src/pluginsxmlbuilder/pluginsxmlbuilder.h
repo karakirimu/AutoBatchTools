@@ -1,12 +1,12 @@
-#ifndef EXTRAFUNCTIONSXMLBUILDER_H
-#define EXTRAFUNCTIONSXMLBUILDER_H
+#ifndef PLUGINSXMLBUILDER_H
+#define PLUGINSXMLBUILDER_H
 
-#include "extrafunctionsxmlbuilder_global.h"
+#include "pluginsxmlbuilder_global.h"
 #include <../xmlbuilder/xmlbuilder.h>
 #include <QDir>
 
 /**
- * @class ExtrafunctionsXmlBuilder
+ * @class PLUGINSXmlBuilder
  * @brief QList<QStringList> short description
  * @param data
  * @details
@@ -17,12 +17,12 @@
  * 0    :extras   :text   :
  */
 
-class EXTRAFUNCTIONSXMLBUILDERSHARED_EXPORT ExtrafunctionsXmlBuilder : public Xmlbuilder
+class PLUGINSXMLBUILDERSHARED_EXPORT PluginsXmlBuilder : public Xmlbuilder
 {
     Q_OBJECT
 public:
-    explicit ExtrafunctionsXmlBuilder(QObject *parent = nullptr);
-    ~ExtrafunctionsXmlBuilder();
+    explicit PluginsXmlBuilder(QObject *parent = nullptr);
+    ~PluginsXmlBuilder();
 
     bool readItem(int itemid, QList<QStringList> *itemlist);
     bool addItem(const QList<QStringList> *itemlist);
@@ -45,4 +45,4 @@ private:
     const QString ATTR = "id";
 };
 
-#endif // EXTRAFUNCTIONSXMLBUILDER_H
+#endif // PLUGINSXMLBUILDER_H

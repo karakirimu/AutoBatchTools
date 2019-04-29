@@ -6,10 +6,10 @@
 
 QT       -= gui
 
-TARGET = extrafunctionsxmlbuilder
+TARGET = pluginsxmlbuilder
 TEMPLATE = lib
 
-DEFINES += EXTRAFUNCTIONSXMLBUILDER_LIBRARY
+DEFINES += PLUGINSXMLBUILDER_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -25,11 +25,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include($$PWD/../build_library_path.pri)
 
 SOURCES += \
-        extrafunctionsxmlbuilder.cpp
+    pluginsxmlbuilder.cpp
 
 HEADERS += \
-        extrafunctionsxmlbuilder.h \
-        extrafunctionsxmlbuilder_global.h 
+        pluginsxmlbuilder_global.h  \
+        pluginsxmlbuilder.h
 
 LIBS += -L$$DESTDIR -lxmlbuilder
 
