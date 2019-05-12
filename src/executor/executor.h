@@ -203,6 +203,9 @@ private:
     QStack<ProcessXmlBuilder *> builderstack;
     QStack<QHash<QString, QString> *> localstack;
     QStack<QList<int> *> execliststack;
+
+    // local var
+    const int LOCALVARINDEX = 1;
 };
 
 #endif // EXECUTOR_H

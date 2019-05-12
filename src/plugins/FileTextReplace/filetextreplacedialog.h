@@ -12,8 +12,10 @@ class FileTextReplaceDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit FileTextReplaceDialog(QWidget *parent = nullptr);
+    explicit FileTextReplaceDialog(QStringList *current, QWidget *parent = nullptr);
     ~FileTextReplaceDialog();
+
+    QStringList getargs();
 
 private:
     Ui::FileTextReplaceDialog *ui;

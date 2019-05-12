@@ -47,7 +47,7 @@ StartupDialog::StartupDialog(QWidget *parent) :
     QDateTime time = QDateTime::currentDateTime();
     ui->scheduleDateTimeEdit->setDateTime(time);
 
-    qsrand(time.currentSecsSinceEpoch() ^ 987465123);
+    qsrand(static_cast<uint>(time.currentSecsSinceEpoch() ^ 987465123));
 }
 
 StartupDialog::~StartupDialog()
@@ -84,7 +84,7 @@ void StartupDialog::loadSettingList(int index, const QList<QStringList> *data)
 //    ui->validCheckBox->setChecked(VariantConverter::stringToBool(data->at(2).at(1)));
 
     //set radio button
-    ui->radioButtonGroup->button(((QString)data->at(3).at(1)).toInt())->setChecked(true);
+    ui->radioButtonGroup->button((static_cast<QString>(data->at(3).at(1)).toInt()))->setChecked(true);
 
     //set schedule datetime
     QDateTime datetime = QDateTime::fromString(data->at(4).at(1), "yyyy/MM/dd HH:mm:ss");
@@ -156,6 +156,7 @@ void StartupDialog::closeEvent(QCloseEvent *event)
     case QMessageBox::Cancel:
       // キャンセルして作業に戻る
       event->ignore();
+      break;
 
     default:
       break;

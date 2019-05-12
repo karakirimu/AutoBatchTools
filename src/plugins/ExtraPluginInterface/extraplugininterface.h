@@ -24,6 +24,8 @@ public:
 
     //This is plugin main function. return number 0 stands for success
     //Other numbers (e.g. -1) stands for failure.
+    // int argc         : argument count
+    // QStringList args : arguments
     virtual int functionMain(int argc, QStringList *args) = 0;
 
     //This function sets explain string.

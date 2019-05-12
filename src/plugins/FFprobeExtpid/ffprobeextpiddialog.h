@@ -4,19 +4,21 @@
 #include <QDialog>
 
 namespace Ui {
-class FFprobeExtpidDialog2;
+class FFprobeExtpidDialog;
 }
 
-class FFprobeExtpidDialog2 : public QDialog
+class FFprobeExtpidDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit FFprobeExtpidDialog2(QWidget *parent = nullptr);
-    ~FFprobeExtpidDialog2();
+    explicit FFprobeExtpidDialog(QStringList *current, QWidget *parent = nullptr);
+    ~FFprobeExtpidDialog();
+
+    QStringList getargs();
 
 private:
-    Ui::FFprobeExtpidDialog2 *ui;
+    Ui::FFprobeExtpidDialog *ui;
 };
 
 #endif // FFPROBEEXTPIDDIALOG2_H

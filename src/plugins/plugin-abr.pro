@@ -16,4 +16,6 @@ win32-msvc* {
 
 SUBDIRS += \
           $$PWD\TakeLinePlugin \
-          $$PWD\BufferedCopy
+          $$PWD\BufferedCopy \
+          $$PWD\FFprobeExtpid \
+          $$PWD\FileTextReplace

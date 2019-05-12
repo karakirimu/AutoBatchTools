@@ -182,6 +182,7 @@ void FileSearchDialog::closeEvent(QCloseEvent *event)
     case QMessageBox::Cancel:
       // cancel
       event->ignore();
+       break;
 
     default:
       break;

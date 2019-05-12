@@ -23,13 +23,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        ffprobeextpid.cpp
+        ffprobeextpid.cpp \
+        ffprobeextpiddialog.cpp
 
 HEADERS += \
         ffprobeextpid.h \
-        ffprobeextpid_global.h 
+        ffprobeextpid_global.h \
+        ffprobeextpiddialog.h
 
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
+FORMS += \
+    ffprobeextpiddialog.ui
+
+DISTFILES += \
+    ffprobeextpid.json

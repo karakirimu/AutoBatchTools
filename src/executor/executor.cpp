@@ -180,17 +180,13 @@ void Executor::setLocalList()
     qDebug() << "[Executor::setLocalList]";
 #endif
 
-    int counter = pbuilder->count();
     QList<QStringList> list;
 
-    for(int i = 0; i < counter; i++){
-        if(pbuilder->readItem(i, &list) && getReadType(list.at(0).at(1)) == 6){
-            int localc = static_cast<QString>(list.at(1).at(1)).toInt();
+    if(pbuilder->count() > 1 && pbuilder->readItem(LOCALVARINDEX, &list)){
+        int localc = static_cast<QString>(list.at(1).at(1)).toInt();
 
-            for(int i = 0; i < localc; i++){
-                localHash->insert(list.at(2 + i).at(0), list.at(2 + i).at(1));
-            }
-            break;
+        for(int i = 0; i < localc; i++){
+            localHash->insert(list.at(2 + i).at(1), list.at(2 + i).at(3));
         }
     }
 }
@@ -218,6 +214,13 @@ bool Executor::runProcess()
     checkExecList(execlist);
     emit processStateCount(0, execlist->count());
 
+    //Read profile information (Info data must index 0)
+    setProcessSettings(&fileinput, &loopcount);
+
+    //Load variables
+    setGlobalList();
+    setLocalList();
+
     //Preparation for execution of executable file
     work->process = new QProcess();
     work->process->setProcessChannelMode(QProcess::MergedChannels);
@@ -228,13 +231,6 @@ bool Executor::runProcess()
 #ifdef QT_DEBUG
     qDebug() << "[Executor::runProcess] execlist count :" << execlist->count();
 #endif
-
-    //Read profile information (Info data must index 0)
-    setProcessSettings(&fileinput, &loopcount);
-
-    //Load variables
-    setGlobalList();
-    setLocalList();
 
     //Execution flags
     work->working = true;

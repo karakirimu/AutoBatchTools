@@ -82,8 +82,8 @@ void RunTaskSignalBinder::start()
         executor->setSearchfileoverwrite(settings.value("FSUPDATE", true).toBool());
         settings.endGroup();
 
-        executor->setGlobalList();
-        executor->setLocalList();
+//        executor->setGlobalList();
+//        executor->setLocalList();
 
         worker->start();
     }
@@ -113,14 +113,18 @@ void RunTaskSignalBinder::updateRange(QString str)
             tmp = var.split("-");
 
             tmpstart = static_cast<QString>(tmp.at(0)).toInt() - 1;
+
+            //error correction
+            tmpstart = tmpstart < 1 ? 0 : tmpstart;
+
             tmpend = static_cast<QString>(tmp.at(1)).toInt();
 
-            for(; tmpstart <= tmpend; tmpstart++){
+            for(; tmpstart < tmpend; tmpstart++){
                 result.append(tmpstart);
             }
 
         }else{
-            result.append(var.toInt() > 0 ? var.toInt() : 0);
+            result.append(var.toInt() > 0 ? var.toInt() - 1 : 0);
         }
     }
 
