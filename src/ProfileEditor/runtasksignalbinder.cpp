@@ -100,6 +100,7 @@ void RunTaskSignalBinder::stop()
 //    executor->processKill();
 }
 
+//tested multiple range (x,x,x,x)
 void RunTaskSignalBinder::updateRange(QString str)
 {
     QStringList split = str.split(",");
@@ -112,19 +113,19 @@ void RunTaskSignalBinder::updateRange(QString str)
             tmp.clear();
             tmp = var.split("-");
 
-            tmpstart = static_cast<QString>(tmp.at(0)).toInt() - 1;
+            tmpstart = static_cast<QString>(tmp.at(0)).toInt();
 
             //error correction
-            tmpstart = tmpstart < 1 ? 0 : tmpstart;
+            tmpstart = tmpstart < 2 ? 0 : tmpstart;
 
             tmpend = static_cast<QString>(tmp.at(1)).toInt();
 
-            for(; tmpstart < tmpend; tmpstart++){
+            for(; tmpstart <= tmpend; tmpstart++){
                 result.append(tmpstart);
             }
 
         }else{
-            result.append(var.toInt() > 0 ? var.toInt() - 1 : 0);
+            result.append(var.toInt() > 1 ? var.toInt() : 0);
         }
     }
 
