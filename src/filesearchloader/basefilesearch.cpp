@@ -54,19 +54,32 @@ void BaseFileSearch::setRegularExpressionCondition(QStringList *filelist, QStrin
     deleteLists(&deleteddata, filelist);
 }
 
+/*!
+ * \brief BaseFileSearch::setCurrentTimeCondition
+ *  Extract files created within x seconds from current time from "filelist".
+ * \param filelist          List of files searched by search term.
+ * \param limitedtime       The time x seconds before the current time.
+ */
 void BaseFileSearch::setCurrentTimeCondition(QStringList *filelist, qint64 limitedtime)
 {
     int filecount = filelist->count();
     QList<int> deleteddata;
     QString file;
     QDateTime dtime = QDateTime::currentDateTime();
-    dtime.addSecs(-limitedtime);
+
+    // addsecs returns calculated Time
+    dtime = dtime.addSecs(-limitedtime);
 
     //check delete files
     for(int i = 0; i < filecount; i++){
         file = filelist->at(i);
         QFileInfo info(file);
-        //older.secsto(newer) > 0
+#ifdef QT_DEBUG
+        qDebug() << "[BaseFileSearch::setCurrentTimeCondition] lastModified : " << info.lastModified();
+        qDebug() << "[BaseFileSearch::setCurrentTimeCondition] birthtime  : " << info.birthTime();
+        qDebug() << "[BaseFileSearch::setCurrentTimeCondition] setdatetime  : " << dtime;
+        qDebug() << "[BaseFileSearch::setCurrentTimeCondition] calculated  : " << dtime.secsTo(info.lastModified());
+#endif
         if(dtime.secsTo(info.lastModified()) < 0) deleteddata.append(i);
     }
 
