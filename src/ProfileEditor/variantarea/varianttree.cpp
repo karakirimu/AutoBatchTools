@@ -271,7 +271,7 @@ void VariantTree::copyAction()
 
 }
 
-//tested single row text
+//tested single row text & single text
 void VariantTree::pasteAction()
 {
     QClipboard *clipboard = QApplication::clipboard();
@@ -286,7 +286,7 @@ void VariantTree::pasteAction()
     for(int i = 0; i < txcount; i++){
 
        if (this->selectionModel()->currentIndex().parent().isValid()){
-           row = this->currentIndex().row() + i;
+           row = this->currentIndex().row() + 1;
        }else{
            row = itemFromIndex(index)->childCount();
        }
@@ -294,8 +294,15 @@ void VariantTree::pasteAction()
        int rootindex = index.row();
        insertRow(row, rootindex);
 
-       // One row table
+       // One row table or single text
        QStringList intext = (text.at(i)).split(QRegularExpression("\\t|,"));
+
+       // when you want to put filename or variant selected column.
+       if(intext.count() == 1){
+            int column = this->selectionModel()->currentIndex().column();
+            intext.insert(1 - column, "");
+       }
+
        this->replaceItem(row, intext, rootindex);
 
        //insert
@@ -513,9 +520,14 @@ void VariantTree::replaceItem(int row, QStringList strlist, int section)
 
     QTreeWidgetItem *child = itemFromIndex(index)->child(row);
 
-    for (int column = 0; column < model->columnCount(index.parent()); ++column) {
-        child->setData(column, Qt::EditRole, QVariant(strlist.at(column)));
-//        child->setToolTip(column, strlist.at(column));
+    if(strlist.count() == 0){
+        ignoreDataChangedSignal(false);
+        return;
+
+    }else{
+        for (int column = 0; column < model->columnCount(index.parent()); ++column) {
+            child->setData(column, Qt::EditRole, QVariant(strlist.at(column)));
+        }
     }
 
     ignoreDataChangedSignal(false);
