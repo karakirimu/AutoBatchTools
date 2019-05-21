@@ -25,13 +25,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        sleep.cpp
+        sleep.cpp \
+        sleepdialog.cpp
 
 HEADERS += \
         sleep.h \
-        sleep_global.h 
+        sleep_global.h  \
+        sleepdialog.h
 
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+
+FORMS += \
+    sleepdialog.ui
+
+DISTFILES += \
+    sleep.json

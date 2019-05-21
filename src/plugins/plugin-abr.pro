@@ -18,4 +18,8 @@ SUBDIRS += \
           $$PWD\TakeLinePlugin \
           $$PWD\BufferedCopy \
           $$PWD\FFprobeExtpid \
-          $$PWD\FileTextReplace
+          $$PWD\FileTextReplace \
+          RegExpInputRename \
+          Sleep \
+          makedirectory \
+          removedirectory

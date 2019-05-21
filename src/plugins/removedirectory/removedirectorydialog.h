@@ -12,8 +12,10 @@ class RemoveDirectoryDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit RemoveDirectoryDialog(QWidget *parent = nullptr);
+    explicit RemoveDirectoryDialog(QStringList *current, QWidget *parent = nullptr);
     ~RemoveDirectoryDialog();
+
+    QStringList getargs();
 
 private:
     Ui::RemoveDirectoryDialog *ui;

@@ -12,8 +12,10 @@ class RegExpInputRenameDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit RegExpInputRenameDialog(QWidget *parent = nullptr);
+    explicit RegExpInputRenameDialog(QStringList *current, QWidget *parent = nullptr);
     ~RegExpInputRenameDialog();
+
+    QStringList getargs();
 
 private:
     Ui::RegExpInputRenameDialog *ui;

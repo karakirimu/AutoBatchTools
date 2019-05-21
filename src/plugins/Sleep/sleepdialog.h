@@ -12,8 +12,10 @@ class SleepDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SleepDialog(QWidget *parent = nullptr);
+    explicit SleepDialog(QStringList *current, QWidget *parent = nullptr);
     ~SleepDialog();
+
+    QStringList getargs();
 
 private:
     Ui::SleepDialog *ui;
