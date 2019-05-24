@@ -280,8 +280,25 @@ void EditorTab::setOtherDataList(QList<QStringList> *list)
 {
     this->blockSignals(true);
 
+    QString curdata = xgen.fetch(PR_FILEPATH, ATTR_NONE, list);
+    QFileInfo profile(curdata);
+
+    if(profile.exists()){
+        //read file
+        ProcessXmlBuilder tpxb;
+        QList<QStringList> tlist;
+        tpxb.setLoadPath(curdata);
+
+        if(tpxb.readItem(0, &tlist)){
+            curdata = xgen.fetch(I_NAME, ATTR_NONE, &tlist);
+        }
+
+    }else{
+        curdata = tr("(file is not exist)");
+    }
+
     profilecombobox->reloadComboBoxItem();
-    profilecombobox->setCurrentText(xgen.fetch(PR_NAME,ATTR_NONE, list));
+    profilecombobox->setCurrentText(curdata);
 
     autoonly_4->setChecked(VariantConverter::stringToBool( \
                                xgen.fetch(ALL_TYPE,TYPE_ANOTHER,ATTR_ONLY_SCHEDULER, list)));

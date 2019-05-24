@@ -272,7 +272,8 @@ void ProcessFlowTable::replaceItem(int id)
 
 void ProcessFlowTable::selectChanged(int crow, int ccol, int prow, int pcol)
 {
-    Q_UNUSED(ccol); Q_UNUSED(pcol);
+    Q_UNUSED(ccol);
+    Q_UNUSED(pcol);
     if(crow == prow) return;
 
     qDebug() << "[ProcessFlowTable::selectChanged]    rowpos : " << fixedCurrentRow();
@@ -418,7 +419,7 @@ void ProcessFlowTable::setFlowItem(int itemid)
 
     }else if(type == TYPE_SCRIPT){  setPluginsItem(list, itemid);
 
-    }else if(type == TYPE_ANOTHER){ setOtherItem(list, itemid);
+    }else if(type == TYPE_ANOTHER){ setProfileItem(list, itemid);
 
     }
 
@@ -452,7 +453,7 @@ void ProcessFlowTable::setAllFlowItem()
 
         }else if(type == TYPE_SCRIPT){  setPluginsItem(inner, n);
 
-        }else if(type == TYPE_ANOTHER){ setOtherItem(inner, n);
+        }else if(type == TYPE_ANOTHER){ setProfileItem(inner, n);
 
         }
 
@@ -484,7 +485,7 @@ void ProcessFlowTable::setTempItem(QList<QStringList> *list, int dataid)
         break;
 
     case ProcessXmlListGenerator::OTHER:
-        setOtherItem(list, dataid);
+        setProfileItem(list, dataid);
         break;
 
     default:
@@ -623,10 +624,28 @@ void ProcessFlowTable::setPluginsItem(QList<QStringList> *list, int dataid)
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
-void ProcessFlowTable::setOtherItem(QList<QStringList> *list, int dataid)
+void ProcessFlowTable::setProfileItem(QList<QStringList> *list, int dataid)
 {
-    QString curdata = pxlg.fetch(PR_NAME, ATTR_NONE, list);
-    curdata = (curdata == "")? "(not selected)" : curdata;
+    QString curdata = pxlg.fetch(PR_FILEPATH, ATTR_NONE, list);
+    QFileInfo profile(curdata);
+
+    if(profile.exists()){
+        //read file
+        ProcessXmlBuilder tpxb;
+        QList<QStringList> tlist;
+        tpxb.setLoadPath(curdata);
+
+        if(tpxb.readItem(0, &tlist)){
+            curdata = pxlg.fetch(I_NAME, ATTR_NONE, &tlist);
+            curdata.append(" - ");
+            curdata.append(profile.baseName());
+        }
+
+    }else{
+        curdata = tr("(file is not exist)");
+    }
+
+    if(curdata == "") curdata = "(not selected)";
 
     QColor color;
     color.setNamedColor(tr("#ffecb3"));

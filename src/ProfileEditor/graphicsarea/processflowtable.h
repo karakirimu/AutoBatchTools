@@ -68,7 +68,7 @@ private:
     void setNormalItem(QList<QStringList> *list, int dataid);
     void setSearchItem(QList<QStringList> *list, int dataid);
     void setPluginsItem(QList<QStringList> *list, int dataid);
-    void setOtherItem(QList<QStringList> *list, int dataid);
+    void setProfileItem(QList<QStringList> *list, int dataid);
 
 //    void updateLastIndexItem(int lastindex);
 
