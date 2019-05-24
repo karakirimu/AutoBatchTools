@@ -44,6 +44,8 @@
 
 // tag define (index 0)
 // all
+
+//! XML tag "type"
 static const QString ALL_TYPE =                   "type";
 
 // info
@@ -64,8 +66,11 @@ static const QString S_SEPARATOR =                "sep";
 static const QString S_VARIANT =                  "var";
 static const QString S_OUTPUTFILE =               "output";
 
-// profile(other)
-static const QString PR_NAME =                    "prname";
+// profile
+
+// XML tag "prname"
+//static const QString PR_NAME =                    "prname";
+//! XML tag "prfile"
 static const QString PR_FILEPATH =                "prfile";
 
 // exec(normal)

@@ -46,8 +46,8 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
 //    const QString PR_NAME =                    "prname";
 //    const QString PR_FILEPATH =                "prfile";
 
-    generateId.insert(PR_NAME, 300);
-    generateId.insert(PR_FILEPATH, 301);
+//    generateId.insert(PR_NAME, 300);
+    generateId.insert(PR_FILEPATH, 300);
 
     // exec(normal)
 //    const QString E_TIMEOUT =                  "timeout";
@@ -188,7 +188,7 @@ void ProcessXmlListGenerator::createNewList(QList<QStringList> *newlist)
     newlist->append((QStringList() << S_OUTPUTFILE << "" << ATTR_RADIOBUTTONPOS << "0"));
     //other
     newlist->append((QStringList() << ALL_TYPE << TYPE_ANOTHER << ATTR_ONLY_SCHEDULER << "no"));
-    newlist->append((QStringList() << PR_NAME << ""));
+//    newlist->append((QStringList() << PR_NAME << ""));
     newlist->append((QStringList() << PR_FILEPATH << ""));
     //normal
     newlist->append((QStringList() << ALL_TYPE << TYPE_EXEC << ATTR_ONLY_SCHEDULER << "no"));

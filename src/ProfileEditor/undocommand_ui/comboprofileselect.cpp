@@ -13,14 +13,14 @@ ComboProfileSelect::ComboProfileSelect(const int &targetindex
     m_cache = cache;
     m_newfile = newfile;
 
-    m_oldstring = pxlg.fetch(PR_NAME, ATTR_NONE, m_cache->at(m_targetindex));
+//    m_oldstring = pxlg.fetch(PR_NAME, ATTR_NONE, m_cache->at(m_targetindex));
     m_oldfile = pxlg.fetch(PR_FILEPATH, ATTR_NONE, m_cache->at(m_targetindex));
 
 }
 
 void ComboProfileSelect::undo()
 {
-    pxlg.replaceElementList(PR_NAME, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
+//    pxlg.replaceElementList(PR_NAME, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
     pxlg.replaceElementList(PR_FILEPATH, ATTR_NONE, m_targetindex, m_oldfile, m_cache);
 
     setText(QObject::tr("Other profile to %1 ").arg(m_oldstring) \
@@ -29,7 +29,7 @@ void ComboProfileSelect::undo()
 
 void ComboProfileSelect::redo()
 {
-    pxlg.replaceElementList(PR_NAME, ATTR_NONE, m_targetindex, m_newstring, m_cache);
+//    pxlg.replaceElementList(PR_NAME, ATTR_NONE, m_targetindex, m_newstring, m_cache);
     pxlg.replaceElementList(PR_FILEPATH, ATTR_NONE, m_targetindex, m_newfile, m_cache);
 
     setText(QObject::tr("Other profile to %1 ").arg(m_newstring) \
@@ -39,7 +39,7 @@ void ComboProfileSelect::redo()
 int ComboProfileSelect::id() const
 {
     ProcessXmlListGenerator pxg;
-    return pxg.getId(PR_NAME);
+    return pxg.getId(PR_FILEPATH);
 }
 
 bool ComboProfileSelect::mergeWith(const QUndoCommand *other)

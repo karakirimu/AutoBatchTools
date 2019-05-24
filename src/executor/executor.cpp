@@ -604,7 +604,7 @@ bool Executor::loadProject(QList<QStringList> *list)
     int counter = execlist->count();
 
     emit processMessage(tr("[Project : %1] (loop %2)")
-                        .arg(xgen.fetch(PR_NAME,ATTR_NONE, list))
+                        .arg(xgen.fetch(PR_FILEPATH,ATTR_NONE, list))
                         .arg(QString::number(builderstack.count()))
                         , OTHER);
 
