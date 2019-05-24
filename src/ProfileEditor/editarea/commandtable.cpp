@@ -101,6 +101,11 @@ void CommandTable::editAction()
     this->edit(currentIndex());
 }
 
+///
+/// \fn CommandTable::deleteAction
+/// \brief delete table item(s)
+/// \date 2019/05/24
+///
 void CommandTable::deleteAction()
 {
     //if rowcount is zero.
@@ -109,12 +114,23 @@ void CommandTable::deleteAction()
     //check delete warning message
     if(!deleteCheckMessage()) return;
 
+//    QModelIndexList lists = this->selectedIndexes();
+//    int rows = lists.count();
+//    for(int i = 0; i < rows; i++){
+//        emit updateTable(lists.at(0).row(), "", ProcessXmlListGenerator::TABLE_DELETE);
+//        lists = this->selectedIndexes();
+//    }
+
     QModelIndexList lists = this->selectedIndexes();
-    int rows = lists.count();
-    for(int i = 0; i < rows; i++){
-        emit updateTable(lists.at(i).row(), "", ProcessXmlListGenerator::TABLE_DELETE);
+
+    while(!lists.empty()){
+        this->removeRow(lists.at(0).row());
+        emit updateTable(lists.at(0).row(), "", ProcessXmlListGenerator::TABLE_DELETE);
+
+        lists = this->selectedIndexes();
     }
-    BaseTable::deleteTableRecursive();
+
+//    BaseTable::deleteTableRecursive();
 }
 
 //FIXME : multiple select (it msy be not so good ...)
