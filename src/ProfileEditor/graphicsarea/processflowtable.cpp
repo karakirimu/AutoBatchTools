@@ -40,62 +40,31 @@ void ProcessFlowTable::setEditOperator(EditOperator *op)
 
 bool ProcessFlowTable::eventFilter(QObject *obj, QEvent *event)
 {
-//    qDebug() << "FlowTable::eventFilter : " << event->type();
     if (event->type() == QEvent::KeyPress) {
+
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+
         switch (keyEvent->key())
          {
-//           case Qt::Key_Return:
-//           case Qt::Key_Enter:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//               addAction();
-//             break;
-
-//           case Qt::Key_Delete:
-//             deleteAction();
-//             break;
-
            case Qt::Key_Up:
-//             if (keyEvent->modifiers() & Qt::ControlModifier){
-//                 upAction();
-//             }else{
                  if(this->currentRow() != 0)
                      selectRow(this->currentRow() - 1);
-//             }
              break;
 
            case Qt::Key_Down:
-//             if (keyEvent->modifiers() & Qt::ControlModifier){
-//                 downAction();
-//             }else{
                  if(this->rowCount() - 1 != this->currentRow())
                      selectRow(this->currentRow() + 1);
-//             }
             break;
-//           case Qt::Key_X:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//                 cutAction();
-//             break;
-
-//           case Qt::Key_C:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//                 copyAction();
-//             break;
-
-//           case Qt::Key_V:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//                 pasteAction();
-//             break;
            case Qt::Key_R:
              if (keyEvent->modifiers() & Qt::ControlModifier)
                  reloadAction();
              break;
            default:
-             //qDebug("Ate key press %d", keyEvent->key());
              break;
          }
         return true;
     }
+
     // standard event processing
     return QObject::eventFilter(obj, event);
 }
