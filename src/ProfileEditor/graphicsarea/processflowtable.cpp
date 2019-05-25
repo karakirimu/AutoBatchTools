@@ -164,8 +164,18 @@ void ProcessFlowTable::downAction()
     }
 }
 
+//!
+//! \fn ProcessFlowTable::reloadAction
+//! \brief Reload process flow items.
+//! \date 2019/5/25
+//!
 void ProcessFlowTable::reloadAction()
 {
+    // Reflect after update
+    int cur = this->currentRow();
+
+    this->blockSignals(true);
+
     int counter = editop->getCacheSize();
 
     //can't clear, delete all objects
@@ -186,7 +196,9 @@ void ProcessFlowTable::reloadAction()
 #ifdef QT_DEBUG
     qDebug() << "[ProcessFlowTable::reloadAction] elapsed : " << time.elapsed() << "ms";
 #endif
+    this->blockSignals(false);
 
+    selectRow(cur);
 }
 
 void ProcessFlowTable::updateIndex(QString operation)
