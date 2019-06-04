@@ -13,6 +13,18 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     //setup ui
     ui->setupUi(this);
 
+    //init optiondialog object
+    opdialog = new OptionDialog();
+
+    //init task management
+    mlTask = new MultiTask();
+
+    //set window icon
+    setWindowIcon(QIcon(":/app_icons/app_abr_24x24.ico"));
+
+    //init profilelist
+    ui->comboBox->reloadComboBoxItem();
+
     //Window init
     setWindowTitle(tr("AutoBatchRunner - BatchRunner"));
     QSettings settings( "./settings.ini", QSettings::IniFormat );
@@ -21,9 +33,18 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
         // load window settings on MainWindow
         restoreGeometry( settings.value( "batchrunner/geometry" ).toByteArray() );
         restoreState( settings.value( "batchrunner/windowState" ).toByteArray() );
+
+        // load combobox previous position
+        int comboindex = settings.value("batchrunner/profilecombo").toInt();
+        if(comboindex < ui->comboBox->count()){
+            ui->comboBox->setCurrentIndex(comboindex);
+        }
     }
 
-    //set menu file
+    //init ui theme
+    themeChangeAction();
+
+    //set menu action
     connect(ui->actionExit, &QAction::triggered, qApp, &QCoreApplication::quit);
 
     //set dock autohide TODO: not saved menu
@@ -33,23 +54,9 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     connect(ui->actionAutohide, &QAction::triggered, ui->consoleDock, &BaseDockWidget::setAutohide);
     connect(ui->consoleDock, &BaseDockWidget::visibilityChanged, ui->actionAutohide, &QAction::setChecked);
 
-    //init optiondialog object
-    opdialog = new OptionDialog();
-
-    //init ui theme
-    themeChangeAction();
-
-    //set window icon
-    setWindowIcon(QIcon(":/app_icons/app_abr_24x24.ico"));
-
     //init ui add delete edit button
     connect(ui->addButton, &QToolButton::clicked, ui->comboBox, &ProfileComboBox::addItemAction);
     connect(ui->deleteButton, &QToolButton::clicked, ui->comboBox, &ProfileComboBox::deleteItemAction);
-
-    //init profilelist
-    ui->comboBox->reloadComboBoxItem();
-
-    mlTask = new MultiTask();
 
     initStatusBar();
 
@@ -69,6 +76,7 @@ AutoBatchRunner::~AutoBatchRunner()
     QSettings settings( "./settings.ini", QSettings::IniFormat );
     settings.setValue( "batchrunner/geometry", saveGeometry() );
     settings.setValue( "batchrunner/windowState", saveState() );
+    settings.setValue( "batchrunner/profilecombo", ui->comboBox->currentIndex());
 
     delete opdialog;
     delete mlTask;
