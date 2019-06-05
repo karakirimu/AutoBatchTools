@@ -141,13 +141,13 @@ void BaseTable::deleteTableRecursive()
     }
 }
 
-/**
- * @details grab key event
- * @brief mainTable::eventFilter
- * @param obj
- * @param event
- * @return
- */
+///
+/// \fn BaseTable::eventFilter
+/// \brief grab key event
+/// \param obj
+/// \param event
+/// \return
+///
 bool BaseTable::eventFilter(QObject *obj, QEvent *event)
 {
     //qDebug() << event->type();
