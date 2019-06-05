@@ -11,9 +11,9 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
 
     //set docktab
-    tabifyDockWidget(ui->globalVariantDockWidget, ui->localVariantDockWidget);
+//    tabifyDockWidget(ui->globalVariantDockWidget, ui->localVariantDockWidget);
     setTabPosition(Qt::RightDockWidgetArea, QTabWidget::TabPosition::East);
-    ui->localVariantDockWidget->show();
+//    ui->localVariantDockWidget->show();
 
     //Window data restore
     QSettings settings( "./settings.ini", QSettings::IniFormat );
@@ -34,8 +34,8 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     //set dock autohide TODO: not saved menu
     ui->processDockWidget->setAutohide(ui->actionAutohide->isChecked());
 //    ui->editorDockWidget->setAutohide(ui->actionAutohide->isChecked());
-    ui->globalVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
-    ui->localVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
+//    ui->globalVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
+//    ui->localVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
     ui->setTestDockWidget->setAutohide(ui->actionAutohide->isChecked());
     ui->consoleDockWidget->setAutohide(ui->actionAutohide->isChecked());
     ui->variantDockWidget->setAutohide(ui->actionAutohide->isChecked());
@@ -49,7 +49,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //provide operator
     ui->flowTableWidget->setEditOperator(editop);
-    ui->variantTableWidget->setEditOperator(editop);
+//    ui->variantTableWidget->setEditOperator(editop);
     ui->editorTab->setEditOperator(editop);
     ui->innerStackedWidget->setEditOperator(editop);
     ui->variantTreeWidget->setEditOperator(editop);
@@ -125,15 +125,15 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->actionToolBar, &QAction::triggered, ui->mainToolBar, &QWidget::setVisible);
     connect(ui->actionProcess, &QAction::triggered, ui->processDockWidget, &QWidget::setVisible);
 //    connect(ui->actionEditor, &QAction::triggered, ui->editorDockWidget, &QWidget::setVisible);
-    connect(ui->actionFileVariant, &QAction::triggered, ui->localVariantDockWidget, &QWidget::setVisible);
-    connect(ui->actionAppVariant, &QAction::triggered, ui->globalVariantDockWidget, &QWidget::setVisible);
+//    connect(ui->actionFileVariant, &QAction::triggered, ui->localVariantDockWidget, &QWidget::setVisible);
+//    connect(ui->actionAppVariant, &QAction::triggered, ui->globalVariantDockWidget, &QWidget::setVisible);
     connect(ui->actionVariant, &QAction::triggered, ui->variantDockWidget, &QWidget::setVisible);
     connect(ui->actionRunSetting, &QAction::triggered, ui->setTestDockWidget, &BaseDockWidget::setVisible);
     connect(ui->actionRunConsole, &QAction::triggered, ui->consoleDockWidget, &BaseDockWidget::setVisible);
 
     connect(ui->processDockWidget, &QDockWidget::visibilityChanged, ui->actionProcess, &QAction::setChecked);
-    connect(ui->localVariantDockWidget, &QDockWidget::visibilityChanged, ui->actionFileVariant, &QAction::setChecked);
-    connect(ui->globalVariantDockWidget, &QDockWidget::visibilityChanged, ui->actionAppVariant, &QAction::setChecked);
+//    connect(ui->localVariantDockWidget, &QDockWidget::visibilityChanged, ui->actionFileVariant, &QAction::setChecked);
+//    connect(ui->globalVariantDockWidget, &QDockWidget::visibilityChanged, ui->actionAppVariant, &QAction::setChecked);
 //    connect(ui->editorDockWidget, &QDockWidget::visibilityChanged, ui->actionEditor, &QAction::setChecked);
     connect(ui->mainToolBar, &QToolBar::visibilityChanged, ui->actionToolBar, &QAction::setChecked);
     connect(ui->setTestDockWidget, &BaseDockWidget::visibilityChanged, ui->actionRunSetting, &QAction::setChecked);
@@ -143,8 +143,8 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->actionAutohide, &QAction::triggered, ui->setTestDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->consoleDockWidget, &BaseDockWidget::setAutohide);
 //    connect(ui->actionAutohide, &QAction::triggered, ui->editorDockWidget, &BaseDockWidget::setAutohide);
-    connect(ui->actionAutohide, &QAction::triggered, ui->globalVariantDockWidget, &BaseDockWidget::setAutohide);
-    connect(ui->actionAutohide, &QAction::triggered, ui->localVariantDockWidget, &BaseDockWidget::setAutohide);
+//    connect(ui->actionAutohide, &QAction::triggered, ui->globalVariantDockWidget, &BaseDockWidget::setAutohide);
+//    connect(ui->actionAutohide, &QAction::triggered, ui->localVariantDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->variantDockWidget, &BaseDockWidget::setAutohide);
 
     //Infomation
@@ -259,7 +259,7 @@ void ProfileEditor::undoAction()
 
     ui->innerStackedWidget->updateIndex(updop);
     ui->flowTableWidget->updateIndex(updop);
-    ui->variantTableWidget->updateIndex(updop);
+//    ui->variantTableWidget->updateIndex(updop);
     ui->editorTab->updateIndex(updop);
     ui->variantTreeWidget->updateIndex(updop);
 }
@@ -281,7 +281,7 @@ void ProfileEditor::redoAction()
 
     ui->innerStackedWidget->updateIndex(updop);
     ui->flowTableWidget->updateIndex(updop);
-    ui->variantTableWidget->updateIndex(updop);
+//    ui->variantTableWidget->updateIndex(updop);
     ui->editorTab->updateIndex(updop);
     ui->variantTreeWidget->updateIndex(updop);
 
@@ -632,7 +632,7 @@ void ProfileEditor::initUi()
 //    ui->graphicsView->reloadAction();
     ui->innerStackedWidget->reloadAction();
     ui->flowTableWidget->reloadAction();
-    ui->variantTableWidget->reloadAction();
+//    ui->variantTableWidget->reloadAction();
     ui->variantTreeWidget->reloadAction();
 
     this->blockSignals(false);

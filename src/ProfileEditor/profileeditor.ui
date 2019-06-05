@@ -1366,8 +1366,6 @@
     <addaction name="separator"/>
     <addaction name="actionProcess"/>
     <addaction name="separator"/>
-    <addaction name="actionFileVariant"/>
-    <addaction name="actionAppVariant"/>
     <addaction name="actionVariant"/>
     <addaction name="separator"/>
     <addaction name="actionRunSetting"/>
@@ -1501,149 +1499,6 @@ selection-color: rgb(0, 0, 0);</string>
           </property>
           <property name="wordWrap">
            <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
-  <widget class="BaseDockWidget" name="localVariantDockWidget">
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>157</height>
-    </size>
-   </property>
-   <property name="windowTitle">
-    <string>File</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_3">
-    <layout class="QVBoxLayout" name="verticalLayout_7">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QFrame" name="frame_8">
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_15">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="VariantTable" name="variantTableWidget">
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectRows</enum>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
-  <widget class="BaseDockWidget" name="globalVariantDockWidget">
-   <property name="minimumSize">
-    <size>
-     <width>100</width>
-     <height>87</height>
-    </size>
-   </property>
-   <property name="features">
-    <set>QDockWidget::AllDockWidgetFeatures</set>
-   </property>
-   <property name="windowTitle">
-    <string>App</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_2">
-    <layout class="QVBoxLayout" name="verticalLayout_6">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QFrame" name="frame_7">
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_14">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="StringTable" name="stringTableWidget">
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="selectionBehavior">
-           <enum>QAbstractItemView::SelectRows</enum>
           </property>
          </widget>
         </item>
@@ -2393,8 +2248,6 @@ border: none;</string>
     <string>Variant</string>
    </property>
   </action>
-  <zorder>globalVariantDockWidget</zorder>
-  <zorder>localVariantDockWidget</zorder>
   <zorder>setTestDockWidget</zorder>
   <zorder>consoleDockWidget</zorder>
   <zorder>variantDockWidget</zorder>
@@ -2428,11 +2281,6 @@ border: none;</string>
    <header>./console/consoleedit.h</header>
   </customwidget>
   <customwidget>
-   <class>StringTable</class>
-   <extends>QTableWidget</extends>
-   <header>../stringtable/stringtable.h</header>
-  </customwidget>
-  <customwidget>
    <class>CommandTable</class>
    <extends>QTableWidget</extends>
    <header>./editarea/commandtable.h</header>
@@ -2441,11 +2289,6 @@ border: none;</string>
    <class>SearchComboBox</class>
    <extends>QComboBox</extends>
    <header>./editarea/searchcombobox.h</header>
-  </customwidget>
-  <customwidget>
-   <class>VariantTable</class>
-   <extends>QTableWidget</extends>
-   <header>./variantarea/varianttable.h</header>
   </customwidget>
   <customwidget>
    <class>VariantComboBox</class>
