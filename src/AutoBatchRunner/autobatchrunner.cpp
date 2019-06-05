@@ -1,7 +1,10 @@
 #include "autobatchrunner.h"
 #include "ui_autobatchrunner.h"
 
-
+///
+/// \brief AutoBatchRunner::AutoBatchRunner This is a main constructor of AutoBatchRunner.exe
+/// \param parent default QMainWindow
+///
 AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::AutoBatchRunner)
