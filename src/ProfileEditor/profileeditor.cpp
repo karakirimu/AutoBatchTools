@@ -22,6 +22,14 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
         // load window settings on MainWindow
         restoreGeometry( settings.value( "profileeditor/geometry" ).toByteArray() );
         restoreState( settings.value( "profileeditor/windowState" ).toByteArray() );
+
+        // load action autohide settings
+        bool autohide = settings.value("profileeditor/autohide", true).toBool();
+        ui->actionAutohide->setChecked(autohide);
+        ui->processDockWidget->setAutohide(autohide);
+        ui->setTestDockWidget->setAutohide(autohide);
+        ui->consoleDockWidget->setAutohide(autohide);
+        ui->variantDockWidget->setAutohide(autohide);
     }
 
     //set Attrs
@@ -32,13 +40,13 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     themeChangeAction();
 
     //set dock autohide TODO: not saved menu
-    ui->processDockWidget->setAutohide(ui->actionAutohide->isChecked());
-//    ui->editorDockWidget->setAutohide(ui->actionAutohide->isChecked());
-//    ui->globalVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
-//    ui->localVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
-    ui->setTestDockWidget->setAutohide(ui->actionAutohide->isChecked());
-    ui->consoleDockWidget->setAutohide(ui->actionAutohide->isChecked());
-    ui->variantDockWidget->setAutohide(ui->actionAutohide->isChecked());
+//    ui->processDockWidget->setAutohide(ui->actionAutohide->isChecked());
+////    ui->editorDockWidget->setAutohide(ui->actionAutohide->isChecked());
+////    ui->globalVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
+////    ui->localVariantDockWidget->setAutohide(ui->actionAutohide->isChecked());
+//    ui->setTestDockWidget->setAutohide(ui->actionAutohide->isChecked());
+//    ui->consoleDockWidget->setAutohide(ui->actionAutohide->isChecked());
+//    ui->variantDockWidget->setAutohide(ui->actionAutohide->isChecked());
 
     //init sharedfunction
     editop = new EditOperator(this);
@@ -184,6 +192,7 @@ ProfileEditor::~ProfileEditor()
     QSettings settings( "./settings.ini", QSettings::IniFormat );
     settings.setValue( "profileeditor/geometry", saveGeometry() );
     settings.setValue( "profileeditor/windowState", saveState() );
+    settings.setValue( "profileeditor/autohide", ui->actionAutohide->isChecked());
 
     delete ui;
     delete settingdialog;
