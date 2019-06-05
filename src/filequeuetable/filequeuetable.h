@@ -19,10 +19,12 @@ public:
 
 protected slots:
     void dragEnterEvent(QDragEnterEvent *event);
-    void dragMoveEvent(QDragMoveEvent *event);
+//    void dragMoveEvent(QDragMoveEvent *event);
     void dropEvent(QDropEvent *event);
 
 private slots:
+    bool eventFilter(QObject *obj, QEvent *event);
+
     void setPopupActionTop();
     void setPopupActionDefault();
     void setPopupActionBottom();

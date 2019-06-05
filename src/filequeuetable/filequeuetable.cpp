@@ -6,6 +6,7 @@ FileQueueTable::FileQueueTable(QWidget *parent)
 {
     // disable edit
     setEditTriggers(QAbstractItemView::NoEditTriggers);
+//    setDragDropMode(QAbstractItemView::InternalMove);
 
     //accept drops
 //    setAcceptDrops(true);
@@ -53,6 +54,25 @@ void FileQueueTable::dropEvent(QDropEvent *event)
     }
 }
 
+bool FileQueueTable::eventFilter(QObject *obj, QEvent *event)
+{
+//    qDebug() << "[FileQueueTable::eventFilter] Event type : " << event->type();
+
+//    if(event->type() == QEvent::ChildRemoved){
+////        QChildEvent *childevent = static_cast<QChildEvent *>(event);
+
+//    }
+
+//    if(event->type() == QEvent::Enter){
+////        QEnterEvent *enter = static_cast<QEnterEvent *>(event);
+////        enter->pos()
+//    }
+
+
+    // standard event processing
+    return QObject::eventFilter(obj, event);
+}
+
 void FileQueueTable::addFilesAction()
 {
     QStringList selected = selectFiles(QDir::currentPath());
@@ -95,10 +115,10 @@ void FileQueueTable::dragEnterEvent(QDragEnterEvent *event)
     }
 }
 
-void FileQueueTable::dragMoveEvent(QDragMoveEvent *event)
-{
-    event->acceptProposedAction();
-}
+//void FileQueueTable::dragMoveEvent(QDragMoveEvent *event)
+//{
+//    event->acceptProposedAction();
+//}
 
 void FileQueueTable::addFiles(const QStringList &filenames)
 {
@@ -114,7 +134,12 @@ void FileQueueTable::addFiles(const QStringList &filenames)
 
             //Add imported information to table
             QFileInfo file(filenames.at(i));
-           this->setItem(rcount,0,new QTableWidgetItem(file.canonicalFilePath()));
+            QTableWidgetItem *newitem = new QTableWidgetItem();
+            newitem->setData(Qt::DisplayRole, file.canonicalFilePath());
+            newitem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled \
+                              | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+
+           this->setItem(rcount,0, newitem);
             //test
 //            this->setItem(rcount,1,new QTableWidgetItem(QString::number(i)));
         }
