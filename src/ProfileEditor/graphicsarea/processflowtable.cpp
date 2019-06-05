@@ -54,11 +54,13 @@ bool ProcessFlowTable::eventFilter(QObject *obj, QEvent *event)
            case Qt::Key_Down:
                  if(this->rowCount() - 1 != this->currentRow())
                      selectRow(this->currentRow() + 1);
-            break;
-           case Qt::Key_R:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 reloadAction();
              break;
+
+           case Qt::Key_R:
+                 if (keyEvent->modifiers() & Qt::ControlModifier)
+                     reloadAction();
+             break;
+
            default:
              break;
          }
@@ -78,10 +80,35 @@ void ProcessFlowTable::addAction()
 
 }
 
+
+/// \fn ProcessFlowTable::deleteAction
+/// \brief Clear multiple selections at once.
+/// \date 2019/05/26
 void ProcessFlowTable::deleteAction()
 {
-    int cur = fixedCurrentRow();
-    if(cur > 1){
+    // information process only
+    if(this->rowCount() < 2) return;
+
+    //check delete warning message
+    if(!deleteCheckMessage()) return;
+
+    int cur = 0;
+
+//    if(cur > 1){
+//        editop->deleteAction(cur);
+//        emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::FLOWTABLE);
+//    }
+
+    QModelIndexList lists = this->selectionModel()->selectedRows();
+
+    std::sort(lists.begin(), lists.end(), qGreater<QModelIndex>());
+
+
+    for (int i = 0; i < lists.count(); i++) {
+        cur = uiIndexToData(lists.at(i).row());
+
+        if(cur == 0) break;
+
         editop->deleteAction(cur);
         emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::FLOWTABLE);
     }
@@ -133,11 +160,9 @@ void ProcessFlowTable::downAction()
     }
 }
 
-//!
 //! \fn ProcessFlowTable::reloadAction
 //! \brief Reload process flow items.
 //! \date 2019/5/25
-//!
 void ProcessFlowTable::reloadAction()
 {
     // Reflect after update
@@ -292,6 +317,9 @@ void ProcessFlowTable::onItemStatusChanged(int after, int before, int function, 
     }
 }
 
+//! \fn ProcessFlowTable::fixedCurrentRow
+//! \brief Convert index on UI to data number of XML. (To avoid XML localvalue items.)
+//! \return fixed id
 int ProcessFlowTable::fixedCurrentRow()
 {
     return uiIndexToData(this->currentRow());
@@ -604,7 +632,11 @@ void ProcessFlowTable::setPluginsItem(QList<QStringList> *list, int dataid)
 //    cell->setContent(tmp);
 }
 
-///DEPENDS_XML DEPENDS_UI PROCESS
+//!
+//! \brief ProcessFlowTable::setProfileItem DEPENDS_XML DEPENDS_UI
+//! \param list loaded xml list
+//! \param dataid xml data position
+//!
 void ProcessFlowTable::setProfileItem(QList<QStringList> *list, int dataid)
 {
     QString curdata = pxlg.fetch(PR_FILEPATH, ATTR_NONE, list);

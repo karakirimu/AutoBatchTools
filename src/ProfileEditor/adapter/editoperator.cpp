@@ -70,6 +70,9 @@ void EditOperator::insertAction(int id, QList<QStringList> *xmlstruct)
 
 }
 
+//! \fn EditOperator::deleteAction
+//! \brief Delete specified XML index.
+//! \param id Deleted XML index
 void EditOperator::deleteAction(int id)
 {
     DeleteCommand *com = new DeleteCommand(id,cache->at(id), cache);
