@@ -176,7 +176,7 @@ void AutoBatchRunner::on_actionStop_triggered()
 //    ui->actionRun->setEnabled(false);
 //    ui->actionPause->setEnabled(false);
 //    ui->actionStop->setEnabled(false);
-    setRunButtonState(false, false, false);
+    setRunButtonState(true, false, false);
 
     mlTask->removeTask(key);
     key = "";
