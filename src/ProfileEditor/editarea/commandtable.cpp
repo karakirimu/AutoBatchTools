@@ -7,6 +7,11 @@ CommandTable::CommandTable(QWidget *parent)
     setPopupActionTop();
     setPopupActionDefault();
 
+    setDragEnabled(true);
+    setAcceptDrops(true);
+    setDropIndicatorShown(true);
+    setDragDropMode(QAbstractItemView::InternalMove);
+
     //init table size
     setColumnCount(1);
     setRowCount(0);
@@ -82,6 +87,20 @@ void CommandTable::insertItems(QStringList *item)
     }
 }
 
+void CommandTable::dragEnterEvent(QDragEnterEvent *event)
+{
+    qDebug() << "[CommandTable::dragEnterEvent] Object : " << event->source()->objectName();
+    if(event->source() != nullptr){
+        event->acceptProposedAction();
+    }
+}
+
+void CommandTable::dropEvent(QDropEvent *event)
+{
+    this->swapItem(this->row(this->selectedItems().at(0))
+                   , this->indexAt(event->pos()).row());
+}
+
 void CommandTable::addAction()
 {
     int row = this->rowCount();
@@ -114,13 +133,6 @@ void CommandTable::deleteAction()
     //check delete warning message
     if(!deleteCheckMessage()) return;
 
-//    QModelIndexList lists = this->selectedIndexes();
-//    int rows = lists.count();
-//    for(int i = 0; i < rows; i++){
-//        emit updateTable(lists.at(0).row(), "", ProcessXmlListGenerator::TABLE_DELETE);
-//        lists = this->selectedIndexes();
-//    }
-
     QModelIndexList lists = this->selectedIndexes();
 
     while(!lists.empty()){
@@ -129,8 +141,6 @@ void CommandTable::deleteAction()
 
         lists = this->selectedIndexes();
     }
-
-//    BaseTable::deleteTableRecursive();
 }
 
 //FIXME : multiple select (it msy be not so good ...)
@@ -246,22 +256,34 @@ void CommandTable::pasteEnterAction()
     }
 }
 
+///
+/// \fn CommandTable::upAction
+/// \brief Swap selected row with the row above
+/// \date 2019/06/16
+///
 void CommandTable::upAction()
 {
     int current = this->currentRow();
     if(current == 0) return;
 
     //swap item
-    QModelIndexList mlist = this->selectedIndexes();
-    QString tmp = this->model()->index(current - 1, 0).data().toString();
-    this->setItem(current - 1, 0, new QTableWidgetItem(this->model()->index(current, 0).data().toString()));
-    this->setItem(current, 0, new QTableWidgetItem(tmp));
+//    QModelIndexList mlist = this->selectedIndexes();
+//    QString tmp = this->model()->index(current - 1, 0).data().toString();
+//    this->setItem(current - 1, 0, new QTableWidgetItem(this->model()->index(current, 0).data().toString()));
+//    this->setItem(current, 0, new QTableWidgetItem(tmp));
+
+    this->swapItem(current, current - 1);
 
 //    emit swapTable(current, current - 1);
-    this->clearSelection();
-    selectRow(current - 1);
+//    this->clearSelection();
+//    selectRow(current - 1);
 }
 
+///
+/// \fn CommandTable::downAction
+/// \brief Swap selected row with the row below
+/// \date 2019/06/16
+///
 void CommandTable::downAction()
 {
     int current = this->currentRow();
@@ -270,14 +292,16 @@ void CommandTable::downAction()
     if((current + 1) == counter) return;
 
     //swap item
-    QString tmp = this->model()->index(current + 1, 0).data().toString();
-    this->setItem(current + 1, 0, new QTableWidgetItem(this->model()->index(current, 0).data().toString()));
-    this->setItem(current, 0, new QTableWidgetItem(tmp));
+//    QString tmp = this->model()->index(current + 1, 0).data().toString();
+//    this->setItem(current + 1, 0, new QTableWidgetItem(this->model()->index(current, 0).data().toString()));
+//    this->setItem(current, 0, new QTableWidgetItem(tmp));
 
-//  TODO:
-//    emit swapTable(current, current + 1);
-    this->clearSelection();
-    selectRow(current + 1);
+////  TODO:
+////    emit swapTable(current, current + 1);
+//    this->clearSelection();
+//    selectRow(current + 1);
+
+    this->swapItem(current, current + 1);
 }
 
 void CommandTable::openFileAction()
@@ -429,6 +453,9 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
          }
         return true;
     }
+
+    qDebug() << "[FileQueueTable::eventFilter] Event type : " << event->type();
+
     // standard event processing
     return QObject::eventFilter(obj, event);
 }

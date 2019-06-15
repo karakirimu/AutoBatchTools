@@ -28,6 +28,11 @@ signals:
     void updateTable(int index, QString newstr, int function);
     void swapTable(int before, int after);
 
+protected slots:
+    void dragEnterEvent(QDragEnterEvent *event);
+//    void dragMoveEvent(QDragMoveEvent *event);
+    void dropEvent(QDropEvent *event);
+
 private slots:
     void addAction();
     void editAction();
