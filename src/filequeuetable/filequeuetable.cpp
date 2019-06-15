@@ -54,25 +54,6 @@ void FileQueueTable::dropEvent(QDropEvent *event)
     }
 }
 
-bool FileQueueTable::eventFilter(QObject *obj, QEvent *event)
-{
-//    qDebug() << "[FileQueueTable::eventFilter] Event type : " << event->type();
-
-//    if(event->type() == QEvent::ChildRemoved){
-////        QChildEvent *childevent = static_cast<QChildEvent *>(event);
-
-//    }
-
-//    if(event->type() == QEvent::Enter){
-////        QEnterEvent *enter = static_cast<QEnterEvent *>(event);
-////        enter->pos()
-//    }
-
-
-    // standard event processing
-    return QObject::eventFilter(obj, event);
-}
-
 void FileQueueTable::addFilesAction()
 {
     QStringList selected = selectFiles(QDir::currentPath());
@@ -110,7 +91,8 @@ void FileQueueTable::propertyAction()
 
 void FileQueueTable::dragEnterEvent(QDragEnterEvent *event)
 {
-    if(event->mimeData()->hasUrls()){
+    if(event->mimeData()->hasUrls()
+            || event->source() != nullptr){
         event->acceptProposedAction();
     }
 }
