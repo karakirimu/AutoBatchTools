@@ -61,31 +61,17 @@ void BaseTable::insertTableRow(int from, int dest)
     int distance = dest - from;
     QTableWidgetItem *temp;
 
-    if(distance < 0){
-        for (int col = 0; col < this->columnCount(); col++){
+    this->insertRow(dest);
 
-            temp = this->takeItem(from, col);
-            for(int i = from; i > dest; i--){
-                //copy action
-                this->setItem(i, col, this->takeItem(i-1, col));
-            }
+    // + 1 means effect of insertrow
+    from = from + ((distance > 0)? 0 : 1);
 
-            this->setItem(dest, col, temp);
-        }
+    for (int col = 0; col < this->columnCount(); col++){
+        temp = this->takeItem(from, col);
+        this->setItem(dest, col, temp);
     }
 
-    if(distance > 0){
-        for (int col = 0; col < this->columnCount(); col++){
-
-            temp = this->takeItem(from, col);
-            for(int i = from; i < dest; i++){
-                //copy action
-                this->setItem(i, col, this->takeItem(i+1, col));
-            }
-
-            this->setItem(dest, col, temp);
-        }
-    }
+    this->removeRow(from);
 }
 
 void BaseTable::copyTable(int index){
