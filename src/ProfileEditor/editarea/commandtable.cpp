@@ -97,8 +97,46 @@ void CommandTable::dragEnterEvent(QDragEnterEvent *event)
 
 void CommandTable::dropEvent(QDropEvent *event)
 {
-    this->swapItem(this->row(this->selectedItems().at(0))
-                   , this->indexAt(event->pos()).row());
+//    this->swapItem(this->row(this->selectedItems().at(0))
+//                   , this->indexAt(event->pos()).row());
+    //like cutaction
+
+    //if rowcount is zero.
+    if(this->rowCount() == 0) return;
+    int droppedrow = this->indexAt(event->pos()).row();
+//    int prevrowcount = this->rowCount();
+    if(droppedrow == -1) return;
+
+    QStringList text;
+    QModelIndexList mlist = this->selectedIndexes();
+    int rows = mlist.count();
+    for(int i = 0; i < rows; i++){
+        text.append(mlist.at(i).data().toString());
+
+        emit updateTable(mlist.at(i).row(), "", ProcessXmlListGenerator::TABLE_DELETE);
+    }
+
+    //force delete
+    BaseTable::deleteTableRecursive();
+
+    //last lests unknown ""
+    if(text.last() == "") text.removeLast();
+
+    int row = this->rowCount();
+    int txcount = text.count();
+
+    //TODO: last index
+    if(row > 0) row = droppedrow;
+    qDebug() << "[CommandTable::dropEvent] row : " << row;
+
+    for(int i = 0; i < txcount; i++){
+       insertRow(row + i);
+       this->blockSignals(true);
+       this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
+       this->blockSignals(false);
+       emit updateTable(row + i, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
+
+    }
 }
 
 void CommandTable::addAction()
@@ -265,18 +303,7 @@ void CommandTable::upAction()
 {
     int current = this->currentRow();
     if(current == 0) return;
-
-    //swap item
-//    QModelIndexList mlist = this->selectedIndexes();
-//    QString tmp = this->model()->index(current - 1, 0).data().toString();
-//    this->setItem(current - 1, 0, new QTableWidgetItem(this->model()->index(current, 0).data().toString()));
-//    this->setItem(current, 0, new QTableWidgetItem(tmp));
-
     this->swapItem(current, current - 1);
-
-//    emit swapTable(current, current - 1);
-//    this->clearSelection();
-//    selectRow(current - 1);
 }
 
 ///
@@ -287,20 +314,7 @@ void CommandTable::upAction()
 void CommandTable::downAction()
 {
     int current = this->currentRow();
-    int counter = this->rowCount();
-
-    if((current + 1) == counter) return;
-
-    //swap item
-//    QString tmp = this->model()->index(current + 1, 0).data().toString();
-//    this->setItem(current + 1, 0, new QTableWidgetItem(this->model()->index(current, 0).data().toString()));
-//    this->setItem(current, 0, new QTableWidgetItem(tmp));
-
-////  TODO:
-////    emit swapTable(current, current + 1);
-//    this->clearSelection();
-//    selectRow(current + 1);
-
+    if((current + 1) == this->rowCount()) return;
     this->swapItem(current, current + 1);
 }
 
