@@ -97,11 +97,6 @@ void FileQueueTable::dragEnterEvent(QDragEnterEvent *event)
     }
 }
 
-//void FileQueueTable::dragMoveEvent(QDragMoveEvent *event)
-//{
-//    event->acceptProposedAction();
-//}
-
 void FileQueueTable::addFiles(const QStringList &filenames)
 {
     // check files
