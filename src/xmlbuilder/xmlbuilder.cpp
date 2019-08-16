@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016-2019 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "xmlbuilder.h"
 
 Xmlbuilder::Xmlbuilder(QObject *)
@@ -10,10 +26,20 @@ Xmlbuilder::~Xmlbuilder()
 
 }
 
-bool Xmlbuilder::readItem(int itemid,
-                                   QString firstlayername,
-                                   QString attr,
-                                   QList<QStringList> *itemlist)
+/**
+ * @fn Xmlbuilder::readItem
+ * @brief If there is an attribute with the specified
+ *        itemid in firstlayername, data is assigned to itemlist.
+ *
+ * @param itemid         : Value in attribute
+ * @param firstlayername : firstlayer name
+ * @param attr           : attribute
+ * @param itemlist       : Instance of data to get
+ *
+ * @return Whether data acquisition was successful.
+ */
+bool Xmlbuilder::readItem(int itemid, QString firstlayername,
+                          QString attr, QList<QStringList> *itemlist)
 {
     bool hasid = false;
     QString name = "";
@@ -47,8 +73,20 @@ bool Xmlbuilder::readItem(int itemid,
     return (itemlist->count() > 0)? true: false;
 }
 
-//Reading with fewer open times of opening and closing files
-bool Xmlbuilder::readAllItem(QString firstlayername, QString attr, QList<QList<QStringList> *> *itemlist)
+/**
+ * @fn Xmlbuilder::readAllItem
+ * @brief All the data when there is an itemid associated with attr is
+ *        extracted and stored in itemlist.
+ *
+ * @param firstlayername : firstlayer name
+ * @param attr           : attribute name
+ * @param itemlist       : Instance of data to get
+ *
+ * @return if item count is zero, return false.
+ * @remarks Reading with fewer open times of opening and closing files.
+ */
+bool Xmlbuilder::readAllItem(QString firstlayername, QString attr,
+                             QList<QList<QStringList> *> *itemlist)
 {
     bool hasid = false;
     QString name = "";
@@ -82,15 +120,24 @@ bool Xmlbuilder::readAllItem(QString firstlayername, QString attr, QList<QList<Q
     checkXmlError();
     closeFile();
 
-    //if item count is zero, return false
     return (itemlist->count() > 0)? true: false;
 }
 
+/**
+ * @fn Xmlbuilder::swapItem
+ * @brief Exchange tags in the following layers within the selected itemid.
+ *
+ * @param beforeitemid   : The value of the attribute you want to exchange.
+ * @param afteritemid    : Attribute value after exchange.
+ * @param rootelement    : Root tag name.
+ * @param firstlayername : firstlayer name
+ * @param attr           : attribute name.
+ */
 void Xmlbuilder::swapItem(int beforeitemid,
-                                   int afteritemid,
-                                   QString rootelement,
-                                   QString firstlayername,
-                                   QString attr)
+                          int afteritemid,
+                          QString rootelement,
+                          QString firstlayername,
+                          QString attr)
 {
     //this function probably slower.
     QList<QStringList> before;
@@ -103,11 +150,23 @@ void Xmlbuilder::swapItem(int beforeitemid,
     overwriteItem(afteritemid, rootelement, firstlayername, attr, &before);
 }
 
+/**
+ * @deprecated It is better not to use.
+ *
+ * @fn Xmlbuilder::copyItem
+ * @brief Copy the layer below the itemid attribute and insert it into the next itemid.
+ *
+ * @param itemid         : The value of the attribute you want to copy.
+ * @param rootelement    : Root tag name.
+ * @param firstlayername : firstlayer name
+ * @param attr           : attribute name.
+ * @param exchangedata   : ?
+ */
 void Xmlbuilder::copyItem(int itemid,
-                                   QString rootelement,
-                                   QString firstlayername,
-                                   QString attr,
-                                   QString exchangedata){
+                          QString rootelement,
+                          QString firstlayername,
+                          QString attr,
+                          QString exchangedata){
     QList<QStringList> tmp;
     readItem(itemid, firstlayername, attr, &tmp);
 
@@ -127,14 +186,27 @@ void Xmlbuilder::copyItem(int itemid,
     overwriteItem(count(firstlayername), rootelement, firstlayername, attr, &tmp);
 }
 
+/**
+ * @fn Xmlbuilder::overwriteItem
+ * @brief The attribute tag containing the specified itemid is overwritten with
+ *        the information described in the itemlist.
+ *
+ * @param itemid         : The value of the attribute you want to exchange.
+ * @param rootelement    : Root tag name.
+ * @param firstlayername : firstlayer tag name.
+ * @param attr           : attribute name.
+ * @param itemlist       : An instance of data to set.
+ *
+ * @return Whether writing was successful.
+ */
 bool Xmlbuilder::overwriteItem(int itemid,
-                                        QString rootelement,
-                                        QString firstlayername,
-                                        QString attr,
-                                        const QList<QStringList> *itemlist)
+                               QString rootelement,
+                               QString firstlayername,
+                               QString attr,
+                               const QList<QStringList> *itemlist)
 {
     if(count(firstlayername) < itemid){
-        qDebug() << "[Xmlbuilder::overwriteItem] : counter fault : " << rootelement;
+        qDebug() << "[Xmlbuilder::overwriteItem] : No Itemid : " << rootelement;
         return false;
     }
 
@@ -185,11 +257,30 @@ bool Xmlbuilder::insertItem(int itemid, QString rootelement, QString firstlayern
     return insertItemId(itemid, rootelement, firstlayername, attr, itemlist);
 }
 
+/**
+ * @fn Xmlbuilder::count
+ * @brief returns the number of tag blocks contained in firstlayername.
+ *
+ * @param firstlayername : firstlayer tag name.
+ *
+ * @return The number of tag blocks included in the tag.
+ */
 int Xmlbuilder::count(QString firstlayername)
 {
     return getElementItemsCount(firstlayername);
 }
 
+/**
+ * @fn Xmlbuilder::deleteItem
+ * @brief Deletes the element in the specified firstlayername.
+ *
+ * @param itemid         : The value of the attribute you want to exchange.
+ * @param firstlayername : firstlayer tag name.
+ * @param attr           : attribute name.
+ *
+ * @return Whether or not itemid with attr attribute in firstlayername tag
+ *         could be deleted.
+ */
 bool Xmlbuilder::deleteItem(int itemid, QString firstlayername, QString attr)
 {
     int lastindex = count(firstlayername) - 1;
@@ -199,18 +290,44 @@ bool Xmlbuilder::deleteItem(int itemid, QString firstlayername, QString attr)
     }else{
         //get table last id
         //copy other items
-        deleteItemIdRecursive(itemid, firstlayername, attr);
+        deleteItemIdToEnd(itemid, firstlayername, attr);
         //delete other items
         return deleteElementGroup(firstlayername, attr, lastindex, true);
     }
 }
 
-void Xmlbuilder::setSearchItemData(QString, QList<QStringList> *)
+/**
+ * @fn Xmlbuilder::setSearchItemData
+ * @brief Implements a method of assigning a value to QStringList in QList
+ *        used when retrieving the specified element.
+ *
+ * @param element : An element that requires an assignment method.
+ * @param list    : A list where items are set. (same as itemlist)
+ */
+void Xmlbuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {
+    Q_UNUSED(element);
+    Q_UNUSED(*list);
     //set search element
     return;
 }
 
+/**
+ * @fn Xmlbuilder::getStructureStr
+ * @brief This function starts with firstlayername and returns the entire
+ *        string in an xml block (e.g. <abc> </ abc>) containing the block
+ *        defined in list. firstlayername can define the initial value of
+ *        indent with indentnum. Blocks below it are automatically indented.
+ *
+ * @param itemid         : The value of the attribute you want to exchange.
+ * @param firstlayername : firstlayer tag name.
+ * @param attr           : attribute name.
+ * @param indentnum      : Number of tabs to add.
+ * @param list           : A list where items are set. (same as itemlist)
+ * @param withparent     : Whether to generate an attribute tag of itemid.
+ *
+ * @return XML string with properly entered tabs and newlines.
+ */
 QString Xmlbuilder::getStructureStr(int itemid,
                                   QString firstlayername,
                                   QString attr,
@@ -244,18 +361,32 @@ QString Xmlbuilder::getStructureStr(int itemid,
     return getTabbedXmlString(&tmp, indentnum);
 }
 
-//QString Xmlbuilder::getIdLine(int itemid, QString firstlayername, QString attr, int indentnum)
-//{
-//    QString line = BaseXmlBuilder::appendTabIndent(indentnum);
-//    line.append("<%1 %2=\"%3\">").arg(firstlayername).arg(attr).arg(QString::number(itemid));
-//    return line;
-//}
-
+/**
+ * @fn Xmlbuilder::getItemFirstLine
+ * @brief A wrapper for a function that returns the first row of the tag
+ *        block for the element whose value associated with attr matches.
+ *
+ * @param tablenum       : Value associated with the attribute.
+ * @param firstlayername : firstlayer tag name.
+ * @param attr           : attribute name.
+ *
+ * @return The first line of the tag block specified by element.
+ *         If it does not have any elements, then returns -1.
+ */
 qint64 Xmlbuilder::getItemFirstLine(int tablenum, QString firstlayername, QString attr)
 {
     return getElementFirstLineNumber(firstlayername, attr, QString::number(tablenum));
 }
 
+/**
+ * @fn Xmlbuilder::writeXmlItem
+ * @brief Write the elements in list to an XML file.
+ *
+ * @param itemid         : The value of the attribute you want to exchange.
+ * @param firstlayername : firstlayer tag name.
+ * @param attr           : attribute name.
+ * @param list           : A list where items are set. (same as itemlist)
+ */
 void Xmlbuilder::writeXmlItem(int itemid,
                                        QString firstlayername,
                                        QString attr,
@@ -269,6 +400,12 @@ void Xmlbuilder::writeXmlItem(int itemid,
     wxml->writeEndElement();
 }
 
+/**
+ * @fn Xmlbuilder::writeElementData
+ * @brief Write xml file.
+ *
+ * @param list       : An instance of data to set.
+ */
 void Xmlbuilder::writeElementData(const QList<QStringList> *list)
 {
     //set all settings
@@ -289,6 +426,18 @@ void Xmlbuilder::writeElementData(const QList<QStringList> *list)
     }
 }
 
+/**
+ * @fn Xmlbuilder::insertItemId
+ * @brief Inserts the data of itemid with attr attribute in firstlayername.
+ *
+ * @param itemid         : The value of the attribute you want to exchange.
+ * @param rootelement    : Root tag name.
+ * @param firstlayername : firstlayer tag name.
+ * @param attr           : attribute name.
+ * @param itemlist       : An instance of data to set.
+ *
+ * @return Whether it was successfully inserted into the XML file.
+ */
 bool Xmlbuilder::insertItemId(int itemid
                             , QString rootelement
                             , QString firstlayername
@@ -358,10 +507,23 @@ bool Xmlbuilder::insertItemId(int itemid
     return true;
 }
 
+/**
+ * @fn Xmlbuilder::deleteItemId
+ * @brief Delete the block with the attribute with the specified id.
+ *        If there is an attribute block with the specified id after
+ *        the deleted block, the id value is overwritten as destitemid.
+ *
+ * @param destitemid     : Id of the attribute block with the specified id you want to delete.
+ * @param fromitemid     : Attribute block with id overwritten as destitemid.
+ * @param firstlayername : firstlayer tag name.
+ * @param attr           : attribute name.
+ *
+ * @return Whether it was successfully deleted into the XML file.
+ */
 bool Xmlbuilder::deleteItemId(int destitemid,
-                                       int fromitemid,
-                                       QString firstlayername,
-                                       QString attr)
+                              int fromitemid,
+                              QString firstlayername,
+                              QString attr)
 {
     int counter = count(firstlayername);
     if(counter < fromitemid || counter < destitemid){
@@ -408,9 +570,20 @@ bool Xmlbuilder::deleteItemId(int destitemid,
     return true;
 }
 
-bool Xmlbuilder::deleteItemIdRecursive(int deleteitemid,
-                                                QString firstlayername,
-                                                QString attr)
+/**
+ * @fn Xmlbuilder::deleteItemIdToEnd
+ * @brief Deletes from the attribute with deleteitemid value to the last id with
+ *        this attribute.
+ *
+ * @param deleteitemid   : the value to delete associated with the attr attribute
+ * @param firstlayername : firstlayer tag name.
+ * @param attr           : attribute name.
+ *
+ * @return Whether the specified element could be deleted.
+ */
+bool Xmlbuilder::deleteItemIdToEnd(int deleteitemid,
+                                   QString firstlayername,
+                                   QString attr)
 {
     //get tableid
     int tableid = count(firstlayername);

@@ -1,13 +1,29 @@
-﻿#include "basexmlbuilder.h"
+﻿/*
+ * Copyright 2016-2019 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-BaseXmlBuilder::BaseXmlBuilder(QObject *parent) : QObject(parent)
+#include "basexmlbuilder.h"
+
+BaseXmlBuilder::BaseXmlBuilder(QObject *parent)
+    : QObject(parent)
 {
     file = new QFile();
     rxml = new QXmlStreamReader();
     wxml = new QXmlStreamWriter();
 
-    //set codec
-    //locale settings
+    //Change format when exporting files
 #ifdef Q_OS_WIN
     wxml->setCodec(QTextCodec::codecForName("Shift_JIS"));
 #else
@@ -23,6 +39,13 @@ BaseXmlBuilder::~BaseXmlBuilder()
     delete wxml;
 }
 
+/**
+ * @fn BaseXmlBuilder::setFileName
+ * @brief Specify the XML file name that this class opens.
+ *        If the specified file does not exist, create it.
+ *
+ * @param filename : The path of the file to create or load.
+ */
 void BaseXmlBuilder::setFileName(QString filename){
     file->setFileName(filename);
 
@@ -40,6 +63,12 @@ void BaseXmlBuilder::setFileName(QString filename){
     }
 }
 
+/**
+ * @fn BaseXmlBuilder::createXmlBaseDocument
+ * @brief Creating a document.
+ *
+ * @param rootelement : root tag.
+ */
 void BaseXmlBuilder::createXmlBaseDocument(QString rootelement)
 {
     openFile(QIODevice::WriteOnly);
@@ -62,7 +91,18 @@ void BaseXmlBuilder::createXmlBaseDocument(QString rootelement)
     closeFile();
 }
 
-//if it can't get specified element, this function does nothing.
+/**
+ * @fn BaseXmlBuilder::deleteElementGroup
+ * @brief Delete XML block with the specified attribute value.
+ *
+ * @param element    : The name of the tag containing attr, value.
+ * @param attr       : attribute name.
+ * @param value      : The value of the attribute.
+ * @param withparent : whether to leave tags attr, value.
+ *
+ * @return
+ * @remarks if it can't get specified element, this function does nothing.
+ */
 bool BaseXmlBuilder::deleteElementGroup(QString element, QString attr, int value, bool withparent)
 {
     bool hasid = false;
@@ -92,6 +132,9 @@ bool BaseXmlBuilder::deleteElementGroup(QString element, QString attr, int value
         }
 
     }
+
+    qDebug() << "[BaseXmlBuilder::deleteElementGroup] firstline: " << firstline \
+             << " endline: " << endline;
 
     //xml error check
 //    qDebug() << "BaseXmlBuilder: " << this->sender();
@@ -123,8 +166,6 @@ bool BaseXmlBuilder::deleteElementGroup(QString element, QString attr, int value
     }
 
     clearFileText();
-//    qDebug() << "firstline:" << firstline;
-//    qDebug() << "endline:" << endline;
 //    qDebug() << deletedText;
 
     //add text
@@ -134,7 +175,17 @@ bool BaseXmlBuilder::deleteElementGroup(QString element, QString attr, int value
     return true;
 }
 
-// get first line in multiple specified element.
+/**
+ * @fn BaseXmlBuilder::getElementFirstLineNumber
+ * @brief Returns the first line of the tag block of the element whose value
+ *        associated with attr matches.
+ *
+ * @param element : Tag name
+ *
+ * @return The first line of the tag block specified by element.
+ *         If it does not have any elements, then returns -1.
+ * @remarks get first line in multiple specified element.
+ */
 qint64 BaseXmlBuilder::getElementFirstLineNumber(QString element)
 {
     qint64 line = 0;
@@ -160,7 +211,18 @@ qint64 BaseXmlBuilder::getElementFirstLineNumber(QString element)
     return line;
 }
 
-// it is not have any elements, then returns -1.
+/**
+ * @fn BaseXmlBuilder::getElementFirstLineNumber
+ * @brief Returns the first line of the tag block of the element whose value
+ *        associated with attr matches.
+ *
+ * @param element   : Tag name
+ * @param attr      : Attribute name in tag.
+ * @param attrvalue : Value associated with the attribute.
+ *
+ * @return The first line of the tag block specified by element.
+ *         If it does not have any elements, then returns -1.
+ */
 qint64 BaseXmlBuilder::getElementFirstLineNumber(QString element, QString attr, QString attrvalue)
 {
     qint64 line = -1;
@@ -187,6 +249,17 @@ qint64 BaseXmlBuilder::getElementFirstLineNumber(QString element, QString attr, 
     return line;
 }
 
+/**
+ * @fn BaseXmlBuilder::getElementEndLineNumber
+ * @brief Returns the last line of the tag block of the element whose value
+ *        associated with attr matches.
+ *
+ * @param element : Tag name
+ * @param attr    : Attribute name in tag.
+ * @param value   : Value associated with the attribute.
+ *
+ * @return The last line of the tag block specified by element.
+ */
 qint64 BaseXmlBuilder::getElementEndLineNumber(QString element, QString attr, int value)
 {
     qint64 line = 0;
@@ -211,16 +284,22 @@ qint64 BaseXmlBuilder::getElementEndLineNumber(QString element, QString attr, in
         }
     }
 
-//    qDebug() << "BaseXmlBuilder: " << line << attr << value;
     checkXmlError();
     closeFile();
     return line;
 }
 
+/**
+ * @fn BaseXmlBuilder::getElementItemsCount
+ * @brief returns the number of tag blocks contained in element.
+ *
+ * @param element : tag name
+ *
+ * @return The number of tag blocks included in the tag.
+ */
 int BaseXmlBuilder::getElementItemsCount(QString element)
 {
     int count = 0;
-    //reset
     openFile(QIODevice::ReadOnly);
     openedFileReset();
 
@@ -233,14 +312,23 @@ int BaseXmlBuilder::getElementItemsCount(QString element)
         }
     }
 
-//    qDebug() << "BaseXmlBuilder: " << element;
     checkXmlError();
     closeFile();
-//    qDebug() << count << " :count";
+
+    qDebug() << "[BaseXmlBuilder::getElementItemsCount] element: " << element \
+             << " count: " << count;
+
     return count;
 }
 
-// return numbers of tab sequence
+/**
+ * @fn BaseXmlBuilder::appendTabIndent
+ * @brief returns the number of tabs
+ *
+ * @param num : numbers of tab sequence
+ *
+ * @return numbers of tab sequence
+ */
 QString BaseXmlBuilder::appendTabIndent(int num)
 {
     QString indent;
@@ -250,15 +338,29 @@ QString BaseXmlBuilder::appendTabIndent(int num)
     return indent;
 }
 
+/**
+ * @fn BaseXmlBuilder::endLineStr
+ * @brief Returns the line feed code that matches the OS.
+ *
+ * @return Line feed code suitable for OS.
+ */
 QString BaseXmlBuilder::endLineStr(){
     return "\n";
 }
 
+/**
+ * @fn BaseXmlBuilder::checkXmlError
+ * @brief xml file reading error check.
+ */
 void BaseXmlBuilder::checkXmlError(){
     if (rxml->hasError())
         qDebug() << "[BaseXmlBuilder::checkXmlError] : XML read error: " << rxml->errorString();
 }
 
+/**
+ * @fn BaseXmlBuilder::openedFileReset
+ * @brief Initialize the file reading position.
+ */
 void BaseXmlBuilder::openedFileReset(){
 
     //file seek to first point
@@ -270,10 +372,16 @@ void BaseXmlBuilder::openedFileReset(){
 
 void BaseXmlBuilder::clearFileText(){ file->resize(0); }
 
-
+/**
+ * @fn BaseXmlBuilder::openFile
+ * @brief Open file.
+ *
+ * @param flags : Qt designed file open flags.
+ *
+ * @return Whether the file was opened.
+ */
 bool BaseXmlBuilder::openFile(QFlags<QIODevice::OpenModeFlag> flags)
 {
-    //fileopen check
     if (!file->open(flags | QFile::Text)) {
         qDebug() << "[BaseXmlBuilder::openFile] : Cannot read file.";
         return false;
@@ -282,15 +390,20 @@ bool BaseXmlBuilder::openFile(QFlags<QIODevice::OpenModeFlag> flags)
     return true;
 }
 
+/**
+ * @fn BaseXmlBuilder::closeFile
+ * @brief Close file if open.
+ */
 void BaseXmlBuilder::closeFile(){ if(file->isOpen()) file->close(); }
 
-
 /**
- * @brief BaseXmlBuilder::getAdjustedXmlDataString
- * @param tmp
- * @param indent
- * @return
- * @details adjust code formatting. it becomes able to insert created xml.
+ * @fn BaseXmlBuilder::getTabbedXmlString
+ * @brief adjust code formatting. it becomes able to insert created xml.
+ *
+ * @param tmp    : The name of the temporary file.
+ * @param indent : Number of tabs to add.
+ *
+ * @return String with tabs.
  */
 QString BaseXmlBuilder::getTabbedXmlString(QTemporaryFile *tmp, int indent)
 {
