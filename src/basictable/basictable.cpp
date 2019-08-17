@@ -1,12 +1,27 @@
+/*
+ * Copyright 2016-2019 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "basictable.h"
 
 
 BasicTable::BasicTable(QWidget *parent)
     : BaseTable(parent)
 {
-
     //set header sort settings
-    connect(horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(horizontalHeaderClicked(int)));
+    connect(horizontalHeader(), &QHeaderView::sectionClicked, this, &BasicTable::horizontalHeaderClicked);
 }
 
 BasicTable::~BasicTable(){
@@ -34,9 +49,9 @@ void BasicTable::setPopupActionDefault(QIcon copy, QIcon up, QIcon down)
     m_down->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
 
     //connect signals
-    connect(m_copy, SIGNAL(triggered()), this, SLOT(copyAction()));
-    connect(m_up, SIGNAL(triggered()), this, SLOT(upAction()));
-    connect(m_down, SIGNAL(triggered()), this, SLOT(downAction()));
+    connect(m_copy, &QAction::triggered, this, &BasicTable::copyAction);
+    connect(m_up, &QAction::triggered, this, &BasicTable::upAction);
+    connect(m_down, &QAction::triggered, this, &BasicTable::downAction);
 }
 
 bool BasicTable::deleteCheckMessage()

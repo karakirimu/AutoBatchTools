@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016-2019 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #ifndef SEARCHXMLBUILDER_H
 #define SEARCHXMLBUILDER_H
 
@@ -5,8 +21,23 @@
 #include <QObject>
 #include <../xmlbuilder/xmlbuilder.h>
 
+#define SEARCH_NAME         "name"
+#define SEARCH_KEYWORD      "keyword"
+#define SEARCH_REGEX        "regex"
+#define SEARCH_DIR          "dir"
+#define SEARCH_RECURSIVE    "recursive"
+#define SEARCH_SECONDS      "seconds"
+#define SEARCH_CREATION     "creation"
+#define SEARCH_MODIFIED     "modified"
+#define SEARCH_FSIZE_1      "fsize_1"
+#define SEARCH_FSIZE_2      "fsize_2"
+
+#define ENABLED     "enabled"
+#define COMBO       "combo"
+#define SEARCH_NONE ""
+
 /**
- * @class SearchSettings_xml
+ * @class SearchXmlBuilder
  * @brief QList<QStringList> short description
  * @param data
  * @details this function sets text and checkbox.
@@ -24,22 +55,6 @@
  * 7    :fsize_1  :text   :enabled:data   :combo   :data
  * 8    :fsize_2  :text   :enabled:data   :combo   :data
  */
-
-#define SEARCH_NAME         "name"
-#define SEARCH_KEYWORD      "keyword"
-#define SEARCH_REGEX        "regex"
-#define SEARCH_DIR          "dir"
-#define SEARCH_RECURSIVE    "recursive"
-#define SEARCH_SECONDS      "seconds"
-#define SEARCH_CREATION     "creation"
-#define SEARCH_MODIFIED     "modified"
-#define SEARCH_FSIZE_1      "fsize_1"
-#define SEARCH_FSIZE_2      "fsize_2"
-
-#define ENABLED     "enabled"
-#define COMBO       "combo"
-#define SEARCH_NONE ""
-
 class SEARCHXMLBUILDERSHARED_EXPORT SearchXmlBuilder : public Xmlbuilder
 {
     Q_OBJECT
