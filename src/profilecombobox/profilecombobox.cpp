@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016-2019 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "profilecombobox.h"
 
 ProfileComboBox::ProfileComboBox(QObject *)
@@ -12,12 +28,23 @@ ProfileComboBox::~ProfileComboBox()
     delete pbuilder;
 }
 
+/**
+ * @fn ProfileComboBox::getCurrentFileName
+ * @brief Extract the file name at the position selected by ui.
+ * @return The filepath of the selected index.
+ */
 QString ProfileComboBox::getCurrentFileName()
 {
     int selected = this->currentIndex();
     return getCurrentFileName(selected);
 }
 
+/**
+ * @fn ProfileComboBox::getCurrentFileName
+ * @brief Returns the file name saved in the XML file according to the position of the combo box
+ * @param index The position of the combo box to retrieve.
+ * @return filepath
+ */
 QString ProfileComboBox::getCurrentFileName(int index)
 {
     if(index > -1){
@@ -29,6 +56,12 @@ QString ProfileComboBox::getCurrentFileName(int index)
     return "";
 }
 
+/**
+ * @fn ProfileComboBox::getIndexFromFileName
+ * @brief Get combo box position from filepath.
+ * @param filepath
+ * @return Combo box position or -1.
+ */
 int ProfileComboBox::getIndexFromFileName(QString filepath)
 {
     QList<QStringList> item;
@@ -44,6 +77,10 @@ int ProfileComboBox::getIndexFromFileName(QString filepath)
     return -1;
 }
 
+/**
+ * @fn ProfileComboBox::reloadComboBoxItem
+ * @brief Read the xml file and update the combo box item.
+ */
 void ProfileComboBox::reloadComboBoxItem()
 {
     this->clear();
@@ -64,7 +101,11 @@ void ProfileComboBox::reloadComboBoxItem()
     }
 }
 
-//DEPENDS_XML INPUT PROFILE
+/**
+ * @fn ProfileComboBox::addItemAction
+ * @brief Add combo box item and add data to XML file.
+ * @remarks DEPENDS_XML
+ */
 void ProfileComboBox::addItemAction()
 {
     //add empty item
@@ -102,6 +143,10 @@ void ProfileComboBox::addItemAction()
     }
 }
 
+/**
+ * @fn ProfileComboBox::deleteItemAction
+ * @brief Delete the combo box item and delete the corresponding data in the XML file.
+ */
 void ProfileComboBox::deleteItemAction()
 {
     //if rowcount is zero.

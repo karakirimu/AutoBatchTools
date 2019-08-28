@@ -179,8 +179,8 @@ public slots:
     void pasteAction(int id);
     void swapAction(int before, int after);
 
-    //internal function
-    void loadcache(int amount);
+    //check difference
+    bool elementDiffCheck();
 
 protected:
     void timerEvent(QTimerEvent *event);
@@ -191,6 +191,9 @@ protected:
 private:
     void save();
     void reset();
+
+    //internal function
+    void loadcache(int amount);
 
     //cache data
     QList<QList<QStringList> *> *cache;

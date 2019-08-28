@@ -13,7 +13,7 @@ class VariantComboBox : public QComboBox
 {
     Q_OBJECT
 public:
-    explicit VariantComboBox(QObject *parent = 0);
+    explicit VariantComboBox(QObject *parent = nullptr);
     ~VariantComboBox();
     void reloadComboBoxItem();
 
@@ -23,7 +23,7 @@ public:
 
 private:
     EditOperator *editop;
-//    StringXmlBuilder *sbuilder;
+    StringXmlBuilder *sbuilder;
 //    ProcessXmlBuilder *pbuilder;
     static const int PEMAGIC = 1;
 };

@@ -412,16 +412,21 @@ void EditorTab::tabChanged(int index)
     }
 }
 
+///
+/// \brief EditorTab::editCheckAction
+/// \fn
+/// "timeoutCheckBox"
+/// "autoOnlyCheckBox" normal
+/// "autoOnlyCheckBox_2" search
+/// "autoOnlyCheckBox_3" plugin
+/// "autoOnlyCheckBox_4" other
+/// \param check
+///
 void EditorTab::editCheckAction(bool check)
 {
     QString objname = this->sender()->objectName();
     qDebug() << "EditorTab::editcheckaction : " << objname;
 
-//"timeoutCheckBox"
-//"autoOnlyCheckBox" normal
-//"autoOnlyCheckBox_2" search
-//"autoOnlyCheckBox_3" plugin
-//"autoOnlyCheckBox_4" other
     if(objname == "timeoutCheckBox"){
         editop->checkTimeoutAction(currentid, check);
 

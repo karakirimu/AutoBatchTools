@@ -27,7 +27,6 @@ VariantTree::VariantTree(QWidget *)
     //row select action
     connect(this, &QAbstractItemView::clicked, this, &VariantTree::itemSelectUpdate);
     connect(this->model(), &QAbstractItemModel::dataChanged, this, &VariantTree::itemDataUpdate);
-
 }
 
 VariantTree::~VariantTree()

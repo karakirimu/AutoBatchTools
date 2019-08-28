@@ -97,19 +97,18 @@ void CommandTable::dragEnterEvent(QDragEnterEvent *event)
 
 void CommandTable::dropEvent(QDropEvent *event)
 {
-//    this->swapItem(this->row(this->selectedItems().at(0))
-//                   , this->indexAt(event->pos()).row());
-    //like cutaction
-
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
     int droppedrow = this->indexAt(event->pos()).row();
-//    int prevrowcount = this->rowCount();
     if(droppedrow == -1) return;
 
     QStringList text;
     QModelIndexList mlist = this->selectedIndexes();
     int rows = mlist.count();
+
+    //todo: this code is insufficient for multiple drag and drop.
+    if( rows > 1 ) return;
+
     for(int i = 0; i < rows; i++){
         text.append(mlist.at(i).data().toString());
 
@@ -122,11 +121,9 @@ void CommandTable::dropEvent(QDropEvent *event)
     //last lests unknown ""
     if(text.last() == "") text.removeLast();
 
-    int row = this->rowCount();
+    int row = droppedrow;
     int txcount = text.count();
 
-    //TODO: last index
-    if(row > 0) row = droppedrow;
     qDebug() << "[CommandTable::dropEvent] row : " << row;
 
     for(int i = 0; i < txcount; i++){

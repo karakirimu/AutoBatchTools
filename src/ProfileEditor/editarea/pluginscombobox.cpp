@@ -54,7 +54,7 @@ void PluginsComboBox::reloadComboBoxItem()
     int counter = builder->count();
     for(int i = 0; i < counter; i++){
         builder->readItem(i, &item);
-        buffer.append(item.at(0).at(NAME_XML));
+        buffer.append(item.at(0).at(PATH_XML));
         item.clear();
     }
 

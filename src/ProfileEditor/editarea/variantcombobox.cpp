@@ -2,14 +2,14 @@
 
 VariantComboBox::VariantComboBox(QObject *)
 {
-// sbuilder = new StringXmlBuilder();
+ sbuilder = new StringXmlBuilder();
 // pbuilder = new ProcessXmlBuilder();
     editop = nullptr;
 }
 
 VariantComboBox::~VariantComboBox()
 {
-//    delete sbuilder;
+    delete sbuilder;
 //    delete pbuilder;
 }
 
@@ -19,6 +19,15 @@ void VariantComboBox::reloadComboBoxItem()
     QList<QStringList> item;
     int counter;
 
+    //stringbuilder update (global)
+    counter = sbuilder->count();
+    for(int i = 0; i < counter; i++){
+        if(sbuilder->readItem(i, &item)){
+            this->addItem(item.at(0).at(1));
+            item.clear();
+        }
+    }
+
     //Processxmlbuilder update (local)
     if(editop->read(PEMAGIC, &item)){
         counter = QString(item.at(1).at(1)).toInt();
@@ -27,15 +36,6 @@ void VariantComboBox::reloadComboBoxItem()
         }
     }
     item.clear();
-
-    //stringbuilder update (global)
-//    counter = sbuilder->count();
-//    for(int i = 0; i < counter; i++){
-//        if(sbuilder->readItem(i, &item)){
-//            this->addItem(item.at(0).at(1));
-//            item.clear();
-//        }
-    //    }
 }
 
 void VariantComboBox::setEditOperator(EditOperator *op)
