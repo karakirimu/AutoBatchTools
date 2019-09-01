@@ -112,7 +112,8 @@ void EditorTab::setEditOperator(EditOperator *op)
 
     connect(autoonly_3, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
 
-    connect(profilecombobox, &ProfileComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    connect(profilecombobox, QOverload<const QString &>::of(&ProfileComboBox::activated) \
+            , this, &EditorTab::editTextAction);
     connect(autoonly_4, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
 
     //index edit (table only)
@@ -412,16 +413,16 @@ void EditorTab::tabChanged(int index)
     }
 }
 
-///
-/// \brief EditorTab::editCheckAction
-/// \fn
-/// "timeoutCheckBox"
-/// "autoOnlyCheckBox" normal
-/// "autoOnlyCheckBox_2" search
-/// "autoOnlyCheckBox_3" plugin
-/// "autoOnlyCheckBox_4" other
-/// \param check
-///
+/**
+ * @fn EditorTab::editCheckAction
+ * @brief
+ *  "timeoutCheckBox"
+ *  "autoOnlyCheckBox" normal
+ *  "autoOnlyCheckBox_2" search
+ *  "autoOnlyCheckBox_3" plugin
+ *  "autoOnlyCheckBox_4" other
+ * @param check
+ */
 void EditorTab::editCheckAction(bool check)
 {
     QString objname = this->sender()->objectName();
