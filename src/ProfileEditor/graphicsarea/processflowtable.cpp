@@ -81,9 +81,10 @@ void ProcessFlowTable::addAction()
 }
 
 
-/// \fn ProcessFlowTable::deleteAction
-/// \brief Clear multiple selections at once.
-/// \date 2019/05/26
+/**
+ * @fn ProcessFlowTable::deleteAction
+ * @brief Clear multiple selections at once.
+ */
 void ProcessFlowTable::deleteAction()
 {
     // information process only
@@ -93,11 +94,6 @@ void ProcessFlowTable::deleteAction()
     if(!deleteCheckMessage()) return;
 
     int cur = 0;
-
-//    if(cur > 1){
-//        editop->deleteAction(cur);
-//        emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::FLOWTABLE);
-//    }
 
     QModelIndexList lists = this->selectionModel()->selectedRows();
 
@@ -160,9 +156,10 @@ void ProcessFlowTable::downAction()
     }
 }
 
-//! \fn ProcessFlowTable::reloadAction
-//! \brief Reload process flow items.
-//! \date 2019/5/25
+/**
+ * @fn ProcessFlowTable::reloadAction
+ * @brief Reload process flow items.
+ */
 void ProcessFlowTable::reloadAction()
 {
     // Reflect after update
@@ -195,11 +192,17 @@ void ProcessFlowTable::reloadAction()
     selectRow(cur);
 }
 
+/**
+ * @fn ProcessFlowTable::updateIndex
+ * @brief Function called when back / forward is executed
+ * @param operation Formatted string
+ */
 void ProcessFlowTable::updateIndex(QString operation)
 {
     QStringList sep = operation.split(",");
 
-    if(sep.count() < 2){
+    if(sep.count() < 2 || \
+            (sep.count() == 3 && sep.at(2) == UNDOREDO_E_TABLEEDIT)){
         //edit
         replaceItem(static_cast<QString>(sep.at(0)).toInt());
     }else if(sep.at(1) == UNDOREDO_ADD){
@@ -536,7 +539,8 @@ void ProcessFlowTable::setNormalItem(QList<QStringList> *list, int dataid)
 
 //    cell->setTypeAll(exec_title, &exec_pixmap, &exec_style, &exec_frame);
 
-    QString curdata = (cmdcount == 0)? "(new command)" : list->at(cmdfirst).at(1);
+    QString curdata = (cmdcount == 0)? "(no command)" : list->at(cmdfirst).at(1);
+    if(curdata == "") curdata = "(no command)";
 
     QFileInfo info(curdata);
     QString tmp = /*getHtmlHeader("") + */(info.isFile() ? info.fileName() : curdata);
@@ -632,11 +636,12 @@ void ProcessFlowTable::setPluginsItem(QList<QStringList> *list, int dataid)
 //    cell->setContent(tmp);
 }
 
-//!
-//! \brief ProcessFlowTable::setProfileItem DEPENDS_XML DEPENDS_UI
-//! \param list loaded xml list
-//! \param dataid xml data position
-//!
+/**
+ * @fn ProcessFlowTable::setProfileItem
+ * @brief DEPENDS_XML DEPENDS_UI
+ * @param list loaded xml list
+ * @param dataid xml data position
+ */
 void ProcessFlowTable::setProfileItem(QList<QStringList> *list, int dataid)
 {
     QString curdata = pxlg.fetch(PR_FILEPATH, ATTR_NONE, list);
