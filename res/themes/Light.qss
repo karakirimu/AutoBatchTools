@@ -120,8 +120,7 @@ QToolButton:hover
 ,QToolButton#runToolButton:hover
 , QToolButton#stopToolButton:hover
 , QToolButton#pauseToolButton:hover
-, QToolButton#settingToolButton:hover
-{
+, QToolButton#settingToolButton:hover {
     background-color: #e0e0e0;
     border: none;
 }
@@ -137,10 +136,21 @@ QToolButton:pressed
 ,QToolButton#runToolButton:pressed
 , QToolButton#stopToolButton:pressed
 , QToolButton#pauseToolButton:pressed
-, QToolButton#settingToolButton:pressed
-{
+, QToolButton#settingToolButton:pressed {
     background-color: #aeaeae;
     border: none;
+}
+
+QToolButton#qt_calendar_prevmonth {
+    icon-size:16px 16px;
+    border:0px;
+    qproperty-icon: url(:/default_icons/undo.png);
+}
+
+QToolButton#qt_calendar_nextmonth {
+    icon-size:16px 16px;
+    border:0px;
+    qproperty-icon: url(:/default_icons/redo.png);
 }
 
 /* ===== QTableWidget, QheaderView ===== */
@@ -175,6 +185,22 @@ QTreeView {
     background-color: #f5f5f5;
 }
 
+QTreeView::item:alternate {
+    background-color: #ececec;
+}
+
+QTreeView::branch {
+    background-color: #f5f5f5;
+}
+
+QTreeView::branch:open {
+    image: url(:/default_icons/tree_open.png);
+}
+
+QTreeView::branch:closed:has-children {
+    image: url(:/default_icons/tree_close.png);
+}
+
 QTreeView::item {
     border-top-color: transparent;
     border-bottom-color: transparent;
@@ -192,7 +218,7 @@ QTreeView::item:selected {
 }
 
 QTreeView::item:selected:active{
-    background: #f5f5f5;
+    background: #c2c2c2;
     color: #393939;
 }
 
@@ -277,7 +303,7 @@ QDockWidget::close-button
     border: 1px solid transparent;
     background: transparent;
     color: #393939;
-    padding: 2px;
+    icon-size: 12px;
 }
 
 QDockWidget::close-button:hover
@@ -306,6 +332,7 @@ QWidget#plugins,
 QWidget#otherprof,
 QWidget#settinggeneral,
 QWidget#settingsearch,
+QWidget#settingtest,
 QWidget#settingstring,
 QWidget#settingplugins,
 QWidget#baseSettingTab,
@@ -322,6 +349,10 @@ QWidget#changelog
 
 QTextBrowser {
     color: #393939;
+}
+
+QWidget#qt_calendar_navigationbar {
+    background: #f5f5f5;
 }
 
 /* Style the tab using the tab sub-control. Note that
@@ -355,7 +386,7 @@ QStatusBar {
 QPushButton {
     background-color: #f5f5f5;
     border: none;
-    min-width: 8ex;
+    min-width: 20ex;
     padding: 4px;
     color: #393939;
 }
@@ -415,29 +446,87 @@ QCheckBox::indicator:checked:pressed {
     background-color: #f5f5f5;
 }
 
-QSpinBox,
-QTimeEdit,
-QDateTimeEdit
+/* ===== QDateTimeEdit ===== */
+
+QDateTimeEdit {
+    background-color: #f5f5f5;
+    color: #393939;
+    border: none;
+}
+
+QDateTimeEdit:hover {
+    background-color: #e0e0e0;
+    color: #111111;
+    border: none;
+}
+
+QDateTimeEdit::drop-down
 {
+    background-color: #f5f5f5;
+    border: none;
+}
+
+QDateTimeEdit::down-arrow {
+    image: url(:/default_icons/tree_open.png);
+    height: 10px;
+    width: 10px;
+}
+
+/* ===== QSpinBox ===== */
+
+QSpinBox,
+QTimeEdit {
     background-color: #f5f5f5;
     color: #393939;
     border: none;
 }
 
 QSpinBox:hover,
-QTimeEdit:hover,
-QDateTimeEdit:hover
-{
+QTimeEdit:hover {
     background-color: #e0e0e0;
     color: #111111;
     border: none;
 }
+
+QSpinBox::up-button,
+QSpinBox::down-button {
+    background-color: #f5f5f5;
+    border: none;
+}
+
+QSpinBox::up-button:hover,
+QSpinBox::down-button:hover {
+    background-color: #616161;
+    border: none;
+}
+
+QSpinBox::up-button:pressed,
+QSpinBox::down-button:pressed {
+    background-color: #e0e0e0;
+    border: none;
+}
+
+QSpinBox::up-arrow {
+    image: url(:/default_icons/sub_arrow_up.png);
+    height: 6px;
+    width: 6px;
+}
+
+QSpinBox::down-arrow {
+    image: url(:/default_icons/tree_open.png);
+    height: 6px;
+    width: 6px;
+}
+
+/* ===== QRadioButton ===== */
 
 QRadioButton
 {
     background-color: transparent;
     color: #393939;
 }
+
+/* ===== QComboBox ===== */
 
 QComboBox
 {
@@ -446,20 +535,33 @@ QComboBox
     border: none;
 }
 
-QComboBox:hover, QComboBox::drop-down
+QComboBox:hover
 {
     background-color: #e0e0e0;
-}
-
-QGroupBox
-{
-    background-color: transparent;
-    color: #393939;
 }
 
 QComboBox:pressed
 {
     background-color: #aeaeae;
+}
+
+QComboBox::drop-down
+{
+    background-color: #f5f5f5;
+}
+
+QComboBox::down-arrow {
+    image: url(:/default_icons/tree_open.png);
+    height: 10px;
+    width: 10px;
+}
+
+/* ===== QGroupBox ===== */
+
+QGroupBox
+{
+    background-color: transparent;
+    color: #393939;
 }
 
 QProgressBar {

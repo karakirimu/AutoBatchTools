@@ -12,7 +12,6 @@
 @spinbox_hover_textcolor = #eeeeee;
 */
 
-
 /* ===== QMainWindow ===== */
 
 QMainWindow::separator {
@@ -142,6 +141,18 @@ QToolButton:pressed
     border: none;
 }
 
+QToolButton#qt_calendar_prevmonth {
+    icon-size:16px 16px;
+    border:0px;
+    qproperty-icon: url(:/default_icons/undo.png);
+}
+
+QToolButton#qt_calendar_nextmonth {
+    icon-size:16px 16px;
+    border:0px;
+    qproperty-icon: url(:/default_icons/redo.png);
+}
+
 /* ===== QTableWidget, QheaderView ===== */
 
 QHeaderView::section {
@@ -162,7 +173,6 @@ QTableWidget {
     background-color: #373737;
     selection-background-color: #8e8e8e;
     color: #c6c6c6;
-/*    border: 1px solid #616161;*/
 }
 
 QTableWidget#flowTableWidget {
@@ -175,6 +185,22 @@ QTreeView {
     background-color: #373737;
 }
 
+QTreeView::item:alternate {
+    background-color: #303030;
+}
+
+QTreeView::branch {
+    background-color: #373737;
+}
+
+QTreeView::branch:open {
+    image: url(:/default_icons/tree_open.png);
+}
+
+QTreeView::branch:closed:has-children {
+    image: url(:/default_icons/tree_close.png);
+}
+
 QTreeView::item {
     border-top-color: transparent;
     border-bottom-color: transparent;
@@ -182,7 +208,7 @@ QTreeView::item {
 }
 
 QTreeView::item:hover {
-    background-color: #8e8e8e;
+    background-color: #616161;
     border: none;
 }
 
@@ -192,13 +218,13 @@ QTreeView::item:selected {
 }
 
 QTreeView::item:selected:active{
-    background: #373737;
-    color: #c6c6c6;
+    background: #c6c6c6;
+    color: black;
 }
 
 QTreeView::item:selected:!active {
-    background: #efefef;
-    color: black;
+    background: #373737;
+    color: #c6c6c6;
 }
 
 /* ===== QListView ===== */
@@ -273,7 +299,7 @@ QDockWidget::close-button
     border: 1px solid transparent;
     background: transparent;
     color: #c6c6c6;
-    padding: 2px;
+    icon-size: 12px;
 }
 
 QDockWidget::close-button:hover
@@ -299,6 +325,7 @@ QTabWidget::pane { /* The tab widget frame */
     background-color: #373737;
 }*/
 
+Qwidget#info,
 QWidget#general,
 QWidget#loop,
 QWidget#exec,
@@ -307,6 +334,7 @@ QWidget#plugins,
 QWidget#otherprof,
 QWidget#settinggeneral,
 QWidget#settingsearch,
+QWidget#settingtest,
 QWidget#settingstring,
 QWidget#settingplugins,
 QWidget#baseSettingTab,
@@ -324,6 +352,10 @@ QWidget#changelog
 QWidget#startupgeneral
 {
     background-color: #373737;
+}
+
+QWidget#qt_calendar_navigationbar {
+    background: #373737;
 }
 
 /* Style the tab using the tab sub-control. Note that
@@ -361,9 +393,8 @@ QStatusBar {
 
 QPushButton {
     background-color: #373737;
-/*    border: 1px solid #8e8e8e;*/
     border: none;
-    min-width: 8ex;
+    min-width: 20ex;
     padding: 4px;
     color: #c6c6c6;
 }
@@ -423,24 +454,81 @@ QCheckBox::indicator:checked:pressed {
     background-color: #373737;
 }
 
+/* ===== QDateTimeEdit ===== */
+
+QDateTimeEdit {
+    background-color: #373737;
+    color: #c6c6c6;
+    border: none;
+}
+
+QDateTimeEdit:hover {
+    background-color: #8e8e8e;
+    color: #eeeeee;
+    border: none;
+}
+
+QDateTimeEdit::drop-down
+{
+    background-color: #373737;
+    border: none;
+}
+
+QDateTimeEdit::down-arrow {
+    image: url(:/default_icons/tree_open.png);
+    height: 10px;
+    width: 10px;
+}
+
+/* ===== QSpinBox ===== */
+
 QSpinBox,
-QTimeEdit,
-QDateTimeEdit
+QTimeEdit
 {
     background-color: #373737;
     color: #c6c6c6;
-/*    border: 1px solid #8e8e8e;*/
     border: none;
 }
 
 QSpinBox:hover,
-QTimeEdit:hover,
-QDateTimeEdit:hover
+QTimeEdit:hover
 {
     background-color: #8e8e8e;
     color: #eeeeee;
     border: none;
 }
+
+QSpinBox::up-button,
+QSpinBox::down-button {
+    background-color: #373737;
+    border: none;
+}
+
+QSpinBox::up-button:hover,
+QSpinBox::down-button:hover {
+    background-color: #eeeeee;
+    border: none;
+}
+
+QSpinBox::up-button:pressed,
+QSpinBox::down-button:pressed {
+    background-color: #1b1b1b;
+    border: none;
+}
+
+QSpinBox::up-arrow {
+    image: url(:/default_icons/sub_arrow_up.png);
+    height: 6px;
+    width: 6px;
+}
+
+QSpinBox::down-arrow {
+    image: url(:/default_icons/tree_open.png);
+    height: 6px;
+    width: 6px;
+}
+
+/* ===== QRadioButton ===== */
 
 QRadioButton
 {
@@ -448,28 +536,41 @@ QRadioButton
     color: #c6c6c6;
 }
 
+/* ===== QComboBox ===== */
+
 QComboBox
 {
     background-color: #373737;
     color: #c6c6c6;
-/*    border: 1px solid #8e8e8e;*/
     border: none;
 }
 
-QComboBox:hover, QComboBox::drop-down
+QComboBox:hover
 {
     background-color: #8e8e8e;
-}
-
-QGroupBox
-{
-    background-color: transparent;
-    color: #c6c6c6;
 }
 
 QComboBox:pressed
 {
     background-color: #1b1b1b;
+}
+
+QComboBox::drop-down {
+    background-color: #373737;
+}
+
+QComboBox::down-arrow {
+    image: url(:/default_icons/tree_open.png);
+    height: 10px;
+    width: 10px;
+}
+
+/* ===== QGroupBox ===== */
+
+QGroupBox
+{
+    background-color: transparent;
+    color: #c6c6c6;
 }
 
 QProgressBar {

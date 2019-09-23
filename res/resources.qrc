@@ -15,7 +15,6 @@
         <file>default_icons/export.png</file>
         <file>default_icons/extras.png</file>
         <file>default_icons/file.png</file>
-        <file>default_icons/flowarrow.png</file>
         <file>default_icons/folder.png</file>
         <file>default_icons/info.png</file>
         <file>default_icons/newfile.png</file>
@@ -46,5 +45,12 @@
         <file>app_icons/app_pe_24x24.ico</file>
         <file>app_icons/app_abr_24x24.ico</file>
         <file>app_icons/app_abs_24x24_white.ico</file>
+        <file>default_icons/tree_close.png</file>
+        <file>default_icons/tree_open.png</file>
+        <file>default_icons/flowarrow.png</file>
+        <file>default_icons/sub_arrow_up.png</file>
+        <file>default_icons/close.png</file>
+        <file>default_icons/minimize.png</file>
+        <file>default_icons/normalize.png</file>
     </qresource>
 </RCC>
