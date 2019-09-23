@@ -6,9 +6,11 @@ BaseDockWidget::BaseDockWidget(QWidget *parent)
 
     installEventFilter(this);
     def = titleBarWidget();
+
     empty = new QWidget;
     setMouseTracking(true);
     setAttribute(Qt::WA_Hover);
+
     connect(this, &BaseDockWidget::topLevelChanged, this, &BaseDockWidget::showTitleBar);
 }
 

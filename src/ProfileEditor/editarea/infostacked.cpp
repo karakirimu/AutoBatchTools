@@ -105,7 +105,8 @@ void InfoStacked::reloadAction()
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void InfoStacked::setInfoDataList(int after, int before, int function, int sendfrom)
 {
-    Q_UNUSED(before); Q_UNUSED(sendfrom);
+    Q_UNUSED(before)
+    Q_UNUSED(sendfrom)
 
     // change stack and check loading is need or not.
     if(!moveStacked(after, function)) return;
@@ -155,7 +156,7 @@ void InfoStacked::setInfoDataList(int after, int before, int function, int sendf
 void InfoStacked::editAuthorAction(QString text)
 {
 #ifdef QT_DEBUG
-    qDebug() << "InnerStackedWidget::editAuthorAction : ";
+    qDebug() << "[InnerStackedWidget::editAuthorAction] : ";
 #endif
     editop->textProjectAuthorAction(0,text);
 }
@@ -163,7 +164,7 @@ void InfoStacked::editAuthorAction(QString text)
 void InfoStacked::editProjectNameAction(QString text)
 {
 #ifdef QT_DEBUG
-    qDebug() << "InnerStackedWidget::editProjectNameAction : ";
+    qDebug() << "[InnerStackedWidget::editProjectNameAction] : ";
 #endif
     editop->textProjectNameAction(0, text);
 }
@@ -171,7 +172,7 @@ void InfoStacked::editProjectNameAction(QString text)
 void InfoStacked::editVerAction(QString text)
 {
 #ifdef QT_DEBUG
-    qDebug() << "InnerStackedWidget::editVerAction : ";
+    qDebug() << "[InnerStackedWidget::editVerAction] : ";
 #endif
     editop->textProjectVerAction(0, text);
 }
@@ -179,7 +180,7 @@ void InfoStacked::editVerAction(QString text)
 void InfoStacked::editDescriptionAction(QString text)
 {
 #ifdef QT_DEBUG
-    qDebug() << "InnerStackedWidget::editdescriptionaction : " << this->sender()->objectName();
+    qDebug() << "[InnerStackedWidget::editdescriptionaction] : " << this->sender()->objectName();
 #endif
     editop->textProjectDescriptAction(0, text);
 }
@@ -187,7 +188,7 @@ void InfoStacked::editDescriptionAction(QString text)
 void InfoStacked::editInitialSearch(QString text)
 {
 #ifdef QT_DEBUG
-    qDebug() << "InnerStackedWidget::editInitialSearch : ";
+    qDebug() << "[InnerStackedWidget::editInitialSearch] : ";
 #endif
 
     editop->comboboxSearchAction(0,text, fscombo->currentIndex());
@@ -197,7 +198,7 @@ void InfoStacked::editCheckAction(bool check)
 {
     QString objname = this->sender()->objectName();
 #ifdef QT_DEBUG
-    qDebug() << "InnerStackedWidget::editcheckaction : " << objname;
+    qDebug() << "[InnerStackedWidget::editcheckaction] : " << objname;
 #endif
     //allowInputCheckBox
     //loopCountInfCheckBox
@@ -225,7 +226,7 @@ void InfoStacked::editTextValueAction(QString value)
 {
     QString objname = this->sender()->objectName();
 #ifdef QT_DEBUG
-    qDebug() << "InnerStackedWidget::editvalueaction : " << objname;
+    qDebug() << "[InnerStackedWidget::editvalueaction] : " << objname;
 #endif
 
     if(objname == "loopMaxLineEdit"){

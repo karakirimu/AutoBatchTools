@@ -41,8 +41,8 @@ QString CommandTable::getText(int row)
 void CommandTable::insertItem(int row)
 {
     this->blockSignals(true);
+    this->clearSelection();
     this->insertRow(row);
-    this->setCurrentItem(itemAt(row,0));
     this->selectRow(row);
     this->blockSignals(false);
 }
@@ -52,6 +52,7 @@ void CommandTable::deleteItem(int row)
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
     this->removeRow(row);
+    this->clearSelection();
 }
 
 void CommandTable::replaceItem(int row, QString str)
@@ -139,14 +140,12 @@ void CommandTable::dropEvent(QDropEvent *event)
 void CommandTable::addAction()
 {
     int row = this->rowCount();
-    setRowCount(row + 1);
+    this->insertRow(row);
     emit updateTable(row, "", ProcessXmlListGenerator::TABLE_ADD);
 
     //for useability
     this->setCurrentItem(itemAt(row,0));
     this->selectRow(row);
-
-    editAction();
 }
 
 void CommandTable::editAction()
@@ -155,11 +154,10 @@ void CommandTable::editAction()
     this->edit(currentIndex());
 }
 
-///
-/// \fn CommandTable::deleteAction
-/// \brief delete table item(s)
-/// \date 2019/05/24
-///
+/**
+ * @fn CommandTable::deleteAction
+ * @brief delete table item(s)
+ */
 void CommandTable::deleteAction()
 {
     //if rowcount is zero.
@@ -178,7 +176,11 @@ void CommandTable::deleteAction()
     }
 }
 
-//FIXME : multiple select (it msy be not so good ...)
+/**
+ * @fn CommandTable::cutAction
+ * @brief cut selected command
+ * @note multiple select (it msy be not so good ...)
+ */
 void CommandTable::cutAction()
 {
     //if rowcount is zero.
@@ -291,11 +293,10 @@ void CommandTable::pasteEnterAction()
     }
 }
 
-///
-/// \fn CommandTable::upAction
-/// \brief Swap selected row with the row above
-/// \date 2019/06/16
-///
+/**
+ * @fn CommandTable::upAction
+ * @brief Swap selected row with the row above
+ */
 void CommandTable::upAction()
 {
     int current = this->currentRow();
@@ -303,11 +304,10 @@ void CommandTable::upAction()
     this->swapItem(current, current - 1);
 }
 
-///
-/// \fn CommandTable::downAction
-/// \brief Swap selected row with the row below
-/// \date 2019/06/16
-///
+/**
+ * @fn CommandTable::downAction
+ * @brief Swap selected row with the row below
+ */
 void CommandTable::downAction()
 {
     int current = this->currentRow();
@@ -465,7 +465,7 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
         return true;
     }
 
-    qDebug() << "[FileQueueTable::eventFilter] Event type : " << event->type();
+//    qDebug() << "[CommandTable::eventFilter] Event type : " << event->type();
 
     // standard event processing
     return QObject::eventFilter(obj, event);

@@ -10,7 +10,7 @@ class CommandTable : public BasicTable
 {
     Q_OBJECT
 public:
-    explicit CommandTable(QWidget *parent = Q_NULLPTR);
+    explicit CommandTable(QWidget *parent = nullptr);
     ~CommandTable();
 
     QString getText(int row);
