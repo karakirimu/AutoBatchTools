@@ -260,7 +260,21 @@ void EditorTab::setPluginDataList(QList<QStringList> *list)
 
     //reset combobox
     extrafunccombobox->reloadComboBoxItem();
-    extrafunccombobox->setCurrentText(xgen.fetch(PL_NAME,ATTR_NONE, list));
+
+    //get plugin name
+    QString file = xgen.fetch(PL_FILEPATH,ATTR_NONE, list);
+    QFileInfo info(file);
+
+    if(info.exists()){
+        //check plugin can use
+        QPluginLoader loader(file);
+
+        if(loader.load()){
+            ExtraPluginInterface *ext = qobject_cast<ExtraPluginInterface *>(loader.instance());
+            extrafunccombobox->setCurrentText(ext->pluginInfo().name);
+            loader.unload();
+        }
+    }
 
     int counter = xgen.fetch(PL_CMDARGCOUNT,ATTR_NONE, list).toInt();
     int ecmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
@@ -310,7 +324,9 @@ void EditorTab::setOtherDataList(QList<QStringList> *list)
 ///DEPENDS_XML DEPENDS_UI PROCESS
 void EditorTab::setCombinedDataList(int after, int before, int function, int sendfrom)
 {
-    Q_UNUSED(before); Q_UNUSED(sendfrom); Q_UNUSED(function)
+    Q_UNUSED(before)
+    Q_UNUSED(sendfrom)
+    Q_UNUSED(function)
 
     QList<QStringList> *list = new QList<QStringList>();
 
@@ -511,8 +527,7 @@ void EditorTab::editTableAction(int index, QString str, int function)
     }else if(objname == "extrafuncTableWidget"){
         editop->tableEditPluginAction(currentid, index, str, function);
 
-    }
-
+    }  
 }
 
 void EditorTab::editSwapTableAction(int indexbefore, int indexafter)

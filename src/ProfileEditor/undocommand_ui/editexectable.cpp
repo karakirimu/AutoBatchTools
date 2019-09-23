@@ -144,19 +144,19 @@ int EditExecTable::id() const
     return pxg.getId(E_CMDARGCOUNT);
 }
 
-bool EditExecTable::mergeWith(const QUndoCommand *other)
-{
-    if (other->id() != id()) return false;
-    const EditExecTable *com = static_cast<const EditExecTable *>(other);
+//bool EditExecTable::mergeWith(const QUndoCommand *other)
+//{
+//    if (other->id() != id()) return false;
+//    const EditExecTable *com = static_cast<const EditExecTable *>(other);
 
-    if(operation() == ProcessXmlListGenerator::TABLE_EDIT){
-        m_newstr = com->m_newstr;
-    }else{
-        return false;
-    }
+//    if(operation() == ProcessXmlListGenerator::TABLE_EDIT){
+//        m_newstr = com->m_newstr;
+//    }else{
+//        return false;
+//    }
 
-    return true;
-}
+//    return true;
+//}
 
 int EditExecTable::operation() const
 {
