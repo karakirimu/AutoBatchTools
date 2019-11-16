@@ -20,6 +20,7 @@ public:
     void deleteItem(int row);
     void replaceItem(int row, QString str);
     void swapItem(int before, int after);
+    void moveItem(int before, int beforecount, int after);
 
     //pluginstable -> settingsclicked
     void insertItems(QStringList *item);
@@ -27,6 +28,7 @@ public:
 signals:
     void updateTable(int index, QString newstr, int function);
     void swapTable(int before, int after);
+    void dragDropTable(QList<int> before, int after);
 
 protected slots:
     void dragEnterEvent(QDragEnterEvent *event);

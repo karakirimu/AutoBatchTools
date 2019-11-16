@@ -68,11 +68,76 @@ void CommandTable::swapItem(int before, int after)
 {
     //swap item
     QString tmp = this->model()->index(before, 0).data().toString();
+    this->blockSignals(true);
     this->setItem(before, 0, new QTableWidgetItem(this->model()->index(after, 0).data().toString()));
     this->setItem(after, 0, new QTableWidgetItem(tmp));
+    this->blockSignals(false);
 
     this->clearSelection();
     selectRow(after);
+}
+
+/**
+ * @fn CommandTable::moveItem
+ * @brief moving item in table (single or multiple contiguous select only)
+ * @param before
+ * @param beforecount
+ * @param after
+ */
+void CommandTable::moveItem(int before, int beforecount, int after)
+{
+    QHash<int, QString> selectlist;
+
+    if(before < after){
+        for (int i = 0; i < beforecount; i++) {
+            selectlist.insert(before + i, this->model()->index(before + i, 0).data().toString());
+        }
+
+    }else{
+        int bc = before - beforecount + 1;
+        for (int i = 0; i < beforecount; i++) {
+            selectlist.insert(bc + i, this->model()->index(bc + i, 0).data().toString());
+        }
+    }
+
+    int deleterow = 0;
+    bool firstelement = false;
+    bool lastelement = false;
+
+    int updown = 0;
+    QString beforedata;
+    int deductnum = 0;
+
+    for (int i = 0; i < beforecount; i++) {
+
+        if(before > after){
+
+            if(!lastelement){
+                lastelement = true;
+                deleterow = before;
+            }
+
+            beforedata = selectlist.value(before - deductnum);
+            deductnum++;
+            updown = 0;
+
+        }else{
+
+            if(!firstelement){
+                firstelement = true;
+                deleterow = before;
+            }
+
+            beforedata = selectlist.value(before + i);
+            updown = -1;
+        }
+
+        this->blockSignals(true);
+        this->removeRow(deleterow);
+        this->insertRow(after + updown);
+        this->setItem(after + updown, 0, new QTableWidgetItem(beforedata));
+        this->blockSignals(false);
+    }
 }
 
 void CommandTable::insertItems(QStringList *item)
@@ -100,41 +165,71 @@ void CommandTable::dropEvent(QDropEvent *event)
 {
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
+
     int droppedrow = this->indexAt(event->pos()).row();
     if(droppedrow == -1) return;
 
-    QStringList text;
     QModelIndexList mlist = this->selectedIndexes();
-    int rows = mlist.count();
 
-    //todo: this code is insufficient for multiple drag and drop.
-    if( rows > 1 ) return;
+    //sort list ascend order
+    std::sort(mlist.begin(), mlist.end());
 
-    for(int i = 0; i < rows; i++){
-        text.append(mlist.at(i).data().toString());
+    QHash<int, QString> selectlist;
 
-        emit updateTable(mlist.at(i).row(), "", ProcessXmlListGenerator::TABLE_DELETE);
+    for (int i = 0; i < mlist.count(); i++) {
+        selectlist.insert(mlist.at(i).row(), mlist.at(i).data().toString());
     }
 
-    //force delete
-    BaseTable::deleteTableRecursive();
+    QList<int> beforeindex;
 
-    //last lests unknown ""
-    if(text.last() == "") text.removeLast();
+    int deleterow = 0;
+    bool firstelement = false;
+    bool lastelement = false;
 
-    int row = droppedrow;
-    int txcount = text.count();
+    int updown = 0;
+    int before = 0;
+    QString beforedata;
+    int deductnum = 1;
 
-    qDebug() << "[CommandTable::dropEvent] row : " << row;
+    int indexcount = mlist.count();
 
-    for(int i = 0; i < txcount; i++){
-       insertRow(row + i);
-       this->blockSignals(true);
-       this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
-       this->blockSignals(false);
-       emit updateTable(row + i, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
+    for (int i = 0; i < indexcount; i++) {
 
+        before = mlist.at(i).row();
+        beforeindex.append(before);
+
+        if(before > droppedrow){
+
+            if(!lastelement){
+                lastelement = true;
+                deleterow = mlist.last().row();
+            }
+
+            beforedata = selectlist.value(mlist.at(indexcount - deductnum).row());
+            deductnum++;
+            updown = 0;
+
+        }else{
+
+            if(!firstelement){
+                firstelement = true;
+                deleterow = mlist.first().row();
+            }
+
+            beforedata = selectlist.value(before);
+            updown = -1;
+        }
+
+        this->blockSignals(true);
+        this->removeRow(deleterow);
+        this->insertRow(droppedrow + updown);
+        this->setItem(droppedrow + updown, 0, new QTableWidgetItem(beforedata));
+        this->blockSignals(false);
     }
+
+    qDebug() << "[CommandTable::dropEvent] droppedrow : " << droppedrow;
+
+    emit dragDropTable(beforeindex, droppedrow);
 }
 
 void CommandTable::addAction()
@@ -193,7 +288,7 @@ void CommandTable::cutAction()
         tmp.append(mlist.at(i).data().toString());
         if(i < rows) tmp.append("\t");
 
-        emit updateTable(mlist.at(i).row(), "", ProcessXmlListGenerator::TABLE_DELETE);
+        emit updateTable(mlist.at(i).row(), "", ProcessXmlListGenerator::TABLE_CUT);
     }
 
     //force delete
@@ -203,6 +298,10 @@ void CommandTable::cutAction()
     clipboard->setText(tmp);
 }
 
+/**
+ * @fn CommandTable::copyAction
+ * @brief copy selected commands to clipboard
+ */
 void CommandTable::copyAction()
 {
     //if rowcount is zero.
@@ -221,6 +320,10 @@ void CommandTable::copyAction()
 
 }
 
+/**
+ * @fn CommandTable::pasteAction
+ * @brief paste commands from clipboard
+ */
 void CommandTable::pasteAction()
 {
     QClipboard *clipboard = QApplication::clipboard();
@@ -238,7 +341,7 @@ void CommandTable::pasteAction()
        this->blockSignals(true);
        this->setItem(row, 0, new QTableWidgetItem(text.at(i)));
        this->blockSignals(false);
-       emit updateTable(row, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
+       emit updateTable(row, text.at(i), ProcessXmlListGenerator::TABLE_PASTE);
     }
 }
 
@@ -262,7 +365,7 @@ void CommandTable::pasteSpaceAction()
        this->blockSignals(true);
        this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
        this->blockSignals(false);
-       emit updateTable(row + i, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
+       emit updateTable(row + i, text.at(i), ProcessXmlListGenerator::TABLE_PASTE);
     }
 
 }
@@ -289,7 +392,7 @@ void CommandTable::pasteEnterAction()
        this->blockSignals(true);
        this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
        this->blockSignals(false);
-       emit updateTable(row + i, text.at(i), ProcessXmlListGenerator::TABLE_INSERT);
+       emit updateTable(row + i, text.at(i), ProcessXmlListGenerator::TABLE_PASTE);
     }
 }
 
@@ -302,6 +405,8 @@ void CommandTable::upAction()
     int current = this->currentRow();
     if(current == 0) return;
     this->swapItem(current, current - 1);
+
+    emit swapTable(current, current - 1);
 }
 
 /**
@@ -313,6 +418,8 @@ void CommandTable::downAction()
     int current = this->currentRow();
     if((current + 1) == this->rowCount()) return;
     this->swapItem(current, current + 1);
+
+    emit swapTable(current, current + 1);
 }
 
 void CommandTable::openFileAction()
@@ -344,11 +451,17 @@ void CommandTable::editedAction(int row, int column)
      emit updateTable(row, this->item(row, column)->text(), ProcessXmlListGenerator::TABLE_EDIT);
 }
 
+/**
+ * @fn CommandTable::setPopupActionTop
+ * @brief popup action menu definition
+ */
 void CommandTable::setPopupActionTop()
 {
     //set basic items
     m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add"));
     m_add->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Enter));
+    m_add->setShortcutVisibleInContextMenu(true);
+
     m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
     m_delete->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Delete));
     contextMenu->addSeparator();
@@ -382,8 +495,8 @@ void CommandTable::setPopupActionDefault()
     m_paste = contextMenu->addAction(QIcon(":/default_icons/paste.png"), tr("Paste"));
     m_paste->setShortcut(QKeySequence(Qt::ALT + Qt::Key_V));
 
-    m_pastespace = contextMenu->addAction(tr("Paste separated by space"));
-    m_pasteenter = contextMenu->addAction(tr("Paste separated by newline"));
+    m_pastespace = contextMenu->addAction(QIcon(":/default_icons/blank.png"), tr("Paste (space separated)"));
+    m_pasteenter = contextMenu->addAction(QIcon(":/default_icons/blank.png"), tr("Paste (newline separated)"));
 
     contextMenu->addSeparator();
 

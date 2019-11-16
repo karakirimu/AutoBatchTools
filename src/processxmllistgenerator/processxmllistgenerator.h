@@ -120,18 +120,21 @@ static const QString UNDOREDO_ADD =               "ADD";
 static const QString UNDOREDO_DELETE =            "DEL";
 static const QString UNDOREDO_INSERT =            "INS";
 static const QString UNDOREDO_SWAP =              "SWA";
+static const QString UNDOREDO_MOVE =              "MOV";
 
 static const QString UNDOREDO_E_TABLEADD =        "ET_ADD";
 static const QString UNDOREDO_E_TABLEEDIT =       "ET_EDIT";
 static const QString UNDOREDO_E_TABLEDEL =        "ET_DEL";
 static const QString UNDOREDO_E_TABLEINS =        "ET_INS";
 static const QString UNDOREDO_E_TABLESWAP =       "ET_SWAP";
+static const QString UNDOREDO_E_TABLEMOVE =       "ET_MOVE";
 
 static const QString UNDOREDO_PL_TABLEADD =       "PLT_ADD";
 static const QString UNDOREDO_PL_TABLEEDIT =      "PLT_EDIT";
 static const QString UNDOREDO_PL_TABLEDEL =       "PLT_DEL";
 static const QString UNDOREDO_PL_TABLEINS =       "PLT_INS";
 static const QString UNDOREDO_PL_TABLESWAP =      "PLT_SWAP";
+static const QString UNDOREDO_PL_TABLEMOVE =      "PLT_MOVE";
 
 static const QString UNDOREDO_LV_ADD =            "LV_ADD";
 static const QString UNDOREDO_LV_EDIT =           "LV_EDIT";
@@ -182,7 +185,10 @@ public:
     enum{NORMAL, SEARCH, PLUGINS, OTHER};
 
     //inner table operation
-    enum{TABLE_ADD,TABLE_EDIT,TABLE_INSERT,TABLE_DELETE,TABLE_UP,TABLE_DOWN,TABLE_SWAP};
+    enum{TABLE_ADD,TABLE_EDIT,TABLE_INSERT,TABLE_DELETE
+         ,TABLE_CUT,TABLE_PASTE,TABLE_DRAGDROP,TABLE_UP,TABLE_DOWN,TABLE_SWAP};
+
+    //connect ui to xml operation of tree
     enum{TREE_ADD,TREE_EDIT,TREE_INSERT,TREE_DELETE,TREE_UP,TREE_DOWN,TREE_SWAP};
 
     //list add structure

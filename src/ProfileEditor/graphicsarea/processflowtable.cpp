@@ -8,6 +8,11 @@ ProcessFlowTable::ProcessFlowTable(QWidget *parent)
     setPopupActionDefault();
     setPopupActionBottom();
 
+    setDragEnabled(true);
+    setAcceptDrops(true);
+    setDropIndicatorShown(true);
+//    setDragDropMode(QAbstractItemView::InternalMove);
+
     //init table size
     setColumnCount(2);
     setRowCount(0);
@@ -35,7 +40,7 @@ void ProcessFlowTable::setEditOperator(EditOperator *op)
     editop = op;
 
     connect(editop, &EditOperator::editUpdate, this, &ProcessFlowTable::replaceItem);
-    connect(editop, &EditOperator::ui_funcindexUpdate, this, &ProcessFlowTable::onItemStatusChanged);
+    connect(editop, &EditOperator::processIndexUpdate, this, &ProcessFlowTable::onItemStatusChanged);
 }
 
 bool ProcessFlowTable::eventFilter(QObject *obj, QEvent *event)
@@ -76,7 +81,7 @@ void ProcessFlowTable::addAction()
     editop->addAction();
 
     int cache = editop->getCacheSize() - 1;
-    emit editop->ui_funcindexUpdate(cache, -1, EditOperator::ADD, EditOperator::FLOWTABLE);
+    emit editop->processIndexUpdate(cache, -1, EditOperator::ADD, EditOperator::FLOWTABLE);
 
 }
 
@@ -97,7 +102,7 @@ void ProcessFlowTable::deleteAction()
 
     QModelIndexList lists = this->selectionModel()->selectedRows();
 
-    std::sort(lists.begin(), lists.end(), qGreater<QModelIndex>());
+    std::sort(lists.rbegin(), lists.rend());
 
 
     for (int i = 0; i < lists.count(); i++) {
@@ -106,7 +111,7 @@ void ProcessFlowTable::deleteAction()
         if(cur == 0) break;
 
         editop->deleteAction(cur);
-        emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::FLOWTABLE);
+        emit editop->processIndexUpdate(cur, -1, EditOperator::DELETE, EditOperator::FLOWTABLE);
     }
 }
 
@@ -115,7 +120,7 @@ void ProcessFlowTable::cutAction()
     int cur = fixedCurrentRow();
     if(cur > 1){
         editop->cutAction(cur);
-        emit editop->ui_funcindexUpdate(cur, -1, EditOperator::DELETE, EditOperator::FLOWTABLE);
+        emit editop->processIndexUpdate(cur, -1, EditOperator::DELETE, EditOperator::FLOWTABLE);
     }
 }
 
@@ -133,7 +138,7 @@ void ProcessFlowTable::pasteAction()
     if(cur > 0){
         cur++;
         editop->pasteAction(cur);
-        emit editop->ui_funcindexUpdate(cur, -1, EditOperator::INSERT, EditOperator::FLOWTABLE);
+        emit editop->processIndexUpdate(cur, -1, EditOperator::INSERT, EditOperator::FLOWTABLE);
 
     }
 }
@@ -143,7 +148,7 @@ void ProcessFlowTable::upAction()
     int cur = fixedCurrentRow();
     if(cur > 2){
         editop->swapAction(cur, cur - 1);
-        emit editop->ui_funcindexUpdate(cur - 1, cur, EditOperator::SWAP, EditOperator::FLOWTABLE);
+        emit editop->processIndexUpdate(cur - 1, cur, EditOperator::SWAP, EditOperator::FLOWTABLE);
     }
 }
 
@@ -152,7 +157,7 @@ void ProcessFlowTable::downAction()
     int cur = fixedCurrentRow();
     if(cur < rowCount()){
         editop->swapAction(cur, cur + 1);
-        emit editop->ui_funcindexUpdate(cur + 1, cur, EditOperator::SWAP, EditOperator::FLOWTABLE);
+        emit editop->processIndexUpdate(cur + 1, cur, EditOperator::SWAP, EditOperator::FLOWTABLE);
     }
 }
 
@@ -221,7 +226,109 @@ void ProcessFlowTable::updateIndex(QString operation)
         int second = static_cast<QString>(sep.at(1)).toInt();
 
         swapItem(first, second);
+    }else if(sep.count() == 4
+             && sep.at(3) == UNDOREDO_MOVE){
+        //move
+        reloadAction();
+
+    }else if(sep.count() == 5
+             && (sep.at(4) == UNDOREDO_E_TABLEMOVE
+                 || sep.at(4) == UNDOREDO_PL_TABLEMOVE)){
+        replaceItem(static_cast<QString>(sep.at(0)).toInt());
     }
+}
+
+void ProcessFlowTable::dragEnterEvent(QDragEnterEvent *event)
+{
+    qDebug() << "[ProcessFlowTable::dragEnterEvent] Object : " << event->source()->objectName();
+    if(event->source() != nullptr
+            && this->indexAt(event->pos()).row() > 0 ){
+        event->acceptProposedAction();
+    }
+}
+
+void ProcessFlowTable::dragMoveEvent(QDragMoveEvent *event)
+{
+    qDebug() << "[ProcessFlowTable::dragMoveEvent] Object : " << event->source()->objectName();
+    if(event->source() != nullptr
+            && this->indexAt(event->pos()).row() > 0 ){
+        event->accept();
+    }else{
+        event->ignore();
+    }
+}
+
+void ProcessFlowTable::dropEvent(QDropEvent *event)
+{
+    int droppedrow = this->indexAt(event->pos()).row();
+    if(droppedrow == -1 || droppedrow == 0) return;
+
+    QModelIndexList mlist = this->selectedIndexes();
+
+    //sort list ascend order
+    std::sort(mlist.begin(), mlist.end());
+
+    QHash<int, QList<QTableWidgetItem>> selectlist;
+
+    for (int i = 0; i < mlist.count(); i+=2) {
+        QList<QTableWidgetItem> widget;
+        widget.append(*this->item(mlist.at(i).row(), 0));
+        widget.append(*this->item(mlist.at(i).row(), 1));
+        selectlist.insert(mlist.at(i).row(), widget);
+    }
+
+    QList<int> beforeindex;
+
+    int deleterow = 0;
+    bool firstelement = false;
+    bool lastelement = false;
+
+    int updown = 0;
+    int before = 0;
+    QList<QTableWidgetItem> beforedata;
+    int deductnum = 0;
+
+    int indexcount = mlist.count();
+
+    for (int i = 0; i < indexcount; i+=2) {
+
+        before = mlist.at(i).row();
+        beforeindex.append(uiIndexToData(before));
+
+        if(before > droppedrow){
+
+            if(!lastelement){
+                lastelement = true;
+                deleterow = mlist.last().row();
+            }
+
+            beforedata = selectlist.value(deleterow - deductnum);
+            deductnum++;
+            updown = 0;
+
+        }else{
+
+            if(!firstelement){
+                firstelement = true;
+                deleterow = mlist.first().row();
+            }
+
+            beforedata = selectlist.value(before);
+            updown = -1;
+        }
+
+        this->blockSignals(true);
+        this->removeRow(deleterow);
+        this->insertRow(droppedrow + updown);
+        this->setItem(droppedrow + updown, 0, new QTableWidgetItem(beforedata.at(0)));
+        this->setItem(droppedrow + updown, 1, new QTableWidgetItem(beforedata.at(1)));
+        this->blockSignals(false);
+    }
+
+    qDebug() << "[ProcessFlowTable::dropEvent] droppedrow : " << droppedrow;
+
+    editop->dragDropAction(beforeindex, uiIndexToData(droppedrow));
+
 }
 
 void ProcessFlowTable::addItem()
@@ -281,19 +388,19 @@ void ProcessFlowTable::replaceItem(int id)
 
 void ProcessFlowTable::selectChanged(int crow, int ccol, int prow, int pcol)
 {
-    Q_UNUSED(ccol);
-    Q_UNUSED(pcol);
+    Q_UNUSED(ccol)
+    Q_UNUSED(pcol)
     if(crow == prow) return;
 
     qDebug() << "[ProcessFlowTable::selectChanged]    rowpos : " << fixedCurrentRow();
     this->currentItem()->setToolTip(this->currentItem()->text());
 
-    emit editop->ui_funcindexUpdate(fixedCurrentRow(), -1, EditOperator::SELECT, EditOperator::FLOWTABLE);
+    emit editop->processIndexUpdate(fixedCurrentRow(), -1, EditOperator::SELECT, EditOperator::FLOWTABLE);
 }
 
 void ProcessFlowTable::onItemStatusChanged(int after, int before, int function, int sendfrom)
 {
-    Q_UNUSED(sendfrom);
+    Q_UNUSED(sendfrom)
 
 #ifdef QT_DEBUG
     qDebug() << "[ProcessFlowTable::onItemStatusChanged] rowpos : after : " << after \
@@ -527,7 +634,7 @@ void ProcessFlowTable::setInfoItem(QList<QStringList> *list, int dataid)
 
     QTableWidgetItem *item = new QTableWidgetItem(QIcon(info_pixmap), info_title);
     item->setBackground(QBrush(color));
-    item->setTextColor(QColor(Qt::black));
+    item->setForeground(QBrush(QColor(Qt::black)));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 }
 
@@ -556,7 +663,7 @@ void ProcessFlowTable::setNormalItem(QList<QStringList> *list, int dataid)
 
     QTableWidgetItem *item = new QTableWidgetItem(QIcon(exec_pixmap), exec_title);
     item->setBackground(QBrush(color));
-    item->setTextColor(QColor(Qt::black));
+    item->setForeground(QBrush(QColor(Qt::black)));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 
 //    cell->setContent(tmp);
@@ -600,7 +707,7 @@ void ProcessFlowTable::setSearchItem(QList<QStringList> *list, int dataid)
 
     QTableWidgetItem *item = new QTableWidgetItem(QIcon(search_pixmap), search_title);
     item->setBackground(QBrush(color));
-    item->setTextColor(QColor(Qt::black));
+    item->setForeground(QBrush(QColor(Qt::black)));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 //    cell->setContent(tmp);
 }
@@ -631,7 +738,7 @@ void ProcessFlowTable::setPluginsItem(QList<QStringList> *list, int dataid)
 
     QTableWidgetItem *item = new QTableWidgetItem(QIcon(plugin_pixmap), plugin_title);
     item->setBackground(QBrush(color));
-    item->setTextColor(QColor(Qt::black));
+    item->setForeground(QBrush(QColor(Qt::black)));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 //    cell->setContent(tmp);
 }
@@ -672,6 +779,6 @@ void ProcessFlowTable::setProfileItem(QList<QStringList> *list, int dataid)
 
     QTableWidgetItem *item = new QTableWidgetItem(QIcon(other_pixmap), other_title);
     item->setBackground(QBrush(color));
-    item->setTextColor(QColor(Qt::black));
+    item->setForeground(QBrush(QColor(Qt::black)));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 }

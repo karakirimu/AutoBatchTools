@@ -38,7 +38,7 @@ void InfoStacked::setEditOperator(EditOperator *op)
 
     rlabel = stackwidget->findChild<QLabel *>("loopMaxLabel");
 
-    connect(editop, &EditOperator::ui_funcindexUpdate, this, &InfoStacked::setInfoDataList);
+    connect(editop, &EditOperator::processIndexUpdate, this, &InfoStacked::setInfoDataList);
 //    connect(editop, &EditOperator::ui_funcindexUpdate, this, &InnerStackedWidget::moveStacked);
 
     connect(name, &QLineEdit::textEdited, this, &InfoStacked::editProjectNameAction);

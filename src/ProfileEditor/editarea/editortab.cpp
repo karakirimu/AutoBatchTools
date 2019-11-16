@@ -84,7 +84,7 @@ void EditorTab::setEditOperator(EditOperator *op)
     autoonly_4 = otherwidget->findChild<QCheckBox *>("autoOnlyCheckBox_4");
 
     //index update
-    connect(editop, &EditOperator::ui_funcindexUpdate, this, &EditorTab::setCombinedDataList);
+    connect(editop, &EditOperator::processIndexUpdate, this, &EditorTab::setCombinedDataList);
 
 
     //index edit (table is ignored)
@@ -119,8 +119,12 @@ void EditorTab::setEditOperator(EditOperator *op)
     //index edit (table only)
     connect(ctablenormal, &CommandTable::updateTable, this, &EditorTab::editTableAction);
     connect(ctablenormal, &CommandTable::swapTable, this, &EditorTab::editSwapTableAction);
+    connect(ctablenormal, &CommandTable::dragDropTable, this, &EditorTab::editDragDropTableAction);
+
     connect(ctableplugins, &CommandTable::updateTable, this, &EditorTab::editTableAction);
     connect(ctableplugins, &CommandTable::swapTable, this, &EditorTab::editSwapTableAction);
+    connect(ctableplugins, &CommandTable::dragDropTable, this, &EditorTab::editDragDropTableAction);
+
 }
 
 void EditorTab::updateIndex(QString operation)
@@ -200,6 +204,20 @@ void EditorTab::updateIndex(QString operation)
         //exectableswap
         ctableplugins->swapItem(static_cast<QString>(sep.at(0)).toInt()
                                , static_cast<QString>(sep.at(1)).toInt());
+
+    }else if(sep.count() == 5
+             && sep.at(4) == UNDOREDO_E_TABLEMOVE){
+        //exectabledragdrop
+        ctablenormal->moveItem(static_cast<QString>(sep.at(1)).toInt()
+                               , static_cast<QString>(sep.at(2)).toInt()
+                               , static_cast<QString>(sep.at(3)).toInt());
+
+    }else if(sep.count() == 5
+             && sep.at(4) == UNDOREDO_PL_TABLEMOVE){
+        //plugintabledragdrop
+        ctableplugins->moveItem(static_cast<QString>(sep.at(1)).toInt()
+                               , static_cast<QString>(sep.at(2)).toInt()
+                               , static_cast<QString>(sep.at(3)).toInt());
 
     }
 }
@@ -538,8 +556,22 @@ void EditorTab::editSwapTableAction(int indexbefore, int indexafter)
     if(objname == "cmdTableWidget"){
         editop->tableSwapExecAction(currentid, indexbefore, indexafter);
 
-    }else if(objname == "ctableplugins"){
+    }else if(objname == "extrafuncTableWidget"){
         editop->tableSwapPluginAction(currentid, indexbefore, indexafter);
+
+    }
+}
+
+void EditorTab::editDragDropTableAction(QList<int> indexbefore, int indexafter)
+{
+    QString objname = this->sender()->objectName();
+    qDebug() << "[EditorTab::editDragDropTableAction] object : " << objname;
+
+    if(objname == "cmdTableWidget"){
+        editop->tableDragDropExecAction(currentid, indexbefore, indexafter);
+
+    }else if(objname == "extrafuncTableWidget"){
+        editop->tableDragDropPluginAction(currentid, indexbefore, indexafter);
 
     }
 }

@@ -53,6 +53,7 @@ private slots:
     void pasteAction();
     void upAction();
     void downAction();
+    void reloadAction();
 
     void launchSettingAction();
     void themeChangeAction();

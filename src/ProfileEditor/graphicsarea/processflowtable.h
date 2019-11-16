@@ -18,8 +18,10 @@ public:
 
     void updateIndex(QString operation);
 
-//protected:
-//    void mousePressEvent(QMouseEvent *event);
+protected slots:
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dragMoveEvent(QDragMoveEvent *event);
+    void dropEvent(QDropEvent *event);
 
 private slots:
     bool eventFilter(QObject *obj, QEvent *event);

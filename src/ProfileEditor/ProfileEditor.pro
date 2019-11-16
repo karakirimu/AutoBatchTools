@@ -49,6 +49,7 @@ HEADERS  += editarea/commandtable.h \
     console/consoleview.h \
     undocommand/addcommand.h \
     undocommand/deletecommand.h \
+    undocommand/dragdropcommand.h \
     undocommand/insertcommand.h \
     undocommand/swapcommand.h \
     undocommand_ui/checkeditallowinput.h \
@@ -63,6 +64,8 @@ HEADERS  += editarea/commandtable.h \
     undocommand_ui/combopluginselect.h \
     undocommand_ui/comboprofileselect.h \
 #    undocommand_ui/editcheckcommand.h \
+    undocommand_ui/dragdropexectable.h \
+    undocommand_ui/dragdropplugintable.h \
     undocommand_ui/editcomboboxcommand.h \
     undocommand_ui/editexectable.h \
     undocommand_ui/editlocalvartable.h \
@@ -118,6 +121,7 @@ SOURCES += editarea/commandtable.cpp \
     console/consoleview.cpp \
     undocommand/addcommand.cpp \
     undocommand/deletecommand.cpp \
+    undocommand/dragdropcommand.cpp \
     undocommand/insertcommand.cpp \
     undocommand/swapcommand.cpp \
     undocommand_ui/checkeditallowinput.cpp \
@@ -132,6 +136,8 @@ SOURCES += editarea/commandtable.cpp \
     undocommand_ui/combopluginselect.cpp \
     undocommand_ui/comboprofileselect.cpp \
 #    undocommand_ui/editcheckcommand.cpp \
+    undocommand_ui/dragdropexectable.cpp \
+    undocommand_ui/dragdropplugintable.cpp \
     undocommand_ui/editcomboboxcommand.cpp \
     undocommand_ui/editexectable.cpp \
     undocommand_ui/editlocalvartable.cpp \

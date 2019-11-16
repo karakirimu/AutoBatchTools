@@ -68,9 +68,8 @@ void PluginsComboBox::reloadComboBoxItem()
         if(loader.load()){
             inter = qobject_cast<ExtraPluginInterface *>(loader.instance());
             this->addItem(inter->pluginInfo().name);
-            loader.unload();
-
         }
+        loader.unload();
     }
 
     //reload selected position

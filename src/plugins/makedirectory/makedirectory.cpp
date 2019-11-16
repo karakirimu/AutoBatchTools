@@ -17,10 +17,10 @@ int MakeDirectory::functionMain(int argc, QStringList *args)
 int MakeDirectory::launchSettingWidget(QStringList *currentargs, QStringList *resultargs \
                                        , QPoint parentpos, QString parentstylesheet)
 {
-    Q_UNUSED(currentargs);
-    Q_UNUSED(resultargs);
-    Q_UNUSED(parentpos);
-    Q_UNUSED(parentstylesheet);
+    Q_UNUSED(currentargs)
+    Q_UNUSED(resultargs)
+    Q_UNUSED(parentpos)
+    Q_UNUSED(parentstylesheet)
 
     return 0;
 }

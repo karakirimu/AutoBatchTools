@@ -45,7 +45,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="info">
        <property name="styleSheet">
@@ -634,7 +634,7 @@
          <number>0</number>
         </property>
         <property name="topMargin">
-         <number>1</number>
+         <number>0</number>
         </property>
         <property name="rightMargin">
          <number>0</number>
@@ -687,6 +687,9 @@
              <widget class="CommandTable" name="cmdTableWidget">
               <property name="frameShape">
                <enum>QFrame::NoFrame</enum>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::ContiguousSelection</enum>
               </property>
              </widget>
             </item>
@@ -1181,6 +1184,9 @@
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
                 </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::ContiguousSelection</enum>
+                </property>
                </widget>
               </item>
               <item row="0" column="2" colspan="2">
@@ -1346,8 +1352,14 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">
@@ -1378,6 +1390,8 @@
     <addaction name="separator"/>
     <addaction name="actionUpItem"/>
     <addaction name="actionDownItem"/>
+    <addaction name="separator"/>
+    <addaction name="actionReloadProcess"/>
    </widget>
    <widget class="QMenu" name="menu_4">
     <property name="title">
@@ -1472,7 +1486,7 @@
       <number>0</number>
      </property>
      <property name="topMargin">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="rightMargin">
       <number>0</number>
@@ -1517,13 +1531,16 @@ selection-color: rgb(0, 0, 0);</string>
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>
           <property name="dragDropMode">
-           <enum>QAbstractItemView::NoDragDrop</enum>
+           <enum>QAbstractItemView::InternalMove</enum>
+          </property>
+          <property name="defaultDropAction">
+           <enum>Qt::MoveAction</enum>
           </property>
           <property name="alternatingRowColors">
            <bool>false</bool>
           </property>
           <property name="selectionMode">
-           <enum>QAbstractItemView::ExtendedSelection</enum>
+           <enum>QAbstractItemView::ContiguousSelection</enum>
           </property>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
@@ -1534,6 +1551,9 @@ selection-color: rgb(0, 0, 0);</string>
           <property name="wordWrap">
            <bool>false</bool>
           </property>
+          <attribute name="horizontalHeaderVisible">
+           <bool>true</bool>
+          </attribute>
          </widget>
         </item>
        </layout>
@@ -2055,7 +2075,7 @@ border: none;</string>
     <string>Add</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Return</string>
+    <string>Ctrl+Enter</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::WindowShortcut</enum>
@@ -2165,6 +2185,10 @@ border: none;</string>
    </property>
   </action>
   <action name="actionCut">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/default_icons/blank.png</normaloff>:/default_icons/blank.png</iconset>
+   </property>
    <property name="text">
     <string>Cut</string>
    </property>
@@ -2298,6 +2322,15 @@ border: none;</string>
    </property>
    <property name="text">
     <string>Variant</string>
+   </property>
+  </action>
+  <action name="actionReloadProcess">
+   <property name="icon">
+    <iconset resource="../../res/resources.qrc">
+     <normaloff>:/default_icons/refresh.png</normaloff>:/default_icons/refresh.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reload</string>
    </property>
   </action>
   <zorder>setTestDockWidget</zorder>

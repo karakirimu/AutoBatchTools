@@ -225,6 +225,22 @@ void EditOperator::tableEditPluginAction(int id, int tableid, QString newstr, in
     emit editUpdate(id);
 }
 
+void EditOperator::tableDragDropExecAction(int id, QList<int> beforeid, int afterid)
+{
+    DragDropExecTable *com = new DragDropExecTable(id, beforeid, afterid, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
+void EditOperator::tableDragDropPluginAction(int id, QList<int> beforeid, int afterid)
+{
+    DragDropPluginTable *com = new DragDropPluginTable(id, beforeid, afterid, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
 void EditOperator::treeEditGVariantAction(int id, QStringList variants, int operation)
 {
     EditGlobalVarTree *com = new EditGlobalVarTree(id, variants, operation);
@@ -410,7 +426,7 @@ void EditOperator::pasteAction(int id)
         QString dats = QString::fromLocal8Bit(dat);
         QStringList ilist = dats.split("\n\"");
 
-        QList<QStringList> _list;
+        QList<QStringList> tlist;
         QStringList tmp;
         int count = ilist.count();
         for(int i = 0; i < count - 1; i++){
@@ -419,10 +435,10 @@ void EditOperator::pasteAction(int id)
             tmp.replace(0, static_cast<QString>(tmp.at(0)).remove(0,2));
             QString inner = static_cast<QString>(tmp.at(tmp.count() - 1));
             tmp.replace(tmp.count() - 1, inner.left(inner.size() - 4));
-            _list.append(tmp);
+            tlist.append(tmp);
         }
 
-        insertAction(id, &_list);
+        insertAction(id, &tlist);
     }
 }
 
@@ -438,6 +454,12 @@ void EditOperator::swapAction(int before, int after)
         return;
 
     SwapCommand *com = new SwapCommand(before, after, cache);
+    undostack->push(com);
+}
+
+void EditOperator::dragDropAction(QList<int> before, int after)
+{
+    DragDropCommand *com = new DragDropCommand(before, after, cache);
     undostack->push(com);
 }
 

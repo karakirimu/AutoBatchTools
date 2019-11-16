@@ -79,5 +79,5 @@ void SwapExecTable::redo()
 int SwapExecTable::id() const
 {
     ProcessXmlListGenerator pxg;
-    return pxg.getId(E_CMDARGCOUNT);
+    return pxg.getId(E_SWAP_TABLE);
 }

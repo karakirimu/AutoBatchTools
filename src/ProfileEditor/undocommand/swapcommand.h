@@ -18,7 +18,7 @@ public:
 private:
     int m_beforeindex;
     int m_afterindex;
-    QList<QStringList> m_added;
+
     QList<QList<QStringList> *> *m_cache;
 };
 

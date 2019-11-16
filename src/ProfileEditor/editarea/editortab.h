@@ -64,6 +64,7 @@ private slots:
     void editTextAction(QString text);
     void editTableAction(int index, QString str, int function);
     void editSwapTableAction(int indexbefore, int indexafter);
+    void editDragDropTableAction(QList<int> indexbefore, int indexafter);
 
     void pluginSettingsClicked();
 

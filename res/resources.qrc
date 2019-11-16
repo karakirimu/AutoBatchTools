@@ -52,5 +52,6 @@
         <file>default_icons/close.png</file>
         <file>default_icons/minimize.png</file>
         <file>default_icons/normalize.png</file>
+        <file>default_icons/blank.png</file>
     </qresource>
 </RCC>

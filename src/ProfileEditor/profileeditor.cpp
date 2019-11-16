@@ -92,6 +92,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->actionPaste, &QAction::triggered, this, &ProfileEditor::pasteAction);
     connect(ui->actionUpItem, &QAction::triggered, this, &ProfileEditor::upAction);
     connect(ui->actionDownItem, &QAction::triggered, this, &ProfileEditor::downAction);
+    connect(ui->actionReloadProcess, &QAction::triggered, this, &ProfileEditor::reloadAction);
 
     //Edit (Undo,Redo)
     connect(editop->getUndostack(), &QUndoStack::canUndoChanged, ui->actionUndo, &QAction::setEnabled);
@@ -140,7 +141,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     //end-----------------------------------------------------------------------------------------------
 
-    connect(editop, &EditOperator::ui_funcindexUpdate, this, &ProfileEditor::itemChangedAction);
+    connect(editop, &EditOperator::processIndexUpdate, this, &ProfileEditor::itemChangedAction);
 
     //Title * flag
     connect(editop->getUndostack(), &QUndoStack::canUndoChanged, this, &ProfileEditor::onFileEdited);
@@ -274,7 +275,7 @@ void ProfileEditor::redoAction()
 void ProfileEditor::addAction()
 {
     editop->addAction();
-    emit editop->ui_funcindexUpdate(editop->getCacheSize() - 1, -1, EditOperator::ADD, EditOperator::MAINEDITOR);
+    emit editop->processIndexUpdate(editop->getCacheSize() - 1, -1, EditOperator::ADD, EditOperator::MAINEDITOR);
 
 }
 
@@ -282,7 +283,7 @@ void ProfileEditor::deleteAction()
 {
     if(dataindexpos <= 1) return;
     editop->deleteAction(dataindexpos);
-    emit editop->ui_funcindexUpdate(dataindexpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
+    emit editop->processIndexUpdate(dataindexpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
 
     dataindexpos--;
 }
@@ -291,7 +292,7 @@ void ProfileEditor::cutAction()
 {
     if(dataindexpos <= 1) return;
     editop->cutAction(dataindexpos);
-    emit editop->ui_funcindexUpdate(dataindexpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
+    emit editop->processIndexUpdate(dataindexpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
 
     dataindexpos--;
 }
@@ -305,21 +306,26 @@ void ProfileEditor::pasteAction()
 {
     if(dataindexpos <= 1) return;
     editop->pasteAction(dataindexpos);
-    emit editop->ui_funcindexUpdate(dataindexpos, -1, EditOperator::INSERT, EditOperator::MAINEDITOR);
+    emit editop->processIndexUpdate(dataindexpos, -1, EditOperator::INSERT, EditOperator::MAINEDITOR);
 }
 
 void ProfileEditor::upAction()
 {
     if(dataindexpos <= 2) return;
     editop->swapAction(dataindexpos, dataindexpos - 1);
-    emit editop->ui_funcindexUpdate(dataindexpos - 1, dataindexpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
+    emit editop->processIndexUpdate(dataindexpos - 1, dataindexpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
 }
 
 void ProfileEditor::downAction()
 {
     if(dataindexpos < 2 || dataindexpos >= (editop->getCacheSize() - 1)) return;
     editop->swapAction(dataindexpos, dataindexpos + 1);
-    emit editop->ui_funcindexUpdate(dataindexpos + 1, dataindexpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
+    emit editop->processIndexUpdate(dataindexpos + 1, dataindexpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
+}
+
+void ProfileEditor::reloadAction()
+{
+    ui->flowTableWidget->reloadAction();
 }
 
 void ProfileEditor::launchSettingAction()
@@ -418,7 +424,8 @@ void ProfileEditor::onFileEdited(bool edited)
 
 void ProfileEditor::itemChangedAction(int after, int before, int function, int sendfrom)
 {
-    Q_UNUSED(before); Q_UNUSED(sendfrom);
+    Q_UNUSED(before)
+    Q_UNUSED(sendfrom)
 
     int showdata = 1;
 
@@ -450,14 +457,17 @@ void ProfileEditor::about()
 void ProfileEditor::taskStarted(QString objectname, int runfrom)
 {
     qDebug() << "[ProfileEditor::taskStarted]";
-    Q_UNUSED(objectname); Q_UNUSED(runfrom);
+    Q_UNUSED(objectname)
+    Q_UNUSED(runfrom)
+
     setRunButtonState(false, true, true);
 }
 
 void ProfileEditor::taskPaused(QString objectname)
 {
     qDebug() << "[ProfileEditor::taskPaused]";
-    Q_UNUSED(objectname);
+    Q_UNUSED(objectname)
+
     setRunButtonState(true, false, true);
 }
 
@@ -465,14 +475,16 @@ void ProfileEditor::taskPaused(QString objectname)
 void ProfileEditor::taskStopped(QString objectname)
 {
     qDebug() << "[ProfileEditor::taskStopped]";
-    Q_UNUSED(objectname);
+    Q_UNUSED(objectname)
+
     setRunButtonState(true, false, false);
 }
 
 void ProfileEditor::taskEnd(QString objectname, int runfrom)
 {
     qDebug() << "[ProfileEditor::taskEnd]";
-    Q_UNUSED(runfrom);
+    Q_UNUSED(runfrom)
+
     setRunButtonState(true, false, false);
 
 

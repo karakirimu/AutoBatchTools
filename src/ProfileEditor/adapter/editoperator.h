@@ -48,6 +48,8 @@
 #include <swapplugintable.h>
 #include <editexectable.h>
 #include <editplugintable.h>
+#include <dragdropexectable.h>
+#include <dragdropplugintable.h>
 
 //tree variant operation
 #include <editglobalvartree.h>
@@ -69,6 +71,7 @@
 #include <deletecommand.h>
 #include <insertcommand.h>
 #include <swapcommand.h>
+#include <dragdropcommand.h>
 
 //xml operation
 #include <../processxmlbuilder/processxmlbuilder.h>
@@ -108,7 +111,7 @@ signals:
     void editUpdate(int);
 
     //Communication from profileeditor or flowtable widget to editortab
-    void ui_funcindexUpdate(int after, int before, int function, int sender);
+    void processIndexUpdate(int after, int before, int function, int sender);
 //    void ui_scrollReachBottom();
 
 public slots:
@@ -157,6 +160,8 @@ public slots:
     void tableEditVariantAction(int id, int tableid, QStringList variants, int operation);
     void tableEditExecAction(int id, int tableid, QString newstr, int operation);
     void tableEditPluginAction(int id, int tableid, QString newstr, int operation);
+    void tableDragDropExecAction(int id, QList<int> beforeid, int afterid);
+    void tableDragDropPluginAction(int id, QList<int> beforeid, int afterid);
 
     //tree operation
     void treeEditGVariantAction(int id, QStringList variants, int operation);
@@ -178,6 +183,7 @@ public slots:
     void cutAction(int id);
     void pasteAction(int id);
     void swapAction(int before, int after);
+    void dragDropAction(QList<int> before, int after);
 
     //check difference
     bool elementDiffCheck();
