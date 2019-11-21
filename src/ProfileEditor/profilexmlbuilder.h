@@ -20,7 +20,7 @@ class ProfileXmlBuilder : public Xmlbuilder
 {
     Q_OBJECT
 public:
-    explicit ProfileXmlBuilder(QObject *parent = 0);
+    explicit ProfileXmlBuilder(QObject *parent = nullptr);
     ~ProfileXmlBuilder();
 
     bool readItem(int itemid, QList<QStringList> *itemlist);

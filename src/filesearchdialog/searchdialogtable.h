@@ -13,7 +13,7 @@ class SearchDialogTable : public BaseTable
 {
     Q_OBJECT
 public:
-    explicit SearchDialogTable(QWidget *parent = Q_NULLPTR);
+    explicit SearchDialogTable(QWidget *parent = nullptr);
     ~SearchDialogTable();
 
 private slots:

@@ -15,7 +15,7 @@ class ConsoleView : public ConsoleBase
 {
     Q_OBJECT
 public:
-    explicit ConsoleView(QObject *parent = 0);
+    explicit ConsoleView(QObject *parent = nullptr);
     ~ConsoleView();
 
     //ui settings

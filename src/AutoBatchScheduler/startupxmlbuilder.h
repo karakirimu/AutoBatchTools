@@ -37,7 +37,7 @@ class StartupXmlBuilder : public Xmlbuilder
 {
     Q_OBJECT
 public:
-    explicit StartupXmlBuilder(QObject *parent = 0);
+    explicit StartupXmlBuilder(QObject *parent = nullptr);
     ~StartupXmlBuilder();
 
     bool readItem(int itemid, QList<QStringList> *itemlist);

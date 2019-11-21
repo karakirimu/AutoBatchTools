@@ -28,7 +28,7 @@ class STRINGTABLESHARED_EXPORT StringTable : public BasicTable
 {
     Q_OBJECT
 public:
-    explicit StringTable(QWidget *parent = Q_NULLPTR);
+    explicit StringTable(QWidget *parent = nullptr);
     ~StringTable();
 
 public slots:

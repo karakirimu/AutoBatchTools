@@ -11,7 +11,7 @@ class EntryScheduler : public QObject
 {
     Q_OBJECT
 public:
-    explicit EntryScheduler(QObject *parent = 0);
+    explicit EntryScheduler(QObject *parent = nullptr);
     ~EntryScheduler();
 
     bool isStarted();

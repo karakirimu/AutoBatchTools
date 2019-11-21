@@ -12,7 +12,7 @@ class ProfileTable : public BasicTable
 {
     Q_OBJECT
 public:
-    explicit ProfileTable(QWidget *parent = Q_NULLPTR);
+    explicit ProfileTable(QWidget *parent = nullptr);
     ~ProfileTable();
 
 public slots:

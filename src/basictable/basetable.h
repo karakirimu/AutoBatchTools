@@ -30,7 +30,7 @@ class BASICTABLESHARED_EXPORT BaseTable : public QTableWidget
 {
     Q_OBJECT
 public:
-    explicit BaseTable(QWidget *parent = Q_NULLPTR);
+    explicit BaseTable(QWidget *parent = nullptr);
     ~BaseTable();
 
 protected slots:

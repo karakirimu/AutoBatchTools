@@ -9,7 +9,7 @@ class ExtraFunctionsComboBox : public QComboBox
 {
     Q_OBJECT
 public:
-    explicit ExtraFunctionsComboBox(QObject *parent = 0);
+    explicit ExtraFunctionsComboBox(QObject *parent = nullptr);
     ~ExtraFunctionsComboBox();
 
     QString getCurrentVariant();
