@@ -259,8 +259,12 @@ void VariantTree::copyAction()
         int crow = mlist.at(i).row();
 
 //        tmp.append("\"");
-        tmp.append(this->selectionModel()->currentIndex().parent().\
-                            child(crow, i % 2).data().toString());
+//        tmp.append(this->selectionModel()->currentIndex().parent().\
+//                            child(crow, i % 2).data().toString());
+
+        tmp.append(this->selectionModel()->currentIndex().\
+                   sibling(crow, i % 2).data().toString());
+
         tmp.append((i%2 == 0)? "\t" : "\n");
 
     }
@@ -420,8 +424,8 @@ void VariantTree::itemSelectUpdate()
 //tested
 void VariantTree::itemDataUpdate(const QModelIndex &topLeft, const QModelIndex &bottomRight)
 {
-    Q_UNUSED(topLeft);
-    Q_UNUSED(bottomRight);
+    Q_UNUSED(topLeft)
+    Q_UNUSED(bottomRight)
 
     qDebug() << "[VariantTree::itemDataUpdate] currentindex : " \
              << this->currentIndex().data().toString();
@@ -552,16 +556,17 @@ void VariantTree::swapRow(int before, int after, QModelIndex *index)
 {
     //if the point of distination is parent or not.
     QVariantList bku;
-    bku.append(index->child(before, 0).data());
-    bku.append(index->child(before, 1).data());
+
+    bku.append(this->model()->index(before, 0, *index).data());
+    bku.append(this->model()->index(before, 1, *index).data());
     QAbstractItemModel *model = this->model();
 
     //set item
     for (int column = 0; column < model->columnCount(*index); ++column) {
-        QModelIndex child = index->child(before, column);
-        model->setData(child, QVariant(index->child(after, column).data()), Qt::EditRole);
+        QModelIndex child = this->model()->index(before, column, *index);
+        model->setData(child, QVariant(this->model()->index(after, column, *index).data()), Qt::EditRole);
 
-        child = index->child(after, column);
+        child = this->model()->index(after, column, *index);
         model->setData(child, QVariant(bku.at(column)), Qt::EditRole);
     }
 }
@@ -651,7 +656,7 @@ bool VariantTree::eventFilter(QObject *obj, QEvent *event)
              }else{
                  int current = this->currentIndex().row();
                  if(current != 0)
-                     this->selectionModel()->setCurrentIndex(this->currentIndex().parent().child(current - 1,0) \
+                     this->selectionModel()->setCurrentIndex(this->model()->index(current - 1, 0, this->currentIndex().parent()) \
                                      , QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 
                  closeEditState();
@@ -668,7 +673,7 @@ bool VariantTree::eventFilter(QObject *obj, QEvent *event)
                  int current = this->currentIndex().row();
 
                  if(count - 1 != current)
-                     this->selectionModel()->setCurrentIndex(this->currentIndex().parent().child(current + 1,0) \
+                     this->selectionModel()->setCurrentIndex(this->model()->index(current + 1, 0, this->currentIndex().parent()) \
                                      , QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 
                  closeEditState();
@@ -868,8 +873,9 @@ QStringList VariantTree::getVariants(QTreeWidgetItem *childitem)
 
     if(child.parent().isValid()){
         int row = child.row();
-        list.append(child.parent().child(row, 0).data().toString());
-        list.append(child.parent().child(row, 1).data().toString());
+
+        list.append(this->model()->index(row, 0, child.parent()).data().toString());
+        list.append(this->model()->index(row, 1, child.parent()).data().toString());
 
     }else{
         list.append("");

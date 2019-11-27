@@ -229,7 +229,7 @@ void VariantTable::reloadAction()
 
 void VariantTable::textEditedAction(int row, int column)
 {
-    Q_UNUSED(column);
+    Q_UNUSED(column)
 
     qDebug() << "VariantTable::textEditedAction : row:" << row
              << " col:" << column;
