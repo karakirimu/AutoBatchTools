@@ -146,7 +146,7 @@ int EditLocalVarTable::id() const
 
 bool EditLocalVarTable::mergeWith(const QUndoCommand *other)
 {
-    Q_UNUSED(other);
+    Q_UNUSED(other)
 //    if (other->id() != id()) return false;
 //    const EditLocalVarTable *com = static_cast<const EditLocalVarTable *>(other);
 //    if(operation() == ProcessXmlListGenerator::TABLE_EDIT){

@@ -135,7 +135,7 @@ int EditGlobalVarTree::id() const
 
 bool EditGlobalVarTree::mergeWith(const QUndoCommand *other)
 {
-    Q_UNUSED(other);
+    Q_UNUSED(other)
     return false;
 }
 

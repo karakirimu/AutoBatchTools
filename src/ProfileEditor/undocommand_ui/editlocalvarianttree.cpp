@@ -145,7 +145,7 @@ int EditLocalVariantTree::id() const
 
 bool EditLocalVariantTree::mergeWith(const QUndoCommand *other)
 {
-    Q_UNUSED(other);
+    Q_UNUSED(other)
     return false;
 }
 

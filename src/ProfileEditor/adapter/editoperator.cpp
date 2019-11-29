@@ -627,7 +627,7 @@ void EditOperator::save()
 
 void EditOperator::loadcache(int amount)
 {
-    Q_UNUSED(amount);
+    Q_UNUSED(amount)
     if(loadfile == "") return;
 
     //append new index along with "amount" number.
