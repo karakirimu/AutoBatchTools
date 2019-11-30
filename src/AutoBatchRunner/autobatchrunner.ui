@@ -43,7 +43,7 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
-        <number>1</number>
+        <number>0</number>
        </property>
        <property name="leftMargin">
         <number>0</number>
@@ -175,6 +175,9 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -253,7 +256,10 @@ border: 0px</string>
      <normaloff>:/default_icons/newfile.png</normaloff>:/default_icons/newfile.png</iconset>
    </property>
    <property name="text">
-    <string>Open files ...</string>
+    <string>Open</string>
+   </property>
+   <property name="iconText">
+    <string>Open</string>
    </property>
   </action>
   <action name="actionExit">
@@ -356,12 +362,6 @@ border: 0px</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
  </resources>
  <connections/>
