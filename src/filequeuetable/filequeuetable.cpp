@@ -50,7 +50,7 @@ void FileQueueTable::dropEvent(QDropEvent *event)
     if(mime->hasUrls()){
         addFiles(droppedFromOutside(event));
     }else {
-        droppedFromInside(event);
+        insideDropRowMove(event);
     }
 }
 

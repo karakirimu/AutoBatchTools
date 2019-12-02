@@ -23,7 +23,7 @@ BaseTable::BaseTable(QWidget *)
 
     //install custom context
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+    connect(this, &QWidget::customContextMenuRequested, this, &BaseTable::onCustomContextMenu);
 
     //init menu context
     contextMenu = new QMenu(this);
@@ -48,7 +48,7 @@ QStringList BaseTable::droppedFromOutside(QDropEvent *event)
     QStringList droppeddata;
 
     //QUrlに取得した複数URLを1つずつ代入する。
-    foreach(QUrl url, event->mimeData()->urls()){
+    for(QUrl url: event->mimeData()->urls()){
         droppeddata.append(url.toLocalFile());
     }
 
@@ -56,10 +56,103 @@ QStringList BaseTable::droppedFromOutside(QDropEvent *event)
     return droppeddata;
 }
 
-void BaseTable::droppedFromInside(QDropEvent *event)
+void BaseTable::insideDropRowMove(QDropEvent *event)
 {
     insertTableRow(this->row(this->selectedItems().at(0))
                    ,this->indexAt(event->pos()).row());
+}
+
+/**
+ * @fn BaseTable::insideDropRowsMove
+ * @brief
+ * Move multiple rows when dropped action.
+ * Allowed UI selects are single selection and multiple continuous ones.
+ *
+ * @param event    : dropEvent action argment.
+ * @param selected : if you needed to get a rows list of before moved.
+ *
+ * @return operation success or falied.
+ */
+bool BaseTable::insideDropRowsMove(QDropEvent *event, QList<int> *selected)
+{   
+    // Check dropped row
+    int droppedrow = this->indexAt(event->pos()).row();
+    if(droppedrow == -1 || droppedrow == 0) return false;
+
+    QModelIndexList mlist = this->selectedIndexes();
+
+    // Sort list ascend order
+    std::sort(mlist.begin(), mlist.end());
+
+    if(!checkRowContinuous(&mlist)) return false;
+
+    // Stores the row number and element
+    // before the selection value is moved.
+    QHash<int, QList<QTableWidgetItem>> selectlist;
+    int cols = this->horizontalHeader()->count();
+
+    for (int i = 0; i < mlist.count(); i+=cols) {
+        QList<QTableWidgetItem> widget;
+        for(int j = 0; j < cols; j++){
+            widget.append(*this->item(mlist.at(i).row(), j));
+        }
+        selectlist.insert(mlist.at(i).row(), widget);
+    }
+
+    // Swap multiple lines
+    int deleterow = 0;
+    bool firstelement = false;
+    bool lastelement = false;
+
+    int updown = 0;
+    int before = 0;
+    QList<QTableWidgetItem> beforedata;
+    int deductnum = 0;
+
+    int rows = selectlist.count();
+
+    for (int i = 0; i < rows; i++) {
+
+        before = mlist.at(i * cols).row();
+
+        if(selected != nullptr){
+            selected->append(before);
+        }
+
+        if(before > droppedrow){
+
+            if(!lastelement){
+                lastelement = true;
+                deleterow = mlist.last().row();
+            }
+
+            beforedata = selectlist.value(deleterow - deductnum);
+            deductnum++;
+            updown = 0;
+
+        }else{
+
+            if(!firstelement){
+                firstelement = true;
+                deleterow = mlist.first().row();
+            }
+
+            beforedata = selectlist.value(before);
+            updown = -1;
+        }
+
+        this->blockSignals(true);
+        this->removeRow(deleterow);
+        this->insertRow(droppedrow + updown);
+        for(int j = 0; j < cols; j++){
+            this->setItem(droppedrow + updown, j, new QTableWidgetItem(beforedata.at(j)));
+        }
+        this->blockSignals(false);
+    }
+
+    qDebug() << "[BaseTable::insideDropRowsMove] droppedrow : " << droppedrow;
+
+    return true;
 }
 
 void BaseTable::swapTableRow(int from, int dest)
@@ -103,32 +196,12 @@ void BaseTable::copyTable(int index){
     }
 }
 
+/**
+ * @fn BaseTable::deleteTableRecursive
+ * @brief Delete user-selected table items in UI.
+ */
 void BaseTable::deleteTableRecursive()
 {
-//　　　　itemがあるときだけしか消えない
-//    QList <QTableWidgetItem *> items;
-//    for (int x = 0; x < this->rowCount(); ++x)
-//    {
-//      items = this->selectedItems();
-//      if(!items.empty()){
-//          this->removeRow(items.at(0)->row());
-//          delete items.at(0);
-//      }
-//    }
-
-//    QModelIndexList lists;
-//    for (int x = 0; x < this->rowCount(); ++x)
-//    {
-//        lists = this->selectedIndexes();
-//        if(!lists.empty()){
-//          this->removeRow(lists.at(0).row());
-
-//          //delete column index
-//          for(int i = 0; i < lists.at(0).column(); i++){
-//              lists.removeAt(0);
-//          }
-//        }
-//    }
     //すべての条件で消える
     QModelIndexList lists = this->selectedIndexes();
 
@@ -143,13 +216,13 @@ void BaseTable::deleteTableRecursive()
     }
 }
 
-///
-/// \fn BaseTable::eventFilter
-/// \brief grab key event
-/// \param obj
-/// \param event
-/// \return
-///
+/**
+ * @fn BaseTable::eventFilter
+ * @brief grab key event
+ * @param obj
+ * @param event
+ * @return
+ */
 bool BaseTable::eventFilter(QObject *obj, QEvent *event)
 {
     //qDebug() << event->type();
@@ -181,14 +254,31 @@ bool BaseTable::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 
+/**
+ * @fn BaseTable::checkRowContinuous
+ * @brief Check if row selection is continuous.
+ * @param indexes : List to judge.
+ * @return True if continuous, false if discontinuous.
+ */
+bool BaseTable::checkRowContinuous(QModelIndexList *indexes)
+{
+    // Check row selections are of continuous value.
+    if(indexes->count() > 1){
+        int col = this->horizontalHeader()->count();
+
+        for (int i = 1; i < indexes->count(); i+=col) {
+            int deduct = indexes->at(i).row() - indexes->at(i-1).row();
+            if(deduct > 2 || deduct < 0){
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
 void BaseTable::onCustomContextMenu(const QPoint &point)
 {
-    //    QModelIndex index = this->indexAt(point);
-    //    if (index.isValid() && index.row() % 2 == 0) {
-    //      // contextMenu->exec(this->mapToGlobal(point));
-    //    }
-
-    //    qDebug() << index;
     contextMenu->popup(mapToGlobal(point));
 }
 

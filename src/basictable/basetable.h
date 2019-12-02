@@ -25,6 +25,7 @@
 #include <QMimeData>
 #include <QMouseEvent>
 #include <QDebug>
+#include <QHeaderView>
 
 class BASICTABLESHARED_EXPORT BaseTable : public QTableWidget
 {
@@ -46,12 +47,16 @@ protected:
     virtual void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
     QStringList droppedFromOutside(QDropEvent *event);
-    void droppedFromInside(QDropEvent *event);
+    void insideDropRowMove(QDropEvent *event);
+    bool insideDropRowsMove(QDropEvent *event, QList<int> *selected = nullptr);
     void swapTableRow(int from, int dest);
     void insertTableRow(int from, int dest);
     virtual bool eventFilter(QObject *obj, QEvent *event);
 
     QMenu *contextMenu;
+
+private:
+    bool checkRowContinuous(QModelIndexList *indexes);
 
 };
 

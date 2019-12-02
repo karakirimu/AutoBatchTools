@@ -260,70 +260,76 @@ void ProcessFlowTable::dragMoveEvent(QDragMoveEvent *event)
 
 void ProcessFlowTable::dropEvent(QDropEvent *event)
 {
-    int droppedrow = this->indexAt(event->pos()).row();
-    if(droppedrow == -1 || droppedrow == 0) return;
-
-    QModelIndexList mlist = this->selectedIndexes();
-
-    //sort list ascend order
-    std::sort(mlist.begin(), mlist.end());
-
-    QHash<int, QList<QTableWidgetItem>> selectlist;
-
-    for (int i = 0; i < mlist.count(); i+=2) {
-        QList<QTableWidgetItem> widget;
-        widget.append(*this->item(mlist.at(i).row(), 0));
-        widget.append(*this->item(mlist.at(i).row(), 1));
-        selectlist.insert(mlist.at(i).row(), widget);
-    }
-
     QList<int> beforeindex;
 
-    int deleterow = 0;
-    bool firstelement = false;
-    bool lastelement = false;
+    int droppedrow = this->indexAt(event->pos()).row();
 
-    int updown = 0;
-    int before = 0;
-    QList<QTableWidgetItem> beforedata;
-    int deductnum = 0;
+    if(!BaseTable::insideDropRowsMove(event, &beforeindex)) return;
 
-    int indexcount = mlist.count();
-
-    for (int i = 0; i < indexcount; i+=2) {
-
-        before = mlist.at(i).row();
-        beforeindex.append(uiIndexToData(before));
-
-        if(before > droppedrow){
-
-            if(!lastelement){
-                lastelement = true;
-                deleterow = mlist.last().row();
-            }
-
-            beforedata = selectlist.value(deleterow - deductnum);
-            deductnum++;
-            updown = 0;
-
-        }else{
-
-            if(!firstelement){
-                firstelement = true;
-                deleterow = mlist.first().row();
-            }
-
-            beforedata = selectlist.value(before);
-            updown = -1;
-        }
-
-        this->blockSignals(true);
-        this->removeRow(deleterow);
-        this->insertRow(droppedrow + updown);
-        this->setItem(droppedrow + updown, 0, new QTableWidgetItem(beforedata.at(0)));
-        this->setItem(droppedrow + updown, 1, new QTableWidgetItem(beforedata.at(1)));
-        this->blockSignals(false);
+    for (int i = 0; i < beforeindex.count(); i++) {
+        beforeindex[i] = uiIndexToData(beforeindex.at(i));
     }
+//    QModelIndexList mlist = this->selectedIndexes();
+
+//    //sort list ascend order
+//    std::sort(mlist.begin(), mlist.end());
+
+//    QHash<int, QList<QTableWidgetItem>> selectlist;
+
+//    for (int i = 0; i < mlist.count(); i+=2) {
+//        QList<QTableWidgetItem> widget;
+//        widget.append(*this->item(mlist.at(i).row(), 0));
+//        widget.append(*this->item(mlist.at(i).row(), 1));
+//        selectlist.insert(mlist.at(i).row(), widget);
+//    }
+
+//    QList<int> beforeindex;
+
+//    int deleterow = 0;
+//    bool firstelement = false;
+//    bool lastelement = false;
+
+//    int updown = 0;
+//    int before = 0;
+//    QList<QTableWidgetItem> beforedata;
+//    int deductnum = 0;
+
+//    int indexcount = mlist.count();
+
+//    for (int i = 0; i < indexcount; i+=2) {
+
+//        before = mlist.at(i).row();
+//        beforeindex.append(uiIndexToData(before));
+
+//        if(before > droppedrow){
+
+//            if(!lastelement){
+//                lastelement = true;
+//                deleterow = mlist.last().row();
+//            }
+
+//            beforedata = selectlist.value(deleterow - deductnum);
+//            deductnum++;
+//            updown = 0;
+
+//        }else{
+
+//            if(!firstelement){
+//                firstelement = true;
+//                deleterow = mlist.first().row();
+//            }
+
+//            beforedata = selectlist.value(before);
+//            updown = -1;
+//        }
+
+//        this->blockSignals(true);
+//        this->removeRow(deleterow);
+//        this->insertRow(droppedrow + updown);
+//        this->setItem(droppedrow + updown, 0, new QTableWidgetItem(beforedata.at(0)));
+//        this->setItem(droppedrow + updown, 1, new QTableWidgetItem(beforedata.at(1)));
+//        this->blockSignals(false);
+//    }
 
     qDebug() << "[ProcessFlowTable::dropEvent] droppedrow : " << droppedrow;
 
