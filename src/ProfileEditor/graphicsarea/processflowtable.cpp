@@ -263,6 +263,7 @@ void ProcessFlowTable::dropEvent(QDropEvent *event)
     QList<int> beforeindex;
 
     int droppedrow = this->indexAt(event->pos()).row();
+    if(droppedrow == 0) return;
 
     if(!BaseTable::insideDropRowsMove(event, &beforeindex)) return;
 

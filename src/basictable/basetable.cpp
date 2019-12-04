@@ -77,7 +77,7 @@ bool BaseTable::insideDropRowsMove(QDropEvent *event, QList<int> *selected)
 {   
     // Check dropped row
     int droppedrow = this->indexAt(event->pos()).row();
-    if(droppedrow == -1 || droppedrow == 0) return false;
+    if(droppedrow == -1) return false;
 
     QModelIndexList mlist = this->selectedIndexes();
 

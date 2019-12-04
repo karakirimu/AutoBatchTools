@@ -167,65 +167,9 @@ void CommandTable::dropEvent(QDropEvent *event)
     if(this->rowCount() == 0) return;
 
     int droppedrow = this->indexAt(event->pos()).row();
-    if(droppedrow == -1) return;
-
-    QModelIndexList mlist = this->selectedIndexes();
-
-    //sort list ascend order
-    std::sort(mlist.begin(), mlist.end());
-
-    QHash<int, QString> selectlist;
-
-    for (int i = 0; i < mlist.count(); i++) {
-        selectlist.insert(mlist.at(i).row(), mlist.at(i).data().toString());
-    }
 
     QList<int> beforeindex;
-
-    int deleterow = 0;
-    bool firstelement = false;
-    bool lastelement = false;
-
-    int updown = 0;
-    int before = 0;
-    QString beforedata;
-    int deductnum = 1;
-
-    int indexcount = mlist.count();
-
-    for (int i = 0; i < indexcount; i++) {
-
-        before = mlist.at(i).row();
-        beforeindex.append(before);
-
-        if(before > droppedrow){
-
-            if(!lastelement){
-                lastelement = true;
-                deleterow = mlist.last().row();
-            }
-
-            beforedata = selectlist.value(mlist.at(indexcount - deductnum).row());
-            deductnum++;
-            updown = 0;
-
-        }else{
-
-            if(!firstelement){
-                firstelement = true;
-                deleterow = mlist.first().row();
-            }
-
-            beforedata = selectlist.value(before);
-            updown = -1;
-        }
-
-        this->blockSignals(true);
-        this->removeRow(deleterow);
-        this->insertRow(droppedrow + updown);
-        this->setItem(droppedrow + updown, 0, new QTableWidgetItem(beforedata));
-        this->blockSignals(false);
-    }
+    if(!BaseTable::insideDropRowsMove(event, &beforeindex)) return;
 
     qDebug() << "[CommandTable::dropEvent] droppedrow : " << droppedrow;
 
