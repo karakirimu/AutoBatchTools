@@ -24,9 +24,9 @@ StartupDialog::StartupDialog(QWidget *parent) :
     ui->radioButtonGroup->setId(ui->secondsRadioButton, 2);
 
     //connect action
-    connect( ui->buttonBox, SIGNAL(accepted()), this, SLOT(onAccept()));
-    connect( ui->buttonBox, SIGNAL(rejected()), this, SLOT(onReject()));
-    connect(ui->everyDayCheckBox, SIGNAL(clicked(bool)), this, SLOT(everyDaySelected(bool)));
+    connect( ui->buttonBox, &QDialogButtonBox::accepted, this, &StartupDialog::onAccept);
+    connect( ui->buttonBox, &QDialogButtonBox::rejected, this, &StartupDialog::onReject);
+    connect(ui->everyDayCheckBox, &QAbstractButton::clicked, this, &StartupDialog::everyDaySelected);
     connect(ui->profileAddButton, &QToolButton::clicked, ui->profileComboBox, &ProfileComboBox::addItemAction);
     connect(ui->profileDeleteButton, &QToolButton::clicked, ui->profileComboBox, &ProfileComboBox::deleteItemAction);
 

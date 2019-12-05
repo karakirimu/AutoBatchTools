@@ -100,6 +100,7 @@ void BasicTable::upAction()
 
     if(row-1 == -1) return;
     swapTableRow(row,row-1);
+    selectRow(row-1);
 }
 
 void BasicTable::downAction()
@@ -109,4 +110,5 @@ void BasicTable::downAction()
 
     if(row+1 == this->rowCount()) return;
     swapTableRow(row,row+1);
+    selectRow(row+1);
 }

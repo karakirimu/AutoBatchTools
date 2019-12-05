@@ -22,12 +22,6 @@ FileQueueTable::FileQueueTable(QWidget *parent)
 {
     // disable edit
     setEditTriggers(QAbstractItemView::NoEditTriggers);
-//    setDragDropMode(QAbstractItemView::InternalMove);
-
-    //accept drops
-//    setAcceptDrops(true);
-//    setDragDropMode(QAbstractItemView::DragDrop);
-//    setDropIndicatorShown(true);
 
     //popupAction
     setPopupActionTop();
@@ -133,8 +127,6 @@ void FileQueueTable::addFiles(const QStringList &filenames)
                               | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
 
            this->setItem(rcount,0, newitem);
-            //test
-//            this->setItem(rcount,1,new QTableWidgetItem(QString::number(i)));
         }
         cfile.close();
     }
@@ -165,8 +157,8 @@ void FileQueueTable::setPopupActionDefault()
     m_down = contextMenu->addAction(QIcon(":/default_icons/arrow_down.png"), tr("Down"));
 
     //connect signals
-    connect(m_up, SIGNAL(triggered()), this, SLOT(upAction()));
-    connect(m_down, SIGNAL(triggered()), this, SLOT(downAction()));
+    connect(m_up, &QAction::triggered, this, &FileQueueTable::upAction);
+    connect(m_down, &QAction::triggered, this, &FileQueueTable::downAction);
 }
 
 void FileQueueTable::setPopupActionBottom()

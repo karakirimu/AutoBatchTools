@@ -33,7 +33,7 @@ StartupTable::StartupTable(QWidget *parent)
 
     //set current time
     QDateTime time = QDateTime::currentDateTime();
-    qsrand(time.currentSecsSinceEpoch() ^ 165423987);
+    qsrand(static_cast<uint>(time.currentSecsSinceEpoch() ^ 165423987));
 }
 
 StartupTable::~StartupTable()
@@ -260,7 +260,7 @@ void StartupTable::editAction()
 
 void StartupTable::editTableAction(int row, int col)
 {
-    Q_UNUSED(col);
+    Q_UNUSED(col)
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
 

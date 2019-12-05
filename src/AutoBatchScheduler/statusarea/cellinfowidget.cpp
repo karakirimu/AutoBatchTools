@@ -70,7 +70,7 @@ void CellInfoWidget::scheduled()
 
 void CellInfoWidget::updateProcess(QString data, int type)
 {
-    Q_UNUSED(type);
+    Q_UNUSED(type)
     ui->currentProcessLabel->setText(data);
 }
 
