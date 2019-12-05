@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>459</width>
-    <height>275</height>
+    <width>453</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,27 +32,41 @@
    <item>
     <widget class="QLineEdit" name="nameLineEdit">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>19</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
      <property name="placeholderText">
-      <string>Setting name</string>
+      <string>Schedule name ...</string>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QFrame" name="frame_2">
      <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+      <enum>QFrame::NoFrame</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -67,25 +81,18 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QLabel" name="label_2">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Profile name</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="ProfileComboBox" name="profileComboBox">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
+          <verstretch>16</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>19</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -97,6 +104,12 @@
         <property name="icon">
          <iconset resource="../../res/resources.qrc">
           <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>16</width>
+          <height>16</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -116,8 +129,14 @@
    </item>
    <item>
     <widget class="QGroupBox" name="groupBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="title">
-      <string>Specify date</string>
+      <string>Run Options</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="3" column="2">
@@ -211,7 +230,7 @@
       <item row="0" column="0" colspan="3">
        <widget class="QRadioButton" name="oneshotRadioButton">
         <property name="text">
-         <string>Run once</string>
+         <string>Once</string>
         </property>
         <attribute name="buttonGroup">
          <string notr="true">radioButtonGroup</string>
@@ -242,7 +261,7 @@
       <item row="1" column="0" colspan="5">
        <widget class="QRadioButton" name="weeksRadioButton">
         <property name="text">
-         <string>Specified day of the week and time</string>
+         <string>Day of the week and time</string>
         </property>
         <attribute name="buttonGroup">
          <string notr="true">radioButtonGroup</string>
@@ -252,7 +271,7 @@
       <item row="4" column="0" colspan="4">
        <widget class="QRadioButton" name="secondsRadioButton">
         <property name="text">
-         <string>Specified time interval</string>
+         <string>Time interval</string>
         </property>
         <attribute name="buttonGroup">
          <string notr="true">radioButtonGroup</string>
@@ -305,12 +324,6 @@
   <tabstop>secondsLineEdit</tabstop>
  </tabstops>
  <resources>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
-  <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
  </resources>
  <connections>
