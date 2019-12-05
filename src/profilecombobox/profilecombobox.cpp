@@ -36,6 +36,9 @@ ProfileComboBox::~ProfileComboBox()
 QString ProfileComboBox::getCurrentFileName()
 {
     int selected = this->currentIndex();
+
+    if(selected < 1) return "";
+
     return getCurrentFileName(selected);
 }
 
@@ -47,13 +50,12 @@ QString ProfileComboBox::getCurrentFileName()
  */
 QString ProfileComboBox::getCurrentFileName(int index)
 {
-    if(index > -1){
-        QList<QStringList> item;
-        builder->readItem(index, &item);
-        return item.at(2).at(1);
-    }
+    if(index < 1) return "";
 
-    return "";
+    QList<QStringList> item;
+    builder->readItem(index, &item);
+
+    return item.at(2).at(1);
 }
 
 /**
@@ -86,10 +88,16 @@ void ProfileComboBox::reloadComboBoxItem()
     this->clear();
     QList<QStringList> item;
     QFileInfo info;
+
     int counter = builder->count();
+
+    this->addItem(tr("Select profile ..."));
+
     for(int i = 0; i < counter; i++){
+
         builder->readItem(i, &item);
         info.setFile(item.at(2).at(1));
+
         if(info.exists()){
             QString name = item.at(0).at(1);
             name = name == "" ? tr("(no name)") : name;
@@ -97,6 +105,7 @@ void ProfileComboBox::reloadComboBoxItem()
         }else{
             this->addItem(tr("Unknown"));
         }
+
         item.clear();
     }
 }
@@ -149,8 +158,9 @@ void ProfileComboBox::addItemAction()
  */
 void ProfileComboBox::deleteItemAction()
 {
+    int current = this->currentIndex();
     //if rowcount is zero.
-    if(builder->count() == 0) return;
+    if(current < 1 || builder->count() == 0) return;
 
     // show delete warning
     QMessageBox::StandardButton res = QMessageBox::warning(
@@ -160,7 +170,6 @@ void ProfileComboBox::deleteItemAction()
 
     if(res == QMessageBox::Yes){
         //delete file item
-        int current = this->currentIndex();
         builder->deleteItem(current);
 
         //reload
