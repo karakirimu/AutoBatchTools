@@ -28,8 +28,6 @@ SystemTray::SystemTray(QWidget *parent) : QWidget(parent)
 
     themeChangeAction();
 
-//    settings.setDefaultFormat(QSettings::IniFormat);
-//    settings.setUserIniPath("./settings.ini");
 }
 
 SystemTray::~SystemTray()
@@ -55,12 +53,6 @@ void SystemTray::setTaskSchedulerConnector(TaskSchedulerConnector *task)
 
     //not timer this is whole task
     connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &SystemTray::showTaskDisabled);
-
-//    connect(taskc, &TaskSchedulerConnector::addListAction, this, &SystemTray::addlistAction);
-//    connect(taskc, &TaskSchedulerConnector::deleteListAction, this, &SystemTray::deletelistAction);
-
-    //Menu Checkable
-//    connect(taskc, &TaskSchedulerConnector::xmlStateChanged, this, &SystemTray::updateCheckStateChanged);
 
     //set trayicon actions (task function is need for this.)
     initTrayIcon();
@@ -257,7 +249,6 @@ void SystemTray::initTrayIcon()
     trayIconMenu->addSeparator();
     quitAction = trayIconMenu->addAction(tr("Quit"));
 
-//    connect(launchAction, &QAction::triggered, this, &SystemTray::launchMainAction);
     connect(settingsAction, &QAction::triggered, this, &SystemTray::launchSettingsAction);
     connect(quitAction, &QAction::triggered, this, &SystemTray::trayCloseAction);
     connect(quitAction, &QAction::triggered, this, &QWidget::close);
@@ -279,7 +270,6 @@ void SystemTray::changeXmlValidState(int itemid)
 
         builder->editItem(itemid, list);
 
-//        emit taskc->xmlStateChanged(list->at(StartupXmlBuilder::UNIQUE).at(1));
     }
 
     delete list;

@@ -29,11 +29,6 @@ signals:
     void launchclose();
 
 private slots:
-    //check state change from user
-//    void onCheckStateChanged(bool checked);
-    //check state change received from xml state
-//    void updateCheckStateChanged(QString objname);
-
     void trayActivated(QSystemTrayIcon::ActivationReason reason);
 
     void showTimerStart(QString objectname, QDateTime time);
@@ -48,21 +43,14 @@ private slots:
     void launchSettingsAction();
     void trayCloseAction();
 
-    //from table
-//    void addlistAction(int xmlitemid);
-//    void deletelistAction(QString objectname);
-
 private:
     void initTrayIcon();
-//    void initDynamicActionList();
-//    void initDynamicAction(int itemid);
+
     void changeXmlValidState(int itemid);
     int getStartupXmlIndex(QString objectname);
     QString getNameByActions(QString objectname);
     QString encodeDayOfWeek(int dayofweek);
     void themeChangeAction();
-//    QAction *generateAction(int itemid);
-//    QSettings settings;
 
     QMenu *trayIconMenu;
     QAction *launchAction;
