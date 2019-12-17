@@ -282,12 +282,6 @@ void BaseTable::onCustomContextMenu(const QPoint &point)
     contextMenu->popup(mapToGlobal(point));
 }
 
-QStringList BaseTable::selectFiles(QString basedir){
-    QFileDialog dialog(this);
-    dialog.setFileMode(QFileDialog::ExistingFiles);
-    return dialog.getOpenFileNames(this, tr("Open Files"), basedir, tr("Files (*.*)"));
-}
-
 QString BaseTable::selectFile(QString basedir){
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::ExistingFile);

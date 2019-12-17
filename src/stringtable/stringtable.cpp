@@ -53,23 +53,21 @@ StringTable::~StringTable()
 void StringTable::setPopupActionTop()
 {
     //set basic items
-    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add"));
-    m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
-    m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
-    m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
+    m_add = addTableAction(ACTION::ADD, Qt::CTRL + Qt::Key_Enter);
+    m_delete = addTableAction(ACTION::REMOVE, Qt::Key_Delete);
     contextMenu->addSeparator();
-    m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"), tr("Edit"));
-    m_edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
+
+    m_edit = addTableAction(ACTION::EDIT, Qt::CTRL + Qt::Key_E);
     contextMenu->addSeparator();
-    m_file = contextMenu->addAction(QIcon(":/default_icons/file.png"), tr("Select File..."));
-    m_dir = contextMenu->addAction(QIcon(":/default_icons/folder.png"), tr("Select Dir..."));
+
+    m_file = addTableAction(ACTION::FILE);
+    m_dir = addTableAction(ACTION::FOLDER);
     contextMenu->addSeparator();
 
     //connect signals
     connect(m_add, &QAction::triggered, this, &StringTable::addAction);
     connect(m_delete, &QAction::triggered, this, &StringTable::deleteAction);
     connect(m_edit, &QAction::triggered, this, &StringTable::editAction);
-
     connect(m_file, &QAction::triggered, this, &StringTable::openFileAction);
     connect(m_dir, &QAction::triggered, this, &StringTable::openDirectoryAction);
 }
@@ -77,22 +75,14 @@ void StringTable::setPopupActionTop()
 void StringTable::setPopupActionDefault()
 {
     //set basic items
-    m_cut = contextMenu->addAction(QIcon(":/default_icons/cut.png"), tr("Cut"));
-    m_cut->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
-
-    m_copy = contextMenu->addAction(QIcon(":/default_icons/copy.png"), tr("Copy"));
-    m_copy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
-
-    m_paste = contextMenu->addAction(QIcon(":/default_icons/paste.png"), tr("Paste"));
-    m_paste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
+    m_cut = addTableAction(ACTION::CUT, Qt::CTRL + Qt::Key_X);
+    m_copy = addTableAction(ACTION::COPY, Qt::CTRL + Qt::Key_C);
+    m_paste = addTableAction(ACTION::PASTE, Qt::CTRL + Qt::Key_V);
 
     contextMenu->addSeparator();
 
-    m_up = contextMenu->addAction(QIcon(":/default_icons/arrow_up.png"), tr("Up"));
-    m_up->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Up));
-
-    m_down = contextMenu->addAction(QIcon(":/default_icons/arrow_down.png"), tr("Down"));
-    m_down->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
+    m_up = addTableAction(ACTION::UP, Qt::CTRL + Qt::Key_Up);
+    m_down = addTableAction(ACTION::DOWN, Qt::CTRL + Qt::Key_Down);
 
     //connect signals
     connect(m_cut, &QAction::triggered, this, &StringTable::cutAction);
@@ -105,31 +95,31 @@ void StringTable::setPopupActionDefault()
 void StringTable::setPopupActionBottom()
 {
     contextMenu->addSeparator();
-    m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
-    m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
+
+    m_ref = addTableAction(ACTION::REFRESH, Qt::CTRL + Qt::Key_R);
 
     connect(m_ref, &QAction::triggered, this, &StringTable::reloadAction);
 }
 
 bool StringTable::eventFilter(QObject *obj, QEvent *event)
 {
+     QKeyEvent *keyEvent;
+
+    auto mdCheck = [&keyEvent](){
+        return static_cast<bool>(keyEvent->modifiers() & Qt::ControlModifier);
+    };
+
     //qDebug() << event->type();
     if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        keyEvent = static_cast<QKeyEvent *>(event);
         switch (keyEvent->key())
          {
            case Qt::Key_Return:
-           case Qt::Key_Enter:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-               addAction();
-             break;
-
-           case Qt::Key_Delete:
-             deleteAction();
-             break;
+           case Qt::Key_Enter:  if (mdCheck())  addAction();     break;
+           case Qt::Key_Delete:                 deleteAction();  break;
 
            case Qt::Key_Up:
-             if (keyEvent->modifiers() & Qt::ControlModifier){
+             if (mdCheck()){
                  upAction();
              }else{
                  if(this->currentRow() != 0)
@@ -138,7 +128,7 @@ bool StringTable::eventFilter(QObject *obj, QEvent *event)
              break;
 
            case Qt::Key_Down:
-             if (keyEvent->modifiers() & Qt::ControlModifier){
+             if (mdCheck()){
                  downAction();
              }else{
                  if(this->rowCount() - 1 != this->currentRow())
@@ -146,30 +136,11 @@ bool StringTable::eventFilter(QObject *obj, QEvent *event)
              }
             break;
 
-           case Qt::Key_X:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 cutAction();
-             break;
-
-           case Qt::Key_C:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 copyAction();
-             break;
-
-           case Qt::Key_V:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 pasteAction();
-             break;
-
-           case Qt::Key_E:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 editAction();
-             break;
-
-           case Qt::Key_R:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                reloadAction();
-             break;
+           case Qt::Key_X:      if (mdCheck())  cutAction();     break;
+           case Qt::Key_C:      if (mdCheck())  copyAction();    break;
+           case Qt::Key_V:      if (mdCheck())  pasteAction();   break;
+           case Qt::Key_E:      if (mdCheck())  editAction();    break;
+           case Qt::Key_R:      if (mdCheck())  reloadAction();  break;
 
            default:
              //qDebug("Ate key press %d", keyEvent->key());

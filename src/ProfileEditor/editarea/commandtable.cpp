@@ -1,4 +1,20 @@
-﻿#include "commandtable.h"
+﻿/*
+ * Copyright 2016-2019 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include "commandtable.h"
 
 CommandTable::CommandTable(QWidget *parent)
     : BasicTable(parent)
@@ -402,18 +418,15 @@ void CommandTable::editedAction(int row, int column)
 void CommandTable::setPopupActionTop()
 {
     //set basic items
-    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add"));
-    m_add->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Enter));
-    m_add->setShortcutVisibleInContextMenu(true);
+    m_add = addTableAction(ACTION::ADD, Qt::ALT + Qt::Key_Enter);
+    m_delete = addTableAction(ACTION::REMOVE, Qt::ALT + Qt::Key_Delete);
+    contextMenu->addSeparator();
 
-    m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
-    m_delete->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Delete));
+    m_edit = addTableAction(ACTION::EDIT, Qt::ALT + Qt::Key_E);
     contextMenu->addSeparator();
-    m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"), tr("Edit"));
-    m_edit->setShortcut(QKeySequence(Qt::ALT + Qt::Key_E));
-    contextMenu->addSeparator();
-    m_file = contextMenu->addAction(QIcon(":/default_icons/file.png"), tr("Select file..."));
-    m_dir = contextMenu->addAction(QIcon(":/default_icons/folder.png"), tr("Select Dir..."));
+
+    m_file = addTableAction(ACTION::FILE);
+    m_dir = addTableAction(ACTION::FOLDER);
     contextMenu->addSeparator();
 
     //connect signals
@@ -428,27 +441,20 @@ void CommandTable::setPopupActionTop()
 void CommandTable::setPopupActionDefault()
 {
     //set basic items
-    m_cut = contextMenu->addAction(QIcon(":/default_icons/cut.png"), tr("Cut"));
-    m_cut->setShortcut(QKeySequence(Qt::ALT + Qt::Key_X));
-
-    m_copy = contextMenu->addAction(QIcon(":/default_icons/copy.png"), tr("Copy"));
-    m_copy->setShortcut(QKeySequence(Qt::ALT + Qt::Key_C));
+    m_cut = addTableAction(ACTION::CUT, Qt::ALT + Qt::Key_X);
+    m_copy = addTableAction(ACTION::COPY, Qt::ALT + Qt::Key_C);
 
     contextMenu->addSeparator();
 
-    m_paste = contextMenu->addAction(QIcon(":/default_icons/paste.png"), tr("Paste"));
-    m_paste->setShortcut(QKeySequence(Qt::ALT + Qt::Key_V));
+    m_paste = addTableAction(ACTION::PASTE, Qt::ALT + Qt::Key_V);
 
-    m_pastespace = contextMenu->addAction(QIcon(":/default_icons/blank.png"), tr("Paste (space separated)"));
-    m_pasteenter = contextMenu->addAction(QIcon(":/default_icons/blank.png"), tr("Paste (newline separated)"));
+    m_pastespace = addTableAction(ACTION::PASTESPACE);
+    m_pasteenter = addTableAction(ACTION::PASTENEWLINE);
 
     contextMenu->addSeparator();
 
-    m_up = contextMenu->addAction(QIcon(":/default_icons/arrow_up.png"), tr("Up"));
-    m_up->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Up));
-
-    m_down = contextMenu->addAction(QIcon(":/default_icons/arrow_down.png"), tr("Down"));
-    m_down->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Down));
+    m_up = addTableAction(ACTION::UP, Qt::ALT + Qt::Key_Up);
+    m_down = addTableAction(ACTION::DOWN, Qt::ALT + Qt::Key_Down);
 
     //connect signals
     connect(m_cut, &QAction::triggered, this, &CommandTable::cutAction);
@@ -462,23 +468,23 @@ void CommandTable::setPopupActionDefault()
 
 bool CommandTable::eventFilter(QObject *obj, QEvent *event)
 {
+    QKeyEvent *keyEvent;
+
+    auto mdCheck = [&keyEvent](){
+        return static_cast<bool>(keyEvent->modifiers() & Qt::AltModifier);
+    };
+
     if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        keyEvent = static_cast<QKeyEvent *>(event);
         switch (keyEvent->key())
          {
            case Qt::Key_Return:
-           case Qt::Key_Enter:
-             if (keyEvent->modifiers() & Qt::AltModifier)
-               addAction();
-             break;
-
-           case Qt::Key_Delete:
-             if (keyEvent->modifiers() & Qt::AltModifier)
-               deleteAction();
-             break;
+           case Qt::Key_Enter:  if (mdCheck()) addAction();    break;
+           case Qt::Key_Delete: if (mdCheck()) deleteAction(); break;
+           case Qt::Key_E:      if (mdCheck()) editAction();   break;
 
            case Qt::Key_Up:
-             if (keyEvent->modifiers() & Qt::AltModifier){
+             if(mdCheck()){
                  upAction();
              }else{
                  if(this->currentRow() != 0)
@@ -487,7 +493,7 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
              break;
 
            case Qt::Key_Down:
-             if (keyEvent->modifiers() & Qt::AltModifier){
+             if(mdCheck()){
                  downAction();
              }else{
                  if(this->rowCount() - 1 != this->currentRow())
@@ -495,25 +501,9 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
              }
             break;
 
-           case Qt::Key_X:
-             if (keyEvent->modifiers() & Qt::AltModifier)
-                 cutAction();
-             break;
-
-           case Qt::Key_C:
-             if (keyEvent->modifiers() & Qt::AltModifier)
-                 copyAction();
-             break;
-
-           case Qt::Key_V:
-             if (keyEvent->modifiers() & Qt::AltModifier)
-                 pasteAction();
-             break;
-
-           case Qt::Key_E:
-             if (keyEvent->modifiers() & Qt::AltModifier)
-                 editAction();
-             break;
+           case Qt::Key_X:  if(mdCheck()) cutAction();    break;
+           case Qt::Key_C:  if(mdCheck()) copyAction();   break;
+           case Qt::Key_V:  if(mdCheck()) pasteAction();  break;
 
            default:
              //qDebug("Ate key press %d", keyEvent->key());

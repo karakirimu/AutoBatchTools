@@ -39,7 +39,6 @@ protected slots:
     void deleteTableRecursive();
     void copyTable(int index);
 
-    QStringList selectFiles(QString basedir);
     QString selectFile(QString basedir);
     QString selectFolder(QString basedir);
 

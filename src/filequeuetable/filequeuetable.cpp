@@ -66,13 +66,19 @@ void FileQueueTable::dropEvent(QDropEvent *event)
 
 void FileQueueTable::addFilesAction()
 {
-    QStringList selected = selectFiles(QDir::currentPath());
+    QStringList selected;
+
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::ExistingFiles);
+    selected = dialog.getOpenFileNames(this, tr("Open Files"),\
+                                       QDir::currentPath(), tr("Files (*.*)"));
     addFiles(selected);
 }
 
 void FileQueueTable::addFolderAction()
 {
     QString selected = selectFolder(QDir::currentPath());
+
     int rcount = this->rowCount();
     this->setRowCount(rcount+1);
     this->setItem(rcount,0,new QTableWidgetItem(selected));
@@ -135,12 +141,12 @@ void FileQueueTable::addFiles(const QStringList &filenames)
 void FileQueueTable::setPopupActionTop()
 {
     //init menu context
-    contextMenu->setStyleSheet("border:1px;");
-    m_addfile = contextMenu->addAction(QIcon(":/default_icons/file.png"), tr("Add Files ..."));
-    m_adddir = contextMenu->addAction(QIcon(":/default_icons/folder.png"), tr("Add Folder ..."));
-    m_deleteitems = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
+//    contextMenu->setStyleSheet("border:1px;");
+    m_addfile = addTableAction(ACTION::FILES);
+    m_adddir = addTableAction(ACTION::FOLDER);
+    m_deleteitems = addTableAction(ACTION::REMOVE, Qt::Key_Delete);
     contextMenu->addSeparator();
-    m_deleteAll = contextMenu->addAction(tr("Clear"));
+    m_deleteAll = addTableAction(ACTION::CLEAR);
 
     //connect signals
     connect(m_addfile, &QAction::triggered, this, &FileQueueTable::addFilesAction);
@@ -153,8 +159,8 @@ void FileQueueTable::setPopupActionDefault()
 {
     contextMenu->addSeparator();
     //set basic items
-    m_up = contextMenu->addAction(QIcon(":/default_icons/arrow_up.png"), tr("Up"));
-    m_down = contextMenu->addAction(QIcon(":/default_icons/arrow_down.png"), tr("Down"));
+    m_up = addTableAction(ACTION::UP, Qt::CTRL + Qt::Key_Up);
+    m_down = addTableAction(ACTION::DOWN, Qt::CTRL + Qt::Key_Down);
 
     //connect signals
     connect(m_up, &QAction::triggered, this, &FileQueueTable::upAction);
@@ -164,6 +170,6 @@ void FileQueueTable::setPopupActionDefault()
 void FileQueueTable::setPopupActionBottom()
 {
     contextMenu->addSeparator();
-    m_property = contextMenu->addAction(QIcon(":/default_icons/info.png"), tr("File Info"));
+    m_property = addTableAction(ACTION::FILEINFO);
     connect(m_property, &QAction::triggered, this, &FileQueueTable::propertyAction);
 }

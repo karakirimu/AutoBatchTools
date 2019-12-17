@@ -45,9 +45,22 @@ protected:
     void setPopupActionDefault(QIcon copy, QIcon up, QIcon down);
     bool deleteCheckMessage();
 
+    enum class ACTION{NEWFILE, ADD, REMOVE, EDIT, CLEAR,
+                ENABLE, DISABLE, FILE, FILES, FOLDER, FILEINFO,
+                CUT, COPY, PASTE, PASTESPACE, PASTENEWLINE, UP, DOWN,
+                REFRESH, PROPERTY};
+
+    QIcon getIcon(BasicTable::ACTION action);
+    QString getActionText(BasicTable::ACTION action);
+
+    inline QAction * addTableAction(BasicTable::ACTION action, int keycode = 0);
+
     QAction *m_copy;
     QAction *m_up;
     QAction *m_down;
+
+private:
+
 };
 
 #endif // LIBBASICTABLE_H

@@ -5,15 +5,7 @@ SearchDialogTable::SearchDialogTable(QWidget *)
     // disable edit
     setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    //init menu context
-    m_copy = contextMenu->addAction(tr("Copy"));
-    m_copy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
-    m_property = contextMenu->addAction(tr("Property"));
-    m_property->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_P));
-
-    // connect signals
-    connect(m_copy, SIGNAL(triggered()), this, SLOT(copyAction()));
-    connect(m_property, SIGNAL(triggered()), this, SLOT(propertyAction()));
+    setPopupActionTop();
 
     //init table size
     setColumnCount(1);
@@ -61,6 +53,17 @@ void SearchDialogTable::propertyAction()
         dialog->setFileInfo(this->selectedItems().at(0)->text());
         dialog->show();
     }
+}
+
+void SearchDialogTable::setPopupActionTop()
+{
+    //init menu context
+    m_copy = addTableAction(ACTION::COPY, Qt::CTRL + Qt::Key_C);
+    m_property = addTableAction(ACTION::PROPERTY, Qt::CTRL + Qt::Key_P);
+
+    // connect signals
+    connect(m_copy, &QAction::triggered, this, &SearchDialogTable::copyAction);
+    connect(m_property, &QAction::triggered, this, &SearchDialogTable::propertyAction);
 }
 
 bool SearchDialogTable::eventFilter(QObject *obj, QEvent *event)

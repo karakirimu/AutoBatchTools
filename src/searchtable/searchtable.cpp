@@ -23,9 +23,9 @@ SearchTable::SearchTable(QWidget *)
 
     //popupAction
     setPopupActionTop();
-    setPopupActionDefault(QIcon(":/default_icons/copy.png"), \
-                          QIcon(":/default_icons/arrow_up.png"), \
-                          QIcon(":/default_icons/arrow_down.png"));
+    setPopupActionDefault(getIcon(ACTION::COPY), \
+                          getIcon(ACTION::UP), \
+                          getIcon(ACTION::DOWN));
     setPopupActionBottom();
 
     //init table size
@@ -59,15 +59,13 @@ SearchTable::~SearchTable()
 void SearchTable::setPopupActionTop()
 {
     //set basic items
-    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add"));
-    m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
-    m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
-    m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
+    m_add = addTableAction(ACTION::ADD, Qt::CTRL + Qt::Key_Enter);
+    m_delete = addTableAction(ACTION::REMOVE, Qt::Key_Delete);
     contextMenu->addSeparator();
 
-    m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"),tr("Edit"));
-    m_edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
+    m_edit = addTableAction(ACTION::EDIT, Qt::CTRL + Qt::Key_E);
     contextMenu->addSeparator();
+
     //connect signals
     connect(m_add, &QAction::triggered, this, &SearchTable::addAction);
     connect(m_delete, &QAction::triggered, this, &SearchTable::deleteAction);
@@ -77,70 +75,58 @@ void SearchTable::setPopupActionTop()
 void SearchTable::setPopupActionBottom()
 {
     contextMenu->addSeparator();
-    m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
-    m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
+    m_ref = addTableAction(ACTION::REFRESH, Qt::CTRL + Qt::Key_R);
 
     connect(m_ref, &QAction::triggered, this, &SearchTable::reloadAction);
 }
 
 bool SearchTable::eventFilter(QObject *obj, QEvent *event)
 {
-    //qDebug() << event->type();
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        switch (keyEvent->key())
-         {
-           case Qt::Key_Return:
-           case Qt::Key_Enter:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-               addAction();
-             break;
+   QKeyEvent *keyEvent;
 
-           case Qt::Key_Delete:
-             deleteAction();
-             break;
+   auto mdCheck = [&keyEvent](){
+       return static_cast<bool>(keyEvent->modifiers() & Qt::ControlModifier);
+   };
 
-           case Qt::Key_Up:
-             if (keyEvent->modifiers() & Qt::ControlModifier){
-                 upAction();
-             }else{
-                 if(this->currentRow() != 0)
-                     selectRow(this->currentRow() - 1);
-             }
-             break;
+   //qDebug() << event->type();
+   if (event->type() == QEvent::KeyPress) {
+       keyEvent = static_cast<QKeyEvent *>(event);
+       switch (keyEvent->key())
+        {
+          case Qt::Key_Return:
+          case Qt::Key_Enter:  if (mdCheck())  addAction();     break;
+          case Qt::Key_Delete:                 deleteAction();  break;
 
-           case Qt::Key_Down:
-             if (keyEvent->modifiers() & Qt::ControlModifier){
-                 downAction();
-             }else{
-                 if(this->rowCount() - 1 != this->currentRow())
-                     selectRow(this->currentRow() + 1);
-             }
+          case Qt::Key_Up:
+            if (mdCheck()){
+                upAction();
+            }else{
+                if(this->currentRow() != 0)
+                    selectRow(this->currentRow() - 1);
+            }
             break;
 
-           case Qt::Key_C:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 copyAction();
-             break;
+          case Qt::Key_Down:
+            if (mdCheck()){
+                downAction();
+            }else{
+                if(this->rowCount() - 1 != this->currentRow())
+                    selectRow(this->currentRow() + 1);
+            }
+           break;
 
-           case Qt::Key_E:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 editAction();
-             break;
+          case Qt::Key_C:      if (mdCheck())  copyAction();    break;
+          case Qt::Key_E:      if (mdCheck())  editAction();    break;
+          case Qt::Key_R:      if (mdCheck())  reloadAction();  break;
 
-           case Qt::Key_R:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                reloadAction();
-             break;
-
-           default:
-             //qDebug("Ate key press %d", keyEvent->key());
-             break;
-         }
-        return true;
-    }
-    // standard event processing
-    return QObject::eventFilter(obj, event);
+          default:
+            //qDebug("Ate key press %d", keyEvent->key());
+            break;
+        }
+       return true;
+   }
+   // standard event processing
+   return QObject::eventFilter(obj, event);
 }
 
 void SearchTable::addAction()

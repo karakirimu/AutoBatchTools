@@ -54,16 +54,15 @@ void StartupTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
 void StartupTable::setPopupActionTop()
 {
     //set basic items
-    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"), tr("Add"));
-    m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
-    m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
-    m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
+    m_add = addTableAction(ACTION::ADD, Qt::CTRL + Qt::Key_Enter);
+    m_delete = addTableAction(ACTION::REMOVE, Qt::Key_Delete);
     contextMenu->addSeparator();
-    m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"), tr("Edit"));
-    m_edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
+
+    m_edit = addTableAction(ACTION::EDIT, Qt::CTRL + Qt::Key_E);
     contextMenu->addSeparator();
-    m_enable = contextMenu->addAction(QIcon(":/default_icons/enable.png"), tr("Enable"));
-    m_disable = contextMenu->addAction(QIcon(":/default_icons/error.png"), tr("Disable"));
+
+    m_enable = addTableAction(ACTION::ENABLE);
+    m_disable = addTableAction(ACTION::DISABLE);
     contextMenu->addSeparator();
 
     //connect signals
@@ -78,31 +77,30 @@ void StartupTable::setPopupActionTop()
 void StartupTable::setPopupActionBottom()
 {
     contextMenu->addSeparator();
-    m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
-    m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
+    m_ref = addTableAction(ACTION::REFRESH, Qt::CTRL + Qt::Key_R);
 
     connect(m_ref, &QAction::triggered, this, &StartupTable::reloadAction);
 }
 
 bool StartupTable::eventFilter(QObject *obj, QEvent *event)
 {
+    QKeyEvent *keyEvent;
+
+    auto mdCheck = [&keyEvent](){
+        return static_cast<bool>(keyEvent->modifiers() & Qt::ControlModifier);
+    };
+
     //qDebug() << event->type();
     if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        keyEvent = static_cast<QKeyEvent *>(event);
         switch (keyEvent->key())
          {
            case Qt::Key_Return:
-           case Qt::Key_Enter:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-               addAction();
-             break;
-
-           case Qt::Key_Delete:
-             deleteAction();
-             break;
+           case Qt::Key_Enter:       if(mdCheck()) addAction(); break;
+           case Qt::Key_Delete:      deleteAction();            break;
 
            case Qt::Key_Up:
-             if (keyEvent->modifiers() & Qt::ControlModifier){
+             if(mdCheck()){
                  upAction();
              }else{
                  if(this->currentRow() != 0)
@@ -111,7 +109,7 @@ bool StartupTable::eventFilter(QObject *obj, QEvent *event)
              break;
 
            case Qt::Key_Down:
-             if (keyEvent->modifiers() & Qt::ControlModifier){
+             if(mdCheck()){
                  downAction();
              }else{
                  if(this->rowCount() - 1 != this->currentRow())
@@ -119,20 +117,9 @@ bool StartupTable::eventFilter(QObject *obj, QEvent *event)
              }
             break;
 
-           case Qt::Key_C:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 copyAction();
-             break;
-
-           case Qt::Key_E:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 editAction();
-             break;
-
-           case Qt::Key_R:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                reloadAction();
-             break;
+           case Qt::Key_C:          if(mdCheck()) copyAction();   break;
+           case Qt::Key_E:          if(mdCheck()) editAction();   break;
+           case Qt::Key_R:          if(mdCheck()) reloadAction(); break;
 
            default:
              //qDebug("Ate key press %d", keyEvent->key());

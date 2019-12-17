@@ -67,6 +67,108 @@ bool BasicTable::deleteCheckMessage()
     }
 }
 
+/**
+ * @fn BasicTable::addTableAction
+ *
+ * @brief A wrapper function to simplify action creation.
+ *        The icon path and the corresponding text are all
+ *        defined in the class.
+ *
+ * @param action "enum ACTION" defined in this class
+ * @param keycode QKeySequence keycode
+ *
+ * @return created action
+ */
+QAction *BasicTable::addTableAction(ACTION action, int keycode)
+{
+    QAction *res = contextMenu->addAction(getIcon(action), getActionText(action));
+    if(keycode != 0){
+        res->setShortcutVisibleInContextMenu(true);
+        res->setShortcut(QKeySequence(keycode));
+    }
+    return res;
+}
+
+/**
+ * @fn BasicTable::getIcon
+ *
+ * @brief Default icon path definition
+ *
+ * @param action "enum ACTION" defined in this class
+ *
+ * @return QIcon with path assigned
+ */
+QIcon BasicTable::getIcon(ACTION action)
+{
+    QIcon icon;
+    QString basename = ":/default_icons/";
+
+    switch (action) {
+    case ACTION::NEWFILE:       icon.addFile(basename + "newfile.png");    break;
+    case ACTION::ADD:           icon.addFile(basename + "add.png");        break;
+    case ACTION::REMOVE:        icon.addFile(basename + "remove.png");     break;
+    case ACTION::EDIT:          icon.addFile(basename + "edit.png");       break;
+    case ACTION::ENABLE:        icon.addFile(basename + "enable.png");     break;
+    case ACTION::DISABLE:       icon.addFile(basename + "error.png");      break;
+    case ACTION::CLEAR:         icon.addFile(basename + "blank.png");      break;
+    case ACTION::FILE:
+    case ACTION::FILES:         icon.addFile(basename + "file.png");       break;
+    case ACTION::FOLDER:        icon.addFile(basename + "folder.png");     break;
+    case ACTION::FILEINFO:      icon.addFile(basename + "info.png");       break;
+    case ACTION::CUT:           icon.addFile(basename + "cut.png");        break;
+    case ACTION::COPY:          icon.addFile(basename + "copy.png");       break;
+    case ACTION::PASTE:         icon.addFile(basename + "paste.png");      break;
+    case ACTION::PASTESPACE:    icon.addFile(basename + "blank.png");      break;
+    case ACTION::PASTENEWLINE:  icon.addFile(basename + "blank.png");      break;
+    case ACTION::UP:            icon.addFile(basename + "arrow_up.png");   break;
+    case ACTION::DOWN:          icon.addFile(basename + "arrow_down.png"); break;
+    case ACTION::REFRESH:       icon.addFile(basename + "refresh.png");    break;
+    case ACTION::PROPERTY:      icon.addFile(basename + "blank.png");      break;
+    }
+
+
+    return icon;
+}
+
+/**
+ * @fn BasicTable::getActionText
+ *
+ * @brief Define default action text
+ *
+ * @param action "enum ACTION" defined in this class
+ *
+ * @return The text corresponding to the action
+ */
+QString BasicTable::getActionText(ACTION action)
+{
+    QString text = "undefined";
+
+    switch (action) {
+    case ACTION::NEWFILE:       text = tr("New");                       break;
+    case ACTION::ADD:           text = tr("Add");                       break;
+    case ACTION::REMOVE:        text = tr("Delete");                    break;
+    case ACTION::EDIT:          text = tr("Edit");                      break;
+    case ACTION::ENABLE:        text = tr("Enable");                    break;
+    case ACTION::DISABLE:       text = tr("Disable");                   break;
+    case ACTION::CLEAR:         text = tr("Clear");                     break;
+    case ACTION::FILE:          text = tr("Add File ...");              break;
+    case ACTION::FILES:         text = tr("Add Files ...");             break;
+    case ACTION::FOLDER:        text = tr("Add Folder ...");            break;
+    case ACTION::FILEINFO:      text = tr("File Info");                 break;
+    case ACTION::CUT:           text = tr("Cut");                       break;
+    case ACTION::COPY:          text = tr("Copy");                      break;
+    case ACTION::PASTE:         text = tr("Paste");                     break;
+    case ACTION::PASTESPACE:    text = tr("Paste (space separated)");   break;
+    case ACTION::PASTENEWLINE:  text = tr("Paste (newline separated)"); break;
+    case ACTION::UP:            text = tr("Up");                        break;
+    case ACTION::DOWN:          text = tr("Down");                      break;
+    case ACTION::REFRESH:       text = tr("Reload");                    break;
+    case ACTION::PROPERTY:      text = tr("Property");                  break;
+    }
+
+    return text;
+}
+
 void BasicTable::horizontalHeaderClicked(int)
 {
     this->selectAll();
