@@ -5,34 +5,8 @@
 #include <QDockWidget>
 #include <QEvent>
 #include <QDebug>
-//#include <QThread>
-//#include <QTime>
-//#include <QMutex>
 
-//#define TIME_MS 1000
 #define Y_RANGE 10
-
-//class HoverTimer : public QThread
-//{
-//    Q_OBJECT
-//public:
-//    explicit HoverTimer(QObject *parent = nullptr);
-//    ~HoverTimer();
-
-//    void setEnter(bool value);
-//    void setPoint(const QPoint &value);
-
-//public slots:
-//    void work();
-
-//signals:
-//    void launch();
-
-//private:
-////    QMutex mutex;
-//    QPoint point;
-//    bool enter;
-//};
 
 class BaseDockWidget : public QDockWidget
 {
@@ -44,7 +18,6 @@ public:
     ~BaseDockWidget();
 
     bool isAutohide() const;
-//    void mouseMoved();
 
 public slots:
     void setAutohide(bool value);
@@ -60,10 +33,6 @@ private:
 
     //setting data
     bool autohide;
-
-    //variant data
-//    QThread *wait;
-//    HoverTimer *hTimer;
 
     //widget data
     QWidget *def;
