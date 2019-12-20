@@ -8,7 +8,7 @@ StartupTable::StartupTable(QWidget *parent)
 
     //popupAction
     setPopupActionTop();
-    setPopupActionDefault(QIcon(":/default_icons/copy.png"), QIcon(":/default_icons/arrow_up.png"), QIcon(":/default_icons/arrow_down.png"));
+    setPopupActionDefault();
     setPopupActionBottom();
 
     //init table size
@@ -61,24 +61,36 @@ void StartupTable::setPopupActionTop()
     m_edit = addTableAction(ACTION::EDIT, Qt::CTRL + Qt::Key_E);
     contextMenu->addSeparator();
 
-    m_enable = addTableAction(ACTION::ENABLE);
-    m_disable = addTableAction(ACTION::DISABLE);
-    contextMenu->addSeparator();
-
     //connect signals
     connect(m_add, &QAction::triggered, this, &StartupTable::addAction);
     connect(m_edit, &QAction::triggered, this, &StartupTable::editAction);
     connect(m_delete, &QAction::triggered, this, &StartupTable::deleteAction);
+}
 
+void StartupTable::setPopupActionDefault()
+{
+    m_enable = addTableAction(ACTION::ENABLE);
+    m_disable = addTableAction(ACTION::DISABLE);
+    contextMenu->addSeparator();
+
+    m_copy = addTableAction(ACTION::COPY, Qt::CTRL + Qt::Key_C);
+
+    contextMenu->addSeparator();
+    connect(m_copy, &QAction::triggered, this, &StartupTable::copyAction);
     connect(m_enable, &QAction::triggered, this, &StartupTable::enableAction);
     connect(m_disable, &QAction::triggered, this, &StartupTable::disableAction);
 }
 
 void StartupTable::setPopupActionBottom()
 {
+    m_up = addTableAction(ACTION::UP, Qt::CTRL + Qt::Key_Up);
+    m_down = addTableAction(ACTION::DOWN, Qt::CTRL + Qt::Key_Down);
+
     contextMenu->addSeparator();
     m_ref = addTableAction(ACTION::REFRESH, Qt::CTRL + Qt::Key_R);
 
+    connect(m_up, &QAction::triggered, this, &StartupTable::upAction);
+    connect(m_down, &QAction::triggered, this, &StartupTable::downAction);
     connect(m_ref, &QAction::triggered, this, &StartupTable::reloadAction);
 }
 
@@ -225,7 +237,8 @@ void StartupTable::addAction()
 
         setTableItem(index);
 
-        emit taskc->tableInserted(index);
+        emit taskc->tableMessenger(QString::number(index),\
+                                   TaskSchedulerConnector::TABLE::ADD);
     }
 }
 
@@ -258,8 +271,8 @@ void StartupTable::editTableAction(int row, int col)
         setTableItem(row);
     }
 
-
-    emit taskc->tableReplaced(row);
+    emit taskc->tableMessenger(QString::number(row),\
+                               TaskSchedulerConnector::TABLE::EDIT);
 }
 
 void StartupTable::deleteAction()
@@ -279,7 +292,8 @@ void StartupTable::deleteAction()
         //delete file item
         builder->deleteItem(currentRow());
 
-        emit taskc->tableDeleted(currentRow());
+        emit taskc->tableMessenger(QString::number(currentRow()),\
+                                   TaskSchedulerConnector::TABLE::DELETE);
 
         //reload
         reloadAction();
@@ -314,7 +328,8 @@ void StartupTable::copyAction()
         // update item
         builder->editItem(currentrow, list);
 
-        emit taskc->tableInserted(currentrow);
+        emit taskc->tableMessenger(QString::number(currentrow),\
+                                   TaskSchedulerConnector::TABLE::INSERT);
     }
 
     reloadAction();
@@ -359,7 +374,8 @@ void StartupTable::enableAction(){
             if(info.exists()){
 
                 //change validation
-                emit taskc->tableEnabled(list->at(StartupXmlBuilder::UNIQUE).at(1));
+                emit taskc->tableMessenger(list->at(StartupXmlBuilder::UNIQUE).at(1),\
+                                           TaskSchedulerConnector::TABLE::ENABLE);
 
                 replaceItem(row);
             }
@@ -378,7 +394,8 @@ void StartupTable::disableAction(){
         if(VariantConverter::stringToBool(list->at(StartupXmlBuilder::VALID).at(1))){
 
             //change validation
-            emit taskc->tableDisabled(list->at(StartupXmlBuilder::UNIQUE).at(1));
+            emit taskc->tableMessenger(list->at(StartupXmlBuilder::UNIQUE).at(1),\
+                                       TaskSchedulerConnector::TABLE::DISABLE);
             replaceItem(row);
         }
     }

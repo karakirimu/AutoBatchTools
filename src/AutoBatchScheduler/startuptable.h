@@ -35,6 +35,7 @@ private slots:
 
 private:
     void setPopupActionTop();
+    void setPopupActionDefault();
     void setPopupActionBottom();
     bool eventFilter(QObject *obj, QEvent *event);
     int getStartupXmlIndex(QString objectname);
