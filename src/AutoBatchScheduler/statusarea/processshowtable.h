@@ -37,6 +37,8 @@ signals:
 public slots:
     //create ui
 //    void addItem(QString objname);
+    void tableChanged(QString message, TaskSchedulerConnector::TABLE func);
+
 
     //from startuptable
     void removeItem(int itemid);

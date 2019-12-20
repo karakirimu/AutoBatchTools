@@ -45,7 +45,8 @@ protected:
     void setPopupActionDefault(QIcon copy, QIcon up, QIcon down);
     bool deleteCheckMessage();
 
-    enum class ACTION{NEWFILE, ADD, REMOVE, EDIT, CLEAR,
+    enum class ACTION{
+                NEWFILE, ADD, REMOVE, EDIT, CLEAR,
                 ENABLE, DISABLE, FILE, FILES, FOLDER, FILEINFO,
                 CUT, COPY, PASTE, PASTESPACE, PASTENEWLINE, UP, DOWN,
                 REFRESH, PROPERTY};

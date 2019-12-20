@@ -339,16 +339,34 @@ void ProcessShowTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
 //    connect(taskc, &TaskSchedulerConnector::taskEnabled, this, &ProcessShowTable::enableItem);
 //    connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &ProcessShowTable::disableItem);
 
-    connect(taskc, &TaskSchedulerConnector::tableInserted, this, &ProcessShowTable::insertItem);
-    connect(taskc, &TaskSchedulerConnector::tableDeleted, this, &ProcessShowTable::removeItem);
-    connect(taskc, &TaskSchedulerConnector::tableReplaced, this, &ProcessShowTable::replaceItem);
-    connect(taskc, &TaskSchedulerConnector::tableEnabled, this, &ProcessShowTable::enableItem);
-    connect(taskc, &TaskSchedulerConnector::tableDisabled, this, &ProcessShowTable::disableItem);
+//    connect(taskc, &TaskSchedulerConnector::tableInserted, this, &ProcessShowTable::insertItem);
+//    connect(taskc, &TaskSchedulerConnector::tableDeleted, this, &ProcessShowTable::removeItem);
+//    connect(taskc, &TaskSchedulerConnector::tableReplaced, this, &ProcessShowTable::replaceItem);
+//    connect(taskc, &TaskSchedulerConnector::tableEnabled, this, &ProcessShowTable::enableItem);
+//    connect(taskc, &TaskSchedulerConnector::tableDisabled, this, &ProcessShowTable::disableItem);
+    connect(taskc, &TaskSchedulerConnector::tableMessenger, this, &ProcessShowTable::tableChanged);
 
     connect(this, &ProcessShowTable::pause, taskc, &TaskSchedulerConnector::processPause);
     connect(this, &ProcessShowTable::stop, taskc, &TaskSchedulerConnector::processStop);
 
     initCellWidgets();
+}
+
+void ProcessShowTable::tableChanged(QString message, TaskSchedulerConnector::TABLE func)
+{
+    switch (func) {
+    case TaskSchedulerConnector::TABLE::ADD:
+    case TaskSchedulerConnector::TABLE::INSERT:   insertItem(message.toInt());   break;
+    case TaskSchedulerConnector::TABLE::DELETE:   removeItem(message.toInt());   break;
+    case TaskSchedulerConnector::TABLE::EDIT:     replaceItem(message.toInt());  break;
+    case TaskSchedulerConnector::TABLE::ENABLE:   enableItem(message);           break;
+    case TaskSchedulerConnector::TABLE::DISABLE:  disableItem(message);          break;
+    case TaskSchedulerConnector::TABLE::COPY: break;
+    case TaskSchedulerConnector::TABLE::DRAGDROP: break;
+    case TaskSchedulerConnector::TABLE::UP: break;
+    case TaskSchedulerConnector::TABLE::DOWN: break;
+    case TaskSchedulerConnector::TABLE::SWAP: break;
+    }
 }
 
 

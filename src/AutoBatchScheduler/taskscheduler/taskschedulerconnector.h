@@ -26,17 +26,21 @@ public:
     explicit TaskSchedulerConnector(QObject *parent = nullptr);
     ~TaskSchedulerConnector();
 
+    //! table function
+    enum class TABLE {ADD,EDIT,INSERT,DELETE,ENABLE,DISABLE,COPY,DRAGDROP,UP,DOWN,SWAP};
+
 signals:
     void taskDisabled(QString);
     void taskEnabled(QString);
 
     //for syncronize table
     //startuptable <-> processshowtable
-    void tableInserted(int);
-    void tableDeleted(int);
-    void tableReplaced(int);
-    void tableEnabled(QString);
-    void tableDisabled(QString);
+//    void tableInserted(int);
+//    void tableDeleted(int);
+//    void tableReplaced(int);
+//    void tableEnabled(QString);
+//    void tableDisabled(QString);
+    void tableMessenger(QString message, TABLE func);
 
 public slots:
     //from systemtray or settingdialog
