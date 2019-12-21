@@ -24,7 +24,6 @@
 /**
  * @class The ProfileXmlBuilder class
  * @brief QList<QStringList> short description
- * @param data
  * @details
  * data structure
  * Left Listnum:

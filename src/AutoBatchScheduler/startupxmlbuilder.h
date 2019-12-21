@@ -6,7 +6,6 @@
 /**
  * @class StartupSettings_xml
  * @brief QList<QStringList> short description
- * @param data
  * @details this function sets text and checkbox.
  * data structure
  * Left Listnum:
