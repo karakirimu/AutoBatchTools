@@ -44,11 +44,8 @@ StartupTable::~StartupTable()
 void StartupTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
 {
     taskc = task;
-//    connect(taskc, &TaskSchedulerConnector::xmlStateChanged, this, &StartupTable::updateItemEnabled);
     connect(taskc, &TaskSchedulerConnector::taskEnabled, this, &StartupTable::updateItemEnabled);
     connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &StartupTable::updateItemEnabled);
-//    connect(this, &StartupTable::actionDeleted, task, &TaskSchedulerConnector::actionDeleted);
-//    connect(this, &StartupTable::actionAdded, task, &TaskSchedulerConnector::actionAdded);
 }
 
 void StartupTable::setPopupActionTop()
@@ -198,11 +195,11 @@ void StartupTable::setTableItem(int row)
         this->setItem(row,1,new QTableWidgetItem(list->at(1).at(1)));
 
         //set icon
-        QString icon;
+        QIcon icon;
         if(VariantConverter::stringToBool(list->at(StartupXmlBuilder::VALID).at(1))){
-            icon = ":/default_icons/enable.png";
+            icon = getIcon(ACTION::ENABLE);
         }else{
-            icon = ":/default_icons/remove.png";
+            icon = getIcon(ACTION::DISABLE);
         }
 
         this->setItem(row,2,new QTableWidgetItem(QIcon(icon),list->at(2).at(1)));
@@ -368,18 +365,20 @@ void StartupTable::enableAction(){
     QList<QStringList> *list = new QList<QStringList>();
     int row = this->currentRow();
 
-    if(builder->readItem(row, list)){
-        if(!VariantConverter::stringToBool(list->at(StartupXmlBuilder::VALID).at(1))){
-            QFileInfo info(list->at(StartupXmlBuilder::PROF).at(1));
-            if(info.exists()){
+    if(!builder->readItem(row, list)) return;
 
-                //change validation
-                emit taskc->tableMessenger(list->at(StartupXmlBuilder::UNIQUE).at(1),\
-                                           TaskSchedulerConnector::TABLE::ENABLE);
+    if(!VariantConverter::stringToBool(list->at(StartupXmlBuilder::VALID).at(1))){
+        QFileInfo info(list->at(StartupXmlBuilder::PROF).at(1));
 
-                replaceItem(row);
-            }
+        if(info.exists()){
+
+            //change validation
+            emit taskc->tableMessenger(list->at(StartupXmlBuilder::UNIQUE).at(1),\
+                                       TaskSchedulerConnector::TABLE::ENABLE);
+
+            replaceItem(row);
         }
+
     }
 }
 
