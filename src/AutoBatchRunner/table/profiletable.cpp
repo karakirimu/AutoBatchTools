@@ -7,9 +7,6 @@ ProfileTable::ProfileTable(QWidget *)
 
     //popupAction
     setPopupActionTop();
-    setPopupActionDefault(getIcon(ACTION::COPY), \
-                          getIcon(ACTION::UP), \
-                          getIcon(ACTION::DOWN));
 
     //init table size
     setColumnCount(3);
@@ -65,11 +62,22 @@ void ProfileTable::setPopupActionTop()
     m_edit = addTableAction(ACTION::EDIT, Qt::CTRL + Qt::Key_E);
     contextMenu->addSeparator();
 
+    m_copy = addTableAction(ACTION::COPY, Qt::CTRL + Qt::Key_C);
+    contextMenu->addSeparator();
+
+    m_up = addTableAction(ACTION::UP, Qt::CTRL + Qt::Key_Up);
+    m_down = addTableAction(ACTION::DOWN, Qt::CTRL + Qt::Key_Down);
+
     //connect signals
     connect(m_new, &QAction::triggered, this, &ProfileTable::newAction);
     connect(m_add, &QAction::triggered, this, &ProfileTable::addAction);
     connect(m_edit, &QAction::triggered, this, &ProfileTable::editAction);
     connect(m_delete, &QAction::triggered, this, &ProfileTable::deleteAction);
+
+    connect(m_copy, &QAction::triggered, this, &ProfileTable::copyAction);
+
+    connect(m_up, &QAction::triggered, this, &ProfileTable::upAction);
+    connect(m_down, &QAction::triggered, this, &ProfileTable::downAction);
 }
 
 bool ProfileTable::eventFilter(QObject *obj, QEvent *event)
