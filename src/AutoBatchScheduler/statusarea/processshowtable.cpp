@@ -336,8 +336,8 @@ void ProcessShowTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
     connect(taskc, &TaskSchedulerConnector::encounteredScheduledTime, this, &ProcessShowTable::encounterdTime);
     connect(taskc, &TaskSchedulerConnector::processEnd, this, &ProcessShowTable::setProcessEnd);
     connect(taskc, &TaskSchedulerConnector::processStopped, this, &ProcessShowTable::setProcessStopped);
-//    connect(taskc, &TaskSchedulerConnector::taskEnabled, this, &ProcessShowTable::enableItem);
-//    connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &ProcessShowTable::disableItem);
+    connect(taskc, &TaskSchedulerConnector::taskEnabled, this, &ProcessShowTable::enableItem);
+    connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &ProcessShowTable::disableItem);
 
 //    connect(taskc, &TaskSchedulerConnector::tableInserted, this, &ProcessShowTable::insertItem);
 //    connect(taskc, &TaskSchedulerConnector::tableDeleted, this, &ProcessShowTable::removeItem);
