@@ -39,7 +39,6 @@ private:
     void setPopupActionBottom();
     bool eventFilter(QObject *obj, QEvent *event);
     int getStartupXmlIndex(QString objectname);
-//    void themeChangeAction(StartupDialog *sd);
 
     QAction *m_add;
     QAction *m_edit;

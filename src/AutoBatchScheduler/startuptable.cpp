@@ -131,7 +131,6 @@ bool StartupTable::eventFilter(QObject *obj, QEvent *event)
            case Qt::Key_R:          if(mdCheck()) reloadAction(); break;
 
            default:
-             //qDebug("Ate key press %d", keyEvent->key());
              break;
          }
         return true;
@@ -161,29 +160,6 @@ int StartupTable::getStartupXmlIndex(QString objectname)
     delete list;
     return itemid;
 }
-
-////QSS_THEME
-//void StartupTable::themeChangeAction(StartupDialog *sd)
-//{
-//    QSettings settings( "./settings.ini", QSettings::IniFormat );
-
-//    //theme settings
-//    settings.beginGroup("scheduler_startup");
-//    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
-//    settings.endGroup();
-
-//    if(stylecolor != "Default"){
-//#ifdef QT_DEBUG
-//        QFile file(QString("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/%1.qss").arg(stylecolor));
-//#else
-//        QFile file(QString(":/themes/%1.qss").arg(stylecolor));
-//#endif
-//        if(file.open( QFile::ReadOnly | QFile::Text )){
-//            QString data(QLatin1String(file.readAll()));
-//            sd->setStyleSheet(data);
-//        }
-//    }
-//}
 
 void StartupTable::setTableItem(int row)
 {
@@ -219,13 +195,11 @@ void StartupTable::replaceItem(int row)
     setTableItem(row);
 
     qDebug() << "StartupTable :: column count end: " << this->rowCount();
-//    this->insertRow(row);
 }
 
 void StartupTable::addAction()
 {
     StartupDialog *sd = new StartupDialog();
-//    themeChangeAction(sd);
     sd->setStyleSheet(this->styleSheet());
     sd->setWindowTitle(tr("Editing - New_file*"));
     if(sd->exec() == QDialog::Accepted){
@@ -250,9 +224,7 @@ void StartupTable::editTableAction(int row, int col)
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
 
-//    QString yesno = "";
     StartupDialog *sd = new StartupDialog();
-//    themeChangeAction(sd);
     sd->setStyleSheet(this->styleSheet());
 
     QList<QStringList> list;
@@ -261,7 +233,6 @@ void StartupTable::editTableAction(int row, int col)
     if(builder->readItem(rows, &list)){
         //set title
         sd->loadSettingList(rows, &list);
-//        yesno = list.at(StartupXmlBuilder::VALID).at(1);
     }
 
     if(sd->exec() == QDialog::Accepted){
