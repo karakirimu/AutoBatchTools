@@ -151,7 +151,7 @@ void Xmlbuilder::swapItem(int beforeitemid,
 }
 
 /**
- * @deprecated It is better not to use.
+ * \ deprecated It is better not to use.
  *
  * @fn Xmlbuilder::copyItem
  * @brief Copy the layer below the itemid attribute and insert it into the next itemid.
@@ -306,8 +306,8 @@ bool Xmlbuilder::deleteItem(int itemid, QString firstlayername, QString attr)
  */
 void Xmlbuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {
-    Q_UNUSED(element);
-    Q_UNUSED(*list);
+    Q_UNUSED(element)
+    Q_UNUSED(*list)
     //set search element
     return;
 }
