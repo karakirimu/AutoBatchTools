@@ -185,16 +185,8 @@ void StartupTable::setTableItem(int row)
 
 void StartupTable::replaceItem(int row)
 {
-    qDebug() << "StartupTable :: column count start: " << this->rowCount();
-    //FIXME: quick fix column
-    for(int i = 0; i < 3; i++){
-        this->takeItem(row, i);
-    }
-    qDebug() << "StartupTable :: column count proc later: " << this->rowCount();
-
+    this->removeRow(row);
     setTableItem(row);
-
-    qDebug() << "StartupTable :: column count end: " << this->rowCount();
 }
 
 void StartupTable::addAction()
