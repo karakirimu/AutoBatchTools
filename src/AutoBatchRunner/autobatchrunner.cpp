@@ -88,39 +88,27 @@ AutoBatchRunner::~AutoBatchRunner()
 
 void AutoBatchRunner::taskStarted(QString objectname, int runfrom)
 {
-    Q_UNUSED(objectname);
-    Q_UNUSED(runfrom);
-//    ui->actionRun->setEnabled(false);
-//    ui->actionPause->setEnabled(true);
-//    ui->actionStop->setEnabled(true);
+    Q_UNUSED(objectname)
+    Q_UNUSED(runfrom)
     setRunButtonState(false, true, true);
 }
 
 void AutoBatchRunner::taskPaused(QString objectname)
 {
-    Q_UNUSED(objectname);
-//    ui->actionRun->setEnabled(true);
-//    ui->actionPause->setEnabled(false);
-//    ui->actionStop->setEnabled(true);
+    Q_UNUSED(objectname)
     setRunButtonState(true, false, true);
 }
 
 void AutoBatchRunner::taskStopped(QString objectname)
 {
-    Q_UNUSED(objectname);
-//    ui->actionRun->setEnabled(true);
-//    ui->actionPause->setEnabled(false);
-//    ui->actionStop->setEnabled(false);
+    Q_UNUSED(objectname)
     setRunButtonState(true, false, false);
 }
 
 void AutoBatchRunner::taskEnd(QString objectname, int runfrom)
 {
-    Q_UNUSED(objectname);
-    Q_UNUSED(runfrom);
-//    ui->actionRun->setEnabled(true);
-//    ui->actionPause->setEnabled(false);
-//    ui->actionStop->setEnabled(false);
+    Q_UNUSED(objectname)
+    Q_UNUSED(runfrom)
     setRunButtonState(true, false, false);
 
     mlTask->removeTask(key);
@@ -136,9 +124,6 @@ void AutoBatchRunner::on_actionOpen_triggered()
 
 void AutoBatchRunner::on_actionRun_triggered()
 {
-//    ui->actionRun->setEnabled(false);
-//    ui->actionPause->setEnabled(false);
-//    ui->actionStop->setEnabled(false);
     setRunButtonState(false, false, false);
 
     if(key == ""){
@@ -163,9 +148,6 @@ void AutoBatchRunner::on_actionRun_triggered()
 
 void AutoBatchRunner::on_actionPause_triggered()
 {
-//    ui->actionRun->setEnabled(false);
-//    ui->actionPause->setEnabled(false);
-//    ui->actionStop->setEnabled(false);
     setRunButtonState(false, false, false);
 
     mlTask->processPause(key);
@@ -173,9 +155,6 @@ void AutoBatchRunner::on_actionPause_triggered()
 
 void AutoBatchRunner::on_actionStop_triggered()
 {
-//    ui->actionRun->setEnabled(false);
-//    ui->actionPause->setEnabled(false);
-//    ui->actionStop->setEnabled(false);
     setRunButtonState(true, false, false);
 
     mlTask->removeTask(key);
