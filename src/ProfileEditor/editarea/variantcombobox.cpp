@@ -19,6 +19,8 @@ void VariantComboBox::reloadComboBoxItem()
     QList<QStringList> item;
     int counter;
 
+    //this->addItem(tr("Select variant ..."));
+
     //stringbuilder update (global)
     counter = sbuilder->count();
     for(int i = 0; i < counter; i++){
@@ -29,7 +31,7 @@ void VariantComboBox::reloadComboBoxItem()
     }
 
     //Processxmlbuilder update (local)
-    if(editop->read(PEMAGIC, &item)){
+    if(editop->read(LOCALVARINDEX, &item)){
         counter = QString(item.at(1).at(1)).toInt();
         for(int i = 0; i < counter; i++){
             this->addItem(item.at(2 + i).at(1));

@@ -25,7 +25,7 @@ private:
     EditOperator *editop;
     StringXmlBuilder *sbuilder;
 //    ProcessXmlBuilder *pbuilder;
-    static const int PEMAGIC = 1;
+    static const int LOCALVARINDEX = 1;
 };
 
 #endif // VARIANTCOMBOBOX_H
