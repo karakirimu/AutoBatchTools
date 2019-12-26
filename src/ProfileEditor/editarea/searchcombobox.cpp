@@ -17,6 +17,9 @@ void SearchComboBox::reloadComboBoxItem()
     this->clear();
     QList<QStringList> item;
     int counter = builder->count();
+
+    this->addItem(tr("Select search condition ..."));
+
     for(int i = 0; i < counter; i++){
         if(builder->readItem(i, &item)){
             this->addItem(builder->fetch(SEARCH_NAME,SEARCH_NONE, &item));
@@ -41,8 +44,8 @@ void SearchComboBox::addAction()
 
 void SearchComboBox::editAction()
 {
-    //if count is zero.
-    if(this->count() == 0) return;
+    //if count is one
+    if(this->count() == 1) return;
 
     FileSearchDialog *fs = new FileSearchDialog();
     fs->setStyleSheet(this->styleSheet());
