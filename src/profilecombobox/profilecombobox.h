@@ -36,6 +36,9 @@ public:
     QString getCurrentFileName();
     QString getCurrentFileName(int index);
     int getIndexFromFileName(QString filepath);
+
+    void setIndex(QString filepath);
+
 public slots:
     void reloadComboBoxItem();
     void addItemAction();
@@ -44,6 +47,7 @@ public slots:
 private:
     ProfileXmlBuilder *builder;
     ProcessXmlBuilder *pbuilder;
+
 };
 
 #endif // PROFILECOMBOBOX_H

@@ -53,7 +53,9 @@ QString ProfileComboBox::getCurrentFileName(int index)
     if(index < 1) return "";
 
     QList<QStringList> item;
-    builder->readItem(index, &item);
+
+    // It needs to deduct this combobox's default text.
+    builder->readItem(index - 1, &item);
 
     return item.at(2).at(1);
 }
@@ -80,6 +82,37 @@ int ProfileComboBox::getIndexFromFileName(QString filepath)
 }
 
 /**
+ * @fn ProfileComboBox::setIndex
+ * @brief Show an appropriate item from the file path.
+ *        If it is not a proper file path, show the default item.
+ *
+ * @param filepath File path to set
+ */
+void ProfileComboBox::setIndex(QString filepath)
+{
+    QList<QStringList> item;
+    QFileInfo info;
+    QFileInfo other(filepath);
+    int counter = builder->count();
+
+    for(int i = 0; i < counter; i++){
+
+        builder->readItem(i, &item);
+        info.setFile(item.at(2).at(1));
+
+        // info file exist && other file exist && same filepath
+        if(info.exists() \
+            && other.exists() \
+            && info.canonicalFilePath() == other.canonicalFilePath()){
+            this->setCurrentIndex(i + 1);
+            break;
+        }
+
+        item.clear();
+    }
+}
+
+/**
  * @fn ProfileComboBox::reloadComboBoxItem
  * @brief Read the xml file and update the combo box item.
  */
@@ -96,14 +129,18 @@ void ProfileComboBox::reloadComboBoxItem()
     for(int i = 0; i < counter; i++){
 
         builder->readItem(i, &item);
-        info.setFile(item.at(2).at(1));
+        info.setFile(item.at(ProfileXmlBuilder::FILE).at(1));
 
         if(info.exists()){
-            QString name = item.at(0).at(1);
+            QString name = item.at(ProfileXmlBuilder::NAME).at(1);
             name = name == "" ? tr("(no name)") : name;
             this->addItem(tr("%1 - %2").arg(name).arg(info.fileName()));
         }else{
             this->addItem(tr("Unknown"));
+// multiple alert
+//            QMessageBox::warning( this, tr("Alert")
+//                        , tr("%1 is not exist.").arg(item.at(ProfileXmlBuilder::FILE).at(1))
+//                        , QMessageBox::Yes );
         }
 
         item.clear();
