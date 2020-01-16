@@ -45,7 +45,7 @@ RESOURCES += \
 
 #include path
 #include(xml/xml.pri)
-include(combobox/combobox.pri)
+#include(combobox/combobox.pri)
 include(table/table.pri)
 #include(timemanager/timemanager.pri)
 #include(systemtray/systemtray.pri)

@@ -92,7 +92,6 @@ HEADERS  += editarea/commandtable.h \
     basedockwidget.h \
     multitaskp.h \
     profileeditor.h \
-    profilexmlbuilder.h \
     runtasksignalbinder.h \
     editarea/pluginscombobox.h \
     graphicsarea/processflowtable.h \
@@ -162,10 +161,9 @@ SOURCES += editarea/commandtable.cpp \
     variantarea/varianttable.cpp \
     aboutpe.cpp \
     basedockwidget.cpp \
-    main.cpp \
+#    main.cpp \
     multitaskp.cpp \
     profileeditor.cpp \
-    profilexmlbuilder.cpp \
     runtasksignalbinder.cpp \
     editarea/pluginscombobox.cpp \
     graphicsarea/processflowtable.cpp \
