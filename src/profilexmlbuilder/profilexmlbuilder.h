@@ -29,9 +29,9 @@
  * Left Listnum:
  * Top  xmlelementname(StringListnum):
  * \    :        0:      1:
- * 0    :name     :text   :
- * 1    :desc     :text   :
- * 2    :file     :text   :
+ * 0    :name     :text   : profile name
+ * 1    :desc     :text   : processxmlbuilder's description
+ * 2    :file     :text   : profile file path
  */
 class PROFILEXMLBUILDERSHARED_EXPORT ProfileXmlBuilder : public Xmlbuilder
 {
@@ -48,6 +48,8 @@ public:
     bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
     void createDocument();
     int count();
+
+    enum {NAME, DESCRIPTON, FILE};
 private:
 
     void setSearchItemData(QString element, QList<QStringList> *list);
