@@ -61,25 +61,26 @@ QString ProfileComboBox::getCurrentFileName(int index)
 }
 
 /**
+ * @deprecated
  * @fn ProfileComboBox::getIndexFromFileName
  * @brief Get combo box position from filepath.
  * @param filepath
  * @return Combo box position or -1.
  */
-int ProfileComboBox::getIndexFromFileName(QString filepath)
-{
-    QList<QStringList> item;
-    int count = builder->count();
-    for(int i = 0; i < count; i++){
-        item.clear();
-        if(builder->readItem(i, &item)
-                && item.at(2).at(1) == filepath){
-            return i;
-        }
-    }
+//int ProfileComboBox::getIndexFromFileName(QString filepath)
+//{
+//    QList<QStringList> item;
+//    int count = builder->count();
+//    for(int i = 0; i < count; i++){
+//        item.clear();
+//        if(builder->readItem(i, &item)
+//                && item.at(2).at(1) == filepath){
+//            return i;
+//        }
+//    }
 
-    return -1;
-}
+//    return -1;
+//}
 
 /**
  * @fn ProfileComboBox::setIndex

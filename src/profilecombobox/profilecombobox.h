@@ -35,7 +35,7 @@ public:
 
     QString getCurrentFileName();
     QString getCurrentFileName(int index);
-    int getIndexFromFileName(QString filepath);
+//    int getIndexFromFileName(QString filepath);
 
     void setIndex(QString filepath);
 
