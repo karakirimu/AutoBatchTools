@@ -280,12 +280,12 @@ void EditorTab::setPluginDataList(QList<QStringList> *list)
     extrafunccombobox->reloadComboBoxItem();
 
     //get plugin name
-    QString file = xgen.fetch(PL_FILEPATH,ATTR_NONE, list);
-    QFileInfo info(file);
+    QString plfile = xgen.fetch(PL_FILEPATH,ATTR_NONE, list);
+    QFileInfo info(plfile);
 
     if(info.exists()){
         //check plugin can use
-        QPluginLoader loader(file);
+        QPluginLoader loader(plfile);
 
         if(loader.load()){
             ExtraPluginInterface *ext = qobject_cast<ExtraPluginInterface *>(loader.instance());
@@ -331,7 +331,7 @@ void EditorTab::setOtherDataList(QList<QStringList> *list)
     }
 
     profilecombobox->reloadComboBoxItem();
-    profilecombobox->setCurrentText(curdata);
+    profilecombobox->setIndex(profile.canonicalFilePath());
 
     autoonly_4->setChecked(VariantConverter::stringToBool( \
                                xgen.fetch(ALL_TYPE,TYPE_ANOTHER,ATTR_ONLY_SCHEDULER, list)));
@@ -604,7 +604,6 @@ void EditorTab::pluginSettingsClicked()
 
 void EditorTab::openSavefile()
 {
-    QLineEdit *outputLineEdit = this->widget(ProcessXmlListGenerator::SEARCH)->findChild<QLineEdit *>("outputLineEdit");
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Search file"),\
                                          QDir::currentPath(), "File (*.*)");
 
