@@ -37,6 +37,13 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
         restoreGeometry( settings.value( "profileeditor/geometry" ).toByteArray() );
         restoreState( settings.value( "profileeditor/windowState" ).toByteArray() );
 
+        // load window check settings
+        ui->actionToolBar->setChecked(settings.value("profileeditor/toolbar", true).toBool());
+        ui->actionProcess->setChecked(settings.value("profileeditor/process", true).toBool());
+        ui->actionVariant->setChecked(settings.value("profileeditor/variant", true).toBool());
+        ui->actionRunSetting->setChecked(settings.value("profileeditor/runset", true).toBool());
+        ui->actionRunConsole->setChecked(settings.value("profileeditor/console", true).toBool());
+
         // load action autohide settings
         bool autohide = settings.value("profileeditor/autohide", true).toBool();
         ui->actionAutohide->setChecked(autohide);
@@ -186,6 +193,13 @@ ProfileEditor::~ProfileEditor()
     QSettings settings( "./settings.ini", QSettings::IniFormat );
     settings.setValue( "profileeditor/geometry", saveGeometry() );
     settings.setValue( "profileeditor/windowState", saveState() );
+
+    //window menu
+    settings.setValue("profileeditor/toolbar", ui->actionToolBar->isChecked());
+    settings.setValue("profileeditor/process", ui->actionProcess->isChecked());
+    settings.setValue("profileeditor/variant", ui->actionVariant->isChecked());
+    settings.setValue("profileeditor/runset", ui->actionRunSetting->isChecked());
+    settings.setValue("profileeditor/console", ui->actionRunConsole->isChecked());
     settings.setValue( "profileeditor/autohide", ui->actionAutohide->isChecked());
 
     delete ui;
