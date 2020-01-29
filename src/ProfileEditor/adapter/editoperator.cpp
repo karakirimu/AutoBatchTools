@@ -177,6 +177,13 @@ void EditOperator::radioSearchOutputAction(int id, int newvalue)
     emit editUpdate(id);
 }
 
+void EditOperator::radioSearchFileOutputTypeAction(int id, int newvalue)
+{
+    EditSearchFileOutputType *com = new EditSearchFileOutputType(id, newvalue, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
 
 
 

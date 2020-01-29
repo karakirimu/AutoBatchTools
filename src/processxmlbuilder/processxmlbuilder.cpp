@@ -160,6 +160,7 @@ void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *l
             || element == E_CMDARGCOUNT
             || element == L_VAR_COUNT
             || element == S_SEPARATOR
+            || element == S_OUTPUTFILETYPE
             || element == PR_FILEPATH
             || element == PL_CMDARGCOUNT
             || element == PL_FILEPATH

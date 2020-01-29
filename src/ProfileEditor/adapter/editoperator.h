@@ -42,6 +42,7 @@
 
 //radiobutton operation
 #include <editsearchoutput.h>
+#include <editsearchfileoutputtype.h>
 
 //table operation
 #include <swapexectable.h>
@@ -153,6 +154,7 @@ public slots:
 
     //radiobutton operation
     void radioSearchOutputAction(int id, int newvalue);
+    void radioSearchFileOutputTypeAction(int id, int newvalue);
 
     //table operation
     void tableSwapExecAction(int id, int beforeid, int afterid);

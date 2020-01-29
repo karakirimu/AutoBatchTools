@@ -65,6 +65,7 @@ static const QString S_NAME =                     "sname";
 static const QString S_SEPARATOR =                "sep";
 static const QString S_VARIANT =                  "var";
 static const QString S_OUTPUTFILE =               "output";
+static const QString S_OUTPUTFILETYPE =           "fitype";
 
 // profile
 

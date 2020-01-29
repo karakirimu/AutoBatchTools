@@ -41,6 +41,7 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
     generateId.insert(S_SEPARATOR, 201);
     generateId.insert(S_VARIANT, 202);
     generateId.insert(S_OUTPUTFILE, 203);
+    generateId.insert(S_OUTPUTFILETYPE, 204);
 
     // profile(other)
 //    const QString PR_NAME =                    "prname";
@@ -186,6 +187,7 @@ void ProcessXmlListGenerator::createNewList(QList<QStringList> *newlist)
     newlist->append((QStringList() << S_SEPARATOR << ""));
     newlist->append((QStringList() << S_VARIANT << ""));
     newlist->append((QStringList() << S_OUTPUTFILE << "" << ATTR_RADIOBUTTONPOS << "0"));
+    newlist->append((QStringList() << S_OUTPUTFILETYPE << "0"));
     //other
     newlist->append((QStringList() << ALL_TYPE << TYPE_ANOTHER << ATTR_ONLY_SCHEDULER << "no"));
 //    newlist->append((QStringList() << PR_NAME << ""));

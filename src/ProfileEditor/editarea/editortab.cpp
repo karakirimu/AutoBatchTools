@@ -71,6 +71,8 @@ void EditorTab::setEditOperator(EditOperator *op)
     autoonly_2 = widgetsearch->findChild<QCheckBox *>("autoOnlyCheckBox_2");
     vari = widgetsearch->findChild<QRadioButton *>("variRadioButton");
     file = widgetsearch->findChild<QRadioButton *>("fileRadioButton");
+    fileOverWrite = widgetsearch->findChild<QRadioButton *>("fileOverWriteRadioButton");
+    fileAppend = widgetsearch->findChild<QRadioButton *>("fileAppendRadioButton");
 
     //set editop
     localVariantComboBox->setEditOperator(op);
@@ -106,6 +108,8 @@ void EditorTab::setEditOperator(EditOperator *op)
     connect(autoonly_2, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
     connect(vari, &QRadioButton::clicked, this, &EditorTab::editRadioAction);
     connect(file, &QRadioButton::clicked, this, &EditorTab::editRadioAction);
+    connect(fileOverWrite, &QRadioButton::clicked, this, &EditorTab::editRadioAction);
+    connect(fileAppend, &QRadioButton::clicked, this, &EditorTab::editRadioAction);
 
     connect(extrafunccombobox, QOverload<const QString &>::of(&PluginsComboBox::activated) \
             , this, &EditorTab::editTextAction);
@@ -262,6 +266,12 @@ void EditorTab::setSearchDataList(QList<QStringList> *list)
         vari->setChecked(true);
     }else{
         file->setChecked(true);
+    }
+
+    if(xgen.fetch(S_OUTPUTFILETYPE,ATTR_NONE, list) == "0"){
+        fileOverWrite->setChecked(true);
+    }else{
+        fileAppend->setChecked(true);
     }
 
     autoonly_2->setChecked(VariantConverter::stringToBool( \
@@ -491,6 +501,12 @@ void EditorTab::editRadioAction(bool)
 
     }else if(objname == "fileRadioButton"){
         editop->radioSearchOutputAction(currentid, 1);
+
+    }else if(objname == "fileOverWriteRadioButton"){
+        editop->radioSearchFileOutputTypeAction(currentid, 0);
+
+    }else if(objname == "fileAppendRadioButton"){
+        editop->radioSearchFileOutputTypeAction(currentid, 1);
 
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 karakirimu
+ * Copyright 2016-2020 karakirimu
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -465,18 +465,20 @@ bool Executor::loadSearch(QList<QStringList> *list)
     //combine search result
     QString combineresult;
     QString sepdata = xgen.fetch(S_SEPARATOR, ATTR_NONE, list);
+
+    //convert sepdata
+    sepdata = sepdata.contains("\\r\\n") ? sepdata.replace("\\r\\n","\r\n") : sepdata;
+    sepdata = sepdata.contains("\\n")    ? sepdata.replace("\\n","\n")      : sepdata;
+    sepdata = sepdata.contains("\\r")    ? sepdata.replace("\\r","\r")      : sepdata;
+    sepdata = sepdata.contains("\\t")    ? sepdata.replace("\\t","\t")      : sepdata;
+
     int cre = result.count();
     for(int i = 0; i < cre; i++){
         emit processMessage(tr("%1").arg(result.at(i)), SEARCH);
 
         combineresult.append(result.at(i));
         if(i < (cre-1)){
-            if(sepdata.contains("\\r\\n")){    combineresult += "\r\n";
-            }else if(sepdata.contains("\\n")){ combineresult += '\n';
-            }else if(sepdata.contains("\\r")){ combineresult += '\r';
-            }else if(sepdata.contains("\\t")){ combineresult += '\t';
-            }else{                             combineresult += sepdata;
-            }
+            combineresult += sepdata;
         }
     }
 
@@ -498,21 +500,45 @@ bool Executor::loadSearch(QList<QStringList> *list)
         //TODO: create data to File
         QString outputfile = xgen.fetch(S_OUTPUTFILE, ATTR_NONE, list);
 
-        if(outputfile == ""){
+        if(outputfile != ""){
+            // 0: overwrite, 1: append
+            int writetype = xgen.fetch(S_OUTPUTFILETYPE, ATTR_NONE, list).toInt();
+            bool opened = false;
+
             QFile file(outputfile);
 
             //TODO: add overwrite permission (2017/09/02 updated)
-            if(file.exists() && setting->searchoutputoverwrite){
-                //clear file string
-                file.resize(0);
+//            if(file.exists() && setting->searchoutputoverwrite){
+//                //clear file string
+//                file.resize(0);
+//            }
+
+            if(file.exists()){
+                switch (writetype) {
+                case 0:
+                    //clear file string
+                    file.resize(0);
+                    opened = file.open(QIODevice::ReadWrite | QFile::Text);
+                    break;
+                case 1:
+                    opened = file.open(QIODevice::Append | QFile::Text);
+                    combineresult.insert(0, sepdata);
+                    break;
+                default:
+                    break;
+                }
+
+            }else{
+                opened = file.open(QIODevice::ReadWrite | QFile::Text);
             }
 
             //create new file
-            if(file.open(QIODevice::ReadWrite | QFile::Text)){
+            if(opened){
                 QTextStream stream(&file);
                 stream << combineresult;
                 file.close();
             }
+
         }
     }
 

@@ -61,13 +61,14 @@
  * 2    :sep      :text   :
  * 3    :var      :text   :
  * 4    :output   :text   :radio  :data   :
+ * 5    :fitype   :data   :
  *
  * data structure <order> type=script
  * \    :        0:      1:      2:      3:
  * 0    :type     :script :only   :data   :
  * 1    :name     :text   :
  * 2    :var      :text   :
- * 3    :cmdc     :counts : //unnessesary?
+ * 3    :cmdc     :counts :
  * 4    :cmd      :text   :id     :data   :
  * -                    *
  * -                    *

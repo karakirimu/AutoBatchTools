@@ -97,6 +97,8 @@ private:
     QCheckBox *autoonly_2;
     QRadioButton *vari;
     QRadioButton *file;
+    QRadioButton *fileOverWrite;
+    QRadioButton *fileAppend;
 
     //plugins
     QWidget *widgetextra;
