@@ -82,9 +82,9 @@ void SettingDialog::setSettings()
     settings.endGroup();
 
     settings.beginGroup("pe_testexec");
-    settings.setValue("DETACH", ui->detachCheckBox->isChecked());
+//    settings.setValue("DETACH", ui->detachCheckBox->isChecked());
     settings.setValue("FAKERES", ui->fakeresidentCheckBox->isChecked());
-    settings.setValue("FSUPDATE", ui->fsupdateCheckBox->isChecked());
+//    settings.setValue("FSUPDATE", ui->fsupdateCheckBox->isChecked());
     settings.endGroup();
 
 //    settings.beginGroup("scheduler_startup");
@@ -109,9 +109,9 @@ void SettingDialog::loadSettings()
     settings.endGroup();
 
     settings.beginGroup("pe_testexec");
-    ui->detachCheckBox->setChecked(settings.value("DETACH", false).toBool());
+//    ui->detachCheckBox->setChecked(settings.value("DETACH", false).toBool());
     ui->fakeresidentCheckBox->setChecked(settings.value("FAKERES", false).toBool());
-    ui->fsupdateCheckBox->setChecked(settings.value("FSUPDATE", true).toBool());
+//    ui->fsupdateCheckBox->setChecked(settings.value("FSUPDATE", true).toBool());
     settings.endGroup();
 
 //    settings.beginGroup("scheduler_startup");

@@ -41,8 +41,8 @@ public:
     ~Executor();
 
     //run part
-    bool getDetached() const;
-    void setDetached(bool detach); /*preset func*/
+//    bool getDetached() const;
+//    void setDetached(bool detach); /*preset func*/
 
     int getStartnum() const;
     void setStartnum(int start); /*preset func*/
@@ -74,8 +74,8 @@ public:
     int getLaunchedfrom() const;
     void setLaunchedfrom(int only = DEFAULT); /*preset func*/
 
-    bool getSearchfileoverwrite() const;
-    void setSearchfileoverwrite(bool overwrite); /*preset func*/
+//    bool getSearchfileoverwrite() const;
+//    void setSearchfileoverwrite(bool overwrite); /*preset func*/
 
 //    int getOthernestmax() const;
 //    void setOthernestmax(int nest = 10);
@@ -171,9 +171,9 @@ private:
 
     //execution setting task variant (normal)
     typedef struct{
-        bool detached = false;
+//        bool detached = false;
         int launched = DEFAULT;
-        bool searchoutputoverwrite = true;
+//        bool searchoutputoverwrite = true;
         int argumentscount;
         int othernestmax = 1;
         QString initFilename = "";

@@ -46,134 +46,135 @@
 // all
 
 //! XML tag "type"
-static const QString ALL_TYPE =                   "type";
+#define ALL_TYPE                     "type"
 
 // info
-static const QString I_NAME =                     "iname";
-static const QString I_VERSION =                  "ver";
-static const QString I_AUTHOR =                   "author";
-static const QString I_DESCRIPTION =              "desc";
-static const QString I_FILEINPUT =                "finput";
-static const QString I_FILEINPUT_SEARCHCHECK =    "sinput";
-static const QString I_FILESEARCH_NAME =          "fsname";
-static const QString I_RECURSIVE_LOOP =           "rloop";
-static const QString I_RECURSIVE_LOOPARGCOUNT =   "rlarg";
-static const QString I_RECURSIVE_LOOPCOUNT =      "reloop";
+#define I_NAME                       "iname"
+#define I_VERSION                    "ver"
+#define I_AUTHOR                     "author"
+#define I_DESCRIPTION                "desc"
+#define I_FILEINPUT                  "finput"
+#define I_FILEINPUT_SEARCHCHECK      "sinput"
+#define I_FILESEARCH_NAME            "fsname"
+#define I_RECURSIVE_LOOP             "rloop"
+#define I_RECURSIVE_LOOPARGCOUNT     "rlarg"
+#define I_RECURSIVE_LOOPCOUNT        "reloop"
 
 // search
-static const QString S_NAME =                     "sname";
-static const QString S_SEPARATOR =                "sep";
-static const QString S_VARIANT =                  "var";
-static const QString S_OUTPUTFILE =               "output";
-static const QString S_OUTPUTFILETYPE =           "fitype";
+#define S_NAME                       "sname"
+#define S_SEPARATOR                  "sep"
+#define S_VARIANT                    "var"
+#define S_OUTPUTFILE                 "output"
+#define S_OUTPUTFILETYPE             "fitype"
 
 // profile
 
 // XML tag "prname"
-//static const QString PR_NAME =                    "prname";
+//#define PR_NAME                      "prname"
 //! XML tag "prfile"
-static const QString PR_FILEPATH =                "prfile";
+#define PR_FILEPATH                  "prfile"
 
 // exec(normal)
-static const QString E_TIMEOUT =                  "timeout";
-static const QString E_CMD =                      "exc";
-static const QString E_CMDARGCOUNT =              "cmdc";
+#define E_TIMEOUT                    "timeout"
+#define E_RUNDETACH                  "detach"
+#define E_CMD                        "exc"
+#define E_CMDARGCOUNT                "cmdc"
 
 // plugin(extrafunc)
-static const QString PL_NAME =                    "plname";
-static const QString PL_FILEPATH =                "plfile";
-static const QString PL_CMD =                     "plc";
-static const QString PL_CMDARGCOUNT =             "pcmdc";
+#define PL_NAME                      "plname"
+#define PL_FILEPATH                  "plfile"
+#define PL_CMD                       "plc"
+#define PL_CMDARGCOUNT               "pcmdc"
 
 // temp
-static const QString TE_STACKEDWIDGET_POSITION =  "istack";
+#define TE_STACKEDWIDGET_POSITION    "istack"
 
 // local
-static const QString L_VARIANT =                  "lvar";
-static const QString L_VAR_COUNT =                "localc";
+#define L_VARIANT                    "lvar"
+#define L_VAR_COUNT                  "localc"
 
 // value define (index 1)
-static const QString TYPE_INFO =                  "info";
-static const QString TYPE_EXEC =                  "normal";
-static const QString TYPE_SEARCH =                "search";
-static const QString TYPE_SCRIPT =                "script";
-static const QString TYPE_ANOTHER =               "other";
+#define TYPE_INFO                    "info"
+#define TYPE_EXEC                    "normal"
+#define TYPE_SEARCH                  "search"
+#define TYPE_SCRIPT                  "script"
+#define TYPE_ANOTHER                 "other"
 
-static const QString TYPE_ALLINCLUDE =            "temp";
-static const QString TYPE_LOCAL =                 "local";
+#define TYPE_ALLINCLUDE              "temp"
+#define TYPE_LOCAL                   "local"
 
 // attribute define (index 2)
 // all
-static const QString ATTR_ONLY_SCHEDULER =        "only";
-static const QString ATTR_POSNUM =                "id";
-static const QString ATTR_RADIOBUTTONPOS =        "radio";
-static const QString ATTR_MAXCOUNT =              "max";
-static const QString ATTR_NONE =                  "";
+#define ATTR_ONLY_SCHEDULER          "only"
+#define ATTR_POSNUM                  "id"
+#define ATTR_RADIOBUTTONPOS          "radio"
+#define ATTR_MAXCOUNT                "max"
+#define ATTR_NONE                    ""
 
 // normal
-static const QString ATTR_TIMEOUTMS =             "dur";
+#define ATTR_TIMEOUTMS               "dur"
 
 // local
-static const QString ATTR_LOCALVALUE =            "lval";
+#define ATTR_LOCALVALUE              "lval"
 
 // undo redo operation command
-static const QString UNDOREDO_ADD =               "ADD";
-static const QString UNDOREDO_DELETE =            "DEL";
-static const QString UNDOREDO_INSERT =            "INS";
-static const QString UNDOREDO_SWAP =              "SWA";
-static const QString UNDOREDO_MOVE =              "MOV";
+#define UNDOREDO_ADD                 "ADD"
+#define UNDOREDO_DELETE              "DEL"
+#define UNDOREDO_INSERT              "INS"
+#define UNDOREDO_SWAP                "SWA"
+#define UNDOREDO_MOVE                "MOV"
 
-static const QString UNDOREDO_E_TABLEADD =        "ET_ADD";
-static const QString UNDOREDO_E_TABLEEDIT =       "ET_EDIT";
-static const QString UNDOREDO_E_TABLEDEL =        "ET_DEL";
-static const QString UNDOREDO_E_TABLEINS =        "ET_INS";
-static const QString UNDOREDO_E_TABLESWAP =       "ET_SWAP";
-static const QString UNDOREDO_E_TABLEMOVE =       "ET_MOVE";
+#define UNDOREDO_E_TABLEADD          "ET_ADD"
+#define UNDOREDO_E_TABLEEDIT         "ET_EDIT"
+#define UNDOREDO_E_TABLEDEL          "ET_DEL"
+#define UNDOREDO_E_TABLEINS          "ET_INS"
+#define UNDOREDO_E_TABLESWAP         "ET_SWAP"
+#define UNDOREDO_E_TABLEMOVE         "ET_MOVE"
 
-static const QString UNDOREDO_PL_TABLEADD =       "PLT_ADD";
-static const QString UNDOREDO_PL_TABLEEDIT =      "PLT_EDIT";
-static const QString UNDOREDO_PL_TABLEDEL =       "PLT_DEL";
-static const QString UNDOREDO_PL_TABLEINS =       "PLT_INS";
-static const QString UNDOREDO_PL_TABLESWAP =      "PLT_SWAP";
-static const QString UNDOREDO_PL_TABLEMOVE =      "PLT_MOVE";
+#define UNDOREDO_PL_TABLEADD         "PLT_ADD"
+#define UNDOREDO_PL_TABLEEDIT        "PLT_EDIT"
+#define UNDOREDO_PL_TABLEDEL         "PLT_DEL"
+#define UNDOREDO_PL_TABLEINS         "PLT_INS"
+#define UNDOREDO_PL_TABLESWAP        "PLT_SWAP"
+#define UNDOREDO_PL_TABLEMOVE        "PLT_MOVE"
 
-static const QString UNDOREDO_LV_ADD =            "LV_ADD";
-static const QString UNDOREDO_LV_EDIT =           "LV_EDIT";
-static const QString UNDOREDO_LV_DEL =            "LV_DEL";
-static const QString UNDOREDO_LV_INS =            "LV_INS";
-static const QString UNDOREDO_LV_SWAP =           "LV_SWAP";
+#define UNDOREDO_LV_ADD              "LV_ADD"
+#define UNDOREDO_LV_EDIT             "LV_EDIT"
+#define UNDOREDO_LV_DEL              "LV_DEL"
+#define UNDOREDO_LV_INS              "LV_INS"
+#define UNDOREDO_LV_SWAP             "LV_SWAP"
 
-static const QString UNDOREDO_GV_ADD =            "GV_ADD";
-static const QString UNDOREDO_GV_EDIT =           "GV_EDIT";
-static const QString UNDOREDO_GV_DEL =            "GV_DEL";
-static const QString UNDOREDO_GV_INS =            "GV_INS";
-static const QString UNDOREDO_GV_SWAP =           "GV_SWAP";
+#define UNDOREDO_GV_ADD              "GV_ADD"
+#define UNDOREDO_GV_EDIT             "GV_EDIT"
+#define UNDOREDO_GV_DEL              "GV_DEL"
+#define UNDOREDO_GV_INS              "GV_INS"
+#define UNDOREDO_GV_SWAP             "GV_SWAP"
 
 //undo redo table operation id value. It is no means.
 //?
-static const QString E_ADD_TABLE    = "{(I*9g-v";
-static const QString E_INSERT_TABLE = "M$7>O/Qb";
-static const QString E_EDIT_TABLE   = "d/%o'q9l";
-static const QString E_DELETE_TABLE = "ht9!YQ(:";
-static const QString E_SWAP_TABLE   = ",5Dm&y/R";
+#define E_ADD_TABLE      "{(I*9g-v"
+#define E_INSERT_TABLE   "M$7>O/Qb"
+#define E_EDIT_TABLE     "d/%o'q9l"
+#define E_DELETE_TABLE   "ht9!YQ(:"
+#define E_SWAP_TABLE     ",5Dm&y/R"
 
-static const QString PL_ADD_TABLE    = ")r]&mwqn";
-static const QString PL_INSERT_TABLE = "8NGM:Yv3";
-static const QString PL_EDIT_TABLE   = "UOq:>~`c";
-static const QString PL_DELETE_TABLE = "/=gx79d,";
-static const QString PL_SWAP_TABLE   = "[FX@!%Nb";
+#define PL_ADD_TABLE      ")r]&mwqn"
+#define PL_INSERT_TABLE   "8NGM:Yv3"
+#define PL_EDIT_TABLE     "UOq:>~`c"
+#define PL_DELETE_TABLE   "/=gx79d,"
+#define PL_SWAP_TABLE     "[FX@!%Nb"
 
-static const QString L_ADD_TABLE    = "gh%j~w+x";
-static const QString L_INSERT_TABLE = "EjE;Z)PX";
-static const QString L_EDIT_TABLE   = "VngH68T:";
-static const QString L_DELETE_TABLE = "[u}iS63'";
-static const QString L_SWAP_TABLE   = "1yJ2VDbs";
+#define L_ADD_TABLE      "gh%j~w+x"
+#define L_INSERT_TABLE   "EjEZ)PX"
+#define L_EDIT_TABLE     "VngH68T:"
+#define L_DELETE_TABLE   "[u}iS63'"
+#define L_SWAP_TABLE     "1yJ2VDbs"
 
 //undo redo only check operation id value. It is no means.
-static const QString E_ONLY_SCHEDULER  = "krMQk[Me";
-static const QString S_ONLY_SCHEDULER  = "YW)5K?g9";
-static const QString PL_ONLY_SCHEDULER = "d:&Dp<HB";
-static const QString PR_ONLY_SCHEDULER = "y0Dl)ZXR";
+#define E_ONLY_SCHEDULER    "krMQk[Me"
+#define S_ONLY_SCHEDULER    "YW)5K?g9"
+#define PL_ONLY_SCHEDULER   "d:&Dp<HB"
+#define PR_ONLY_SCHEDULER   "y0Dl)ZXR"
 
 class PROCESSXMLLISTGENERATORSHARED_EXPORT ProcessXmlListGenerator : public QObject
 {

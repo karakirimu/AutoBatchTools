@@ -54,6 +54,7 @@ HEADERS  += editarea/commandtable.h \
     undocommand/swapcommand.h \
     undocommand_ui/checkeditallowinput.h \
     undocommand_ui/checkeditloopinf.h \
+    undocommand_ui/checkeditrundetach.h \
     undocommand_ui/checkeditsearchinput.h \
     undocommand_ui/checkedittimeout.h \
     undocommand_ui/checkonlyschedulernormal.h \
@@ -74,6 +75,7 @@ HEADERS  += editarea/commandtable.h \
     undocommand_ui/editlooprecursive.h \
     undocommand_ui/editplugintable.h \
     undocommand_ui/editscomboboxcommand.h \
+    undocommand_ui/editsearchfileoutputtype.h \
     undocommand_ui/editsearchoutput.h \
 #    undocommand_ui/editsearchtextsep.h \
     undocommand_ui/edittabcommand.h \
@@ -125,6 +127,7 @@ SOURCES += editarea/commandtable.cpp \
     undocommand/swapcommand.cpp \
     undocommand_ui/checkeditallowinput.cpp \
     undocommand_ui/checkeditloopinf.cpp \
+    undocommand_ui/checkeditrundetach.cpp \
     undocommand_ui/checkeditsearchinput.cpp \
     undocommand_ui/checkedittimeout.cpp \
     undocommand_ui/checkonlyschedulernormal.cpp \
@@ -145,6 +148,7 @@ SOURCES += editarea/commandtable.cpp \
     undocommand_ui/editlooprecursive.cpp \
     undocommand_ui/editplugintable.cpp \
     undocommand_ui/editscomboboxcommand.cpp \
+    undocommand_ui/editsearchfileoutputtype.cpp \
     undocommand_ui/editsearchoutput.cpp \
 #    undocommand_ui/editsearchtextsep.cpp \
     undocommand_ui/edittabcommand.cpp \

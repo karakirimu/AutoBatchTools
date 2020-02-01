@@ -55,8 +55,9 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
 //    const QString E_CMDARGCOUNT =              "cmdc";
 
     generateId.insert(E_TIMEOUT, 400);
-    generateId.insert(E_CMD, 401);
-    generateId.insert(E_CMDARGCOUNT, 402);
+    generateId.insert(E_RUNDETACH, 401);
+    generateId.insert(E_CMD, 402);
+    generateId.insert(E_CMDARGCOUNT, 403);
 
     // plugin(extrafunc)
 //    const QString PL_NAME =                    "plname";
@@ -195,6 +196,7 @@ void ProcessXmlListGenerator::createNewList(QList<QStringList> *newlist)
     //normal
     newlist->append((QStringList() << ALL_TYPE << TYPE_EXEC << ATTR_ONLY_SCHEDULER << "no"));
     newlist->append((QStringList() << E_TIMEOUT << "no" << ATTR_TIMEOUTMS << "30000"));
+    newlist->append((QStringList() << E_RUNDETACH << "no"));
     newlist->append((QStringList() << E_CMDARGCOUNT << "0"));
     //extrafunc
     newlist->append((QStringList() << ALL_TYPE << TYPE_SCRIPT << ATTR_ONLY_SCHEDULER << "no"));

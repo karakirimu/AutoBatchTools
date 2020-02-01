@@ -10,7 +10,6 @@
  * @brief QList<QStringList> short description
  * @param data
  * @details
- *
  * Left Listnum:
  * Top  xmlelementname(StringListnum):
  *
@@ -47,12 +46,13 @@
  * \    :        0:      1:      2:      3:
  * 0    :type     :normal :only   :data   :
  * 1    :nowait   :data   :
- * 2    :cmdc     :counts : //unnessesary?
- * 3    :cmd      :text   :id     :data   :
- * 4                    *
+ * 2    :detach   :data   :
+ * 3    :cmdc     :counts :
+ * 4    :cmd      :text   :id     :data   :
  * 5                    *
  * 6                    *
- * 7         it follows to the end.
+ * 7                    *
+ * 8         it follows to the end.
  *
  * data structure <order> type=search
  * \    :        0:      1:      2:      3:

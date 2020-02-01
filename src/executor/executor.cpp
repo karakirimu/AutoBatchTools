@@ -42,15 +42,15 @@ Executor::~Executor()
 //    delete execlist;
 }
 
-bool Executor::getDetached() const
-{
-    return setting->detached;
-}
+//bool Executor::getDetached() const
+//{
+//    return setting->detached;
+//}
 
-void Executor::setDetached(bool detach)
-{
-    setting->detached = detach;
-}
+//void Executor::setDetached(bool detach)
+//{
+//    setting->detached = detach;
+//}
 
 int Executor::getStartnum() const
 {
@@ -431,7 +431,7 @@ bool Executor::loadNormal(QList<QStringList> *list)
     emit processMessage(show, NORMAL);
 
     //start commands
-    if(setting->detached){
+    if(VariantConverter::stringToBool(xgen.fetch(E_RUNDETACH,ATTR_NONE, list))){
         work->process->startDetached(app, arguments);
     }else{
         work->process->start(app, arguments);
@@ -905,15 +905,15 @@ bool Executor::processStopHandleChecker()
 //    setting->othernestmax = nest;
 //}
 
-bool Executor::getSearchfileoverwrite() const
-{
-    return setting->searchoutputoverwrite;
-}
+//bool Executor::getSearchfileoverwrite() const
+//{
+//    return setting->searchoutputoverwrite;
+//}
 
-void Executor::setSearchfileoverwrite(bool overwrite)
-{
-    setting->searchoutputoverwrite = overwrite;
-}
+//void Executor::setSearchfileoverwrite(bool overwrite)
+//{
+//    setting->searchoutputoverwrite = overwrite;
+//}
 
 int Executor::getLaunchedfrom() const
 {

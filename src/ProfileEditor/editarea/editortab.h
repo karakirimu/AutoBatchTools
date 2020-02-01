@@ -81,6 +81,7 @@ private:
     QWidget *widgetnormal;
     QCheckBox *timeoutCheckBox;
     QLineEdit *timeoutLineEdit;
+    QCheckBox *runDetachCheckBox;
     QCheckBox *autoonly;
     CommandTable *ctablenormal;
 

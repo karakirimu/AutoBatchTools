@@ -22,6 +22,7 @@
 #include <checkeditloopinf.h>
 #include <checkeditsearchinput.h>
 #include <checkedittimeout.h>
+#include <checkeditrundetach.h>
 #include <checkonlyschedulernormal.h>
 #include <checkonlyschedulerother.h>
 #include <checkonlyschedulerplugin.h>
@@ -135,6 +136,7 @@ public slots:
     void checkSearchInputAction(int id, bool newcheck);
 
     void checkTimeoutAction(int id, bool newcheck);
+    void checkRunDetachAction(int id, bool newcheck);
     void checkOnlyNormalAction(int id, bool newcheck);
     void checkOnlySearchAction(int id, bool newcheck);
     void checkOnlyPluginAction(int id, bool newcheck);

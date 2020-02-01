@@ -361,6 +361,14 @@ void EditOperator::checkTimeoutAction(int id, bool newcheck)
     emit editUpdate(id);
 }
 
+void EditOperator::checkRunDetachAction(int id, bool newcheck)
+{
+    CheckEditRunDetach *com = new CheckEditRunDetach(id, newcheck, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
 void EditOperator::checkOnlyNormalAction(int id, bool newcheck)
 {
     CheckOnlySchedulerNormal *com = new CheckOnlySchedulerNormal(id, newcheck, cache);
@@ -575,7 +583,7 @@ void EditOperator::exportAction(QString filepath)
     ProcessXmlBuilder *mexport = new ProcessXmlBuilder();
     mexport->setLoadBlankPath(filepath);
 
-    for(int i = 0; i < count; i++){
+    for(i = 0; i < count; i++){
         mexport->addItem(&(tempcache->at(i)));
     }
 

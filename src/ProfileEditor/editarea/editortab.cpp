@@ -61,6 +61,7 @@ void EditorTab::setEditOperator(EditOperator *op)
     widgetnormal = this->widget(ProcessXmlListGenerator::NORMAL);
     timeoutCheckBox = widgetnormal->findChild<QCheckBox *>("timeoutCheckBox");
     timeoutLineEdit = widgetnormal->findChild<QLineEdit *>("timeoutLineEdit");
+    runDetachCheckBox = widgetnormal->findChild<QCheckBox *>("runDetachCheckBox");
     autoonly = widgetnormal->findChild<QCheckBox *>("autoOnlyCheckBox");
     ctablenormal = widgetnormal->findChild<CommandTable *>("cmdTableWidget");
 
@@ -91,6 +92,7 @@ void EditorTab::setEditOperator(EditOperator *op)
 
     //index edit (table is ignored)
     connect(timeoutCheckBox, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
+    connect(runDetachCheckBox, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
 
     connect(timeoutLineEdit, &QLineEdit::textEdited, this, &EditorTab::editTextAction);
     timeoutLineEdit->setValidator(new QIntValidator(0, INT_FAST32_MAX, this));
@@ -231,6 +233,8 @@ void EditorTab::setNormalDataList(QList<QStringList> *list)
 {
     int counter = xgen.fetch(E_CMDARGCOUNT,ATTR_NONE, list).toInt();
     this->blockSignals(true);
+
+    runDetachCheckBox->setChecked(VariantConverter::stringToBool(xgen.fetch(E_RUNDETACH,ATTR_NONE, list)));
 
     timeoutCheckBox->setChecked(VariantConverter::stringToBool(xgen.fetch(E_TIMEOUT,ATTR_NONE, list)));
 
@@ -465,7 +469,7 @@ void EditorTab::tabChanged(int index)
  *  "autoOnlyCheckBox_2" search
  *  "autoOnlyCheckBox_3" plugin
  *  "autoOnlyCheckBox_4" other
- * @param check
+ * @param check checkbox status
  */
 void EditorTab::editCheckAction(bool check)
 {
@@ -474,6 +478,9 @@ void EditorTab::editCheckAction(bool check)
 
     if(objname == "timeoutCheckBox"){
         editop->checkTimeoutAction(currentid, check);
+
+    }else if(objname == "runDetachCheckBox"){
+        editop->checkRunDetachAction(currentid, check);
 
     }else if(objname == "autoOnlyCheckBox"){
         editop->checkOnlyNormalAction(currentid, check);

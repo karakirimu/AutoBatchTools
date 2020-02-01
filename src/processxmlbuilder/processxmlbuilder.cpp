@@ -158,6 +158,7 @@ void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *l
             || element == I_RECURSIVE_LOOPARGCOUNT
             || element == I_RECURSIVE_LOOPCOUNT
             || element == E_CMDARGCOUNT
+            || element == E_RUNDETACH
             || element == L_VAR_COUNT
             || element == S_SEPARATOR
             || element == S_OUTPUTFILETYPE
