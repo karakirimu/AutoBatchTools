@@ -48,7 +48,7 @@ void PluginsXmlBuilder::swapItem(int beforeitemid, int afteritemid)
 
 void PluginsXmlBuilder::copyItem(int itemid)
 {
-    Xmlbuilder::copyItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, PL_NAME);
+    Xmlbuilder::copyItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, PL_XML_NAME);
 }
 
 bool PluginsXmlBuilder::overwriteItem(int itemid, const QList<QStringList> *itemlist)
@@ -68,7 +68,7 @@ int PluginsXmlBuilder::count()
 
 void PluginsXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {
-    if(element == PL_NAME)
+    if(element == PL_XML_NAME)
     {
 //        QStringList data;
 //        //add element and text
@@ -77,6 +77,6 @@ void PluginsXmlBuilder::setSearchItemData(QString element, QList<QStringList> *l
 //        list->append(data);
 
         list->append(QStringList() << element << rxml->readElementText()
-                     << PL_ATTR_FILE << rxml->attributes().value(PL_ATTR_FILE).toString());
+                     << PL_XML_ATTR_FILE << rxml->attributes().value(PL_XML_ATTR_FILE).toString());
     }
 }

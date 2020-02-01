@@ -8,7 +8,6 @@
 /**
  * @class PLUGINSXmlBuilder
  * @brief QList<QStringList> short description
- * @param data
  * @details
  * data structure
  * Left Listnum:
@@ -34,8 +33,8 @@ public:
     void createDocument();
     int count();
 
-    const QString PL_NAME = "manual";
-    const QString PL_ATTR_FILE = "file";
+    const QString PL_XML_NAME = "manual";
+    const QString PL_XML_ATTR_FILE = "file";
 
 private:
 
