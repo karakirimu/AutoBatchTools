@@ -49,6 +49,8 @@ void PluginsComboBox::reloadComboBoxItem()
     FileSearchLoader fsload;
     buffer = fsload.searchFromStrList(&searchsettings);
 
+    this->addItem(tr("Select plugins ..."));
+
     //read all manual list items
     QList<QStringList> item;
     int counter = builder->count();
@@ -96,8 +98,8 @@ void PluginsComboBox::addItemAction()
         if(loader.load()){
             QObject *plugin = loader.instance();
             ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
-            list.append(QStringList () << builder->PL_NAME << inter->pluginInfo().name \
-                        << builder->PL_ATTR_FILE << file);
+            list.append(QStringList () << builder->PL_XML_NAME << inter->pluginInfo().name \
+                        << builder->PL_XML_ATTR_FILE << file);
             builder->addItem(&list);
 
             //reload
@@ -199,7 +201,7 @@ void PluginsComboBox::pluginCheckAction(int index)
 QString PluginsComboBox::getCurrentExtraFile()
 {
     int selected = this->currentIndex();
-    if(selected > -1){
+    if(selected > 0){
         return buffer.at(selected);
     }
 

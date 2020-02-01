@@ -413,7 +413,7 @@ bool PluginsTree::setManualPlugins(QTreeWidgetItem *parent)
 
 QStringList PluginsTree::getEmptyVariants()
 {
-    return QStringList() << builder->PL_NAME << "" << builder->PL_ATTR_FILE << "";
+    return QStringList() << builder->PL_XML_NAME << "" << builder->PL_XML_ATTR_FILE << "";
 }
 
 QStringList PluginsTree::getVariants(QTreeWidgetItem *childitem)
@@ -434,8 +434,8 @@ QStringList PluginsTree::getVariants(QTreeWidgetItem *childitem)
 QList<QStringList> PluginsTree::createXmlVariants(QStringList *uitext)
 {
     QList<QStringList> listdata;
-    listdata.append(QStringList() << builder->PL_NAME << uitext->at(NAME_UI) \
-                                << builder->PL_ATTR_FILE << uitext->at(PATH_UI));
+    listdata.append(QStringList() << builder->PL_XML_NAME << uitext->at(NAME_UI) \
+                                << builder->PL_XML_ATTR_FILE << uitext->at(PATH_UI));
     return listdata;
 }
 
