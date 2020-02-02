@@ -52,7 +52,10 @@ void SearchComboBox::editAction()
 //    setTheme(fs);
     QList<QStringList> list;
 
-    int index = this->currentIndex();
+    int index = this->currentIndex() - 1;
+
+    if(index < 0) return;
+
     if(builder->readItem(index, &list)){
         //set title
         fs->loadSettingList(index, &list);
