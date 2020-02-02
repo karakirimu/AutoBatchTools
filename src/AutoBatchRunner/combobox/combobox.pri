@@ -1,13 +1,9 @@
 INCLUDEPATH += $$PWD
 
-HEADERS += \
+HEADERS +=
 #    $$PWD/searchcombobox.h \
-    $$PWD/scriptcombobox.h \
 #    $$PWD/profilecombobox.h \
-    $$PWD/variantcombobox.h
 
-SOURCES += \
+SOURCES +=
 #    $$PWD/searchcombobox.cpp \
-    $$PWD/scriptcombobox.cpp \
 #    $$PWD/profilecombobox.cpp \
-    $$PWD/variantcombobox.cpp
