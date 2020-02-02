@@ -166,9 +166,12 @@ void StartupTable::setTableItem(int row)
     //qDebug () << "setTableItem";
     QList<QStringList> *list = new QList<QStringList>();
     if(builder->readItem(row, list)){
-        //set tableitem
-        this->setItem(row,0,new QTableWidgetItem(list->at(0).at(1)));
-        this->setItem(row,1,new QTableWidgetItem(list->at(1).at(1)));
+        //set name
+        this->setItem(row,0,new QTableWidgetItem(list->at(StartupXmlBuilder::NAME).at(1)));
+
+        //set profile
+        QFileInfo info(list->at(StartupXmlBuilder::PROF).at(1));
+        this->setItem(row,1,new QTableWidgetItem(info.fileName()));
 
         //set icon
         QIcon icon;
@@ -180,13 +183,16 @@ void StartupTable::setTableItem(int row)
 
         this->setItem(row,2,new QTableWidgetItem(QIcon(icon),list->at(2).at(1)));
     }
+
     delete list;
 }
 
 void StartupTable::replaceItem(int row)
 {
     this->removeRow(row);
+    this->insertRow(row);
     setTableItem(row);
+    this->selectRow(row);
 }
 
 void StartupTable::addAction()
@@ -325,18 +331,18 @@ void StartupTable::downAction()
 
 void StartupTable::enableAction(){
 
-    QList<QStringList> *list = new QList<QStringList>();
+    QList<QStringList> list;
     int row = this->currentRow();
 
-    if(!builder->readItem(row, list)) return;
+    if(!builder->readItem(row, &list)) return;
 
-    if(!VariantConverter::stringToBool(list->at(StartupXmlBuilder::VALID).at(1))){
-        QFileInfo info(list->at(StartupXmlBuilder::PROF).at(1));
+    if(!VariantConverter::stringToBool(list.at(StartupXmlBuilder::VALID).at(1))){
+        QFileInfo info(list.at(StartupXmlBuilder::PROF).at(1));
 
         if(info.exists()){
 
             //change validation
-            emit taskc->tableMessenger(list->at(StartupXmlBuilder::UNIQUE).at(1),\
+            emit taskc->tableMessenger(list.at(StartupXmlBuilder::UNIQUE).at(1),\
                                        TaskSchedulerConnector::TABLE::ENABLE);
 
             replaceItem(row);
@@ -348,18 +354,17 @@ void StartupTable::enableAction(){
 void StartupTable::disableAction(){
     //FIXME: NO CONDITION APPLYED IN ...
 
-    QList<QStringList> *list = new QList<QStringList>();
+    QList<QStringList> list;
     int row = this->currentRow();
 
-    if(builder->readItem(row, list)){
+    if(!builder->readItem(row, &list)) return;
 
-        if(VariantConverter::stringToBool(list->at(StartupXmlBuilder::VALID).at(1))){
+    if(VariantConverter::stringToBool(list.at(StartupXmlBuilder::VALID).at(1))){
 
-            //change validation
-            emit taskc->tableMessenger(list->at(StartupXmlBuilder::UNIQUE).at(1),\
-                                       TaskSchedulerConnector::TABLE::DISABLE);
-            replaceItem(row);
-        }
+        //change validation
+        emit taskc->tableMessenger(list.at(StartupXmlBuilder::UNIQUE).at(1),\
+                                   TaskSchedulerConnector::TABLE::DISABLE);
+        replaceItem(row);
     }
 }
 
