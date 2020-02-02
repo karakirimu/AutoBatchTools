@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 karakirimu
+ * Copyright 2016-2020 karakirimu
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,9 @@ SearchTable::SearchTable(QWidget *)
 
     //adjust row
     resizeRowsToContents();
+
+    //remove row number
+    verticalHeader()->setVisible(false);
 
     //adjust column
     horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
