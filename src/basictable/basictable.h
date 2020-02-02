@@ -54,7 +54,7 @@ protected:
     QIcon getIcon(BasicTable::ACTION action);
     QString getActionText(BasicTable::ACTION action);
 
-    inline QAction * addTableAction(BasicTable::ACTION action, int keycode = 0);
+    QAction * addTableAction(BasicTable::ACTION action, int keycode = 0);
 
     QAction *m_copy;
     QAction *m_up;
