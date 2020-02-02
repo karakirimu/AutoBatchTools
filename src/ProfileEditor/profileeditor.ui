@@ -45,7 +45,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="info">
        <property name="styleSheet">
@@ -692,7 +692,7 @@
            <enum>QTabWidget::North</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="exec">
            <attribute name="icon">
@@ -733,7 +733,10 @@
               <property name="frameShadow">
                <enum>QFrame::Raised</enum>
               </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <property name="lineWidth">
+               <number>0</number>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_3">
                <property name="leftMargin">
                 <number>0</number>
                </property>
@@ -746,27 +749,10 @@
                <property name="bottomMargin">
                 <number>0</number>
                </property>
-               <item>
-                <widget class="QCheckBox" name="timeoutCheckBox">
-                 <property name="text">
-                  <string>Timeout</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_4">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
+               <property name="verticalSpacing">
+                <number>2</number>
+               </property>
+               <item row="0" column="2">
                 <widget class="QLineEdit" name="timeoutLineEdit">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -785,21 +771,47 @@
                  </property>
                 </widget>
                </item>
-               <item>
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="runDetachCheckBox">
+                 <property name="text">
+                  <string>Run detach</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
                 <widget class="QLabel" name="label_3">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="text">
                   <string>ms</string>
                  </property>
                 </widget>
                </item>
+               <item row="0" column="0">
+                <widget class="QCheckBox" name="timeoutCheckBox">
+                 <property name="text">
+                  <string>Timeout</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <spacer name="horizontalSpacer_4">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
               </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="runDetachCheckBox">
-              <property name="text">
-               <string>Run detach</string>
-              </property>
              </widget>
             </item>
             <item>
@@ -1228,7 +1240,7 @@
              <number>2</number>
             </property>
             <property name="bottomMargin">
-             <number>1</number>
+             <number>2</number>
             </property>
             <item>
              <layout class="QGridLayout" name="gridLayout_2">
@@ -2078,11 +2090,6 @@ border: none;</string>
        <property name="selectionMode">
         <enum>QAbstractItemView::ExtendedSelection</enum>
        </property>
-       <column>
-        <property name="text">
-         <string notr="true">1</string>
-        </property>
-       </column>
       </widget>
      </item>
     </layout>
