@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "listmimedata.h"
 
 ListMimeData::ListMimeData()
@@ -6,15 +22,8 @@ ListMimeData::ListMimeData()
 
 void ListMimeData::setList(const QList<QStringList> *list)
 {
-    //Windows
-    //can't use foreach
-    //convert to qvariant
-//    QVariantList list_;
-//    for(int i = 0; i < list->count(); i++){
-//        list_.append(QVariant(list->at(i)));
-//    }
-
     QString convert = "";
+
     QStringList ilist;
     int count = list->count();
     for(int i = 0; i < count; i++){
@@ -25,36 +34,12 @@ void ListMimeData::setList(const QList<QStringList> *list)
         convert.append("\n");
     }
 
-//    foreach (QStringList ilist, list) {
-//        foreach (QString cell, ilist) {
-//            convert.append(cell).append(" ");
-//        }
-//        convert.append("\n");
-//    }
-
     QByteArray array = toCsv(convert).toLocal8Bit();
 
     setData(QLatin1String("application/x-qt-profilerlist"), array);
 }
 
-//QList<QStringList> ListMimeData::list() const
-//{
-//    QVariant data = retrieveData(QLatin1String("application/x-qt-profilerlist"), QVariant::List);
-//    QVariantList list = data.toList();
-//    QList<QStringList> _list;
-////    for(int i = 0; i < list.count(); i++){
-////        _list.append(list.at(i).toStringList());
-////    }
-
-//    QMutableListIterator<QVariant> i(list);
-//    while(i.hasNext()){
-//        _list.append(i.next().toStringList());
-//    }
-
-//    return _list;
-//}
-
-QStringList ListMimeData::formats()
+QStringList ListMimeData::formats() const
 {
     return QStringList(QLatin1String("application/x-qt-profilerlist"));
 }
@@ -76,7 +61,5 @@ QString ListMimeData::toCsv(QString plainText)
     result.replace("\"", "\\\"");
     result.replace("\t", "\", \"");
     result.replace("\n", "\"\n\"");
-//    result.prepend("\"");
-//    result.append("\"");
     return result;
 }
