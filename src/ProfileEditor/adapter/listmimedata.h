@@ -19,13 +19,16 @@
 
 #include <QMimeData>
 
+#define LISTMIMEDATA_MIMETYPE QLatin1String("application/x-qt-profilerlist")
+
 class ListMimeData : public QMimeData
 {
     Q_OBJECT
 public:
     ListMimeData();
 
-    void setList(const QList<QStringList> *list);
+    void setListData(const QList<QStringList> *list);
+    static QList<QStringList> getListData(const ListMimeData *lmime);
 
     QStringList formats() const override;
     bool hasFormat(const QString &mimetype) const override;
@@ -35,6 +38,7 @@ protected:
 
 private:
     QString toCsv(QString plainText);
+
 };
 
 #endif // LISTMIMEDATA_H

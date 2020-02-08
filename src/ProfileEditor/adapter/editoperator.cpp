@@ -425,7 +425,7 @@ void EditOperator::cutAction(int id)
     QClipboard *clipboard = QApplication::clipboard();
     ListMimeData *lmime = new ListMimeData();
 
-    lmime->setList(cache->at(id));
+    lmime->setListData(cache->at(id));
     clipboard->setMimeData(lmime);
 
     DeleteCommand *com = new DeleteCommand(id, cache->at(id), cache);
@@ -438,44 +438,17 @@ void EditOperator::copyAction(int id)
     QClipboard *clipboard = QApplication::clipboard();
     ListMimeData *lmime = new ListMimeData();
 
-    lmime->setList(cache->at(id));
+    lmime->setListData(cache->at(id));
     clipboard->setMimeData(lmime);
 }
 
 void EditOperator::pasteAction(int id)
 {
     QClipboard *clipboard = QApplication::clipboard();
+    const ListMimeData *lmime = qobject_cast<const ListMimeData *>(clipboard->mimeData());
+    QList<QStringList> tlist(ListMimeData::getListData(lmime));
 
-    if(clipboard->ownsClipboard()
-            && clipboard->mimeData()->hasFormat(QLatin1String("application/x-qt-profilerlist"))){
-        const ListMimeData *lmime = qobject_cast<const ListMimeData *>(clipboard->mimeData());
-
-        //encode
-        QByteArray dat = lmime->data(QLatin1String("application/x-qt-profilerlist"));
-        QString dats = QString::fromLocal8Bit(dat);
-        QStringList ilist = dats.split("\n\"");
-
-        QList<QStringList> tlist;
-        QStringList tmp;
-        int count = ilist.count();
-        for(int i = 0; i < count - 1; i++){
-            tmp.clear();
-            tmp = static_cast<QString>(ilist.at(i)).split("\\\" \\\"");
-
-            tmp.replace(0, static_cast<QString>(tmp.at(0)).remove(0,2));
-            QString inner = static_cast<QString>(tmp.at(tmp.count() - 1));
-            tmp.replace(tmp.count() - 1, inner.left(inner.size() - 4));
-
-            QStringList::iterator it;
-            for (it = tmp.begin(); it != tmp.end(); ++it){
-                (*it).replace("\\\\","\\");
-            }
-
-            tlist.append(tmp);
-        }
-
-        insertAction(id, &tlist);
-    }
+    insertAction(id, &tlist);
 }
 
 void EditOperator::swapAction(int before, int after)
