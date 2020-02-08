@@ -447,7 +447,6 @@ void EditOperator::pasteAction(int id)
 {
     QClipboard *clipboard = QApplication::clipboard();
 
-    //TODO:
     if(clipboard->ownsClipboard()
             && clipboard->mimeData()->hasFormat(QLatin1String("application/x-qt-profilerlist"))){
         const ListMimeData *lmime = qobject_cast<const ListMimeData *>(clipboard->mimeData());
