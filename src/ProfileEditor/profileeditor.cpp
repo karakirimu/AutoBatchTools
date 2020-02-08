@@ -227,7 +227,7 @@ void ProfileEditor::openAction()
     // open file
     QString fileName = fdialog->getOpenFileName(this,\
                                                 tr("Open file"), settings.value("profileeditor/lastopened",\
-                                                    QDir::currentPath()).toString(), "Profile (*.xml *.apro)");
+                                                QDir::currentPath()).toString(), "Profile (*.xml *.apro)");
 
     if(fileName != ""){
         settings.setValue("profileeditor/lastopened", QFileInfo(fileName).canonicalPath());
@@ -363,7 +363,8 @@ void ProfileEditor::launchSettingAction()
     //setup settingdialog
     settingdialog->move(this->geometry().center() - settingdialog->rect().center());
     settingdialog->setListPos(SettingDialog::GENERAL);
-    settingdialog->show();
+//    int result = settingdialog->exec();
+    settingdialog->open();
 }
 
 //QSS_THEME
@@ -374,6 +375,8 @@ void ProfileEditor::themeChangeAction()
     //theme settings
     settings.beginGroup("pe_general");
     QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
+    QFont settingfont = QFont(settings.value("WINDOWFONT", QApplication::font().toString()).toString());
+    settingfont.setPointSize(settings.value("WINDOWFONTSIZE", QApplication::font().pointSize()).toInt());
     settings.endGroup();
 
     if(stylecolor != "Default"){
@@ -394,6 +397,8 @@ void ProfileEditor::themeChangeAction()
             ui->fileTableWidget->setStyleSheet(data);
         }
     }
+
+    QApplication::setFont(settingfont);
 }
 
 

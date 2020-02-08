@@ -1,4 +1,20 @@
-﻿#include "settingdialog.h"
+﻿/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include "settingdialog.h"
 #include "ui_settingdialog.h"
 
 SettingDialog::SettingDialog(QWidget *parent) :
@@ -13,7 +29,7 @@ SettingDialog::SettingDialog(QWidget *parent) :
     loadSettings();
 
     //connect action
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingDialog::onAccept);
+//    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingDialog::onAccept);
     connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &SettingDialog::onButtonBoxClicked);
     connect(ui->openButton, &QToolButton::clicked, this, &SettingDialog::openDir);
 
@@ -79,7 +95,8 @@ void SettingDialog::setSettings()
     settings.setValue("TEMPDIR", ui->tempEdit->text());
     settings.setValue("AUTOSAVEPERIOD", ui->autosaveSpinBox->value());
     settings.setValue("THEMECOLOR", ui->themeComboBox->currentText());
-    settings.endGroup();
+    settings.setValue("WINDOWFONT", ui->windowFontComboBox->currentText());
+    settings.setValue("WINDOWFONTSIZE", ui->windowFontSizeSpinBox->value());
 
     settings.beginGroup("pe_testexec");
 //    settings.setValue("DETACH", ui->detachCheckBox->isChecked());
@@ -106,6 +123,8 @@ void SettingDialog::loadSettings()
     ui->tempEdit->setText(settings.value("TEMPDIR", "./").toString());
     ui->autosaveSpinBox->setValue(settings.value("AUTOSAVEPERIOD", 5).toInt());
     ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Default").toString());
+    ui->windowFontComboBox->setCurrentFont(QFont(settings.value("WINDOWFONT", QApplication::font().toString()).toString()));
+    ui->windowFontSizeSpinBox->setValue(settings.value("WINDOWFONTSIZE", QApplication::font().pointSize()).toInt());
     settings.endGroup();
 
     settings.beginGroup("pe_testexec");
@@ -132,14 +151,16 @@ void SettingDialog::on_listWidget_currentRowChanged(int currentRow)
     if(currentRow == 2) ui->searchTableWidget->setStyleSheet(this->styleSheet());
 }
 
-void SettingDialog::onAccept()
-{
-    setSettings();
-}
+//void SettingDialog::onAccept()
+//{
+//    setSettings();
+//}
 
 void SettingDialog::onButtonBoxClicked(QAbstractButton *button)
 {
-    if(button->text() == "Apply"){
+    QString pressed = button->text();
+    if(pressed == "Apply"
+            || pressed == "OK"){
         setSettings();
     }
 }

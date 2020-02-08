@@ -83,7 +83,6 @@ void EditOperator::insertAction(int id, QList<QStringList> *xmlstruct)
 {
     InsertCommand *com = new InsertCommand(id,xmlstruct,cache);
     undostack->push(com);
-
 }
 
 /**
@@ -518,7 +517,9 @@ void EditOperator::newAction()
 #else
     autosavefile = "./.~$";
 #endif
-    autosavefile.append(QString::number(QDateTime::currentSecsSinceEpoch()).append(".autosave"));
+    autosavefile.append(QString("new_") \
+                        .append(QString::number(QDateTime::currentSecsSinceEpoch())) \
+                        .append(".autosave"));
 
     //create xmlfile
     ProcessXmlBuilder *updater = new ProcessXmlBuilder();
