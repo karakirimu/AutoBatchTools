@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "filesearchdialog.h"
 #include "ui_filesearchdialog.h"
 
@@ -19,10 +35,10 @@ FileSearchDialog::FileSearchDialog(QWidget *parent) :
     ui->fsizeLineEdit2->setValidator(new QRegExpValidator(QRegExp("[0-9]*")));
 
     //connect action
-    connect( ui->buttonBox, SIGNAL(accepted()), this, SLOT(onAccept()));
-    connect( ui->buttonBox, SIGNAL(rejected()), this, SLOT(onReject()));
-    connect( ui->openToolButton, SIGNAL(clicked()), this, SLOT(openAction()));
-    connect( ui->testSearchButton, SIGNAL(clicked()), this, SLOT(searchAction()));
+    connect( ui->buttonBox, &QDialogButtonBox::accepted, this, &FileSearchDialog::onAccept);
+    connect( ui->buttonBox, &QDialogButtonBox::rejected, this, &FileSearchDialog::onReject);
+    connect( ui->openToolButton, &QAbstractButton::clicked, this, &FileSearchDialog::openAction);
+    connect( ui->testSearchButton, &QAbstractButton::clicked, this, &FileSearchDialog::searchAction);
     connect( ui->directoryLineEdit, SIGNAL(textChanged(QString)), this, SLOT(dirEditFinished(QString)));
 
     //set current time
@@ -44,7 +60,6 @@ FileSearchDialog::~FileSearchDialog()
 
 /**
  * @brief FileSearchDialog::setSettingList
- * @param data
  * @details this function sets text and checkbox. it uses in edit only.
  * data structure
  * Left Listnum:
@@ -195,11 +210,6 @@ void FileSearchDialog::createList(QList<QStringList> *newlist)
 
     //add title
     newlist->append(QStringList() << SEARCH_NAME << ui->nameLineEdit->text());
-
-    //add variant
-//    tmp << "variant" << ui->variantLineEdit->text();
-//    newlist->append(tmp);
-//    tmp.clear();
 
     //add keyword
     newlist->append(QStringList() << SEARCH_KEYWORD << ui->keywordLineEdit->text());

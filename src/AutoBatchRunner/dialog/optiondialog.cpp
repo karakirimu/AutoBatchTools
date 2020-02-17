@@ -1,4 +1,20 @@
-﻿#include "optiondialog.h"
+﻿/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include "optiondialog.h"
 #include "ui_optiondialog.h"
 
 OptionDialog::OptionDialog(QWidget *parent) :
@@ -8,11 +24,9 @@ OptionDialog::OptionDialog(QWidget *parent) :
     setWindowFlags(Qt::WindowCloseButtonHint);
     ui->setupUi(this);
     setupItem();
-    loadSettings();
 
     //connect action
-    connect( ui->buttonBox, SIGNAL(accepted()), this, SLOT(onAccept()));
-//    connect( ui->buttonBox, SIGNAL(rejected()), this, SLOT(onReject()));
+    connect( ui->buttonBox, &QDialogButtonBox::accepted, this, &OptionDialog::onAccept);
 
     //project
     connect(ui->pAddButton, &QPushButton::clicked, ui->profileTableWidget, &ProfileTable::addAction);
@@ -40,7 +54,6 @@ OptionDialog::OptionDialog(QWidget *parent) :
     connect(ui->eDeleteButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::deleteAction);
     connect(ui->eUpButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::upAction);
     connect(ui->eDownButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::downAction);
-
 }
 
 OptionDialog::~OptionDialog()
@@ -51,22 +64,18 @@ OptionDialog::~OptionDialog()
 void OptionDialog::setupItem(){
     ui->listWidget->addItem(tr("General"));
     ui->listWidget->addItem(tr("Project"));
-//    ui->listWidget->addItem(tr("Resident"));
     ui->listWidget->addItem(tr("Global Variant"));
     ui->listWidget->addItem(tr("Search"));
     ui->listWidget->addItem(tr("Plugins"));
-//    ui->listWidget->addItem(tr("Theme"));
 
     ui->listWidget->item(0)->setSelected(true);
     ui->listWidget->setIconSize(QSize(32,32));
 
     ui->listWidget->item(0)->setIcon(QIcon(":/default_icons/settings.png"));
     ui->listWidget->item(1)->setIcon(QIcon(":/default_icons/others.png"));
-//    ui->listWidget->item(2)->setIcon(QIcon(":/default_icons/app_abs.png"));
     ui->listWidget->item(2)->setIcon(QIcon(":/default_icons/string.png"));
     ui->listWidget->item(3)->setIcon(QIcon(":/default_icons/search.png"));
     ui->listWidget->item(4)->setIcon(QIcon(":/default_icons/extras.png"));
-//    ui->listWidget->item(3)->setIcon(QIcon(":/icons/Colors.png"));
 }
 
 void OptionDialog::setSettings()
@@ -75,13 +84,8 @@ void OptionDialog::setSettings()
 
     settings.beginGroup("abr_settings");
     settings.setValue("THEMECOLOR", ui->themeComboBox->currentText());
-//    settings.setValue("ENABLED", ui->sysTrayCheckBox->isChecked());
-//    settings.setValue("STARTUPM", ui->startupCheckBox->isChecked());
-//    settings.setValue("ALLCLOSE", ui->allcloseCheckBox->isChecked());
-//    settings.setValue("HIDETIMERSTART", ui->timerStartCheckBox->isChecked());
-//    settings.setValue("TIMERSTARTMS", ui->timerStartSpinBox->value());
-//    settings.setValue("HIDETASKSTART", ui->taskStartCheckBox->isChecked());
-//    settings.setValue("TASKSTARTMS", ui->taskStartSpinBox->value());
+    settings.setValue("WINDOWFONT", ui->windowFontComboBox->currentText());
+    settings.setValue("WINDOWFONTSIZE", ui->windowFontSizeSpinBox->value());
     settings.endGroup();
 }
 
@@ -91,13 +95,8 @@ void OptionDialog::loadSettings()
 
     settings.beginGroup("abr_settings");
     ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Default").toString());
-//    ui->sysTrayCheckBox->setChecked(settings.value("ENABLED", false).toBool());
-//    ui->startupCheckBox->setChecked(settings.value("STARTUPM", false).toBool());
-//    ui->allcloseCheckBox->setChecked(settings.value("ALLCLOSE", true).toBool());
-//    ui->timerStartCheckBox->setChecked(settings.value("HIDETIMERSTART", false).toBool());
-//    ui->timerStartSpinBox->setValue(settings.value("TIMERSTARTMS", 2500).toInt());
-//    ui->taskStartCheckBox->setChecked(settings.value("HIDETASKSTART", false).toBool());
-//    ui->taskStartSpinBox->setValue(settings.value("TASKSTARTMS", 2500).toInt());
+    ui->windowFontComboBox->setCurrentFont(QFont(settings.value("WINDOWFONT", QApplication::font().toString()).toString()));
+    ui->windowFontSizeSpinBox->setValue(settings.value("WINDOWFONTSIZE", QApplication::font().pointSize()).toInt());
     settings.endGroup();
 }
 
@@ -110,33 +109,19 @@ void OptionDialog::on_listWidget_currentRowChanged(int currentRow)
 void OptionDialog::onAccept()
 {
     setSettings();
-//    systemTraySelect();
 }
 
-//void OptionDialog::onReject()
-//{
-//    systemTraySelect();
-//}
+void OptionDialog::showEvent(QShowEvent *event)
+{
+    Q_UNUSED(event)
+    loadSettings();
 
-//void OptionDialog::closeEvent(QCloseEvent *event)
-//{
-//    systemTraySelect() ? event->ignore() : event->accept();
-//}
+    // Qss is not reflected in the displayed dialog
+    ui->searchTableWidget->setStyleSheet(this->styleSheet());
+}
 
-//bool OptionDialog::systemTraySelect()
-//{
-//#ifdef Q_OS_OSX
-//    if (!event->spontaneous() || !isVisible()) {
-//        return;
-//    }
-//#endif
-//    //when startup action selected, hide window.
-//    QSettings settings( "./settings.ini", QSettings::IniFormat );
-//    settings.beginGroup("scheduler_startup");
-//    bool isstartup = settings.value("ENABLED", false).toBool();
-//    settings.endGroup();
-
-//    if(isstartup) this->hide();
-
-//    return isstartup;
-//}
+void OptionDialog::closeEvent(QCloseEvent *event)
+{
+    Q_UNUSED(event)
+    this->hide();
+}

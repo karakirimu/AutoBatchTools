@@ -39,15 +39,14 @@ public:
 
 private slots:
     void on_listWidget_currentRowChanged(int currentRow);
-//    void onAccept();
     void onButtonBoxClicked(QAbstractButton *button);
     void openDir();
-//    void onReject();
 
 private:
     Ui::SettingDialog *ui;
+
+    void showEvent(QShowEvent *event);
     void closeEvent(QCloseEvent *event);
-    bool systemTraySelect();
 
     void setupItem();
     void setSettings();

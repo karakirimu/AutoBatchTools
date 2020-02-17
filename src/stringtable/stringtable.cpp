@@ -35,6 +35,9 @@ StringTable::StringTable(QWidget *parent) : BasicTable(parent)
     //set header label
     setHorizontalHeaderLabels((QStringList() << tr("App Variant") << tr("Value")));
 
+    //set vertical header style
+    verticalHeader()->setProperty("VerticalHeaderStyle", 1);
+
     //set new xml builder
     builder = new StringXmlBuilder();
 

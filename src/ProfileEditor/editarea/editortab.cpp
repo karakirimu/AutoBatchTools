@@ -20,24 +20,24 @@ void EditorTab::setConnection()
     editbutton = widgetsearch->findChild<QToolButton *>(SEARCH_EDIT);
     deletebutton = widgetsearch->findChild<QToolButton *>(SEARCH_DELETE);
     searchcombobox = widgetsearch->findChild<SearchComboBox *>(SEARCH_COMBO);
-    openButton = widgetsearch->findChild<QToolButton *>("openToolButton");
+    openToolButton = widgetsearch->findChild<QToolButton *>("openToolButton");
 
     widgetextra = this->widget(ProcessXmlListGenerator::PLUGINS);
-    extrafunccombobox = widgetextra->findChild<PluginsComboBox *>("extrafuncComboBox");
-    addbutton_e = widgetextra->findChild<QToolButton *>("extrafuncAddButton");
-    deletebutton_e = widgetextra->findChild<QToolButton *>("extrafuncDeleteButton");
-    pluginsetting = widgetextra->findChild<QToolButton *>("pluginSettingButton");
+    extrafunccombobox = widgetextra->findChild<PluginsComboBox *>("pluginComboBox");
+    addbutton_e = widgetextra->findChild<QToolButton *>("pluginAddToolButton");
+    deletebutton_e = widgetextra->findChild<QToolButton *>("pluginDeleteToolButton");
+    pluginsetting = widgetextra->findChild<QToolButton *>("pluginSettingToolButton");
 
     otherwidget = this->widget(ProcessXmlListGenerator::OTHER);
     profilecombobox = otherwidget->findChild<ProfileComboBox *>("profileComboBox");
-    addbutton_o = otherwidget->findChild<QToolButton *>("otherAddButton");
-    deletebutton_o = otherwidget->findChild<QToolButton *>("otherDeleteButton");
+    addbutton_o = otherwidget->findChild<QToolButton *>("profileAddToolButton");
+    deletebutton_o = otherwidget->findChild<QToolButton *>("profileDeleteToolButton");
 
     //connect action in search widget
     connect(addbutton, &QAbstractButton::clicked, searchcombobox, &SearchComboBox::addAction);
     connect(editbutton, &QAbstractButton::clicked, searchcombobox, &SearchComboBox::editAction);
     connect(deletebutton, &QAbstractButton::clicked, searchcombobox, &SearchComboBox::deleteAction);
-    connect(openButton, &QToolButton::clicked, this, &EditorTab::openSavefile); 
+    connect(openToolButton, &QToolButton::clicked, this, &EditorTab::openSavefile);
 
     //connect action in extrafunc widget
     connect(addbutton_e, &QAbstractButton::clicked, extrafunccombobox, &PluginsComboBox::addItemAction);

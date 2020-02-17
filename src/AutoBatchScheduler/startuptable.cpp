@@ -1,4 +1,20 @@
-﻿#include "startuptable.h"
+﻿/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include "startuptable.h"
 
 StartupTable::StartupTable(QWidget *parent)
     : BasicTable(parent)
@@ -22,6 +38,9 @@ StartupTable::StartupTable(QWidget *parent)
     horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     //set header label
     setHorizontalHeaderLabels((QStringList() << tr("Setting Name") << tr("Profile") << tr("Run Progress")));
+
+    //set header style
+    verticalHeader()->setProperty("VerticalHeaderStyle", 1);
 
     builder = new StartupXmlBuilder();
 
@@ -200,6 +219,7 @@ void StartupTable::addAction()
     StartupDialog *sd = new StartupDialog();
     sd->setStyleSheet(this->styleSheet());
     sd->setWindowTitle(tr("Editing - New_file*"));
+    sd->move(this->window()->mapToGlobal(this->geometry().center()) - sd->rect().center());
     if(sd->exec() == QDialog::Accepted){
         int index = this->rowCount();
         setRowCount(index + 1);
@@ -224,6 +244,7 @@ void StartupTable::editTableAction(int row, int col)
 
     StartupDialog *sd = new StartupDialog();
     sd->setStyleSheet(this->styleSheet());
+    sd->move(this->window()->mapToGlobal(this->geometry().center()) - sd->rect().center());
 
     QList<QStringList> list;
     int rows = row;

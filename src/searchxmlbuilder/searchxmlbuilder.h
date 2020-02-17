@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 karakirimu
+ * Copyright 2016-2020 karakirimu
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,6 @@
 /**
  * @class SearchXmlBuilder
  * @brief QList<QStringList> short description
- * @param data
  * @details this function sets text and checkbox.
  * data structure
  * Left Listnum:
@@ -47,13 +46,14 @@
  * \    :        0:      1:      2:      3:      4:     5:
  * 0    :name     :text   :
  * 1    :keyword  :text   :
- * 2    :dir      :text   :
- * 3    :recursive:text   :
- * 4    :seconds  :text   :enabled:data   :
- * 5    :creation :text   :enabled:data   :combo   :data
- * 6    :modified :text   :enabled:data   :combo   :data
- * 7    :fsize_1  :text   :enabled:data   :combo   :data
- * 8    :fsize_2  :text   :enabled:data   :combo   :data
+ * 2    :regex    :text   :enabled:data   :
+ * 3    :dir      :text   :
+ * 4    :recursive:text   :
+ * 5    :seconds  :text   :enabled:data   :
+ * 6    :creation :text   :enabled:data   :combo   :data
+ * 7    :modified :text   :enabled:data   :combo   :data
+ * 8    :fsize_1  :text   :enabled:data   :combo   :data
+ * 9    :fsize_2  :text   :enabled:data   :combo   :data
  */
 class SEARCHXMLBUILDERSHARED_EXPORT SearchXmlBuilder : public Xmlbuilder
 {

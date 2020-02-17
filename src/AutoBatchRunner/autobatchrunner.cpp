@@ -30,6 +30,7 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
 
     //Window init
     setWindowTitle(tr("AutoBatchRunner - BatchRunner"));
+
     QSettings settings( "./settings.ini", QSettings::IniFormat );
     QVariant v = settings.value( "batchrunner/geometry" );
     if (v.type() != QVariant::Invalid){
@@ -58,8 +59,8 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     connect(ui->consoleDock, &BaseDockWidget::visibilityChanged, ui->actionAutohide, &QAction::setChecked);
 
     //init ui add delete edit button
-    connect(ui->addButton, &QToolButton::clicked, ui->comboBox, &ProfileComboBox::addItemAction);
-    connect(ui->deleteButton, &QToolButton::clicked, ui->comboBox, &ProfileComboBox::deleteItemAction);
+    connect(ui->profileAddToolButton, &QToolButton::clicked, ui->comboBox, &ProfileComboBox::addItemAction);
+    connect(ui->profileDeleteToolButton, &QToolButton::clicked, ui->comboBox, &ProfileComboBox::deleteItemAction);
 
     initStatusBar();
 
@@ -190,7 +191,7 @@ void AutoBatchRunner::initStatusBar()
     connect(mlTask, &MultiTask::processCurrent, progressbar, &QProgressBar::setValue);
 }
 
-void AutoBatchRunner::on_editButton_clicked()
+void AutoBatchRunner::on_profileEditToolButton_clicked()
 {
     //run ProfileEditor.exe
     QProcess process;
@@ -222,6 +223,8 @@ void AutoBatchRunner::themeChangeAction()
     //theme settings
     settings.beginGroup("abr_settings");
     QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
+    QFont settingfont = QFont(settings.value("WINDOWFONT", QApplication::font().toString()).toString());
+    settingfont.setPointSize(settings.value("WINDOWFONTSIZE", QApplication::font().pointSize()).toInt());
     settings.endGroup();
 
     if(stylecolor != "Default"){
@@ -235,7 +238,8 @@ void AutoBatchRunner::themeChangeAction()
             this->setStyleSheet(data);
             opdialog->setStyleSheet(data);
             ui->fileTable->setStyleSheet(data);
-//            settingdialog->setStyleSheet(data);
         }
     }
+
+    QApplication::setFont(settingfont);
 }

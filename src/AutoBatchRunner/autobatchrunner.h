@@ -61,7 +61,7 @@ private slots:
     void on_actionStop_triggered();
     void on_actionSettings_triggered();
 
-    void on_editButton_clicked();
+    void on_profileEditToolButton_clicked();
 
 private:
     void setRunButtonState(bool run, bool pause, bool stop);

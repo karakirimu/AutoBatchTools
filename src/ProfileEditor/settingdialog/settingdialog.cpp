@@ -21,24 +21,14 @@ SettingDialog::SettingDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingDialog)
 {
-//    setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::WindowCloseButtonHint);
 
     ui->setupUi(this);
     setupItem();
-    loadSettings();
 
     //connect action
-//    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &SettingDialog::onAccept);
     connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &SettingDialog::onButtonBoxClicked);
-    connect(ui->openButton, &QToolButton::clicked, this, &SettingDialog::openDir);
-
-    //global variant
-//    connect(ui->gAddButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::addAction);
-//    connect(ui->gCopyButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::copyAction);
-//    connect(ui->gDeleteButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::deleteAction);
-//    connect(ui->gUpButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::upAction);
-//    connect(ui->gDownButton, &QPushButton::clicked, ui->stringTableWidget, &StringTable::downAction);
+    connect(ui->openToolButton, &QToolButton::clicked, this, &SettingDialog::openDir);
 
     //search variant
     connect(ui->seAddButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::addAction);
@@ -71,20 +61,17 @@ void SettingDialog::setListPos(int num)
 
 void SettingDialog::setupItem(){
     ui->listWidget->addItem(tr("General"));
-//    ui->listWidget->addItem(tr("Variant"));
     ui->listWidget->addItem(tr("Test"));
     ui->listWidget->addItem(tr("Search"));
     ui->listWidget->addItem(tr("Plugins"));
-//    ui->listWidget->addItem(tr("Theme"));
 
-//    ui->listWidget->item(0)->setSelected(true);
+    ui->listWidget->item(0)->setSelected(true);
     ui->listWidget->setIconSize(QSize(32,32));
 
     ui->listWidget->item(0)->setIcon(QIcon(":/default_icons/settings.png"));
     ui->listWidget->item(1)->setIcon(QIcon(":/default_icons/string.png"));
     ui->listWidget->item(2)->setIcon(QIcon(":/default_icons/search.png"));
     ui->listWidget->item(3)->setIcon(QIcon(":/default_icons/extras.png"));
-//    ui->listWidget->item(4)->setIcon(QIcon(":/icons/Colors.png"));
 }
 
 void SettingDialog::setSettings()
@@ -99,20 +86,8 @@ void SettingDialog::setSettings()
     settings.setValue("WINDOWFONTSIZE", ui->windowFontSizeSpinBox->value());
 
     settings.beginGroup("pe_testexec");
-//    settings.setValue("DETACH", ui->detachCheckBox->isChecked());
     settings.setValue("FAKERES", ui->fakeresidentCheckBox->isChecked());
-//    settings.setValue("FSUPDATE", ui->fsupdateCheckBox->isChecked());
     settings.endGroup();
-
-//    settings.beginGroup("scheduler_startup");
-//    settings.setValue("ENABLED", ui->sysTrayCheckBox->isChecked());
-//    settings.setValue("STARTUPM", ui->startupCheckBox->isChecked());
-//    settings.setValue("ALLCLOSE", ui->allcloseCheckBox->isChecked());
-//    settings.setValue("HIDETIMERSTART", ui->timerStartCheckBox->isChecked());
-//    settings.setValue("TIMERSTARTMS", ui->timerStartSpinBox->value());
-//    settings.setValue("HIDETASKSTART", ui->taskStartCheckBox->isChecked());
-//    settings.setValue("TASKSTARTMS", ui->taskStartSpinBox->value());
-//    settings.endGroup();
 }
 
 void SettingDialog::loadSettings()
@@ -128,20 +103,9 @@ void SettingDialog::loadSettings()
     settings.endGroup();
 
     settings.beginGroup("pe_testexec");
-//    ui->detachCheckBox->setChecked(settings.value("DETACH", false).toBool());
     ui->fakeresidentCheckBox->setChecked(settings.value("FAKERES", false).toBool());
-//    ui->fsupdateCheckBox->setChecked(settings.value("FSUPDATE", true).toBool());
     settings.endGroup();
 
-//    settings.beginGroup("scheduler_startup");
-//    ui->sysTrayCheckBox->setChecked(settings.value("ENABLED", false).toBool());
-//    ui->startupCheckBox->setChecked(settings.value("STARTUPM", false).toBool());
-//    ui->allcloseCheckBox->setChecked(settings.value("ALLCLOSE", true).toBool());
-//    ui->timerStartCheckBox->setChecked(settings.value("HIDETIMERSTART", false).toBool());
-//    ui->timerStartSpinBox->setValue(settings.value("TIMERSTARTMS", 2500).toInt());
-//    ui->taskStartCheckBox->setChecked(settings.value("HIDETASKSTART", false).toBool());
-//    ui->taskStartSpinBox->setValue(settings.value("TASKSTARTMS", 2500).toInt());
-//    settings.endGroup();
 }
 
 //change list to stackedwidget
@@ -150,11 +114,6 @@ void SettingDialog::on_listWidget_currentRowChanged(int currentRow)
     ui->stackedWidget->setCurrentIndex(currentRow);
     if(currentRow == 2) ui->searchTableWidget->setStyleSheet(this->styleSheet());
 }
-
-//void SettingDialog::onAccept()
-//{
-//    setSettings();
-//}
 
 void SettingDialog::onButtonBoxClicked(QAbstractButton *button)
 {
@@ -171,6 +130,12 @@ void SettingDialog::openDir()
     dialog.setFileMode(QFileDialog::Directory);
     QString res = dialog.getExistingDirectory(this, tr("Open Folder"), ui->tempEdit->text());
     ui->tempEdit->setText(res);
+}
+
+void SettingDialog::showEvent(QShowEvent *event)
+{
+    Q_UNUSED(event)
+    loadSettings();
 }
 
 void SettingDialog::closeEvent(QCloseEvent *event)

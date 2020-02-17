@@ -91,7 +91,7 @@ private:
     QToolButton *editbutton;
     QToolButton *deletebutton;
     SearchComboBox *searchcombobox;
-    QToolButton *openButton;
+    QToolButton *openToolButton;
     QLineEdit *separatorLineEdit;
     VariantComboBox *localVariantComboBox;
     QLineEdit *outputLineEdit;

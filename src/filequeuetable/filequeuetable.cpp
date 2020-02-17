@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 karakirimu
+ * Copyright 2016-2020 karakirimu
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,9 @@ FileQueueTable::FileQueueTable(QWidget *parent)
 
     //adjust column
     horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+
+    //set header style
+    verticalHeader()->setProperty("VerticalHeaderStyle", 1);
 
     //set header sort settings
     connect(horizontalHeader(), &QHeaderView::sectionClicked, this, &FileQueueTable::horizontalHeaderClicked);

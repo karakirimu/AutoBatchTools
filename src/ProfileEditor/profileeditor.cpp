@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2016-2019 karakirimu
+ * Copyright 2016-2020 karakirimu
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -392,7 +392,7 @@ void ProfileEditor::themeChangeAction()
             this->setStyleSheet(data);
             settingdialog->setStyleSheet(data);
             ui->searchComboBox->setStyleSheet(data);
-            ui->extrafuncComboBox->setStyleSheet(data);
+            ui->pluginComboBox->setStyleSheet(data);
             ui->searchInputComboBox->setStyleSheet(data);
             ui->fileTableWidget->setStyleSheet(data);
         }

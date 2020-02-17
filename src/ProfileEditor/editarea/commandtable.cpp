@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2016-2019 karakirimu
+ * Copyright 2016-2020 karakirimu
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,9 @@ CommandTable::CommandTable(QWidget *parent)
 
     //adjust column
     horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+
+    //set vertical header style
+    verticalHeader()->setProperty("VerticalHeaderStyle", 1);
 
     //set header label
     setHorizontalHeaderLabels((QStringList() << tr("Executable file / Arguments")));
@@ -407,7 +410,7 @@ void CommandTable::openDirectoryAction()
 
 void CommandTable::editedAction(int row, int column)
 {
-    qDebug() << "CommandTable : editedAction";
+    qDebug() << "[CommandTable : editedAction]";
      emit updateTable(row, this->item(row, column)->text(), ProcessXmlListGenerator::TABLE_EDIT);
 }
 

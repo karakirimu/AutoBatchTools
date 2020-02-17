@@ -58,10 +58,17 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="ProfileComboBox" name="comboBox"/>
+        <widget class="ProfileComboBox" name="comboBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="addButton">
+        <widget class="QToolButton" name="profileAddToolButton">
          <property name="text">
           <string>+</string>
          </property>
@@ -72,7 +79,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="deleteButton">
+        <widget class="QToolButton" name="profileDeleteToolButton">
          <property name="text">
           <string>-</string>
          </property>
@@ -83,7 +90,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="editButton">
+        <widget class="QToolButton" name="profileEditToolButton">
          <property name="text">
           <string>*</string>
          </property>
@@ -135,7 +142,7 @@
      <x>0</x>
      <y>0</y>
      <width>580</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -342,7 +349,7 @@ border: 0px</string>
   <customwidget>
    <class>ConsoleView</class>
    <extends>QTextEdit</extends>
-   <header>consoleview.h</header>
+   <header>./textedit/consoleview.h</header>
   </customwidget>
   <customwidget>
    <class>BaseDockWidget</class>
@@ -358,10 +365,14 @@ border: 0px</string>
   <customwidget>
    <class>ConsoleEdit</class>
    <extends>QLineEdit</extends>
-   <header>consoleedit.h</header>
+   <header>./textedit/consoleedit.h</header>
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
  </resources>
  <connections/>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 karakirimu
+ * Copyright 2016-2020 karakirimu
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -102,8 +102,6 @@ QString SearchXmlBuilder::fetch(QString tag, QString attr, const QList<QStringLi
 
 /**
  * @brief SearchXmlBuilder::getItemData
- * @param element
- * @param list
  * @details
  * QList<QStringList> structures
  * QList

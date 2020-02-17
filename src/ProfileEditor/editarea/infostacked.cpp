@@ -145,8 +145,8 @@ void InfoStacked::setInfoDataList(int after, int before, int function, int sendf
     fscombo->setVisible(check);
 
     check = VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list));
-    rlabel->setEnabled(!check);
-    rloopmax->setEnabled(!check);
+    rlabel->setVisible(!check);
+    rloopmax->setVisible(!check);
 
     delete list;
 
@@ -212,8 +212,8 @@ void InfoStacked::editCheckAction(bool check)
         editop->checkSearchInputAction(0,check);
 
     }else if(objname == "loopCountInfCheckBox"){
-        rlabel->setEnabled(!check);
-        rloopmax->setEnabled(!check);
+        rlabel->setVisible(!check);
+        rloopmax->setVisible(!check);
 
         editop->checkLoopInfAction(0, check);
     }else if(objname == "allowInputCheckBox"){

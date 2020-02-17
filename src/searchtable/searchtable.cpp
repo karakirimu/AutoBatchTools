@@ -29,7 +29,7 @@ SearchTable::SearchTable(QWidget *)
     setPopupActionBottom();
 
     //init table size
-    setColumnCount(4);
+    setColumnCount(3);
     setRowCount(0);
 
     //adjust row
@@ -39,10 +39,10 @@ SearchTable::SearchTable(QWidget *)
     verticalHeader()->setVisible(false);
 
     //adjust column
-    horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+    horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
     //set header label
     setHorizontalHeaderLabels((QStringList() << tr("Setting Name")
-                               << tr("Return Variant") << tr("Search Word") << tr("Directory")));
+                               << tr("Search Word") << tr("Directory")));
 
     //set new xml builder
     builder = new SearchXmlBuilder();
@@ -136,6 +136,7 @@ void SearchTable::addAction()
 {
     FileSearchDialog *fs = new FileSearchDialog();
     fs->setStyleSheet(this->styleSheet());
+    fs->move(this->mapToGlobal(this->geometry().center()) - fs->rect().center());
     fs->setWindowTitle(tr("Editing - untitled*"));
     if(fs->exec() == QDialog::Accepted){
         int index = this->rowCount();
@@ -151,6 +152,7 @@ void SearchTable::editAction()
 
     FileSearchDialog *fs = new FileSearchDialog();
     fs->setStyleSheet(this->styleSheet());
+    fs->move(this->mapToGlobal(this->geometry().center()) - fs->rect().center());
     QList<QStringList> list;
     int row = currentRow();
     if(builder->readItem(row, &list)){
@@ -232,10 +234,9 @@ void SearchTable::setTableItem(int row)
     QList<QStringList> *list = new QList<QStringList>();
     if(builder->readItem(row, list)){
         //set tableitem
-        this->setItem(row,0,new QTableWidgetItem(list->at(0).at(1)));
-        this->setItem(row,1,new QTableWidgetItem(list->at(1).at(1)));
-        this->setItem(row,2,new QTableWidgetItem(list->at(2).at(1)));
-        this->setItem(row,3,new QTableWidgetItem(list->at(3).at(1)));
+        this->setItem(row,0,new QTableWidgetItem(builder->fetch(SEARCH_NAME,SEARCH_NONE, list)));
+        this->setItem(row,1,new QTableWidgetItem(builder->fetch(SEARCH_KEYWORD,SEARCH_NONE, list)));
+        this->setItem(row,2,new QTableWidgetItem(builder->fetch(SEARCH_DIR,SEARCH_NONE, list)));
     }
     delete list;
 }

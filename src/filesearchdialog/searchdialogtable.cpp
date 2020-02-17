@@ -1,4 +1,20 @@
-﻿#include "searchdialogtable.h"
+﻿/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include "searchdialogtable.h"
 
 SearchDialogTable::SearchDialogTable(QWidget *)
 {
@@ -16,6 +32,9 @@ SearchDialogTable::SearchDialogTable(QWidget *)
     // adjust row
     resizeRowsToContents();
     horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+
+    //set vertical header style
+    verticalHeader()->setProperty("VerticalHeaderStyle", 1);
 
     //set header sort settings
     connect(horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(selectAll()));
@@ -50,6 +69,8 @@ void SearchDialogTable::propertyAction()
     if(this->rowCount() > 0){
         FileInfoDialog *dialog = new FileInfoDialog();
         dialog->setStyleSheet(this->styleSheet());
+        dialog->move(this->mapToGlobal(QPoint(this->geometry().center().x(),this->geometry().top()) \
+                                       - QPoint(dialog->rect().center().x(), dialog->rect().bottom())));
         dialog->setFileInfo(this->selectedItems().at(0)->text());
         dialog->show();
     }

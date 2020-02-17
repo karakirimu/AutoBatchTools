@@ -27,8 +27,8 @@ StartupDialog::StartupDialog(QWidget *parent) :
     connect( ui->buttonBox, &QDialogButtonBox::accepted, this, &StartupDialog::onAccept);
     connect( ui->buttonBox, &QDialogButtonBox::rejected, this, &StartupDialog::onReject);
     connect(ui->everyDayCheckBox, &QAbstractButton::clicked, this, &StartupDialog::everyDaySelected);
-    connect(ui->profileAddButton, &QToolButton::clicked, ui->profileComboBox, &ProfileComboBox::addItemAction);
-    connect(ui->profileDeleteButton, &QToolButton::clicked, ui->profileComboBox, &ProfileComboBox::deleteItemAction);
+    connect(ui->profileAddToolButton, &QToolButton::clicked, ui->profileComboBox, &ProfileComboBox::addItemAction);
+    connect(ui->profileDeleteToolButton, &QToolButton::clicked, ui->profileComboBox, &ProfileComboBox::deleteItemAction);
 
     //set new xml builder
     builder = new StartupXmlBuilder();
