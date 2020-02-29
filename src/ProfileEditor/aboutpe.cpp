@@ -17,8 +17,6 @@
 #include "aboutpe.h"
 #include "ui_aboutpe.h"
 
-#include <QFile>
-
 AboutPE::AboutPE(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::AboutPE)
