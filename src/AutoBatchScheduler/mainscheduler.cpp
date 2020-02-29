@@ -26,7 +26,7 @@ MainScheduler::MainScheduler(QWidget *parent) :
     //initial selected position
     ui->optionStackedWidget->setCurrentIndex(0);
     ui->actionSchedule->setChecked(true);
-    setWindowTitle(tr("AutoBatchRunner - Scheduler"));
+    setWindowTitle("ProfileScheduler");
 
     //set window icon
     setWindowIcon(QIcon(":/app_icons/app_abs_24x24.ico"));

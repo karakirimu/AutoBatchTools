@@ -29,7 +29,7 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     ui->comboBox->reloadComboBoxItem();
 
     //Window init
-    setWindowTitle(tr("AutoBatchRunner - BatchRunner"));
+    setWindowTitle("ProfileRunner");
 
     QSettings settings( "./settings.ini", QSettings::IniFormat );
     QVariant v = settings.value( "batchrunner/geometry" );

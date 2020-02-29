@@ -13,8 +13,14 @@ TEMPLATE = app
 
 TRANSLATIONS = peditor_ja_JP.ts
 
+VERSION = 1.0.0
+
 win32 {
-    RC_FILE = $$PWD/../../res/app_icons/app_pe.rc
+    QMAKE_TARGET_COMPANY = karakirimu
+    QMAKE_TARGET_PRODUCT = AutoBatchRunner - ProfileEditor
+    QMAKE_TARGET_DESCRIPTION = AutoBatchRunner apro file editor
+    QMAKE_TARGET_COPYRIGHT = Copyright 2016-2020 karakirimu
+    RC_ICONS = ../../res/app_icons/app_pe.ico
 }
 
 DESTDIR = $$OUT_PWD/../../
