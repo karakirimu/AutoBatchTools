@@ -23,12 +23,9 @@ BaseXmlBuilder::BaseXmlBuilder(QObject *parent)
     rxml = new QXmlStreamReader();
     wxml = new QXmlStreamWriter();
 
-    //Change format when exporting files
-#ifdef Q_OS_WIN
-    wxml->setCodec(QTextCodec::codecForName("Shift_JIS"));
-#else
+    //Set UTF-8 Codec
     wxml->setCodec(QTextCodec::codecForName("UTF-8"));
-#endif
+
 }
 
 BaseXmlBuilder::~BaseXmlBuilder()
