@@ -430,6 +430,8 @@ void ProfileEditor::onTitleChanged(QString newload)
 {
     QString newtitle;
     QFileInfo info(newload);
+    lastedited = false;
+
     if(info.suffix() == "autosave"){
         newtitle = tr("untitled");
     }else{
