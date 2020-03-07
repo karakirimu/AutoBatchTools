@@ -33,6 +33,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     QSettings settings( "./settings.ini", QSettings::IniFormat );
     QVariant v = settings.value( "profileeditor/geometry" );
     if (v.type() != QVariant::Invalid){
+
         // load window settings on MainWindow
         restoreGeometry( settings.value( "profileeditor/geometry" ).toByteArray() );
         restoreState( settings.value( "profileeditor/windowState" ).toByteArray() );
@@ -51,6 +52,9 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
         ui->setTestDockWidget->setAutohide(autohide);
         ui->consoleDockWidget->setAutohide(autohide);
         ui->variantDockWidget->setAutohide(autohide);
+
+        // load recent opened files
+        setOpenRecent();
     }
 
     //set Attrs
@@ -85,7 +89,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->rangeLineEdit, &QLineEdit::textChanged, this, &ProfileEditor::updateRangeText);
 
     //update window title
-    connect(editop, &EditOperator::loadfileChanged, this, &ProfileEditor::onTitleChanged);
+    connect(editop, &EditOperator::loadfileChanged, this, &ProfileEditor::reloadWindow);
 
     //set window icon
     setWindowIcon(QIcon(":/app_icons/app_pe_24x24.ico"));
@@ -99,6 +103,11 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     //file
     connect(ui->actionNew, &QAction::triggered, this, &ProfileEditor::newfileAction);
     connect(ui->actionOpen, &QAction::triggered, this, &ProfileEditor::openAction);
+
+    connect(this, &ProfileEditor::openRecentClicked, this, &ProfileEditor::openRecentAction);
+    connect(ui->actionClearRecentHistory, &QAction::triggered, this, &ProfileEditor::clearOpenRecentAction);
+    connect(ui->actionOpenLastClosed, &QAction::triggered, this, &ProfileEditor::openLastClosedAction);
+
     connect(ui->actionSave, &QAction::triggered, this, &ProfileEditor::saveAction);
     connect(ui->actionOverWriteSave, &QAction::triggered, this, &ProfileEditor::overWriteSaveAction);
 //    connect(ui->actionCurrentSave, &QAction::triggered, this, &ProfileEditor::saveCurrentAction);
@@ -183,7 +192,6 @@ ProfileEditor::ProfileEditor(QStringList cuiargs, QWidget *parent)
 
     if(cuiargs.count() == 2 && lfile.contains("apro")){
         editop->openAction(lfile);
-        initUi();
     }
 }
 
@@ -215,8 +223,6 @@ void ProfileEditor::newfileAction()
 
     // not save and newfile generate
     editop->newAction();
-    initUi();
-
 }
 
 void ProfileEditor::openAction()
@@ -230,11 +236,35 @@ void ProfileEditor::openAction()
                                                 QDir::currentPath()).toString(), "Profile (*.xml *.apro)");
 
     if(fileName != ""){
+        // save last opened folder
         settings.setValue("profileeditor/lastopened", QFileInfo(fileName).canonicalPath());
         editop->openAction(fileName);
-        initUi();
+
+        // reset recent open menu
+        clearOpenRecent(false);
+        setOpenRecent();
     }
 
+}
+
+void ProfileEditor::openRecentAction(QString filename)
+{
+    if(checkOverWrite() == CANCEL) return;
+    editop->openAction(filename);
+}
+
+void ProfileEditor::clearOpenRecentAction()
+{
+    clearOpenRecent(true);
+    ui->menuOpenRecent->setEnabled(false);
+}
+
+void ProfileEditor::openLastClosedAction()
+{
+    if(checkOverWrite() == CANCEL) return;
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QStringList list = settings.value("profileeditor/recentfiles").value<QStringList>();
+    editop->openAction(list.first());
 }
 
 
@@ -363,7 +393,6 @@ void ProfileEditor::launchSettingAction()
     //setup settingdialog
     settingdialog->move(this->geometry().center() - settingdialog->rect().center());
     settingdialog->setListPos(SettingDialog::GENERAL);
-//    int result = settingdialog->exec();
     settingdialog->open();
 }
 
@@ -426,7 +455,7 @@ void ProfileEditor::exportAction()
     editop->exportAction(fileName);
 }
 
-void ProfileEditor::onTitleChanged(QString newload)
+void ProfileEditor::reloadWindow(QString newload)
 {
     QString newtitle;
     QFileInfo info(newload);
@@ -440,6 +469,7 @@ void ProfileEditor::onTitleChanged(QString newload)
 
     setWindowTitle(newtitle + " - ProfileEditor");
 
+    initUi();
 }
 
 void ProfileEditor::onFileEdited(bool edited)
@@ -654,7 +684,10 @@ void ProfileEditor::initStatusBar()
     connect(mlTask, &MultiTaskP::processCurrent, progressbar, &QProgressBar::setValue);
 }
 
-//when opening new file
+/**
+ * @fn ProfileEditor::initUi
+ * @brief Reset UI when opening a new file.
+ */
 void ProfileEditor::initUi()
 {
     //reload file
@@ -669,6 +702,50 @@ void ProfileEditor::initUi()
     //reset tree row position
     dataindexpos = 0;
 
+}
+
+/**
+ * @fn ProfileEditor::clearOpenRecent
+ * @brief reset recent files list
+ * @param deletelist Whether to delete saved recently opened lists. true is deleted, false is not.
+ */
+void ProfileEditor::clearOpenRecent(bool deletelist)
+{
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QStringList list = settings.value("profileeditor/recentfiles").value<QStringList>();
+
+    QList<QAction *> acts = ui->menuOpenRecent->actions();
+
+    for (QAction *act : acts) {
+        for(QString recentfile : list) {
+            if(act->text() == recentfile){
+                ui->menuOpenRecent->removeAction(act);
+                break;
+            }
+        }
+    }
+
+    if(deletelist) settings.setValue("profileeditor/recentfiles", QStringList());
+}
+
+/**
+ * @fn ProfileEditor::setOpenRecent
+ * @brief Create 'Open Recent' menu actions.
+ */
+void ProfileEditor::setOpenRecent()
+{
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QStringList list = settings.value("profileeditor/recentfiles").value<QStringList>();
+
+    for (QString file : list) {
+        QAction *action = new QAction(file);
+        connect(action, &QAction::triggered, [=](){
+            emit openRecentClicked(file);
+        });
+        ui->menuOpenRecent->insertAction(ui->actionClearRecentHistory, action);
+    }
+    ui->menuOpenRecent->insertSeparator(ui->actionClearRecentHistory);
+    if(list.count() > 0) ui->menuOpenRecent->setEnabled(true);
 }
 
 void ProfileEditor::setRunButtonState(bool run, bool pause, bool stop)

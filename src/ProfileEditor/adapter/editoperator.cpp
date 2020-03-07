@@ -525,6 +525,17 @@ void EditOperator::openAction(QString filepath)
     //load action TODO:init loading num
     loadcache(0);
 
+    // save recent files list (max: 10)
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QStringList list = settings.value("profileeditor/recentfiles").value<QStringList>();
+    int recentcount = list.count();
+
+    list.removeOne(loadfile);
+    list.insert(0, loadfile);
+
+    if(recentcount > 10) list.removeLast();
+    settings.setValue("profileeditor/recentfiles", list);
+
     emit loadfileChanged(loadfile);
 }
 

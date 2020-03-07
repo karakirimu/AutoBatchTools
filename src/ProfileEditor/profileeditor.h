@@ -26,6 +26,7 @@
 #include <QSettings>
 #include <QFileDialog>
 #include <QProgressBar>
+#include <QSignalMapper>
 
 #include <settingdialog/settingdialog.h>
 #include <editoperator.h>
@@ -50,11 +51,15 @@ public:
 
 signals:
     void statusLabelChanged(QString);
+    void openRecentClicked(QString);
 
 private slots:
     //file
     void newfileAction();
     void openAction();
+    void openRecentAction(QString filename);
+    void clearOpenRecentAction();
+    void openLastClosedAction();
     bool saveAction();
     void overWriteSaveAction();
     void exportAction();
@@ -74,7 +79,7 @@ private slots:
     void launchSettingAction();
     void themeChangeAction();
 
-    void onTitleChanged(QString newload);
+    void reloadWindow(QString newload);
     void onFileEdited(bool edited);
 
     //item select change
@@ -108,12 +113,27 @@ private:
     void initStatusBar();
     void initUi();
 
+    // Open Recent menu actions
+    void clearOpenRecent(bool deletelist);
+    void setOpenRecent();
+
     //run pause stop button selection
     void setRunButtonState(bool run, bool pause, bool stop);
 
-    //overwrite save option (yes :0, no : 1, cancel : 2, not need to save : 3)
     int checkOverWrite();
-    enum{YES,NO,CANCEL,NOTNEED};
+    /**
+     * overwrite save option
+     */
+    enum {
+        //! 0: yes
+        YES,
+        //! 1: no
+        NO,
+        //! 2: cancel
+        CANCEL,
+        //! 3: no need to save
+        NOTNEED
+    };
 
     Ui::ProfileEditor *ui;
 
