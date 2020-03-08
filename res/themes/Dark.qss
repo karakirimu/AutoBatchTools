@@ -97,6 +97,12 @@ QToolBar {
     border: none;
 }
 
+/*
+QToolBarExtension#qt_toolbar_ext_button {
+    qproperty-icon: url(:/default_icons/tree_close.png);
+}
+*/
+
 /* ===== QToolButton ===== */
 
 QToolButton {
