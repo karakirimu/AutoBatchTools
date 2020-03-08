@@ -723,7 +723,7 @@ void ProfileEditor::closeEvent(QCloseEvent *event)
 
     if(!lastedited) return;
 
-    // ドキュメントが変更されている場合の警告
+    // Warning if the document has changed
     QMessageBox::StandardButton res = QMessageBox::question(this, tr("Alert"),\
                                     tr("File was edited.\nDo you want to save this file ?"),\
                                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
