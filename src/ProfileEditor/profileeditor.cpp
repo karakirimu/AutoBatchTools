@@ -39,7 +39,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
         restoreState( settings.value( "profileeditor/windowState" ).toByteArray() );
 
         // load window check settings
-        ui->actionToolBar->setChecked(settings.value("profileeditor/toolbar", true).toBool());
+        ui->actionToolBarEdit->setChecked(settings.value("profileeditor/toolbar/edit", true).toBool());
         ui->actionProcess->setChecked(settings.value("profileeditor/process", true).toBool());
         ui->actionVariant->setChecked(settings.value("profileeditor/variant", true).toBool());
         ui->actionRunSetting->setChecked(settings.value("profileeditor/runset", true).toBool());
@@ -86,7 +86,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     ui->consolemessage->setMultiTask(mlTask);
 
     //function signal bind
-    connect(ui->rangeLineEdit, &QLineEdit::textChanged, this, &ProfileEditor::updateRangeText);
+    connect(rangeLineEdit, &QLineEdit::textChanged, this, &ProfileEditor::updateRangeText);
 
     //update window title
     connect(editop, &EditOperator::loadfileChanged, this, &ProfileEditor::reloadWindow);
@@ -137,11 +137,11 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->actionPause, &QAction::triggered, this, &ProfileEditor::pauseTriggered);
     connect(ui->actionStop, &QAction::triggered, this, &ProfileEditor::stopTriggered);
 
-    connect(ui->runToolButton, &QToolButton::clicked, this, &ProfileEditor::runTriggered);
-    connect(ui->pauseToolButton, &QToolButton::clicked, this, &ProfileEditor::pauseTriggered);
-    connect(ui->stopToolButton, &QToolButton::clicked, this, &ProfileEditor::stopTriggered);
+//    connect(ui->runToolButton, &QToolButton::clicked, this, &ProfileEditor::runTriggered);
+//    connect(ui->pauseToolButton, &QToolButton::clicked, this, &ProfileEditor::pauseTriggered);
+//    connect(ui->stopToolButton, &QToolButton::clicked, this, &ProfileEditor::stopTriggered);
 
-    connect(ui->testSettingToolButton, &QToolButton::clicked, this, &ProfileEditor::testSettingTriggered);
+//    connect(ui->testSettingToolButton, &QToolButton::clicked, this, &ProfileEditor::testSettingTriggered);
 
     connect(mlTask, &MultiTaskP::processStarted, this, &ProfileEditor::taskStarted);
     connect(mlTask, &MultiTaskP::processPaused, this, &ProfileEditor::taskPaused);
@@ -151,14 +151,14 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->actionSettings, &QAction::triggered, this, &ProfileEditor::launchSettingAction);
 
     //Window
-    connect(ui->actionToolBar, &QAction::triggered, ui->mainToolBar, &QWidget::setVisible);
+    connect(ui->actionToolBarEdit, &QAction::triggered, ui->mainToolBar, &QWidget::setVisible);
     connect(ui->actionProcess, &QAction::triggered, ui->processDockWidget, &QWidget::setVisible);
     connect(ui->actionVariant, &QAction::triggered, ui->variantDockWidget, &QWidget::setVisible);
     connect(ui->actionRunSetting, &QAction::triggered, ui->setTestDockWidget, &BaseDockWidget::setVisible);
     connect(ui->actionRunConsole, &QAction::triggered, ui->consoleDockWidget, &BaseDockWidget::setVisible);
 
     connect(ui->processDockWidget, &QDockWidget::visibilityChanged, ui->actionProcess, &QAction::setChecked);
-    connect(ui->mainToolBar, &QToolBar::visibilityChanged, ui->actionToolBar, &QAction::setChecked);
+    connect(ui->mainToolBar, &QToolBar::visibilityChanged, ui->actionToolBarEdit, &QAction::setChecked);
     connect(ui->setTestDockWidget, &BaseDockWidget::visibilityChanged, ui->actionRunSetting, &QAction::setChecked);
     connect(ui->consoleDockWidget, &BaseDockWidget::visibilityChanged, ui->actionRunConsole, &QAction::setChecked);
 
@@ -178,6 +178,8 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     //Title * flag
     connect(editop->getUndostack(), &QUndoStack::canUndoChanged, this, &ProfileEditor::onFileEdited);
 
+    initRunRangeToolBar();
+    initRunToolBar();
     initStatusBar();
 
     //set new file
@@ -203,14 +205,26 @@ ProfileEditor::~ProfileEditor()
     settings.setValue( "profileeditor/windowState", saveState() );
 
     //window menu
-    settings.setValue("profileeditor/toolbar", ui->actionToolBar->isChecked());
+    settings.setValue("profileeditor/toolbar/edit", ui->actionToolBarEdit->isChecked());
+    settings.setValue("profileeditor/toolbar/run", actionToolBarRun->isChecked());
+    settings.setValue("profileeditor/toolbar/testrange", actionToolBarTestRange->isChecked());
+
     settings.setValue("profileeditor/process", ui->actionProcess->isChecked());
     settings.setValue("profileeditor/variant", ui->actionVariant->isChecked());
     settings.setValue("profileeditor/runset", ui->actionRunSetting->isChecked());
     settings.setValue("profileeditor/console", ui->actionRunConsole->isChecked());
     settings.setValue( "profileeditor/autohide", ui->actionAutohide->isChecked());
 
+    delete actionRunSetting;
+    delete runToolBar;
+    delete actionToolBarRun;
+
+    delete rangeLineEdit;
+    delete testRangeToolBar;
+    delete actionToolBarTestRange;
+
     delete ui;
+
     delete settingdialog;
     delete fdialog;
     delete editop;
@@ -520,6 +534,59 @@ void ProfileEditor::about()
 
 }
 
+void ProfileEditor::initRunToolBar()
+{
+    runToolBar = new QToolBar(tr("Run"));
+    runToolBar->setObjectName("RunToolBar");
+    runToolBar->setToolButtonStyle(ui->mainToolBar->toolButtonStyle());
+
+    runToolBar->addAction(ui->actionRun);
+    runToolBar->addAction(ui->actionPause);
+    runToolBar->addAction(ui->actionStop);
+
+    actionRunSetting = new QAction(QIcon(":/default_icons/string.png"), tr("Test"));
+    actionRunSetting->setToolTip(tr("'Run Test' Settings"));
+    connect(actionRunSetting, &QAction::triggered, this, &ProfileEditor::runTestSettingsTriggered);
+    runToolBar->addAction(actionRunSetting);
+
+    this->addToolBar(runToolBar);
+
+    // add menu action
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    actionToolBarRun = new QAction(runToolBar->windowTitle());
+    actionToolBarRun->setCheckable(true);
+    actionToolBarRun->setChecked(settings.value("profileeditor/toolbar/run", true).toBool());
+    connect(actionToolBarRun, &QAction::triggered, runToolBar, &QToolBar::setVisible);
+    ui->menuToolBar->addAction(actionToolBarRun);
+
+    runToolBar->setVisible(actionToolBarRun->isChecked());
+}
+
+void ProfileEditor::initRunRangeToolBar()
+{
+    testRangeToolBar = new QToolBar(tr("TestRange"));
+    testRangeToolBar->setObjectName("TestRangeToolBar");
+    testRangeToolBar->setToolButtonStyle(ui->mainToolBar->toolButtonStyle());
+
+    rangeLineEdit = new QLineEdit();
+    rangeLineEdit->setMinimumWidth(150);
+    rangeLineEdit->setMaximumWidth(200);
+    rangeLineEdit->setPlaceholderText(tr("execution range here"));
+    rangeLineEdit->setToolTip(tr("Specify the execution range.\nExample: 0-7 0, 1, 2, 3"));
+    testRangeToolBar->addWidget(rangeLineEdit);
+    this->addToolBar(testRangeToolBar);
+
+    // add menu action
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    actionToolBarTestRange = new QAction(testRangeToolBar->windowTitle());
+    actionToolBarTestRange->setCheckable(true);
+    actionToolBarTestRange->setChecked(settings.value("profileeditor/toolbar/testrange", true).toBool());
+    connect(actionToolBarTestRange, &QAction::triggered, testRangeToolBar, &QToolBar::setVisible);
+    ui->menuToolBar->addAction(actionToolBarTestRange);
+
+    testRangeToolBar->setVisible(actionToolBarTestRange->isChecked());
+}
+
 void ProfileEditor::taskStarted(QString objectname, int runfrom)
 {
     qDebug() << "[ProfileEditor::taskStarted]";
@@ -587,7 +654,7 @@ void ProfileEditor::runTriggered()
         mlTask->setInputFileList(key, &flist);
 
         //init execute list range
-        mlTask->setRange(key, ui->rangeLineEdit->text());
+        mlTask->setRange(key, rangeLineEdit->text());
 
         qDebug() << "key:: " << key;
 
@@ -612,7 +679,7 @@ void ProfileEditor::stopTriggered()
     ui->consolemessage->setObjectName(key);
 }
 
-void ProfileEditor::testSettingTriggered()
+void ProfileEditor::runTestSettingsTriggered()
 {
     //setup settingdialog
     settingdialog->move(this->geometry().center() - settingdialog->rect().center());
@@ -753,9 +820,9 @@ void ProfileEditor::setRunButtonState(bool run, bool pause, bool stop)
     ui->actionRun->setEnabled(run);
     ui->actionPause->setEnabled(pause);
     ui->actionStop->setEnabled(stop);
-    ui->runToolButton->setEnabled(run);
-    ui->pauseToolButton->setEnabled(pause);
-    ui->stopToolButton->setEnabled(stop);
+//    ui->runToolButton->setEnabled(run);
+//    ui->pauseToolButton->setEnabled(pause);
+//    ui->stopToolButton->setEnabled(stop);
 }
 
 int ProfileEditor::checkOverWrite()

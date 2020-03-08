@@ -45,7 +45,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="info">
        <property name="styleSheet">
@@ -1488,7 +1488,13 @@
     <property name="title">
      <string>Window</string>
     </property>
-    <addaction name="actionToolBar"/>
+    <widget class="QMenu" name="menuToolBar">
+     <property name="title">
+      <string>ToolBar</string>
+     </property>
+     <addaction name="actionToolBarEdit"/>
+    </widget>
+    <addaction name="menuToolBar"/>
     <addaction name="separator"/>
     <addaction name="actionProcess"/>
     <addaction name="separator"/>
@@ -1546,10 +1552,6 @@
    <addaction name="actionDeleteItem"/>
    <addaction name="actionUpItem"/>
    <addaction name="actionDownItem"/>
-   <addaction name="separator"/>
-   <addaction name="actionRun"/>
-   <addaction name="actionPause"/>
-   <addaction name="actionStop"/>
    <addaction name="separator"/>
    <addaction name="actionSettings"/>
   </widget>
@@ -1747,127 +1749,6 @@ selection-color: rgb(0, 0, 0);</string>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QFrame" name="ScopeFrame">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <property name="lineWidth">
-           <number>0</number>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>1</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLineEdit" name="rangeLineEdit">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>19</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>You can specify the execution range.
-Example: 0-7 0, 1, 2, 3</string>
-             </property>
-             <property name="maxLength">
-              <number>40</number>
-             </property>
-             <property name="frame">
-              <bool>false</bool>
-             </property>
-             <property name="placeholderText">
-              <string>execution range ...</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QToolButton" name="runToolButton">
-             <property name="text">
-              <string>...</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../res/resources.qrc">
-               <normaloff>:/default_icons/run.png</normaloff>:/default_icons/run.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QToolButton" name="pauseToolButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>...</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../res/resources.qrc">
-               <normaloff>:/default_icons/pause.png</normaloff>:/default_icons/pause.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QToolButton" name="stopToolButton">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>...</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../res/resources.qrc">
-               <normaloff>:/default_icons/stop.png</normaloff>:/default_icons/stop.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QToolButton" name="testSettingToolButton">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../../res/resources.qrc">
-               <normaloff>:/default_icons/string.png</normaloff>:/default_icons/string.png</iconset>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </widget>
         </item>
        </layout>
@@ -2395,17 +2276,6 @@ border: none;</string>
     <string>Run</string>
    </property>
   </action>
-  <action name="actionToolBar">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>ToolBar</string>
-   </property>
-  </action>
   <action name="actionVariant">
    <property name="checkable">
     <bool>true</bool>
@@ -2437,6 +2307,17 @@ border: none;</string>
   <action name="actionOpenLastClosed">
    <property name="text">
     <string>Open Last Opened File</string>
+   </property>
+  </action>
+  <action name="actionToolBarEdit">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Edit</string>
    </property>
   </action>
   <zorder>setTestDockWidget</zorder>

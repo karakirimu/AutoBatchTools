@@ -101,7 +101,7 @@ private slots:
     void stopTriggered();
 
     //launch test setting in direct
-    void testSettingTriggered();
+    void runTestSettingsTriggered();
 
     //text sender
     void updateRangeText(QString range);
@@ -110,6 +110,8 @@ private slots:
     void about();
 
 private:
+    void initRunToolBar();
+    void initRunRangeToolBar();
     void initStatusBar();
     void initUi();
 
@@ -136,6 +138,16 @@ private:
     };
 
     Ui::ProfileEditor *ui;
+
+    // runtoolbar
+    QToolBar *runToolBar;
+    QAction *actionRunSetting;
+    QAction *actionToolBarRun;
+
+    // run test range toolbar
+    QToolBar *testRangeToolBar;
+    QLineEdit *rangeLineEdit;
+    QAction *actionToolBarTestRange;
 
     //settindopen and save
     SettingDialog *settingdialog;
