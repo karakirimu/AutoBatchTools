@@ -129,7 +129,7 @@ void SettingDialog::openDir()
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::Directory);
     QString res = dialog.getExistingDirectory(this, tr("Open Folder"), ui->tempEdit->text());
-    ui->tempEdit->setText(res);
+    if(res != "") ui->tempEdit->setText(res);
 }
 
 void SettingDialog::showEvent(QShowEvent *event)
