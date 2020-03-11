@@ -1665,7 +1665,7 @@ selection-color: rgb(0, 0, 0);</string>
     <bool>true</bool>
    </property>
    <property name="windowTitle">
-    <string>Run</string>
+    <string>Input File</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -2262,7 +2262,7 @@ border: none;</string>
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Automatically hide</string>
+    <string>Automatically Hide Title</string>
    </property>
   </action>
   <action name="actionRunSetting">
@@ -2273,7 +2273,7 @@ border: none;</string>
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Run</string>
+    <string>Input File</string>
    </property>
   </action>
   <action name="actionVariant">
