@@ -215,7 +215,7 @@ bool Executor::runProcess()
 
     //file input existing check
     if(setting->initFilename == ""){
-        emit processCheckError(tr("FILE IS NOT LOADED !!"));
+        emit processCheckError(tr("## FILE IS NOT LOADED !!"));
         emit processStopped();
         return false;
 
@@ -354,35 +354,37 @@ void Executor::loadNormalStandardOutput()
 //    emit processStateUpdate(maxcount);
 //}
 
-//Think kinds of text
+/**
+ * @fn Executor::loadInfo
+ * @brief it shows the autobatchrunner project description text on the console.
+ * @param list processxmlbuilder information list.
+ * @return true or false (it no means.)
+ */
 bool Executor::loadInfo(QList<QStringList> *list)
 {
     QString curdata;
     QString result = "";
-    curdata = xgen.fetch(I_NAME, ATTR_NONE, list);
-    curdata = (curdata == "")? "(no name)" : curdata;
 
     // line 1
-    result.append(tr("Project : "));
-    result.append(curdata);
-    result.append(tr(" : Version."));
-
-    curdata = xgen.fetch(I_VERSION, ATTR_NONE, list);
-    curdata = (curdata == "")? "(test)" : curdata;
-    result.append(curdata);
-    result.append(tr("\r\n"));
+    result.append(tr("``` \n"));
 
     // line 2
+    curdata = xgen.fetch(I_NAME, ATTR_NONE, list);
+    curdata = (curdata == "")? "(no name)" : curdata;
+    result.append(tr("Project : ")).append(curdata).append(tr(" \n"));
+
+    // line 3
+    curdata = xgen.fetch(I_VERSION, ATTR_NONE, list);
+    curdata = (curdata == "")? "(test)" : curdata;
+    result.append(tr("Version : ")).append(curdata).append(tr(" \n"));
+
+    // line 4
     curdata = xgen.fetch(I_AUTHOR, ATTR_NONE, list);
     curdata = (curdata == "")? "(anonymous)" : curdata;
+    result.append(tr("Created : ")).append(curdata).append(tr(" \n"));
 
-    result.append(tr("This process is created by "));
-    result.append(curdata);
-    result.append(tr(".\r\n"));
-
-    //line 3
-    result.append(tr("--------------------------------------------------"));
-    result.append(tr("\r\n"));
+    //line 5
+    result.append(tr("``` \n"));
 
     emit processMessage(result, INFO);
 
@@ -398,7 +400,7 @@ bool Executor::loadNormal(QList<QStringList> *list)
     int cmdc = static_cast<QString>(xgen.fetch(E_CMDARGCOUNT, ATTR_NONE, list)).toInt();
 
     if(cmdc == 0){
-        emit processMessage(tr("[Execution] There is no execution command, it skips."), ERROR);
+        emit processMessage(tr("## [Execution] No execution command, it skips."), ERROR);
         return true;
     }
 
@@ -417,16 +419,16 @@ bool Executor::loadNormal(QList<QStringList> *list)
     QString show;
     QFileInfo apps(app);
     if(apps.isFile()){
-        show.append(tr("[") + apps.fileName() + tr("]"));
+        show.append(tr("## [") + apps.fileName() + tr("] \n"));
     }else{
-        show.append(tr("[") + app + tr("]"));
+        show.append(tr("## [") + app + tr("] \n"));
     }
 
-    foreach (QString var, arguments) {
+    for(QString var : arguments) {
         show.append(" ");
         show.append(var);
     }
-    show.append("\r\n");
+    show.append("\n\n").append("```");
 
     emit processMessage(show, NORMAL);
 
@@ -445,6 +447,10 @@ bool Executor::loadNormal(QList<QStringList> *list)
         work->process->waitForFinished(-1);
     }
 
+    show.clear();
+    show.append("```").append("\n");
+    emit processMessage(show, NORMAL);
+
     return true;
 }
 
@@ -458,8 +464,8 @@ bool Executor::loadSearch(QList<QStringList> *list)
     QStringList result = loader->searchFromXml( \
                 static_cast<QString>(xgen.fetch(S_NAME,ATTR_POSNUM, list)).toInt());
 
-    emit processMessage(tr("[Search : %1] ").arg(xgen.fetch(S_NAME,ATTR_NONE, list)) + \
-                        QString::number(result.count()) + tr(" files found.\r\n"), SEARCH);
+    emit processMessage(tr("## [Search : %1] \n").arg(xgen.fetch(S_NAME,ATTR_NONE, list)) + \
+                        QString::number(result.count()) + tr(" files found.\n"), SEARCH);
 
     //TODO : separation data detection ?
     //combine search result
@@ -493,7 +499,7 @@ bool Executor::loadSearch(QList<QStringList> *list)
             //set data to variant
             overwriteLocalMacro(selectvar, combineresult);
         }else{
-            emit processMessage(tr("[Search] No variant is defined."), ERROR);
+            emit processMessage(tr("## [Search] No variant is defined."), ERROR);
         }
 
     }else{
@@ -589,21 +595,21 @@ bool Executor::loadPlugins(QList<QStringList> *list)
 //    const char *plname = plugin->metaObject()->className();
     const QString plname = ext->pluginInfo().name;
 
-    emit processMessage(tr("[%1] started").arg(plname), PLUGINS);
+    emit processMessage(tr("## [%1] started").arg(plname), PLUGINS);
 
     if(!ext->functionMain(cmdc, &tmp)){
         QString success = ext->functionSuccessMessage();
-        emit processMessage(tr("[%1] %2").arg(plname).arg(success) + tr("\r\n") + \
-                            tr("[%1] sucessful").arg(plname), PLUGINS);
+        emit processMessage(tr("## [%1] %2").arg(plname).arg(success) + tr("\n") + \
+                            tr("## [%1] sucessful").arg(plname), PLUGINS);
 
     }else{
         QString error = ext->functionErrorMessage();
-        emit processMessage(tr("[%1] %2").arg(plname).arg(error) + tr("\r\n") + \
-                            tr("[%1] failed").arg(plname), PLUGINS);
+        emit processMessage(tr("## [%1] %2").arg(plname).arg(error) + tr("\n") + \
+                            tr("## [%1] failed").arg(plname), PLUGINS);
         result = false;
     }
 
-    emit processMessage(tr("[%1] elapsed %2 ms\r\n").arg(plname).arg(time.elapsed()), PLUGINS);
+    emit processMessage(tr("## [%1] elapsed %2 ms\n").arg(plname).arg(time.elapsed()), PLUGINS);
 
     loader.unload();
 
@@ -619,7 +625,7 @@ bool Executor::loadProject(QList<QStringList> *list)
 
     QFileInfo info(xgen.fetch(PR_FILEPATH,ATTR_NONE, list));
     if(!info.exists()){
-        emit processMessage(tr("Project %1 is not existed.")
+        emit processMessage(tr("## [Project] %1 is not existed.")
                             .arg(info.fileName()), ERROR);
         return false;
     }
@@ -645,7 +651,7 @@ bool Executor::loadProject(QList<QStringList> *list)
     //set counter
     int counter = execlist->count();
 
-    emit processMessage(tr("[Project : %1] (loop %2)")
+    emit processMessage(tr("## [Project : %1] (loop %2)")
                         .arg(xgen.fetch(PR_FILEPATH,ATTR_NONE, list))
                         .arg(QString::number(builderstack.count()))
                         , OTHER);
@@ -797,7 +803,7 @@ void Executor::checkExecList(QList<int> *elist)
             if(!(elist->at(i) < buildermax)){
                 emit processMessage(tr("Index ")
                                     + QString::number(elist->at(i))
-                                    + tr(" is not exist. \r\n"), ERROR);
+                                    + tr(" is not exist. \n"), ERROR);
                 elist->removeAt(i);
             }
         }
@@ -822,7 +828,7 @@ void Executor::setProcessSettings(bool *fileinput, int *loopcount)
         FileSearchLoader loader;
         fileList.append(loader.searchFromXml( \
                         static_cast<QString>(xgen.fetch(I_FILESEARCH_NAME, ATTR_POSNUM, &list)).toInt()));
-        emit processMessage(tr("Input : ") + QString::number(fileList.count()) + tr(" files.\r\n"), SEARCH);
+        emit processMessage(tr("Input : ") + QString::number(fileList.count()) + tr(" files.\n"), SEARCH);
     }
 
     //Whether to loop the read file to the end ( 1 : no loop or set max loop count )

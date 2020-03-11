@@ -1,5 +1,20 @@
-#include "consolebase.h"
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+#include "consolebase.h"
 
 ConsoleBase::ConsoleBase(QWidget *parent)
     : QTextEdit(parent)
@@ -7,7 +22,7 @@ ConsoleBase::ConsoleBase(QWidget *parent)
     //install custom context
     setContextMenuPolicy(Qt::CustomContextMenu);
     installEventFilter(this);
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+    connect(this, &QWidget::customContextMenuRequested, this, &ConsoleBase::onCustomContextMenu);
 
     //init menu context
     setPopupAction();
@@ -30,11 +45,11 @@ void ConsoleBase::started(int runtype)
     setTextColor(QColor(Qt::darkGray));
     switch (runtype) {
     case Executor::DEFAULT:
-        append(tr("***** PROCESS STARTED *****\r\n"));
+        append(tr("# -- PROCESS STARTED -- \n"));
         break;
 
     case Executor::SCHEDULER:
-        append(tr("***** PROCESS STARTED - SCHEDULER *****\r\n"));
+        append(tr("# -- SCHEDULER PROCESS STARTED -- \n"));
         break;
 
     default:
@@ -47,14 +62,14 @@ void ConsoleBase::started(int runtype)
 void ConsoleBase::pause()
 {
     setTextColor(QColor(Qt::darkGray));
-    append(tr("***** PROCESS PAUSED *****\r\n"));
+    append(tr("# -- PROCESS PAUSED -- \n"));
     this->textCursor().movePosition(QTextCursor::End);
 }
 
 void ConsoleBase::stop()
 {
     setTextColor(QColor(Qt::darkGray));
-    append(tr("***** PROCESS STOPPED *****\r\n"));
+    append(tr("# -- PROCESS STOPPED -- \n"));
     this->textCursor().movePosition(QTextCursor::End);
 }
 
@@ -63,11 +78,11 @@ void ConsoleBase::end(int runtype)
     setTextColor(QColor(Qt::darkGray));
     switch (runtype) {
     case Executor::DEFAULT:
-        append(tr("***** PROCESS COMPLETED *****\r\n"));
+        append(tr("# -- PROCESS COMPLETED -- \n"));
         break;
 
     case Executor::SCHEDULER:
-        append(tr("***** PROCESS COMPLETED - SCHEDULER *****\r\n"));
+        append(tr("# -- SCHEDULER PROCESS COMPLETED -- \n"));
         break;
 
     default:
@@ -139,7 +154,7 @@ void ConsoleBase::setPopupAction()
     m_selectall = contextMenu->addAction(tr("Select All"));
     m_copy = contextMenu->addAction(QIcon(":/default_icons/copy.png"), tr("Copy"));
     contextMenu->addSeparator();
-    m_clear = contextMenu->addAction(tr("Clear all text"));
+    m_clear = contextMenu->addAction(tr("Clear Console Output"));
 
     //connect signals
     connect(m_selectall, &QAction::triggered, this, &QTextEdit::selectAll);
