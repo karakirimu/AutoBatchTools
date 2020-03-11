@@ -23,10 +23,8 @@ Executor::Executor(QObject *parent)
 {
     pbuilder = new ProcessXmlBuilder();
     localHash = new QHash<QString, QString>();
-//    execlist = new QList<int>();
     userexeclist.clear();
 
-//    connect(this, &Executor::processEnded, this, &Executor::processEndLastStatus);
     work = new WorkingParam();
     test = new TestParam();
     setting = new SettingParam();
@@ -41,16 +39,6 @@ Executor::~Executor()
     delete setting;
 //    delete execlist;
 }
-
-//bool Executor::getDetached() const
-//{
-//    return setting->detached;
-//}
-
-//void Executor::setDetached(bool detach)
-//{
-//    setting->detached = detach;
-//}
 
 int Executor::getStartnum() const
 {
@@ -76,14 +64,12 @@ void Executor::setEndnum(int end)
 void Executor::processWrite(QString code)
 {
     work->process->write(code.toLocal8Bit());
-//    emit processMessage(code, INPUT);
 }
 
 void Executor::processKill()
 {
     work->process->kill();
     emit processMessage(QObject::tr("Process killed."), INPUT);
-    //    emit processStopped();
 }
 
 void Executor::setMutex(QMutex *mutex)
@@ -91,16 +77,6 @@ void Executor::setMutex(QMutex *mutex)
     //TODO: no imprementation to run function
     sMutex = mutex;
 }
-
-//int Executor::getForcequittime() const
-//{
-//    return forcequittime;
-//}
-
-//void Executor::setForcequittime(int ms)
-//{
-//    forcequittime = ms;
-//}
 
 bool Executor::getPaused() const
 {
@@ -142,7 +118,6 @@ bool Executor::getWorking() const
 
 void Executor::setProcessFile(QString filepath)
 {
-//    pbuilder->setLoadPath(filepath);
     profileloaded = true;
     setting->initFilename = filepath;
 }
@@ -326,11 +301,6 @@ bool Executor::Execute()
     return checker;
 }
 
-//void Executor::pauseProcess()
-//{
-//    paused = true;
-//}
-
 void Executor::stopProcess()
 {
     work->working = false;
@@ -345,14 +315,6 @@ void Executor::loadNormalStandardOutput()
 //    QString encode = QTextCodec::codecForUtfText(read)->toUnicode(read);
     emit processMessage(encode, NORMAL);
 }
-
-//void Executor::processEndLastStatus(int maxcount)
-//{
-//#ifdef QT_DEBUG
-//    qDebug() << "Executor:: processEndLastStatus()" << maxcount;
-//#endif
-//    emit processStateUpdate(maxcount);
-//}
 
 /**
  * @fn Executor::loadInfo
@@ -571,8 +533,6 @@ bool Executor::loadPlugins(QList<QStringList> *list)
     QObject *plugin = loader.instance();
     ext = qobject_cast<ExtraPluginInterface *>(plugin);
 
-//    connect(ext, SIGNAL(sendMessage()), this, SLOT(sendPluginMessage()));
-
     int cmdc = static_cast<QString>(xgen.fetch(PL_CMDARGCOUNT, ATTR_NONE, list)).toInt();
     int ecmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
 
@@ -585,14 +545,11 @@ bool Executor::loadPlugins(QList<QStringList> *list)
     ext->setGlobalValue(globalHash);
     ext->setLocalValue(localHash);
 
-//    disconnect(ext, SIGNAL(sendMessage()), this, SLOT(sendPluginMessage()));
-
     bool result = true;
 
     QTime time;
     time.start();
 
-//    const char *plname = plugin->metaObject()->className();
     const QString plname = ext->pluginInfo().name;
 
     emit processMessage(tr("## [%1] started").arg(plname), PLUGINS);
@@ -618,7 +575,6 @@ bool Executor::loadPlugins(QList<QStringList> *list)
 
 bool Executor::loadProject(QList<QStringList> *list)
 {
-//    emit processStarted(OTHERPROCESS);
     //scheduler only or not
     if(VariantConverter::stringToBool(xgen.fetch(ALL_TYPE,TYPE_ANOTHER,ATTR_ONLY_SCHEDULER, list))
             && setting->launched == DEFAULT) return true;
@@ -669,8 +625,6 @@ bool Executor::loadProject(QList<QStringList> *list)
         if(pbuilder->readItem(execlist->at(i), ilist)){
 
             //scheduler only or not
-//            if(VariantConverter::stringToBool(ilist->at(0).at(3)) && setting->launched == DEFAULT) break;
-
             switch (getReadType(ilist->at(0).at(1))) {
             case INFO:    checker = loadInfo(ilist);    break;
             case NORMAL:  checker = loadNormal(ilist);  break;
@@ -684,7 +638,6 @@ bool Executor::loadProject(QList<QStringList> *list)
             }
 
             if(!checker){
-//                emit processErrorOccured(i);
                 // when max nested, all processes are through.
                 i = counter;
             }
@@ -705,8 +658,6 @@ bool Executor::loadProject(QList<QStringList> *list)
     //check nest
     if(builderstack.count() == 0) neststop = false;
 
-//    emit processEnded(OTHERPROCESS);
-
     return true;
 }
 
@@ -723,20 +674,9 @@ bool Executor::loadTemp(QList<QStringList> *list)
     case ProcessXmlListGenerator::SEARCH:  return loadSearch(list);
     case ProcessXmlListGenerator::PLUGINS: return loadPlugins(list);
     case ProcessXmlListGenerator::OTHER:   return ((neststop)? false : loadProject(list));
-//        if(neststop){
-//            return false;
-//        }else{
-//            return loadOther(list);
-//        }
     default: return true;
     }
 }
-
-// original is part of 1 commands in one process
-//QString Executor::replaceInputMacro(QString original)
-//{
-//    return replaceMacro(original, &fileHash);
-//}
 
 QString Executor::replaceInputMacro(QString original)
 {
@@ -900,26 +840,6 @@ bool Executor::processStopHandleChecker()
 
     return work->working;
 }
-
-//int Executor::getOthernestmax() const
-//{
-//    return setting->othernestmax;
-//}
-
-//void Executor::setOthernestmax(int nest)
-//{
-//    setting->othernestmax = nest;
-//}
-
-//bool Executor::getSearchfileoverwrite() const
-//{
-//    return setting->searchoutputoverwrite;
-//}
-
-//void Executor::setSearchfileoverwrite(bool overwrite)
-//{
-//    setting->searchoutputoverwrite = overwrite;
-//}
 
 int Executor::getLaunchedfrom() const
 {

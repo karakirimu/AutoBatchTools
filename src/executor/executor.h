@@ -40,10 +40,6 @@ public:
     explicit Executor(QObject *parent = nullptr);
     ~Executor();
 
-    //run part
-//    bool getDetached() const;
-//    void setDetached(bool detach); /*preset func*/
-
     int getStartnum() const;
     void setStartnum(int start); /*preset func*/
 
@@ -54,8 +50,6 @@ public:
     void processWrite(QString code);
     void processKill();
 
-//    int getForcequittime() const;
-//    void setForcequittime(int ms); /*preset func*/
     void setMutex(QMutex *mutex);
 
     bool getPaused() const;
@@ -74,15 +68,9 @@ public:
     int getLaunchedfrom() const;
     void setLaunchedfrom(int only = DEFAULT); /*preset func*/
 
-//    bool getSearchfileoverwrite() const;
-//    void setSearchfileoverwrite(bool overwrite); /*preset func*/
-
-//    int getOthernestmax() const;
-//    void setOthernestmax(int nest = 10);
-
     enum {INFO, NORMAL, SEARCH, PLUGINS, OTHER, TEMP, LOCAL, WARNING, ERROR, INPUT};
     enum {DEFAULT, SCHEDULER};
-//    enum {MAINPROCESS, OTHERPROCESS};
+
 signals:
     //in runprocess
     //signals to all
@@ -99,9 +87,7 @@ signals:
 
     //signals to textview (output)
     void processCheckError(QString);
-//    void processInformation(QString);
     void processMessage(QString, int type);
-//    void processUpdated(QString);
 
 
 public slots:
@@ -113,12 +99,10 @@ public slots:
 
     //process slot
     bool runProcess(); /*main func*/
-//    bool runProcess2();
     void stopProcess();
 
 private slots:
     void loadNormalStandardOutput();
-//    void processEndLastStatus(int maxcount);
     void sendPluginMessage(QString str){ emit processMessage(str, PLUGINS);}
 
 private:
@@ -171,9 +155,7 @@ private:
 
     //execution setting task variant (normal)
     typedef struct{
-//        bool detached = false;
         int launched = DEFAULT;
-//        bool searchoutputoverwrite = true;
         int argumentscount;
         int othernestmax = 1;
         QString initFilename = "";
@@ -192,14 +174,12 @@ private:
     //setting part (execution order)
     QList<int> userexeclist;
     QList<int> *execlist;
-//    int forcequittime = -1;
 
     //inner
     bool neststop = false;
     bool noexeclist = false;
 
     //macro part
-//    QHash<QString, QString> fileHash;
     QStringList fileList;
     QHash<QString, QString> globalHash;
     QHash<QString, QString> *localHash;
