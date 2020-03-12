@@ -50,7 +50,7 @@ private slots:
     void setSearchDataList(QList<QStringList> *list);
     void setPluginDataList(QList<QStringList> *list);
     void setOtherDataList(QList<QStringList> *list);
-    void setCombinedDataList(int after, int before, int function, int sendfrom);
+    void setCombinedDataList(int after, int before, int function);
 
     // DEPENDS_XML undo redo functions
     QString getTableData(int targetrow, int tablerow, QString loadtype);

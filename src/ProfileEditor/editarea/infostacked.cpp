@@ -85,7 +85,7 @@ void InfoStacked::updateIndex(QString operation)
     if(sep.count() < 2){
         //edit
         setInfoDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
-                            EditOperator::SELECT, EditOperator::MAINEDITOR);
+                            EditOperator::SELECT);
     }else if(sep.at(0) == "2" && sep.at(1) == UNDOREDO_DELETE){
         //change stack
         moveStacked(0, EditOperator::SELECT);
@@ -99,14 +99,14 @@ void InfoStacked::updateIndex(QString operation)
 
 void InfoStacked::reloadAction()
 {
-    setInfoDataList(0, -1, EditOperator::SELECT, EditOperator::MAINEDITOR);
+    setInfoDataList(0, -1, EditOperator::SELECT);
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
-void InfoStacked::setInfoDataList(int after, int before, int function, int sendfrom)
+void InfoStacked::setInfoDataList(int after, int before, int function)
 {
     Q_UNUSED(before)
-    Q_UNUSED(sendfrom)
+
 
     // change stack and check loading is need or not.
     if(!moveStacked(after, function)) return;

@@ -30,7 +30,7 @@ public:
     void reloadAction();
 
 public slots:
-    void setInfoDataList(int after, int before, int function, int sendfrom);
+    void setInfoDataList(int after, int before, int function);
 
 private slots:
     void editAuthorAction(QString text);

@@ -109,17 +109,29 @@ public:
 
     QUndoStack *getUndostack() const;
     int getCacheSize() const;
+    QString getLoadfile() const;
 
     int getCurrentCommandType();
 
-    //detect called item
-    enum{FLOWTABLE, MAINEDITOR};
-    enum{ADD,DELETE,INSERT,SWAP,SELECT};
+    /**
+     * @brief
+     * Enum for propagating UI operations to other UI
+     */
+    enum {
+        //! 0: Add action
+        ADD,
+        //! 1: Delete action
+        DELETE,
+        //! 2: Insert action
+        INSERT,
+        //! 3: Swap action
+        SWAP,
+        //! 4: Select action
+        SELECT
+    };
 
     //gui functions
     QRect getMainWindowGeometry();
-
-    QString getLoadfile() const;
 
 signals:
     void loadfileChanged(QString);
@@ -129,7 +141,7 @@ signals:
     void editUpdate(int);
 
     //Communication from profileeditor or flowtable widget to editortab
-    void processIndexUpdate(int after, int before, int function, int sender);
+    void processIndexUpdate(int after, int before, int function);
 //    void ui_scrollReachBottom();
 
 public slots:

@@ -83,7 +83,7 @@ private slots:
     void onFileEdited(bool edited);
 
     //item select change
-    void itemChangedAction(int after, int before, int function, int sendfrom);
+    void itemChangedAction(int after, int before, int function);
 
     //undo,redo command
     void onUndoTextChanged(QString text);

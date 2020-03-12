@@ -140,7 +140,7 @@ void EditorTab::updateIndex(QString operation)
     if(sep.count() < 2){
         //edit
         setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
-                            EditOperator::SELECT, EditOperator::MAINEDITOR);
+                            EditOperator::SELECT);
 
 //    }else if(sep.at(1) == UNDOREDO_ADD){
 //        //add
@@ -151,7 +151,7 @@ void EditorTab::updateIndex(QString operation)
     }else if(sep.at(1) == UNDOREDO_INSERT){
         //ins
         setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
-                            EditOperator::SELECT, EditOperator::MAINEDITOR);
+                            EditOperator::SELECT);
 
     }else if(sep.at(1) == UNDOREDO_E_TABLEADD){
         //exectableadd
@@ -354,10 +354,10 @@ void EditorTab::setOtherDataList(QList<QStringList> *list)
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
-void EditorTab::setCombinedDataList(int after, int before, int function, int sendfrom)
+void EditorTab::setCombinedDataList(int after, int before, int function)
 {
     Q_UNUSED(before)
-    Q_UNUSED(sendfrom)
+
     Q_UNUSED(function)
 
     QList<QStringList> *list = new QList<QStringList>();

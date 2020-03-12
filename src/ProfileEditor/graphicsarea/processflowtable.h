@@ -62,7 +62,7 @@ private slots:
     //table selection changed
     void selectChanged(int crow, int ccol, int prow, int pcol);
 
-    void onItemStatusChanged(int after, int before, int function, int sendfrom);
+    void onItemStatusChanged(int after, int before, int function);
 
 private:
     // argument is ui index

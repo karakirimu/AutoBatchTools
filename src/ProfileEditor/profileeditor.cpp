@@ -349,7 +349,7 @@ void ProfileEditor::redoAction()
 void ProfileEditor::addAction()
 {
     editop->addAction();
-    emit editop->processIndexUpdate(editop->getCacheSize() - 1, -1, EditOperator::ADD, EditOperator::MAINEDITOR);
+    emit editop->processIndexUpdate(editop->getCacheSize() - 1, -1, EditOperator::ADD);
 
 }
 
@@ -357,7 +357,7 @@ void ProfileEditor::deleteAction()
 {
     if(dataindexpos <= 1) return;
     editop->deleteAction(dataindexpos);
-    emit editop->processIndexUpdate(dataindexpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
+    emit editop->processIndexUpdate(dataindexpos, -1, EditOperator::DELETE);
 
     dataindexpos--;
 }
@@ -366,7 +366,7 @@ void ProfileEditor::cutAction()
 {
     if(dataindexpos <= 1) return;
     editop->cutAction(dataindexpos);
-    emit editop->processIndexUpdate(dataindexpos, -1, EditOperator::DELETE, EditOperator::MAINEDITOR);
+    emit editop->processIndexUpdate(dataindexpos, -1, EditOperator::DELETE);
 
     dataindexpos--;
 }
@@ -380,21 +380,21 @@ void ProfileEditor::pasteAction()
 {
     if(dataindexpos <= 1) return;
     editop->pasteAction(dataindexpos);
-    emit editop->processIndexUpdate(dataindexpos, -1, EditOperator::INSERT, EditOperator::MAINEDITOR);
+    emit editop->processIndexUpdate(dataindexpos, -1, EditOperator::INSERT);
 }
 
 void ProfileEditor::upAction()
 {
     if(dataindexpos <= 2) return;
     editop->swapAction(dataindexpos, dataindexpos - 1);
-    emit editop->processIndexUpdate(dataindexpos - 1, dataindexpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
+    emit editop->processIndexUpdate(dataindexpos - 1, dataindexpos, EditOperator::SWAP);
 }
 
 void ProfileEditor::downAction()
 {
     if(dataindexpos < 2 || dataindexpos >= (editop->getCacheSize() - 1)) return;
     editop->swapAction(dataindexpos, dataindexpos + 1);
-    emit editop->processIndexUpdate(dataindexpos + 1, dataindexpos, EditOperator::SWAP, EditOperator::MAINEDITOR);
+    emit editop->processIndexUpdate(dataindexpos + 1, dataindexpos, EditOperator::SWAP);
 }
 
 void ProfileEditor::reloadAction()
@@ -502,10 +502,10 @@ void ProfileEditor::onFileEdited(bool edited)
     }
 }
 
-void ProfileEditor::itemChangedAction(int after, int before, int function, int sendfrom)
+void ProfileEditor::itemChangedAction(int after, int before, int function)
 {
     Q_UNUSED(before)
-    Q_UNUSED(sendfrom)
+
 
     int showdata = 1;
 
