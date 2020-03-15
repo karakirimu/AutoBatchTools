@@ -849,7 +849,7 @@ void ProfileEditor::setRunButtonState(bool run, bool pause, bool stop)
 
 int ProfileEditor::checkOverWrite()
 {
-    if(!lastedited) return 3;
+    if(!lastedited) return NOTNEED;
 
     // Warning if document is edited by user.
     QMessageBox::StandardButton res = QMessageBox::question(this, tr("Alert"),\
@@ -859,10 +859,10 @@ int ProfileEditor::checkOverWrite()
 
     switch( res )
     {
-    case QMessageBox::Yes: overWriteSaveAction(); return 0;
-    case QMessageBox::No:                         return 1;
-    case QMessageBox::Cancel:                     return 2;
-    default:                                      return 2;
+    case QMessageBox::Yes: overWriteSaveAction(); return YES;
+    case QMessageBox::No:                         return NO;
+    case QMessageBox::Cancel:
+    default:                                      return CANCEL;
     }
 }
 

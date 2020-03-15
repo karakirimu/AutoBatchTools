@@ -128,9 +128,6 @@ private:
     //run pause stop button selection
     void setRunButtonState(bool run, bool pause, bool stop);
 
-    int checkOverWrite();
-    bool checkAutoSave();
-
     /**
      * overwrite save option
      */
@@ -144,6 +141,9 @@ private:
         //! 3: no need to save
         NOTNEED
     };
+
+    int checkOverWrite();
+    bool checkAutoSave();
 
     Ui::ProfileEditor *ui;
 
