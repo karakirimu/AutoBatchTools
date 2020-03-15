@@ -485,12 +485,11 @@ void EditOperator::newAction()
 #endif
 
     reset();
-#ifdef Q_OS_WIN
-    autosavefile = ".\\.~$";
-#else
-    autosavefile = "./.~$";
-#endif
-    autosavefile.append(QString("new_") \
+
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    autosavefile = settings.value("profileeditor/tempdir", "./").toString();
+
+    autosavefile.append(QString(".~$new_") \
                         .append(QString::number(QDateTime::currentSecsSinceEpoch())) \
                         .append(".autosave"));
 
@@ -501,7 +500,28 @@ void EditOperator::newAction()
 
     //temp loadfile change
     loadfile = autosavefile;
-    loadcache(XML_MIN);
+    loadcache(0);
+
+    emit loadfileChanged(autosavefile);
+}
+
+/**
+ * @fn EditOperator::autoSaveRecoveryAction
+ * @brief Load a *.autosave file that remains when the application crashes unexpectedly.
+ * @param filepath *.autosave file
+ */
+void EditOperator::autoSaveRecoveryAction(QString filepath)
+{
+    autosavefile = filepath;
+
+    //create xmlfile
+    ProcessXmlBuilder *updater = new ProcessXmlBuilder();
+    updater->setLoadPath(autosavefile);
+    delete updater;
+
+    //temp loadfile change
+    loadfile = autosavefile;
+    loadcache(0);
 
     emit loadfileChanged(autosavefile);
 }
@@ -647,6 +667,12 @@ void EditOperator::save()
     delete updater;
 }
 
+/**
+ * @fn EditOperator::loadcache
+ * @brief Read apro, xml and create all list.
+ * @param amount currently unused
+ * @todo Considered page loading to speed up the display, but failed.
+ */
 void EditOperator::loadcache(int amount)
 {
     Q_UNUSED(amount)

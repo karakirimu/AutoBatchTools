@@ -150,6 +150,7 @@ public slots:
     void insertAction(int id, QList<QStringList> *xmlstruct);
     void deleteAction(int id);
     void newAction();
+    void autoSaveRecoveryAction(QString filepath);
     void openAction(QString filepath);
     void saveAction(QString filepath);
     void exportAction(QString filepath);

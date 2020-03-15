@@ -40,6 +40,7 @@ DEPENDPATH += $$OUT_PWD/../../library/
 LIBRARYPATH = $$OUT_PWD/../../library/
 
 HEADERS  += editarea/commandtable.h \
+    autosaveselectiondialog.h \
     editarea/editortab.h \
 #    editarea/profilecombobox.h \
     editarea/searchcombobox.h \
@@ -113,6 +114,7 @@ HEADERS  += editarea/commandtable.h \
     undocommand_ui/swapglobalvartree.h
 
 SOURCES += editarea/commandtable.cpp \
+    autosaveselectiondialog.cpp \
     editarea/editortab.cpp \
 #    editarea/profilecombobox.cpp \
     editarea/searchcombobox.cpp \
@@ -191,6 +193,7 @@ SOURCES += main.cpp
 FORMS    += $$PWD/profileeditor.ui \
     aboutpe.ui \
 #    graphicsarea/flowcellwidget.ui \
+    autosaveselectiondialog.ui \
     settingdialog/settingdialog.ui
 
 RESOURCES += \
