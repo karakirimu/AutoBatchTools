@@ -39,6 +39,12 @@ QStringList BaseFileSearch::listFilesRecursive(QString path, QStringList *search
     return files;
 }
 
+/**
+ * @fn BaseFileSearch::setRegularExpressionCondition
+ * @brief Filter filelist by a regular expression.
+ * @param filelist    List of files searched by listFiles... functions.
+ * @param regexp      Regular expression string
+ */
 void BaseFileSearch::setRegularExpressionCondition(QStringList *filelist, QString regexp)
 {
     int filecount = filelist->count();
@@ -54,12 +60,12 @@ void BaseFileSearch::setRegularExpressionCondition(QStringList *filelist, QStrin
     deleteLists(&deleteddata, filelist);
 }
 
-//!
-//! \fn BaseFileSearch::setCurrentTimeCondition
-//! \brief Extract files created within x seconds from current time from "filelist".
-//! \param filelist          List of files searched by search term.
-//! \param limitedtime       The time x seconds before the current time.
-//!
+/**
+ * @fn BaseFileSearch::setCurrentTimeCondition
+ * @brief Extract files created within x seconds from current time from "filelist".
+ * @param filelist          List of files searched by listFiles... functions.
+ * @param limitedtime       The time x seconds before the current time.
+ */
 void BaseFileSearch::setCurrentTimeCondition(QStringList *filelist, qint64 limitedtime)
 {
     int filecount = filelist->count();
