@@ -79,7 +79,7 @@ void SettingDialog::setSettings()
     QSettings settings( "./settings.ini", QSettings::IniFormat );
 
     settings.beginGroup("pe_general");
-    settings.setValue("TEMPDIR", ui->tempEdit->text());
+    settings.setValue("profileeditor/tempdir", ui->tempEdit->text());
     settings.setValue("AUTOSAVEPERIOD", ui->autosaveSpinBox->value());
     settings.setValue("THEMECOLOR", ui->themeComboBox->currentText());
     settings.setValue("WINDOWFONT", ui->windowFontComboBox->currentText());
@@ -95,7 +95,7 @@ void SettingDialog::loadSettings()
     QSettings settings( "./settings.ini", QSettings::IniFormat );
 
     settings.beginGroup("pe_general");
-    ui->tempEdit->setText(settings.value("TEMPDIR", "./").toString());
+    ui->tempEdit->setText(settings.value("profileeditor/tempdir", "./").toString());
     ui->autosaveSpinBox->setValue(settings.value("AUTOSAVEPERIOD", 5).toInt());
     ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Default").toString());
     ui->windowFontComboBox->setCurrentFont(QFont(settings.value("WINDOWFONT", QApplication::font().toString()).toString()));

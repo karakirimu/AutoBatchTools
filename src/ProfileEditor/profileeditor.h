@@ -29,6 +29,7 @@
 #include <QSignalMapper>
 
 #include <settingdialog/settingdialog.h>
+#include <autosaveselectiondialog.h>
 #include <editoperator.h>
 #include <multitaskp.h>
 #include <aboutpe.h>
@@ -47,6 +48,7 @@ public:
     explicit ProfileEditor(QStringList loadfile, QWidget *parent = nullptr);
     ~ProfileEditor();
 
+    void showEvent(QShowEvent *event);
     void closeEvent(QCloseEvent *event);
 
 signals:
@@ -109,7 +111,11 @@ private slots:
     //popup
     void about();
 
+    //initialize
+    void initFileLoad();
+
 private:
+    // initialize
     void initRunToolBar();
     void initRunRangeToolBar();
     void initStatusBar();
@@ -123,6 +129,8 @@ private:
     void setRunButtonState(bool run, bool pause, bool stop);
 
     int checkOverWrite();
+    bool checkAutoSave();
+
     /**
      * overwrite save option
      */

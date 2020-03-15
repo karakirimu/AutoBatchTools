@@ -85,9 +85,6 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     ui->console->setMultiTask(mlTask);
     ui->consolemessage->setMultiTask(mlTask);
 
-    //function signal bind
-    connect(rangeLineEdit, &QLineEdit::textChanged, this, &ProfileEditor::updateRangeText);
-
     //update window title
     connect(editop, &EditOperator::loadfileChanged, this, &ProfileEditor::reloadWindow);
 
@@ -175,15 +172,15 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 
     connect(editop, &EditOperator::processIndexUpdate, this, &ProfileEditor::itemChangedAction);
 
-    //Title * flag
+    // Title * flag
     connect(editop->getUndostack(), &QUndoStack::canUndoChanged, this, &ProfileEditor::onFileEdited);
 
+    // set additional toobar
     initRunRangeToolBar();
     initRunToolBar();
-    initStatusBar();
 
-    //set new file
-    newfileAction();
+    // set statusbar
+    initStatusBar();
 }
 
 //with loading constructor
@@ -229,6 +226,21 @@ ProfileEditor::~ProfileEditor()
     delete fdialog;
     delete editop;
     delete mlTask;
+}
+
+void ProfileEditor::showEvent(QShowEvent *event)
+{
+    static bool showfirst = true;
+
+    if(!showfirst){
+        event->ignore();
+        return;
+    }
+
+    // it must be zero.
+    QTimer::singleShot(0, this, &ProfileEditor::initFileLoad);
+    showfirst = false;
+    event->accept();
 }
 
 void ProfileEditor::newfileAction()
@@ -573,6 +585,7 @@ void ProfileEditor::initRunRangeToolBar()
     rangeLineEdit->setMaximumWidth(200);
     rangeLineEdit->setPlaceholderText(tr("execution range here"));
     rangeLineEdit->setToolTip(tr("Specify the execution range.\nExample: 0-7 0, 1, 2, 3"));
+    connect(rangeLineEdit, &QLineEdit::textChanged, this, &ProfileEditor::updateRangeText);
     testRangeToolBar->addWidget(rangeLineEdit);
     this->addToolBar(testRangeToolBar);
 
@@ -737,6 +750,15 @@ void ProfileEditor::closeEvent(QCloseEvent *event)
     }
 }
 
+void ProfileEditor::initFileLoad()
+{
+    // search *.autosave file and recover
+    if(!checkAutoSave()){
+        // set new file
+        newfileAction();
+    }
+}
+
 void ProfileEditor::initStatusBar()
 {
     QLabel *statusLabel = new QLabel();
@@ -842,4 +864,40 @@ int ProfileEditor::checkOverWrite()
     case QMessageBox::Cancel:                     return 2;
     default:                                      return 2;
     }
+}
+
+/**
+ * @fn ProfileEditor::checkAutoSave
+ * @brief search *.autosave file and recover
+ * @return Returns true if the user has selected an autosave file, false otherwise.
+ */
+bool ProfileEditor::checkAutoSave()
+{
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+
+    QStringList slist = QStringList() << "*.autosave";
+
+    QStringList result;
+    BaseFileSearch search;
+    result = search.listFiles(settings.value("profileeditor/tempdir", "./").toString(), &slist);
+
+    // get filtered result
+    search.setRegularExpressionCondition(&result, "(\\.~\\$new_\\w+\\.autosave)$");
+
+    if(result.count() > 0){
+        AutoSaveSelectionDialog autosaveDialog;
+        autosaveDialog.setStyleSheet(this->styleSheet());
+        autosaveDialog.move(QPoint(this->geometry().center().x(), this->geometry().center().y()) \
+                            - QPoint(autosaveDialog.rect().center().x(), autosaveDialog.rect().center().y()));
+        autosaveDialog.setAutoSaveFileList(&result);
+
+        QString selectfile = autosaveDialog.execDialog();
+        if(selectfile != ""){
+            editop->autoSaveRecoveryAction(selectfile);
+            onFileEdited(true);
+            return true;
+        }
+    }
+
+    return false;
 }
