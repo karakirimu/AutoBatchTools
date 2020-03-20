@@ -29,7 +29,7 @@ EditOperator::EditOperator(QObject *parent)
 
     //init timer (ms)
     settings.beginGroup("pe_general");
-    timerid = startTimer(settings.value("AUTOSAVEPERIOD", 5).toInt() * 60000);
+    timerid = startTimer(settings.value("profileeditor/autosaveperiod", 1).toInt() * 60000);
     settings.endGroup();
 }
 
