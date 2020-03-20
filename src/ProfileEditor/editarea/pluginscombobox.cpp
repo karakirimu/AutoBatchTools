@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "pluginscombobox.h"
 
 PluginsComboBox::PluginsComboBox(QObject *)
@@ -17,24 +33,6 @@ PluginsComboBox::~PluginsComboBox()
     delete builder;
 }
 
-//void PluginsComboBox::reloadComboBoxItem()
-//{
-//    int tmp = this->currentIndex();
-//    this->clear();
-//    QList<QStringList> item;
-//    QFileInfo info;
-//    int counter = builder->count();
-//    for(int i = 0; i < counter; i++){
-//        builder->readItem(i, &item);
-//        info.setFile(item.at(0).at(NAME_XML));
-
-//        // set combobox item
-//        this->addItem(info.baseName());
-//        item.clear();
-//    }
-//    if(-1 < tmp && tmp < counter)
-//        this->setCurrentIndex(tmp);
-//}
 
 void PluginsComboBox::reloadComboBoxItem()
 {
@@ -116,27 +114,6 @@ void PluginsComboBox::addItemAction()
     }
 }
 
-//void ScriptComboBox::editAction(QString variant)
-//{
-//    int selected = this->currentIndex();
-//    if(selected > -1){
-//        QList<QStringList> item;
-//        QList<QStringList> newitem;
-//        builder->readItem(selected, &item);
-
-//        //update item string
-//        newitem.append((QStringList () << "extras" << item.at(0).at(1)));
-////        newitem.append((QStringList () << "jsfile" << item.at(1).at(1)));
-
-//        //edit
-//        builder->editItem(selected, &newitem);
-
-//        //clear
-//        item.clear();
-//        newitem.clear();
-//    }
-//}
-
 void PluginsComboBox::deleteAction()
 {
     //if rowcount is zero.
@@ -186,23 +163,17 @@ void PluginsComboBox::pluginCheckAction(int index)
     }
 }
 
-//QString PluginsComboBox::getCurrentExtraFile()
-//{
-//    int selected = this->currentIndex();
-//    if(selected > -1){
-//        QList<QStringList> item;
-//        builder->readItem(selected, &item);
-//        return item.at(0).at(PATH_XML);
-//    }
-
-//    return "";
-//}
-
+/**
+ * @fn PluginsComboBox::getCurrentExtraFile
+ * @brief Gets the associated plugin file path from the combo box selection.
+ * @return file path
+ */
 QString PluginsComboBox::getCurrentExtraFile()
 {
     int selected = this->currentIndex();
     if(selected > 0){
-        return buffer.at(selected);
+        // -1 means avoid combobox default text.
+        return buffer.at(selected - 1);
     }
 
     return "";

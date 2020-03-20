@@ -546,7 +546,7 @@ void EditorTab::editTextAction(QString text)
     }else if(objname == "localVariantComboBox"){
         editop->comboboxLocalValAction(currentid, text);
 
-    }else if(objname == "extrafuncComboBox"){
+    }else if(objname == "pluginComboBox"){
         editop->comboboxPluginAction(currentid, text, extrafunccombobox->getCurrentExtraFile());
 
     }else if(objname == "profileComboBox"){
