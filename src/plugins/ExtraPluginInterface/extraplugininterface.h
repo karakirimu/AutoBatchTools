@@ -17,7 +17,6 @@
 #ifndef EXTRAPLUGININTERFACE_H
 #define EXTRAPLUGININTERFACE_H
 
-//#include "extraplugininterface_global.h"
 #include <QHash>
 #include <QString>
 #include <QStringList>
@@ -25,57 +24,72 @@
 #include <QtPlugin>
 
 typedef struct {
-    QString name;           //set plugin name
-    QString version;        //set function's version　(preffered: v X.X.X)
-    QString author;         //set yours name
-    QString tooltip;        //This function sets explain string.
-    bool issettingwidget;   //This function set true if you use setting widget function
+    //! plugin name
+    QString name;
+
+    //! functions version (preferred: v X.X.X)
+    QString version;
+
+    //! author name
+    QString author;
+
+    //! explain string
+    QString tooltip;
+
+    //! true if you use setting widget
+    bool issettingwidget;
 
 } PLUGININFO;
 
+/**
+ * @brief The ExtraPluginInterface class
+ * Interface class for writing a plugin to customize AutoBatchRunner.
+ */
 class ExtraPluginInterface : public QObject
 {
 public:
     virtual ~ExtraPluginInterface(){}
 
-    //This is plugin main function. return number 0 stands for success
-    //Other numbers (e.g. -1) stands for failure.
-    // int argc         : argument count
-    // QStringList args : arguments
+    /**
+     * @fn functionMain
+     * @brief This is plugin main function.
+     * @param argc arguments count
+     * @param args arguments
+     * @return Returns 0 on success. Otherwise, -1.
+     */
     virtual int functionMain(int argc, QStringList *args) = 0;
 
-    //This function sets explain string.
-//    virtual QString tooltipString() = 0;
-
-    //set your function's version　(preffered: v X.X.X)
-//    virtual QString version() = 0;
-
-    //set your displayed name
-//    virtual QString vendor() = 0;
-
-    //This function set true if you use setting widget function
-//    virtual bool existsSettingWidget() = 0;
-
-    //This function is called above function returns true.
-    //currentargs represents input, and resultargs represents output.
-    //It returns argument of tablewidget
+    /**
+     * @fn launchSettingWidget
+     * @brief This function is called above function returns true.
+     *        currentargs represents input, and resultargs represents output.
+     *
+     * @param currentargs
+     * @param resultargs
+     * @param parentpos
+     * @param parentstylesheet
+     * @return It returns argument of tablewidget
+     */
     virtual int launchSettingWidget(QStringList *currentargs, QStringList *resultargs \
                                     , QPoint parentpos, QString parentstylesheet = "") = 0;
-
-
-    //Used when executing, rewriting data.
-    void setLocalValue(QHash<QString, QString> *local){ this->local = local; }
-    void setGlobalValue(QHash<QString, QString> global){this->global= global;}
-    void setInputFileData(QStringList file){this->file  = file;  }
 
     //This is signal. It can send message to main console view
 //    virtual void sendMessage(const QString message) = 0;
 
     //In case of error termination, call this function and get the set character string.
     QString functionErrorMessage(){ return errorMessage; }
-
     QString functionSuccessMessage(){ return successMessage; }
 
+    //Used when executing, rewriting data.
+    void setLocalValue(QHash<QString, QString> *local){ this->local = local; }
+    void setGlobalValue(QHash<QString, QString> global){this->global= global;}
+    void setInputFileData(QStringList file){this->file  = file;  }
+
+    /**
+     * @fn pluginInfo
+     * @brief Return the set information to ProfileEditor etc.
+     * @return PLUGININFO structure
+     */
     const PLUGININFO pluginInfo(){return pinfo;}
 
 protected:
@@ -89,7 +103,6 @@ protected:
     QHash<QString, QString> global;
     QStringList file;
 
-    // Describe the name, version, etc. in this structure after interface inheritance.
     PLUGININFO pinfo;
 
 };
