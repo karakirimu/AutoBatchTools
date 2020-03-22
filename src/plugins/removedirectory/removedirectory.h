@@ -2,7 +2,7 @@
 #define REMOVEDIRECTORY_H
 
 #include "removedirectory_global.h"
-#include "../ExtraPluginInterface/extraplugininterface.h"
+#include "../plugininterface/extraplugininterface.h"
 #include <QFile>
 #include <QDir>
 #include <QPoint>

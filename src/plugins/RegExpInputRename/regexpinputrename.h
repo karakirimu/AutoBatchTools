@@ -2,7 +2,7 @@
 #define REGEXPINPUTRENAME_H
 
 #include "regexpinputrename_global.h"
-#include "../ExtraPluginInterface/extraplugininterface.h"
+#include "../plugininterface/extraplugininterface.h"
 #include <regexpinputrenamedialog.h>
 #include <QFileInfo>
 #include <QDir>

@@ -23,7 +23,7 @@
 #include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <../variantconverter/variantconverter.h>
 #include <../filesearchloader/filesearchloader.h>
-#include <../plugins/ExtraPluginInterface/extraplugininterface.h>
+#include <../plugins/plugininterface/extraplugininterface.h>
 
 #include <QObject>
 #include <QProcess>
@@ -32,6 +32,7 @@
 #include <QMutex>
 #include <QStack>
 #include <QPluginLoader>
+#include <QFileInfo>
 
 class EXECUTORSHARED_EXPORT Executor : public QObject
 {   

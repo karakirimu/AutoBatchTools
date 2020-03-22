@@ -2,7 +2,7 @@
 #define TAKELINEPLUGIN_H
 
 #include "takelineplugin_global.h"
-#include "../ExtraPluginInterface/extraplugininterface.h"
+#include "../plugininterface/extraplugininterface.h"
 #include "takelinedialog.h"
 
 #include <QFile>

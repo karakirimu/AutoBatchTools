@@ -12,7 +12,7 @@
 #include <QKeyEvent>
 #include <../filesearchloader/filesearchloader.h>
 #include <../pluginsxmlbuilder/pluginsxmlbuilder.h>
-#include <../plugins/ExtraPluginInterface/extraplugininterface.h>
+#include <../plugins/plugininterface/extraplugininterface.h>
 
 #ifdef QT_DEBUG
     #include <QTime>

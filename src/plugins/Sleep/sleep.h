@@ -2,7 +2,7 @@
 #define SLEEP_H
 
 #include "sleep_global.h"
-#include "../ExtraPluginInterface/extraplugininterface.h"
+#include "../plugininterface/extraplugininterface.h"
 #include <sleepdialog.h>
 #include <QEventLoop>
 #include <QTimer>

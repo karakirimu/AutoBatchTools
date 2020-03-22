@@ -2,7 +2,7 @@
 #define FILETEXTREPLACE_H
 
 #include "filetextreplace_global.h"
-#include "../ExtraPluginInterface/extraplugininterface.h"
+#include "../plugininterface/extraplugininterface.h"
 #include <QFile>
 #include <QFileInfo>
 #include <QTextStream>

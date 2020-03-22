@@ -22,7 +22,7 @@
 //#include <pesharedfunction.h>
 #include <../variantconverter/variantconverter.h>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
-#include <../plugins/ExtraPluginInterface/extraplugininterface.h>
+#include <../plugins/PluginInterface/extraplugininterface.h>
 
 //ui object strings
 #define SEARCH_ADD      "searchAddButton"

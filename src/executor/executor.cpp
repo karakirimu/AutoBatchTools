@@ -16,8 +16,6 @@
 
 #include "executor.h"
 
-#include <QFileInfo>
-
 Executor::Executor(QObject *parent)
     : QObject(parent)
 {
