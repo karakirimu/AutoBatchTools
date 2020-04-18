@@ -1,0 +1,4 @@
+#ifndef PLUGINVARIANTS_H
+#define PLUGINVARIANTS_H
+
+#endif // PLUGINVARIANTS_H

@@ -1,0 +1,4 @@
+#ifndef INNERFUNCTIONS_H
+#define INNERFUNCTIONS_H
+
+#endif // INNERFUNCTIONS_H

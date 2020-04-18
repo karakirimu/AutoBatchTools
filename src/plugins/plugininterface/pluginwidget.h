@@ -1,0 +1,4 @@
+#ifndef PLUGINWIDGET_H
+#define PLUGINWIDGET_H
+
+#endif // PLUGINWIDGET_H
