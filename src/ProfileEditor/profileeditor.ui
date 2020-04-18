@@ -17,7 +17,7 @@
    <property name="styleSheet">
     <string notr="true"/>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_23">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -45,7 +45,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="info">
        <property name="styleSheet">
@@ -546,7 +546,7 @@
            <enum>QTabWidget::North</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="exec">
            <attribute name="icon">
@@ -1200,7 +1200,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../../res/resources.qrc">
-                  <normaloff>:/default_icons/edit.png</normaloff>:/default_icons/edit.png</iconset>
+                  <normaloff>:/default_icons/switch.png</normaloff>:/default_icons/switch.png</iconset>
                 </property>
                </widget>
               </item>
@@ -1229,13 +1229,95 @@
              </layout>
             </item>
             <item>
-             <widget class="CommandTable" name="extrafuncTableWidget">
-              <property name="frameShape">
-               <enum>QFrame::NoFrame</enum>
+             <widget class="QStackedWidget" name="pluginSetStackedWidget">
+              <property name="currentIndex">
+               <number>1</number>
               </property>
-              <property name="selectionMode">
-               <enum>QAbstractItemView::ContiguousSelection</enum>
-              </property>
+              <widget class="QWidget" name="guiPage">
+               <layout class="QVBoxLayout" name="verticalLayout_24">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>6</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QScrollArea" name="scrollArea">
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="widgetResizable">
+                   <bool>true</bool>
+                  </property>
+                  <widget class="QWidget" name="blankWidget">
+                   <property name="geometry">
+                    <rect>
+                     <x>0</x>
+                     <y>0</y>
+                     <width>506</width>
+                     <height>314</height>
+                    </rect>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_25">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                   </layout>
+                  </widget>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="commandPage">
+               <layout class="QVBoxLayout" name="verticalLayout">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="PluginCommandTable" name="extrafuncTableWidget">
+                  <property name="frameShape">
+                   <enum>QFrame::NoFrame</enum>
+                  </property>
+                  <property name="selectionMode">
+                   <enum>QAbstractItemView::ContiguousSelection</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
              </widget>
             </item>
             <item>
@@ -2393,6 +2475,11 @@ border: none;</string>
    <class>VariantTree</class>
    <extends>QTreeWidget</extends>
    <header>./variantarea/varianttree.h</header>
+  </customwidget>
+  <customwidget>
+   <class>PluginCommandTable</class>
+   <extends>QTableWidget</extends>
+   <header>./editarea/plugincommandtable.h</header>
   </customwidget>
  </customwidgets>
  <resources>

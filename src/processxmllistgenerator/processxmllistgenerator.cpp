@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "processxmllistgenerator.h"
 
 ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
@@ -140,12 +156,14 @@ ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
 //    static const QString PL_EDIT_TABLE   = "UOq:>~`c";
 //    static const QString PL_DELETE_TABLE = "/=gx79d,";
 //    static const QString PL_SWAP_TABLE   = "[FX@!%Nb";
+//    #define PL_ALLUPDATE_TABLE "kW3#ZQ!T"
 
     generateId.insert(PL_ADD_TABLE, 1005);
     generateId.insert(PL_INSERT_TABLE, 1006);
     generateId.insert(PL_EDIT_TABLE, 1007);
     generateId.insert(PL_DELETE_TABLE, 1008);
     generateId.insert(PL_SWAP_TABLE, 1009);
+    generateId.insert(PL_ALLUPDATE_TABLE, 1010);
 
 //    static const QString L_ADD_TABLE    = "gh%j~w+x";
 //    static const QString L_INSERT_TABLE = "EjE;Z)PX";
@@ -176,7 +194,11 @@ ProcessXmlListGenerator::~ProcessXmlListGenerator()
 
 }
 
-///DEPENDS_XML
+/**
+ * @fn ProcessXmlListGenerator::createNewList
+ * @brief A list of strings that will be initialized when the element is added.
+ * @param newlist List to receive results.
+ */
 void ProcessXmlListGenerator::createNewList(QList<QStringList> *newlist)
 {
     //initial data
@@ -263,7 +285,12 @@ void ProcessXmlListGenerator::getListStructure(QList<QStringList> *ctos, QHash<i
     }
 }
 
-///DEPENDS_XML
+/**
+ * @fn ProcessXmlListGenerator::getType
+ * @brief Returns the GUI correspondence corresponding to the XML tag.
+ * @param type XML tag.
+ * @return The type of the corresponding tab UI.
+ */
 int ProcessXmlListGenerator::getType(QString type)
 {
     if(type == TYPE_EXEC) return NORMAL;
@@ -273,21 +300,52 @@ int ProcessXmlListGenerator::getType(QString type)
     return -1;
 }
 
+/**
+ * @fn ProcessXmlListGenerator::createExecElement
+ * @brief Returns the corresponding XML element when the value
+ *        is changed on the Exec tab table.
+ * @param value Table value.
+ * @param index Table index.
+ * @return Element list.
+ */
 QStringList ProcessXmlListGenerator::createExecElement(QString value, int index)
 {
     return QStringList() << E_CMD << value << ATTR_POSNUM << QString::number(index);
 }
 
+/**
+ * @fn ProcessXmlListGenerator::createPluginElement
+ * @brief Returns the corresponding XML element when the value
+ *        is changed on the Plugin tab table.
+ * @param value Table value.
+ * @param index Table index.
+ * @return Element list.
+ */
 QStringList ProcessXmlListGenerator::createPluginElement(QString value, int index)
 {
     return QStringList() << PL_CMD << value << ATTR_POSNUM << QString::number(index);
 }
 
+/**
+ * @fn ProcessXmlListGenerator::createVariantElement
+ * @brief Returns the corresponding XML element when the value
+ *        is changed on the Variant table.
+ * @param variants Set two strings in the order of (variable name, value).
+ * @return Element list.
+ */
 QStringList ProcessXmlListGenerator::createVariantElement(QStringList variants)
 {
     return QStringList() << L_VARIANT << variants.at(0) << ATTR_LOCALVALUE << variants.at(1);
 }
 
+/**
+ * @fn ProcessXmlListGenerator::fetchCmdFirstPos
+ * @brief Find the first position in the list that contains
+ *        nformation about the table elements in the tab.
+ * @param tag Tag name. (E_CMD or PL_CMD)
+ * @param loadbase List of elements selected in ProcessFlowTable.
+ * @return The first position in the list of table elements, or -1 if not found.
+ */
 int ProcessXmlListGenerator::fetchCmdFirstPos(QString tag, const QList<QStringList> *loadbase)
 {
     int count = loadbase->count();
@@ -393,11 +451,7 @@ void ProcessXmlListGenerator::replaceElementList(QString tag, QString attr, int 
 void ProcessXmlListGenerator::replaceElementList(int tableindex, int targetindex, QString replacestr, \
                                                       int skip, QList<QList<QStringList> *> *cache)
 {
-//    QStringList alist = cache->at(targetindex)->at(tableindex + skip);
-//    alist.replace(1, replacestr);
-//    cache->at(targetindex)->replace(tableindex + skip, alist);
     replaceElementList(tableindex,targetindex,QStringList() << replacestr, skip, cache);
-
 }
 
 void ProcessXmlListGenerator::replaceElementList(int tableindex, int targetindex, QStringList replace, \
@@ -410,6 +464,11 @@ void ProcessXmlListGenerator::replaceElementList(int tableindex, int targetindex
     alist.replace(1, replace.at(0));
     if(replace.count() > 1) alist.replace(3, replace.at(1));
     cache->at(targetindex)->replace(tableindex + skip, alist);
+}
+
+void ProcessXmlListGenerator::replaceElementList(QStringList replace, int targetindex, \
+                                                 int skip, QList<QList<QStringList> *> *cache)
+{
 }
 
 void ProcessXmlListGenerator::replaceTypeElement(QString edittype, QString attr, int targetindex, QString replacestr, QList<QList<QStringList> *> *cache)

@@ -17,16 +17,16 @@ void StringProjectDescription::undo()
 {
     pxlg.replaceElementList(I_DESCRIPTION, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
 
-    setText(QObject::tr("Description Text ") \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Description Text") \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 void StringProjectDescription::redo()
 {
     pxlg.replaceElementList(I_DESCRIPTION, ATTR_NONE, m_targetindex, m_newstring, m_cache);
 
-    setText(QObject::tr("Description Text ") \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Description Text") \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 int StringProjectDescription::id() const

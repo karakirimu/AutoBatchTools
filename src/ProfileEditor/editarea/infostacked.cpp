@@ -82,7 +82,7 @@ void InfoStacked::updateIndex(QString operation)
 {
     QStringList sep = operation.split(",");
 
-    if(sep.count() < 2){
+    if(sep.at(0) == "2" && sep.at(1) == UNDOREDO_EDIT){
         //edit
         setInfoDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
                             EditOperator::SELECT);

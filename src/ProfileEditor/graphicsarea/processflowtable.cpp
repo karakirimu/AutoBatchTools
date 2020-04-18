@@ -225,7 +225,9 @@ void ProcessFlowTable::updateIndex(QString operation)
 {
     QStringList sep = operation.split(",");
 
-    if(sep.count() < 2 || \
+    if(sep.count() < 2) return;
+
+    if(sep.at(1) == UNDOREDO_EDIT || \
             (sep.count() == 3 && sep.at(2) == UNDOREDO_E_TABLEEDIT)){
         //edit
         replaceItem(static_cast<QString>(sep.at(0)).toInt());

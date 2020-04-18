@@ -324,7 +324,9 @@ void ProfileEditor::undoAction()
     // update ui element
     QString text = editop->getUndostack()->redoText();
 
-    int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9]+)((,|)(|[0-9]+|\\w+))+\\)+$"));
+    //int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9]+)((,|)(|[0-9]+|\\w+))+\\)+$"));
+    int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\((,|\\w+|\\S){1,}\\)+$"));
+
     QString rep = text.mid(0,lastindex);
 
     // +3 means string of " ^(", -1 means string of ")";
@@ -345,7 +347,8 @@ void ProfileEditor::redoAction()
     // update ui element
     QString text = editop->getUndostack()->undoText();
 
-    int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9]+)((,|)(|[0-9]+|\\w+))+\\)+$"));
+    //int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9]+)((,|)(|[0-9]+|\\w+))+\\)+$"));
+    int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\((,|\\w+|\\S){1,}\\)+$"));
     QString rep = text.mid(0,lastindex);
 
     // +3 means string of " ^(", -1 means string of ")";
@@ -713,7 +716,7 @@ void ProfileEditor::onUndoTextChanged(QString text)
     qDebug() << "undo count : " << editop->getUndostack()->count() << "raw data : " << text;
 #endif
 
-    QString rep = text.remove(QRegularExpression(".\\^\\(([0-9]+)((,|)(|[0-9]+|\\w+))+\\)+$"));
+    QString rep = text.remove(QRegularExpression(".\\^\\((,|\\w+|\\S){1,}\\)+$"));
     ui->actionUndo->setText(tr("Undo %1").arg(rep));
 }
 
@@ -724,7 +727,7 @@ void ProfileEditor::onRedoTextChanged(QString text)
     qDebug() << "redo count : " << editop->getUndostack()->count() << "raw data : " << text;
 #endif
 
-    QString rep = text.remove(QRegularExpression(".\\^\\(([0-9]+)((,|)(|[0-9]+|\\w+))+\\)+$"));
+    QString rep = text.remove(QRegularExpression(".\\^\\((,|\\w+|\\S){1,}\\)+$"));
     ui->actionRedo->setText(tr("Redo %1").arg(rep));
 }
 

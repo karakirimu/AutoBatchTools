@@ -67,7 +67,8 @@ void PluginsComboBox::reloadComboBoxItem()
 
         if(loader.load()){
             inter = qobject_cast<ExtraPluginInterface *>(loader.instance());
-            this->addItem(inter->pluginInfo().name);
+            this->addItem(inter->getInformation()->name);
+            counter++;
         }
         loader.unload();
     }
@@ -75,6 +76,24 @@ void PluginsComboBox::reloadComboBoxItem()
     //reload selected position
     if(-1 < tmp && tmp < counter)
         this->setCurrentIndex(tmp);
+}
+
+void PluginsComboBox::setComboBoxItem(QString *filepath)
+{
+    QPluginLoader loader(*filepath);
+    ExtraPluginInterface *inter;
+
+    if(loader.load()){
+        inter = qobject_cast<ExtraPluginInterface *>(loader.instance());
+        if(int no = this->findText(inter->getInformation()->name) > -1){
+            this->setCurrentIndex(no);
+        }else{
+            this->setCurrentIndex(0);
+        }
+        loader.unload();
+    }else{
+        this->setCurrentIndex(0);
+    }
 }
 
 //DEPENDS_XML PLUGINS
@@ -96,7 +115,7 @@ void PluginsComboBox::addItemAction()
         if(loader.load()){
             QObject *plugin = loader.instance();
             ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
-            list.append(QStringList () << builder->PL_XML_NAME << inter->pluginInfo().name \
+            list.append(QStringList () << builder->PL_XML_NAME << inter->getInformation()->name \
                         << builder->PL_XML_ATTR_FILE << file);
             builder->addItem(&list);
 
@@ -144,15 +163,13 @@ void PluginsComboBox::pluginCheckAction(int index)
     if(loader.load()){
         QObject *plugin = loader.instance();
         ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
-        PLUGININFO pinfo = inter->pluginInfo();
+        const PluginInformation *pinfo = inter->getInformation();
 
-        if(pinfo.issettingwidget){
-            emit pluginChanged(true);
-        }else{
-            emit pluginChanged(false);
+        if(pinfo->hassettingwidget){
+            emit pluginChanged(getCurrentExtraFile());
         }
 
-        QString desc = pinfo.tooltip;
+        QString desc = pinfo->tooltip;
 
         if(desc != ""){
             this->setToolTip(desc);
@@ -160,6 +177,8 @@ void PluginsComboBox::pluginCheckAction(int index)
 
         loader.unload();
 
+    }else{
+        emit pluginChanged("");
     }
 }
 

@@ -28,8 +28,8 @@ void StringProjectVersion::undo()
 //    m_cache->at(m_targetindex)->replace(2, alist);
     pxlg.replaceElementList(I_VERSION, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
 
-    setText(QObject::tr("Version changed ") \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Version changed") \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 void StringProjectVersion::redo()
@@ -39,8 +39,8 @@ void StringProjectVersion::redo()
 //    m_cache->at(m_targetindex)->replace(2, alist);
     pxlg.replaceElementList(I_VERSION, ATTR_NONE, m_targetindex, m_newstring, m_cache);
 
-    setText(QObject::tr("Version changed ") \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Version changed") \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 int StringProjectVersion::id() const

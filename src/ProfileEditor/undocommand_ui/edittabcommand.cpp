@@ -33,7 +33,7 @@ void EditTabCommand::undo()
         pxlg.replaceElementList(TE_STACKEDWIDGET_POSITION, ATTR_NONE, m_targetindex, QString::number(m_oldid), m_cache);
     }
 
-    setText(QObject::tr("Type change") + QString(" ^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Type change") + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 void EditTabCommand::redo()
@@ -45,7 +45,7 @@ void EditTabCommand::redo()
         pxlg.replaceElementList(TE_STACKEDWIDGET_POSITION, ATTR_NONE, m_targetindex, QString::number(m_newid), m_cache);
     }
 
-    setText(QObject::tr("Type change") + QString(" ^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Type change") + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 int EditTabCommand::id() const

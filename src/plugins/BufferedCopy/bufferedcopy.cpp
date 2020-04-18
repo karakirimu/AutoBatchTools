@@ -1,9 +1,45 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "bufferedcopy.h"
+
+BufferedCopy::BufferedCopy(){
+    PluginInformation pinfo;
+    pinfo.name = "BufferedCopy";
+    pinfo.version = "1.00";
+    pinfo.author = "karakirimu";
+    pinfo.tooltip = "";
+    pinfo.hassettingwidget = true;
+
+    //Create new widget
+    swidget = new SettingWidget();
+    pinfo.settingwidget = swidget;
+
+    setInformation(pinfo);
+}
+
+BufferedCopy::~BufferedCopy()
+{
+    delete swidget;
+}
 
 int BufferedCopy::functionMain(int argc, QStringList *args)
 {
     if(argc < 2){
-        setErrorMessage(tr("Argument is missing"));
+        functionMessage(tr("Argument is missing"), MessageType::Error);
         return -1;
     }
 
@@ -36,13 +72,13 @@ int BufferedCopy::functionMain(int argc, QStringList *args)
     //output filename change
     QFileInfo stmp(source);
     if(filename == "" && stmp.exists()){
-        dest = QFileInfo(dest).canonicalPath() \
+        dest = QFileInfo(dest).dir().path() \
                 + stmp.fileName();
     }else if(stmp.exists()){
-        dest = QFileInfo(dest).canonicalPath() \
+        dest = QFileInfo(dest).dir().path() \
                 + filename;
     }else{
-        setErrorMessage(tr("Input file does not exist"));
+        functionMessage(tr("Input file does not exist"), MessageType::Error);
         return -1;
     }
 
@@ -54,7 +90,7 @@ int BufferedCopy::functionMain(int argc, QStringList *args)
 
     //in the case of the "verify" option is not enabled.
     if(!verify){
-        setSuccessMessage(tr("Data writing completed !"));
+        functionMessage(tr("Data writing completed !"), MessageType::Error);
         return 0;
     }
 
@@ -63,34 +99,24 @@ int BufferedCopy::functionMain(int argc, QStringList *args)
     return 0;
 }
 
-int BufferedCopy::launchSettingWidget(QStringList *currentargs, QStringList *resultargs \
-                                      , QPoint parentpos, QString parentstylesheet)
-{
-    BufferedCopyDialog *tdialog = new BufferedCopyDialog(currentargs);
-    tdialog->move(parentpos - tdialog->rect().center());
-    tdialog->setStyleSheet(parentstylesheet);
-
-    if(tdialog->exec() == QDialog::Accepted){
-        *resultargs = tdialog->getargs();
-    }
-
-    delete tdialog;
-    return 0;
-}
+//void BufferedCopy::widgetUpdate(QStringList list)
+//{
+//    functionWidgetSetting(list);
+//}
 
 bool BufferedCopy::copyData(QString source, QString dest, long cachesize)
 {
     //create destination file
     QFile ofile(dest);
     if (!ofile.open(QIODevice::WriteOnly)){
-        setErrorMessage(tr("Output file could not open"));
+        functionMessage(tr("Output file could not open"), MessageType::Error);
         return false;
     }
 
     //read source data
     QFile sfile(source);
     if (!sfile.open(QIODevice::ReadOnly)){
-        setErrorMessage(tr("Input file could not open"));
+        functionMessage(tr("Input file could not open"), MessageType::Error);
         ofile.close();
         return false;
     }
@@ -98,13 +124,29 @@ bool BufferedCopy::copyData(QString source, QString dest, long cachesize)
     //copy data and show progress
     QByteArray buffer;
 
+    qint64 filesize = sfile.size();
+    qint64 current = 0;
+
+    QString *prevprogress = new QString();
+    QString currentprogress = "";
+
     while(!sfile.atEnd()){
         //set buffer size
         buffer = sfile.read(cachesize);
         ofile.write(buffer);
+
+        current += buffer.size();
+
+        currentprogress = QString::number(static_cast<double>(current)/filesize * 100, 'f', 2);
+
+        if(currentprogress != prevprogress) functionMessage(tr("progress %1 %").arg(currentprogress), MessageType::Update);
+
+        *prevprogress = currentprogress;
     }
     sfile.close();
     ofile.close();
+
+    delete prevprogress;
 
     return true;
 }
@@ -114,14 +156,16 @@ bool BufferedCopy::checkHash(QString source, QString dest)
     QByteArray shash = sha1Hash(source).toHex();
     QByteArray dhash = sha1Hash(dest).toHex();
 
-    setErrorMessage(tr("source       : ") + QString(shash) + tr("\r\n") + \
-                    tr("[%1] destination : ").arg(this->metaObject()->className()) + \
-                    QString(dhash));
-    setSuccessMessage(tr("source       : ") + QString(shash) + tr("\r\n") + \
-                    tr("[%1] destination : ").arg(this->metaObject()->className()) + \
-                    QString(dhash));
+    QString hashresult = "false";
+    bool hashres = (shash == dhash)? true : false;
+    if(hashres) hashresult = "true";
 
-    return (shash == dhash)? true : false;
+    functionMessage(tr("[%1] source      : ").arg(this->getInformation()->name) + QString(shash) + tr("\n") + \
+                    tr("[%1] destination : ").arg(this->getInformation()->name) + QString(dhash) + tr("\n") + \
+                    tr("[%1] hash check  : %2").arg(this->getInformation()->name).arg(hashresult) \
+                    , MessageType::Update);
+
+    return hashres;
 }
 
 QByteArray BufferedCopy::sha1Hash(QString file)

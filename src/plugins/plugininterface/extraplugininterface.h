@@ -17,35 +17,14 @@
 #ifndef EXTRAPLUGININTERFACE_H
 #define EXTRAPLUGININTERFACE_H
 
-#include <QHash>
-#include <QString>
-#include <QStringList>
-#include <QObject>
-#include <QtPlugin>
 
-typedef struct {
-    //! plugin name
-    QString name;
-
-    //! functions version (preferred: v X.X.X)
-    QString version;
-
-    //! author name
-    QString author;
-
-    //! explain string
-    QString tooltip;
-
-    //! true if you use setting widget
-    bool issettingwidget;
-
-} PLUGININFO;
+#include "InnerFunctions.h"
 
 /**
  * @brief The ExtraPluginInterface class
  * Interface class for writing a plugin to customize AutoBatchRunner.
  */
-class ExtraPluginInterface : public QObject
+class ExtraPluginInterface : public InnerFunctions
 {
 public:
     virtual ~ExtraPluginInterface(){}
@@ -59,51 +38,49 @@ public:
      */
     virtual int functionMain(int argc, QStringList *args) = 0;
 
-    /**
-     * @fn launchSettingWidget
-     * @brief This function is called above function returns true.
-     *        currentargs represents input, and resultargs represents output.
-     *
-     * @param currentargs
-     * @param resultargs
-     * @param parentpos
-     * @param parentstylesheet
-     * @return It returns argument of tablewidget
-     */
-    virtual int launchSettingWidget(QStringList *currentargs, QStringList *resultargs \
-                                    , QPoint parentpos, QString parentstylesheet = "") = 0;
-
-    //This is signal. It can send message to main console view
-//    virtual void sendMessage(const QString message) = 0;
-
-    //In case of error termination, call this function and get the set character string.
-    QString functionErrorMessage(){ return errorMessage; }
-    QString functionSuccessMessage(){ return successMessage; }
-
-    //Used when executing, rewriting data.
-    void setLocalValue(QHash<QString, QString> *local){ this->local = local; }
-    void setGlobalValue(QHash<QString, QString> global){this->global= global;}
-    void setInputFileData(QStringList file){this->file  = file;  }
-
-    /**
-     * @fn pluginInfo
-     * @brief Return the set information to ProfileEditor etc.
-     * @return PLUGININFO structure
-     */
-    const PLUGININFO pluginInfo(){return pinfo;}
-
 protected:
-    void setErrorMessage(const QString message){ errorMessage = message; }
-    void setSuccessMessage(const QString message){ successMessage = message; }
 
-    QString errorMessage = "";
-    QString successMessage = "";
+    /**
+     * @fn functionMessage
+     * @brief Sets the text displayed on the console, such as autobatchrunner.
+     * @param message The message you want to display.
+     * @param type Message type.
+     */
+    void functionMessage(QString message, MessageType type){
+        setMessage(message, type);
+    }
 
-    QHash<QString, QString> *local;
-    QHash<QString, QString> global;
-    QStringList file;
+    /**
+     * @fn functionInfo
+     * @brief Set basic information for plugins.
+     * @param info PluginInformation structure.
+     */
+    void functionInfo(PluginInformation info){
+        setInformation(info);
+    }
 
-    PLUGININFO pinfo;
+    /**
+     * @fn functionWidgetSetting
+     * @brief Function to reflect the settings of Widget to ProfileEditor.
+     *        Not used when PluginInformation::issettingwidget is false.
+     * @param args Argument list used in functionMain function.
+     */
+//    void functionWidgetSetting(QStringList args){
+//        setWidgetMessage(&args);
+//    }
+
+    template<typename T>
+    /**
+     * @fn applicationVariant
+     * @brief Get variables given from AutoBatchRunner etc.
+     *        The type to be obtained is determined by InputType.
+     * @param type enum class of Input type
+     * @param variant
+     */
+    void applicationVariant(InputType type, T *variant){
+        getVariant<T>(type, variant);
+    }
+
 
 };
 

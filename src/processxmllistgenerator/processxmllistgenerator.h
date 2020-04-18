@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #ifndef PROCESSXMLLISTGENERATOR_H
 #define PROCESSXMLLISTGENERATOR_H
 
@@ -123,6 +139,7 @@
 #define UNDOREDO_INSERT              "INS"
 #define UNDOREDO_SWAP                "SWA"
 #define UNDOREDO_MOVE                "MOV"
+#define UNDOREDO_EDIT                "EDI"
 
 #define UNDOREDO_E_TABLEADD          "ET_ADD"
 #define UNDOREDO_E_TABLEEDIT         "ET_EDIT"
@@ -137,6 +154,7 @@
 #define UNDOREDO_PL_TABLEINS         "PLT_INS"
 #define UNDOREDO_PL_TABLESWAP        "PLT_SWAP"
 #define UNDOREDO_PL_TABLEMOVE        "PLT_MOVE"
+#define UNDOREDO_PL_ALLUPDATE        "PLT_AUPD"
 
 #define UNDOREDO_LV_ADD              "LV_ADD"
 #define UNDOREDO_LV_EDIT             "LV_EDIT"
@@ -158,11 +176,12 @@
 #define E_DELETE_TABLE   "ht9!YQ(:"
 #define E_SWAP_TABLE     ",5Dm&y/R"
 
-#define PL_ADD_TABLE      ")r]&mwqn"
-#define PL_INSERT_TABLE   "8NGM:Yv3"
-#define PL_EDIT_TABLE     "UOq:>~`c"
-#define PL_DELETE_TABLE   "/=gx79d,"
-#define PL_SWAP_TABLE     "[FX@!%Nb"
+#define PL_ADD_TABLE       ")r]&mwqn"
+#define PL_INSERT_TABLE    "8NGM:Yv3"
+#define PL_EDIT_TABLE      "UOq:>~`c"
+#define PL_DELETE_TABLE    "/=gx79d,"
+#define PL_SWAP_TABLE      "[FX@!%Nb"
+#define PL_ALLUPDATE_TABLE "kW3#ZQ!T"
 
 #define L_ADD_TABLE      "gh%j~w+x"
 #define L_INSERT_TABLE   "EjEZ)PX"
@@ -188,7 +207,8 @@ public:
 
     //inner table operation
     enum{TABLE_ADD,TABLE_EDIT,TABLE_INSERT,TABLE_DELETE
-         ,TABLE_CUT,TABLE_PASTE,TABLE_DRAGDROP,TABLE_UP,TABLE_DOWN,TABLE_SWAP};
+         ,TABLE_CUT,TABLE_PASTE,TABLE_DRAGDROP,TABLE_UP,TABLE_DOWN,TABLE_SWAP
+         ,TABLE_ALLUPDATE};
 
     //connect ui to xml operation of tree
     enum{TREE_ADD,TREE_EDIT,TREE_INSERT,TREE_DELETE,TREE_UP,TREE_DOWN,TREE_SWAP};
@@ -224,6 +244,10 @@ public:
     void replaceElementList(QString tag, QString attr, int targetindex, QString replacestr, QList<QList<QStringList> *> *cache);
     void replaceElementList(int tableindex, int targetindex, QString replacestr, int skip, QList<QList<QStringList> *> *cache);
     void replaceElementList(int tableindex, int targetindex, QStringList replace, int skip, QList<QList<QStringList> *> *cache);
+
+    //plugin list
+    void replaceElementList(QStringList replace, int targetindex, int skip, QList<QList<QStringList> *> *cache);
+
     void replaceTypeElement(QString edittype, QString attr, int targetindex, QString replacestr, QList<QList<QStringList> *> *cache);
 
     int getId(QString tag);

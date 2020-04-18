@@ -31,7 +31,7 @@ class PluginsComboBox : public QComboBox
     Q_OBJECT
 
 signals:
-    void pluginChanged(bool);
+    void pluginChanged(QString);
 
 public:
     explicit PluginsComboBox(QObject *parent = nullptr);
@@ -39,6 +39,7 @@ public:
 
     QString getCurrentExtraFile();
     void reloadComboBoxItem();
+    void setComboBoxItem(QString *filepath);
 
 public slots:
     void addItemAction();

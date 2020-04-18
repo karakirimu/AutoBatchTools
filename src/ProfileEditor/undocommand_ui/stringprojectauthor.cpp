@@ -18,16 +18,16 @@ void StringProjectAuthor::undo()
 {
     pxlg.replaceElementList(I_AUTHOR, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
 
-    setText(QObject::tr("Author changed ") \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Author changed") \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 void StringProjectAuthor::redo()
 {
     pxlg.replaceElementList(I_AUTHOR, ATTR_NONE, m_targetindex, m_newstring, m_cache);
 
-    setText(QObject::tr("Author changed ") \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Author changed") \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 int StringProjectAuthor::id() const

@@ -247,6 +247,14 @@ void EditOperator::tableEditPluginAction(int id, int tableid, QString newstr, in
     emit editUpdate(id);
 }
 
+void EditOperator::tableEditPluginAction(int id, QStringList newstrlist, int operation)
+{
+    EditPluginTable *com = new EditPluginTable(id, newstrlist, operation, cache);
+
+    undostack->push(com);
+    emit editUpdate(id);
+}
+
 void EditOperator::tableDragDropExecAction(int id, QList<int> beforeid, int afterid)
 {
     DragDropExecTable *com = new DragDropExecTable(id, beforeid, afterid, cache);

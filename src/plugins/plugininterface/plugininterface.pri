@@ -1,7 +1,7 @@
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    $$PWD/extraplugininterface.h
-
-SOURCES += \
-    $$PWD/extraplugininterface.cpp
+    $$PWD/InnerFunctions.h \
+    $$PWD/extraplugininterface.h \
+    $$PWD/pluginvariants.h \
+    $$PWD/pluginwidget.h

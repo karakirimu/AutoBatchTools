@@ -21,7 +21,7 @@ void EditSearchFileOutputType::undo()
     pxlg.replaceElementList(S_OUTPUTFILETYPE, ATTR_NONE, m_targetindex, QString::number(m_oldvalue), m_cache);
 
     setText(QObject::tr("Change output file method") \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 void EditSearchFileOutputType::redo()
@@ -29,7 +29,7 @@ void EditSearchFileOutputType::redo()
     pxlg.replaceElementList(S_OUTPUTFILETYPE, ATTR_NONE, m_targetindex, QString::number(m_newvalue), m_cache);
 
     setText(QObject::tr("Change output file method") \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 int EditSearchFileOutputType::id() const

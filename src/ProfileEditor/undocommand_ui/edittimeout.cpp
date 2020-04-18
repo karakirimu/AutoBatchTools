@@ -18,7 +18,7 @@ void EditTimeout::undo()
     pxlg.replaceElementList(E_TIMEOUT, ATTR_TIMEOUTMS, m_targetindex, QString::number(m_oldvalue), m_cache);
 
     setText(QObject::tr("Timeout to %1ms").arg(m_newvalue) \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 void EditTimeout::redo()
@@ -26,7 +26,7 @@ void EditTimeout::redo()
     pxlg.replaceElementList(E_TIMEOUT, ATTR_TIMEOUTMS, m_targetindex, QString::number(m_newvalue), m_cache);
 
     setText(QObject::tr("Timeout to %1ms").arg(m_oldvalue) \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 int EditTimeout::id() const

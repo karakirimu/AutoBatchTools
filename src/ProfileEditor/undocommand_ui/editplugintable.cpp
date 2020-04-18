@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "editplugintable.h"
 
 EditPluginTable::EditPluginTable(const int &targetindex
@@ -24,6 +40,40 @@ EditPluginTable::EditPluginTable(const int &targetindex
     }
 }
 
+/**
+ * @fn EditPluginTable::EditPluginTable
+ * @brief EditPluginTable constructor. It is used only for TABLE_ALLUPDATE operations.
+ *
+ * @param targetindex The number selected by ProcessFlowTable.
+ * @param newstrlist  Updated new string list.
+ * @param operation   Operation name for changing xml cache data. Enum is defined.
+ * @param cache       Cache containing data to change.
+ * @param parent      Parent object.
+ */
+EditPluginTable::EditPluginTable(const int &targetindex
+                                     , QStringList newstrlist
+                                     , const int operation
+                                     , QList<QList<QStringList> *> *cache
+                                     , QUndoCommand *parent)
+    :QUndoCommand(parent)
+{
+    m_targetindex = targetindex;
+    m_newstrlist = newstrlist;
+    m_operation = operation;
+    m_cache = cache;
+
+    SKIP = pxlg.fetchCmdFirstPos(PL_CMD, m_cache->at(m_targetindex));
+    int cmdcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
+
+    for(int i = 0; i < cmdcount; i++){
+        m_oldstrlist.append(m_cache->at(m_targetindex)->at(i + SKIP).at(1));
+    }
+}
+
+/**
+ * @fn EditPluginTable::undo
+ * @brief Undo operation.
+ */
 void EditPluginTable::undo()
 {
     int rcount = -1;
@@ -88,11 +138,42 @@ void EditPluginTable::undo()
 
         break;
 
-    default:
+    case ProcessXmlListGenerator::TABLE_ALLUPDATE:
+        // delete all items
+        for(int i = 0; i < rcount; i++){
+            m_cache->at(m_targetindex)->removeAt(SKIP);
+        }
+
+        // add old items
+        int tableindex = 0;
+        for(QString item : m_oldstrlist){
+            alist = ProcessXmlListGenerator::createPluginElement(item, tableindex);
+            m_cache->at(m_targetindex)->append(alist);
+
+            tableindex++;
+        }
+
+        // update counter
+        QStringList ialist = m_cache->at(m_targetindex)->at(SKIP - 1);
+        ialist.replace(1, QString::number(m_oldstrlist.count()));
+        m_cache->at(m_targetindex)->replace(SKIP - 1, ialist);
+
+        // set undo text
+        QString strlistformat;
+        for(QString str : m_oldstrlist){
+            strlistformat.append(str).append(",");
+        }
+
+        sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UNDOREDO_PL_ALLUPDATE);
+        setText(QObject::tr("Update plugin settings at %1").arg(QString::number(m_targetindex)) + sendcode);
         break;
     }
 }
 
+/**
+ * @fn EditPluginTable::redo
+ * @brief Redo operation.
+ */
 void EditPluginTable::redo()
 {
     QStringList alist;
@@ -137,7 +218,6 @@ void EditPluginTable::redo()
         break;
     case ProcessXmlListGenerator::TABLE_DELETE:
     case ProcessXmlListGenerator::TABLE_CUT:
-        //add
         rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
         m_cache->at(m_targetindex)->removeAt(m_tableindex + SKIP);
 
@@ -154,7 +234,37 @@ void EditPluginTable::redo()
         }
 
         break;
-    default:
+
+    case ProcessXmlListGenerator::TABLE_ALLUPDATE:
+        rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
+
+        // delete all items
+        for(int i = 0; i < rcount; i++){
+            m_cache->at(m_targetindex)->removeAt(SKIP);
+        }
+
+        // add new items
+        int tableindex = 0;
+        for(QString item : m_newstrlist){
+            alist = ProcessXmlListGenerator::createPluginElement(item, tableindex);
+            m_cache->at(m_targetindex)->append(alist);
+
+            tableindex++;
+        }
+
+        // update counter
+        QStringList ialist = m_cache->at(m_targetindex)->at(SKIP - 1);
+        ialist.replace(1, QString::number(m_newstrlist.count()));
+        m_cache->at(m_targetindex)->replace(SKIP - 1, ialist);
+
+        // update string
+        QString strlistformat;
+        for(QString str : m_newstrlist){
+            strlistformat.append(str).append(",");
+        }
+
+        sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UNDOREDO_PL_ALLUPDATE);
+        setText(QObject::tr("Update plugin settings at %1").arg(QString::number(m_targetindex)) + sendcode);
         break;
     }
 }
@@ -178,6 +288,8 @@ int EditPluginTable::id() const
     case ProcessXmlListGenerator::TABLE_DELETE:
         return pxg.getId(PL_DELETE_TABLE);
 
+    case ProcessXmlListGenerator::TABLE_ALLUPDATE:
+        return pxg.getId(PL_ALLUPDATE_TABLE);
     }
 
     return pxg.getId(PL_CMDARGCOUNT);
@@ -207,6 +319,11 @@ void EditPluginTable::updateIndex(int count)
     }
 }
 
+/**
+ * @fn EditPluginTable::updateCounter
+ * @brief Update the counter of commandtable recorded in cache.
+ * @param ascend True to +1 the counter value, false to -1.
+ */
 void EditPluginTable::updateCounter(bool ascend)
 {
     QStringList alist;

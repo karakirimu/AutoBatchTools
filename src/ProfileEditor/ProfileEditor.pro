@@ -43,6 +43,7 @@ HEADERS  += editarea/commandtable.h \
     autosaveselectiondialog.h \
     editarea/editortab.h \
 #    editarea/profilecombobox.h \
+    editarea/plugincommandtable.h \
     editarea/searchcombobox.h \
     editarea/variantcombobox.h \
     adapter/editoperator.h \
@@ -117,6 +118,7 @@ SOURCES += editarea/commandtable.cpp \
     autosaveselectiondialog.cpp \
     editarea/editortab.cpp \
 #    editarea/profilecombobox.cpp \
+    editarea/plugincommandtable.cpp \
     editarea/searchcombobox.cpp \
     editarea/variantcombobox.cpp \
     adapter/editoperator.cpp \
@@ -207,6 +209,8 @@ RESOURCES += \
 #include(adapter/adapter.pri)
 #include(undocommand/undocommand.pri)
 #include(undocommand_ui/undocommand_ui.pri)
+
+include($$PWD/../plugins/plugininterface/plugininterface.pri)
 
 LIBS += \
         -L$$LIBRARYPATH -lVariantConverter \

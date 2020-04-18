@@ -1,14 +1,44 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "editortab.h"
 
 EditorTab::EditorTab(QWidget *parent)
     : QTabWidget(parent)
 {
-
+    pluginloader = nullptr;
+    plugininstance = nullptr;
 }
 
 EditorTab::~EditorTab()
 {
+    if(pluginloader != nullptr){
 
+        ExtraPluginInterface *ext = qobject_cast<ExtraPluginInterface *>(plugininstance);
+        if(ext->getInformation()->hassettingwidget){
+            disconnect(ext->getInformation()->settingwidget, \
+                       &PluginWidget::sendList, ctableplugins, &PluginCommandTable::insertSettingUpdate);
+//            disconnect(ext, &ExtraPluginInterface::updateSetting,\
+//                       ctableplugins, &PluginCommandTable::insertSettingUpdate);
+        }
+
+        pluginloader->unload();
+        plugininstance = nullptr;
+        delete pluginloader;
+    }
 }
 
 
@@ -22,11 +52,13 @@ void EditorTab::setConnection()
     searchcombobox = widgetsearch->findChild<SearchComboBox *>(SEARCH_COMBO);
     openToolButton = widgetsearch->findChild<QToolButton *>("openToolButton");
 
-    widgetextra = this->widget(ProcessXmlListGenerator::PLUGINS);
-    extrafunccombobox = widgetextra->findChild<PluginsComboBox *>("pluginComboBox");
-    addbutton_e = widgetextra->findChild<QToolButton *>("pluginAddToolButton");
-    deletebutton_e = widgetextra->findChild<QToolButton *>("pluginDeleteToolButton");
-    pluginsetting = widgetextra->findChild<QToolButton *>("pluginSettingToolButton");
+    widgetplugin = this->widget(ProcessXmlListGenerator::PLUGINS);
+    plugincombobox = widgetplugin->findChild<PluginsComboBox *>("pluginComboBox");
+    addbutton_e = widgetplugin->findChild<QToolButton *>("pluginAddToolButton");
+    deletebutton_e = widgetplugin->findChild<QToolButton *>("pluginDeleteToolButton");
+    pluginsetting = widgetplugin->findChild<QToolButton *>("pluginSettingToolButton");
+    scrollSettingWidget = widgetplugin->findChild<QScrollArea *>("scrollArea");
+    pluginPane = widgetplugin->findChild<QStackedWidget *>("pluginSetStackedWidget");
 
     otherwidget = this->widget(ProcessXmlListGenerator::OTHER);
     profilecombobox = otherwidget->findChild<ProfileComboBox *>("profileComboBox");
@@ -39,11 +71,11 @@ void EditorTab::setConnection()
     connect(deletebutton, &QAbstractButton::clicked, searchcombobox, &SearchComboBox::deleteAction);
     connect(openToolButton, &QToolButton::clicked, this, &EditorTab::openSavefile);
 
-    //connect action in extrafunc widget
-    connect(addbutton_e, &QAbstractButton::clicked, extrafunccombobox, &PluginsComboBox::addItemAction);
-    connect(deletebutton_e, &QAbstractButton::clicked, extrafunccombobox, &PluginsComboBox::deleteAction);
-    connect(extrafunccombobox, &PluginsComboBox::pluginChanged, pluginsetting, &QPushButton::setEnabled);
-    connect(pluginsetting, &QPushButton::clicked, this, &EditorTab::pluginSettingsClicked);
+    //connect action in plugin widget
+    connect(addbutton_e, &QAbstractButton::clicked, plugincombobox, &PluginsComboBox::addItemAction);
+    connect(deletebutton_e, &QAbstractButton::clicked, plugincombobox, &PluginsComboBox::deleteAction);
+    connect(plugincombobox, &PluginsComboBox::pluginChanged, this, &EditorTab::loadPluginInstance);
+    connect(pluginsetting, &QPushButton::clicked, this, &EditorTab::pluginSwitchSettingsClicked);
 
     //connect action in profile widget
     connect(addbutton_o, &QToolButton::clicked, profilecombobox, &ProfileComboBox::addItemAction);
@@ -79,8 +111,8 @@ void EditorTab::setEditOperator(EditOperator *op)
     localVariantComboBox->setEditOperator(op);
 
     // load extrafunc widget ui objects
-    autoonly_3 = widgetextra->findChild<QCheckBox *>("autoOnlyCheckBox_3");
-    ctableplugins = widgetextra->findChild<CommandTable *>("extrafuncTableWidget");
+    autoonly_3 = widgetplugin->findChild<QCheckBox *>("autoOnlyCheckBox_3");
+    ctableplugins = widgetplugin->findChild<PluginCommandTable *>("extrafuncTableWidget");
 
     // load other widget ui objects
     profilecombobox = otherwidget->findChild<ProfileComboBox *>("profileComboBox");
@@ -113,7 +145,7 @@ void EditorTab::setEditOperator(EditOperator *op)
     connect(fileOverWrite, &QRadioButton::clicked, this, &EditorTab::editRadioAction);
     connect(fileAppend, &QRadioButton::clicked, this, &EditorTab::editRadioAction);
 
-    connect(extrafunccombobox, QOverload<const QString &>::of(&PluginsComboBox::activated) \
+    connect(plugincombobox, QOverload<const QString &>::of(&PluginsComboBox::activated) \
             , this, &EditorTab::editTextAction);
 
     connect(autoonly_3, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
@@ -128,6 +160,7 @@ void EditorTab::setEditOperator(EditOperator *op)
     connect(ctablenormal, &CommandTable::dragDropTable, this, &EditorTab::editDragDropTableAction);
 
     connect(ctableplugins, &CommandTable::updateTable, this, &EditorTab::editTableAction);
+    connect(ctableplugins, &PluginCommandTable::updatePluginWidget, this, &EditorTab::editPluginTableAction);
     connect(ctableplugins, &CommandTable::swapTable, this, &EditorTab::editSwapTableAction);
     connect(ctableplugins, &CommandTable::dragDropTable, this, &EditorTab::editDragDropTableAction);
 
@@ -137,7 +170,22 @@ void EditorTab::updateIndex(QString operation)
 {
     QStringList sep = operation.split(",");
 
-    if(sep.count() < 2){
+    if(sep.last() == UNDOREDO_PL_ALLUPDATE){
+        //exectabledel
+        sep.removeLast();
+        ctableplugins->updateTableList(&sep);
+
+        if(pluginloader != nullptr){
+            ExtraPluginInterface *ext = qobject_cast<ExtraPluginInterface *>(plugininstance);
+            if(ext->getInformation()->hassettingwidget){
+                ext->getInformation()->settingwidget->blockSignals(true);
+                ext->getInformation()->settingwidget->receiveList(sep);
+                ext->getInformation()->settingwidget->blockSignals(false);
+
+            }
+        }
+
+    }else if(sep.at(1) == UNDOREDO_EDIT){
         //edit
         setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
                             EditOperator::SELECT);
@@ -291,29 +339,27 @@ void EditorTab::setPluginDataList(QList<QStringList> *list)
     this->blockSignals(true);
 
     //reset combobox
-    extrafunccombobox->reloadComboBoxItem();
+    plugincombobox->reloadComboBoxItem();
 
-    //get plugin name
-    QString plfile = xgen.fetch(PL_FILEPATH,ATTR_NONE, list);
-    QFileInfo info(plfile);
-
-    if(info.exists()){
-        //check plugin can use
-        QPluginLoader loader(plfile);
-
-        if(loader.load()){
-            ExtraPluginInterface *ext = qobject_cast<ExtraPluginInterface *>(loader.instance());
-            extrafunccombobox->setCurrentText(ext->pluginInfo().name);
-            loader.unload();
-        }
-    }
-
+    // update table
     int counter = xgen.fetch(PL_CMDARGCOUNT,ATTR_NONE, list).toInt();
     int ecmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
 
     ctableplugins->setRowCount(counter);
     for(int i = 0; i < counter; i++){
         ctableplugins->replaceItem(i, list->at(ecmdfirst + i).at(1));
+    }
+
+    //get plugin name
+    QString plfile = xgen.fetch(PL_FILEPATH,ATTR_NONE, list);
+
+    plugincombobox->setComboBoxItem(&plfile);
+
+    loadPluginInstance(plfile);
+
+    if(plugininstance != nullptr){
+        ExtraPluginInterface *ext = qobject_cast<ExtraPluginInterface *>(plugininstance);
+        plugincombobox->setCurrentText(ext->getInformation()->name);
     }
 
     autoonly_3->setChecked(VariantConverter::stringToBool( \
@@ -442,7 +488,7 @@ void EditorTab::tabChanged(int index)
 
     case ProcessXmlListGenerator::PLUGINS:
         this->blockSignals(true);
-        extrafunccombobox->reloadComboBoxItem();
+        plugincombobox->reloadComboBoxItem();
         this->blockSignals(false);
 
         editop->editTabAction(currentid, index);
@@ -547,7 +593,7 @@ void EditorTab::editTextAction(QString text)
         editop->comboboxLocalValAction(currentid, text);
 
     }else if(objname == "pluginComboBox"){
-        editop->comboboxPluginAction(currentid, text, extrafunccombobox->getCurrentExtraFile());
+        editop->comboboxPluginAction(currentid, text, plugincombobox->getCurrentExtraFile());
 
     }else if(objname == "profileComboBox"){
         editop->comboboxProfileAction(currentid, text, profilecombobox->getCurrentFileName());
@@ -568,7 +614,18 @@ void EditorTab::editTableAction(int index, QString str, int function)
     }else if(objname == "extrafuncTableWidget"){
         editop->tableEditPluginAction(currentid, index, str, function);
 
-    }  
+    }
+}
+
+void EditorTab::editPluginTableAction(QStringList strlist, int function)
+{
+    QString objname = this->sender()->objectName();
+    qDebug() << "[EditorTab::editPluginTableAction] object : " << objname;
+
+    if(objname == "extrafuncTableWidget"){
+        editop->tableEditPluginAction(currentid, strlist, function);
+
+    }
 }
 
 void EditorTab::editSwapTableAction(int indexbefore, int indexafter)
@@ -599,36 +656,131 @@ void EditorTab::editDragDropTableAction(QList<int> indexbefore, int indexafter)
     }
 }
 
-void EditorTab::pluginSettingsClicked()
+/**
+ * @fn EditorTab::pluginSwitchSettingsClicked
+ * @brief Switch between the command widget and the settings widget
+ *        in the plugin tab. Operation is enabled only when hassettingwidget
+ *        is true when loading plugins.
+ */
+void EditorTab::pluginSwitchSettingsClicked()
 {
-    QPluginLoader loader(extrafunccombobox->getCurrentExtraFile());
-    if(loader.load()){
-        QObject *plugin = loader.instance();
-        ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
-        QStringList resultargs;
-
-        //read data
-        int excount = ctableplugins->rowCount();
-        QStringList currentargs;
-        for(int i = 0; i < excount; i++){
-            currentargs.append(ctableplugins->model()->index(i, 0).data().toString());
-        }
-
-        inter->launchSettingWidget(&currentargs, &resultargs, \
-                                   editop->getMainWindowGeometry().center(), \
-                                   extrafunccombobox->styleSheet());
-
-        //write data
-        ctableplugins->insertItems(&resultargs);
-
-        loader.unload();
+    if(pluginPane->currentIndex() == PluginPane::SettingWidget){
+        pluginPane->setCurrentIndex(PluginPane::Command);
+    }else{
+        pluginPane->setCurrentIndex(PluginPane::SettingWidget);
     }
+
+//    QPluginLoader loader(extrafunccombobox->getCurrentExtraFile());
+//    if(loader.load()){
+//        QObject *plugin = loader.instance();
+//        ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
+//        QStringList resultargs;
+
+//        //read data
+//        int excount = ctableplugins->rowCount();
+//        QStringList currentargs;
+//        for(int i = 0; i < excount; i++){
+//            currentargs.append(ctableplugins->model()->index(i, 0).data().toString());
+//        }
+
+//        inter->launchSettingWidget(&currentargs, &resultargs, \
+//                                   editop->getMainWindowGeometry().center(), \
+//                                   extrafunccombobox->styleSheet());
+
+//        //write data
+//        ctableplugins->insertItems(&resultargs);
+
+//        loader.unload();
+//    }
 }
 
+/**
+ * @fn EditorTab::openSavefile
+ * @brief Select an output file in FileSearch tab widget.
+ */
 void EditorTab::openSavefile()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Search file"),\
                                          QDir::currentPath(), "File (*.*)");
 
     if(fileName != "") outputLineEdit->setText(fileName);
+}
+
+/**
+ * @fn EditorTab::loadPluginInstance
+ * @brief Load the plugin. The instance is retained until you switch
+ *        the row selection in ProcessFlowTable.
+ * @param plfile File path where the plugin exists.
+ */
+void EditorTab::loadPluginInstance(QString plfile)
+{
+    ExtraPluginInterface *ext = nullptr;
+
+    if(pluginloader != nullptr){
+
+        ext = qobject_cast<ExtraPluginInterface *>(plugininstance);
+        if(ext->getInformation()->hassettingwidget){
+            disconnect(ext->getInformation()->settingwidget, &PluginWidget::sendList, \
+                       ctableplugins, &PluginCommandTable::insertSettingUpdate);
+//            disconnect(ext, &ExtraPluginInterface::updateSetting,\
+//                       ctableplugins, &PluginCommandTable::insertSettingUpdate);
+        }
+
+        pluginloader->unload();
+        delete pluginloader;
+        pluginloader = nullptr;
+        plugininstance = nullptr;
+        ext = nullptr;
+    }
+
+    QFileInfo info(plfile);
+
+    if(info.exists()){
+        //check plugin can use
+        pluginloader = new QPluginLoader(plfile);
+
+        if(pluginloader->load()){
+            plugininstance = pluginloader->instance();
+            ext = qobject_cast<ExtraPluginInterface *>(plugininstance);
+
+        }else{
+            delete pluginloader;
+            pluginloader = nullptr;
+            plugininstance = nullptr;
+        }
+    }
+
+    // update gui widget
+    if(ext != nullptr){
+        if(ext->getInformation()->hassettingwidget){
+
+            // get table items
+            QStringList tmp;
+            int tc = ctableplugins->rowCount();
+
+            for (int i = 0; i < tc; i++) {
+                tmp.append(ctableplugins->item(i, 0)->text());
+            }
+
+            // set current table items (set first for later signal avoid)
+            ext->getInformation()->settingwidget->receiveList(tmp);
+
+            scrollSettingWidget->setWidget(ext->getInformation()->settingwidget);
+
+            // connect to ctableplugin
+            connect(ext->getInformation()->settingwidget, &PluginWidget::sendList, \
+                       ctableplugins, &PluginCommandTable::insertSettingUpdate);
+
+            pluginsetting->setEnabled(true);
+            pluginPane->setCurrentIndex(PluginPane::SettingWidget);
+        }else{
+            pluginsetting->setEnabled(false);
+            pluginPane->setCurrentIndex(PluginPane::Command);
+        }
+
+    }else{
+        scrollSettingWidget->takeWidget();
+        pluginsetting->setEnabled(false);
+        pluginPane->setCurrentIndex(PluginPane::SettingWidget);
+    }
 }

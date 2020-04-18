@@ -451,10 +451,10 @@ QStringList PluginsTree::loadPluginUiText(const QStringList *xmltext)
         QObject *plugin = loader.instance();
         ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
 
-        PLUGININFO pinfo = inter->pluginInfo();
+        const PluginInformation *pinfo = inter->getInformation();
 
-        hlist << pinfo.name << pinfo.version
-              << pinfo.author << xmltext->at(PATH_XML) << pinfo.tooltip;
+        hlist << pinfo->name << pinfo->version
+              << pinfo->author << xmltext->at(PATH_XML) << pinfo->tooltip;
 
         loader.unload();
 

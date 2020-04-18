@@ -530,6 +530,7 @@ bool Executor::loadPlugins(QList<QStringList> *list)
 
     QObject *plugin = loader.instance();
     ext = qobject_cast<ExtraPluginInterface *>(plugin);
+    connect(ext, &ExtraPluginInterface::updateMessage, this, &Executor::sendPluginMessage);
 
     int cmdc = static_cast<QString>(xgen.fetch(PL_CMDARGCOUNT, ATTR_NONE, list)).toInt();
     int ecmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
@@ -539,32 +540,30 @@ bool Executor::loadPlugins(QList<QStringList> *list)
         tmp.append(macroConvert(list->at(ecmdfirst + i).at(1)));
     }
 
-    ext->setInputFileData(fileList);
-    ext->setGlobalValue(globalHash);
-    ext->setLocalValue(localHash);
+    ext->setValue(&fileList, InputType::File);
+    ext->setValue(&globalHash, InputType::Global);
+    ext->setValue(localHash, InputType::Local);
 
     bool result = true;
 
-    QTime time;
-    time.start();
-
-    const QString plname = ext->pluginInfo().name;
+    const QString plname = ext->getInformation()->name;
 
     emit processMessage(tr("## [%1] started").arg(plname), PLUGINS);
 
     if(!ext->functionMain(cmdc, &tmp)){
-        QString success = ext->functionSuccessMessage();
-        emit processMessage(tr("## [%1] %2").arg(plname).arg(success) + tr("\n") + \
-                            tr("## [%1] sucessful").arg(plname), PLUGINS);
+        QString success = ext->getMessage(MessageType::Success);
+        if(success == "") success = tr("successfully completed.");
+
+        emit processMessage(tr("## [%1] %2").arg(plname).arg(success), PLUGINS);
 
     }else{
-        QString error = ext->functionErrorMessage();
-        emit processMessage(tr("## [%1] %2").arg(plname).arg(error) + tr("\n") + \
-                            tr("## [%1] failed").arg(plname), PLUGINS);
+        QString error = ext->getMessage(MessageType::Error);
+        if(error == "") error = tr("failed");
+
+        emit processMessage(tr("## [%1] %2").arg(plname).arg(error), PLUGINS);
         result = false;
     }
-
-    emit processMessage(tr("## [%1] elapsed %2 ms\n").arg(plname).arg(time.elapsed()), PLUGINS);
+    disconnect(ext, &ExtraPluginInterface::updateMessage, this, &Executor::sendPluginMessage);
 
     loader.unload();
 

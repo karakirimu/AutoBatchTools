@@ -18,7 +18,7 @@ void StringProjectName::undo()
     pxlg.replaceElementList(I_NAME, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
 
     setText(QObject::tr("Project name change") \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 void StringProjectName::redo()
@@ -26,7 +26,7 @@ void StringProjectName::redo()
     pxlg.replaceElementList(I_NAME, ATTR_NONE, m_targetindex, m_newstring, m_cache);
 
     setText(QObject::tr("Project name change") \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 int StringProjectName::id() const

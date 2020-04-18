@@ -18,7 +18,7 @@ void EditLoopArguments::undo()
     pxlg.replaceElementList(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, m_targetindex, QString::number(m_oldvalue), m_cache);
 
     setText(QObject::tr("Arguments count to %1").arg(m_newvalue) \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 void EditLoopArguments::redo()
@@ -26,7 +26,7 @@ void EditLoopArguments::redo()
     pxlg.replaceElementList(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, m_targetindex, QString::number(m_newvalue), m_cache);
 
     setText(QObject::tr("Arguments count to %1").arg(m_oldvalue) \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 int EditLoopArguments::id() const

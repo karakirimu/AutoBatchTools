@@ -20,7 +20,7 @@ void StringFileOutput::undo()
     pxlg.replaceElementList(S_OUTPUTFILE, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
 
     setText(QObject::tr("Change Search outputfile at %1").arg(m_targetindex) \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 void StringFileOutput::redo()
@@ -28,7 +28,7 @@ void StringFileOutput::redo()
     pxlg.replaceElementList(S_OUTPUTFILE, ATTR_NONE, m_targetindex, m_newstring, m_cache);
 
     setText(QObject::tr("Change Search outputfile at %1").arg(m_targetindex) \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 int StringFileOutput::id() const

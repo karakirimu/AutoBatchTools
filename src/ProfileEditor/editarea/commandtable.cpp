@@ -99,9 +99,9 @@ void CommandTable::swapItem(int before, int after)
 /**
  * @fn CommandTable::moveItem
  * @brief moving item in table (single or multiple contiguous select only)
- * @param before
- * @param beforecount
- * @param after
+ * @param before The first-line number to move from.
+ * @param beforecount The number of selections from the 'before' param.
+ * @param after The first line number to move.
  */
 void CommandTable::moveItem(int before, int beforecount, int after)
 {
@@ -156,19 +156,6 @@ void CommandTable::moveItem(int before, int beforecount, int after)
         this->insertRow(after + updown);
         this->setItem(after + updown, 0, new QTableWidgetItem(beforedata));
         this->blockSignals(false);
-    }
-}
-
-void CommandTable::insertItems(QStringList *item)
-{
-    int counter = item->count();
-    setRowCount(counter);
-
-    for(int i = 0; i < counter; i++){
-       this->blockSignals(true);
-       this->setItem(i, 0, new QTableWidgetItem(item->at(i)));
-       this->blockSignals(false);
-       emit updateTable(i, item->at(i), ProcessXmlListGenerator::TABLE_ADD);
     }
 }
 

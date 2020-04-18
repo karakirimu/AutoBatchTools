@@ -19,7 +19,7 @@ void EditLoopRecursive::undo()
     pxlg.replaceElementList(I_RECURSIVE_LOOPCOUNT, ATTR_NONE, m_targetindex, QString::number(m_oldvalue), m_cache);
 
     setText(QObject::tr("Loop recursive count to %1").arg(m_newvalue) \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 void EditLoopRecursive::redo()
@@ -27,7 +27,7 @@ void EditLoopRecursive::redo()
     pxlg.replaceElementList(I_RECURSIVE_LOOPCOUNT, ATTR_NONE, m_targetindex, QString::number(m_newvalue), m_cache);
 
     setText(QObject::tr("Loop recursive count to %1").arg(m_oldvalue) \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 int EditLoopRecursive::id() const

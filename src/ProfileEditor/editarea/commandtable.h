@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 karakirimu
+ * Copyright 2016-2020 karakirimu
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,9 +38,6 @@ public:
     void swapItem(int before, int after);
     void moveItem(int before, int beforecount, int after);
 
-    //pluginstable -> settingsclicked
-    void insertItems(QStringList *item);
-
 signals:
     void updateTable(int index, QString newstr, int function);
     void swapTable(int before, int after);
@@ -48,7 +45,6 @@ signals:
 
 protected slots:
     void dragEnterEvent(QDragEnterEvent *event);
-//    void dragMoveEvent(QDragMoveEvent *event);
     void dropEvent(QDropEvent *event);
 
 private slots:

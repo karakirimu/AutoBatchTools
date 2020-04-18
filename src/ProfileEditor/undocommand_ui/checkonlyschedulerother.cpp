@@ -18,7 +18,7 @@ void CheckOnlySchedulerOther::undo()
     pxlg.replaceTypeElement(TYPE_ANOTHER, ATTR_ONLY_SCHEDULER, m_targetindex, m_oldcheck, m_cache);
 
     setText(QObject::tr("Scheduler only %1").arg(m_newcheck) \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 void CheckOnlySchedulerOther::redo()
@@ -26,7 +26,7 @@ void CheckOnlySchedulerOther::redo()
     pxlg.replaceTypeElement(TYPE_ANOTHER, ATTR_ONLY_SCHEDULER, m_targetindex, m_newcheck, m_cache);
 
     setText(QObject::tr("Scheduler only %1").arg(m_newcheck) \
-            + QString(" ^(%1)").arg(m_targetindex));
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 int CheckOnlySchedulerOther::id() const

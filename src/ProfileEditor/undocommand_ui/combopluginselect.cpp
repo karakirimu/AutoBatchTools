@@ -22,8 +22,8 @@ void ComboPluginSelect::undo()
     pxlg.replaceElementList(PL_NAME, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
     pxlg.replaceElementList(PL_FILEPATH, ATTR_NONE, m_targetindex, m_oldfile, m_cache);
 
-    setText(QObject::tr("Plugins to %1 ").arg(m_oldstring) \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Plugins to %1").arg(m_oldstring) \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 void ComboPluginSelect::redo()
@@ -31,8 +31,8 @@ void ComboPluginSelect::redo()
     pxlg.replaceElementList(PL_NAME, ATTR_NONE, m_targetindex, m_newstring, m_cache);
     pxlg.replaceElementList(PL_FILEPATH, ATTR_NONE, m_targetindex, m_newfile, m_cache);
 
-    setText(QObject::tr("Plugins to %1 ").arg(m_newstring) \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Plugins to %1").arg(m_newstring) \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 int ComboPluginSelect::id() const

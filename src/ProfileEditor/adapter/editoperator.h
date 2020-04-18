@@ -193,6 +193,7 @@ public slots:
     void tableEditVariantAction(int id, int tableid, QStringList variants, int operation);
     void tableEditExecAction(int id, int tableid, QString newstr, int operation);
     void tableEditPluginAction(int id, int tableid, QString newstr, int operation);
+    void tableEditPluginAction(int id, QStringList newstrlist, int operation);
     void tableDragDropExecAction(int id, QList<int> beforeid, int afterid);
     void tableDragDropPluginAction(int id, QList<int> beforeid, int afterid);
 

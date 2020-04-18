@@ -17,15 +17,15 @@ EditComboBoxCommand::EditComboBoxCommand(const int &targetindex
 void EditComboBoxCommand::undo()
 {
     pxlg.replaceElementList(S_VARIANT, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
-    setText(QObject::tr("Return variant to %1 ").arg(m_oldstring) \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Return variant to %1").arg(m_oldstring) \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 void EditComboBoxCommand::redo()
 {
     pxlg.replaceElementList(S_VARIANT, ATTR_NONE, m_targetindex, m_newstring, m_cache);
-    setText(QObject::tr("Return variant to %1 ").arg(m_newstring) \
-            + QString("^(%1)").arg(m_targetindex));
+    setText(QObject::tr("Return variant to %1").arg(m_newstring) \
+            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
 }
 
 int EditComboBoxCommand::id() const

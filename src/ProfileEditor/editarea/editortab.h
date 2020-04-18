@@ -1,9 +1,26 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #ifndef EDITORTAB_H
 #define EDITORTAB_H
 
 #include "commandtable.h"
 #include "pluginscombobox.h"
 #include "../profilecombobox/profilecombobox.h"
+#include "plugincommandtable.h"
 #include "searchcombobox.h"
 #include "variantcombobox.h"
 
@@ -19,10 +36,12 @@
 #include <QRadioButton>
 #include <editoperator.h>
 #include <QDesktopWidget>
-//#include <pesharedfunction.h>
+#include <QScrollArea>
+#include <QStackedWidget>
+
 #include <../variantconverter/variantconverter.h>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
-#include <../plugins/PluginInterface/extraplugininterface.h>
+#include <../plugins/plugininterface/extraplugininterface.h>
 
 //ui object strings
 #define SEARCH_ADD      "searchAddButton"
@@ -63,16 +82,19 @@ private slots:
 //    void editValueAction(QString value);
     void editTextAction(QString text);
     void editTableAction(int index, QString str, int function);
+    void editPluginTableAction(QStringList strlist, int function);
     void editSwapTableAction(int indexbefore, int indexafter);
     void editDragDropTableAction(QList<int> indexbefore, int indexafter);
 
-    void pluginSettingsClicked();
+    void pluginSwitchSettingsClicked();
+    void loadPluginInstance(QString plfile);
 
 private:
     void openSavefile();
 
     EditOperator *editop;
     ProcessXmlListGenerator xgen;
+
     //current xml id
     int currentid = -1;
 
@@ -102,13 +124,19 @@ private:
     QRadioButton *fileAppend;
 
     //plugins
-    QWidget *widgetextra;
-    PluginsComboBox *extrafunccombobox;
+    QWidget *widgetplugin;
+    PluginsComboBox *plugincombobox;
     QCheckBox *autoonly_3;
-    CommandTable *ctableplugins;
+    PluginCommandTable *ctableplugins;
     QToolButton *addbutton_e;
     QToolButton *deletebutton_e;
     QToolButton *pluginsetting;
+    QScrollArea *scrollSettingWidget;
+    QStackedWidget *pluginPane;
+    enum PluginPane { SettingWidget, Command };
+
+    QPluginLoader *pluginloader;
+    QObject *plugininstance;
 
     //other
     QWidget *otherwidget;
