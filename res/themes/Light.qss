@@ -433,6 +433,12 @@ QDialog#FileSearchDialog {
 
 /* ===== QWidget ===== */
 
+QWidget#guiPage,
+QWidget#blankWidget,
+QWidget#SettingWidget {
+    background-color: #f5f5f5;
+}
+
 QWidget#StatusWidget,
 QWidget#AboutPE,
 QWidget#information,
