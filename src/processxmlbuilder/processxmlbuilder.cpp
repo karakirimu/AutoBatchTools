@@ -164,6 +164,7 @@ void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *l
             || element == S_OUTPUTFILETYPE
             || element == PR_FILEPATH
             || element == PL_CMDARGCOUNT
+            || element == PL_NAME
             || element == PL_FILEPATH
             || element == TE_STACKEDWIDGET_POSITION)
     {
