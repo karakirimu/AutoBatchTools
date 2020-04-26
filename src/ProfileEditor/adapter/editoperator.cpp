@@ -739,7 +739,7 @@ void EditOperator::loadcache(int amount)
     updater->readAllItem(cache);
     loadedxmlid = updater->count() - 1;
 
-    editorCache->deSerialize(cache);
+    //editorCache->deSerialize(cache);
 
 #ifdef QT_DEBUG
     qDebug() << "[EditOperator::loadcache] elapsed: " << time.elapsed() << "ms";
