@@ -23,6 +23,8 @@ EditOperator::EditOperator(QObject *parent)
 //    undostack->setUndoLimit(0);
 
     cache = new QList<QList<QStringList>*>();
+//    editorCache = new EditorCacheList();
+
     parentwid = qobject_cast<QMainWindow *>(parent);
 
     QSettings settings( "./settings.ini", QSettings::IniFormat );
@@ -42,6 +44,7 @@ EditOperator::~EditOperator()
         }
     }
 
+//    delete editorCache;
     delete cache;
 }
 
@@ -652,6 +655,26 @@ void EditOperator::save()
     ProcessXmlBuilder *updater = new ProcessXmlBuilder();
     updater->setLoadBlankPath(autosavefile);
 
+//    QList<QList<QStringList> *> dest;
+//    editorCache->serialize(&dest);
+//    if(QFile::exists("test.xml")){
+//        //condition of currently file used
+//        QFile file("test.xml");
+//        if(file.open(QIODevice::ReadOnly | QIODevice::Text)){
+//            file.close();
+//            QFile::remove("test.xml");
+//        }else{
+//            return;
+//        }
+//    }
+//    ProcessXmlBuilder *updater3 = new ProcessXmlBuilder();
+//    updater3->setLoadBlankPath("test.xml");
+//    int ecount = dest.count();
+//    for(int i = 0; i < ecount; i++){
+//        updater3->addItem(dest.at(i));
+//    }
+//    delete updater3;
+
     int count = cache->count();
     for(int i = 0; i < count; i++){
         updater->addItem(cache->at(i));
@@ -715,6 +738,8 @@ void EditOperator::loadcache(int amount)
 
     updater->readAllItem(cache);
     loadedxmlid = updater->count() - 1;
+
+    editorCache->deSerialize(cache);
 
 #ifdef QT_DEBUG
     qDebug() << "[EditOperator::loadcache] elapsed: " << time.elapsed() << "ms";

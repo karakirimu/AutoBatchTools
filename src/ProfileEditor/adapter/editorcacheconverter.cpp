@@ -1,6 +1,407 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "editorcacheconverter.h"
 
 EditorCacheConverter::EditorCacheConverter()
 {
 
+}
+
+EditorCacheConverter::~EditorCacheConverter()
+{
+
+}
+
+/**
+ * @fn EditorCacheConverter::convertToEditorCache
+ * @brief Convert XML to a cache for editor editing
+ * @param source List from XML
+ * @param dest Obtained data structure
+ */
+void EditorCacheConverter::convertToEditorCache(const QList<QList<QStringList> *> *source, QList<EditorCache> *dest)
+{
+    dest->clear();
+    for(QList<QStringList> *one : *source){
+        EditorCache cache;
+        convertToCache(&cache,one);
+        dest->append(cache);
+    }
+}
+
+/**
+ * @fn EditorCacheConverter::convertToXml
+ * @brief Converts a cache for editing into a list for writing to XML
+ * @param source List from data structure
+ * @param dest Obtained XML list
+ */
+void EditorCacheConverter::convertToXml(const QList<EditorCache> *source, QList<QList<QStringList> *> *dest)
+{
+    dest->clear();
+    for(EditorCache cache : *source){
+        QList<QStringList> *one = new QList<QStringList>();
+        convertFromCache(&cache, one);
+        dest->append(one);
+    }
+}
+
+/**
+ * @fn EditorCacheConverter::convertFromCache
+ * @brief Convert one element to XML format
+ * @param from Data structure for gui operation
+ * @param to Data structure for xml output
+ */
+void EditorCacheConverter::convertFromCache(const EditorCache *from, QList<QStringList> *to)
+{
+    switch (detectType(from->type)) {
+    case XMLLOAD::ALLINCLUDE:
+        to->append((QStringList() << TAG_TYPE << VALUE_TYPEALL));
+        to->append((QStringList() << TAG_FUNCTIONSELECT << QString::number(from->functionSelect)));
+        fromExecuteCache(from, to);
+        fromFileSearchCache(from, to);
+        fromPluginCache(from, to);
+        fromProfileLoadCache(from, to);
+        break;
+    case XMLLOAD::INFORMATION:
+        fromInfomationCache(from, to);
+        break;
+    case XMLLOAD::LOCAL:
+        fromLocalCache(from, to);
+        break;
+    case XMLLOAD::EXECUTE:
+        fromExecuteCache(from, to);
+        break;
+    case XMLLOAD::FILESEARCH:
+        fromFileSearchCache(from, to);
+        break;
+    case XMLLOAD::PLUGIN:
+        fromPluginCache(from, to);
+        break;
+    case XMLLOAD::PROFILELOAD:
+        fromProfileLoadCache(from, to);
+        break;
+    case XMLLOAD::INVALID:
+        break;
+    }
+}
+
+void EditorCacheConverter::fromInfomationCache(const EditorCache *from, QList<QStringList> *to)
+{
+    to->append((QStringList() << TAG_TYPE << VALUE_TYPEINFO));
+    to->append((QStringList() << TAG_I_NAME << from->info.name));
+    to->append((QStringList() << TAG_I_VERSION << from->info.version));
+    to->append((QStringList() << TAG_I_AUTHOR << from->info.author));
+    to->append((QStringList() << TAG_I_DESCRIPTION << from->info.description));
+    to->append((QStringList() << TAG_I_FILEINPUT_BOOL << VariantConverter::boolToString(from->info.fileInput)));
+    to->append((QStringList() << TAG_I_FILEINPUT_SEARCH_BOOL << VariantConverter::boolToString(from->info.fileInputSearch)));
+    to->append((QStringList() << TAG_I_FILESEARCH_NAME << from->info.fileSearchName \
+                              << ATTR_COMMAND_ID_INT << QString::number(from->info.fileSearchIndex)));
+
+    to->append((QStringList() << TAG_I_PROCESS_BOOL_HA1 << VariantConverter::boolToString(from->info.processAll) \
+                              << ATTR_I_PROCESSMAX_INT << QString::number(from->info.processMaxCount)));
+
+    to->append((QStringList() << TAG_I_ARG_IN_ONELOOP_INT << QString::number(from->info.argumentsInOneLoop)));
+    to->append((QStringList() << TAG_I_RECURSIVE_LOOPMAX_INT << QString::number(from->info.recursiveLoopMax)));
+}
+
+void EditorCacheConverter::fromLocalCache(const EditorCache *from, QList<QStringList> *to)
+{
+    to->append((QStringList() << TAG_TYPE << VALUE_TYPELOCAL));
+    to->append((QStringList() << TAG_L_VARIANTCOUNT_INT << QString::number(from->local.variantData.count())));
+
+    for(VariantPair v : from->local.variantData){
+        to->append(QStringList() << TAG_L_VARIANT_HA1 << v.variant << ATTR_L_VALUE << v.value);
+    }
+}
+
+void EditorCacheConverter::fromExecuteCache(const EditorCache *from, QList<QStringList> *to)
+{
+    to->append((QStringList() << TAG_TYPE << VALUE_TYPEEXEC \
+                << ATTR_ONLY_SCHEDULER_BOOL << VariantConverter::boolToString(from->exec.schedulerOnly)));
+    to->append((QStringList() << TAG_E_TIMEOUT_BOOL_HA1 << VariantConverter::boolToString(from->exec.timeoutEnabled) \
+                << ATTR_TIMEOUT_INT << QString::number(from->exec.timeout)));
+    to->append((QStringList() << TAG_E_DETACH_BOOL << VariantConverter::boolToString(from->exec.detach)));
+
+    int commandCount = from->exec.command.count();
+    to->append((QStringList() << TAG_E_COMMANDCOUNT_INT << QString::number(commandCount)));
+
+    for(int i = 0; i < commandCount; i++){
+        to->append(QStringList() << TAG_E_CMD_HA1 << from->exec.command.at(i) << ATTR_COMMAND_ID_INT << QString::number(i));
+    }
+}
+
+void EditorCacheConverter::fromFileSearchCache(const EditorCache *from, QList<QStringList> *to)
+{
+    to->append((QStringList() << TAG_TYPE << VALUE_TYPESEARCH \
+                << ATTR_ONLY_SCHEDULER_BOOL << VariantConverter::boolToString(from->filesearch.schedulerOnly)));
+    to->append((QStringList() << TAG_FS_NAME_HA1 << from->filesearch.name \
+                << ATTR_COMMAND_ID_INT << QString::number(from->filesearch.nameIndex)));
+    to->append((QStringList() << TAG_FS_SEPARATOR << from->filesearch.separator));
+    to->append((QStringList() << TAG_FS_VARIANT << from->filesearch.variant));
+    to->append((QStringList() << TAG_FS_FILEPATH_HA1 << from->filesearch.filePath \
+                << ATTR_FS_OUTPUTOPTION_INT << QString::number(from->filesearch.outputOption)));
+    to->append((QStringList() << TAG_FS_WRITEOPTION_INT << QString::number(from->filesearch.writeOption)));
+}
+
+void EditorCacheConverter::fromPluginCache(const EditorCache *from, QList<QStringList> *to)
+{
+    to->append((QStringList() << TAG_TYPE << VALUE_TYPEPLUGIN
+                << ATTR_ONLY_SCHEDULER_BOOL << VariantConverter::boolToString(from->plugin.schedulerOnly)));
+    to->append((QStringList() << TAG_P_NAME << from->plugin.name));
+    to->append((QStringList() << TAG_P_FILEPATH << from->plugin.filePath));
+
+    int commandCount = from->plugin.command.count();
+    to->append((QStringList() << TAG_P_COMMANDCOUNT_INT << QString::number(commandCount)));
+
+    for(int i = 0; i < commandCount; i++){
+        to->append(QStringList() << TAG_P_CMD_HA1 << from->plugin.command.at(i) << ATTR_COMMAND_ID_INT << QString::number(i));
+    }
+}
+
+void EditorCacheConverter::fromProfileLoadCache(const EditorCache *from, QList<QStringList> *to)
+{
+    to->append((QStringList() << TAG_TYPE << VALUE_TYPEPLOAD \
+                << ATTR_ONLY_SCHEDULER_BOOL << VariantConverter::boolToString(from->profileload.schedulerOnly)));
+    to->append((QStringList() << TAG_PLOAD_FILEPATH << from->profileload.filePath));
+}
+
+/**
+ * @fn EditorCacheConverter::convertToCache
+ * @brief Convert one XML element into an edit data structure
+ * @param to Data structure for gui operation
+ * @param from Data structure for xml output
+ */
+void EditorCacheConverter::convertToCache(EditorCache *to, const QList<QStringList> *from)
+{
+    to->type = fetch(TAG_TYPE, from);
+
+    switch (detectType(to->type)) {
+    case XMLLOAD::ALLINCLUDE:
+        to->functionSelect = fetch(TAG_FUNCTIONSELECT, from).toInt();
+        toExecuteCache(to, from);
+        toFileSearchCache(to, from);
+        toPluginCache(to, from);
+        toProfileLoadCache(to, from);
+        break;
+    case XMLLOAD::INFORMATION:
+        toInfomationCache(to, from);
+        break;
+    case XMLLOAD::LOCAL:
+        toLocalCache(to, from);
+        break;
+    case XMLLOAD::EXECUTE:
+        toExecuteCache(to, from);
+        break;
+    case XMLLOAD::FILESEARCH:
+        toFileSearchCache(to, from);
+        break;
+    case XMLLOAD::PLUGIN:
+        toPluginCache(to, from);
+        break;
+    case XMLLOAD::PROFILELOAD:
+        toProfileLoadCache(to, from);
+        break;
+    case XMLLOAD::INVALID:
+        break;
+    }
+}
+
+void EditorCacheConverter::toInfomationCache(EditorCache *to, const QList<QStringList> *from)
+{
+    to->info.name = fetch(TAG_I_NAME, from);
+    to->info.version = fetch(TAG_I_VERSION, from);
+    to->info.author = fetch(TAG_I_AUTHOR, from);
+    to->info.description = fetch(TAG_I_DESCRIPTION, from);
+
+    to->info.fileInput = VariantConverter::stringToBool(fetch(TAG_I_FILEINPUT_BOOL, from));
+    to->info.fileInputSearch = VariantConverter::stringToBool(fetch(TAG_I_FILEINPUT_SEARCH_BOOL, from));
+
+    to->info.fileSearchName = fetch(TAG_I_FILESEARCH_NAME, from);
+    to->info.fileSearchIndex = fetch(TAG_I_FILESEARCH_NAME, ATTR_COMMAND_ID_INT, from).toInt();
+
+    to->info.processAll = VariantConverter::stringToBool(fetch(TAG_I_PROCESS_BOOL_HA1, from));
+    to->info.processMaxCount = fetch(TAG_I_PROCESS_BOOL_HA1, ATTR_I_PROCESSMAX_INT, from).toInt();
+
+    to->info.argumentsInOneLoop = fetch(TAG_I_ARG_IN_ONELOOP_INT, from).toInt();
+
+    to->info.recursiveLoopMax = fetch(TAG_I_RECURSIVE_LOOPMAX_INT, from).toInt();
+}
+
+void EditorCacheConverter::toLocalCache(EditorCache *to, const QList<QStringList> *from)
+{
+    int variantCount = fetch(TAG_L_VARIANTCOUNT_INT, from).toInt();
+    int cmdfirst = fetchCommandFirstPos(TAG_L_VARIANTCOUNT_INT, from);
+
+    for(int i = 0; i < variantCount; i++){
+        VariantPair pair = {from->at(cmdfirst + i).at(1), from->at(cmdfirst + i).at(3)};
+        to->local.variantData.append(pair);
+    }
+}
+
+void EditorCacheConverter::toExecuteCache(EditorCache *to, const QList<QStringList> *from)
+{
+    int commandCount = fetch(TAG_E_COMMANDCOUNT_INT, from).toInt();
+
+    to->exec.detach = VariantConverter::stringToBool(fetch(TAG_E_DETACH_BOOL, from));
+
+    to->exec.timeoutEnabled = VariantConverter::stringToBool(fetch(TAG_E_TIMEOUT_BOOL_HA1, from));
+    to->exec.timeout = fetch(TAG_E_TIMEOUT_BOOL_HA1,ATTR_TIMEOUT_INT, from).toInt();
+
+    int cmdfirst = fetchCommandFirstPos(TAG_E_CMD_HA1, from);
+    for(int i = 0; i < commandCount; i++){
+        to->exec.command.append(from->at(cmdfirst + i).at(1));
+    }
+
+    to->exec.schedulerOnly = VariantConverter::stringToBool(fetch(TAG_TYPE,VALUE_TYPEEXEC,ATTR_ONLY_SCHEDULER_BOOL, from));
+
+}
+
+void EditorCacheConverter::toFileSearchCache(EditorCache *to, const QList<QStringList> *from)
+{
+    to->filesearch.name = fetch(TAG_FS_NAME_HA1, from);
+    to->filesearch.nameIndex = fetch(TAG_FS_NAME_HA1, ATTR_COMMAND_ID_INT, from).toInt();
+
+    to->filesearch.separator = fetch(TAG_FS_SEPARATOR, from);
+
+    to->filesearch.variant = fetch(TAG_FS_VARIANT, from);
+    to->filesearch.filePath = fetch(TAG_FS_FILEPATH_HA1, from);
+
+    // variant or outputfile
+    to->filesearch.outputOption = fetch(TAG_FS_FILEPATH_HA1,ATTR_FS_OUTPUTOPTION_INT, from).toInt();
+
+    // overwrite or append
+    to->filesearch.writeOption = fetch(TAG_FS_WRITEOPTION_INT, from).toInt();
+
+    to->filesearch.schedulerOnly = VariantConverter::stringToBool(fetch(TAG_TYPE,VALUE_TYPESEARCH,ATTR_ONLY_SCHEDULER_BOOL, from));
+}
+
+void EditorCacheConverter::toPluginCache(EditorCache *to, const QList<QStringList> *from)
+{
+    int commandCount = fetch(TAG_P_COMMANDCOUNT_INT, from).toInt();
+    to->plugin.name = fetch(TAG_P_NAME, from);
+
+    int ecmdfirst = fetchCommandFirstPos(TAG_P_CMD_HA1, from);
+    for(int i = 0; i < commandCount; i++){
+        to->plugin.command.append(from->at(ecmdfirst + i).at(1));
+    }
+
+    to->plugin.filePath = fetch(TAG_P_FILEPATH, from);
+    to->plugin.schedulerOnly = VariantConverter::stringToBool(fetch(TAG_TYPE,VALUE_TYPEPLUGIN,ATTR_ONLY_SCHEDULER_BOOL, from));
+}
+
+void EditorCacheConverter::toProfileLoadCache(EditorCache *to, const QList<QStringList> *from)
+{
+    to->profileload.filePath = fetch(TAG_PLOAD_FILEPATH, from);
+    to->profileload.schedulerOnly = VariantConverter::stringToBool(fetch(TAG_TYPE,VALUE_TYPEPLOAD,ATTR_ONLY_SCHEDULER_BOOL, from));
+}
+
+/**
+ * @fn EditorCacheConverter::fetch
+ * @brief Get the value of an XML tag
+ * @param tag Tag name
+ * @param loadbase List for XML
+ * @return The retrieved value
+ */
+QString EditorCacheConverter::fetch(QString tag, const QList<QStringList> *loadbase)
+{
+    return this->fetch(tag, "", loadbase, 0);
+}
+
+QString EditorCacheConverter::fetch(QString tag, QString attr, const QList<QStringList> *loadbase)
+{
+    return this->fetch(tag, attr, loadbase, 0);
+}
+
+QString EditorCacheConverter::fetch(QString tag, QString attr, const QList<QStringList> *loadbase, int firstpos)
+{
+    int count = loadbase->count();
+    int i = firstpos;
+    int listnummax = 0;
+    while(i < count){
+        if(tag == loadbase->at(i).at(0)){
+            if(attr == "") return loadbase->at(i).at(1);
+
+            listnummax = loadbase->at(i).count();
+            if(listnummax > 3 && attr == loadbase->at(i).at(2)) return loadbase->at(i).at(3);
+            if(listnummax > 5 && attr == loadbase->at(i).at(4)) return loadbase->at(i).at(5);
+        }
+        i++;
+    }
+
+    //cannot find
+    return "";
+}
+
+QString EditorCacheConverter::fetch(QString tag, QString value, QString attr, const QList<QStringList> *loadbase)
+{
+    int count = loadbase->count();
+    int i = 0;
+    int listnummax = 0;
+    while(i < count){
+        if(tag == loadbase->at(i).at(0)
+                && value == loadbase->at(i).at(1)){
+            if(attr == "") return loadbase->at(i).at(1);
+
+            listnummax = loadbase->at(i).count();
+            if(listnummax > 3 && attr == loadbase->at(i).at(2)) return loadbase->at(i).at(3);
+            if(listnummax > 5 && attr == loadbase->at(i).at(4)) return loadbase->at(i).at(5);
+        }
+        i++;
+    }
+
+    //cannot find
+    return "";
+}
+
+/**
+ * @fn ProcessXmlListGenerator::fetchCmdFirstPos
+ * @brief Find the first position in the list that contains
+ *        nformation about the table elements in the tab.
+ * @param tag Tag name. (E_CMD or PL_CMD)
+ * @param loadbase List of elements selected in ProcessFlowTable.
+ * @return The first position in the list of table elements, or -1 if not found.
+ */
+int EditorCacheConverter::fetchCommandFirstPos(QString tag, const QList<QStringList> *loadbase)
+{
+    int count = loadbase->count();
+    int i = 0;
+
+    if(tag == TAG_E_CMD_HA1)  tag = TAG_E_COMMANDCOUNT_INT;
+    if(tag == TAG_P_CMD_HA1) tag = TAG_P_COMMANDCOUNT_INT;
+
+    while(i < count){
+        if(tag == loadbase->at(i).at(0)){
+            return i + 1;
+        }
+        i++;
+    }
+
+    //cannot find
+    return -1;
+}
+
+EditorCacheConverter::XMLLOAD EditorCacheConverter::detectType(QString type)
+{
+    if(type == VALUE_TYPEALL) return XMLLOAD::ALLINCLUDE;
+    if(type == VALUE_TYPEEXEC)       return XMLLOAD::EXECUTE;
+    if(type == VALUE_TYPESEARCH)     return XMLLOAD::FILESEARCH;
+    if(type == VALUE_TYPEPLUGIN)     return XMLLOAD::PLUGIN;
+    if(type == VALUE_TYPEPLOAD)    return XMLLOAD::PROFILELOAD;
+    if(type == VALUE_TYPEINFO)       return XMLLOAD::INFORMATION;
+    if(type == VALUE_TYPELOCAL)      return XMLLOAD::LOCAL;
+
+    return XMLLOAD::INVALID;
 }

@@ -40,6 +40,9 @@ DEPENDPATH += $$OUT_PWD/../../library/
 LIBRARYPATH = $$OUT_PWD/../../library/
 
 HEADERS  += editarea/commandtable.h \
+    adapter/editorcache.h \
+    adapter/editorcacheconverter.h \
+    adapter/editorcachelist.h \
     autosaveselectiondialog.h \
     editarea/editortab.h \
 #    editarea/profilecombobox.h \
@@ -48,7 +51,6 @@ HEADERS  += editarea/commandtable.h \
     editarea/variantcombobox.h \
     adapter/editoperator.h \
     adapter/listmimedata.h \
-#    adapter/xmllistgenerator.h \
 #    graphicsarea/flowcellwidget.h \
 #    graphicsarea/flowtable.h \
 #    processlistarea/profiletreewidget.h \
@@ -115,6 +117,9 @@ HEADERS  += editarea/commandtable.h \
     undocommand_ui/swapglobalvartree.h
 
 SOURCES += editarea/commandtable.cpp \
+    adapter/editorcache.cpp \
+    adapter/editorcacheconverter.cpp \
+    adapter/editorcachelist.cpp \
     autosaveselectiondialog.cpp \
     editarea/editortab.cpp \
 #    editarea/profilecombobox.cpp \
@@ -123,7 +128,6 @@ SOURCES += editarea/commandtable.cpp \
     editarea/variantcombobox.cpp \
     adapter/editoperator.cpp \
     adapter/listmimedata.cpp \
-#    adapter/xmllistgenerator.cpp \
 #    graphicsarea/flowcellwidget.cpp \
 #    graphicsarea/flowtable.cpp \
 #    processlistarea/profiletreewidget.cpp \

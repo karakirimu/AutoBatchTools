@@ -30,6 +30,8 @@
 
 #include <listmimedata.h>
 
+#include <editorcachelist.h>
+
 #include <editlocalvartable.h>
 #include <edittabcommand.h>
 
@@ -237,6 +239,9 @@ private:
 
     //cache data
     QList<QList<QStringList> *> *cache;
+
+    // Thread safe cache
+//    EditorCacheList *editorCache;
 
     //undo stack
     QUndoStack *undostack;
