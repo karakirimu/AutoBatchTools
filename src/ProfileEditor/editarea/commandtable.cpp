@@ -123,7 +123,7 @@ void CommandTable::moveItem(int before, int beforecount, int after)
     bool firstelement = false;
     bool lastelement = false;
 
-    int updown = 0;
+//    int updown = 0;
     QString beforedata;
     int deductnum = 0;
 
@@ -138,7 +138,7 @@ void CommandTable::moveItem(int before, int beforecount, int after)
 
             beforedata = selectlist.value(before - deductnum);
             deductnum++;
-            updown = 0;
+//            updown = 0;
 
         }else{
 
@@ -148,13 +148,13 @@ void CommandTable::moveItem(int before, int beforecount, int after)
             }
 
             beforedata = selectlist.value(before + i);
-            updown = -1;
+//            updown = -1;
         }
 
         this->blockSignals(true);
         this->removeRow(deleterow);
-        this->insertRow(after + updown);
-        this->setItem(after + updown, 0, new QTableWidgetItem(beforedata));
+        this->insertRow(after /*+ updown*/);
+        this->setItem(after /*+ updown*/, 0, new QTableWidgetItem(beforedata));
         this->blockSignals(false);
     }
 }
