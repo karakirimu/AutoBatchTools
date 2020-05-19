@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "infostacked.h"
 
 InfoStacked::InfoStacked(QWidget *parent) : QStackedWidget(parent)
@@ -64,7 +80,13 @@ void InfoStacked::setEditOperator(EditOperator *op)
 
 }
 
-bool InfoStacked::moveStacked(int after, int function)
+/**
+ * @brief InfoStacked::switchStackedWidget
+ * @param after
+ * @param function
+ * @return
+ */
+bool InfoStacked::switchStackedWidget(int after, int function)
 {
     if((after == 2 && function == EditOperator::DELETE)
             || after == 0){
@@ -82,17 +104,17 @@ void InfoStacked::updateIndex(QString operation)
 {
     QStringList sep = operation.split(",");
 
-    if(sep.at(0) == "2" && sep.at(1) == UNDOREDO_EDIT){
+    if(sep.at(0) == "0" && sep.at(1) == UNDOREDO_EDIT){
         //edit
         setInfoDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
                             EditOperator::SELECT);
     }else if(sep.at(0) == "2" && sep.at(1) == UNDOREDO_DELETE){
         //change stack
-        moveStacked(0, EditOperator::SELECT);
+        switchStackedWidget(0, EditOperator::SELECT);
 
     }else if(sep.at(0) == "2" && sep.at(1) == UNDOREDO_ADD){
         //change stack
-        moveStacked(1, EditOperator::SELECT);
+        switchStackedWidget(1, EditOperator::SELECT);
 
     }
 }
@@ -103,52 +125,83 @@ void InfoStacked::reloadAction()
 }
 
 ///DEPENDS_XML DEPENDS_UI PROCESS
-void InfoStacked::setInfoDataList(int after, int before, int function)
+void InfoStacked::setInfoDataList(int after, int unused1, int function)
 {
-    Q_UNUSED(before)
+    Q_UNUSED(unused1)
 
 
     // change stack and check loading is need or not.
-    if(!moveStacked(after, function)) return;
+    if(!switchStackedWidget(after, function)) return;
 
     // update information ui
     this->blockSignals(true);
 
-    QList<QStringList> *list = new QList<QStringList>();
+//    QList<QStringList> *list = new QList<QStringList>();
 
-    if(!editop->read(after, list)){
-        delete list;
+//    if(!editop->read(after, list)){
+//        delete list;
+//        return;
+//    }
+
+//    ProcessXmlListGenerator pxlg;
+
+//    name->setText(pxlg.fetch(I_NAME, ATTR_NONE, list));
+//    ver->setText(pxlg.fetch(I_VERSION, ATTR_NONE, list));
+//    author->setText(pxlg.fetch(I_AUTHOR, ATTR_NONE, list));
+//    desc->setText(pxlg.fetch(I_DESCRIPTION, ATTR_NONE, list));
+
+//    finput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT, ATTR_NONE, list)));
+//    sinput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list)));
+
+//    fscombo->reloadComboBoxItem();
+//    fscombo->setCurrentText(pxlg.fetch(I_FILESEARCH_NAME, ATTR_NONE, list));
+//    rloop->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list)));
+//    rloopmax->setText(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_MAXCOUNT, list));
+//    rlargs->setText(pxlg.fetch(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, list));
+//    reloop->setText(pxlg.fetch(I_RECURSIVE_LOOPCOUNT, ATTR_NONE, list));
+
+//    bool check = VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list));
+//    addbutton->setVisible(check);
+//    editbutton->setVisible(check);
+//    deletebutton->setVisible(check);
+//    fscombo->setVisible(check);
+
+//    check = VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list));
+//    rlabel->setVisible(!check);
+//    rloopmax->setVisible(!check);
+
+//    delete list;
+
+    EditorCache list;
+
+    if(!editop->read(after, &list)){
         return;
     }
 
-    ProcessXmlListGenerator pxlg;
+    name->setText(list.info.name);
+    ver->setText(list.info.version);
+    author->setText(list.info.author);
+    desc->setText(list.info.description);
 
-    name->setText(pxlg.fetch(I_NAME, ATTR_NONE, list));
-    ver->setText(pxlg.fetch(I_VERSION, ATTR_NONE, list));
-    author->setText(pxlg.fetch(I_AUTHOR, ATTR_NONE, list));
-    desc->setText(pxlg.fetch(I_DESCRIPTION, ATTR_NONE, list));
-
-    finput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT, ATTR_NONE, list)));
-    sinput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list)));
+    finput->setChecked(list.info.fileInput);
+    sinput->setChecked(list.info.fileInputSearch);
 
     fscombo->reloadComboBoxItem();
-    fscombo->setCurrentText(pxlg.fetch(I_FILESEARCH_NAME, ATTR_NONE, list));
-    rloop->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list)));
-    rloopmax->setText(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_MAXCOUNT, list));
-    rlargs->setText(pxlg.fetch(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, list));
-    reloop->setText(pxlg.fetch(I_RECURSIVE_LOOPCOUNT, ATTR_NONE, list));
+    fscombo->setCurrentText(list.info.fileSearchName);
+    rloop->setChecked(list.info.processAll);
+    rloopmax->setText(QString::number(list.info.processMaxCount));
+    rlargs->setText(QString::number(list.info.argumentsInOneLoop));
+    reloop->setText(QString::number(list.info.recursiveLoopMax));
 
-    bool check = VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list));
+    bool check = list.info.fileInputSearch;
     addbutton->setVisible(check);
     editbutton->setVisible(check);
     deletebutton->setVisible(check);
     fscombo->setVisible(check);
 
-    check = VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list));
+    check = list.info.processAll;
     rlabel->setVisible(!check);
     rloopmax->setVisible(!check);
-
-    delete list;
 
     this->blockSignals(false);
 }

@@ -1,8 +1,24 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "variantcombobox.h"
 
 VariantComboBox::VariantComboBox(QObject *)
 {
- sbuilder = new StringXmlBuilder();
+    sbuilder = new StringXmlBuilder();
 // pbuilder = new ProcessXmlBuilder();
     editop = nullptr;
 }
@@ -30,14 +46,25 @@ void VariantComboBox::reloadComboBoxItem()
         }
     }
 
-    //Processxmlbuilder update (local)
-    if(editop->read(LOCALVARINDEX, &item)){
-        counter = QString(item.at(1).at(1)).toInt();
-        for(int i = 0; i < counter; i++){
-            this->addItem(item.at(2 + i).at(1));
+    //Variant cache update (Consider future XML changes) (local)
+    FunctionType fs;
+    QList<EditorCache> ec;
+    editop->readAll(&ec);
+    int index = 0;
+
+    for(EditorCache ect : ec){
+        if(fs.getType(ect.type) != fs.TYPE::LOCAL){
+            break;
         }
+        index++;
     }
-    item.clear();
+
+    if(index == ec.count()) return;
+
+    for (VariantPair pair : ec.at(index).local.variantData) {
+        this->addItem(pair.variant);
+    }
+
 }
 
 void VariantComboBox::setEditOperator(EditOperator *op)

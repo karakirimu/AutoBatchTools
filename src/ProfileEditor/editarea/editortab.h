@@ -65,14 +65,20 @@ public:
 
 private slots:
     //DEPENDS_XML data -> ui functions
-    void setNormalDataList(QList<QStringList> *list);
-    void setSearchDataList(QList<QStringList> *list);
-    void setPluginDataList(QList<QStringList> *list);
-    void setOtherDataList(QList<QStringList> *list);
-    void setCombinedDataList(int after, int before, int function);
+//    void setNormalDataList(QList<QStringList> *list);
+//    void setSearchDataList(QList<QStringList> *list);
+//    void setPluginDataList(QList<QStringList> *list);
+//    void setOtherDataList(QList<QStringList> *list);
+//    void setCombinedDataList(int after, int before, int function);
+
+    void setAllIncludeDataList(int itemid, int unused1 = -1, int unused2 = -1);
+    void setExecuteDataList(EditorCache *list);
+    void setFileSearchDataList(EditorCache *list);
+    void setPluginDataList(EditorCache *list);
+    void setProfileLoadDataList(EditorCache *list);
 
     // DEPENDS_XML undo redo functions
-    QString getTableData(int targetrow, int tablerow, QString loadtype);
+    QString getCommandTableRowData(int targetrow, int tablerow, QString loadtype);
 
     // DEPENDS_XML ui -> data functions
     void tabChanged(int index);

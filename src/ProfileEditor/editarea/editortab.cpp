@@ -119,7 +119,7 @@ void EditorTab::setEditOperator(EditOperator *op)
     autoonly_4 = otherwidget->findChild<QCheckBox *>("autoOnlyCheckBox_4");
 
     //index update
-    connect(editop, &EditOperator::processIndexUpdate, this, &EditorTab::setCombinedDataList);
+    connect(editop, &EditOperator::processIndexUpdate, this, &EditorTab::setAllIncludeDataList);
 
 
     //index edit (table is ignored)
@@ -138,7 +138,7 @@ void EditorTab::setEditOperator(EditOperator *op)
     connect(localVariantComboBox, QOverload<const QString &>::of(&VariantComboBox::activated) \
             , this, &EditorTab::editTextAction);
 
-    connect(outputLineEdit, &QLineEdit::textChanged, this, &EditorTab::editTextAction);
+    connect(outputLineEdit, &QLineEdit::textEdited, this, &EditorTab::editTextAction);
     connect(autoonly_2, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
     connect(vari, &QRadioButton::clicked, this, &EditorTab::editRadioAction);
     connect(file, &QRadioButton::clicked, this, &EditorTab::editRadioAction);
@@ -187,8 +187,9 @@ void EditorTab::updateIndex(QString operation)
 
     }else if(sep.at(1) == UNDOREDO_EDIT){
         //edit
-        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
-                            EditOperator::SELECT);
+//        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
+//                            EditOperator::SELECT);
+        setAllIncludeDataList(static_cast<QString>(sep.at(0)).toInt());
 
 //    }else if(sep.at(1) == UNDOREDO_ADD){
 //        //add
@@ -198,8 +199,10 @@ void EditorTab::updateIndex(QString operation)
 
     }else if(sep.at(1) == UNDOREDO_INSERT){
         //ins
-        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
-                            EditOperator::SELECT);
+//        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
+//                            EditOperator::SELECT);
+
+        setAllIncludeDataList(static_cast<QString>(sep.at(0)).toInt());
 
     }else if(sep.at(1) == UNDOREDO_E_TABLEADD){
         //exectableadd
@@ -211,21 +214,20 @@ void EditorTab::updateIndex(QString operation)
         ctablenormal->insertItem(static_cast<QString>(sep.at(1)).toInt());
         int rowpos = static_cast<QString>(sep.at(0)).toInt();
         int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-        ctablenormal->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos, UNDOREDO_E_TABLEEDIT));
+        ctablenormal->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_E_TABLEEDIT));
 
     }else if(sep.count() == 3
              && sep.at(2) == UNDOREDO_E_TABLEEDIT){
         //exectableedit
         int rowpos = static_cast<QString>(sep.at(0)).toInt();
         int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-        ctablenormal->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos, UNDOREDO_E_TABLEEDIT));
+        ctablenormal->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_E_TABLEEDIT));
 
     }else if(sep.at(1) == UNDOREDO_E_TABLEDEL){
         //exectabledel
         ctablenormal->deleteItem(static_cast<QString>(sep.at(0)).toInt());
 
-    }else if(sep.count() == 3
-             && sep.at(2) == UNDOREDO_E_TABLESWAP){
+    }else if(sep.count() == 3 && sep.at(2) == UNDOREDO_E_TABLESWAP){
         //exectableswap
         ctablenormal->swapItem(static_cast<QString>(sep.at(0)).toInt()
                                , static_cast<QString>(sep.at(1)).toInt());
@@ -240,14 +242,14 @@ void EditorTab::updateIndex(QString operation)
         ctableplugins->insertItem(static_cast<QString>(sep.at(1)).toInt());
         int rowpos = static_cast<QString>(sep.at(0)).toInt();
         int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-        ctableplugins->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos, UNDOREDO_PL_TABLEEDIT));
+        ctableplugins->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_PL_TABLEEDIT));
 
     }else if(sep.count() == 3
              && sep.at(2) == UNDOREDO_PL_TABLEEDIT){
         //exectableedit
         int rowpos = static_cast<QString>(sep.at(0)).toInt();
         int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-        ctableplugins->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos, UNDOREDO_PL_TABLEEDIT));
+        ctableplugins->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_PL_TABLEEDIT));
 
     }else if(sep.at(1) == UNDOREDO_PL_TABLEDEL){
         //exectabledel
@@ -276,65 +278,287 @@ void EditorTab::updateIndex(QString operation)
     }
 }
 
-///DEPENDS_XML DEPENDS_UI PROCESS
-void EditorTab::setNormalDataList(QList<QStringList> *list)
+/////DEPENDS_XML DEPENDS_UI PROCESS
+//void EditorTab::setNormalDataList(QList<QStringList> *list)
+//{
+//    int counter = xgen.fetch(E_CMDARGCOUNT,ATTR_NONE, list).toInt();
+//    this->blockSignals(true);
+
+//    runDetachCheckBox->setChecked(VariantConverter::stringToBool(xgen.fetch(E_RUNDETACH,ATTR_NONE, list)));
+
+//    timeoutCheckBox->setChecked(VariantConverter::stringToBool(xgen.fetch(E_TIMEOUT,ATTR_NONE, list)));
+
+//    timeoutLineEdit->setText(xgen.fetch(E_TIMEOUT,ATTR_TIMEOUTMS, list));
+
+//    int cmdfirst = xgen.fetchCmdFirstPos(E_CMD, list);
+
+//    ctablenormal->setRowCount(counter);
+//    for(int i = 0; i < counter; i++){
+//        ctablenormal->replaceItem(i, list->at(cmdfirst + i).at(1));
+//    }
+
+//    autoonly->setChecked(VariantConverter::stringToBool( \
+//                             xgen.fetch(ALL_TYPE,TYPE_EXEC,ATTR_ONLY_SCHEDULER, list)));
+
+//    this->blockSignals(false);
+
+//}
+
+/////DEPENDS_XML DEPENDS_UI PROCESS
+//void EditorTab::setSearchDataList(QList<QStringList> *list)
+//{
+//    this->blockSignals(true);
+
+//    searchcombobox->reloadComboBoxItem();
+//    searchcombobox->setCurrentText(xgen.fetch(S_NAME,ATTR_NONE, list));
+
+//    separatorLineEdit->setText(xgen.fetch(S_SEPARATOR,ATTR_NONE, list));
+//    localVariantComboBox->insertItem(0,xgen.fetch(S_VARIANT,ATTR_NONE, list));
+//    outputLineEdit->setText(xgen.fetch(S_OUTPUTFILE,ATTR_NONE, list));
+
+//    if(xgen.fetch(S_OUTPUTFILE,ATTR_RADIOBUTTONPOS, list) == "0"){
+//        vari->setChecked(true);
+//    }else{
+//        file->setChecked(true);
+//    }
+
+//    if(xgen.fetch(S_OUTPUTFILETYPE,ATTR_NONE, list) == "0"){
+//        fileOverWrite->setChecked(true);
+//    }else{
+//        fileAppend->setChecked(true);
+//    }
+
+//    autoonly_2->setChecked(VariantConverter::stringToBool( \
+//                               xgen.fetch(ALL_TYPE,TYPE_SEARCH,ATTR_ONLY_SCHEDULER, list)));
+
+//    this->blockSignals(false);
+
+//}
+
+/////DEPENDS_XML DEPENDS_UI PROCESS
+//void EditorTab::setPluginDataList(QList<QStringList> *list)
+//{
+//    this->blockSignals(true);
+
+//    //reset combobox
+//    plugincombobox->reloadComboBoxItem();
+
+//    // update table
+//    int counter = xgen.fetch(PL_CMDARGCOUNT,ATTR_NONE, list).toInt();
+//    int ecmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
+
+//    ctableplugins->setRowCount(counter);
+//    for(int i = 0; i < counter; i++){
+//        ctableplugins->replaceItem(i, list->at(ecmdfirst + i).at(1));
+//    }
+
+//    //get plugin name
+//    QString plfile = xgen.fetch(PL_FILEPATH,ATTR_NONE, list);
+
+//    plugincombobox->setComboBoxItem(&plfile);
+
+//    loadPluginInstance(plfile);
+
+//    if(plugininstance != nullptr){
+//        ExtraPluginInterface *ext = qobject_cast<ExtraPluginInterface *>(plugininstance);
+//        plugincombobox->setCurrentText(ext->getInformation()->name);
+//    }
+
+//    autoonly_3->setChecked(VariantConverter::stringToBool( \
+//                               xgen.fetch(ALL_TYPE,TYPE_SCRIPT,ATTR_ONLY_SCHEDULER, list)));
+
+//    this->blockSignals(false);
+//}
+
+/////DEPENDS_XML DEPENDS_UI PROCESS
+//void EditorTab::setOtherDataList(QList<QStringList> *list)
+//{
+//    this->blockSignals(true);
+
+//    QString curdata = xgen.fetch(PR_FILEPATH, ATTR_NONE, list);
+//    QFileInfo profile(curdata);
+
+//    if(profile.exists()){
+//        //read file
+//        ProcessXmlBuilder tpxb;
+//        QList<QStringList> tlist;
+//        tpxb.setLoadPath(curdata);
+
+//        if(tpxb.readItem(0, &tlist)){
+//            curdata = xgen.fetch(I_NAME, ATTR_NONE, &tlist);
+//        }
+
+//    }else{
+//        curdata = tr("(file is not exist)");
+//    }
+
+//    profilecombobox->reloadComboBoxItem();
+//    profilecombobox->setIndex(profile.canonicalFilePath());
+
+//    autoonly_4->setChecked(VariantConverter::stringToBool( \
+//                               xgen.fetch(ALL_TYPE,TYPE_ANOTHER,ATTR_ONLY_SCHEDULER, list)));
+
+//    this->blockSignals(false);
+//}
+
+/////DEPENDS_XML DEPENDS_UI PROCESS
+//void EditorTab::setCombinedDataList(int after, int before, int function)
+//{
+//    Q_UNUSED(before)
+
+//    Q_UNUSED(function)
+
+//    QList<QStringList> *list = new QList<QStringList>();
+
+//    //avoid multiple update
+//    if(after < 2 || !editop->read(after, list)){
+//        delete list;
+//        return;
+//    }
+
+//    //set current id
+//    qDebug() << "[EditorTab::setCombinedDataList]     currentid update : " << after;
+//    currentid = after;
+
+//    //set widget selection
+//    this->blockSignals(true);
+
+//    QString type = xgen.fetch(ALL_TYPE, ATTR_NONE, list);
+//    if(type == TYPE_ALLINCLUDE){
+//        setCurrentIndex(static_cast<QString>(xgen.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt());
+
+//        setNormalDataList(list);
+//        setSearchDataList(list);
+//        setPluginDataList(list);
+//        setOtherDataList(list);
+
+//    }else if(type == TYPE_EXEC){
+//        setNormalDataList(list);
+
+//    }else if(type == TYPE_SEARCH){
+//        setSearchDataList(list);
+
+//    }else if(type == TYPE_SCRIPT){
+//        setPluginDataList(list);
+
+//    }else if(type == TYPE_ANOTHER){
+//        setOtherDataList(list);
+//    }
+
+//    this->blockSignals(false);
+
+//    delete list;
+//}
+
+/**
+ * @brief EditorTab::setAllIncludeDataList
+ * @param itemid
+ * @param unused1
+ * @param unused2
+ */
+void EditorTab::setAllIncludeDataList(int itemid, int unused1, int unused2)
 {
-    int counter = xgen.fetch(E_CMDARGCOUNT,ATTR_NONE, list).toInt();
+    Q_UNUSED(unused1)
+    Q_UNUSED(unused2)
+
+    EditorCache list;
+    FunctionType ft;
+
+    //avoid multiple update
+    if(itemid < 2 || !editop->read(itemid, &list)){
+        return;
+    }
+
+    //set current id
+    qDebug() << "[EditorTab::setCombinedDataList]     currentid update : " << itemid;
+    currentid = itemid;
+
+    //set widget selection
     this->blockSignals(true);
 
-    runDetachCheckBox->setChecked(VariantConverter::stringToBool(xgen.fetch(E_RUNDETACH,ATTR_NONE, list)));
+    switch (ft.getType(list.type)) {
+    case ft.TYPE::ALLINCLUDE:
+        setCurrentIndex(list.functionSelect);
+        setExecuteDataList(&list);
+        setFileSearchDataList(&list);
+        setPluginDataList(&list);
+        setProfileLoadDataList(&list);
+        break;
+    case ft.TYPE::INFORMATION: break;
+    case ft.TYPE::LOCAL:       break;
+    case ft.TYPE::EXECUTE:     setExecuteDataList(&list);     break;
+    case ft.TYPE::FILESEARCH:  setFileSearchDataList(&list);  break;
+    case ft.TYPE::PLUGIN:      setPluginDataList(&list);      break;
+    case ft.TYPE::PROFILELOAD: setProfileLoadDataList(&list); break;
+    case ft.TYPE::INVALID: break;
+    }
 
-    timeoutCheckBox->setChecked(VariantConverter::stringToBool(xgen.fetch(E_TIMEOUT,ATTR_NONE, list)));
+    this->blockSignals(false);
+}
 
-    timeoutLineEdit->setText(xgen.fetch(E_TIMEOUT,ATTR_TIMEOUTMS, list));
+/**
+ * @brief EditorTab::setExecuteDataList
+ * @param list
+ */
+void EditorTab::setExecuteDataList(EditorCache *list)
+{
+    int counter = list->exec.command.count();
+    this->blockSignals(true);
 
-    int cmdfirst = xgen.fetchCmdFirstPos(E_CMD, list);
+    runDetachCheckBox->setChecked(list->exec.detach);
+
+    timeoutCheckBox->setChecked(list->exec.timeoutEnabled);
+    timeoutLineEdit->setText(QString::number(list->exec.timeout));
 
     ctablenormal->setRowCount(counter);
     for(int i = 0; i < counter; i++){
-        ctablenormal->replaceItem(i, list->at(cmdfirst + i).at(1));
+        ctablenormal->replaceItem(i, list->exec.command.at(i));
     }
 
-    autoonly->setChecked(VariantConverter::stringToBool( \
-                             xgen.fetch(ALL_TYPE,TYPE_EXEC,ATTR_ONLY_SCHEDULER, list)));
+    autoonly->setChecked(list->exec.schedulerOnly);
 
     this->blockSignals(false);
-
 }
 
-///DEPENDS_XML DEPENDS_UI PROCESS
-void EditorTab::setSearchDataList(QList<QStringList> *list)
+/**
+ * @brief EditorTab::setFileSearchDataList
+ * @param list
+ */
+void EditorTab::setFileSearchDataList(EditorCache *list)
 {
     this->blockSignals(true);
 
     searchcombobox->reloadComboBoxItem();
-    searchcombobox->setCurrentText(xgen.fetch(S_NAME,ATTR_NONE, list));
+    searchcombobox->setCurrentText(list->filesearch.name);
 
-    separatorLineEdit->setText(xgen.fetch(S_SEPARATOR,ATTR_NONE, list));
-    localVariantComboBox->insertItem(0,xgen.fetch(S_VARIANT,ATTR_NONE, list));
-    outputLineEdit->setText(xgen.fetch(S_OUTPUTFILE,ATTR_NONE, list));
+    separatorLineEdit->setText(list->filesearch.separator);
 
-    if(xgen.fetch(S_OUTPUTFILE,ATTR_RADIOBUTTONPOS, list) == "0"){
+    localVariantComboBox->reloadComboBoxItem();
+    localVariantComboBox->setCurrentText(list->filesearch.variant);
+    outputLineEdit->setText(list->filesearch.filePath);
+
+    if(list->filesearch.outputOption == list->filesearch.VARIANT){
         vari->setChecked(true);
     }else{
         file->setChecked(true);
     }
 
-    if(xgen.fetch(S_OUTPUTFILETYPE,ATTR_NONE, list) == "0"){
+    if(list->filesearch.writeOption == list->filesearch.OVERWRITE){
         fileOverWrite->setChecked(true);
     }else{
         fileAppend->setChecked(true);
     }
 
-    autoonly_2->setChecked(VariantConverter::stringToBool( \
-                               xgen.fetch(ALL_TYPE,TYPE_SEARCH,ATTR_ONLY_SCHEDULER, list)));
+    autoonly_2->setChecked(list->filesearch.schedulerOnly);
 
     this->blockSignals(false);
-
 }
 
-///DEPENDS_XML DEPENDS_UI PROCESS
-void EditorTab::setPluginDataList(QList<QStringList> *list)
+/**
+ * @brief EditorTab::setPluginDataList
+ * @param list
+ */
+void EditorTab::setPluginDataList(EditorCache *list)
 {
     this->blockSignals(true);
 
@@ -342,16 +566,15 @@ void EditorTab::setPluginDataList(QList<QStringList> *list)
     plugincombobox->reloadComboBoxItem();
 
     // update table
-    int counter = xgen.fetch(PL_CMDARGCOUNT,ATTR_NONE, list).toInt();
-    int ecmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
+    int counter = list->plugin.command.count();
 
     ctableplugins->setRowCount(counter);
     for(int i = 0; i < counter; i++){
-        ctableplugins->replaceItem(i, list->at(ecmdfirst + i).at(1));
+        ctableplugins->replaceItem(i, list->plugin.command.at(i));
     }
 
     //get plugin name
-    QString plfile = xgen.fetch(PL_FILEPATH,ATTR_NONE, list);
+    QString plfile = list->plugin.filePath;
 
     plugincombobox->setComboBoxItem(&plfile);
 
@@ -362,18 +585,20 @@ void EditorTab::setPluginDataList(QList<QStringList> *list)
         plugincombobox->setCurrentText(ext->getInformation()->name);
     }
 
-    autoonly_3->setChecked(VariantConverter::stringToBool( \
-                               xgen.fetch(ALL_TYPE,TYPE_SCRIPT,ATTR_ONLY_SCHEDULER, list)));
+    autoonly_3->setChecked(list->plugin.schedulerOnly);
 
     this->blockSignals(false);
 }
 
-///DEPENDS_XML DEPENDS_UI PROCESS
-void EditorTab::setOtherDataList(QList<QStringList> *list)
+/**
+ * @brief EditorTab::setProfileLoadDataList
+ * @param list
+ */
+void EditorTab::setProfileLoadDataList(EditorCache *list)
 {
     this->blockSignals(true);
 
-    QString curdata = xgen.fetch(PR_FILEPATH, ATTR_NONE, list);
+    QString curdata = list->profileload.filePath;
     QFileInfo profile(curdata);
 
     if(profile.exists()){
@@ -393,79 +618,50 @@ void EditorTab::setOtherDataList(QList<QStringList> *list)
     profilecombobox->reloadComboBoxItem();
     profilecombobox->setIndex(profile.canonicalFilePath());
 
-    autoonly_4->setChecked(VariantConverter::stringToBool( \
-                               xgen.fetch(ALL_TYPE,TYPE_ANOTHER,ATTR_ONLY_SCHEDULER, list)));
+    autoonly_4->setChecked(list->profileload.schedulerOnly);
 
     this->blockSignals(false);
 }
 
-///DEPENDS_XML DEPENDS_UI PROCESS
-void EditorTab::setCombinedDataList(int after, int before, int function)
+/**
+ * @brief EditorTab::getCommandTableRowData
+ * @param targetrow
+ * @param tablerow
+ * @param loadtype
+ * @return
+ */
+QString EditorTab::getCommandTableRowData(int targetrow, int tablerow, QString loadtype)
 {
-    Q_UNUSED(before)
+//    QList<QStringList> *list = new QList<QStringList>();
 
-    Q_UNUSED(function)
+//    if(targetrow < 2 || !editop->read(targetrow, list)){
+//        delete list;
+//        return "";
+//    }
 
-    QList<QStringList> *list = new QList<QStringList>();
+//    int cmdfirst = 0;
 
-    //avoid multiple update
-    if(after < 2 || !editop->read(after, list)){
-        delete list;
-        return;
-    }
+//    if(loadtype == UNDOREDO_E_TABLEEDIT){
+//        cmdfirst = xgen.fetchCmdFirstPos(E_CMD, list);
+//    }else{
+//        cmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
+//    }
 
-    //set current id
-    qDebug() << "[EditorTab::setCombinedDataList]     currentid update : " << after;
-    currentid = after;
+//    return list->at(cmdfirst + tablerow).at(1);
 
-    //set widget selection
-    this->blockSignals(true);
+    EditorCache list;
 
-    QString type = xgen.fetch(ALL_TYPE, ATTR_NONE, list);
-    if(type == TYPE_ALLINCLUDE){
-        setCurrentIndex(static_cast<QString>(xgen.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt());
-
-        setNormalDataList(list);
-        setSearchDataList(list);
-        setPluginDataList(list);
-        setOtherDataList(list);
-
-    }else if(type == TYPE_EXEC){
-        setNormalDataList(list);
-
-    }else if(type == TYPE_SEARCH){
-        setSearchDataList(list);
-
-    }else if(type == TYPE_SCRIPT){
-        setPluginDataList(list);
-
-    }else if(type == TYPE_ANOTHER){
-        setOtherDataList(list);
-    }
-
-    this->blockSignals(false);
-
-    delete list;
-}
-
-QString EditorTab::getTableData(int targetrow, int tablerow, QString loadtype)
-{
-    QList<QStringList> *list = new QList<QStringList>();
-
-    if(targetrow < 2 || !editop->read(targetrow, list)){
-        delete list;
+    if(targetrow < 2 || !editop->read(targetrow, &list)){
+        qDebug() << "[EditorTab::getCommandTableRowData] EditorCache read failed.";
         return "";
     }
 
-    int cmdfirst = 0;
-
     if(loadtype == UNDOREDO_E_TABLEEDIT){
-        cmdfirst = xgen.fetchCmdFirstPos(E_CMD, list);
-    }else{
-        cmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
-    }
+        return list.exec.command.at(tablerow);
 
-    return list->at(cmdfirst + tablerow).at(1);
+    }else{
+        return list.plugin.command.at(tablerow);
+    }
 }
 
 // DOUBT
@@ -703,7 +899,10 @@ void EditorTab::openSavefile()
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save Search file"),\
                                          QDir::currentPath(), "File (*.*)");
 
-    if(fileName != "") outputLineEdit->setText(fileName);
+    if(fileName != ""){
+        outputLineEdit->setText(fileName);
+        emit outputLineEdit->textEdited(fileName);
+    }
 }
 
 /**

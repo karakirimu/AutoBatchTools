@@ -71,9 +71,17 @@ bool ProcessXmlBuilder::readAllItem(QList<QList<QStringList> *> *itemlist)
     return Xmlbuilder::readAllItem(FIRSTLAYER, ATTR, itemlist);
 }
 
-bool ProcessXmlBuilder::addItem(const QList<QStringList> *itemlist)
+bool ProcessXmlBuilder::writeAllItem(const QList<QList<QStringList> *> *itemlist)
 {
-    return Xmlbuilder::overwriteItem(count(), ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+#ifdef QT_DEBUG
+    qDebug() << "[ProcessXmlBuilder::writeAllItem]";
+#endif
+    return Xmlbuilder::writeAllItem(ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+}
+
+bool ProcessXmlBuilder::insertItem(const QList<QStringList> *itemlist, int index)
+{
+    return Xmlbuilder::overwriteItem(index, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
 }
 
 bool ProcessXmlBuilder::deleteItem(int itemid)
@@ -89,15 +97,6 @@ bool ProcessXmlBuilder::editItem(int itemid, const QList<QStringList> *itemlist)
 void ProcessXmlBuilder::swapItem(int beforeitemid, int afteritemid)
 {
     Xmlbuilder::swapItem(beforeitemid, afteritemid, ROOTELEMENT, FIRSTLAYER, ATTR);
-}
-
-void ProcessXmlBuilder::copyItem(int itemid)
-{
-    QList<QStringList> tmp;
-    readItem(itemid, &tmp);
-
-    //add new item
-    addItem(&tmp);
 }
 
 bool ProcessXmlBuilder::overwriteItem(int itemid, const QList<QStringList> *itemlist)
@@ -124,17 +123,23 @@ void ProcessXmlBuilder::createDocument()
     newlist.append((QStringList() << I_RECURSIVE_LOOPARGCOUNT << "1"));
     newlist.append((QStringList() << I_RECURSIVE_LOOPCOUNT << "0"));
 
-    addItem(&newlist);
+    insertItem(&newlist, count());
     newlist.clear();
 
     //local element
     newlist.append((QStringList() << ALL_TYPE << TYPE_LOCAL));
     newlist.append((QStringList() << L_VAR_COUNT << "0"));
 
-    addItem(&newlist);
+    insertItem(&newlist, count());
     newlist.clear();
 }
 
+/**
+ * @fn ProcessXmlBuilder::count
+ * @brief Get the number of a specific tag group from XML.
+ * @attention When run continuously, it's pretty heavy.
+ * @return Specified tag group counts.
+ */
 int ProcessXmlBuilder::count()
 {
     return getElementItemsCount(FIRSTLAYER);

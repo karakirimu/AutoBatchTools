@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 karakirimu
+ * Copyright 2016-2020 karakirimu
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,14 +19,21 @@
 
 #include <QUndoCommand>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <editorcachelist.h>
 
 class ComboProfileSelect : public QUndoCommand
 {
 public:
+//    ComboProfileSelect(const int &targetindex
+//                       , const QString newstring
+//                       , const QString newfile
+//                       , QList<QList<QStringList> *> *cache
+//                       , QUndoCommand *parent = nullptr);
+
     ComboProfileSelect(const int &targetindex
                        , const QString newstring
                        , const QString newfile
-                       , QList<QList<QStringList> *> *cache
+                       , EditorCacheList *cache
                        , QUndoCommand *parent = nullptr);
 
    void undo() override;
@@ -35,16 +42,18 @@ public:
    int id() const override;
    bool mergeWith(const QUndoCommand *other) override;
 
-   QString m_newstring;
-   QString m_newfile;
+   QString newString;
+   QString newFile;
 
 private:
-   int m_targetindex;
+   int index;
    QString m_oldstring;
-   QString m_oldfile;
-   QList<QList<QStringList> *> *m_cache;
+   QString oldFile;
+//   QList<QList<QStringList> *> *m_cache;
 //   QHash<int, int> posinfo;
-   ProcessXmlListGenerator pxlg;
+//   ProcessXmlListGenerator pxlg;
+
+   EditorCacheList *ptrCache;
 
 };
 

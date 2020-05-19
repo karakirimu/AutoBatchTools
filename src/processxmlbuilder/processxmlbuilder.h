@@ -135,11 +135,11 @@ public:
 
    bool readItem(int itemid, QList<QStringList> *itemlist);
    bool readAllItem(QList<QList<QStringList> *> *itemlist);
-   bool addItem(const QList<QStringList> *itemlist);
+   bool writeAllItem(const QList<QList<QStringList> *> *itemlist);
+   bool insertItem(const QList<QStringList> *itemlist, int index);
    bool deleteItem(int itemid);
    bool editItem(int itemid, const QList<QStringList> *itemlist);
    void swapItem(int beforeitemid, int afteritemid);
-   void copyItem(int itemid);
    bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
    int count();
 

@@ -18,14 +18,12 @@
 
 EditorCacheList::EditorCacheList()
 {
-    cache = new QList<EditorCache>();
     converter = new EditorCacheConverter();
 }
 
 EditorCacheList::~EditorCacheList()
 {
     delete converter;
-    delete cache;
 }
 
 /**
@@ -36,7 +34,7 @@ EditorCacheList::~EditorCacheList()
 void EditorCacheList::serialize(QList<QList<QStringList> *> *dest)
 {
     std::lock_guard<std::mutex> lock(mutex);
-    converter->convertToXml(cache, dest);
+    converter->convertToXml(&cache, dest);
 }
 
 /**
@@ -47,71 +45,93 @@ void EditorCacheList::serialize(QList<QList<QStringList> *> *dest)
 void EditorCacheList::deSerialize(QList<QList<QStringList> *> *source)
 {
     std::lock_guard<std::mutex> lock(mutex);
-    converter->convertToEditorCache(source, cache);
+    converter->convertToEditorCache(source, &cache);
+}
+
+/**
+ * @brief EditorCacheList::type
+ * @param i Index
+ * @return Selected type
+ */
+FunctionType::TYPE EditorCacheList::loadType(int i)
+{
+    std::lock_guard<std::mutex> lock(mutex);
+    FunctionType ft;
+    return ft.getType(cache.at(i).type);
+}
+
+const EditorCache EditorCacheList::at(int i)
+{
+    std::lock_guard<std::mutex> lock(mutex);
+    return cache.at(i);
 }
 
 void EditorCacheList::append(const EditorCache &value)
 {
     std::lock_guard<std::mutex> lock(mutex);
-    cache->append(value);
+    cache.append(value);
 }
 
 void EditorCacheList::clear()
 {
     std::lock_guard<std::mutex> lock(mutex);
-    return cache->clear();
+    return cache.clear();
 }
 
 void EditorCacheList::insert(int i, const EditorCache &value)
 {
     std::lock_guard<std::mutex> lock(mutex);
-    cache->insert(i, value);
+    cache.insert(i, value);
 }
 
 bool EditorCacheList::isEmpty()
 {
     std::lock_guard<std::mutex> lock(mutex);
-    return cache->isEmpty();
+    return cache.isEmpty();
 }
 
 void EditorCacheList::move(int from, int to)
 {
     std::lock_guard<std::mutex> lock(mutex);
-    cache->move(from, to);
+    cache.move(from, to);
 }
 
 void EditorCacheList::prepend(const EditorCache &value)
 {
     std::lock_guard<std::mutex> lock(mutex);
-    cache->prepend(value);
+    cache.prepend(value);
 }
 
 void EditorCacheList::removeAt(int i)
 {
     std::lock_guard<std::mutex> lock(mutex);
-    cache->removeAt(i);
+    cache.removeAt(i);
 }
 
 void EditorCacheList::removeFirst()
 {
     std::lock_guard<std::mutex> lock(mutex);
-    cache->removeFirst();
+    cache.removeFirst();
 }
 
 void EditorCacheList::removeLast()
 {
     std::lock_guard<std::mutex> lock(mutex);
-    cache->removeLast();
+    cache.removeLast();
 }
 
 void EditorCacheList::replace(int i, const EditorCache &value)
 {
     std::lock_guard<std::mutex> lock(mutex);
-    cache->replace(i, value);
+    cache.replace(i, value);
 }
 
 int EditorCacheList::count()
 {
-    std::lock_guard<std::mutex> lock(mutex);
-    return cache->count();
+    int result = 0;
+    {
+        std::lock_guard<std::mutex> lock(mutex);
+        result = cache.count();
+    }
+    return result;
 }

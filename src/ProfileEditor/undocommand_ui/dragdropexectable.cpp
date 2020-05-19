@@ -1,37 +1,125 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "dragdropexectable.h"
 
+//DragDropExecTable::DragDropExecTable(const int &targetindex
+//                                     , const QList<int> tablebefore
+//                                     , const int &tableafter
+//                                     , QList<QList<QStringList> *> *cache
+//                                     , QUndoCommand *parent)
+//    :QUndoCommand(parent)
+//{
+//    index = targetindex;
+//    indexBefore = tablebefore;
+//    indexAfter = tableafter;
+
+//    m_cache = cache;
+
+//    SKIP = pxlg.fetchCmdFirstPos(E_CMD, m_cache->at(index));
+
+//    //sort list assend order
+//    std::sort(indexBefore.begin(), indexBefore.end());
+
+//    for(int i = 0; i < indexBefore.count(); i++){
+//        m_oldstr.insert(indexBefore.at(i)
+//                        , m_cache->at(index)->at(indexBefore.at(i) + SKIP).at(1));
+//    }
+
+//}
+
 DragDropExecTable::DragDropExecTable(const int &targetindex
-                                     , const QList<int> tablebefore
+                                     , const QList<int> &tablebefore
                                      , const int &tableafter
-                                     , QList<QList<QStringList> *> *cache
+                                     , EditorCacheList *cache
                                      , QUndoCommand *parent)
-    :QUndoCommand(parent)
+    : QUndoCommand(parent)
 {
-    m_targetindex = targetindex;
-    m_indexbefore = tablebefore;
-    m_indexafter = tableafter;
+    index = targetindex;
+    indexBefore = tablebefore;
+    indexAfter = tableafter;
 
-    m_cache = cache;
-
-    SKIP = pxlg.fetchCmdFirstPos(E_CMD, m_cache->at(m_targetindex));
+    ptrCache = cache;
 
     //sort list assend order
-    std::sort(m_indexbefore.begin(), m_indexbefore.end());
+    std::sort(indexBefore.begin(), indexBefore.end());
 
-    for(int i = 0; i < m_indexbefore.count(); i++){
-        m_oldstr.insert(m_indexbefore.at(i)
-                        , m_cache->at(m_targetindex)->at(m_indexbefore.at(i) + SKIP).at(1));
+    for(int i = 0; i < indexBefore.count(); i++){
+        oldStr.insert(indexBefore.at(i)
+                        , cache->at(index).exec.command.at(indexBefore.at(i)));
     }
-
 }
 
 void DragDropExecTable::undo()
 {
-    QStringList alist;
-    QString sendcode;
-    int rcount = -1;
+    // @deprecated
+//    {
+//    QStringList alist;
+//    QString sendcode;
+//    int rcount = -1;
 
-    //delete insert
+//    //delete insert
+
+//    int deleterow = 0;
+//    bool firstelement = false;
+//    bool lastelement = false;
+
+//    int before = 0;
+//    QString beforedata;
+//    int sourcecount = indexBefore.count();
+
+//    for(int i = 0; i < sourcecount; i++){
+//        before = indexBefore.last();
+
+//        if(before > indexAfter){
+
+//            //down to up operation
+//            if(!lastelement){
+//                lastelement = true;
+//                deleterow = indexAfter;
+//            }
+
+//            beforedata = m_oldstr.value(indexBefore.at(i));
+
+//        }else{
+
+//            //up to down operation
+//            if(!firstelement){
+//                firstelement = true;
+//                deleterow = indexAfter - 1;
+//            }
+
+//            before = indexBefore.first();
+
+//            beforedata = m_oldstr.value(indexBefore.at(sourcecount - 1 - i));
+//        }
+
+//        m_cache->at(index)->removeAt(deleterow + SKIP);
+
+//        alist = ProcessXmlListGenerator::createExecElement(beforedata, before);
+//        m_cache->at(index)->insert(before + SKIP, alist);
+//    }
+
+//    rcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, m_cache->at(index))).toInt();
+//    updateIndex(rcount);
+//    }
+
+    EditorCache ec = ptrCache->at(index);
+    QStringList list = ec.exec.command;
+    QString sendcode;
 
     int deleterow = 0;
     bool firstelement = false;
@@ -39,58 +127,110 @@ void DragDropExecTable::undo()
 
     int before = 0;
     QString beforedata;
-    int sourcecount = m_indexbefore.count();
+    int sourcecount = indexBefore.count();
 
     for(int i = 0; i < sourcecount; i++){
-        before = m_indexbefore.last();
+        before = indexBefore.last();
 
-        if(before > m_indexafter){
+        if(before > indexAfter){
 
             //down to up operation
             if(!lastelement){
                 lastelement = true;
-                deleterow = m_indexafter;
+                deleterow = indexAfter;
             }
 
-            beforedata = m_oldstr.value(m_indexbefore.at(i));
+            beforedata = oldStr.value(indexBefore.at(i));
 
         }else{
 
             //up to down operation
             if(!firstelement){
                 firstelement = true;
-                deleterow = m_indexafter - 1;
+                deleterow = indexAfter - 1;
             }
 
-            before = m_indexbefore.first();
+            before = indexBefore.first();
 
-            beforedata = m_oldstr.value(m_indexbefore.at(sourcecount - 1 - i));
+            beforedata = oldStr.value(indexBefore.at(sourcecount - 1 - i));
         }
 
-        m_cache->at(m_targetindex)->removeAt(deleterow + SKIP);
-
-        alist = ProcessXmlListGenerator::createExecElement(beforedata, before);
-        m_cache->at(m_targetindex)->insert(before + SKIP, alist);
+        list.removeAt(deleterow);
+        list.insert(before, beforedata);
     }
 
-    rcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
-    updateIndex(rcount);
+    ec.exec.command = list;
+    ptrCache->replace(index, ec);
 
     //  "process" target index
     //  exec table first before(source) index,
     //  exec table before(source) contiguous count (incremental),
     //  exec table after(target) index, sendcode
-    sendcode = QString(" ^(%1,%2,%3,%4,%5)").arg(m_targetindex).arg(deleterow) \
-                                         .arg(m_indexbefore.count()).arg(before) \
+    sendcode = QString(" ^(%1,%2,%3,%4,%5)").arg(index).arg(deleterow) \
+                                         .arg(indexBefore.count()).arg(before) \
                                          .arg(UNDOREDO_E_TABLEMOVE);
-    setText(QObject::tr("Move exec element at %1").arg(QString::number(m_indexafter)) + sendcode);
+    setText(QObject::tr("Move exec element at %1").arg(QString::number(indexAfter)) + sendcode);
 }
 
 void DragDropExecTable::redo()
 {
-    QStringList alist;
+    // @deprecated
+//    {
+//    QStringList alist;
+//    QString sendcode;
+//    int rcount = -1;
+
+//    int deleterow = 0;
+//    bool firstelement = false;
+//    bool lastelement = false;
+
+//    int updown = 0;
+//    int before = 0;
+//    QString beforedata;
+//    int sourcecount = indexBefore.count();
+
+//    int deductnum = 1;
+
+//    //multiple element move
+//    for(int i = 0; i < sourcecount; i++){
+//        before = indexBefore.at(i);
+
+//        if(before > indexAfter){
+
+//            if(!lastelement){
+//                lastelement = true;
+//                deleterow = indexBefore.last();
+//            }
+
+//            beforedata = m_oldstr.value(indexBefore.at(sourcecount - deductnum));
+//            deductnum++;
+//            updown = 0;
+
+//        }else{
+
+//            if(!firstelement){
+//                firstelement = true;
+//                deleterow = indexBefore.first();
+//            }
+
+//            beforedata = m_oldstr.value(before);
+//            updown = -1;
+
+//        }
+
+//        m_cache->at(index)->removeAt(deleterow + SKIP);
+
+//        alist = ProcessXmlListGenerator::createExecElement(beforedata, indexAfter + updown);
+//        m_cache->at(index)->insert(indexAfter + updown + SKIP, alist);
+//    }
+
+//    rcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, m_cache->at(index))).toInt();
+//    updateIndex(rcount);
+//    }
+
+    EditorCache ec = ptrCache->at(index);
+    QStringList list = ec.exec.command;
     QString sendcode;
-    int rcount = -1;
 
     int deleterow = 0;
     bool firstelement = false;
@@ -99,22 +239,22 @@ void DragDropExecTable::redo()
     int updown = 0;
     int before = 0;
     QString beforedata;
-    int sourcecount = m_indexbefore.count();
+    int sourcecount = indexBefore.count();
 
     int deductnum = 1;
 
     //multiple element move
     for(int i = 0; i < sourcecount; i++){
-        before = m_indexbefore.at(i);
+        before = indexBefore.at(i);
 
-        if(before > m_indexafter){
+        if(before > indexAfter){
 
             if(!lastelement){
                 lastelement = true;
-                deleterow = m_indexbefore.last();
+                deleterow = indexBefore.last();
             }
 
-            beforedata = m_oldstr.value(m_indexbefore.at(sourcecount - deductnum));
+            beforedata = oldStr.value(indexBefore.at(sourcecount - deductnum));
             deductnum++;
             updown = 0;
 
@@ -122,45 +262,42 @@ void DragDropExecTable::redo()
 
             if(!firstelement){
                 firstelement = true;
-                deleterow = m_indexbefore.first();
+                deleterow = indexBefore.first();
             }
 
-            beforedata = m_oldstr.value(before);
+            beforedata = oldStr.value(before);
             updown = -1;
 
         }
 
-        m_cache->at(m_targetindex)->removeAt(deleterow + SKIP);
-
-        alist = ProcessXmlListGenerator::createExecElement(beforedata, m_indexafter + updown);
-        m_cache->at(m_targetindex)->insert(m_indexafter + updown + SKIP, alist);
+        list.removeAt(deleterow);
+        list.insert(indexAfter + updown, beforedata);
     }
 
-    rcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
-    updateIndex(rcount);
-
+    ec.exec.command = list;
+    ptrCache->replace(index, ec);
 
     //  "process" target index
     //  exec table first before(source) index,
     //  exec table before(source) contiguous count (incremental),
     //  exec table after(target) index, sendcode
-    sendcode = QString(" ^(%1,%2,%3,%4,%5)").arg(m_targetindex).arg(deleterow) \
-                                         .arg(m_indexbefore.count()).arg(m_indexafter) \
+    sendcode = QString(" ^(%1,%2,%3,%4,%5)").arg(index).arg(deleterow) \
+                                         .arg(indexBefore.count()).arg(indexAfter) \
                                          .arg(UNDOREDO_E_TABLEMOVE);
 
-    setText(QObject::tr("Move exec element at %1").arg(QString::number(m_indexafter)) + sendcode);
+    setText(QObject::tr("Move exec element at %1").arg(QString::number(indexAfter)) + sendcode);
 }
 
-void DragDropExecTable::updateIndex(int count)
-{
-    QStringList alist;
-    int minbefore = m_indexbefore.first();
-    int minindex = minbefore > m_indexafter ? m_indexafter : minbefore;
+//void DragDropExecTable::updateIndex(int count)
+//{
+//    QStringList alist;
+//    int minbefore = indexBefore.first();
+//    int minindex = minbefore > indexAfter ? indexAfter : minbefore;
 
-    for(int i = minindex; i < count; i++){
-        alist = m_cache->at(m_targetindex)->at(i + SKIP);
-        alist.replace(3, QString::number(i));
-        m_cache->at(m_targetindex)->replace(i + SKIP, alist);
+//    for(int i = minindex; i < count; i++){
+//        alist = m_cache->at(index)->at(i + SKIP);
+//        alist.replace(3, QString::number(i));
+//        m_cache->at(index)->replace(i + SKIP, alist);
 
-    }
-}
+//    }
+//}

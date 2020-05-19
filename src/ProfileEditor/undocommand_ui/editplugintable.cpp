@@ -16,58 +16,95 @@
 
 #include "editplugintable.h"
 
+//EditPluginTable::EditPluginTable(const int &targetindex
+//                                     , const int &tableindex
+//                                     , QString newstr
+//                                     , const int operation
+//                                     , QList<QList<QStringList> *> *cache
+//                                     , QUndoCommand *parent)
+//    :QUndoCommand(parent)
+//{
+//    index = targetindex;
+//    tableIndex = tableindex;
+//    newStr = newstr;
+//    oldStr = "";
+//    tableOperation = operation;
+//    m_cache = cache;
+
+//    SKIP = pxlg.fetchCmdFirstPos(PL_CMD, m_cache->at(index));
+
+//    if(tableOperation == ProcessXmlListGenerator::TABLE_EDIT
+//            || tableOperation == ProcessXmlListGenerator::TABLE_DELETE
+//            || tableOperation == ProcessXmlListGenerator::TABLE_CUT){
+//        oldStr = m_cache->at(index)->at(tableIndex + SKIP).at(1);
+//    }
+//}
+
+///**
+// * @fn EditPluginTable::EditPluginTable
+// * @brief EditPluginTable constructor. It is used only for TABLE_ALLUPDATE operations.
+// *
+// * @param targetindex The number selected by ProcessFlowTable.
+// * @param newstrlist  Updated new string list.
+// * @param operation   Operation name for changing xml cache data. Enum is defined.
+// * @param cache       Cache containing data to change.
+// * @param parent      Parent object.
+// */
+//EditPluginTable::EditPluginTable(const int &targetindex
+//                                     , QStringList newstrlist
+//                                     , const int operation
+//                                     , QList<QList<QStringList> *> *cache
+//                                     , QUndoCommand *parent)
+//    :QUndoCommand(parent)
+//{
+//    index = targetindex;
+//    newStrList = newstrlist;
+//    tableOperation = operation;
+//    m_cache = cache;
+
+//    SKIP = pxlg.fetchCmdFirstPos(PL_CMD, m_cache->at(index));
+//    int cmdcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(index))).toInt();
+
+//    for(int i = 0; i < cmdcount; i++){
+//        oldStrList.append(m_cache->at(index)->at(i + SKIP).at(1));
+//    }
+//}
+
 EditPluginTable::EditPluginTable(const int &targetindex
-                                     , const int &tableindex
-                                     , QString newstr
-                                     , const int operation
-                                     , QList<QList<QStringList> *> *cache
-                                     , QUndoCommand *parent)
-    :QUndoCommand(parent)
+                                 , const int &tableindex
+                                 , const QString newstr
+                                 , const int operation
+                                 , EditorCacheList *cache
+                                 , QUndoCommand *parent)
+    : QUndoCommand(parent)
 {
-    m_targetindex = targetindex;
-    m_tableindex = tableindex;
-    m_newstr = newstr;
-    m_oldstr = "";
-    m_operation = operation;
-    m_cache = cache;
+    index = targetindex;
+    tableIndex = tableindex;
+    newStr = newstr;
+    oldStr = "";
+    tableOperation = operation;
+    ptrCache = cache;
 
-    SKIP = pxlg.fetchCmdFirstPos(PL_CMD, m_cache->at(m_targetindex));
-
-    if(m_operation == ProcessXmlListGenerator::TABLE_EDIT
-            || m_operation == ProcessXmlListGenerator::TABLE_DELETE
-            || m_operation == ProcessXmlListGenerator::TABLE_CUT){
-        m_oldstr = m_cache->at(m_targetindex)->at(m_tableindex + SKIP).at(1);
+    if(tableOperation == ProcessXmlListGenerator::TABLE_EDIT
+            || tableOperation == ProcessXmlListGenerator::TABLE_DELETE
+            || tableOperation == ProcessXmlListGenerator::TABLE_CUT){
+        oldStr = cache->at(index).plugin.command.at(tableIndex);
     }
 }
 
-/**
- * @fn EditPluginTable::EditPluginTable
- * @brief EditPluginTable constructor. It is used only for TABLE_ALLUPDATE operations.
- *
- * @param targetindex The number selected by ProcessFlowTable.
- * @param newstrlist  Updated new string list.
- * @param operation   Operation name for changing xml cache data. Enum is defined.
- * @param cache       Cache containing data to change.
- * @param parent      Parent object.
- */
 EditPluginTable::EditPluginTable(const int &targetindex
-                                     , QStringList newstrlist
-                                     , const int operation
-                                     , QList<QList<QStringList> *> *cache
-                                     , QUndoCommand *parent)
-    :QUndoCommand(parent)
+                                 , const QStringList newstrlist
+                                 , const int operation
+                                 , EditorCacheList *cache
+                                 , QUndoCommand *parent)
+    : QUndoCommand(parent)
 {
-    m_targetindex = targetindex;
-    m_newstrlist = newstrlist;
-    m_operation = operation;
-    m_cache = cache;
+    index = targetindex;
+    newStrList = newstrlist;
+    tableOperation = operation;
+    ptrCache = cache;
 
-    SKIP = pxlg.fetchCmdFirstPos(PL_CMD, m_cache->at(m_targetindex));
-    int cmdcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
-
-    for(int i = 0; i < cmdcount; i++){
-        m_oldstrlist.append(m_cache->at(m_targetindex)->at(i + SKIP).at(1));
-    }
+    oldStrList = cache->at(index).plugin.command;
 }
 
 /**
@@ -76,98 +113,164 @@ EditPluginTable::EditPluginTable(const int &targetindex
  */
 void EditPluginTable::undo()
 {
-    int rcount = -1;
-    QStringList alist;
+    // @deprecated
+//    {
+//    int rcount = -1;
+//    QStringList alist;
+//    QString sendcode;
+
+//    switch (tableOperation) {
+//    case ProcessXmlListGenerator::TABLE_ADD:
+//        //delete
+//        m_cache->at(index)->removeAt(m_tableindex + SKIP);
+
+//        updateCounter(false);
+
+//        setText(QObject::tr("Add plugin at %1").arg(QString::number(m_tableindex)) \
+//                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_PL_TABLEDEL));
+
+//        break;
+
+//    case ProcessXmlListGenerator::TABLE_EDIT:
+//        pxlg.replaceElementList(m_tableindex, index, m_oldstr, SKIP, m_cache);
+
+//        setText(QObject::tr("Edit plugin at %2 arg \'%1\'").arg(m_oldstr).arg(QString::number(m_tableindex)) \
+//                + QString(" ^(%1,%2,%3)").arg(index).arg(m_tableindex).arg(UNDOREDO_PL_TABLEEDIT));
+//        break;
+
+//    case ProcessXmlListGenerator::TABLE_INSERT:
+//    case ProcessXmlListGenerator::TABLE_PASTE:
+//        rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(index))).toInt();
+//        m_cache->at(index)->removeAt(m_tableindex + SKIP);
+
+//        updateCounter(false);
+
+//        if(m_tableindex < (rcount-1)) updateIndex(rcount-1);
+
+//        sendcode = QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_PL_TABLEDEL);
+
+//        if(tableOperation == ProcessXmlListGenerator::TABLE_PASTE){
+//            setText(QObject::tr("Paste plugin at %1 arg \'%2\'").arg(QString::number(m_tableindex)).arg(m_newstr) + sendcode);
+//        }else{
+//            setText(QObject::tr("Insert plugin at %1 arg \'%2\'").arg(QString::number(m_tableindex)).arg(m_newstr) + sendcode);
+//        }
+
+//        break;
+
+//    case ProcessXmlListGenerator::TABLE_DELETE:
+//    case ProcessXmlListGenerator::TABLE_CUT:
+//        rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(index))).toInt();
+//        alist = ProcessXmlListGenerator::createPluginElement(m_oldstr, m_tableindex);
+//        m_cache->at(index)->insert(m_tableindex + SKIP, alist);
+
+//        updateCounter(true);
+
+//        if(m_tableindex < rcount) updateIndex(rcount);
+
+//        sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(m_tableindex).arg(UNDOREDO_PL_TABLEINS);
+
+//        if(tableOperation == ProcessXmlListGenerator::TABLE_CUT){
+//            setText(QObject::tr("Cut plugin at %1").arg(QString::number(m_tableindex)) + sendcode);
+//        }else{
+//            setText(QObject::tr("Delete plugin at %1").arg(QString::number(m_tableindex)) + sendcode);
+//        }
+
+//        break;
+
+//    case ProcessXmlListGenerator::TABLE_ALLUPDATE:
+//        // delete all items
+//        for(int i = 0; i < rcount; i++){
+//            m_cache->at(index)->removeAt(SKIP);
+//        }
+
+//        // add old items
+//        int tableindex = 0;
+//        for(QString item : oldStrList){
+//            alist = ProcessXmlListGenerator::createPluginElement(item, tableindex);
+//            m_cache->at(index)->append(alist);
+
+//            tableindex++;
+//        }
+
+//        // update counter
+//        QStringList ialist = m_cache->at(index)->at(SKIP - 1);
+//        ialist.replace(1, QString::number(oldStrList.count()));
+//        m_cache->at(index)->replace(SKIP - 1, ialist);
+
+//        // set undo text
+//        QString strlistformat;
+//        for(QString str : oldStrList){
+//            strlistformat.append(str).append(",");
+//        }
+
+//        sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UNDOREDO_PL_ALLUPDATE);
+//        setText(QObject::tr("Update plugin settings at %1").arg(QString::number(index)) + sendcode);
+//        break;
+//    }
+//    }
+
+    EditorCache ec = ptrCache->at(index);
+    QStringList list = ec.plugin.command;
     QString sendcode;
 
-    switch (m_operation) {
+    switch (tableOperation) {
     case ProcessXmlListGenerator::TABLE_ADD:
-        //delete
-        m_cache->at(m_targetindex)->removeAt(m_tableindex + SKIP);
-
-        updateCounter(false);
-
-        setText(QObject::tr("Add plugin at %1").arg(QString::number(m_tableindex)) \
-                + QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_PL_TABLEDEL));
-
+        // Delete
+        list.removeAt(tableIndex);
+        setText(QObject::tr("Add plugin at %1").arg(QString::number(tableIndex)) \
+                + QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_PL_TABLEDEL));
         break;
 
     case ProcessXmlListGenerator::TABLE_EDIT:
-        pxlg.replaceElementList(m_tableindex, m_targetindex, m_oldstr, SKIP, m_cache);
 
-        setText(QObject::tr("Edit plugin at %2 arg \'%1\'").arg(m_oldstr).arg(QString::number(m_tableindex)) \
-                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_PL_TABLEEDIT));
+        list.replace(tableIndex, oldStr);
+        setText(QObject::tr("Edit plugin at %2 arg \'%1\'").arg(oldStr).arg(QString::number(tableIndex)) \
+                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_PL_TABLEEDIT));
         break;
 
     case ProcessXmlListGenerator::TABLE_INSERT:
     case ProcessXmlListGenerator::TABLE_PASTE:
-        rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
-        m_cache->at(m_targetindex)->removeAt(m_tableindex + SKIP);
+        // Delete
+        list.removeAt(tableIndex);
 
-        updateCounter(false);
-
-        if(m_tableindex < (rcount-1)) updateIndex(rcount-1);
-
-        sendcode = QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_PL_TABLEDEL);
-
-        if(m_operation == ProcessXmlListGenerator::TABLE_PASTE){
-            setText(QObject::tr("Paste plugin at %1 arg \'%2\'").arg(QString::number(m_tableindex)).arg(m_newstr) + sendcode);
+        sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_PL_TABLEDEL);
+        if(tableOperation == ProcessXmlListGenerator::TABLE_PASTE){
+            setText(QObject::tr("Paste plugin at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) + sendcode);
         }else{
-            setText(QObject::tr("Insert plugin at %1 arg \'%2\'").arg(QString::number(m_tableindex)).arg(m_newstr) + sendcode);
+            setText(QObject::tr("Insert plugin at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) + sendcode);
         }
-
         break;
 
     case ProcessXmlListGenerator::TABLE_DELETE:
     case ProcessXmlListGenerator::TABLE_CUT:
-        rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
-        alist = ProcessXmlListGenerator::createPluginElement(m_oldstr, m_tableindex);
-        m_cache->at(m_targetindex)->insert(m_tableindex + SKIP, alist);
+        // Insert
+        list.insert(tableIndex, oldStr);
 
-        updateCounter(true);
-
-        if(m_tableindex < rcount) updateIndex(rcount);
-
-        sendcode = QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_PL_TABLEINS);
-
-        if(m_operation == ProcessXmlListGenerator::TABLE_CUT){
-            setText(QObject::tr("Cut plugin at %1").arg(QString::number(m_tableindex)) + sendcode);
+        sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_PL_TABLEINS);
+        if(tableOperation == ProcessXmlListGenerator::TABLE_CUT){
+            setText(QObject::tr("Cut plugin at %1").arg(QString::number(tableIndex)) + sendcode);
         }else{
-            setText(QObject::tr("Delete plugin at %1").arg(QString::number(m_tableindex)) + sendcode);
+            setText(QObject::tr("Delete plugin at %1").arg(QString::number(tableIndex)) + sendcode);
         }
-
         break;
 
     case ProcessXmlListGenerator::TABLE_ALLUPDATE:
-        // delete all items
-        for(int i = 0; i < rcount; i++){
-            m_cache->at(m_targetindex)->removeAt(SKIP);
-        }
 
-        // add old items
-        int tableindex = 0;
-        for(QString item : m_oldstrlist){
-            alist = ProcessXmlListGenerator::createPluginElement(item, tableindex);
-            m_cache->at(m_targetindex)->append(alist);
-
-            tableindex++;
-        }
-
-        // update counter
-        QStringList ialist = m_cache->at(m_targetindex)->at(SKIP - 1);
-        ialist.replace(1, QString::number(m_oldstrlist.count()));
-        m_cache->at(m_targetindex)->replace(SKIP - 1, ialist);
+        list = oldStrList;
 
         // set undo text
         QString strlistformat;
-        for(QString str : m_oldstrlist){
+        for(QString str : oldStrList){
             strlistformat.append(str).append(",");
         }
 
         sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UNDOREDO_PL_ALLUPDATE);
-        setText(QObject::tr("Update plugin settings at %1").arg(QString::number(m_targetindex)) + sendcode);
+        setText(QObject::tr("Update plugin settings at %1").arg(QString::number(index)) + sendcode);
         break;
     }
+
+    ec.plugin.command = list;
+    ptrCache->replace(index, ec);
 }
 
 /**
@@ -176,97 +279,164 @@ void EditPluginTable::undo()
  */
 void EditPluginTable::redo()
 {
-    QStringList alist;
+    // @deprecated
+//    {
+//    QStringList alist;
+//    QString sendcode;
+//    int rcount = -1;
+
+//    switch (tableOperation) {
+//    case ProcessXmlListGenerator::TABLE_ADD:
+//        alist = ProcessXmlListGenerator::createPluginElement(m_newstr, m_tableindex);
+//        m_cache->at(index)->insert(m_tableindex + SKIP, alist);
+
+//        updateCounter(true);
+
+//        setText(QObject::tr("Add plugin %1").arg(QString::number(m_tableindex)) \
+//                + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_PL_TABLEADD));
+
+//        break;
+//    case ProcessXmlListGenerator::TABLE_EDIT:
+//        pxlg.replaceElementList(m_tableindex, index, m_newstr, SKIP, m_cache);
+
+//        setText(QObject::tr("Edit plugin at %2 arg \'%1\'").arg(m_newstr).arg(QString::number(m_tableindex)) \
+//                + QString(" ^(%1,%2,%3)").arg(index).arg(m_tableindex).arg(UNDOREDO_PL_TABLEEDIT));
+//        break;
+//    case ProcessXmlListGenerator::TABLE_INSERT:
+//    case ProcessXmlListGenerator::TABLE_PASTE:
+//        rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(index))).toInt();
+//        alist = ProcessXmlListGenerator::createPluginElement(m_newstr, m_tableindex);
+//        m_cache->at(index)->insert(m_tableindex + SKIP, alist);
+
+//        updateCounter(true);
+
+//        if(m_tableindex < rcount) updateIndex(rcount);
+
+//        sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(m_tableindex).arg(UNDOREDO_PL_TABLEINS);
+
+//        if(tableOperation == ProcessXmlListGenerator::TABLE_PASTE){
+//            setText(QObject::tr("Paste plugin at %1 arg \'%2\'").arg(QString::number(m_tableindex).arg(m_newstr)) + sendcode);
+//        }else{
+//            setText(QObject::tr("Insert plugin at %1 arg \'%2\'").arg(QString::number(m_tableindex).arg(m_newstr)) + sendcode);
+//        }
+
+//        break;
+//    case ProcessXmlListGenerator::TABLE_DELETE:
+//    case ProcessXmlListGenerator::TABLE_CUT:
+//        rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(index))).toInt();
+//        m_cache->at(index)->removeAt(m_tableindex + SKIP);
+
+//        updateCounter(false);
+
+//        if(m_tableindex < (rcount-1)) updateIndex(rcount-1);
+
+//        sendcode = QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_PL_TABLEDEL);
+
+//        if(tableOperation == ProcessXmlListGenerator::TABLE_CUT){
+//            setText(QObject::tr("Cut plugin at %1").arg(QString::number(m_tableindex)) + sendcode);
+//        }else{
+//            setText(QObject::tr("Delete plugin at %1").arg(QString::number(m_tableindex)) + sendcode);
+//        }
+
+//        break;
+
+//    case ProcessXmlListGenerator::TABLE_ALLUPDATE:
+//        rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(index))).toInt();
+
+//        // delete all items
+//        for(int i = 0; i < rcount; i++){
+//            m_cache->at(index)->removeAt(SKIP);
+//        }
+
+//        // add new items
+//        int tableindex = 0;
+//        for(QString item : newStrList){
+//            alist = ProcessXmlListGenerator::createPluginElement(item, tableindex);
+//            m_cache->at(index)->append(alist);
+
+//            tableindex++;
+//        }
+
+//        // update counter
+//        QStringList ialist = m_cache->at(index)->at(SKIP - 1);
+//        ialist.replace(1, QString::number(newStrList.count()));
+//        m_cache->at(index)->replace(SKIP - 1, ialist);
+
+//        // update string
+//        QString strlistformat;
+//        for(QString str : newStrList){
+//            strlistformat.append(str).append(",");
+//        }
+
+//        sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UNDOREDO_PL_ALLUPDATE);
+//        setText(QObject::tr("Update plugin settings at %1").arg(QString::number(index)) + sendcode);
+//        break;
+//    }
+//    }
+
+
+    EditorCache ec = ptrCache->at(index);
+    QStringList list = ec.plugin.command;
     QString sendcode;
-    int rcount = -1;
 
-    switch (m_operation) {
+    switch (tableOperation) {
     case ProcessXmlListGenerator::TABLE_ADD:
-        alist = ProcessXmlListGenerator::createPluginElement(m_newstr, m_tableindex);
-        m_cache->at(m_targetindex)->insert(m_tableindex + SKIP, alist);
 
-        updateCounter(true);
-
-        setText(QObject::tr("Add plugin %1").arg(QString::number(m_tableindex)) \
-                + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_PL_TABLEADD));
+        list.append(newStr);
+        setText(QObject::tr("Add plugin %1").arg(QString::number(tableIndex)) \
+                + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_PL_TABLEADD));
 
         break;
     case ProcessXmlListGenerator::TABLE_EDIT:
-        pxlg.replaceElementList(m_tableindex, m_targetindex, m_newstr, SKIP, m_cache);
 
-        setText(QObject::tr("Edit plugin at %2 arg \'%1\'").arg(m_newstr).arg(QString::number(m_tableindex)) \
-                + QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_PL_TABLEEDIT));
+        list.replace(tableIndex, newStr);
+        setText(QObject::tr("Edit plugin at %2 arg \'%1\'").arg(newStr).arg(QString::number(tableIndex)) \
+                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_PL_TABLEEDIT));
         break;
     case ProcessXmlListGenerator::TABLE_INSERT:
     case ProcessXmlListGenerator::TABLE_PASTE:
-        rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
-        alist = ProcessXmlListGenerator::createPluginElement(m_newstr, m_tableindex);
-        m_cache->at(m_targetindex)->insert(m_tableindex + SKIP, alist);
 
-        updateCounter(true);
+        list.insert(tableIndex, newStr);
 
-        if(m_tableindex < rcount) updateIndex(rcount);
-
-        sendcode = QString(" ^(%1,%2,%3)").arg(m_targetindex).arg(m_tableindex).arg(UNDOREDO_PL_TABLEINS);
-
-        if(m_operation == ProcessXmlListGenerator::TABLE_PASTE){
-            setText(QObject::tr("Paste plugin at %1 arg \'%2\'").arg(QString::number(m_tableindex).arg(m_newstr)) + sendcode);
+        sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_PL_TABLEINS);
+        if(tableOperation == ProcessXmlListGenerator::TABLE_PASTE){
+            setText(QObject::tr("Paste plugin at %1 arg \'%2\'").arg(QString::number(tableIndex).arg(newStr)) + sendcode);
         }else{
-            setText(QObject::tr("Insert plugin at %1 arg \'%2\'").arg(QString::number(m_tableindex).arg(m_newstr)) + sendcode);
+            setText(QObject::tr("Insert plugin at %1 arg \'%2\'").arg(QString::number(tableIndex).arg(newStr)) + sendcode);
         }
 
         break;
     case ProcessXmlListGenerator::TABLE_DELETE:
     case ProcessXmlListGenerator::TABLE_CUT:
-        rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
-        m_cache->at(m_targetindex)->removeAt(m_tableindex + SKIP);
 
-        updateCounter(false);
+        list.removeAt(tableIndex);
 
-        if(m_tableindex < (rcount-1)) updateIndex(rcount-1);
-
-        sendcode = QString(" ^(%1,%2)").arg(m_tableindex).arg(UNDOREDO_PL_TABLEDEL);
-
-        if(m_operation == ProcessXmlListGenerator::TABLE_CUT){
-            setText(QObject::tr("Cut plugin at %1").arg(QString::number(m_tableindex)) + sendcode);
+        sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_PL_TABLEDEL);
+        if(tableOperation == ProcessXmlListGenerator::TABLE_CUT){
+            setText(QObject::tr("Cut plugin at %1").arg(QString::number(tableIndex)) + sendcode);
         }else{
-            setText(QObject::tr("Delete plugin at %1").arg(QString::number(m_tableindex)) + sendcode);
+            setText(QObject::tr("Delete plugin at %1").arg(QString::number(tableIndex)) + sendcode);
         }
 
         break;
 
     case ProcessXmlListGenerator::TABLE_ALLUPDATE:
-        rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
-
-        // delete all items
-        for(int i = 0; i < rcount; i++){
-            m_cache->at(m_targetindex)->removeAt(SKIP);
-        }
-
-        // add new items
-        int tableindex = 0;
-        for(QString item : m_newstrlist){
-            alist = ProcessXmlListGenerator::createPluginElement(item, tableindex);
-            m_cache->at(m_targetindex)->append(alist);
-
-            tableindex++;
-        }
-
-        // update counter
-        QStringList ialist = m_cache->at(m_targetindex)->at(SKIP - 1);
-        ialist.replace(1, QString::number(m_newstrlist.count()));
-        m_cache->at(m_targetindex)->replace(SKIP - 1, ialist);
+        list = newStrList;
 
         // update string
         QString strlistformat;
-        for(QString str : m_newstrlist){
+        for(QString str : newStrList){
             strlistformat.append(str).append(",");
         }
 
         sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UNDOREDO_PL_ALLUPDATE);
-        setText(QObject::tr("Update plugin settings at %1").arg(QString::number(m_targetindex)) + sendcode);
+        setText(QObject::tr("Update plugin settings at %1").arg(QString::number(index)) + sendcode);
         break;
     }
+
+    ec.plugin.command = list;
+    ptrCache->replace(index, ec);
+
 }
 
 int EditPluginTable::id() const
@@ -275,7 +445,7 @@ int EditPluginTable::id() const
 //    return pxg.getId(PL_CMDARGCOUNT);
     ProcessXmlListGenerator pxg;
 
-    switch (m_operation) {
+    switch (tableOperation) {
     case ProcessXmlListGenerator::TABLE_ADD:
         return pxg.getId(PL_ADD_TABLE);
 
@@ -300,40 +470,40 @@ bool EditPluginTable::mergeWith(const QUndoCommand *other)
 {
     if (other->id() != id()) return false;
     const EditPluginTable *com = static_cast<const EditPluginTable *>(other);
-    if(m_operation == ProcessXmlListGenerator::TABLE_EDIT){
-        m_newstr = com->m_newstr;
+    if(tableOperation == ProcessXmlListGenerator::TABLE_EDIT){
+        newStr = com->newStr;
     }else{
         return false;
     }
     return true;
 }
 
-void EditPluginTable::updateIndex(int count)
-{
-    QStringList alist;
-    for(int i = m_tableindex; i < count; i++){
-        alist = m_cache->at(m_targetindex)->at(i + SKIP);
-        alist.replace(3, QString::number(i));
-        m_cache->at(m_targetindex)->replace(i + SKIP, alist);
+//void EditPluginTable::updateIndex(int count)
+//{
+//    QStringList alist;
+//    for(int i = m_tableindex; i < count; i++){
+//        alist = m_cache->at(index)->at(i + SKIP);
+//        alist.replace(3, QString::number(i));
+//        m_cache->at(index)->replace(i + SKIP, alist);
 
-    }
-}
+//    }
+//}
 
-/**
- * @fn EditPluginTable::updateCounter
- * @brief Update the counter of commandtable recorded in cache.
- * @param ascend True to +1 the counter value, false to -1.
- */
-void EditPluginTable::updateCounter(bool ascend)
-{
-    QStringList alist;
-    //index size update
-    alist = m_cache->at(m_targetindex)->at(SKIP - 1);
-    int rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(m_targetindex))).toInt();
-    if(ascend){
-        alist.replace(1, QString::number(rcount + 1));
-    }else{
-        alist.replace(1, QString::number(rcount - 1));
-    }
-    m_cache->at(m_targetindex)->replace(SKIP - 1, alist);
-}
+///**
+// * @fn EditPluginTable::updateCounter
+// * @brief Update the counter of commandtable recorded in cache.
+// * @param ascend True to +1 the counter value, false to -1.
+// */
+//void EditPluginTable::updateCounter(bool ascend)
+//{
+//    QStringList alist;
+//    //index size update
+//    alist = m_cache->at(index)->at(SKIP - 1);
+//    int rcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, m_cache->at(index))).toInt();
+//    if(ascend){
+//        alist.replace(1, QString::number(rcount + 1));
+//    }else{
+//        alist.replace(1, QString::number(rcount - 1));
+//    }
+//    m_cache->at(index)->replace(SKIP - 1, alist);
+//}

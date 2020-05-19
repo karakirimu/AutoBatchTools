@@ -1,35 +1,80 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "swapcommand.h"
+
+//SwapCommand::SwapCommand(const int &beforeindex
+//                         , const int &afterindex
+//                         , QList<QList<QStringList> *> *cache
+//                         , QUndoCommand *parent)
+//    :QUndoCommand(parent)
+//{
+//    beforeIndex = beforeindex;
+//    afterIndex = afterindex;
+//    m_cache = cache;
+//}
 
 SwapCommand::SwapCommand(const int &beforeindex
                          , const int &afterindex
-                         , QList<QList<QStringList> *> *cache
+                         , EditorCacheList *cache
                          , QUndoCommand *parent)
-    :QUndoCommand(parent)
+    : QUndoCommand(parent)
 {
-    m_beforeindex = beforeindex;
-    m_afterindex = afterindex;
-    m_cache = cache;
+    beforeIndex = beforeindex;
+    afterIndex = afterindex;
+    ptrCache = cache;
 }
 
 void SwapCommand::undo()
 {
-    if(m_cache->isEmpty()) return;
-    QList<QStringList> *tmp = m_cache->at(m_afterindex);
-    m_cache->replace(m_afterindex, m_cache->at(m_beforeindex));
-    m_cache->replace(m_beforeindex, tmp);
+    // @deprecated
+//    if(m_cache->isEmpty()) return;
+//    QList<QStringList> *tmp = m_cache->at(m_afterindex);
+//    m_cache->replace(m_afterindex, m_cache->at(m_beforeindex));
+//    m_cache->replace(m_beforeindex, tmp);
 
-    setText(QString("Swap item at %1 and %2").arg(m_beforeindex).arg(m_afterindex) \
-            + QString(" ^(%1,%2,%3)").arg(m_afterindex).arg(m_beforeindex).arg(UNDOREDO_SWAP));
+    if(ptrCache->isEmpty()) return;
+
+//    EditorCache tmp = ptrCache->at(afterIndex);
+//    ptrCache->replace(afterIndex, ptrCache->at(beforeIndex));
+//    ptrCache->replace(beforeIndex, tmp);
+
+    ptrCache->move(afterIndex, beforeIndex);
+
+    setText(QString("Swap item at %1 and %2").arg(beforeIndex).arg(afterIndex) \
+            + QString(" ^(%1,%2,%3)").arg(afterIndex).arg(beforeIndex).arg(UNDOREDO_SWAP));
 }
 
 void SwapCommand::redo()
 {
-    if(m_cache->isEmpty()) return;
-    QList<QStringList> *tmp = m_cache->at(m_beforeindex);
+    // @deprecated
+//    if(m_cache->isEmpty()) return;
+//    QList<QStringList> *tmp = m_cache->at(m_beforeindex);
 
-    m_cache->replace(m_beforeindex, m_cache->at(m_afterindex));
-    m_cache->replace(m_afterindex, tmp);
+//    m_cache->replace(m_beforeindex, m_cache->at(m_afterindex));
+//    m_cache->replace(m_afterindex, tmp);
 
-    setText(QString("Swap item at %1 and %2 ").arg(m_beforeindex).arg(m_afterindex) \
-            + QString(" ^(%1,%2,%3)").arg(m_beforeindex).arg(m_afterindex).arg(UNDOREDO_SWAP));
+    if(ptrCache->isEmpty()) return;
+
+//    EditorCache tmp = ptrCache->at(beforeIndex);
+//    ptrCache->replace(beforeIndex, ptrCache->at(afterIndex));
+//    ptrCache->replace(afterIndex, tmp);
+
+    ptrCache->move(beforeIndex, afterIndex);
+
+    setText(QString("Swap item at %1 and %2 ").arg(beforeIndex).arg(afterIndex) \
+            + QString(" ^(%1,%2,%3)").arg(beforeIndex).arg(afterIndex).arg(UNDOREDO_SWAP));
 }

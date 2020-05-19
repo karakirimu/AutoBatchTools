@@ -19,21 +19,35 @@
 
 #include <QUndoCommand>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <editorcachelist.h>
 
 class EditPluginTable : public QUndoCommand
 {
 public:
+//    EditPluginTable(const int &targetindex
+//                      ,const int &tableindex
+//                      ,QString newstr
+//                      ,const int operation
+//                      ,QList<QList<QStringList> *> *cache
+//                      ,QUndoCommand *parent = nullptr);
+
+//    EditPluginTable(const int &targetindex
+//                     , QStringList newstrlist
+//                     , const int operation
+//                     , QList<QList<QStringList> *> *cache
+//                     , QUndoCommand *parent = nullptr);
+
     EditPluginTable(const int &targetindex
                       ,const int &tableindex
-                      ,QString newstr
+                      ,const QString newstr
                       ,const int operation
-                      ,QList<QList<QStringList> *> *cache
+                      ,EditorCacheList *cache
                       ,QUndoCommand *parent = nullptr);
 
     EditPluginTable(const int &targetindex
-                     , QStringList newstrlist
+                     , const QStringList newstrlist
                      , const int operation
-                     , QList<QList<QStringList> *> *cache
+                     , EditorCacheList *cache
                      , QUndoCommand *parent = nullptr);
 
     void undo() override;
@@ -42,25 +56,27 @@ public:
     int id() const override;
     bool mergeWith(const QUndoCommand *other) override;
 
-    QString m_newstr;
-    QStringList m_newstrlist;
+    QString newStr;
+    QStringList newStrList;
 
 private:
-    void updateIndex(int count);
-    void updateCounter(bool ascend);
+//    void updateIndex(int count);
+//    void updateCounter(bool ascend);
 
-    int m_targetindex;
-    int m_tableindex;
-    QString m_oldstr;
-    QStringList m_oldstrlist;
-    int m_operation;
-    QList<QList<QStringList> *> *m_cache;
+    int index;
+    int tableIndex;
+    QString oldStr;
+    QStringList oldStrList;
+    int tableOperation;
+//    QList<QList<QStringList> *> *m_cache;
 //    QHash<int, int> posinfo;
 
-    ProcessXmlListGenerator pxlg;
+//    ProcessXmlListGenerator pxlg;
 
     //! First position of PluginCommandTable
-    int SKIP;
+//    int SKIP;
+
+    EditorCacheList *ptrCache;
 };
 
 #endif // EXTRATABLECOMMAND_H

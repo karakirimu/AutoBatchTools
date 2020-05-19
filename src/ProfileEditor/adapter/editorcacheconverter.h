@@ -30,8 +30,10 @@ public:
     void convertToEditorCache(const QList<QList<QStringList> *> *source, QList<EditorCache> *dest);
     void convertToXml(const QList<EditorCache> *source, QList<QList<QStringList> *> *dest);
 
-private:
     void convertFromCache(const EditorCache *from, QList<QStringList> *to);
+    void convertToCache(EditorCache *to, const QList<QStringList> *from);
+
+private:
 
     void fromInfomationCache(const EditorCache *from, QList<QStringList> *to);
     void fromLocalCache(const EditorCache *from, QList<QStringList> *to);
@@ -39,8 +41,6 @@ private:
     void fromFileSearchCache(const EditorCache *from, QList<QStringList> *to);
     void fromPluginCache(const EditorCache *from, QList<QStringList> *to);
     void fromProfileLoadCache(const EditorCache *from, QList<QStringList> *to);
-
-    void convertToCache(EditorCache *to, const QList<QStringList> *from);
 
     void toInfomationCache(EditorCache *to, const QList<QStringList> *from);
     void toLocalCache(EditorCache *to, const QList<QStringList> *from);
@@ -56,50 +56,10 @@ private:
     QString fetch(QString tag, QString value, QString attr,const QList<QStringList> *loadbase);
     int fetchCommandFirstPos(QString tag, const QList<QStringList> *loadbase);
 
-    /**
-     * @brief XML load type selection
-     */
-    enum class XMLLOAD{
-
-        //! AllInclude list (This type contains EXECUTE,FILESEARCH,PLUGIN,PROFILELOAD)
-        ALLINCLUDE,
-
-        //! Information list
-        INFORMATION,
-
-        //! Local list
-        LOCAL,
-
-        //! Execute list
-        EXECUTE,
-
-        //! FileSearch list
-        FILESEARCH,
-
-        //! Plugin list
-        PLUGIN,
-
-        //! ProfileLoad list
-        PROFILELOAD,
-
-        //! Invalid paramater
-        INVALID
-    };
-
-    XMLLOAD detectType(QString type);
+    FunctionType ft;
 
     //! Shared Tag
     const QString TAG_TYPE                    = "type";
-
-    //! Shared Value
-    const QString VALUE_TYPEINFO              = "info";
-    const QString VALUE_TYPEEXEC              = "normal";
-    const QString VALUE_TYPESEARCH            = "search";
-    const QString VALUE_TYPEPLUGIN            = "script";
-    const QString VALUE_TYPEPLOAD             = "other";
-
-    const QString VALUE_TYPEALL               = "temp";
-    const QString VALUE_TYPELOCAL             = "local";
 
     //! UI Selected Data Type Tag
     const QString TAG_FUNCTIONSELECT          = "istack";

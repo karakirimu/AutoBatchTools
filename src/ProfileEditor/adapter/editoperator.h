@@ -105,8 +105,10 @@ public:
     explicit EditOperator(QObject *parent = nullptr);
     ~EditOperator();
 
-    bool read(int id, QList<QStringList> *list);
-    void readAll(QList<QList<QStringList> *> *list);
+//    bool read(int id, QList<QStringList> *list);
+    bool read(int id, EditorCache *list);
+//    void readAll(QList<QList<QStringList> *> *list);
+    void readAll(QList<EditorCache> *list);
     //editor editindex code (not contain tables)
 
     QUndoStack *getUndostack() const;
@@ -149,7 +151,8 @@ signals:
 public slots:
     //operate main process editor functions
     void addAction();
-    void insertAction(int id, QList<QStringList> *xmlstruct);
+//    void insertAction(int id, QList<QStringList> *xmlstruct);
+    void insertAction(int index, EditorCache *editorcache);
     void deleteAction(int id);
     void newAction();
     void autoSaveRecoveryAction(QString filepath);
@@ -238,10 +241,13 @@ private:
     void loadcache(int amount);
 
     //cache data
-    QList<QList<QStringList> *> *cache;
+//    QList<QList<QStringList> *> *cache;
 
     // Thread safe cache
-//    EditorCacheList *editorCache;
+    EditorCacheList *editorCache;
+
+    // editorCache use undostack;
+//    QUndoStack *undoStack2;
 
     //undo stack
     QUndoStack *undostack;
@@ -254,7 +260,7 @@ private:
 
     //loaded
     QString loadfile;
-    int loadedxmlid = 0;
+//    int loadedxmlid = 0;
 
     //parent geometry
     QMainWindow *parentwid;

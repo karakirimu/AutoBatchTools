@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2016-2019 karakirimu
+ * Copyright 2016-2020 karakirimu
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ void BaseTable::insideDropRowMove(QDropEvent *event)
  * Move multiple rows when dropped action.
  * Allowed UI selects are single selection and multiple continuous ones.
  *
- * @param event    : dropEvent action argment.
+ * @param event    : dropEvent action argument.
  * @param selected : if you needed to get a rows list of before moved.
  *
  * @return operation success or falied.

@@ -34,6 +34,9 @@ public:
 
     void serialize(QList<QList<QStringList> *> *cache);
     void deSerialize(QList<QList<QStringList> *> *cache);
+    FunctionType::TYPE loadType(int i);
+
+    const EditorCache at(int i);
 
     void append(const EditorCache &value);
 
@@ -54,10 +57,12 @@ public:
 
     void replace(int i, const EditorCache &value);
 
+    const QList<EditorCache> getCacheCopy(){ return cache; }
 
 private:
+
     std::mutex mutex;
-    QList<EditorCache> *cache;
+    QList<EditorCache> cache;
     EditorCacheConverter *converter;
 
 };

@@ -124,6 +124,48 @@ bool Xmlbuilder::readAllItem(QString firstlayername, QString attr,
 }
 
 /**
+ * @fn Xmlbuilder::writeAllItem
+ * @brief Rebuild XML from root.
+ * @param root            root element name
+ * @param firstlayername  first layer tag
+ * @param attr            Attribute name added to firstlayername
+ * @param itemlist        List of tags below firstlayername
+ * @return True if the process is successful.
+ */
+bool Xmlbuilder::writeAllItem(QString root, QString firstlayername, QString attr,
+                              const QList<QList<QStringList> *> *itemlist)
+{
+    // text clear and create root
+    if(!openFile(QIODevice::WriteOnly)) return false;
+
+    // delete older characters
+    clearFileText();
+
+    // set device
+    wxml->setDevice(file);
+
+    // seek specified line
+    wxml->setAutoFormatting(true);
+
+    // set 1 tabs
+    wxml->setAutoFormattingIndent(-1);
+
+    wxml->writeStartDocument();
+    wxml->writeStartElement(root);
+
+    int counter = itemlist->count();
+    for(int i = 0; i < counter; i++){
+        writeXmlItem(i, firstlayername, attr, itemlist->at(i));
+    }
+
+    wxml->writeEndElement();
+    wxml->writeEndDocument();
+
+    closeFile();
+    return true;
+}
+
+/**
  * @fn Xmlbuilder::swapItem
  * @brief Exchange tags in the following layers within the selected itemid.
  *
@@ -388,9 +430,9 @@ qint64 Xmlbuilder::getItemFirstLine(int tablenum, QString firstlayername, QStrin
  * @param list           : A list where items are set. (same as itemlist)
  */
 void Xmlbuilder::writeXmlItem(int itemid,
-                                       QString firstlayername,
-                                       QString attr,
-                                       const QList<QStringList> *list)
+                              QString firstlayername,
+                              QString attr,
+                              const QList<QStringList> *list)
 {
     wxml->writeStartElement(firstlayername);
     wxml->writeAttribute(attr, QString::number(itemid));

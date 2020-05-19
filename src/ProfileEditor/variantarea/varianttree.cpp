@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "varianttree.h"
 
 VariantTree::VariantTree(QWidget *)
@@ -130,7 +146,7 @@ void VariantTree::reloadAction()
 //    root_internal->setData(0, Qt::DisplayRole, QVariant(tr("Internal")));
 
     setGlobalListItems(root_global);
-    setLocalListItems(root_local);
+    setLocalListItems(root_local, LOCALINDEX);
 
 
 #ifdef QT_DEBUG
@@ -635,81 +651,136 @@ void VariantTree::setPopupActionBottom()
 
 bool VariantTree::eventFilter(QObject *obj, QEvent *event)
 {
-    //qDebug() << event->type();
+    QKeyEvent *keyEvent;
+
+    auto mdCheck = [&keyEvent](){
+        return static_cast<bool>(keyEvent->modifiers() & Qt::ControlModifier);
+    };
+
     if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        keyEvent = static_cast<QKeyEvent *>(event);
         switch (keyEvent->key())
-         {
-           case Qt::Key_Return:
-           case Qt::Key_Enter:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-               addAction();
-             break;
+        {
+        case Qt::Key_Return:
+        case Qt::Key_Enter:  if (mdCheck()) addAction();    break;
+        case Qt::Key_Delete: if (mdCheck()) deleteAction(); break;
+        case Qt::Key_E:      if (mdCheck()) editAction();   break;
 
-           case Qt::Key_Delete:
-             deleteAction();
-             break;
-
-           case Qt::Key_Up:
-             if (keyEvent->modifiers() & Qt::ControlModifier){
-                 upAction();
-             }else{
-                 int current = this->currentIndex().row();
-                 if(current != 0)
-                     this->selectionModel()->setCurrentIndex(this->model()->index(current - 1, 0, this->currentIndex().parent()) \
+        case Qt::Key_Up:
+            if(mdCheck()){
+                upAction();
+            }else{
+                int current = this->currentIndex().row();
+                if(current != 0)
+                    this->selectionModel()->setCurrentIndex(this->model()->index(current - 1, 0, this->currentIndex().parent()) \
                                      , QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 
-                 closeEditState();
-             }
-
-             break;
-
-           case Qt::Key_Down:
-             if (keyEvent->modifiers() & Qt::ControlModifier){
-                 downAction();
-             }else{
-                 QTreeWidgetItem *top = itemFromIndex(getSectionFromUi());
-                 int count = top->childCount();
-                 int current = this->currentIndex().row();
-
-                 if(count - 1 != current)
-                     this->selectionModel()->setCurrentIndex(this->model()->index(current + 1, 0, this->currentIndex().parent()) \
-                                     , QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-
-                 closeEditState();
-             }
+                closeEditState();
+            }
             break;
 
-           case Qt::Key_X:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 cutAction();
-             break;
+        case Qt::Key_Down:
+            if(mdCheck()){
+                downAction();
+            }else{
+                QTreeWidgetItem *top = itemFromIndex(getSectionFromUi());
+                int count = top->childCount();
+                int current = this->currentIndex().row();
 
-           case Qt::Key_C:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 copyAction();
-             break;
+                if(count - 1 != current)
+                    this->selectionModel()->setCurrentIndex(this->model()->index(current + 1, 0, this->currentIndex().parent()) \
+                                     , QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 
-           case Qt::Key_V:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 pasteAction();
-             break;
+                closeEditState();
+            }
+            break;
 
-           case Qt::Key_E:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                 editAction();
-             break;
-
-           case Qt::Key_R:
-             if (keyEvent->modifiers() & Qt::ControlModifier)
-                reloadAction();
-             break;
-
-           default:
-             break;
-         }
+        case Qt::Key_X:  if(mdCheck()) cutAction();    break;
+        case Qt::Key_C:  if(mdCheck()) copyAction();   break;
+        case Qt::Key_V:  if(mdCheck()) pasteAction();  break;
+        case Qt::Key_R:  if(mdCheck()) reloadAction(); break;
+        default:
+            //qDebug("Ate key press %d", keyEvent->key());
+            break;
+        }
         return true;
     }
+
+//    //qDebug() << event->type();
+//    if (event->type() == QEvent::KeyPress) {
+//        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+//        switch (keyEvent->key())
+//         {
+//           case Qt::Key_Return:
+//           case Qt::Key_Enter:
+//             if (keyEvent->modifiers() & Qt::ControlModifier)
+//               addAction();
+//             break;
+
+//           case Qt::Key_Delete:
+//             deleteAction();
+//             break;
+
+//           case Qt::Key_Up:
+//             if (keyEvent->modifiers() & Qt::ControlModifier){
+//                 upAction();
+//             }else{
+//                 int current = this->currentIndex().row();
+//                 if(current != 0)
+//                     this->selectionModel()->setCurrentIndex(this->model()->index(current - 1, 0, this->currentIndex().parent()) \
+//                                     , QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+
+//                 closeEditState();
+//             }
+
+//             break;
+
+//           case Qt::Key_Down:
+//             if (keyEvent->modifiers() & Qt::ControlModifier){
+//                 downAction();
+//             }else{
+//                 QTreeWidgetItem *top = itemFromIndex(getSectionFromUi());
+//                 int count = top->childCount();
+//                 int current = this->currentIndex().row();
+
+//                 if(count - 1 != current)
+//                     this->selectionModel()->setCurrentIndex(this->model()->index(current + 1, 0, this->currentIndex().parent()) \
+//                                     , QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+
+//                 closeEditState();
+//             }
+//            break;
+
+//           case Qt::Key_X:
+//             if (keyEvent->modifiers() & Qt::ControlModifier)
+//                 cutAction();
+//             break;
+
+//           case Qt::Key_C:
+//             if (keyEvent->modifiers() & Qt::ControlModifier)
+//                 copyAction();
+//             break;
+
+//           case Qt::Key_V:
+//             if (keyEvent->modifiers() & Qt::ControlModifier)
+//                 pasteAction();
+//             break;
+
+//           case Qt::Key_E:
+//             if (keyEvent->modifiers() & Qt::ControlModifier)
+//                 editAction();
+//             break;
+
+//           case Qt::Key_R:
+//             if (keyEvent->modifiers() & Qt::ControlModifier)
+//                reloadAction();
+//             break;
+
+//           default:
+//             break;
+//         }
+//        return true;
+//    }
 
     // standard event processing
     return QObject::eventFilter(obj, event);
@@ -776,40 +847,72 @@ void VariantTree::dropEvent(QDropEvent *event)
     QTreeWidget::dropEvent(event);
 }
 
-bool VariantTree::setLocalListItems(QTreeWidgetItem *parent)
+bool VariantTree::setLocalListItems(QTreeWidgetItem *parent, int itemid)
 {
-    QList<QStringList> *list = new QList<QStringList>();
+//    QList<QStringList> *list = new QList<QStringList>();
 
-    if(!editop->read(LOCALINDEX, list)){
-        delete list;
+//    if(!editop->read(LOCALINDEX, list)){
+//        delete list;
+//        return false;
+//    }
+
+//    //get type
+//    QString type = xgen.fetch(ALL_TYPE, ATTR_NONE, list);
+
+//    //set root
+//    if(type == TYPE_LOCAL){
+//        int counter = QString(xgen.fetch(L_VAR_COUNT, ATTR_NONE, list)).toInt();
+//        int cmdfirst = xgen.fetchCmdFirstPos(L_VAR_COUNT, list);
+
+//        for(int i = 0; i < counter; i++){
+//            QTreeWidgetItem *item = new QTreeWidgetItem(parent);
+//            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsUserCheckable \
+//                           | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
+//            //set item
+//            for (int column = 0; column < this->header()->count(); ++column) {
+//                item->setData(column, Qt::EditRole, QVariant(list->at(cmdfirst + i).at(2 * column + 1)));
+////                item->setToolTip(column, list->at(cmdfirst + i).at(2 * column + 1));
+//            }
+//        }
+
+//        qDebug()<< "[VariantTree::setLocalListItem]";
+//        delete list;
+//        return true;
+//    }
+
+//    return false;
+
+    EditorCache list;
+
+    if(!editop->read(itemid, &list)){
         return false;
     }
 
+    FunctionType fs;
+
     //get type
-    QString type = xgen.fetch(ALL_TYPE, ATTR_NONE, list);
+    QString type = list.type;
 
     //set root
-    if(type == TYPE_LOCAL){
-        int counter = QString(xgen.fetch(L_VAR_COUNT, ATTR_NONE, list)).toInt();
-        int cmdfirst = xgen.fetchCmdFirstPos(L_VAR_COUNT, list);
-
-        for(int i = 0; i < counter; i++){
-            QTreeWidgetItem *item = new QTreeWidgetItem(parent);
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsUserCheckable \
-                           | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
-            //set item
-            for (int column = 0; column < this->header()->count(); ++column) {
-                item->setData(column, Qt::EditRole, QVariant(list->at(cmdfirst + i).at(2 * column + 1)));
-//                item->setToolTip(column, list->at(cmdfirst + i).at(2 * column + 1));
-            }
-        }
-
-        qDebug()<< "[VariantTree::setLocalListItem]";
-        delete list;
-        return true;
+    if(fs.getType(list.type) != fs.TYPE::LOCAL){
+        return false;
     }
 
-    return false;
+    int counter = list.local.variantData.count();
+
+    for(int i = 0; i < counter; i++){
+        VariantPair pair = list.local.variantData.at(i);
+        QTreeWidgetItem *item = new QTreeWidgetItem(parent);
+
+        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsUserCheckable \
+                       | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
+
+        item->setData(0, Qt::EditRole, QVariant(pair.variant));
+        item->setData(1, Qt::EditRole, QVariant(pair.value));
+    }
+
+    qDebug()<< "[VariantTree::setLocalListItem] success";
+    return true;
 }
 
 // needs to update
@@ -837,19 +940,30 @@ bool VariantTree::setGlobalListItems(QTreeWidgetItem *parent)
 
 QStringList VariantTree::getLocalRowElement(int targetrow, int tablerow)
 {
-    //parent
-    QList<QStringList> list;
+//    //parent
+//    QList<QStringList> list;
 
-    if(targetrow != 1 || !editop->read(targetrow, &list)){
+//    if(targetrow != 1 || !editop->read(targetrow, &list)){
+//        return QStringList() << "" << "";
+//    }
+
+//    int cmdfirst = 0;
+//    cmdfirst = xgen.fetchCmdFirstPos(L_VAR_COUNT, &list);
+
+
+//    return QStringList() << list.at(cmdfirst + tablerow).at(1) \
+//                         << list.at(cmdfirst + tablerow).at(3);
+
+    EditorCache list;
+
+    if(targetrow != LOCALINDEX || !editop->read(targetrow, &list)){
         return QStringList() << "" << "";
     }
 
-    int cmdfirst = 0;
-    cmdfirst = xgen.fetchCmdFirstPos(L_VAR_COUNT, &list);
+    VariantPair pair = list.local.variantData.at(tablerow);
 
+    return QStringList() <<  pair.variant << pair.value;
 
-    return QStringList() << list.at(cmdfirst + tablerow).at(1) \
-                         << list.at(cmdfirst + tablerow).at(3);
 }
 
 QStringList VariantTree::getGlobalRowElement(int row)

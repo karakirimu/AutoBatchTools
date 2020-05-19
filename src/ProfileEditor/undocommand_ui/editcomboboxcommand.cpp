@@ -1,31 +1,70 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "editcomboboxcommand.h"
+
+//EditComboBoxCommand::EditComboBoxCommand(const int &targetindex
+//                                         , const QString newstring
+//                                         , QList<QList<QStringList> *> *cache
+//                                         , QUndoCommand *parent)
+//    : QUndoCommand(parent)
+//{
+//    index = targetindex;
+//    newString = newstring;
+//    m_cache = cache;
+
+//    oldString = pxlg.fetch(S_VARIANT, ATTR_NONE, m_cache->at(index));
+
+//}
 
 EditComboBoxCommand::EditComboBoxCommand(const int &targetindex
                                          , const QString newstring
-                                         , QList<QList<QStringList> *> *cache
+                                         , EditorCacheList *cache
                                          , QUndoCommand *parent)
     : QUndoCommand(parent)
 {
-    m_targetindex = targetindex;
-    m_newstring = newstring;
-    m_cache = cache;
+    index = targetindex;
+    newString = newstring;
+    ptrCache = cache;
 
-    m_oldstring = pxlg.fetch(S_VARIANT, ATTR_NONE, m_cache->at(m_targetindex));
-
+    oldString = cache->at(index).filesearch.variant;
 }
 
 void EditComboBoxCommand::undo()
 {
-    pxlg.replaceElementList(S_VARIANT, ATTR_NONE, m_targetindex, m_oldstring, m_cache);
-    setText(QObject::tr("Return variant to %1").arg(m_oldstring) \
-            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
+    //pxlg.replaceElementList(S_VARIANT, ATTR_NONE, index, oldString, m_cache);
+
+    EditorCache ec = ptrCache->at(index);
+    ec.filesearch.variant = oldString;
+    ptrCache->replace(index, ec);
+
+    setText(QObject::tr("Return variant to %1").arg(oldString) \
+            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
 }
 
 void EditComboBoxCommand::redo()
 {
-    pxlg.replaceElementList(S_VARIANT, ATTR_NONE, m_targetindex, m_newstring, m_cache);
-    setText(QObject::tr("Return variant to %1").arg(m_newstring) \
-            + QString(" ^(%1,%2)").arg(m_targetindex).arg(UNDOREDO_EDIT));
+    //pxlg.replaceElementList(S_VARIANT, ATTR_NONE, index, newString, m_cache);
+
+    EditorCache ec = ptrCache->at(index);
+    ec.filesearch.variant = newString;
+    ptrCache->replace(index, ec);
+
+    setText(QObject::tr("Return variant to %1").arg(newString) \
+            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
 }
 
 int EditComboBoxCommand::id() const
@@ -38,6 +77,6 @@ bool EditComboBoxCommand::mergeWith(const QUndoCommand *other)
 {
     if (other->id() != id()) return false;
     const EditComboBoxCommand *com = static_cast<const EditComboBoxCommand*>(other);
-    m_newstring = com->m_newstring;
+    newString = com->newString;
     return true;
 }

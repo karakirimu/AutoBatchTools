@@ -18,6 +18,7 @@
 #define LISTMIMEDATA_H
 
 #include <QMimeData>
+#include <editorcacheconverter.h>
 
 #define LISTMIMEDATA_MIMETYPE QLatin1String("application/x-qt-profilerlist")
 
@@ -27,8 +28,10 @@ class ListMimeData : public QMimeData
 public:
     ListMimeData();
 
-    void setListData(const QList<QStringList> *list);
-    static QList<QStringList> getListData(const ListMimeData *lmime);
+    void setListData(const EditorCache list);
+
+//    static QList<QStringList> getListData(const ListMimeData *lmime);
+    static EditorCache getListData(const ListMimeData *lmime);
 
     QStringList formats() const override;
     bool hasFormat(const QString &mimetype) const override;
@@ -37,6 +40,8 @@ protected:
     QVariant retrieveData(const QString &mimetype, QVariant::Type preferredType) const override;
 
 private:
+    void setList(const QList<QStringList> *list);
+
     QString toCsv(QString plainText);
 
 };

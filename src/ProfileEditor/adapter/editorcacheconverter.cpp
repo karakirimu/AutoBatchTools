@@ -66,41 +66,41 @@ void EditorCacheConverter::convertToXml(const QList<EditorCache> *source, QList<
  */
 void EditorCacheConverter::convertFromCache(const EditorCache *from, QList<QStringList> *to)
 {
-    switch (detectType(from->type)) {
-    case XMLLOAD::ALLINCLUDE:
-        to->append((QStringList() << TAG_TYPE << VALUE_TYPEALL));
+    switch (ft.getType(from->type)) {
+    case ft.TYPE::ALLINCLUDE:
+        to->append((QStringList() << TAG_TYPE << ft.getString(ft.TYPE::ALLINCLUDE)));
         to->append((QStringList() << TAG_FUNCTIONSELECT << QString::number(from->functionSelect)));
         fromExecuteCache(from, to);
         fromFileSearchCache(from, to);
         fromPluginCache(from, to);
         fromProfileLoadCache(from, to);
         break;
-    case XMLLOAD::INFORMATION:
+    case ft.TYPE::INFORMATION:
         fromInfomationCache(from, to);
         break;
-    case XMLLOAD::LOCAL:
+    case ft.TYPE::LOCAL:
         fromLocalCache(from, to);
         break;
-    case XMLLOAD::EXECUTE:
+    case ft.TYPE::EXECUTE:
         fromExecuteCache(from, to);
         break;
-    case XMLLOAD::FILESEARCH:
+    case ft.TYPE::FILESEARCH:
         fromFileSearchCache(from, to);
         break;
-    case XMLLOAD::PLUGIN:
+    case ft.TYPE::PLUGIN:
         fromPluginCache(from, to);
         break;
-    case XMLLOAD::PROFILELOAD:
+    case ft.TYPE::PROFILELOAD:
         fromProfileLoadCache(from, to);
         break;
-    case XMLLOAD::INVALID:
+    case ft.TYPE::INVALID:
         break;
     }
 }
 
 void EditorCacheConverter::fromInfomationCache(const EditorCache *from, QList<QStringList> *to)
 {
-    to->append((QStringList() << TAG_TYPE << VALUE_TYPEINFO));
+    to->append((QStringList() << TAG_TYPE << ft.getString(ft.TYPE::INFORMATION)));
     to->append((QStringList() << TAG_I_NAME << from->info.name));
     to->append((QStringList() << TAG_I_VERSION << from->info.version));
     to->append((QStringList() << TAG_I_AUTHOR << from->info.author));
@@ -119,7 +119,7 @@ void EditorCacheConverter::fromInfomationCache(const EditorCache *from, QList<QS
 
 void EditorCacheConverter::fromLocalCache(const EditorCache *from, QList<QStringList> *to)
 {
-    to->append((QStringList() << TAG_TYPE << VALUE_TYPELOCAL));
+    to->append((QStringList() << TAG_TYPE << ft.getString(ft.TYPE::LOCAL)));
     to->append((QStringList() << TAG_L_VARIANTCOUNT_INT << QString::number(from->local.variantData.count())));
 
     for(VariantPair v : from->local.variantData){
@@ -129,7 +129,7 @@ void EditorCacheConverter::fromLocalCache(const EditorCache *from, QList<QString
 
 void EditorCacheConverter::fromExecuteCache(const EditorCache *from, QList<QStringList> *to)
 {
-    to->append((QStringList() << TAG_TYPE << VALUE_TYPEEXEC \
+    to->append((QStringList() << TAG_TYPE << ft.getString(ft.TYPE::EXECUTE) \
                 << ATTR_ONLY_SCHEDULER_BOOL << VariantConverter::boolToString(from->exec.schedulerOnly)));
     to->append((QStringList() << TAG_E_TIMEOUT_BOOL_HA1 << VariantConverter::boolToString(from->exec.timeoutEnabled) \
                 << ATTR_TIMEOUT_INT << QString::number(from->exec.timeout)));
@@ -145,7 +145,7 @@ void EditorCacheConverter::fromExecuteCache(const EditorCache *from, QList<QStri
 
 void EditorCacheConverter::fromFileSearchCache(const EditorCache *from, QList<QStringList> *to)
 {
-    to->append((QStringList() << TAG_TYPE << VALUE_TYPESEARCH \
+    to->append((QStringList() << TAG_TYPE << ft.getString(ft.TYPE::FILESEARCH) \
                 << ATTR_ONLY_SCHEDULER_BOOL << VariantConverter::boolToString(from->filesearch.schedulerOnly)));
     to->append((QStringList() << TAG_FS_NAME_HA1 << from->filesearch.name \
                 << ATTR_COMMAND_ID_INT << QString::number(from->filesearch.nameIndex)));
@@ -158,7 +158,7 @@ void EditorCacheConverter::fromFileSearchCache(const EditorCache *from, QList<QS
 
 void EditorCacheConverter::fromPluginCache(const EditorCache *from, QList<QStringList> *to)
 {
-    to->append((QStringList() << TAG_TYPE << VALUE_TYPEPLUGIN
+    to->append((QStringList() << TAG_TYPE << ft.getString(ft.TYPE::PLUGIN)
                 << ATTR_ONLY_SCHEDULER_BOOL << VariantConverter::boolToString(from->plugin.schedulerOnly)));
     to->append((QStringList() << TAG_P_NAME << from->plugin.name));
     to->append((QStringList() << TAG_P_FILEPATH << from->plugin.filePath));
@@ -173,7 +173,7 @@ void EditorCacheConverter::fromPluginCache(const EditorCache *from, QList<QStrin
 
 void EditorCacheConverter::fromProfileLoadCache(const EditorCache *from, QList<QStringList> *to)
 {
-    to->append((QStringList() << TAG_TYPE << VALUE_TYPEPLOAD \
+    to->append((QStringList() << TAG_TYPE << ft.getString(ft.TYPE::PROFILELOAD) \
                 << ATTR_ONLY_SCHEDULER_BOOL << VariantConverter::boolToString(from->profileload.schedulerOnly)));
     to->append((QStringList() << TAG_PLOAD_FILEPATH << from->profileload.filePath));
 }
@@ -188,33 +188,37 @@ void EditorCacheConverter::convertToCache(EditorCache *to, const QList<QStringLi
 {
     to->type = fetch(TAG_TYPE, from);
 
-    switch (detectType(to->type)) {
-    case XMLLOAD::ALLINCLUDE:
+    switch (ft.getType(to->type)) {
+    case ft.TYPE::ALLINCLUDE:
         to->functionSelect = fetch(TAG_FUNCTIONSELECT, from).toInt();
         toExecuteCache(to, from);
         toFileSearchCache(to, from);
         toPluginCache(to, from);
         toProfileLoadCache(to, from);
         break;
-    case XMLLOAD::INFORMATION:
+    case ft.TYPE::INFORMATION:
         toInfomationCache(to, from);
         break;
-    case XMLLOAD::LOCAL:
+    case ft.TYPE::LOCAL:
         toLocalCache(to, from);
         break;
-    case XMLLOAD::EXECUTE:
+    case ft.TYPE::EXECUTE:
+        to->functionSelect = static_cast<int>(TAB::EXECUTE);
         toExecuteCache(to, from);
         break;
-    case XMLLOAD::FILESEARCH:
+    case ft.TYPE::FILESEARCH:
+        to->functionSelect = static_cast<int>(TAB::FILESEARCH);
         toFileSearchCache(to, from);
         break;
-    case XMLLOAD::PLUGIN:
+    case ft.TYPE::PLUGIN:
+        to->functionSelect = static_cast<int>(TAB::PLUGINS);
         toPluginCache(to, from);
         break;
-    case XMLLOAD::PROFILELOAD:
+    case ft.TYPE::PROFILELOAD:
+        to->functionSelect = static_cast<int>(TAB::PROFILELOAD);
         toProfileLoadCache(to, from);
         break;
-    case XMLLOAD::INVALID:
+    case ft.TYPE::INVALID:
         break;
     }
 }
@@ -265,7 +269,7 @@ void EditorCacheConverter::toExecuteCache(EditorCache *to, const QList<QStringLi
         to->exec.command.append(from->at(cmdfirst + i).at(1));
     }
 
-    to->exec.schedulerOnly = VariantConverter::stringToBool(fetch(TAG_TYPE,VALUE_TYPEEXEC,ATTR_ONLY_SCHEDULER_BOOL, from));
+    to->exec.schedulerOnly = VariantConverter::stringToBool(fetch(TAG_TYPE,ft.getString(ft.TYPE::EXECUTE),ATTR_ONLY_SCHEDULER_BOOL, from));
 
 }
 
@@ -285,7 +289,7 @@ void EditorCacheConverter::toFileSearchCache(EditorCache *to, const QList<QStrin
     // overwrite or append
     to->filesearch.writeOption = fetch(TAG_FS_WRITEOPTION_INT, from).toInt();
 
-    to->filesearch.schedulerOnly = VariantConverter::stringToBool(fetch(TAG_TYPE,VALUE_TYPESEARCH,ATTR_ONLY_SCHEDULER_BOOL, from));
+    to->filesearch.schedulerOnly = VariantConverter::stringToBool(fetch(TAG_TYPE,ft.getString(ft.TYPE::FILESEARCH),ATTR_ONLY_SCHEDULER_BOOL, from));
 }
 
 void EditorCacheConverter::toPluginCache(EditorCache *to, const QList<QStringList> *from)
@@ -299,13 +303,13 @@ void EditorCacheConverter::toPluginCache(EditorCache *to, const QList<QStringLis
     }
 
     to->plugin.filePath = fetch(TAG_P_FILEPATH, from);
-    to->plugin.schedulerOnly = VariantConverter::stringToBool(fetch(TAG_TYPE,VALUE_TYPEPLUGIN,ATTR_ONLY_SCHEDULER_BOOL, from));
+    to->plugin.schedulerOnly = VariantConverter::stringToBool(fetch(TAG_TYPE,ft.getString(ft.TYPE::PLUGIN),ATTR_ONLY_SCHEDULER_BOOL, from));
 }
 
 void EditorCacheConverter::toProfileLoadCache(EditorCache *to, const QList<QStringList> *from)
 {
     to->profileload.filePath = fetch(TAG_PLOAD_FILEPATH, from);
-    to->profileload.schedulerOnly = VariantConverter::stringToBool(fetch(TAG_TYPE,VALUE_TYPEPLOAD,ATTR_ONLY_SCHEDULER_BOOL, from));
+    to->profileload.schedulerOnly = VariantConverter::stringToBool(fetch(TAG_TYPE,ft.getString(ft.TYPE::PROFILELOAD),ATTR_ONLY_SCHEDULER_BOOL, from));
 }
 
 /**
@@ -391,17 +395,4 @@ int EditorCacheConverter::fetchCommandFirstPos(QString tag, const QList<QStringL
 
     //cannot find
     return -1;
-}
-
-EditorCacheConverter::XMLLOAD EditorCacheConverter::detectType(QString type)
-{
-    if(type == VALUE_TYPEALL) return XMLLOAD::ALLINCLUDE;
-    if(type == VALUE_TYPEEXEC)       return XMLLOAD::EXECUTE;
-    if(type == VALUE_TYPESEARCH)     return XMLLOAD::FILESEARCH;
-    if(type == VALUE_TYPEPLUGIN)     return XMLLOAD::PLUGIN;
-    if(type == VALUE_TYPEPLOAD)    return XMLLOAD::PROFILELOAD;
-    if(type == VALUE_TYPEINFO)       return XMLLOAD::INFORMATION;
-    if(type == VALUE_TYPELOCAL)      return XMLLOAD::LOCAL;
-
-    return XMLLOAD::INVALID;
 }

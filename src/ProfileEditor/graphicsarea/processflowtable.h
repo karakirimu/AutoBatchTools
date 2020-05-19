@@ -81,12 +81,19 @@ private:
 
     void setFlowItem(int itemid);
     void setAllFlowItem();
-    void setTempItem(QList<QStringList> *list, int dataid);
-    void setInfoItem(QList<QStringList> *list, int dataid);
-    void setNormalItem(QList<QStringList> *list, int dataid);
-    void setSearchItem(QList<QStringList> *list, int dataid);
-    void setPluginsItem(QList<QStringList> *list, int dataid);
-    void setProfileItem(QList<QStringList> *list, int dataid);
+//    void setTempItem(QList<QStringList> *list, int dataid);
+//    void setInfoItem(QList<QStringList> *list, int dataid);
+//    void setExecuteItem(QList<QStringList> *list, int dataid);
+//    void setFileSearchItem(QList<QStringList> *list, int dataid);
+//    void setPluginItem(QList<QStringList> *list, int dataid);
+//    void setProfileLoadItem(QList<QStringList> *list, int dataid);
+
+    void setTempItem(EditorCache *list, int dataid);
+    void setInfoItem(EditorCache *list, int dataid);
+    void setExecuteItem(EditorCache *list, int dataid);
+    void setFileSearchItem(EditorCache *list, int dataid);
+    void setPluginItem(EditorCache *list, int dataid);
+    void setProfileLoadItem(EditorCache *list, int dataid);
 
 //    void updateLastIndexItem(int lastindex);
 

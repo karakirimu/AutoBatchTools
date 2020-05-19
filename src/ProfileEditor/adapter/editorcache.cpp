@@ -20,8 +20,3 @@ EditorCache::EditorCache()
 {
 
 }
-
-EditorCache::~EditorCache()
-{
-
-}

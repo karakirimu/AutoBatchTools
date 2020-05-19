@@ -64,32 +64,76 @@ void ProcessFlowTable::setEditOperator(EditOperator *op)
 
 bool ProcessFlowTable::eventFilter(QObject *obj, QEvent *event)
 {
+    QKeyEvent *keyEvent;
+
+    auto mdCheck = [&keyEvent](){
+        return static_cast<bool>(keyEvent->modifiers() & Qt::ControlModifier);
+    };
+
     if (event->type() == QEvent::KeyPress) {
-
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-
+        keyEvent = static_cast<QKeyEvent *>(event);
         switch (keyEvent->key())
-         {
-           case Qt::Key_Up:
-                 if(this->currentRow() != 0)
-                     selectRow(this->currentRow() - 1);
-             break;
+        {
+        case Qt::Key_Return:
+        case Qt::Key_Enter:  if (mdCheck()) addAction();    break;
+        case Qt::Key_Delete: if (mdCheck()) deleteAction(); break;
 
-           case Qt::Key_Down:
-                 if(this->rowCount() - 1 != this->currentRow())
-                     selectRow(this->currentRow() + 1);
-             break;
+        case Qt::Key_Up:
+            if(mdCheck()){
+                upAction();
+            }else{
+                if(this->currentRow() != 0)
+                    selectRow(this->currentRow() - 1);
+            }
+            break;
 
-           case Qt::Key_R:
-                 if (keyEvent->modifiers() & Qt::ControlModifier)
-                     reloadAction();
-             break;
+        case Qt::Key_Down:
+            if(mdCheck()){
+                downAction();
+            }else{
+                if(this->rowCount() - 1 != this->currentRow())
+                    selectRow(this->currentRow() + 1);
+            }
+            break;
 
-           default:
-             break;
-         }
+        case Qt::Key_X:  if(mdCheck()) cutAction();    break;
+        case Qt::Key_C:  if(mdCheck()) copyAction();   break;
+        case Qt::Key_V:  if(mdCheck()) pasteAction();  break;
+        case Qt::Key_R:  if(mdCheck()) reloadAction(); break;
+
+        default:
+            //qDebug("Ate key press %d", keyEvent->key());
+            break;
+        }
         return true;
     }
+
+//    if (event->type() == QEvent::KeyPress) {
+
+//        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+
+//        switch (keyEvent->key())
+//         {
+//           case Qt::Key_Up:
+//                 if(this->currentRow() != 0)
+//                     selectRow(this->currentRow() - 1);
+//             break;
+
+//           case Qt::Key_Down:
+//                 if(this->rowCount() - 1 != this->currentRow())
+//                     selectRow(this->currentRow() + 1);
+//             break;
+
+//           case Qt::Key_R:
+//                 if (keyEvent->modifiers() & Qt::ControlModifier)
+//                     reloadAction();
+//             break;
+
+//           default:
+//             break;
+//         }
+//        return true;
+//    }
 
     // standard event processing
     return BaseTable::eventFilter(obj, event);
@@ -334,11 +378,11 @@ void ProcessFlowTable::insertItem(int id)
 
 void ProcessFlowTable::swapItem(int before, int after)
 {
-    this->clearSelection();
 
     replaceItem(before);
     replaceItem(after);
 
+    this->clearSelection();
     this->selectRow(dataToUiIndex(after));
 
 }
@@ -473,123 +517,351 @@ void ProcessFlowTable::setPopupActionBottom()
 
 void ProcessFlowTable::setFlowItem(int itemid)
 {
-    QList<QStringList> *list = new QList<QStringList>();
+//    QList<QStringList> *list = new QList<QStringList>();
+
+//    //reading failure
+//    if(!editop->read(itemid, list)){
+//        delete list;
+//        return;
+//    }
+
+//    //get type
+//    QString type = pxlg.fetch(ALL_TYPE, ATTR_NONE, list);
+
+//    //type local
+//    if(type == TYPE_LOCAL) return;
+
+//    if(type == TYPE_ALLINCLUDE){    setTempItem(list, itemid);
+
+//    }else if(type == TYPE_INFO){    setInfoItem(list, itemid);
+
+//    }else if(type == TYPE_EXEC){    setExecuteItem(list, itemid);
+
+//    }else if(type == TYPE_SEARCH){  setFileSearchItem(list, itemid);
+
+//    }else if(type == TYPE_SCRIPT){  setPluginItem(list, itemid);
+
+//    }else if(type == TYPE_ANOTHER){ setProfileLoadItem(list, itemid);
+
+//    }
+
+//    delete list;
+
+    EditorCache list;
+    FunctionType ft;
 
     //reading failure
-    if(!editop->read(itemid, list)){
-        delete list;
+    if(!editop->read(itemid, &list)){
         return;
     }
 
-    //get type
-    QString type = pxlg.fetch(ALL_TYPE, ATTR_NONE, list);
-
-    //type local
-    if(type == TYPE_LOCAL) return;
-
-    if(type == TYPE_ALLINCLUDE){    setTempItem(list, itemid);
-
-    }else if(type == TYPE_INFO){    setInfoItem(list, itemid);
-
-    }else if(type == TYPE_EXEC){    setNormalItem(list, itemid);
-
-    }else if(type == TYPE_SEARCH){  setSearchItem(list, itemid);
-
-    }else if(type == TYPE_SCRIPT){  setPluginsItem(list, itemid);
-
-    }else if(type == TYPE_ANOTHER){ setProfileItem(list, itemid);
-
+    switch (ft.getType(list.type)) {
+    case ft.TYPE::ALLINCLUDE:  setTempItem(&list, itemid);        break;
+    case ft.TYPE::INFORMATION: setInfoItem(&list, itemid);        break;
+    case ft.TYPE::LOCAL:       break;
+    case ft.TYPE::EXECUTE:     setExecuteItem(&list, itemid);     break;
+    case ft.TYPE::FILESEARCH:  setFileSearchItem(&list, itemid);  break;
+    case ft.TYPE::PLUGIN:      setPluginItem(&list, itemid);      break;
+    case ft.TYPE::PROFILELOAD: setProfileLoadItem(&list, itemid); break;
+    case ft.TYPE::INVALID:     break;
     }
 
-    delete list;
 }
 
 void ProcessFlowTable::setAllFlowItem()
 {
-    QList<QList<QStringList> *> *list = new QList<QList<QStringList> *>();
-    editop->readAll(list);
+//    QList<QList<QStringList> *> *list = new QList<QList<QStringList> *>();
+//    editop->readAll(list);
 
-    QMutableListIterator<QList<QStringList> *> i(*list);
-    QList<QStringList> *inner;
-    QString type = "";
+//    QMutableListIterator<QList<QStringList> *> i(*list);
+//    QList<QStringList> *inner;
+//    QString type = "";
 
-    int n = 0;
-    while(i.hasNext()){
+//    int n = 0;
+//    while(i.hasNext()){
 
-        inner = i.next();
+//        inner = i.next();
 
-        //get type
-        type = pxlg.fetch(ALL_TYPE, ATTR_NONE, inner);
+//        //get type
+//        type = pxlg.fetch(ALL_TYPE, ATTR_NONE, inner);
 
-        if(type == TYPE_ALLINCLUDE){    setTempItem(inner, n);
+//        if(type == TYPE_ALLINCLUDE){    setTempItem(inner, n);
 
-        }else if(type == TYPE_INFO){    setInfoItem(inner, n);
+//        }else if(type == TYPE_INFO){    setInfoItem(inner, n);
 
-        }else if(type == TYPE_EXEC){    setNormalItem(inner, n);
+//        }else if(type == TYPE_EXEC){    setNormalItem(inner, n);
 
-        }else if(type == TYPE_SEARCH){  setSearchItem(inner, n);
+//        }else if(type == TYPE_SEARCH){  setSearchItem(inner, n);
 
-        }else if(type == TYPE_SCRIPT){  setPluginsItem(inner, n);
+//        }else if(type == TYPE_SCRIPT){  setPluginsItem(inner, n);
 
-        }else if(type == TYPE_ANOTHER){ setProfileItem(inner, n);
+//        }else if(type == TYPE_ANOTHER){ setProfileItem(inner, n);
 
+//        }
+
+//        n++;
+//    }
+
+//    delete list;
+
+
+    QList<EditorCache> list;
+    editop->readAll(&list);
+
+    EditorCache inner;
+    FunctionType ft;
+
+    int count = list.count();
+    for (int n = 0; n < count; n++) {
+        inner = list.at(n);
+
+        switch (ft.getType(inner.type)) {
+        case ft.TYPE::ALLINCLUDE:  setTempItem(&inner, n);        break;
+        case ft.TYPE::INFORMATION: setInfoItem(&inner, n);        break;
+        case ft.TYPE::LOCAL:       break;
+        case ft.TYPE::EXECUTE:     setExecuteItem(&inner, n);     break;
+        case ft.TYPE::FILESEARCH:  setFileSearchItem(&inner, n);  break;
+        case ft.TYPE::PLUGIN:      setPluginItem(&inner, n);      break;
+        case ft.TYPE::PROFILELOAD: setProfileLoadItem(&inner, n); break;
+        case ft.TYPE::INVALID:     break;
         }
-
-        n++;
-    }
-
-    delete list;
-}
-
-///DEPENDS_XML DEPENDS_UI PROCESS
-void ProcessFlowTable::setTempItem(QList<QStringList> *list, int dataid)
-{
-    int istack = static_cast<QString>(pxlg.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt();
-
-    QHash<int, int> hlist;
-    pxlg.getListStructure(list, &hlist);
-
-    switch (istack) {
-    case ProcessXmlListGenerator::NORMAL:
-        setNormalItem(list, dataid);
-        break;
-
-    case ProcessXmlListGenerator::SEARCH:
-        setSearchItem(list, dataid);
-        break;
-
-    case ProcessXmlListGenerator::PLUGINS:
-        setPluginsItem(list, dataid);
-        break;
-
-    case ProcessXmlListGenerator::OTHER:
-        setProfileItem(list, dataid);
-        break;
-
-    default:
-        break;
     }
 }
 
-///DEPENDS_XML DEPENDS_UI PROCESS
-void ProcessFlowTable::setInfoItem(QList<QStringList> *list, int dataid)
+/////DEPENDS_XML DEPENDS_UI PROCESS
+//void ProcessFlowTable::setTempItem(QList<QStringList> *list, int dataid)
+//{
+//    int istack = static_cast<QString>(pxlg.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt();
+
+//    QHash<int, int> hlist;
+//    pxlg.getListStructure(list, &hlist);
+
+//    switch (istack) {
+//    case ProcessXmlListGenerator::NORMAL:
+//        setExecuteItem(list, dataid);
+//        break;
+
+//    case ProcessXmlListGenerator::SEARCH:
+//        setFileSearchItem(list, dataid);
+//        break;
+
+//    case ProcessXmlListGenerator::PLUGINS:
+//        setPluginItem(list, dataid);
+//        break;
+
+//    case ProcessXmlListGenerator::OTHER:
+//        setProfileLoadItem(list, dataid);
+//        break;
+
+//    default:
+//        break;
+//    }
+//}
+
+/////DEPENDS_XML DEPENDS_UI PROCESS
+//void ProcessFlowTable::setInfoItem(QList<QStringList> *list, int dataid)
+//{
+//    QString curdata = pxlg.fetch(I_NAME, ATTR_NONE, list);
+//    curdata = (curdata == "")? "(no name)" : curdata;
+
+////    cell->setTypeAll(info_title, &info_pixmap, &info_style, &info_frame);
+////    cell->hideArrow();
+
+//    QString tmp/* = getHtmlHeader("")*/;
+//    tmp.append(QString("%1").arg(curdata));
+////    tmp.append(QString("[version]: %1　").arg(pxlg.fetch(I_VERSION, ATTR_NONE, list)));
+////    tmp.append(QString("[author]: %1　").arg(pxlg.fetch(I_AUTHOR, ATTR_NONE, list)));
+////    tmp.append(QString("[description]: %1\n").arg(pxlg.fetch(I_DESCRIPTION, ATTR_NONE, list)));
+
+//    QColor color;
+//    color.setNamedColor(tr("#f8f8f8"));
+
+//    this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(tmp));
+
+//    QTableWidgetItem *item = new QTableWidgetItem(QIcon(info_pixmap), info_title);
+//    item->setBackground(QBrush(color));
+//    item->setForeground(QBrush(QColor(Qt::black)));
+//    this->setItem(dataToUiIndex(dataid), SECOND, item);
+//}
+
+/////DEPENDS_XML DEPENDS_UI PROCESS
+//void ProcessFlowTable::setExecuteItem(QList<QStringList> *list, int dataid)
+//{
+//    int cmdcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, list)).toInt();
+//    int cmdfirst = pxlg.fetchCmdFirstPos(E_CMD, list);
+
+////    cell->setTypeAll(exec_title, &exec_pixmap, &exec_style, &exec_frame);
+
+//    QString curdata = (cmdcount == 0)? "(no command)" : list->at(cmdfirst).at(1);
+//    if(curdata == "") curdata = "(no command)";
+
+//    QFileInfo info(curdata);
+//    QString tmp = /*getHtmlHeader("") + */(info.isFile() ? info.fileName() : curdata);
+
+//    for(int i = 1; i < cmdcount; i++){
+//        tmp.append(" " + list->at(cmdfirst + i).at(1));
+//    }
+
+//    QColor color;
+//    color.setNamedColor(tr("#e2f6ff"));
+
+//    this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(tmp));
+
+//    QTableWidgetItem *item = new QTableWidgetItem(QIcon(exec_pixmap), exec_title);
+//    item->setBackground(QBrush(color));
+//    item->setForeground(QBrush(QColor(Qt::black)));
+//    this->setItem(dataToUiIndex(dataid), SECOND, item);
+
+////    cell->setContent(tmp);
+//}
+
+/////DEPENDS_XML DEPENDS_UI PROCESS
+//void ProcessFlowTable::setFileSearchItem(QList<QStringList> *list, int dataid)
+//{
+//    QString curdata;
+//    curdata = pxlg.fetch(S_NAME, ATTR_NONE, list);
+//    curdata = (curdata == "")? "(not selected) " : curdata;
+
+////    cell->setTypeAll(search_title, &search_pixmap, &search_style, &search_frame);
+
+//    QString curdata2;
+//    curdata2 = pxlg.fetch(S_SEPARATOR, ATTR_NONE, list);
+//    curdata2 = (curdata2 == "")? "(not defined) " : curdata2;
+
+//    QString tmp = curdata + QString("sep:%1 ").arg(curdata2);
+
+//    //variant or output
+//    QString cur3;
+//    if(static_cast<QString>(pxlg.fetch(S_OUTPUTFILE, ATTR_RADIOBUTTONPOS, list)).toInt() == 0){
+
+//        cur3 = pxlg.fetch(S_VARIANT, ATTR_NONE, list);
+//        cur3 = (cur3 == "")? "(not defined) " : cur3;
+
+//        tmp.append(QString("var:%1").arg(cur3));
+//    }else{
+
+//        cur3 = pxlg.fetch(S_OUTPUTFILE, ATTR_NONE, list);
+//        cur3 = (cur3 == "")? "(not selected) " : cur3;
+
+//        tmp.append(QString("outpath:%1").arg(cur3));
+//    }
+
+//    QColor color;
+//    color.setNamedColor(tr("#dcedc8"));
+
+//    this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(tmp));
+
+//    QTableWidgetItem *item = new QTableWidgetItem(QIcon(search_pixmap), search_title);
+//    item->setBackground(QBrush(color));
+//    item->setForeground(QBrush(QColor(Qt::black)));
+//    this->setItem(dataToUiIndex(dataid), SECOND, item);
+////    cell->setContent(tmp);
+//}
+
+/////DEPENDS_XML DEPENDS_UI PROCESS
+//void ProcessFlowTable::setPluginItem(QList<QStringList> *list, int dataid)
+//{
+//    QString curdata = pxlg.fetch(PL_FILEPATH, ATTR_NONE, list);
+
+////    cell->setTypeAll(extra_title, &extra_pixmap, &extra_style, &extra_frame);
+
+//    QFileInfo info(curdata);
+//    QString tmp = (info.isFile() ? info.baseName() : curdata);
+
+//    curdata = (curdata == "")? "(not selected)" : tmp;
+
+//    int plgcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, list)).toInt();
+//    int plgfirst = pxlg.fetchCmdFirstPos(PL_CMD, list);
+
+//    for(int i = 0; i < plgcount; i++){
+//        tmp.append(" " + list->at(plgfirst + i).at(1));
+//    }
+
+//    QColor color;
+//    color.setNamedColor(tr("#ffcdd2"));
+
+//    this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(curdata));
+
+//    QTableWidgetItem *item = new QTableWidgetItem(QIcon(plugin_pixmap), plugin_title);
+//    item->setBackground(QBrush(color));
+//    item->setForeground(QBrush(QColor(Qt::black)));
+//    this->setItem(dataToUiIndex(dataid), SECOND, item);
+////    cell->setContent(tmp);
+//}
+
+///**
+// * @fn ProcessFlowTable::setProfileItem
+// * @brief DEPENDS_XML DEPENDS_UI
+// * @param list loaded xml list
+// * @param dataid xml data position
+// */
+//void ProcessFlowTable::setProfileLoadItem(QList<QStringList> *list, int dataid)
+//{
+//    QString curdata = pxlg.fetch(PR_FILEPATH, ATTR_NONE, list);
+//    QFileInfo profile(curdata);
+
+//    if(profile.exists()){
+//        //read file
+//        ProcessXmlBuilder tpxb;
+//        QList<QStringList> tlist;
+//        tpxb.setLoadPath(curdata);
+
+//        if(tpxb.readItem(0, &tlist)){
+//            curdata = pxlg.fetch(I_NAME, ATTR_NONE, &tlist);
+//            curdata.append(" - ");
+//            curdata.append(profile.baseName());
+//        }
+
+//    }else{
+//        curdata = tr("(file is not exist)");
+//    }
+
+//    if(curdata == "") curdata = "(not selected)";
+
+//    QColor color;
+//    color.setNamedColor(tr("#ffecb3"));
+
+//    this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(curdata));
+
+//    QTableWidgetItem *item = new QTableWidgetItem(QIcon(other_pixmap), other_title);
+//    item->setBackground(QBrush(color));
+//    item->setForeground(QBrush(QColor(Qt::black)));
+//    this->setItem(dataToUiIndex(dataid), SECOND, item);
+//}
+
+void ProcessFlowTable::setTempItem(EditorCache *list, int dataid)
 {
-    QString curdata = pxlg.fetch(I_NAME, ATTR_NONE, list);
+    switch (static_cast<TAB>(list->functionSelect)) {
+    case TAB::EXECUTE:
+        setExecuteItem(list, dataid);
+        break;
+
+    case TAB::FILESEARCH:
+        setFileSearchItem(list, dataid);
+        break;
+
+    case TAB::PLUGINS:
+        setPluginItem(list, dataid);
+        break;
+
+    case TAB::PROFILELOAD:
+        setProfileLoadItem(list, dataid);
+        break;
+
+    case TAB::INVALID:
+        break;
+    }
+}
+
+void ProcessFlowTable::setInfoItem(EditorCache *list, int dataid)
+{
+    QString curdata = list->info.name;
     curdata = (curdata == "")? "(no name)" : curdata;
 
-//    cell->setTypeAll(info_title, &info_pixmap, &info_style, &info_frame);
-//    cell->hideArrow();
+    QColor color(tr("#f8f8f8"));
+//    color.setNamedColor(tr("#f8f8f8"));
 
-    QString tmp/* = getHtmlHeader("")*/;
-    tmp.append(QString("%1").arg(curdata));
-//    tmp.append(QString("[version]: %1　").arg(pxlg.fetch(I_VERSION, ATTR_NONE, list)));
-//    tmp.append(QString("[author]: %1　").arg(pxlg.fetch(I_AUTHOR, ATTR_NONE, list)));
-//    tmp.append(QString("[description]: %1\n").arg(pxlg.fetch(I_DESCRIPTION, ATTR_NONE, list)));
-
-    QColor color;
-    color.setNamedColor(tr("#f8f8f8"));
-
-    this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(tmp));
+    this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(curdata));
 
     QTableWidgetItem *item = new QTableWidgetItem(QIcon(info_pixmap), info_title);
     item->setBackground(QBrush(color));
@@ -597,22 +869,18 @@ void ProcessFlowTable::setInfoItem(QList<QStringList> *list, int dataid)
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 }
 
-///DEPENDS_XML DEPENDS_UI PROCESS
-void ProcessFlowTable::setNormalItem(QList<QStringList> *list, int dataid)
+void ProcessFlowTable::setExecuteItem(EditorCache *list, int dataid)
 {
-    int cmdcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, list)).toInt();
-    int cmdfirst = pxlg.fetchCmdFirstPos(E_CMD, list);
+    int cmdcount = list->exec.command.count();
 
-//    cell->setTypeAll(exec_title, &exec_pixmap, &exec_style, &exec_frame);
-
-    QString curdata = (cmdcount == 0)? "(no command)" : list->at(cmdfirst).at(1);
+    QString curdata = (cmdcount == 0)? "(no command)" : list->exec.command.first();
     if(curdata == "") curdata = "(no command)";
 
     QFileInfo info(curdata);
-    QString tmp = /*getHtmlHeader("") + */(info.isFile() ? info.fileName() : curdata);
+    QString tmp = info.isFile() ? info.fileName() : curdata;
 
     for(int i = 1; i < cmdcount; i++){
-        tmp.append(" " + list->at(cmdfirst + i).at(1));
+        tmp.append(" " + list->exec.command.at(i));
     }
 
     QColor color;
@@ -624,43 +892,38 @@ void ProcessFlowTable::setNormalItem(QList<QStringList> *list, int dataid)
     item->setBackground(QBrush(color));
     item->setForeground(QBrush(QColor(Qt::black)));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
-
-//    cell->setContent(tmp);
 }
 
-///DEPENDS_XML DEPENDS_UI PROCESS
-void ProcessFlowTable::setSearchItem(QList<QStringList> *list, int dataid)
+void ProcessFlowTable::setFileSearchItem(EditorCache *list, int dataid)
 {
     QString curdata;
-    curdata = pxlg.fetch(S_NAME, ATTR_NONE, list);
-    curdata = (curdata == "")? "(not selected) " : curdata;
-
-//    cell->setTypeAll(search_title, &search_pixmap, &search_style, &search_frame);
+    curdata = list->filesearch.name;
+    curdata = (curdata == "")? "(not selected) " : (curdata + " ");
 
     QString curdata2;
-    curdata2 = pxlg.fetch(S_SEPARATOR, ATTR_NONE, list);
+    curdata2 = list->filesearch.separator;
     curdata2 = (curdata2 == "")? "(not defined) " : curdata2;
 
     QString tmp = curdata + QString("sep:%1 ").arg(curdata2);
 
     //variant or output
     QString cur3;
-    if(static_cast<QString>(pxlg.fetch(S_OUTPUTFILE, ATTR_RADIOBUTTONPOS, list)).toInt() == 0){
+    if(list->filesearch.outputOption == list->filesearch.VARIANT){
 
-        cur3 = pxlg.fetch(S_VARIANT, ATTR_NONE, list);
+        cur3 = list->filesearch.variant;
         cur3 = (cur3 == "")? "(not defined) " : cur3;
 
         tmp.append(QString("var:%1").arg(cur3));
     }else{
 
-        cur3 = pxlg.fetch(S_OUTPUTFILE, ATTR_NONE, list);
+        cur3 = list->filesearch.filePath;
         cur3 = (cur3 == "")? "(not selected) " : cur3;
 
         tmp.append(QString("outpath:%1").arg(cur3));
     }
 
-    QColor color;
-    color.setNamedColor(tr("#dcedc8"));
+    QColor color(tr("#dcedc8"));
+//    color.setNamedColor(tr("#dcedc8"));
 
     this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(tmp));
 
@@ -668,30 +931,23 @@ void ProcessFlowTable::setSearchItem(QList<QStringList> *list, int dataid)
     item->setBackground(QBrush(color));
     item->setForeground(QBrush(QColor(Qt::black)));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
-//    cell->setContent(tmp);
 }
 
-///DEPENDS_XML DEPENDS_UI PROCESS
-void ProcessFlowTable::setPluginsItem(QList<QStringList> *list, int dataid)
+void ProcessFlowTable::setPluginItem(EditorCache *list, int dataid)
 {
-    QString curdata = pxlg.fetch(PL_FILEPATH, ATTR_NONE, list);
-
-//    cell->setTypeAll(extra_title, &extra_pixmap, &extra_style, &extra_frame);
+    QString curdata = list->plugin.filePath;
 
     QFileInfo info(curdata);
     QString tmp = (info.isFile() ? info.baseName() : curdata);
 
     curdata = (curdata == "")? "(not selected)" : tmp;
 
-    int plgcount = static_cast<QString>(pxlg.fetch(PL_CMDARGCOUNT, ATTR_NONE, list)).toInt();
-    int plgfirst = pxlg.fetchCmdFirstPos(PL_CMD, list);
-
-    for(int i = 0; i < plgcount; i++){
-        tmp.append(" " + list->at(plgfirst + i).at(1));
+    for(QString com : list->plugin.command){
+        tmp.append(" " + com);
     }
 
-    QColor color;
-    color.setNamedColor(tr("#ffcdd2"));
+    QColor color(tr("#ffcdd2"));
+//    color.setNamedColor(tr("#ffcdd2"));
 
     this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(curdata));
 
@@ -699,18 +955,11 @@ void ProcessFlowTable::setPluginsItem(QList<QStringList> *list, int dataid)
     item->setBackground(QBrush(color));
     item->setForeground(QBrush(QColor(Qt::black)));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
-//    cell->setContent(tmp);
 }
 
-/**
- * @fn ProcessFlowTable::setProfileItem
- * @brief DEPENDS_XML DEPENDS_UI
- * @param list loaded xml list
- * @param dataid xml data position
- */
-void ProcessFlowTable::setProfileItem(QList<QStringList> *list, int dataid)
+void ProcessFlowTable::setProfileLoadItem(EditorCache *list, int dataid)
 {
-    QString curdata = pxlg.fetch(PR_FILEPATH, ATTR_NONE, list);
+    QString curdata = list->profileload.filePath;
     QFileInfo profile(curdata);
 
     if(profile.exists()){
@@ -731,8 +980,8 @@ void ProcessFlowTable::setProfileItem(QList<QStringList> *list, int dataid)
 
     if(curdata == "") curdata = "(not selected)";
 
-    QColor color;
-    color.setNamedColor(tr("#ffecb3"));
+    QColor color(tr("#ffecb3"));
+//    color.setNamedColor(tr("#ffecb3"));
 
     this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(curdata));
 
