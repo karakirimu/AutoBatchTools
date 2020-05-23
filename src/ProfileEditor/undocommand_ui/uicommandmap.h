@@ -1,0 +1,4 @@
+#ifndef UICOMMANDMAP_H
+#define UICOMMANDMAP_H
+
+#endif // UICOMMANDMAP_H
