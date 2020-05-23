@@ -28,8 +28,8 @@ EditGlobalVarTree::EditGlobalVarTree(const int &treeindex
 
     m_operation = operation;
 
-    if(m_operation == ProcessXmlListGenerator::TREE_EDIT
-            || m_operation == ProcessXmlListGenerator::TREE_DELETE){
+    if(m_operation == UiCommandMap::GV_EDIT_TREE
+            || m_operation == UiCommandMap::GV_DEL_TREE){
         QList<QStringList> old;
         if(sxml.readItem(m_treeindex, &old)){
             m_oldvar.append(old.at(0).at(1));
@@ -44,36 +44,36 @@ void EditGlobalVarTree::undo()
 
     qDebug() << "VariantTable: Undo: tableindex : " << m_treeindex;
     switch (m_operation) {
-    case ProcessXmlListGenerator::TREE_ADD:
+    case UiCommandMap::GV_ADD_TREE:
         //delete
         sxml.deleteItem(m_treeindex);
 
         setText(QObject::tr("Add global at %1").arg(m_treeindex) \
-                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UNDOREDO_GV_DEL));
+                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_DEL_TREE)));
 
         break;
 
-    case ProcessXmlListGenerator::TREE_EDIT:
+    case UiCommandMap::GV_EDIT_TREE:
         sxml.createVarElement(&xmlformat, &m_oldvar);
         sxml.editItem(m_treeindex, &xmlformat);
 
         setText(QObject::tr("Edit global at %1").arg(m_treeindex) \
-                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UNDOREDO_GV_EDIT));
+                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_EDIT_TREE)));
         break;
 
-    case ProcessXmlListGenerator::TREE_INSERT:
+    case UiCommandMap::GV_INS_TREE:
         sxml.deleteItem(m_treeindex);
 
         setText(QObject::tr("Insert global at %1 \'%2\'").arg(m_treeindex).arg(m_newvar.at(0)) \
-                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UNDOREDO_GV_DEL));
+                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_DEL_TREE)));
         break;
 
-    case ProcessXmlListGenerator::TREE_DELETE:
+    case UiCommandMap::GV_DEL_TREE:
         sxml.createVarElement(&xmlformat, &m_oldvar);
         sxml.insertItem(m_treeindex, &xmlformat);
 
         setText(QObject::tr("Delete global at %1").arg(m_treeindex) \
-                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UNDOREDO_GV_INS));
+                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_INS_TREE)));
         break;
 
     default:
@@ -89,36 +89,36 @@ void EditGlobalVarTree::redo()
 
 
     switch (m_operation) {
-    case ProcessXmlListGenerator::TREE_ADD:
+    case UiCommandMap::GV_ADD_TREE:
         sxml.createVarElement(&xmlformat, &m_newvar);
         sxml.addItem(&xmlformat);
 
         setText(QObject::tr("Add global at %1").arg(m_treeindex) \
-                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UNDOREDO_GV_ADD));
+                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_ADD_TREE)));
         break;
 
-    case ProcessXmlListGenerator::TREE_EDIT:
+    case UiCommandMap::GV_EDIT_TREE:
         sxml.createVarElement(&xmlformat, &m_newvar);
         sxml.editItem(m_treeindex, &xmlformat);
 
         setText(QObject::tr("Edit global at %1").arg(m_treeindex) \
-                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UNDOREDO_GV_EDIT));
+                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_EDIT_TREE)));
         break;
 
-    case ProcessXmlListGenerator::TREE_INSERT:
+    case UiCommandMap::GV_INS_TREE:
         sxml.createVarElement(&xmlformat, &m_newvar);
         sxml.insertItem(m_treeindex, &xmlformat);
 
         setText(QObject::tr("Insert global at %1 \'%2\'").arg(m_treeindex).arg(m_newvar.at(0)) \
-                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UNDOREDO_GV_INS));
+                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_INS_TREE)));
         break;
 
-    case ProcessXmlListGenerator::TREE_DELETE:
+    case UiCommandMap::GV_DEL_TREE:
         //add
         sxml.deleteItem(m_treeindex);
 
         setText(QObject::tr("Delete global at %1").arg(m_treeindex) \
-                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UNDOREDO_GV_DEL));
+                + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_DEL_TREE)));
         break;
 
     default:
@@ -128,25 +128,26 @@ void EditGlobalVarTree::redo()
 
 int EditGlobalVarTree::id() const
 {
-    ProcessXmlListGenerator pxg;
+//    ProcessXmlListGenerator pxg;
 
-    switch (m_operation) {
-    case ProcessXmlListGenerator::TREE_ADD:
-        return pxg.getId(UNDOREDO_GV_ADD);
+//    switch (m_operation) {
+//    case UiCommandMap::GV_ADD_TREE:
+//        return pxg.getId(UNDOREDO_GV_ADD);
 
-    case ProcessXmlListGenerator::TREE_EDIT:
-        return pxg.getId(UNDOREDO_GV_EDIT);
+//    case UiCommandMap::GV_EDIT_TREE:
+//        return pxg.getId(UNDOREDO_GV_EDIT);
 
-    case ProcessXmlListGenerator::TREE_INSERT:
-        return pxg.getId(UNDOREDO_GV_INS);
+//    case UiCommandMap::GV_INS_TREE:
+//        return pxg.getId(UiCommandMap::Id(UiCommandMap::GV_INS_TREE));
 
-    case ProcessXmlListGenerator::TREE_DELETE:
-        return pxg.getId(UNDOREDO_GV_DEL);
+//    case UiCommandMap::GV_DEL_TREE:
+//        return pxg.getId(UiCommandMap::Id(UiCommandMap::GV_DEL_TREE));
 
-    }
+//    }
 
-    //todo: no suitable difinition class
-    return 9000;
+//    //todo: no suitable difinition class
+//    return 9000;
+    return m_operation;
 }
 
 bool EditGlobalVarTree::mergeWith(const QUndoCommand *other)

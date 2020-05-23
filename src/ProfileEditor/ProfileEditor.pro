@@ -58,6 +58,7 @@ HEADERS  += editarea/commandtable.h \
     console/consoleedit.h \
     console/consoleview.h \
     undocommand/addcommand.h \
+    undocommand/commandmap.h \
     undocommand/deletecommand.h \
     undocommand/dragdropcommand.h \
     undocommand/insertcommand.h \
@@ -99,6 +100,7 @@ HEADERS  += editarea/commandtable.h \
     undocommand_ui/stringsearchsep.h \
     undocommand_ui/swapexectable.h \
     undocommand_ui/swapplugintable.h \
+    undocommand_ui/uicommandmap.h \
     variantarea/varianttable.h \
     aboutpe.h \
     basedockwidget.h \

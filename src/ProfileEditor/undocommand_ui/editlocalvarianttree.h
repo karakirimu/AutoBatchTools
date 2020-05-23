@@ -19,7 +19,9 @@
 
 #include <QUndoCommand>
 #include <editorcachelist.h>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <uicommandmap.h>
+#include <QDebug>
 
 /**
  * @brief The EditLocalVariantTree class

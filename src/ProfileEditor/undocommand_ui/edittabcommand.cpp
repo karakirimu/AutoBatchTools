@@ -71,7 +71,7 @@ void EditTabCommand::undo()
     ec.functionSelect = oldIndex;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Type change") + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+    setText(QObject::tr("Type change") + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void EditTabCommand::redo()
@@ -94,13 +94,14 @@ void EditTabCommand::redo()
     ec.functionSelect = newIndex;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Type change") + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+    setText(QObject::tr("Type change") + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int EditTabCommand::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(TE_STACKEDWIDGET_POSITION);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(TE_STACKEDWIDGET_POSITION);
+    return UiCommandMap::FUNCTIONSELECT;
 }
 
 //void EditTabCommand::selectIndex(int index)

@@ -60,8 +60,8 @@ EditLocalVarTable::EditLocalVarTable(const int &targetindex
     tableOperation = operation;
     ptrCache = cache;
 
-    if(tableOperation == ProcessXmlListGenerator::TABLE_EDIT
-            || tableOperation == ProcessXmlListGenerator::TABLE_DELETE){
+    if(tableOperation == UiCommandMap::LV_EDIT
+            || tableOperation == UiCommandMap::LV_DELETE){
         oldVar = cache->at(index).local.variantData.at(tableIndex);
     }
 }
@@ -121,35 +121,35 @@ void EditLocalVarTable::undo()
     QList<VariantPair> list = ec.local.variantData;
 
     switch (tableOperation) {
-    case ProcessXmlListGenerator::TABLE_ADD:
+    case UiCommandMap::LV_ADD:
         // Delete
         list.removeAt(tableIndex);
         setText(QObject::tr("Add local at %1").arg(tableIndex) \
-                + QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_LV_DEL));
+                + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_DELETE)));
 
         break;
 
-    case ProcessXmlListGenerator::TABLE_EDIT:
+    case UiCommandMap::LV_EDIT:
 
         list.replace(tableIndex, oldVar);
         setText(QObject::tr("Edit local at %1").arg(tableIndex) \
-                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_LV_EDIT));
+                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_EDIT)));
 
         break;
 
-    case ProcessXmlListGenerator::TABLE_INSERT:
+    case UiCommandMap::LV_INSERT:
         // Delete
         list.removeAt(tableIndex);
 
         setText(QObject::tr("Insert local at %1 \'%2\'").arg(tableIndex).arg(newVar.variant) \
-                + QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_LV_DEL));
+                + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_DELETE)));
         break;
 
-    case ProcessXmlListGenerator::TABLE_DELETE:
+    case UiCommandMap::LV_DELETE:
         // Insert
         list.insert(tableIndex, oldVar);
         setText(QObject::tr("Delete local at %1").arg(tableIndex) \
-                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_LV_INS));
+                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_INSERT)));
         break;
 
     default:
@@ -213,30 +213,30 @@ void EditLocalVarTable::redo()
     QList<VariantPair> list = ec.local.variantData;
 
     switch (tableOperation) {
-    case ProcessXmlListGenerator::TABLE_ADD:
+    case UiCommandMap::LV_ADD:
 
         list.append(newVar);
         setText(QObject::tr("Add local %1").arg(tableIndex) \
-                + QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_LV_ADD));
+                + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_ADD)));
 
         break;
-    case ProcessXmlListGenerator::TABLE_EDIT:
+    case UiCommandMap::LV_EDIT:
 
         list.replace(tableIndex, newVar);
         setText(QObject::tr("Edit local at %1").arg(tableIndex) \
-                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_LV_EDIT));
+                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_EDIT)));
         break;
-    case ProcessXmlListGenerator::TABLE_INSERT:
+    case UiCommandMap::LV_INSERT:
 
         list.insert(tableIndex, newVar);
         setText(QObject::tr("Insert local at %1 \'%2\'").arg(tableIndex).arg(newVar.variant) \
-                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_LV_INS));
+                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_INSERT)));
         break;
-    case ProcessXmlListGenerator::TABLE_DELETE:
+    case UiCommandMap::LV_DELETE:
 
         list.removeAt(tableIndex);
         setText(QObject::tr("Delete local at %1").arg(tableIndex) \
-                + QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_LV_DEL));
+                + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_DELETE)));
         break;
     default:
         break;
@@ -249,24 +249,25 @@ void EditLocalVarTable::redo()
 
 int EditLocalVarTable::id() const
 {
-    ProcessXmlListGenerator pxg;
+//    ProcessXmlListGenerator pxg;
 
-    switch (tableOperation) {
-    case ProcessXmlListGenerator::TABLE_ADD:
-        return pxg.getId(L_ADD_TABLE);
+//    switch (tableOperation) {
+//    case ProcessXmlListGenerator::TABLE_ADD:
+//        return pxg.getId(L_ADD_TABLE);
 
-    case ProcessXmlListGenerator::TABLE_EDIT:
-        return pxg.getId(L_EDIT_TABLE);
+//    case ProcessXmlListGenerator::TABLE_EDIT:
+//        return pxg.getId(L_EDIT_TABLE);
 
-    case ProcessXmlListGenerator::TABLE_INSERT:
-        return pxg.getId(L_INSERT_TABLE);
+//    case ProcessXmlListGenerator::TABLE_INSERT:
+//        return pxg.getId(L_INSERT_TABLE);
 
-    case ProcessXmlListGenerator::TABLE_DELETE:
-        return pxg.getId(L_DELETE_TABLE);
+//    case ProcessXmlListGenerator::TABLE_DELETE:
+//        return pxg.getId(L_DELETE_TABLE);
 
-    }
+//    }
 
-    return pxg.getId(L_VAR_COUNT);
+//    return pxg.getId(L_VAR_COUNT);
+    return tableOperation;
 }
 
 //bool EditLocalVarTable::mergeWith(const QUndoCommand *other)

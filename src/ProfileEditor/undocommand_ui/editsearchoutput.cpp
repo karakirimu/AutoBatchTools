@@ -54,7 +54,7 @@ void EditSearchOutput::undo()
     replaceValue(oldValue);
 
     setText(QObject::tr("Output Select") \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void EditSearchOutput::redo()
@@ -67,13 +67,14 @@ void EditSearchOutput::redo()
     replaceValue(newValue);
 
     setText(QObject::tr("Output Select") \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int EditSearchOutput::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(ATTR_RADIOBUTTONPOS);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(ATTR_RADIOBUTTONPOS);
+    return UiCommandMap::FS_OUTPUTOPTION_INT;
 }
 
 bool EditSearchOutput::mergeWith(const QUndoCommand *other)

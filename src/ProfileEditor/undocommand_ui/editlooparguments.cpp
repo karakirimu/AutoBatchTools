@@ -52,7 +52,7 @@ void EditLoopArguments::undo()
     replaceValue(oldValue);
 
     setText(QObject::tr("Arguments count to %1").arg(newValue) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void EditLoopArguments::redo()
@@ -65,13 +65,15 @@ void EditLoopArguments::redo()
     replaceValue(newValue);
 
     setText(QObject::tr("Arguments count to %1").arg(oldValue) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int EditLoopArguments::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(I_RECURSIVE_LOOPARGCOUNT);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(I_RECURSIVE_LOOPARGCOUNT);
+
+    return UiCommandMap::I_ARG_IN_ONELOOP_INT;
 }
 
 bool EditLoopArguments::mergeWith(const QUndoCommand *other)

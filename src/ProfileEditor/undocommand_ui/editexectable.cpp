@@ -33,8 +33,8 @@
 
 //    SKIP = pxlg.fetchCmdFirstPos(E_CMD, m_cache->at(index));
 
-//    if(tableOperation == ProcessXmlListGenerator::TABLE_EDIT
-//            || tableOperation == ProcessXmlListGenerator::TABLE_DELETE
+//    if(tableOperation == UiCommandMap::E_EDIT_TABLE
+//            || tableOperation == UiCommandMap::E_DELETE_TABLE
 //            || tableOperation == ProcessXmlListGenerator::TABLE_CUT){
 //        oldStr = m_cache->at(index)->at(tableIndex + SKIP).at(1);
 //    }
@@ -56,9 +56,9 @@ EditExecTable::EditExecTable(const int &targetindex
     tableOperation = operation;
     ptrCache = cache;
 
-    if(tableOperation == ProcessXmlListGenerator::TABLE_EDIT
-            || tableOperation == ProcessXmlListGenerator::TABLE_DELETE
-            || tableOperation == ProcessXmlListGenerator::TABLE_CUT){
+    if(tableOperation == UiCommandMap::E_EDIT_TABLE
+            || tableOperation == UiCommandMap::E_DELETE_TABLE
+            || tableOperation == UiCommandMap::E_CUT_TABLE){
         oldStr = cache->at(index).exec.command.at(tableIndex);
     }
 }
@@ -135,39 +135,39 @@ void EditExecTable::undo()
     QString sendcode;
 
     switch (tableOperation) {
-    case ProcessXmlListGenerator::TABLE_ADD:
+    case UiCommandMap::E_ADD_TABLE:
         // Delete
         list.removeAt(tableIndex);
         setText(QObject::tr("Add exec at %1").arg(QString::number(tableIndex)) \
-                + QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_E_TABLEDEL));
+                + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_DELETE_TABLE)));
 
         break;
-    case ProcessXmlListGenerator::TABLE_EDIT:
+    case UiCommandMap::E_EDIT_TABLE:
 
         list.replace(tableIndex, oldStr);
         setText(QObject::tr("Edit exec at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) \
-                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_E_TABLEEDIT));
+                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_EDIT_TABLE)));
         break;
-    case ProcessXmlListGenerator::TABLE_INSERT:
-    case ProcessXmlListGenerator::TABLE_PASTE:
+    case UiCommandMap::E_INSERT_TABLE:
+    case UiCommandMap::E_PASTE_TABLE:
         // Delete
         list.removeAt(tableIndex);
 
-        sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_E_TABLEDEL);
-        if(tableOperation == ProcessXmlListGenerator::TABLE_PASTE){
+        sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_DELETE_TABLE));
+        if(tableOperation == UiCommandMap::E_PASTE_TABLE){
             setText(QObject::tr("Paste exec at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) + sendcode);
         }else{
             setText(QObject::tr("Insert exec at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) + sendcode);
         }
 
         break;
-    case ProcessXmlListGenerator::TABLE_DELETE:
-    case ProcessXmlListGenerator::TABLE_CUT:
+    case UiCommandMap::E_DELETE_TABLE:
+    case UiCommandMap::E_CUT_TABLE:
         // Insert
         list.insert(tableIndex, oldStr);
 
-        sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_E_TABLEINS);
-        if(tableOperation == ProcessXmlListGenerator::TABLE_CUT){
+        sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_INSERT_TABLE));
+        if(tableOperation == UiCommandMap::E_CUT_TABLE){
             setText(QObject::tr("Cut exec at %1").arg(QString::number(tableIndex)) + sendcode);
         }else{
             setText(QObject::tr("Delete exec at %1").arg(QString::number(tableIndex)) + sendcode);
@@ -255,41 +255,41 @@ void EditExecTable::redo()
     QString sendcode;
 
     switch (tableOperation) {
-    case ProcessXmlListGenerator::TABLE_ADD:
+    case UiCommandMap::E_ADD_TABLE:
 
         list.append(newStr);
         setText(QObject::tr("Add exec at %1").arg(QString::number(tableIndex)) \
-                + QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_E_TABLEADD));
+                + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_ADD_TABLE)));
 
         break;
-    case ProcessXmlListGenerator::TABLE_EDIT:
+    case UiCommandMap::E_EDIT_TABLE:
 
         list.replace(tableIndex, newStr);
         // this is only all update
         setText(QObject::tr("Edit exec at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) \
-                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_E_TABLEEDIT));
+                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_EDIT_TABLE)));
 
         break;
-    case ProcessXmlListGenerator::TABLE_INSERT:
-    case ProcessXmlListGenerator::TABLE_PASTE:
+    case UiCommandMap::E_INSERT_TABLE:
+    case UiCommandMap::E_PASTE_TABLE:
 
         list.insert(tableIndex, newStr);
-        sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_E_TABLEINS);
+        sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_INSERT_TABLE));
 
-        if(tableOperation == ProcessXmlListGenerator::TABLE_PASTE){
+        if(tableOperation == UiCommandMap::E_PASTE_TABLE){
             setText(QObject::tr("Paste exec at %1 arg \'%2\'").arg(QString::number(tableIndex).arg(newStr)) + sendcode);
         }else{
             setText(QObject::tr("Insert exec at %1 arg \'%2\'").arg(QString::number(tableIndex).arg(newStr)) + sendcode);
         }
 
         break;
-    case ProcessXmlListGenerator::TABLE_DELETE:
-    case ProcessXmlListGenerator::TABLE_CUT:
+    case UiCommandMap::E_DELETE_TABLE:
+    case UiCommandMap::E_CUT_TABLE:
 
         list.removeAt(tableIndex);
-        sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_E_TABLEDEL);
+        sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_DELETE_TABLE));
 
-        if(tableOperation == ProcessXmlListGenerator::TABLE_CUT){
+        if(tableOperation == UiCommandMap::E_CUT_TABLE){
             setText(QObject::tr("Cut exec at %1").arg(QString::number(tableIndex)) + sendcode);
         }else{
             setText(QObject::tr("Delete exec at %1").arg(QString::number(tableIndex)) + sendcode);
@@ -307,24 +307,25 @@ void EditExecTable::redo()
 
 int EditExecTable::id() const
 {
-    ProcessXmlListGenerator pxg;
+//    ProcessXmlListGenerator pxg;
 
-    switch (tableOperation) {
-    case ProcessXmlListGenerator::TABLE_ADD:
-        return pxg.getId(E_ADD_TABLE);
+//    switch (tableOperation) {
+//    case ProcessXmlListGenerator::TABLE_ADD:
+//        return UiCommandMap::E_ADD_TABLE;
 
-    case ProcessXmlListGenerator::TABLE_EDIT:
-        return pxg.getId(E_EDIT_TABLE);
+//    case UiCommandMap::E_EDIT_TABLE:
+//        return UiCommandMap::E_EDIT_TABLE;
 
-    case ProcessXmlListGenerator::TABLE_INSERT:
-        return pxg.getId(E_INSERT_TABLE);
+//    case ProcessXmlListGenerator::TABLE_INSERT:
+//        return UiCommandMap::E_INSERT_TABLE;
 
-    case ProcessXmlListGenerator::TABLE_DELETE:
-        return pxg.getId(E_DELETE_TABLE);
+//    case ProcessXmlListGenerator::TABLE_DELETE:
+//        return UiCommandMap::E_DELETE_TABLE;
 
-    }
+//    }
 
-    return pxg.getId(E_CMDARGCOUNT);
+//    return UiCommandMap::INVALID;
+    return tableOperation;
 }
 
 //bool EditExecTable::mergeWith(const QUndoCommand *other)

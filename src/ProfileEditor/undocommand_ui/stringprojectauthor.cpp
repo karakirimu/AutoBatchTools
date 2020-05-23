@@ -51,7 +51,7 @@ void StringProjectAuthor::undo()
     ec.info.author = oldStr;
     ptrCache->replace(index, ec);
     setText(QObject::tr("Author changed") \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void StringProjectAuthor::redo()
@@ -62,13 +62,14 @@ void StringProjectAuthor::redo()
     ec.info.author = newStr;
     ptrCache->replace(index, ec);
     setText(QObject::tr("Author changed") \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int StringProjectAuthor::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(I_AUTHOR);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(I_AUTHOR);
+    return UiCommandMap::I_AUTHOR;
 }
 
 bool StringProjectAuthor::mergeWith(const QUndoCommand *other)

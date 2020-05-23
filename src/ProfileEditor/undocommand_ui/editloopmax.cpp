@@ -55,7 +55,7 @@ void EditLoopMax::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Loop Max count to %1").arg(newValue) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void EditLoopMax::redo()
@@ -70,13 +70,14 @@ void EditLoopMax::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Loop Max count to %1").arg(oldValue) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int EditLoopMax::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(I_RECURSIVE_LOOP);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(I_RECURSIVE_LOOP);
+    return UiCommandMap::I_RECURSIVE_LOOPMAX_INT;
 }
 
 bool EditLoopMax::mergeWith(const QUndoCommand *other)

@@ -52,7 +52,7 @@ void EditLoopRecursive::undo()
     replaceValue(oldValue);
 
     setText(QObject::tr("Loop recursive count to %1").arg(newValue) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void EditLoopRecursive::redo()
@@ -65,13 +65,15 @@ void EditLoopRecursive::redo()
     replaceValue(newValue);
 
     setText(QObject::tr("Loop recursive count to %1").arg(oldValue) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int EditLoopRecursive::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(I_RECURSIVE_LOOPCOUNT);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(I_RECURSIVE_LOOPCOUNT);
+
+    return UiCommandMap::I_RECURSIVE_LOOPMAX_INT;
 }
 
 bool EditLoopRecursive::mergeWith(const QUndoCommand *other)

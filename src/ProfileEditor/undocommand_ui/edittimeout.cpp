@@ -54,7 +54,7 @@ void EditTimeout::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Timeout to %1ms").arg(newValue) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void EditTimeout::redo()
@@ -69,13 +69,14 @@ void EditTimeout::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Timeout to %1ms").arg(oldValue) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int EditTimeout::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(E_TIMEOUT);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(E_TIMEOUT);
+    return UiCommandMap::E_TIMEOUT_INT;
 }
 
 bool EditTimeout::mergeWith(const QUndoCommand *other)

@@ -18,7 +18,8 @@
 #define COMBOPLUGINSELECT_H
 
 #include <QUndoCommand>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <uicommandmap.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 
 class ComboPluginSelect : public QUndoCommand

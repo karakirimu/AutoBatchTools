@@ -124,8 +124,9 @@ void SwapExecTable::redo()
 
 int SwapExecTable::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(E_SWAP_TABLE);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(E_SWAP_TABLE);
+return UiCommandMap::E_SWAP_TABLE;
 }
 
 void SwapExecTable::replaceValue(int source, int dest)
@@ -146,17 +147,17 @@ void SwapExecTable::setTextByCondition(int source, int dest)
     case 1:
         //UP
         setText(QObject::tr("Up exec arg '%1'").arg(arg) \
-                + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UNDOREDO_E_TABLESWAP));
+                + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UiCommandMap::Id(UiCommandMap::E_SWAP_TABLE)));
         break;
     case -1:
         //DOWN
         setText(QObject::tr("Down exec arg '%1'").arg(arg) \
-                + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UNDOREDO_E_TABLESWAP));
+                + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UiCommandMap::Id(UiCommandMap::E_SWAP_TABLE)));
         break;
     default:
         //SWAP
         setText(QObject::tr("Swap exec arg '%1' at %2 to %3").arg(arg).arg(source).arg(dest) \
-                + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UNDOREDO_E_TABLESWAP));
+                + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UiCommandMap::Id(UiCommandMap::E_SWAP_TABLE)));
         break;
     }
 }

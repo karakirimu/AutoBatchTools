@@ -3,7 +3,8 @@
 
 #include <QUndoCommand>
 #include <../stringxmlbuilder/stringxmlbuilder.h>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <uicommandmap.h>
 
 class SwapGlobalVarTree : public QUndoCommand
 {

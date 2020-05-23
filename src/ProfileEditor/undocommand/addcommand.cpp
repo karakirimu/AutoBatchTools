@@ -51,7 +51,7 @@ void AddCommand::undo()
     ptrCache->removeAt(index);
 
     setText(QObject::tr("Add item at %1").arg(index) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_DELETE));
+            + QString(" ^(%1,%2)").arg(index).arg(CommandMap::UNDOREDO_DELETE));
 }
 
 void AddCommand::redo()
@@ -71,5 +71,5 @@ void AddCommand::redo()
     ptrCache->append(add);
 
     setText(QObject::tr("Add item at %1").arg(index) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_ADD));
+            + QString(" ^(%1,%2)").arg(index).arg(CommandMap::UNDOREDO_ADD));
 }

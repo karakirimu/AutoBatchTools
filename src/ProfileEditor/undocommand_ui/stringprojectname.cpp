@@ -51,7 +51,7 @@ void StringProjectName::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Project name change") \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void StringProjectName::redo()
@@ -64,13 +64,14 @@ void StringProjectName::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Project name change") \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int StringProjectName::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(I_NAME);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(I_NAME);
+    return UiCommandMap::I_NAME;
 }
 
 bool StringProjectName::mergeWith(const QUndoCommand *other)

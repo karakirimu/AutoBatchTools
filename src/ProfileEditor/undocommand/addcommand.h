@@ -18,7 +18,8 @@
 #define ADDCOMMAND_H
 
 #include <QUndoCommand>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <CommandMap.h>
 #include <editorcachelist.h>
 
 class AddCommand : public QUndoCommand

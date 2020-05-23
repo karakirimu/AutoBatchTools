@@ -18,7 +18,8 @@
 #define INSERTCOMMAND_H
 
 #include <QUndoCommand>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <CommandMap.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 
 class InsertCommand : public QUndoCommand

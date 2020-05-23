@@ -51,7 +51,7 @@ void CheckOnlySchedulerSearch::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Scheduler only %1").arg(newCheck) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void CheckOnlySchedulerSearch::redo()
@@ -64,11 +64,12 @@ void CheckOnlySchedulerSearch::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Scheduler only %1").arg(newCheck) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int CheckOnlySchedulerSearch::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(S_ONLY_SCHEDULER);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(S_ONLY_SCHEDULER);
+    return UiCommandMap::FS_ONLY_SCHEDULER;
 }

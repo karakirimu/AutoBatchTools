@@ -85,9 +85,9 @@ EditPluginTable::EditPluginTable(const int &targetindex
     tableOperation = operation;
     ptrCache = cache;
 
-    if(tableOperation == ProcessXmlListGenerator::TABLE_EDIT
-            || tableOperation == ProcessXmlListGenerator::TABLE_DELETE
-            || tableOperation == ProcessXmlListGenerator::TABLE_CUT){
+    if(tableOperation == UiCommandMap::PL_EDIT_TABLE
+            || tableOperation == UiCommandMap::PL_DELETE_TABLE
+            || tableOperation == UiCommandMap::PL_CUT_TABLE){
         oldStr = cache->at(index).plugin.command.at(tableIndex);
     }
 }
@@ -214,47 +214,48 @@ void EditPluginTable::undo()
     QString sendcode;
 
     switch (tableOperation) {
-    case ProcessXmlListGenerator::TABLE_ADD:
+    case UiCommandMap::PL_ADD_TABLE:
         // Delete
         list.removeAt(tableIndex);
         setText(QObject::tr("Add plugin at %1").arg(QString::number(tableIndex)) \
-                + QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_PL_TABLEDEL));
+                + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_DELETE_TABLE)));
         break;
 
-    case ProcessXmlListGenerator::TABLE_EDIT:
+    case UiCommandMap::PL_EDIT_TABLE:
 
         list.replace(tableIndex, oldStr);
         setText(QObject::tr("Edit plugin at %2 arg \'%1\'").arg(oldStr).arg(QString::number(tableIndex)) \
-                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_PL_TABLEEDIT));
+                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_EDIT_TABLE)));
         break;
 
-    case ProcessXmlListGenerator::TABLE_INSERT:
-    case ProcessXmlListGenerator::TABLE_PASTE:
+    case UiCommandMap::PL_INSERT_TABLE:
+    case UiCommandMap::PL_PASTE_TABLE:
         // Delete
         list.removeAt(tableIndex);
 
-        sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_PL_TABLEDEL);
-        if(tableOperation == ProcessXmlListGenerator::TABLE_PASTE){
+        sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_DELETE_TABLE));
+        if(tableOperation == UiCommandMap::PL_PASTE_TABLE){
             setText(QObject::tr("Paste plugin at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) + sendcode);
         }else{
             setText(QObject::tr("Insert plugin at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) + sendcode);
         }
         break;
 
-    case ProcessXmlListGenerator::TABLE_DELETE:
-    case ProcessXmlListGenerator::TABLE_CUT:
+    case UiCommandMap::PL_DELETE_TABLE:
+    case UiCommandMap::PL_CUT_TABLE:
         // Insert
         list.insert(tableIndex, oldStr);
 
-        sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_PL_TABLEINS);
-        if(tableOperation == ProcessXmlListGenerator::TABLE_CUT){
+        sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_INSERT_TABLE));
+
+        if(tableOperation == UiCommandMap::PL_CUT_TABLE){
             setText(QObject::tr("Cut plugin at %1").arg(QString::number(tableIndex)) + sendcode);
         }else{
             setText(QObject::tr("Delete plugin at %1").arg(QString::number(tableIndex)) + sendcode);
         }
         break;
 
-    case ProcessXmlListGenerator::TABLE_ALLUPDATE:
+    case UiCommandMap::PL_ALLUPDATE_TABLE:
 
         list = oldStrList;
 
@@ -264,7 +265,7 @@ void EditPluginTable::undo()
             strlistformat.append(str).append(",");
         }
 
-        sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UNDOREDO_PL_ALLUPDATE);
+        sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UiCommandMap::Id(UiCommandMap::PL_ALLUPDATE_TABLE));
         setText(QObject::tr("Update plugin settings at %1").arg(QString::number(index)) + sendcode);
         break;
     }
@@ -380,39 +381,39 @@ void EditPluginTable::redo()
     QString sendcode;
 
     switch (tableOperation) {
-    case ProcessXmlListGenerator::TABLE_ADD:
+    case UiCommandMap::PL_ADD_TABLE:
 
         list.append(newStr);
         setText(QObject::tr("Add plugin %1").arg(QString::number(tableIndex)) \
-                + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_PL_TABLEADD));
+                + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::Id(UiCommandMap::PL_ADD_TABLE)));
 
         break;
-    case ProcessXmlListGenerator::TABLE_EDIT:
+    case UiCommandMap::PL_EDIT_TABLE:
 
         list.replace(tableIndex, newStr);
         setText(QObject::tr("Edit plugin at %2 arg \'%1\'").arg(newStr).arg(QString::number(tableIndex)) \
-                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_PL_TABLEEDIT));
+                + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_EDIT_TABLE)));
         break;
-    case ProcessXmlListGenerator::TABLE_INSERT:
-    case ProcessXmlListGenerator::TABLE_PASTE:
+    case UiCommandMap::PL_INSERT_TABLE:
+    case UiCommandMap::PL_PASTE_TABLE:
 
         list.insert(tableIndex, newStr);
 
-        sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UNDOREDO_PL_TABLEINS);
-        if(tableOperation == ProcessXmlListGenerator::TABLE_PASTE){
+        sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_INSERT_TABLE));
+        if(tableOperation == UiCommandMap::PL_PASTE_TABLE){
             setText(QObject::tr("Paste plugin at %1 arg \'%2\'").arg(QString::number(tableIndex).arg(newStr)) + sendcode);
         }else{
             setText(QObject::tr("Insert plugin at %1 arg \'%2\'").arg(QString::number(tableIndex).arg(newStr)) + sendcode);
         }
 
         break;
-    case ProcessXmlListGenerator::TABLE_DELETE:
-    case ProcessXmlListGenerator::TABLE_CUT:
+    case UiCommandMap::PL_DELETE_TABLE:
+    case UiCommandMap::PL_CUT_TABLE:
 
         list.removeAt(tableIndex);
 
-        sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UNDOREDO_PL_TABLEDEL);
-        if(tableOperation == ProcessXmlListGenerator::TABLE_CUT){
+        sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_DELETE_TABLE));
+        if(tableOperation == UiCommandMap::PL_CUT_TABLE){
             setText(QObject::tr("Cut plugin at %1").arg(QString::number(tableIndex)) + sendcode);
         }else{
             setText(QObject::tr("Delete plugin at %1").arg(QString::number(tableIndex)) + sendcode);
@@ -420,7 +421,7 @@ void EditPluginTable::redo()
 
         break;
 
-    case ProcessXmlListGenerator::TABLE_ALLUPDATE:
+    case UiCommandMap::PL_ALLUPDATE_TABLE:
         list = newStrList;
 
         // update string
@@ -429,7 +430,7 @@ void EditPluginTable::redo()
             strlistformat.append(str).append(",");
         }
 
-        sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UNDOREDO_PL_ALLUPDATE);
+        sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UiCommandMap::Id(UiCommandMap::PL_ALLUPDATE_TABLE));
         setText(QObject::tr("Update plugin settings at %1").arg(QString::number(index)) + sendcode);
         break;
     }
@@ -443,26 +444,28 @@ int EditPluginTable::id() const
 {
 //    ProcessXmlListGenerator pxg;
 //    return pxg.getId(PL_CMDARGCOUNT);
-    ProcessXmlListGenerator pxg;
+//    ProcessXmlListGenerator pxg;
 
-    switch (tableOperation) {
-    case ProcessXmlListGenerator::TABLE_ADD:
-        return pxg.getId(PL_ADD_TABLE);
+//    switch (tableOperation) {
+//    case ProcessXmlListGenerator::TABLE_ADD:
+//        return pxg.getId(PL_ADD_TABLE);
 
-    case ProcessXmlListGenerator::TABLE_EDIT:
-        return pxg.getId(PL_EDIT_TABLE);
+//    case ProcessXmlListGenerator::TABLE_EDIT:
+//        return pxg.getId(PL_EDIT_TABLE);
 
-    case ProcessXmlListGenerator::TABLE_INSERT:
-        return pxg.getId(PL_INSERT_TABLE);
+//    case ProcessXmlListGenerator::TABLE_INSERT:
+//        return pxg.getId(PL_INSERT_TABLE);
 
-    case ProcessXmlListGenerator::TABLE_DELETE:
-        return pxg.getId(PL_DELETE_TABLE);
+//    case ProcessXmlListGenerator::TABLE_DELETE:
+//        return pxg.getId(PL_DELETE_TABLE);
 
-    case ProcessXmlListGenerator::TABLE_ALLUPDATE:
-        return pxg.getId(PL_ALLUPDATE_TABLE);
-    }
+//    case ProcessXmlListGenerator::TABLE_ALLUPDATE:
+//        return pxg.getId(PL_ALLUPDATE_TABLE);
+//    }
 
-    return pxg.getId(PL_CMDARGCOUNT);
+//    return pxg.getId(PL_CMDARGCOUNT);
+
+    return tableOperation;
 
 }
 
@@ -470,7 +473,7 @@ bool EditPluginTable::mergeWith(const QUndoCommand *other)
 {
     if (other->id() != id()) return false;
     const EditPluginTable *com = static_cast<const EditPluginTable *>(other);
-    if(tableOperation == ProcessXmlListGenerator::TABLE_EDIT){
+    if(tableOperation == UiCommandMap::PL_EDIT_TABLE){
         newStr = com->newStr;
     }else{
         return false;

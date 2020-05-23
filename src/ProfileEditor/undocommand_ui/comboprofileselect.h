@@ -18,7 +18,8 @@
 #define COMBOPROFILESELECT_H
 
 #include <QUndoCommand>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <uicommandmap.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 
 class ComboProfileSelect : public QUndoCommand

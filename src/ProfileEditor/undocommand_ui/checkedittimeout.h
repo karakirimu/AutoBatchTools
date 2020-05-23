@@ -17,11 +17,12 @@
 #ifndef EDITTIMEOUTCHECKBOX_H
 #define EDITTIMEOUTCHECKBOX_H
 
-#include <QHash>
+//#include <QHash>
 #include <QUndoCommand>
-#include <QRegularExpression>
+//#include <QRegularExpression>
 #include <editorcachelist.h>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <uicommandmap.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 //#include <../variantconverter/variantconverter.h>
 
 class CheckEditTimeout : public QUndoCommand

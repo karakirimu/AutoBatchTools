@@ -18,8 +18,9 @@
 #define SWAPEXECTABLE_H
 
 #include <QUndoCommand>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
+#include <uicommandmap.h>
 
 class SwapExecTable : public QUndoCommand
 {
@@ -47,10 +48,10 @@ private:
     int index;
     int indexBefore;
     int indexAfter;
-    QString m_objname;
-    QList<QList<QStringList> *> *m_cache;
+//    QString m_objname;
+//    QList<QList<QStringList> *> *m_cache;
 
-    ProcessXmlListGenerator pxlg;
+//    ProcessXmlListGenerator pxlg;
 
     int SKIP;
 

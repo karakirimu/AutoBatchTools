@@ -104,15 +104,15 @@ void InfoStacked::updateIndex(QString operation)
 {
     QStringList sep = operation.split(",");
 
-    if(sep.at(0) == "0" && sep.at(1) == UNDOREDO_EDIT){
+    if(sep.at(0) == "0" && sep.at(1) == QString(UiCommandMap::UNDOREDO_EDIT)){
         //edit
         setInfoDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
                             EditOperator::SELECT);
-    }else if(sep.at(0) == "2" && sep.at(1) == UNDOREDO_DELETE){
+    }else if(sep.at(0) == "2" && sep.at(1) == QString(CommandMap::UNDOREDO_DELETE)){
         //change stack
         switchStackedWidget(0, EditOperator::SELECT);
 
-    }else if(sep.at(0) == "2" && sep.at(1) == UNDOREDO_ADD){
+    }else if(sep.at(0) == "2" && sep.at(1) == QString(CommandMap::UNDOREDO_ADD)){
         //change stack
         switchStackedWidget(1, EditOperator::SELECT);
 

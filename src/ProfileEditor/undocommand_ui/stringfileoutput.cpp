@@ -53,7 +53,7 @@ void StringFileOutput::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Change Search outputfile at %1").arg(index) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void StringFileOutput::redo()
@@ -66,13 +66,14 @@ void StringFileOutput::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Change Search outputfile at %1").arg(index) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int StringFileOutput::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(S_OUTPUTFILE);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(S_OUTPUTFILE);
+    return UiCommandMap::FS_FILEPATH_HA1;
 }
 
 bool StringFileOutput::mergeWith(const QUndoCommand *other)

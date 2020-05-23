@@ -61,7 +61,7 @@ void ComboProfileSelect::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Profile change to %1").arg(newString) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void ComboProfileSelect::redo()
@@ -76,7 +76,7 @@ void ComboProfileSelect::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Profile change from %1").arg(m_oldstring) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 /**
@@ -86,8 +86,9 @@ void ComboProfileSelect::redo()
  */
 int ComboProfileSelect::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(PR_FILEPATH);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(PR_FILEPATH);
+    return UiCommandMap::PLOAD_FILEPATH;
 }
 
 bool ComboProfileSelect::mergeWith(const QUndoCommand *other)

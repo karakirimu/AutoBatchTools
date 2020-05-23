@@ -55,7 +55,7 @@ void SwapCommand::undo()
     ptrCache->move(afterIndex, beforeIndex);
 
     setText(QString("Swap item at %1 and %2").arg(beforeIndex).arg(afterIndex) \
-            + QString(" ^(%1,%2,%3)").arg(afterIndex).arg(beforeIndex).arg(UNDOREDO_SWAP));
+            + QString(" ^(%1,%2,%3)").arg(afterIndex).arg(beforeIndex).arg(CommandMap::UNDOREDO_SWAP));
 }
 
 void SwapCommand::redo()
@@ -76,5 +76,5 @@ void SwapCommand::redo()
     ptrCache->move(beforeIndex, afterIndex);
 
     setText(QString("Swap item at %1 and %2 ").arg(beforeIndex).arg(afterIndex) \
-            + QString(" ^(%1,%2,%3)").arg(beforeIndex).arg(afterIndex).arg(UNDOREDO_SWAP));
+            + QString(" ^(%1,%2,%3)").arg(beforeIndex).arg(afterIndex).arg(CommandMap::UNDOREDO_SWAP));
 }

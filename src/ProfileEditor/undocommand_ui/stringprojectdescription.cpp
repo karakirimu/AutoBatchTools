@@ -51,7 +51,7 @@ void StringProjectDescription::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Description Text") \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void StringProjectDescription::redo()
@@ -64,13 +64,14 @@ void StringProjectDescription::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Description Text") \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int StringProjectDescription::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(I_DESCRIPTION);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(I_DESCRIPTION);
+    return UiCommandMap::I_DESCRIPTION;
 }
 
 bool StringProjectDescription::mergeWith(const QUndoCommand *other)

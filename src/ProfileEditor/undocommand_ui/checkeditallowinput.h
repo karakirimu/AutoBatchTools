@@ -20,7 +20,8 @@
 #include <QHash>
 #include <QUndoCommand>
 #include <QRegularExpression>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <uicommandmap.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 //#include <../variantconverter/variantconverter.h>
 #include <editorcachelist.h>
 

@@ -20,7 +20,8 @@
 #include <QUndoCommand>
 #include <editorcachelist.h>
 #include <../stringxmlbuilder/stringxmlbuilder.h>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <uicommandmap.h>
 
 /**
  * @brief The EditGlobalVarTree class

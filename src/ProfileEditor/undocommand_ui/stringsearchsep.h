@@ -19,7 +19,8 @@
 
 #include <QUndoCommand>
 #include <editorcachelist.h>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <uicommandmap.h>
 
 class StringSearchSep : public QUndoCommand
 {

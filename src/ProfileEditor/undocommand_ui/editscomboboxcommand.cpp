@@ -112,13 +112,20 @@ void EditScomboBoxCommand::redo()
 
 int EditScomboBoxCommand::id() const
 {
-    ProcessXmlListGenerator pxg;
+//    ProcessXmlListGenerator pxg;
+//    if(index > 1){
+//        // sname
+//        return pxg.getId(S_NAME);
+//    }else {
+//        //info "fsname" position
+//        return pxg.getId(I_FILESEARCH_NAME);
+//    }
     if(index > 1){
         // sname
-        return pxg.getId(S_NAME);
+        return UiCommandMap::FS_NAME_HA1;
     }else {
         //info "fsname" position
-        return pxg.getId(I_FILESEARCH_NAME);
+        return UiCommandMap::I_FILESEARCH_NAME;
     }
 }
 
@@ -149,5 +156,5 @@ void EditScomboBoxCommand::replace(QString str, int i)
 
     }
     ptrCache->replace(index, ec);
-    setText(message + str + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+    setText(message + str + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }

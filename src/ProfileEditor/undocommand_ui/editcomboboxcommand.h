@@ -19,7 +19,8 @@
 
 //for localvariant combobox
 #include <QUndoCommand>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <uicommandmap.h>
 #include <editorcachelist.h>
 
 class EditComboBoxCommand : public QUndoCommand
@@ -46,7 +47,7 @@ private:
     int index;
     QString oldString;
 //    QList<QList<QStringList> *> *m_cache;
-    ProcessXmlListGenerator pxlg;
+//    ProcessXmlListGenerator pxlg;
 
     EditorCacheList *ptrCache;
 

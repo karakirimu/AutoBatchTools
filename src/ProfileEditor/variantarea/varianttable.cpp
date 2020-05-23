@@ -58,37 +58,73 @@ void VariantTable::updateIndex(QString operation)
     QStringList sep = operation.split(",");
     if(sep.count() < 2) return;
 
-    if(sep.at(1) == UNDOREDO_LV_ADD){
-        //exectableadd
+    int command = sep.last().toInt();
+
+    int rowpos = -1;
+    int tablerowpos = -1;
+
+    switch (command) {
+    case UiCommandMap::LV_ADD:
         this->insertItem(static_cast<QString>(sep.at(0)).toInt());
+        break;
 
-    }else if(sep.count() == 3
-             && sep.at(2) == UNDOREDO_LV_INS){
-        //exectableins
+    case UiCommandMap::LV_INSERT:
         this->insertItem(static_cast<QString>(sep.at(1)).toInt());
-        int rowpos = static_cast<QString>(sep.at(0)).toInt();
-        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+        rowpos = static_cast<QString>(sep.at(0)).toInt();
+        tablerowpos = static_cast<QString>(sep.at(1)).toInt();
         this->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos));
+        break;
 
-
-    }else if(sep.count() == 3
-             && sep.at(2) == UNDOREDO_LV_EDIT){
-        //exectableedit
-        int rowpos = static_cast<QString>(sep.at(0)).toInt();
-        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+    case UiCommandMap::LV_EDIT:
+        rowpos = static_cast<QString>(sep.at(0)).toInt();
+        tablerowpos = static_cast<QString>(sep.at(1)).toInt();
         this->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos));
+        break;
 
-    }else if(sep.at(1) == UNDOREDO_LV_DEL){
-        //exectabledel
+    case UiCommandMap::LV_DELETE:
         this->deleteItem(static_cast<QString>(sep.at(0)).toInt());
+        break;
 
-    }else if(sep.count() == 3
-             && sep.at(2) == UNDOREDO_LV_SWAP){
-        //exectableswap
+    case UiCommandMap::LV_SWAP:
         this->swapItem(static_cast<QString>(sep.at(0)).toInt()
-                               , static_cast<QString>(sep.at(1)).toInt());
+                           , static_cast<QString>(sep.at(1)).toInt());
+        break;
 
+    default:
+        break;
     }
+
+//    if(sep.at(1) == UNDOREDO_LV_ADD){
+//        //exectableadd
+//        this->insertItem(static_cast<QString>(sep.at(0)).toInt());
+
+//    }else if(sep.count() == 3
+//             && sep.at(2) == UNDOREDO_LV_INS){
+//        //exectableins
+//        this->insertItem(static_cast<QString>(sep.at(1)).toInt());
+//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+//        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+//        this->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos));
+
+
+//    }else if(sep.count() == 3
+//             && sep.at(2) == UNDOREDO_LV_EDIT){
+//        //exectableedit
+//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+//        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+//        this->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos));
+
+//    }else if(sep.at(1) == UNDOREDO_LV_DEL){
+//        //exectabledel
+//        this->deleteItem(static_cast<QString>(sep.at(0)).toInt());
+
+//    }else if(sep.count() == 3
+//             && sep.at(2) == UNDOREDO_LV_SWAP){
+//        //exectableswap
+//        this->swapItem(static_cast<QString>(sep.at(0)).toInt()
+//                               , static_cast<QString>(sep.at(1)).toInt());
+
+//    }
 }
 
 void VariantTable::addAction()

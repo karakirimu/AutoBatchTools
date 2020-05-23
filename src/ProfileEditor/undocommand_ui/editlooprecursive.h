@@ -18,8 +18,9 @@
 #define EDITLOOPRECURSIVE_H
 
 #include <QUndoCommand>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
+#include <uicommandmap.h>
 
 class EditLoopRecursive : public QUndoCommand
 {

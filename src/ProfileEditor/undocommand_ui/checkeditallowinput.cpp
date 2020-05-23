@@ -51,7 +51,7 @@ void CheckEditAllowInput::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Allow input %1").arg(newCheck) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void CheckEditAllowInput::redo()
@@ -64,11 +64,10 @@ void CheckEditAllowInput::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Allow input %1").arg(newCheck) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int CheckEditAllowInput::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(I_FILEINPUT);
+    return UiCommandMap::I_FILEINPUT_BOOL;
 }

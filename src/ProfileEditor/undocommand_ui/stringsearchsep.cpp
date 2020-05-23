@@ -52,7 +52,7 @@ void StringSearchSep::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Search Sep '%1'").arg(newStr) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void StringSearchSep::redo()
@@ -65,13 +65,14 @@ void StringSearchSep::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Search Sep '%1'").arg(oldStr) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int StringSearchSep::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(S_SEPARATOR);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(S_SEPARATOR);
+    return UiCommandMap::FS_SEPARATOR;
 }
 
 bool StringSearchSep::mergeWith(const QUndoCommand *other)

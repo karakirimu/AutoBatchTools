@@ -51,7 +51,7 @@ void CheckEditSearchInput::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Search input %1").arg(newCheck) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void CheckEditSearchInput::redo()
@@ -64,11 +64,12 @@ void CheckEditSearchInput::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Search input %1").arg(newCheck) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int CheckEditSearchInput::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(I_FILEINPUT_SEARCHCHECK);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(I_FILEINPUT_SEARCHCHECK);
+    return UiCommandMap::I_FILEINPUT_SEARCH_BOOL;
 }

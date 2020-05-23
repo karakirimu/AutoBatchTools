@@ -55,7 +55,7 @@ void EditSearchFileOutputType::undo()
     replaceValue(oldValue);
 
     setText(QObject::tr("Change output file method") \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void EditSearchFileOutputType::redo()
@@ -68,13 +68,14 @@ void EditSearchFileOutputType::redo()
     replaceValue(newValue);
 
     setText(QObject::tr("Change output file method") \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int EditSearchFileOutputType::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(ATTR_NONE);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(ATTR_NONE);
+    return UiCommandMap::FS_WRITEOPTION_INT;
 }
 
 bool EditSearchFileOutputType::mergeWith(const QUndoCommand *other)

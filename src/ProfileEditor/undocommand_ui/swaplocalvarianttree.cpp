@@ -113,8 +113,9 @@ void SwapLocalVariantTree::redo()
 
 int SwapLocalVariantTree::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(L_SWAP_TABLE);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(L_SWAP_TABLE);
+    return UiCommandMap::LV_SWAP;
 }
 
 void SwapLocalVariantTree::replaceValue(int source, int dest)
@@ -135,17 +136,17 @@ void SwapLocalVariantTree::setTextByCondition(int source, int dest)
     case 1:
         //UP
         setText(QObject::tr("Up local at %1").arg(arg) \
-                + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UNDOREDO_LV_SWAP));
+                + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UiCommandMap::Id(UiCommandMap::LV_SWAP)));
         break;
     case -1:
         //DOWN
         setText(QObject::tr("Down local at %1").arg(arg) \
-                + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UNDOREDO_LV_SWAP));
+                + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UiCommandMap::Id(UiCommandMap::LV_SWAP)));
         break;
     default:
         //SWAP
         setText(QObject::tr("Swap local at %1 %2 to %3").arg(arg).arg(source).arg(dest) \
-                + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UNDOREDO_LV_SWAP));
+                + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UiCommandMap::Id(UiCommandMap::LV_SWAP)));
         break;
     }
 }

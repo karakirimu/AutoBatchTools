@@ -168,7 +168,7 @@ void DragDropExecTable::undo()
     //  exec table after(target) index, sendcode
     sendcode = QString(" ^(%1,%2,%3,%4,%5)").arg(index).arg(deleterow) \
                                          .arg(indexBefore.count()).arg(before) \
-                                         .arg(UNDOREDO_E_TABLEMOVE);
+                                         .arg(UiCommandMap::Id(UiCommandMap::E_MOVE_TABLE));
     setText(QObject::tr("Move exec element at %1").arg(QString::number(indexAfter)) + sendcode);
 }
 
@@ -283,7 +283,7 @@ void DragDropExecTable::redo()
     //  exec table after(target) index, sendcode
     sendcode = QString(" ^(%1,%2,%3,%4,%5)").arg(index).arg(deleterow) \
                                          .arg(indexBefore.count()).arg(indexAfter) \
-                                         .arg(UNDOREDO_E_TABLEMOVE);
+                                         .arg(UiCommandMap::Id(UiCommandMap::E_MOVE_TABLE));
 
     setText(QObject::tr("Move exec element at %1").arg(QString::number(indexAfter)) + sendcode);
 }

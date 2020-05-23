@@ -18,8 +18,9 @@
 #define EDITTABCOMMAND_H
 
 #include <QUndoCommand>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
+#include <uicommandmap.h>
 
 class EditTabCommand : public QUndoCommand
 {
@@ -49,7 +50,7 @@ private:
     int newIndex;
 //    QString m_newauto;
 //    QList<QList<QStringList> *> *m_cache;
-    ProcessXmlListGenerator pxlg;
+//    ProcessXmlListGenerator pxlg;
 
     EditorCacheList *ptrCache;
 

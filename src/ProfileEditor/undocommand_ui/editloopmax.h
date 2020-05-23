@@ -18,8 +18,9 @@
 #define EDITLOOPMAX_H
 
 #include <QUndoCommand>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
+#include <uicommandmap.h>
 
 class EditLoopMax : public QUndoCommand
 {

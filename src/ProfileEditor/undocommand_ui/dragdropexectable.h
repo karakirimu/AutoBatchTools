@@ -18,7 +18,8 @@
 #define DRAGDROPEXECTABLE_H
 
 #include <QUndoCommand>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <uicommandmap.h>
 #include <editorcachelist.h>
 
 class DragDropExecTable : public QUndoCommand

@@ -168,7 +168,7 @@ void DragDropPluginTable::undo()
     //  exec table after(target) index, sendcode
     sendcode = QString(" ^(%1,%2,%3,%4,%5)").arg(index).arg(deleterow) \
                                          .arg(indexBefore.count()).arg(before) \
-                                         .arg(UNDOREDO_PL_TABLEMOVE);
+                                         .arg(UiCommandMap::Id(UiCommandMap::PL_MOVE_TABLE));
     setText(QObject::tr("Move plugin element at %1").arg(QString::number(indexAfter)) + sendcode);
 }
 
@@ -283,7 +283,7 @@ void DragDropPluginTable::redo()
     //  exec table after(target) index, sendcode
     sendcode = QString(" ^(%1,%2,%3,%4,%5)").arg(index).arg(deleterow) \
                                          .arg(indexBefore.count()).arg(indexAfter) \
-                                         .arg(UNDOREDO_PL_TABLEMOVE);
+                                         .arg(UiCommandMap::Id(UiCommandMap::PL_MOVE_TABLE));
 
     setText(QObject::tr("Move plugin element at %1").arg(QString::number(indexAfter)) + sendcode);
 }

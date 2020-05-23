@@ -51,7 +51,7 @@ void CheckEditLoopInf::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Loop infinity %1").arg(newCheck) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void CheckEditLoopInf::redo()
@@ -64,5 +64,5 @@ void CheckEditLoopInf::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Loop infinity %1").arg(newCheck) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }

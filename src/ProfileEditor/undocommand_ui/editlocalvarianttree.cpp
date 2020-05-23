@@ -60,8 +60,8 @@ EditLocalVariantTree::EditLocalVariantTree(const int &targetindex
     tableOperation = operation;
     ptrCache = cache;
 
-    if(tableOperation == ProcessXmlListGenerator::TREE_EDIT
-            || tableOperation == ProcessXmlListGenerator::TREE_DELETE){
+    if(tableOperation == UiCommandMap::LV_EDIT
+            || tableOperation == UiCommandMap::LV_DELETE){
         oldVar = cache->at(targetIndex).local.variantData.at(treeIndex);
     }
 }
@@ -116,35 +116,35 @@ void EditLocalVariantTree::undo()
     EditorCache ec = ptrCache->at(targetIndex);
 
     switch (tableOperation) {
-    case ProcessXmlListGenerator::TREE_ADD:
+    case UiCommandMap::LV_ADD:
         // Delete
         ec.local.variantData.removeAt(treeIndex);
         setText(QObject::tr("Add local at %1").arg(treeIndex) \
-                + QString(" ^(%1,%2)").arg(treeIndex).arg(UNDOREDO_LV_DEL));
+                + QString(" ^(%1,%2)").arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_DELETE)));
 
         break;
 
-    case ProcessXmlListGenerator::TREE_EDIT:
+    case UiCommandMap::LV_EDIT:
 
         ec.local.variantData.replace(treeIndex, oldVar);
         setText(QObject::tr("Edit local at %1").arg(treeIndex) \
-                + QString(" ^(%1,%2,%3)").arg(targetIndex).arg(treeIndex).arg(UNDOREDO_LV_EDIT));
+                + QString(" ^(%1,%2,%3)").arg(targetIndex).arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_EDIT)));
 
         break;
 
-    case ProcessXmlListGenerator::TREE_INSERT:
+    case UiCommandMap::LV_INSERT:
 
         ec.local.variantData.removeAt(treeIndex);
         setText(QObject::tr("Insert local at %1 \'%2\'").arg(treeIndex).arg(newVar.variant) \
-                + QString(" ^(%1,%2)").arg(treeIndex).arg(UNDOREDO_LV_DEL));
+                + QString(" ^(%1,%2)").arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_DELETE)));
 
         break;
 
-    case ProcessXmlListGenerator::TREE_DELETE:
+    case UiCommandMap::LV_DELETE:
 
         ec.local.variantData.insert(treeIndex, oldVar);
         setText(QObject::tr("Delete local at %1").arg(treeIndex) \
-                + QString(" ^(%1,%2,%3)").arg(targetIndex).arg(treeIndex).arg(UNDOREDO_LV_INS));
+                + QString(" ^(%1,%2,%3)").arg(targetIndex).arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_INSERT)));
 
         break;
 
@@ -204,32 +204,32 @@ void EditLocalVariantTree::redo()
     EditorCache ec = ptrCache->at(targetIndex);
 
     switch (tableOperation) {
-    case ProcessXmlListGenerator::TREE_ADD:
+    case UiCommandMap::LV_ADD:
 
         ec.local.variantData.append(newVar);
         setText(QObject::tr("Add local at %1").arg(treeIndex) \
-                + QString(" ^(%1,%2)").arg(treeIndex).arg(UNDOREDO_LV_ADD));
+                + QString(" ^(%1,%2)").arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_ADD)));
 
         break;
-    case ProcessXmlListGenerator::TREE_EDIT:
+    case UiCommandMap::LV_EDIT:
 
         ec.local.variantData.replace(treeIndex, newVar);
         setText(QObject::tr("Edit local at %1").arg(treeIndex) \
-                + QString(" ^(%1,%2,%3)").arg(targetIndex).arg(treeIndex).arg(UNDOREDO_LV_EDIT));
+                + QString(" ^(%1,%2,%3)").arg(targetIndex).arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_EDIT)));
 
         break;
-    case ProcessXmlListGenerator::TREE_INSERT:
+    case UiCommandMap::LV_INSERT:
 
         ec.local.variantData.insert(treeIndex, newVar);
         setText(QObject::tr("Insert local at %1 \'%2\'").arg(treeIndex).arg(newVar.variant) \
-                + QString(" ^(%1,%2,%3)").arg(targetIndex).arg(treeIndex).arg(UNDOREDO_LV_INS));
+                + QString(" ^(%1,%2,%3)").arg(targetIndex).arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_INSERT)));
 
         break;
-    case ProcessXmlListGenerator::TREE_DELETE:
+    case UiCommandMap::LV_DELETE:
 
         ec.local.variantData.removeAt(treeIndex);
         setText(QObject::tr("Delete local at %1").arg(treeIndex) \
-                + QString(" ^(%1,%2)").arg(treeIndex).arg(UNDOREDO_LV_DEL));
+                + QString(" ^(%1,%2)").arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_DELETE)));
 
         break;
     default:
@@ -242,24 +242,25 @@ void EditLocalVariantTree::redo()
 
 int EditLocalVariantTree::id() const
 {
-    ProcessXmlListGenerator pxg;
+//    ProcessXmlListGenerator pxg;
 
-    switch (tableOperation) {
-    case ProcessXmlListGenerator::TREE_ADD:
-        return pxg.getId(UNDOREDO_LV_ADD);
+//    switch (tableOperation) {
+//    case ProcessXmlListGenerator::TREE_ADD:
+//        return pxg.getId(UNDOREDO_LV_ADD);
 
-    case ProcessXmlListGenerator::TREE_EDIT:
-        return pxg.getId(UNDOREDO_LV_EDIT);
+//    case ProcessXmlListGenerator::TREE_EDIT:
+//        return pxg.getId(UNDOREDO_LV_EDIT);
 
-    case ProcessXmlListGenerator::TREE_INSERT:
-        return pxg.getId(UNDOREDO_LV_INS);
+//    case ProcessXmlListGenerator::TREE_INSERT:
+//        return pxg.getId(UNDOREDO_LV_INS);
 
-    case ProcessXmlListGenerator::TREE_DELETE:
-        return pxg.getId(UNDOREDO_LV_DEL);
+//    case ProcessXmlListGenerator::TREE_DELETE:
+//        return pxg.getId(UNDOREDO_LV_DEL);
 
-    }
+//    }
 
-    return pxg.getId(L_VAR_COUNT);
+//    return pxg.getId(L_VAR_COUNT);
+    return tableOperation;
 }
 
 bool EditLocalVariantTree::mergeWith(const QUndoCommand *other)

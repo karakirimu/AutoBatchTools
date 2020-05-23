@@ -18,7 +18,8 @@
 #define SWAPCOMMAND_H
 
 #include <QUndoCommand>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <CommandMap.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 
 class SwapCommand : public QUndoCommand

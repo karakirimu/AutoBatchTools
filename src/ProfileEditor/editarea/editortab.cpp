@@ -169,8 +169,13 @@ void EditorTab::setEditOperator(EditOperator *op)
 void EditorTab::updateIndex(QString operation)
 {
     QStringList sep = operation.split(",");
+    int command = sep.last().toInt();
 
-    if(sep.last() == UNDOREDO_PL_ALLUPDATE){
+    int rowpos = -1;
+    int tablerowpos = -1;
+
+    switch (command) {
+    case UiCommandMap::PL_ALLUPDATE_TABLE:
         //exectabledel
         sep.removeLast();
         ctableplugins->updateTableList(&sep);
@@ -185,97 +190,190 @@ void EditorTab::updateIndex(QString operation)
             }
         }
 
-    }else if(sep.at(1) == UNDOREDO_EDIT){
-        //edit
-//        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
-//                            EditOperator::SELECT);
+        break;
+
+    case UiCommandMap::UNDOREDO_EDIT:
         setAllIncludeDataList(static_cast<QString>(sep.at(0)).toInt());
+        break;
 
-//    }else if(sep.at(1) == UNDOREDO_ADD){
-//        //add
-
-//    }else if(sep.at(1) == UNDOREDO_DELETE){
-//        //del
-
-    }else if(sep.at(1) == UNDOREDO_INSERT){
-        //ins
-//        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
-//                            EditOperator::SELECT);
-
+    case CommandMap::UNDOREDO_INSERT:
         setAllIncludeDataList(static_cast<QString>(sep.at(0)).toInt());
+        break;
 
-    }else if(sep.at(1) == UNDOREDO_E_TABLEADD){
-        //exectableadd
+    case UiCommandMap::E_ADD_TABLE:
         ctablenormal->insertItem(static_cast<QString>(sep.at(0)).toInt());
+        break;
 
-    }else if(sep.count() == 3
-             && sep.at(2) == UNDOREDO_E_TABLEINS){
-        //exectableins
+    case UiCommandMap::E_INSERT_TABLE:
         ctablenormal->insertItem(static_cast<QString>(sep.at(1)).toInt());
-        int rowpos = static_cast<QString>(sep.at(0)).toInt();
-        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-        ctablenormal->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_E_TABLEEDIT));
+        rowpos = static_cast<QString>(sep.at(0)).toInt();
+        tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+        ctablenormal->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UiCommandMap::E_EDIT_TABLE));
+        break;
 
-    }else if(sep.count() == 3
-             && sep.at(2) == UNDOREDO_E_TABLEEDIT){
-        //exectableedit
-        int rowpos = static_cast<QString>(sep.at(0)).toInt();
-        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-        ctablenormal->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_E_TABLEEDIT));
+    case UiCommandMap::E_EDIT_TABLE:
+        rowpos = static_cast<QString>(sep.at(0)).toInt();
+        tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+        ctablenormal->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UiCommandMap::E_EDIT_TABLE));
+        break;
 
-    }else if(sep.at(1) == UNDOREDO_E_TABLEDEL){
-        //exectabledel
+    case UiCommandMap::E_DELETE_TABLE:
         ctablenormal->deleteItem(static_cast<QString>(sep.at(0)).toInt());
+        break;
 
-    }else if(sep.count() == 3 && sep.at(2) == UNDOREDO_E_TABLESWAP){
-        //exectableswap
+    case UiCommandMap::E_SWAP_TABLE:
         ctablenormal->swapItem(static_cast<QString>(sep.at(0)).toInt()
-                               , static_cast<QString>(sep.at(1)).toInt());
+                                   , static_cast<QString>(sep.at(1)).toInt());
+        break;
 
-    }else if(sep.at(1) == UNDOREDO_PL_TABLEADD){
-        //exectableadd
+    case UiCommandMap::PL_ADD_TABLE:
         ctableplugins->insertItem(static_cast<QString>(sep.at(0)).toInt());
+        break;
 
-    }else if(sep.count() == 3
-             && sep.at(2) == UNDOREDO_PL_TABLEINS){
-        //exectableins
+    case UiCommandMap::PL_INSERT_TABLE:
         ctableplugins->insertItem(static_cast<QString>(sep.at(1)).toInt());
-        int rowpos = static_cast<QString>(sep.at(0)).toInt();
-        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-        ctableplugins->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_PL_TABLEEDIT));
+        rowpos = static_cast<QString>(sep.at(0)).toInt();
+        tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+        ctableplugins->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UiCommandMap::PL_EDIT_TABLE));
+        break;
 
-    }else if(sep.count() == 3
-             && sep.at(2) == UNDOREDO_PL_TABLEEDIT){
-        //exectableedit
-        int rowpos = static_cast<QString>(sep.at(0)).toInt();
-        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-        ctableplugins->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_PL_TABLEEDIT));
+    case UiCommandMap::PL_EDIT_TABLE:
+        rowpos = static_cast<QString>(sep.at(0)).toInt();
+        tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+        ctableplugins->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UiCommandMap::PL_EDIT_TABLE));
+        break;
 
-    }else if(sep.at(1) == UNDOREDO_PL_TABLEDEL){
-        //exectabledel
+    case UiCommandMap::PL_DELETE_TABLE:
         ctableplugins->deleteItem(static_cast<QString>(sep.at(0)).toInt());
+        break;
 
-    }else if(sep.count() == 3
-             && sep.at(2) == UNDOREDO_PL_TABLESWAP){
-        //exectableswap
+    case UiCommandMap::PL_SWAP_TABLE:
         ctableplugins->swapItem(static_cast<QString>(sep.at(0)).toInt()
-                               , static_cast<QString>(sep.at(1)).toInt());
+                                    , static_cast<QString>(sep.at(1)).toInt());
+        break;
 
-    }else if(sep.count() == 5
-             && sep.at(4) == UNDOREDO_E_TABLEMOVE){
-        //exectabledragdrop
+    case UiCommandMap::E_MOVE_TABLE:
         ctablenormal->moveItem(static_cast<QString>(sep.at(1)).toInt()
-                               , static_cast<QString>(sep.at(2)).toInt()
-                               , static_cast<QString>(sep.at(3)).toInt());
+                                   , static_cast<QString>(sep.at(2)).toInt()
+                                   , static_cast<QString>(sep.at(3)).toInt());
+        break;
 
-    }else if(sep.count() == 5
-             && sep.at(4) == UNDOREDO_PL_TABLEMOVE){
-        //plugintabledragdrop
+    case UiCommandMap::PL_MOVE_TABLE:
         ctableplugins->moveItem(static_cast<QString>(sep.at(1)).toInt()
-                               , static_cast<QString>(sep.at(2)).toInt()
-                               , static_cast<QString>(sep.at(3)).toInt());
+                                    , static_cast<QString>(sep.at(2)).toInt()
+                                    , static_cast<QString>(sep.at(3)).toInt());
+        break;
 
+    default:
+        break;
     }
+
+//    if(sep.last() == UNDOREDO_PL_ALLUPDATE){
+//        //exectabledel
+//        sep.removeLast();
+//        ctableplugins->updateTableList(&sep);
+
+//        if(pluginloader != nullptr){
+//            ExtraPluginInterface *ext = qobject_cast<ExtraPluginInterface *>(plugininstance);
+//            if(ext->getInformation()->hassettingwidget){
+//                ext->getInformation()->settingwidget->blockSignals(true);
+//                ext->getInformation()->settingwidget->receiveList(sep);
+//                ext->getInformation()->settingwidget->blockSignals(false);
+
+//            }
+//        }
+
+//    }else if(sep.at(1) == UNDOREDO_EDIT){
+//        //edit
+////        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
+////                            EditOperator::SELECT);
+//        setAllIncludeDataList(static_cast<QString>(sep.at(0)).toInt());
+
+////    }else if(sep.at(1) == UNDOREDO_ADD){
+////        //add
+
+////    }else if(sep.at(1) == UNDOREDO_DELETE){
+////        //del
+
+//    }else if(sep.at(1) == QString(CommandMap::UNDOREDO_INSERT)){
+//        //ins
+////        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
+////                            EditOperator::SELECT);
+
+//        setAllIncludeDataList(static_cast<QString>(sep.at(0)).toInt());
+
+//    }else if(sep.at(1) == UNDOREDO_E_TABLEADD){
+//        //exectableadd
+//        ctablenormal->insertItem(static_cast<QString>(sep.at(0)).toInt());
+
+//    }else if(sep.count() == 3
+//             && sep.at(2) == UNDOREDO_E_TABLEINS){
+//        //exectableins
+//        ctablenormal->insertItem(static_cast<QString>(sep.at(1)).toInt());
+//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+//        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+//        ctablenormal->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_E_TABLEEDIT));
+
+//    }else if(sep.count() == 3
+//             && sep.at(2) == UNDOREDO_E_TABLEEDIT){
+//        //exectableedit
+//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+//        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+//        ctablenormal->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_E_TABLEEDIT));
+
+//    }else if(sep.at(1) == UNDOREDO_E_TABLEDEL){
+//        //exectabledel
+//        ctablenormal->deleteItem(static_cast<QString>(sep.at(0)).toInt());
+
+//    }else if(sep.count() == 3 && sep.at(2) == UNDOREDO_E_TABLESWAP){
+//        //exectableswap
+//        ctablenormal->swapItem(static_cast<QString>(sep.at(0)).toInt()
+//                               , static_cast<QString>(sep.at(1)).toInt());
+
+//    }else if(sep.at(1) == UNDOREDO_PL_TABLEADD){
+//        //exectableadd
+//        ctableplugins->insertItem(static_cast<QString>(sep.at(0)).toInt());
+
+//    }else if(sep.count() == 3
+//             && sep.at(2) == UNDOREDO_PL_TABLEINS){
+//        //exectableins
+//        ctableplugins->insertItem(static_cast<QString>(sep.at(1)).toInt());
+//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+//        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+//        ctableplugins->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_PL_TABLEEDIT));
+
+//    }else if(sep.count() == 3
+//             && sep.at(2) == UNDOREDO_PL_TABLEEDIT){
+//        //exectableedit
+//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+//        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
+//        ctableplugins->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_PL_TABLEEDIT));
+
+//    }else if(sep.at(1) == UNDOREDO_PL_TABLEDEL){
+//        //exectabledel
+//        ctableplugins->deleteItem(static_cast<QString>(sep.at(0)).toInt());
+
+//    }else if(sep.count() == 3
+//             && sep.at(2) == UNDOREDO_PL_TABLESWAP){
+//        //exectableswap
+//        ctableplugins->swapItem(static_cast<QString>(sep.at(0)).toInt()
+//                               , static_cast<QString>(sep.at(1)).toInt());
+
+//    }else if(sep.count() == 5
+//             && sep.at(4) == UNDOREDO_E_TABLEMOVE){
+//        //exectabledragdrop
+//        ctablenormal->moveItem(static_cast<QString>(sep.at(1)).toInt()
+//                               , static_cast<QString>(sep.at(2)).toInt()
+//                               , static_cast<QString>(sep.at(3)).toInt());
+
+//    }else if(sep.count() == 5
+//             && sep.at(4) == UNDOREDO_PL_TABLEMOVE){
+//        //plugintabledragdrop
+//        ctableplugins->moveItem(static_cast<QString>(sep.at(1)).toInt()
+//                               , static_cast<QString>(sep.at(2)).toInt()
+//                               , static_cast<QString>(sep.at(3)).toInt());
+
+//    }
 }
 
 /////DEPENDS_XML DEPENDS_UI PROCESS
@@ -608,7 +706,7 @@ void EditorTab::setProfileLoadDataList(EditorCache *list)
         tpxb.setLoadPath(curdata);
 
         if(tpxb.readItem(0, &tlist)){
-            curdata = xgen.fetch(I_NAME, ATTR_NONE, &tlist);
+            curdata = xgen.fetch("iname"/*I_NAME*/, ""/*ATTR_NONE*/, &tlist);
         }
 
     }else{
@@ -630,7 +728,7 @@ void EditorTab::setProfileLoadDataList(EditorCache *list)
  * @param loadtype
  * @return
  */
-QString EditorTab::getCommandTableRowData(int targetrow, int tablerow, QString loadtype)
+QString EditorTab::getCommandTableRowData(int targetrow, int tablerow, int loadtype)
 {
 //    QList<QStringList> *list = new QList<QStringList>();
 
@@ -656,7 +754,7 @@ QString EditorTab::getCommandTableRowData(int targetrow, int tablerow, QString l
         return "";
     }
 
-    if(loadtype == UNDOREDO_E_TABLEEDIT){
+    if(loadtype == UiCommandMap::E_EDIT_TABLE){
         return list.exec.command.at(tablerow);
 
     }else{

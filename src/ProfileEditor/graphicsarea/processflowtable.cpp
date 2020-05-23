@@ -271,36 +271,71 @@ void ProcessFlowTable::updateIndex(QString operation)
 
     if(sep.count() < 2) return;
 
-    if(sep.at(1) == UNDOREDO_EDIT || \
-            (sep.count() == 3 && sep.at(2) == UNDOREDO_E_TABLEEDIT)){
-        //edit
+    int command = sep.last().toInt();
+
+    switch (command) {
+    case UiCommandMap::UNDOREDO_EDIT:
+    case UiCommandMap::E_EDIT_TABLE:
         replaceItem(static_cast<QString>(sep.at(0)).toInt());
-    }else if(sep.at(1) == UNDOREDO_ADD){
-        //add
+        break;
+
+    case CommandMap::UNDOREDO_ADD:
         addItem();
-    }else if(sep.at(1) == UNDOREDO_DELETE){
-        //del
+        break;
+
+    case CommandMap::UNDOREDO_DELETE:
         deleteItem(static_cast<QString>(sep.at(0)).toInt());
-    }else if(sep.at(1) == UNDOREDO_INSERT){
-        //ins
+        break;
+
+    case CommandMap::UNDOREDO_INSERT:
         insertItem(static_cast<QString>(sep.at(0)).toInt());
-    }else if(sep.count() == 3
-             && sep.at(2) == UNDOREDO_SWAP){
-        //swap
-        int first = static_cast<QString>(sep.at(0)).toInt();
-        int second = static_cast<QString>(sep.at(1)).toInt();
+        break;
 
-        swapItem(first, second);
-    }else if(sep.count() == 4
-             && sep.at(3) == UNDOREDO_MOVE){
-        //move
+    case CommandMap::UNDOREDO_SWAP:
+        swapItem(sep.at(0).toInt(), sep.at(1).toInt());
+        break;
+
+    case CommandMap::UNDOREDO_MOVE:
         reloadAction();
+        break;
 
-    }else if(sep.count() == 5
-             && (sep.at(4) == UNDOREDO_E_TABLEMOVE
-                 || sep.at(4) == UNDOREDO_PL_TABLEMOVE)){
+    case UiCommandMap::E_MOVE_TABLE:
+    case UiCommandMap::PL_MOVE_TABLE:
         replaceItem(static_cast<QString>(sep.at(0)).toInt());
+        break;
     }
+
+
+//    if(sep.at(1) == UNDOREDO_EDIT || \
+//            (sep.count() == 3 && sep.at(2) == UNDOREDO_E_TABLEEDIT)){
+//        //edit
+//        replaceItem(static_cast<QString>(sep.at(0)).toInt());
+//    }else if(sep.at(1) == QString(CommandMap::UNDOREDO_ADD)){
+//        //add
+//        addItem();
+//    }else if(sep.at(1) == QString(CommandMap::UNDOREDO_DELETE)){
+//        //del
+//        deleteItem(static_cast<QString>(sep.at(0)).toInt());
+//    }else if(sep.at(1) == QString(CommandMap::UNDOREDO_INSERT)){
+//        //ins
+//        insertItem(static_cast<QString>(sep.at(0)).toInt());
+//    }else if(sep.count() == 3
+//             && sep.at(2) == QString(CommandMap::UNDOREDO_SWAP)){
+//        //swap
+//        int first = static_cast<QString>(sep.at(0)).toInt();
+//        int second = static_cast<QString>(sep.at(1)).toInt();
+
+//        swapItem(first, second);
+//    }else if(sep.count() == 4
+//             && sep.at(3) == QString(CommandMap::UNDOREDO_MOVE)){
+//        //move
+//        reloadAction();
+
+//    }else if(sep.count() == 5
+//             && (sep.at(4) == UNDOREDO_E_TABLEMOVE
+//                 || sep.at(4) == UNDOREDO_PL_TABLEMOVE)){
+//        replaceItem(static_cast<QString>(sep.at(0)).toInt());
+//    }
 }
 
 void ProcessFlowTable::dragEnterEvent(QDragEnterEvent *event)
@@ -969,7 +1004,7 @@ void ProcessFlowTable::setProfileLoadItem(EditorCache *list, int dataid)
         tpxb.setLoadPath(curdata);
 
         if(tpxb.readItem(0, &tlist)){
-            curdata = pxlg.fetch(I_NAME, ATTR_NONE, &tlist);
+            curdata = pxlg.fetch("iname"/*I_NAME*/, ""/*ATTR_NONE*/, &tlist);
             curdata.append(" - ");
             curdata.append(profile.baseName());
         }

@@ -63,7 +63,7 @@ void ComboPluginSelect::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Plugins to %1").arg(oldString) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void ComboPluginSelect::redo()
@@ -80,13 +80,15 @@ void ComboPluginSelect::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Plugins to %1").arg(newString) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int ComboPluginSelect::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(PL_NAME);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(PL_NAME);
+    return UiCommandMap::P_NAME;
+
 }
 
 bool ComboPluginSelect::mergeWith(const QUndoCommand *other)

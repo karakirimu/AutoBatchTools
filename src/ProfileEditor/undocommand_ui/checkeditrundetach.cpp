@@ -51,7 +51,7 @@ void CheckEditRunDetach::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Run detached %1").arg(newCheck) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void CheckEditRunDetach::redo()
@@ -64,11 +64,10 @@ void CheckEditRunDetach::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Run detached %1").arg(newCheck) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int CheckEditRunDetach::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(E_RUNDETACH);
+    return UiCommandMap::E_DETACH_BOOL;
 }

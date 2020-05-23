@@ -51,7 +51,7 @@ void CheckEditTimeout::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Timeout %1").arg(newCheck) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void CheckEditTimeout::redo()
@@ -64,11 +64,12 @@ void CheckEditTimeout::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Timeout %1").arg(newCheck) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int CheckEditTimeout::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(E_TIMEOUT);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(E_TIMEOUT);
+    return UiCommandMap::E_TIMEOUT_BOOL_HA1;
 }

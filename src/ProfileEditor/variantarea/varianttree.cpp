@@ -62,65 +62,123 @@ void VariantTree::updateIndex(QString operation)
     if(sep.count() < 2) return;
 
     //get operation code
-    QString opcode = sep.last();
+    int command = sep.last().toInt();
+    int rowpos = -1;
+    int treerowpos = -1;
 
-    if(opcode == UNDOREDO_GV_ADD){
+    switch (command) {
+    case UiCommandMap::GV_ADD_TREE:
         this->insertRow(static_cast<QString>(sep.at(0)).toInt(), TREE_GLOBAL);
-        return;
-    }
+        break;
 
-    if(opcode == UNDOREDO_GV_DEL){
+    case UiCommandMap::GV_DEL_TREE:
         this->deleteRow(static_cast<QString>(sep.at(0)).toInt(), TREE_GLOBAL);
-        return;
-    }
+        break;
 
-    if(opcode == UNDOREDO_GV_EDIT){
-        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+    case UiCommandMap::GV_EDIT_TREE:
+        rowpos = static_cast<QString>(sep.at(0)).toInt();
         this->replaceItem(rowpos, getGlobalRowElement(rowpos), TREE_GLOBAL);
-        return;
-    }
+        break;
 
-    if(opcode == UNDOREDO_GV_INS){
-        int treerowpos = static_cast<QString>(sep.at(0)).toInt();
+    case UiCommandMap::GV_INS_TREE:
+        treerowpos = static_cast<QString>(sep.at(0)).toInt();
         this->insertRow(treerowpos, TREE_GLOBAL);
         this->replaceItem(treerowpos, getGlobalRowElement(treerowpos), TREE_GLOBAL);
-        return;
-    }
+        break;
 
-    if(opcode == UNDOREDO_GV_SWAP){
+    case UiCommandMap::GV_SWAP_TREE:
         this->swapRow(static_cast<QString>(sep.at(0)).toInt()
-                               , static_cast<QString>(sep.at(1)).toInt(), TREE_GLOBAL);
-        return;
-    }
+                          , static_cast<QString>(sep.at(1)).toInt(), TREE_GLOBAL);
+        break;
 
-    if(opcode == UNDOREDO_LV_ADD){
+    case UiCommandMap::LV_ADD:
         this->insertRow(static_cast<QString>(sep.at(0)).toInt(), TREE_LOCAL);
-        return;
-    }
+        break;
 
-    if(opcode == UNDOREDO_LV_DEL){
+    case UiCommandMap::LV_DELETE:
         this->deleteRow(static_cast<QString>(sep.at(0)).toInt(), TREE_LOCAL);
-        return;
-    }
+        break;
 
-    if(opcode == UNDOREDO_LV_EDIT){
-        int rowpos = static_cast<QString>(sep.at(1)).toInt();
+    case UiCommandMap::LV_EDIT:
+        rowpos = static_cast<QString>(sep.at(1)).toInt();
         this->replaceItem(rowpos, getLocalRowElement(LOCALINDEX, rowpos), TREE_LOCAL);
-        return;
-    }
+        break;
 
-    if(opcode == UNDOREDO_LV_INS){
-        int treerowpos = static_cast<QString>(sep.at(1)).toInt();
+    case UiCommandMap::LV_INSERT:
+        treerowpos = static_cast<QString>(sep.at(1)).toInt();
         this->insertRow(treerowpos, TREE_LOCAL);
         this->replaceItem(treerowpos, getLocalRowElement(LOCALINDEX, treerowpos), TREE_LOCAL);
-        return;
+        break;
+
+    case UiCommandMap::LV_SWAP:
+        this->swapRow(static_cast<QString>(sep.at(0)).toInt()
+                          , static_cast<QString>(sep.at(1)).toInt(), TREE_LOCAL);
+        break;
+
+    default:
+        break;
     }
 
-    if(opcode == UNDOREDO_LV_SWAP){
-        this->swapRow(static_cast<QString>(sep.at(0)).toInt()
-                               , static_cast<QString>(sep.at(1)).toInt(), TREE_LOCAL);
-        return;
-    }
+
+//    QString opcode = sep.last();
+
+//    if(opcode == UNDOREDO_GV_ADD){
+//        this->insertRow(static_cast<QString>(sep.at(0)).toInt(), TREE_GLOBAL);
+//        return;
+//    }
+
+//    if(opcode == UNDOREDO_GV_DEL){
+//        this->deleteRow(static_cast<QString>(sep.at(0)).toInt(), TREE_GLOBAL);
+//        return;
+//    }
+
+//    if(opcode == UNDOREDO_GV_EDIT){
+//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
+//        this->replaceItem(rowpos, getGlobalRowElement(rowpos), TREE_GLOBAL);
+//        return;
+//    }
+
+//    if(opcode == UNDOREDO_GV_INS){
+//        int treerowpos = static_cast<QString>(sep.at(0)).toInt();
+//        this->insertRow(treerowpos, TREE_GLOBAL);
+//        this->replaceItem(treerowpos, getGlobalRowElement(treerowpos), TREE_GLOBAL);
+//        return;
+//    }
+
+//    if(opcode == UNDOREDO_GV_SWAP){
+//        this->swapRow(static_cast<QString>(sep.at(0)).toInt()
+//                               , static_cast<QString>(sep.at(1)).toInt(), TREE_GLOBAL);
+//        return;
+//    }
+
+//    if(opcode == UNDOREDO_LV_ADD){
+//        this->insertRow(static_cast<QString>(sep.at(0)).toInt(), TREE_LOCAL);
+//        return;
+//    }
+
+//    if(opcode == UNDOREDO_LV_DEL){
+//        this->deleteRow(static_cast<QString>(sep.at(0)).toInt(), TREE_LOCAL);
+//        return;
+//    }
+
+//    if(opcode == UNDOREDO_LV_EDIT){
+//        int rowpos = static_cast<QString>(sep.at(1)).toInt();
+//        this->replaceItem(rowpos, getLocalRowElement(LOCALINDEX, rowpos), TREE_LOCAL);
+//        return;
+//    }
+
+//    if(opcode == UNDOREDO_LV_INS){
+//        int treerowpos = static_cast<QString>(sep.at(1)).toInt();
+//        this->insertRow(treerowpos, TREE_LOCAL);
+//        this->replaceItem(treerowpos, getLocalRowElement(LOCALINDEX, treerowpos), TREE_LOCAL);
+//        return;
+//    }
+
+//    if(opcode == UNDOREDO_LV_SWAP){
+//        this->swapRow(static_cast<QString>(sep.at(0)).toInt()
+//                               , static_cast<QString>(sep.at(1)).toInt(), TREE_LOCAL);
+//        return;
+//    }
 }
 
 void VariantTree::reloadAction()

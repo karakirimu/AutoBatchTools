@@ -18,9 +18,10 @@
 #define EDITLOCALVARTABLE_H
 
 #include <QUndoCommand>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
-//#include <QDebug>
+#include <uicommandmap.h>
+#include <QDebug>
 
 /**
  * @brief The EditLocalVarTable class

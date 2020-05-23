@@ -40,8 +40,9 @@
 #include <QStackedWidget>
 
 #include <../variantconverter/variantconverter.h>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <../plugins/plugininterface/extraplugininterface.h>
+//#include <uicommandmap.h>
 
 //ui object strings
 #define SEARCH_ADD      "searchAddButton"
@@ -78,7 +79,7 @@ private slots:
     void setProfileLoadDataList(EditorCache *list);
 
     // DEPENDS_XML undo redo functions
-    QString getCommandTableRowData(int targetrow, int tablerow, QString loadtype);
+    QString getCommandTableRowData(int targetrow, int tablerow, int loadtype);
 
     // DEPENDS_XML ui -> data functions
     void tabChanged(int index);

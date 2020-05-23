@@ -62,7 +62,7 @@ void StringProjectVersion::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Version changed") \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void StringProjectVersion::redo()
@@ -78,13 +78,14 @@ void StringProjectVersion::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Version changed") \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int StringProjectVersion::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(I_VERSION);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(I_VERSION);
+    return UiCommandMap::I_VERSION;
 }
 
 bool StringProjectVersion::mergeWith(const QUndoCommand *other)

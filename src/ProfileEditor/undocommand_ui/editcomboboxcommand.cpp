@@ -52,7 +52,7 @@ void EditComboBoxCommand::undo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Return variant to %1").arg(oldString) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void EditComboBoxCommand::redo()
@@ -64,13 +64,14 @@ void EditComboBoxCommand::redo()
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Return variant to %1").arg(newString) \
-            + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int EditComboBoxCommand::id() const
 {
-    ProcessXmlListGenerator pxg;
-    return pxg.getId(S_VARIANT);
+//    ProcessXmlListGenerator pxg;
+//    return pxg.getId(S_VARIANT);
+    return UiCommandMap::FS_VARIANT;
 }
 
 bool EditComboBoxCommand::mergeWith(const QUndoCommand *other)
