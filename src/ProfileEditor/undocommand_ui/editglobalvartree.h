@@ -20,12 +20,11 @@
 #include <QUndoCommand>
 #include <editorcachelist.h>
 #include <../stringxmlbuilder/stringxmlbuilder.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <uicommandmap.h>
 
 /**
  * @brief The EditGlobalVarTree class
- * newstrlist structure
+ * variants structure
  * 0       :1       :
  * variant :value   :
  */
@@ -47,19 +46,12 @@ public:
     QStringList m_newvar;
 
 private:
-//    void updateCounter(bool ascend);
-//    void setStrBuilderFormat(QList<QStringList> *internal, QStringList *var);
-
     int m_treeindex;
     int m_tableindex;
     QStringList m_oldvar;
     int m_operation;
-//    QList<QList<QStringList> *> *m_cache;
 
     StringXmlBuilder sxml;
-
-//    int SKIP;
-
     EditorCacheList *ptrCache;
 };
 

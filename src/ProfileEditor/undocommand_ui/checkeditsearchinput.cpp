@@ -16,19 +16,6 @@
 
 #include "checkeditsearchinput.h"
 
-//CheckEditSearchInput::CheckEditSearchInput(const int &targetindex
-//                                           , const bool &newcheck
-//                                           , QList<QList<QStringList> *> *cache
-//                                           , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    m_newcheck = VariantConverter::boolToString(newcheck);
-//    m_cache = cache;
-
-//    m_oldcheck = pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, m_cache->at(index));
-//}
-
 CheckEditSearchInput::CheckEditSearchInput(const int &targetindex
                                            , const bool &newcheck
                                            , EditorCacheList *cache
@@ -43,9 +30,6 @@ CheckEditSearchInput::CheckEditSearchInput(const int &targetindex
 
 void CheckEditSearchInput::undo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, index, m_oldcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.info.fileInput = oldCheck;
     ptrCache->replace(index, ec);
@@ -56,9 +40,6 @@ void CheckEditSearchInput::undo()
 
 void CheckEditSearchInput::redo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, index, m_newcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.info.fileInput = newCheck;
     ptrCache->replace(index, ec);
@@ -69,7 +50,5 @@ void CheckEditSearchInput::redo()
 
 int CheckEditSearchInput::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(I_FILEINPUT_SEARCHCHECK);
     return UiCommandMap::I_FILEINPUT_SEARCH_BOOL;
 }

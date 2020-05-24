@@ -16,23 +16,6 @@
 
 #include "comboprofileselect.h"
 
-//ComboProfileSelect::ComboProfileSelect(const int &targetindex
-//                                       , const QString newstring
-//                                       , const QString newfile
-//                                       , QList<QList<QStringList> *> *cache
-//                                       , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newString = newstring;
-
-//    m_cache = cache;
-//    newFile = newfile;
-
-//    oldFile = pxlg.fetch(PR_FILEPATH, ATTR_NONE, m_cache->at(index));
-
-//}
-
 ComboProfileSelect::ComboProfileSelect(const int &targetindex
                                        , const QString newstring
                                        , const QString newfile
@@ -51,11 +34,6 @@ ComboProfileSelect::ComboProfileSelect(const int &targetindex
 
 void ComboProfileSelect::undo()
 {
-    // @deprecated
-//    {
-//    pxlg.replaceElementList(PR_FILEPATH, ATTR_NONE, index, oldFile, m_cache);
-//    }
-
     EditorCache ec = ptrCache->at(index);
     ec.profileload.filePath = oldFile;
     ptrCache->replace(index, ec);
@@ -66,16 +44,11 @@ void ComboProfileSelect::undo()
 
 void ComboProfileSelect::redo()
 {
-    // @deprecated
-//    {
-//    pxlg.replaceElementList(PR_FILEPATH, ATTR_NONE, index, newFile, m_cache);
-//    }
-
     EditorCache ec = ptrCache->at(index);
     ec.profileload.filePath = newFile;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Profile change from %1").arg(m_oldstring) \
+    setText(QObject::tr("Profile change to %1").arg(newString) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -86,8 +59,6 @@ void ComboProfileSelect::redo()
  */
 int ComboProfileSelect::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(PR_FILEPATH);
     return UiCommandMap::PLOAD_FILEPATH;
 }
 

@@ -19,17 +19,11 @@
 
 #include <QUndoCommand>
 #include <CommandMap.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 
 class SwapCommand : public QUndoCommand
 {
 public:
-//    SwapCommand(const int &beforeindex
-//                , const int &afterindex
-//                , QList<QList<QStringList> *> *cache
-//                , QUndoCommand *parent = nullptr);
-
     SwapCommand(const int &beforeindex
                 , const int &afterindex
                 , EditorCacheList *cache
@@ -42,7 +36,6 @@ private:
     int beforeIndex;
     int afterIndex;
 
-//    QList<QList<QStringList> *> *m_cache;
     EditorCacheList *ptrCache;
 };
 

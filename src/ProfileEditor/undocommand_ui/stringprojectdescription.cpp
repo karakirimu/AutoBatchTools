@@ -16,19 +16,6 @@
 
 #include "stringprojectdescription.h"
 
-//StringProjectDescription::StringProjectDescription(const int &targetindex
-//                                                   , QString newstring
-//                                                   , QList<QList<QStringList> *> *cache
-//                                                   , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newStr = newstring;
-
-//    m_cache = cache;
-//    oldStr = pxlg.fetch(I_DESCRIPTION, ATTR_NONE, m_cache->at(index));
-//}
-
 StringProjectDescription::StringProjectDescription(const int &targetindex
                                                    , const QString &newstring
                                                    , EditorCacheList *cache
@@ -43,9 +30,6 @@ StringProjectDescription::StringProjectDescription(const int &targetindex
 
 void StringProjectDescription::undo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(I_DESCRIPTION, ATTR_NONE, index, oldStr, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.info.description = oldStr;
     ptrCache->replace(index, ec);
@@ -56,9 +40,6 @@ void StringProjectDescription::undo()
 
 void StringProjectDescription::redo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(I_DESCRIPTION, ATTR_NONE, index, newStr, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.info.description = newStr;
     ptrCache->replace(index, ec);
@@ -69,8 +50,6 @@ void StringProjectDescription::redo()
 
 int StringProjectDescription::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(I_DESCRIPTION);
     return UiCommandMap::I_DESCRIPTION;
 }
 

@@ -18,18 +18,12 @@
 #define EDITLOOPRECURSIVE_H
 
 #include <QUndoCommand>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 #include <uicommandmap.h>
 
 class EditLoopRecursive : public QUndoCommand
 {
 public:
-//    EditLoopRecursive(const int &targetindex
-//                      , int newvalue
-//                      , QList<QList<QStringList> *> *cache
-//                      , QUndoCommand *parent = nullptr);
-
     EditLoopRecursive(const int &targetindex
                       , const int &newvalue
                       , EditorCacheList *cache
@@ -48,8 +42,6 @@ public:
 
      int index;
      int oldValue;
-//     QList<QList<QStringList> *> *m_cache;
-//     ProcessXmlListGenerator pxlg;
 
      EditorCacheList *ptrCache;
 

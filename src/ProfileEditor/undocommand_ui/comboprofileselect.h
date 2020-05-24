@@ -19,18 +19,11 @@
 
 #include <QUndoCommand>
 #include <uicommandmap.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 
 class ComboProfileSelect : public QUndoCommand
 {
 public:
-//    ComboProfileSelect(const int &targetindex
-//                       , const QString newstring
-//                       , const QString newfile
-//                       , QList<QList<QStringList> *> *cache
-//                       , QUndoCommand *parent = nullptr);
-
     ComboProfileSelect(const int &targetindex
                        , const QString newstring
                        , const QString newfile
@@ -48,11 +41,7 @@ public:
 
 private:
    int index;
-   QString m_oldstring;
    QString oldFile;
-//   QList<QList<QStringList> *> *m_cache;
-//   QHash<int, int> posinfo;
-//   ProcessXmlListGenerator pxlg;
 
    EditorCacheList *ptrCache;
 

@@ -31,8 +31,6 @@ EditorTab::~EditorTab()
         if(ext->getInformation()->hassettingwidget){
             disconnect(ext->getInformation()->settingwidget, \
                        &PluginWidget::sendList, ctableplugins, &PluginCommandTable::insertSettingUpdate);
-//            disconnect(ext, &ExtraPluginInterface::updateSetting,\
-//                       ctableplugins, &PluginCommandTable::insertSettingUpdate);
         }
 
         pluginloader->unload();
@@ -45,14 +43,14 @@ EditorTab::~EditorTab()
 // Constructor can not initialize connection.
 void EditorTab::setConnection()
 {
-    widgetsearch = this->widget(ProcessXmlListGenerator::SEARCH);
+    widgetsearch = this->widget(static_cast<int>(TAB::FILESEARCH));
     addbutton = widgetsearch->findChild<QToolButton *>(SEARCH_ADD);
     editbutton = widgetsearch->findChild<QToolButton *>(SEARCH_EDIT);
     deletebutton = widgetsearch->findChild<QToolButton *>(SEARCH_DELETE);
     searchcombobox = widgetsearch->findChild<SearchComboBox *>(SEARCH_COMBO);
     openToolButton = widgetsearch->findChild<QToolButton *>("openToolButton");
 
-    widgetplugin = this->widget(ProcessXmlListGenerator::PLUGINS);
+    widgetplugin = this->widget(static_cast<int>(TAB::PLUGINS));
     plugincombobox = widgetplugin->findChild<PluginsComboBox *>("pluginComboBox");
     addbutton_e = widgetplugin->findChild<QToolButton *>("pluginAddToolButton");
     deletebutton_e = widgetplugin->findChild<QToolButton *>("pluginDeleteToolButton");
@@ -60,7 +58,7 @@ void EditorTab::setConnection()
     scrollSettingWidget = widgetplugin->findChild<QScrollArea *>("scrollArea");
     pluginPane = widgetplugin->findChild<QStackedWidget *>("pluginSetStackedWidget");
 
-    otherwidget = this->widget(ProcessXmlListGenerator::OTHER);
+    otherwidget = this->widget(static_cast<int>(TAB::PROFILELOAD));
     profilecombobox = otherwidget->findChild<ProfileComboBox *>("profileComboBox");
     addbutton_o = otherwidget->findChild<QToolButton *>("profileAddToolButton");
     deletebutton_o = otherwidget->findChild<QToolButton *>("profileDeleteToolButton");
@@ -90,7 +88,7 @@ void EditorTab::setEditOperator(EditOperator *op)
     editop = op;
 
     // load normal widget ui objects
-    widgetnormal = this->widget(ProcessXmlListGenerator::NORMAL);
+    widgetnormal = this->widget(static_cast<int>(TAB::EXECUTE));
     timeoutCheckBox = widgetnormal->findChild<QCheckBox *>("timeoutCheckBox");
     timeoutLineEdit = widgetnormal->findChild<QLineEdit *>("timeoutLineEdit");
     runDetachCheckBox = widgetnormal->findChild<QCheckBox *>("runDetachCheckBox");
@@ -267,286 +265,7 @@ void EditorTab::updateIndex(QString operation)
     default:
         break;
     }
-
-//    if(sep.last() == UNDOREDO_PL_ALLUPDATE){
-//        //exectabledel
-//        sep.removeLast();
-//        ctableplugins->updateTableList(&sep);
-
-//        if(pluginloader != nullptr){
-//            ExtraPluginInterface *ext = qobject_cast<ExtraPluginInterface *>(plugininstance);
-//            if(ext->getInformation()->hassettingwidget){
-//                ext->getInformation()->settingwidget->blockSignals(true);
-//                ext->getInformation()->settingwidget->receiveList(sep);
-//                ext->getInformation()->settingwidget->blockSignals(false);
-
-//            }
-//        }
-
-//    }else if(sep.at(1) == UNDOREDO_EDIT){
-//        //edit
-////        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
-////                            EditOperator::SELECT);
-//        setAllIncludeDataList(static_cast<QString>(sep.at(0)).toInt());
-
-////    }else if(sep.at(1) == UNDOREDO_ADD){
-////        //add
-
-////    }else if(sep.at(1) == UNDOREDO_DELETE){
-////        //del
-
-//    }else if(sep.at(1) == QString(CommandMap::UNDOREDO_INSERT)){
-//        //ins
-////        setCombinedDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
-////                            EditOperator::SELECT);
-
-//        setAllIncludeDataList(static_cast<QString>(sep.at(0)).toInt());
-
-//    }else if(sep.at(1) == UNDOREDO_E_TABLEADD){
-//        //exectableadd
-//        ctablenormal->insertItem(static_cast<QString>(sep.at(0)).toInt());
-
-//    }else if(sep.count() == 3
-//             && sep.at(2) == UNDOREDO_E_TABLEINS){
-//        //exectableins
-//        ctablenormal->insertItem(static_cast<QString>(sep.at(1)).toInt());
-//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
-//        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-//        ctablenormal->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_E_TABLEEDIT));
-
-//    }else if(sep.count() == 3
-//             && sep.at(2) == UNDOREDO_E_TABLEEDIT){
-//        //exectableedit
-//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
-//        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-//        ctablenormal->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_E_TABLEEDIT));
-
-//    }else if(sep.at(1) == UNDOREDO_E_TABLEDEL){
-//        //exectabledel
-//        ctablenormal->deleteItem(static_cast<QString>(sep.at(0)).toInt());
-
-//    }else if(sep.count() == 3 && sep.at(2) == UNDOREDO_E_TABLESWAP){
-//        //exectableswap
-//        ctablenormal->swapItem(static_cast<QString>(sep.at(0)).toInt()
-//                               , static_cast<QString>(sep.at(1)).toInt());
-
-//    }else if(sep.at(1) == UNDOREDO_PL_TABLEADD){
-//        //exectableadd
-//        ctableplugins->insertItem(static_cast<QString>(sep.at(0)).toInt());
-
-//    }else if(sep.count() == 3
-//             && sep.at(2) == UNDOREDO_PL_TABLEINS){
-//        //exectableins
-//        ctableplugins->insertItem(static_cast<QString>(sep.at(1)).toInt());
-//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
-//        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-//        ctableplugins->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_PL_TABLEEDIT));
-
-//    }else if(sep.count() == 3
-//             && sep.at(2) == UNDOREDO_PL_TABLEEDIT){
-//        //exectableedit
-//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
-//        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-//        ctableplugins->replaceItem(tablerowpos, getCommandTableRowData(rowpos, tablerowpos, UNDOREDO_PL_TABLEEDIT));
-
-//    }else if(sep.at(1) == UNDOREDO_PL_TABLEDEL){
-//        //exectabledel
-//        ctableplugins->deleteItem(static_cast<QString>(sep.at(0)).toInt());
-
-//    }else if(sep.count() == 3
-//             && sep.at(2) == UNDOREDO_PL_TABLESWAP){
-//        //exectableswap
-//        ctableplugins->swapItem(static_cast<QString>(sep.at(0)).toInt()
-//                               , static_cast<QString>(sep.at(1)).toInt());
-
-//    }else if(sep.count() == 5
-//             && sep.at(4) == UNDOREDO_E_TABLEMOVE){
-//        //exectabledragdrop
-//        ctablenormal->moveItem(static_cast<QString>(sep.at(1)).toInt()
-//                               , static_cast<QString>(sep.at(2)).toInt()
-//                               , static_cast<QString>(sep.at(3)).toInt());
-
-//    }else if(sep.count() == 5
-//             && sep.at(4) == UNDOREDO_PL_TABLEMOVE){
-//        //plugintabledragdrop
-//        ctableplugins->moveItem(static_cast<QString>(sep.at(1)).toInt()
-//                               , static_cast<QString>(sep.at(2)).toInt()
-//                               , static_cast<QString>(sep.at(3)).toInt());
-
-//    }
 }
-
-/////DEPENDS_XML DEPENDS_UI PROCESS
-//void EditorTab::setNormalDataList(QList<QStringList> *list)
-//{
-//    int counter = xgen.fetch(E_CMDARGCOUNT,ATTR_NONE, list).toInt();
-//    this->blockSignals(true);
-
-//    runDetachCheckBox->setChecked(VariantConverter::stringToBool(xgen.fetch(E_RUNDETACH,ATTR_NONE, list)));
-
-//    timeoutCheckBox->setChecked(VariantConverter::stringToBool(xgen.fetch(E_TIMEOUT,ATTR_NONE, list)));
-
-//    timeoutLineEdit->setText(xgen.fetch(E_TIMEOUT,ATTR_TIMEOUTMS, list));
-
-//    int cmdfirst = xgen.fetchCmdFirstPos(E_CMD, list);
-
-//    ctablenormal->setRowCount(counter);
-//    for(int i = 0; i < counter; i++){
-//        ctablenormal->replaceItem(i, list->at(cmdfirst + i).at(1));
-//    }
-
-//    autoonly->setChecked(VariantConverter::stringToBool( \
-//                             xgen.fetch(ALL_TYPE,TYPE_EXEC,ATTR_ONLY_SCHEDULER, list)));
-
-//    this->blockSignals(false);
-
-//}
-
-/////DEPENDS_XML DEPENDS_UI PROCESS
-//void EditorTab::setSearchDataList(QList<QStringList> *list)
-//{
-//    this->blockSignals(true);
-
-//    searchcombobox->reloadComboBoxItem();
-//    searchcombobox->setCurrentText(xgen.fetch(S_NAME,ATTR_NONE, list));
-
-//    separatorLineEdit->setText(xgen.fetch(S_SEPARATOR,ATTR_NONE, list));
-//    localVariantComboBox->insertItem(0,xgen.fetch(S_VARIANT,ATTR_NONE, list));
-//    outputLineEdit->setText(xgen.fetch(S_OUTPUTFILE,ATTR_NONE, list));
-
-//    if(xgen.fetch(S_OUTPUTFILE,ATTR_RADIOBUTTONPOS, list) == "0"){
-//        vari->setChecked(true);
-//    }else{
-//        file->setChecked(true);
-//    }
-
-//    if(xgen.fetch(S_OUTPUTFILETYPE,ATTR_NONE, list) == "0"){
-//        fileOverWrite->setChecked(true);
-//    }else{
-//        fileAppend->setChecked(true);
-//    }
-
-//    autoonly_2->setChecked(VariantConverter::stringToBool( \
-//                               xgen.fetch(ALL_TYPE,TYPE_SEARCH,ATTR_ONLY_SCHEDULER, list)));
-
-//    this->blockSignals(false);
-
-//}
-
-/////DEPENDS_XML DEPENDS_UI PROCESS
-//void EditorTab::setPluginDataList(QList<QStringList> *list)
-//{
-//    this->blockSignals(true);
-
-//    //reset combobox
-//    plugincombobox->reloadComboBoxItem();
-
-//    // update table
-//    int counter = xgen.fetch(PL_CMDARGCOUNT,ATTR_NONE, list).toInt();
-//    int ecmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
-
-//    ctableplugins->setRowCount(counter);
-//    for(int i = 0; i < counter; i++){
-//        ctableplugins->replaceItem(i, list->at(ecmdfirst + i).at(1));
-//    }
-
-//    //get plugin name
-//    QString plfile = xgen.fetch(PL_FILEPATH,ATTR_NONE, list);
-
-//    plugincombobox->setComboBoxItem(&plfile);
-
-//    loadPluginInstance(plfile);
-
-//    if(plugininstance != nullptr){
-//        ExtraPluginInterface *ext = qobject_cast<ExtraPluginInterface *>(plugininstance);
-//        plugincombobox->setCurrentText(ext->getInformation()->name);
-//    }
-
-//    autoonly_3->setChecked(VariantConverter::stringToBool( \
-//                               xgen.fetch(ALL_TYPE,TYPE_SCRIPT,ATTR_ONLY_SCHEDULER, list)));
-
-//    this->blockSignals(false);
-//}
-
-/////DEPENDS_XML DEPENDS_UI PROCESS
-//void EditorTab::setOtherDataList(QList<QStringList> *list)
-//{
-//    this->blockSignals(true);
-
-//    QString curdata = xgen.fetch(PR_FILEPATH, ATTR_NONE, list);
-//    QFileInfo profile(curdata);
-
-//    if(profile.exists()){
-//        //read file
-//        ProcessXmlBuilder tpxb;
-//        QList<QStringList> tlist;
-//        tpxb.setLoadPath(curdata);
-
-//        if(tpxb.readItem(0, &tlist)){
-//            curdata = xgen.fetch(I_NAME, ATTR_NONE, &tlist);
-//        }
-
-//    }else{
-//        curdata = tr("(file is not exist)");
-//    }
-
-//    profilecombobox->reloadComboBoxItem();
-//    profilecombobox->setIndex(profile.canonicalFilePath());
-
-//    autoonly_4->setChecked(VariantConverter::stringToBool( \
-//                               xgen.fetch(ALL_TYPE,TYPE_ANOTHER,ATTR_ONLY_SCHEDULER, list)));
-
-//    this->blockSignals(false);
-//}
-
-/////DEPENDS_XML DEPENDS_UI PROCESS
-//void EditorTab::setCombinedDataList(int after, int before, int function)
-//{
-//    Q_UNUSED(before)
-
-//    Q_UNUSED(function)
-
-//    QList<QStringList> *list = new QList<QStringList>();
-
-//    //avoid multiple update
-//    if(after < 2 || !editop->read(after, list)){
-//        delete list;
-//        return;
-//    }
-
-//    //set current id
-//    qDebug() << "[EditorTab::setCombinedDataList]     currentid update : " << after;
-//    currentid = after;
-
-//    //set widget selection
-//    this->blockSignals(true);
-
-//    QString type = xgen.fetch(ALL_TYPE, ATTR_NONE, list);
-//    if(type == TYPE_ALLINCLUDE){
-//        setCurrentIndex(static_cast<QString>(xgen.fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, list)).toInt());
-
-//        setNormalDataList(list);
-//        setSearchDataList(list);
-//        setPluginDataList(list);
-//        setOtherDataList(list);
-
-//    }else if(type == TYPE_EXEC){
-//        setNormalDataList(list);
-
-//    }else if(type == TYPE_SEARCH){
-//        setSearchDataList(list);
-
-//    }else if(type == TYPE_SCRIPT){
-//        setPluginDataList(list);
-
-//    }else if(type == TYPE_ANOTHER){
-//        setOtherDataList(list);
-//    }
-
-//    this->blockSignals(false);
-
-//    delete list;
-//}
 
 /**
  * @brief EditorTab::setAllIncludeDataList
@@ -730,23 +449,6 @@ void EditorTab::setProfileLoadDataList(EditorCache *list)
  */
 QString EditorTab::getCommandTableRowData(int targetrow, int tablerow, int loadtype)
 {
-//    QList<QStringList> *list = new QList<QStringList>();
-
-//    if(targetrow < 2 || !editop->read(targetrow, list)){
-//        delete list;
-//        return "";
-//    }
-
-//    int cmdfirst = 0;
-
-//    if(loadtype == UNDOREDO_E_TABLEEDIT){
-//        cmdfirst = xgen.fetchCmdFirstPos(E_CMD, list);
-//    }else{
-//        cmdfirst = xgen.fetchCmdFirstPos(PL_CMD, list);
-//    }
-
-//    return list->at(cmdfirst + tablerow).at(1);
-
     EditorCache list;
 
     if(targetrow < 2 || !editop->read(targetrow, &list)){
@@ -766,12 +468,12 @@ QString EditorTab::getCommandTableRowData(int targetrow, int tablerow, int loadt
 void EditorTab::tabChanged(int index)
 {
     switch(index){
-    case ProcessXmlListGenerator::NORMAL:
+    case static_cast<int>(TAB::EXECUTE):
 
         editop->editTabAction(currentid, index);
         break;
 
-    case ProcessXmlListGenerator::SEARCH:
+    case static_cast<int>(TAB::FILESEARCH):
         this->blockSignals(true);
         searchcombobox->reloadComboBoxItem();
         localVariantComboBox->reloadComboBoxItem();
@@ -780,7 +482,7 @@ void EditorTab::tabChanged(int index)
         editop->editTabAction(currentid, index);
         break;
 
-    case ProcessXmlListGenerator::PLUGINS:
+    case static_cast<int>(TAB::PLUGINS):
         this->blockSignals(true);
         plugincombobox->reloadComboBoxItem();
         this->blockSignals(false);
@@ -788,7 +490,7 @@ void EditorTab::tabChanged(int index)
         editop->editTabAction(currentid, index);
         break;
 
-    case ProcessXmlListGenerator::OTHER:
+    case static_cast<int>(TAB::PROFILELOAD):
         this->blockSignals(true);
         profilecombobox->reloadComboBoxItem();
         this->blockSignals(false);
@@ -857,17 +559,6 @@ void EditorTab::editRadioAction(bool)
 
     }
 }
-
-//void EditorTab::editValueAction(QString value)
-//{
-//    QString objname = this->sender()->objectName();
-//    qDebug() << "EditorTab::editvalueaction : " << objname;
-
-//    if(objname == "timeoutLineEdit"){
-//        editop->spinTimeoutAction(currentid, value.toInt());
-
-//    }
-//}
 
 void EditorTab::editTextAction(QString text)
 {
@@ -963,29 +654,6 @@ void EditorTab::pluginSwitchSettingsClicked()
     }else{
         pluginPane->setCurrentIndex(PluginPane::SettingWidget);
     }
-
-//    QPluginLoader loader(extrafunccombobox->getCurrentExtraFile());
-//    if(loader.load()){
-//        QObject *plugin = loader.instance();
-//        ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
-//        QStringList resultargs;
-
-//        //read data
-//        int excount = ctableplugins->rowCount();
-//        QStringList currentargs;
-//        for(int i = 0; i < excount; i++){
-//            currentargs.append(ctableplugins->model()->index(i, 0).data().toString());
-//        }
-
-//        inter->launchSettingWidget(&currentargs, &resultargs, \
-//                                   editop->getMainWindowGeometry().center(), \
-//                                   extrafunccombobox->styleSheet());
-
-//        //write data
-//        ctableplugins->insertItems(&resultargs);
-
-//        loader.unload();
-//    }
 }
 
 /**
@@ -1019,8 +687,6 @@ void EditorTab::loadPluginInstance(QString plfile)
         if(ext->getInformation()->hassettingwidget){
             disconnect(ext->getInformation()->settingwidget, &PluginWidget::sendList, \
                        ctableplugins, &PluginCommandTable::insertSettingUpdate);
-//            disconnect(ext, &ExtraPluginInterface::updateSetting,\
-//                       ctableplugins, &PluginCommandTable::insertSettingUpdate);
         }
 
         pluginloader->unload();

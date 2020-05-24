@@ -16,19 +16,6 @@
 
 #include "checkonlyschedulernormal.h"
 
-//CheckOnlySchedulerNormal::CheckOnlySchedulerNormal(const int &targetindex
-//                                                   , const bool &newcheck
-//                                                   , QList<QList<QStringList> *> *cache
-//                                                   , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    m_newcheck = VariantConverter::boolToString(newcheck);
-//    m_cache = cache;
-
-//    m_oldcheck = pxlg.fetch(ALL_TYPE, TYPE_EXEC, ATTR_ONLY_SCHEDULER, m_cache->at(index));
-//}
-
 CheckOnlySchedulerNormal::CheckOnlySchedulerNormal(const int &targetindex
                                                    , const bool &newcheck
                                                    , EditorCacheList *cache
@@ -43,9 +30,6 @@ CheckOnlySchedulerNormal::CheckOnlySchedulerNormal(const int &targetindex
 
 void CheckOnlySchedulerNormal::undo()
 {
-    // @deprecated
-//    pxlg.replaceTypeElement(TYPE_EXEC, ATTR_ONLY_SCHEDULER, index, m_oldcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.exec.schedulerOnly = oldCheck;
     ptrCache->replace(index, ec);
@@ -56,9 +40,6 @@ void CheckOnlySchedulerNormal::undo()
 
 void CheckOnlySchedulerNormal::redo()
 {
-    // @deprecated
-//    pxlg.replaceTypeElement(TYPE_EXEC, ATTR_ONLY_SCHEDULER, index, m_newcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.exec.schedulerOnly = newCheck;
     ptrCache->replace(index, ec);
@@ -69,7 +50,5 @@ void CheckOnlySchedulerNormal::redo()
 
 int CheckOnlySchedulerNormal::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(E_ONLY_SCHEDULER);
     return UiCommandMap::E_ONLY_SCHEDULER;
 }

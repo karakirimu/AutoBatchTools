@@ -19,27 +19,12 @@
 
 #include <QUndoCommand>
 #include <editorcachelist.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <uicommandmap.h>
 #include <QDebug>
-
-/**
- * @brief The EditLocalVariantTree class
- * newstrlist structure
- * 0       :1       :
- * variant :value   :
- */
 
 class EditLocalVariantTree : public QUndoCommand
 {
 public:
-//    EditLocalVariantTree(const int &targetindex
-//                         , const int &treeindex
-//                         , QStringList variants
-//                         , const int operation
-//                         , QList<QList<QStringList> *> *cache
-//                         , QUndoCommand *parent = nullptr);
-
     EditLocalVariantTree(const int &targetindex
                          , const int &treeindex
                          , const QString &localvariant
@@ -54,23 +39,13 @@ public:
     int id() const override;
     bool mergeWith(const QUndoCommand *other) override;
 
-//    QStringList m_newvar;
     VariantPair newVar;
 
 private:
-//    void updateIndex(int count);
-//    void updateCounter(bool ascend);
-
     int targetIndex;
     int treeIndex;
-//    QStringList m_oldvar;
     VariantPair oldVar;
     int tableOperation;
-
-//    QList<QList<QStringList> *> *m_cache;
-//    ProcessXmlListGenerator pxlg;
-
-//    int SKIP;
 
     EditorCacheList *ptrCache;
 };

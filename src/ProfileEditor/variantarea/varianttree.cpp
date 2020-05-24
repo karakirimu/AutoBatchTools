@@ -118,67 +118,6 @@ void VariantTree::updateIndex(QString operation)
     default:
         break;
     }
-
-
-//    QString opcode = sep.last();
-
-//    if(opcode == UNDOREDO_GV_ADD){
-//        this->insertRow(static_cast<QString>(sep.at(0)).toInt(), TREE_GLOBAL);
-//        return;
-//    }
-
-//    if(opcode == UNDOREDO_GV_DEL){
-//        this->deleteRow(static_cast<QString>(sep.at(0)).toInt(), TREE_GLOBAL);
-//        return;
-//    }
-
-//    if(opcode == UNDOREDO_GV_EDIT){
-//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
-//        this->replaceItem(rowpos, getGlobalRowElement(rowpos), TREE_GLOBAL);
-//        return;
-//    }
-
-//    if(opcode == UNDOREDO_GV_INS){
-//        int treerowpos = static_cast<QString>(sep.at(0)).toInt();
-//        this->insertRow(treerowpos, TREE_GLOBAL);
-//        this->replaceItem(treerowpos, getGlobalRowElement(treerowpos), TREE_GLOBAL);
-//        return;
-//    }
-
-//    if(opcode == UNDOREDO_GV_SWAP){
-//        this->swapRow(static_cast<QString>(sep.at(0)).toInt()
-//                               , static_cast<QString>(sep.at(1)).toInt(), TREE_GLOBAL);
-//        return;
-//    }
-
-//    if(opcode == UNDOREDO_LV_ADD){
-//        this->insertRow(static_cast<QString>(sep.at(0)).toInt(), TREE_LOCAL);
-//        return;
-//    }
-
-//    if(opcode == UNDOREDO_LV_DEL){
-//        this->deleteRow(static_cast<QString>(sep.at(0)).toInt(), TREE_LOCAL);
-//        return;
-//    }
-
-//    if(opcode == UNDOREDO_LV_EDIT){
-//        int rowpos = static_cast<QString>(sep.at(1)).toInt();
-//        this->replaceItem(rowpos, getLocalRowElement(LOCALINDEX, rowpos), TREE_LOCAL);
-//        return;
-//    }
-
-//    if(opcode == UNDOREDO_LV_INS){
-//        int treerowpos = static_cast<QString>(sep.at(1)).toInt();
-//        this->insertRow(treerowpos, TREE_LOCAL);
-//        this->replaceItem(treerowpos, getLocalRowElement(LOCALINDEX, treerowpos), TREE_LOCAL);
-//        return;
-//    }
-
-//    if(opcode == UNDOREDO_LV_SWAP){
-//        this->swapRow(static_cast<QString>(sep.at(0)).toInt()
-//                               , static_cast<QString>(sep.at(1)).toInt(), TREE_LOCAL);
-//        return;
-//    }
 }
 
 void VariantTree::reloadAction()
@@ -331,11 +270,6 @@ void VariantTree::copyAction()
     int counter = mlist.count();
     for(int i = 0; i < counter; i++){
         int crow = mlist.at(i).row();
-
-//        tmp.append("\"");
-//        tmp.append(this->selectionModel()->currentIndex().parent().\
-//                            child(crow, i % 2).data().toString());
-
         tmp.append(this->selectionModel()->currentIndex().\
                    sibling(crow, i % 2).data().toString());
 
@@ -553,15 +487,6 @@ void VariantTree::insertRow(int row, QModelIndex *index)
     ignoreDataChangedSignal(false);
 }
 
-//replaced to two arguments function
-//void VariantTree::deleteRow(int row)
-//{
-//    QModelIndex index = this->indexFromItem(this->itemAt(row, 0));
-//    QAbstractItemModel *model = this->model();
-//    if (model->removeRow(index.row(), index.parent()))
-//        reloadTree();
-//}
-
 void VariantTree::deleteRow(int row, int section)
 {
     QModelIndex index = this->indexFromItem(this->topLevelItem(section));
@@ -764,82 +689,6 @@ bool VariantTree::eventFilter(QObject *obj, QEvent *event)
         return true;
     }
 
-//    //qDebug() << event->type();
-//    if (event->type() == QEvent::KeyPress) {
-//        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-//        switch (keyEvent->key())
-//         {
-//           case Qt::Key_Return:
-//           case Qt::Key_Enter:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//               addAction();
-//             break;
-
-//           case Qt::Key_Delete:
-//             deleteAction();
-//             break;
-
-//           case Qt::Key_Up:
-//             if (keyEvent->modifiers() & Qt::ControlModifier){
-//                 upAction();
-//             }else{
-//                 int current = this->currentIndex().row();
-//                 if(current != 0)
-//                     this->selectionModel()->setCurrentIndex(this->model()->index(current - 1, 0, this->currentIndex().parent()) \
-//                                     , QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-
-//                 closeEditState();
-//             }
-
-//             break;
-
-//           case Qt::Key_Down:
-//             if (keyEvent->modifiers() & Qt::ControlModifier){
-//                 downAction();
-//             }else{
-//                 QTreeWidgetItem *top = itemFromIndex(getSectionFromUi());
-//                 int count = top->childCount();
-//                 int current = this->currentIndex().row();
-
-//                 if(count - 1 != current)
-//                     this->selectionModel()->setCurrentIndex(this->model()->index(current + 1, 0, this->currentIndex().parent()) \
-//                                     , QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-
-//                 closeEditState();
-//             }
-//            break;
-
-//           case Qt::Key_X:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//                 cutAction();
-//             break;
-
-//           case Qt::Key_C:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//                 copyAction();
-//             break;
-
-//           case Qt::Key_V:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//                 pasteAction();
-//             break;
-
-//           case Qt::Key_E:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//                 editAction();
-//             break;
-
-//           case Qt::Key_R:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//                reloadAction();
-//             break;
-
-//           default:
-//             break;
-//         }
-//        return true;
-//    }
-
     // standard event processing
     return QObject::eventFilter(obj, event);
 }
@@ -907,39 +756,6 @@ void VariantTree::dropEvent(QDropEvent *event)
 
 bool VariantTree::setLocalListItems(QTreeWidgetItem *parent, int itemid)
 {
-//    QList<QStringList> *list = new QList<QStringList>();
-
-//    if(!editop->read(LOCALINDEX, list)){
-//        delete list;
-//        return false;
-//    }
-
-//    //get type
-//    QString type = xgen.fetch(ALL_TYPE, ATTR_NONE, list);
-
-//    //set root
-//    if(type == TYPE_LOCAL){
-//        int counter = QString(xgen.fetch(L_VAR_COUNT, ATTR_NONE, list)).toInt();
-//        int cmdfirst = xgen.fetchCmdFirstPos(L_VAR_COUNT, list);
-
-//        for(int i = 0; i < counter; i++){
-//            QTreeWidgetItem *item = new QTreeWidgetItem(parent);
-//            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsUserCheckable \
-//                           | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
-//            //set item
-//            for (int column = 0; column < this->header()->count(); ++column) {
-//                item->setData(column, Qt::EditRole, QVariant(list->at(cmdfirst + i).at(2 * column + 1)));
-////                item->setToolTip(column, list->at(cmdfirst + i).at(2 * column + 1));
-//            }
-//        }
-
-//        qDebug()<< "[VariantTree::setLocalListItem]";
-//        delete list;
-//        return true;
-//    }
-
-//    return false;
-
     EditorCache list;
 
     if(!editop->read(itemid, &list)){
@@ -998,20 +814,6 @@ bool VariantTree::setGlobalListItems(QTreeWidgetItem *parent)
 
 QStringList VariantTree::getLocalRowElement(int targetrow, int tablerow)
 {
-//    //parent
-//    QList<QStringList> list;
-
-//    if(targetrow != 1 || !editop->read(targetrow, &list)){
-//        return QStringList() << "" << "";
-//    }
-
-//    int cmdfirst = 0;
-//    cmdfirst = xgen.fetchCmdFirstPos(L_VAR_COUNT, &list);
-
-
-//    return QStringList() << list.at(cmdfirst + tablerow).at(1) \
-//                         << list.at(cmdfirst + tablerow).at(3);
-
     EditorCache list;
 
     if(targetrow != LOCALINDEX || !editop->read(targetrow, &list)){

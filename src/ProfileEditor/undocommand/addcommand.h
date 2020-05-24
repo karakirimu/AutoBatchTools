@@ -18,18 +18,12 @@
 #define ADDCOMMAND_H
 
 #include <QUndoCommand>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <CommandMap.h>
 #include <editorcachelist.h>
 
 class AddCommand : public QUndoCommand
 {
 public:
-//    AddCommand(const int &targetindex
-//               , QList<QStringList> *added
-//               , QList<QList<QStringList> *> *cache
-//               , QUndoCommand *parent = nullptr);
-
     AddCommand(const int &targetindex
                , EditorCacheList *cache
                , QUndoCommand *parent = nullptr);
@@ -39,9 +33,6 @@ public:
 
 private:
     int index;
-//    QList<QStringList> *m_added;
-//    QList<QStringList> m_addcopy;
-//    QList<QList<QStringList> *> *m_cache;
 
     EditorCacheList *ptrCache;
 };

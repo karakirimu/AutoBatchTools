@@ -16,19 +16,6 @@
 
 #include "checkeditallowinput.h"
 
-//CheckEditAllowInput::CheckEditAllowInput(const int &targetindex
-//                               , const bool &newcheck
-//                               , QList<QList<QStringList> *> *cache
-//                               , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    m_newcheck = VariantConverter::boolToString(newcheck);
-//    m_cache = cache;
-
-//    m_oldcheck = pxlg.fetch(I_FILEINPUT, ATTR_NONE, m_cache->at(index));
-//}
-
 CheckEditAllowInput::CheckEditAllowInput(const int &targetindex
                                          , const bool &newcheck
                                          , EditorCacheList *cache
@@ -43,9 +30,6 @@ CheckEditAllowInput::CheckEditAllowInput(const int &targetindex
 
 void CheckEditAllowInput::undo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(I_FILEINPUT, ATTR_NONE, index, m_oldcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.info.fileInput = oldCheck;
     ptrCache->replace(index, ec);
@@ -56,9 +40,6 @@ void CheckEditAllowInput::undo()
 
 void CheckEditAllowInput::redo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(I_FILEINPUT, ATTR_NONE, index, m_newcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.info.fileInput = newCheck;
     ptrCache->replace(index, ec);

@@ -17,22 +17,13 @@
 #ifndef EDITLOOPINFCHECK_H
 #define EDITLOOPINFCHECK_H
 
-#include <QHash>
 #include <QUndoCommand>
-//#include <QRegularExpression>
 #include <editorcachelist.h>
 #include <uicommandmap.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
-//#include <../variantconverter/variantconverter.h>
 
 class CheckEditLoopInf : public QUndoCommand
 {
 public:
-//    CheckEditLoopInf(const int &targetindex
-//                     , const bool &newcheck
-//                     , QList<QList<QStringList> *> *cache
-//                     , QUndoCommand *parent = nullptr);
-
     CheckEditLoopInf(const int &targetindex
                      , const bool &newcheck
                      , EditorCacheList *cache
@@ -43,11 +34,6 @@ public:
 
 private:
    int index;
-//   QString m_oldcheck;
-//   QString m_newcheck;
-//   QList<QList<QStringList> *> *m_cache;
-//   //init generator
-//   ProcessXmlListGenerator pxlg;
 
    bool oldCheck;
    bool newCheck;

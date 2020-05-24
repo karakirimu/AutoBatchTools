@@ -213,12 +213,6 @@ public:
     //connect ui to xml operation of tree
     enum{TREE_ADD,TREE_EDIT,TREE_INSERT,TREE_DELETE,TREE_UP,TREE_DOWN,TREE_SWAP};
 
-    //list add structure
-//    void createNewList(QList<QStringList> *newlist);
-
-    //list create function
-//    void createLocalList(QList<QStringList> *newlist, QStringList *list);
-
     //change combined structure to separated structure
     void createSeparateList(QList<QStringList> *ctos);
 
@@ -227,12 +221,6 @@ public:
 
     //check info
     int getType(QString type);
-
-    //for change inner table structures
-//    static QStringList createExecElement(QString value, int index);
-//    static QStringList createPluginElement(QString value, int index);
-//    static QStringList createVariantElement(QStringList variants);
-
     int fetchCmdFirstPos(QString tag, const QList<QStringList> *loadbase);
 
     //take specific item string
@@ -240,21 +228,7 @@ public:
     QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase, int firstpos);
     QString fetch(QString tag, QString value, QString attr,const QList<QStringList> *loadbase);
 
-    //replace xml element
-//    void replaceElementList(QString tag, QString attr, int targetindex, QString replacestr, QList<QList<QStringList> *> *cache);
-//    void replaceElementList(int tableindex, int targetindex, QString replacestr, int skip, QList<QList<QStringList> *> *cache);
-//    void replaceElementList(int tableindex, int targetindex, QStringList replace, int skip, QList<QList<QStringList> *> *cache);
-
-    //plugin list
-//    void replaceElementList(QStringList replace, int targetindex, int skip, QList<QList<QStringList> *> *cache);
-
-//    void replaceTypeElement(QString edittype, QString attr, int targetindex, QString replacestr, QList<QList<QStringList> *> *cache);
-
-//    int getId(QString tag);
-
 private:
-    //keystore for undo or redo
-//    QHash<QString, int> generateId;
 
     //xml attributes (temp)
     const QString ALL_TYPE                   = "type";

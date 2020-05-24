@@ -16,19 +16,6 @@
 
 #include "checkeditloopinf.h"
 
-//CheckEditLoopInf::CheckEditLoopInf(const int &targetindex
-//                                   , const bool &newcheck
-//                                   , QList<QList<QStringList> *> *cache
-//                                   , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    m_newcheck = VariantConverter::boolToString(newcheck);
-//    m_cache = cache;
-
-//    m_oldcheck = pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, m_cache->at(index));
-//}
-
 CheckEditLoopInf::CheckEditLoopInf(const int &targetindex
                                    , const bool &newcheck
                                    , EditorCacheList *cache
@@ -43,9 +30,6 @@ CheckEditLoopInf::CheckEditLoopInf(const int &targetindex
 
 void CheckEditLoopInf::undo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(I_RECURSIVE_LOOP, ATTR_NONE, index, m_oldcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.info.processAll = oldCheck;
     ptrCache->replace(index, ec);
@@ -56,9 +40,6 @@ void CheckEditLoopInf::undo()
 
 void CheckEditLoopInf::redo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(I_RECURSIVE_LOOP, ATTR_NONE, index, m_newcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.info.processAll = newCheck;
     ptrCache->replace(index, ec);

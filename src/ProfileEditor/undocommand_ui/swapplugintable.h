@@ -18,19 +18,12 @@
 #define SWAPPLUGINTABLE_H
 
 #include <QUndoCommand>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 #include <uicommandmap.h>
 
 class SwapPluginTable : public QUndoCommand
 {
 public:
-//    SwapPluginTable(const int &targetindex
-//                    , const int &tablebefore
-//                    , const int &tableafter
-//                    , QList<QList<QStringList> *> *cache
-//                    , QUndoCommand *parent = nullptr);
-
     SwapPluginTable(const int &targetindex
                     , const int &tablebefore
                     , const int &tableafter
@@ -48,13 +41,6 @@ private:
     int index;
     int indexBefore;
     int indexAfter;
-//    QString m_objname;
-
-//    QList<QList<QStringList> *> *m_cache;
-
-//    ProcessXmlListGenerator pxlg;
-
-//    int SKIP;
 
     EditorCacheList *ptrCache;
 };

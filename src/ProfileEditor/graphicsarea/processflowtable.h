@@ -19,7 +19,6 @@
 
 #include <../basictable/basictable.h>
 #include <editoperator.h>
-//#include <graphicsarea/flowcellwidget.h>
 
 class ProcessFlowTable : public BasicTable
 {
@@ -29,10 +28,8 @@ public:
     ~ProcessFlowTable();
 
     void setEditOperator(EditOperator *op);
-
-    void reloadAction();
-
     void updateIndex(QString operation);
+    void reloadAction();
 
 protected slots:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -65,11 +62,7 @@ private slots:
     void onItemStatusChanged(int after, int before, int function);
 
 private:
-    // argument is ui index
-//    void excludeSelector(int crow, int ccol, int prow, int pcol);
-
-//    void mousePressEvent(QMouseEvent *event);
-    int fixedCurrentRow();
+    int uiIndexToData();
     inline int dataToUiIndex(int id);
 
     //from ui index to xml data
@@ -81,33 +74,22 @@ private:
 
     void setFlowItem(int itemid);
     void setAllFlowItem();
-//    void setTempItem(QList<QStringList> *list, int dataid);
-//    void setInfoItem(QList<QStringList> *list, int dataid);
-//    void setExecuteItem(QList<QStringList> *list, int dataid);
-//    void setFileSearchItem(QList<QStringList> *list, int dataid);
-//    void setPluginItem(QList<QStringList> *list, int dataid);
-//    void setProfileLoadItem(QList<QStringList> *list, int dataid);
 
-    void setTempItem(EditorCache *list, int dataid);
+    void setAllIncludeItem(EditorCache *list, int dataid);
     void setInfoItem(EditorCache *list, int dataid);
     void setExecuteItem(EditorCache *list, int dataid);
     void setFileSearchItem(EditorCache *list, int dataid);
     void setPluginItem(EditorCache *list, int dataid);
     void setProfileLoadItem(EditorCache *list, int dataid);
 
-//    void updateLastIndexItem(int lastindex);
 
     QAction *m_add;
     QAction *m_delete;
     QAction *m_cut;
-//    QAction *m_copy;
     QAction *m_paste;
-//    QAction *m_up;
-//    QAction *m_down;
     QAction *m_ref;
 
     EditOperator *editop;
-    ProcessXmlListGenerator pxlg;
 
     enum{FIRST, SECOND};
 

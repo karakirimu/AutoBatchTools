@@ -16,20 +16,6 @@
 
 #include "editcomboboxcommand.h"
 
-//EditComboBoxCommand::EditComboBoxCommand(const int &targetindex
-//                                         , const QString newstring
-//                                         , QList<QList<QStringList> *> *cache
-//                                         , QUndoCommand *parent)
-//    : QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newString = newstring;
-//    m_cache = cache;
-
-//    oldString = pxlg.fetch(S_VARIANT, ATTR_NONE, m_cache->at(index));
-
-//}
-
 EditComboBoxCommand::EditComboBoxCommand(const int &targetindex
                                          , const QString newstring
                                          , EditorCacheList *cache
@@ -45,8 +31,6 @@ EditComboBoxCommand::EditComboBoxCommand(const int &targetindex
 
 void EditComboBoxCommand::undo()
 {
-    //pxlg.replaceElementList(S_VARIANT, ATTR_NONE, index, oldString, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.filesearch.variant = oldString;
     ptrCache->replace(index, ec);
@@ -57,8 +41,6 @@ void EditComboBoxCommand::undo()
 
 void EditComboBoxCommand::redo()
 {
-    //pxlg.replaceElementList(S_VARIANT, ATTR_NONE, index, newString, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.filesearch.variant = newString;
     ptrCache->replace(index, ec);
@@ -69,8 +51,6 @@ void EditComboBoxCommand::redo()
 
 int EditComboBoxCommand::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(S_VARIANT);
     return UiCommandMap::FS_VARIANT;
 }
 

@@ -72,8 +72,5 @@ void SwapGlobalVarTree::redo()
 
 int SwapGlobalVarTree::id() const
 {
-    //todo:
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(L_SWAP_TABLE);
     return UiCommandMap::GV_SWAP_TREE;
 }

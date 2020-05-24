@@ -16,29 +16,6 @@
 
 #include "dragdropplugintable.h"
 
-//DragDropPluginTable::DragDropPluginTable(const int &targetindex
-//                                         , const QList<int> tablebefore
-//                                         , const int &tableafter, QList<QList<QStringList> *> *cache
-//                                         , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    indexBefore = tablebefore;
-//    indexAfter = tableafter;
-
-//    m_cache = cache;
-
-//    SKIP = pxlg.fetchCmdFirstPos(PL_CMD, m_cache->at(index));
-
-//    //sort list assend order
-//    std::sort(indexBefore.begin(), indexBefore.end());
-
-//    for(int i = 0; i < indexBefore.count(); i++){
-//        m_oldstr.insert(indexBefore.at(i)
-//                        , m_cache->at(index)->at(indexBefore.at(i) + SKIP).at(1));
-//    }
-//}
-
 DragDropPluginTable::DragDropPluginTable(const int &targetindex
                                          , const QList<int> &tablebefore
                                          , const int &tableafter
@@ -63,58 +40,6 @@ DragDropPluginTable::DragDropPluginTable(const int &targetindex
 
 void DragDropPluginTable::undo()
 {
-    // @deprecated
-//    {
-//    QStringList alist;
-//    QString sendcode;
-//    int rcount = -1;
-
-//    //delete insert
-
-//    int deleterow = 0;
-//    bool firstelement = false;
-//    bool lastelement = false;
-
-//    int before = 0;
-//    QString beforedata;
-//    int sourcecount = indexBefore.count();
-
-//    for(int i = 0; i < sourcecount; i++){
-//        before = indexBefore.last();
-
-//        if(before > indexAfter){
-
-//            //down to up operation
-//            if(!lastelement){
-//                lastelement = true;
-//                deleterow = indexAfter;
-//            }
-
-//            beforedata = m_oldstr.value(indexBefore.at(i));
-
-//        }else{
-
-//            //up to down operation
-//            if(!firstelement){
-//                firstelement = true;
-//                deleterow = indexAfter - 1;
-//            }
-
-//            before = indexBefore.first();
-
-//            beforedata = m_oldstr.value(indexBefore.at(sourcecount - 1 - i));
-//        }
-
-//        m_cache->at(index)->removeAt(deleterow + SKIP);
-
-//        alist = ProcessXmlListGenerator::createPluginElement(beforedata, before);
-//        m_cache->at(index)->insert(before + SKIP, alist);
-//    }
-
-//    rcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, m_cache->at(index))).toInt();
-//    updateIndex(rcount);
-//    }
-
     EditorCache ec = ptrCache->at(index);
     QStringList list = ec.plugin.command;
     QString sendcode;
@@ -174,60 +99,6 @@ void DragDropPluginTable::undo()
 
 void DragDropPluginTable::redo()
 {
-    // @deprecated
-//    {
-//    QStringList alist;
-//    QString sendcode;
-//    int rcount = -1;
-
-//    int deleterow = 0;
-//    bool firstelement = false;
-//    bool lastelement = false;
-
-//    int updown = 0;
-//    int before = 0;
-//    QString beforedata;
-//    int sourcecount = indexBefore.count();
-
-//    int deductnum = 1;
-
-//    //multiple element move
-//    for(int i = 0; i < sourcecount; i++){
-//        before = indexBefore.at(i);
-
-//        if(before > indexAfter){
-
-//            if(!lastelement){
-//                lastelement = true;
-//                deleterow = indexBefore.last();
-//            }
-
-//            beforedata = m_oldstr.value(indexBefore.at(sourcecount - deductnum));
-//            deductnum++;
-//            updown = 0;
-
-//        }else{
-
-//            if(!firstelement){
-//                firstelement = true;
-//                deleterow = indexBefore.first();
-//            }
-
-//            beforedata = m_oldstr.value(before);
-//            updown = -1;
-
-//        }
-
-//        m_cache->at(index)->removeAt(deleterow + SKIP);
-
-//        alist = ProcessXmlListGenerator::createPluginElement(beforedata, indexAfter + updown);
-//        m_cache->at(index)->insert(indexAfter + updown + SKIP, alist);
-//    }
-
-//    rcount = static_cast<QString>(pxlg.fetch(E_CMDARGCOUNT, ATTR_NONE, m_cache->at(index))).toInt();
-//    updateIndex(rcount);
-//    }
-
     EditorCache ec = ptrCache->at(index);
     QStringList list = ec.plugin.command;
     QString sendcode;

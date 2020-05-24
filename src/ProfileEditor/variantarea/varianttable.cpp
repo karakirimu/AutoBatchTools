@@ -93,38 +93,6 @@ void VariantTable::updateIndex(QString operation)
     default:
         break;
     }
-
-//    if(sep.at(1) == UNDOREDO_LV_ADD){
-//        //exectableadd
-//        this->insertItem(static_cast<QString>(sep.at(0)).toInt());
-
-//    }else if(sep.count() == 3
-//             && sep.at(2) == UNDOREDO_LV_INS){
-//        //exectableins
-//        this->insertItem(static_cast<QString>(sep.at(1)).toInt());
-//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
-//        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-//        this->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos));
-
-
-//    }else if(sep.count() == 3
-//             && sep.at(2) == UNDOREDO_LV_EDIT){
-//        //exectableedit
-//        int rowpos = static_cast<QString>(sep.at(0)).toInt();
-//        int tablerowpos = static_cast<QString>(sep.at(1)).toInt();
-//        this->replaceItem(tablerowpos, getTableData(rowpos, tablerowpos));
-
-//    }else if(sep.at(1) == UNDOREDO_LV_DEL){
-//        //exectabledel
-//        this->deleteItem(static_cast<QString>(sep.at(0)).toInt());
-
-//    }else if(sep.count() == 3
-//             && sep.at(2) == UNDOREDO_LV_SWAP){
-//        //exectableswap
-//        this->swapItem(static_cast<QString>(sep.at(0)).toInt()
-//                               , static_cast<QString>(sep.at(1)).toInt());
-
-//    }
 }
 
 void VariantTable::addAction()
@@ -425,68 +393,6 @@ bool VariantTable::eventFilter(QObject *obj, QEvent *event)
         return true;
     }
 
-//    if (event->type() == QEvent::KeyPress) {
-//        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-//        switch (keyEvent->key())
-//         {
-//           case Qt::Key_Return:
-//           case Qt::Key_Enter:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//               addAction();
-//             break;
-
-//           case Qt::Key_Delete:
-//             deleteAction();
-//             break;
-
-//           case Qt::Key_Up:
-//             if (keyEvent->modifiers() & Qt::ControlModifier){
-//                 upAction();
-//             }else{
-//                 if(this->currentRow() != 0)
-//                     selectRow(this->currentRow() - 1);
-//             }
-//             break;
-
-//           case Qt::Key_Down:
-//             if (keyEvent->modifiers() & Qt::ControlModifier){
-//                 downAction();
-//             }else{
-//                 if(this->rowCount() - 1 != this->currentRow())
-//                     selectRow(this->currentRow() + 1);
-//             }
-//            break;
-
-//           case Qt::Key_X:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//                 cutAction();
-//             break;
-
-//           case Qt::Key_C:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//                 copyAction();
-//             break;
-
-//           case Qt::Key_V:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//                 pasteAction();
-//             break;
-
-//           case Qt::Key_E:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//                 editAction();
-//             break;
-
-//           case Qt::Key_R:
-//             if (keyEvent->modifiers() & Qt::ControlModifier)
-//                reloadAction();
-//             break;
-
-//           default:
-//             break;
-//         }
-//        return true;
-//    }
     // standard event processing
     return QObject::eventFilter(obj, event);
 }
@@ -494,31 +400,6 @@ bool VariantTable::eventFilter(QObject *obj, QEvent *event)
 //DEPENDS_XML OUTPUT PROCESS
 bool VariantTable::setLocalListItem(int itemid)
 {
-//    QList<QStringList> *list = new QList<QStringList>();
-
-//    if(!editop->read(itemid, list)){
-//        delete list;
-//        return false;
-//    }
-
-//    //get type
-//    QString type = xgen.fetch(ALL_TYPE, ATTR_NONE, list);
-
-//    //set root
-//    if(type == TYPE_LOCAL){
-//        int counter = QString(xgen.fetch(L_VAR_COUNT, ATTR_NONE, list)).toInt();
-//        setRowCount(counter);
-//        for(int i = 0; i < counter; i++){
-//            //set tableitem
-//            this->setItem(i, 0, new QTableWidgetItem(list->at(i + 2).at(1)));
-//            this->setItem(i, 1, new QTableWidgetItem(list->at(i + 2).at(3)));
-//        }
-
-//        qDebug()<< "VariantTable::setTreeItem";
-//        delete list;
-//        return true;
-//    }
-
     EditorCache list;
 
     if(!editop->read(itemid, &list)){
@@ -563,19 +444,6 @@ void VariantTable::tableItemSwap(int from, int to)
 
 QStringList VariantTable::getTableData(int targetrow, int tablerow)
 {
-//    QList<QStringList> list;
-
-//    if(targetrow != 1 || !editop->read(targetrow, &list)){
-//        return QStringList() << "" << "";
-//    }
-
-//    int cmdfirst = 0;
-//    cmdfirst = xgen.fetchCmdFirstPos(L_VAR_COUNT, &list);
-
-
-//    return QStringList() << list.at(cmdfirst + tablerow).at(1) \
-//                         << list.at(cmdfirst + tablerow).at(3);
-
     EditorCache list;
 
     if(targetrow != LOCALINDEX || !editop->read(targetrow, &list)){
@@ -587,21 +455,6 @@ QStringList VariantTable::getTableData(int targetrow, int tablerow)
     return QStringList() <<  pair.variant << pair.value;
 
 }
-
-//DEPENDS_XML INPUT PROCESS
-//void VariantTable::getLocalList(QList<QStringList> *newlist)
-//{
-//    QStringList list;
-
-//    int rcount = this->rowCount();
-//    list.append(QString::number(rcount));
-//    for(int i = 0; i < rcount; i++){
-//        list.append(this->model()->index(i, 0).data().toString());
-//        list.append(this->model()->index(i, 1).data().toString());
-//    }
-
-//    xgen.createLocalList(newlist, &list);
-//}
 
 QStringList VariantTable::getLocalVariants(int index)
 {

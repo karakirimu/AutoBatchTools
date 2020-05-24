@@ -16,23 +16,6 @@
 
 #include "combopluginselect.h"
 
-//ComboPluginSelect::ComboPluginSelect(const int &targetindex
-//                                     , const QString newstring
-//                                     , const QString newfile
-//                                     , QList<QList<QStringList> *> *cache
-//                                     , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newString = newstring;
-
-//    m_cache = cache;
-//    newFile = newfile;
-
-//    oldString = pxlg.fetch(PL_NAME, ATTR_NONE, m_cache->at(index));
-//    oldFile = pxlg.fetch(PL_FILEPATH, ATTR_NONE, m_cache->at(index));
-//}
-
 ComboPluginSelect::ComboPluginSelect(const int &targetindex
                                      , const QString newstring
                                      , const QString newfile
@@ -51,12 +34,6 @@ ComboPluginSelect::ComboPluginSelect(const int &targetindex
 
 void ComboPluginSelect::undo()
 {
-    // @deprecated
-//    {
-//    pxlg.replaceElementList(PL_NAME, ATTR_NONE, index, oldString, m_cache);
-//    pxlg.replaceElementList(PL_FILEPATH, ATTR_NONE, index, oldFile, m_cache);
-//    }
-
     EditorCache ec = ptrCache->at(index);
     ec.plugin.name = oldString;
     ec.plugin.filePath = oldFile;
@@ -68,12 +45,6 @@ void ComboPluginSelect::undo()
 
 void ComboPluginSelect::redo()
 {
-    // @deprecated
-//    {
-//    pxlg.replaceElementList(PL_NAME, ATTR_NONE, index, newString, m_cache);
-//    pxlg.replaceElementList(PL_FILEPATH, ATTR_NONE, index, newFile, m_cache);
-//    }
-
     EditorCache ec = ptrCache->at(index);
     ec.plugin.name = newString;
     ec.plugin.filePath = newFile;
@@ -85,10 +56,7 @@ void ComboPluginSelect::redo()
 
 int ComboPluginSelect::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(PL_NAME);
     return UiCommandMap::P_NAME;
-
 }
 
 bool ComboPluginSelect::mergeWith(const QUndoCommand *other)

@@ -16,19 +16,6 @@
 
 #include "editloopmax.h"
 
-//EditLoopMax::EditLoopMax(const int &targetindex
-//                         , int newvalue
-//                         , QList<QList<QStringList> *> *cache
-//                         , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newValue = newvalue;
-//    m_cache = cache;
-
-//    oldValue = static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_MAXCOUNT, m_cache->at(index))).toInt();
-//}
-
 EditLoopMax::EditLoopMax(const int &targetindex
                          , const int &newvalue
                          , EditorCacheList *cache
@@ -45,11 +32,6 @@ EditLoopMax::EditLoopMax(const int &targetindex
 
 void EditLoopMax::undo()
 {
-    // @deprecated
-//    {
-//    pxlg.replaceElementList(I_RECURSIVE_LOOP, ATTR_MAXCOUNT, index, QString::number(oldValue), m_cache);
-//    }
-
     EditorCache ec = ptrCache->at(index);
     ec.info.processMaxCount = oldValue;
     ptrCache->replace(index, ec);
@@ -60,11 +42,6 @@ void EditLoopMax::undo()
 
 void EditLoopMax::redo()
 {
-    // @deprecated
-//    {
-//    pxlg.replaceElementList(I_RECURSIVE_LOOP, ATTR_MAXCOUNT, index, QString::number(newValue), m_cache);
-//    }
-
     EditorCache ec = ptrCache->at(index);
     ec.info.processMaxCount = newValue;
     ptrCache->replace(index, ec);
@@ -75,8 +52,6 @@ void EditLoopMax::redo()
 
 int EditLoopMax::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(I_RECURSIVE_LOOP);
     return UiCommandMap::I_RECURSIVE_LOOPMAX_INT;
 }
 

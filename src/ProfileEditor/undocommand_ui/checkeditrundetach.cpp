@@ -16,19 +16,6 @@
 
 #include "checkeditrundetach.h"
 
-//CheckEditRunDetach::CheckEditRunDetach(const int &targetindex
-//                                   , const bool &newcheck
-//                                   , QList<QList<QStringList> *> *cache
-//                                   , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    m_newcheck = VariantConverter::boolToString(newcheck);
-//    m_cache = cache;
-
-//    m_oldcheck = pxlg.fetch(E_RUNDETACH, ATTR_NONE, m_cache->at(index));
-//}
-
 CheckEditRunDetach::CheckEditRunDetach(const int &targetindex
                                        , const bool &newcheck
                                        , EditorCacheList *cache
@@ -43,9 +30,6 @@ CheckEditRunDetach::CheckEditRunDetach(const int &targetindex
 
 void CheckEditRunDetach::undo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(E_RUNDETACH, ATTR_NONE, index, m_oldcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.exec.detach = oldCheck;
     ptrCache->replace(index, ec);
@@ -56,9 +40,6 @@ void CheckEditRunDetach::undo()
 
 void CheckEditRunDetach::redo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(E_RUNDETACH, ATTR_NONE, index, m_newcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.exec.detach = newCheck;
     ptrCache->replace(index, ec);

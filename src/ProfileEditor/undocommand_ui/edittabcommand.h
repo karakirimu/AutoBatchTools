@@ -18,18 +18,12 @@
 #define EDITTABCOMMAND_H
 
 #include <QUndoCommand>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 #include <uicommandmap.h>
 
 class EditTabCommand : public QUndoCommand
 {
 public:
-//    EditTabCommand(const int &targetindex
-//                   , const int &newid
-//                   , QList<QList<QStringList> *> *cache
-//                   , QUndoCommand *parent = nullptr);
-
     EditTabCommand(const int &targetindex
                    , const int &newindex
                    , EditorCacheList *cache
@@ -41,16 +35,10 @@ public:
     int id() const override;
 
 private:
-//    void selectIndex(int index);
-
     int index;
     int oldIndex;
     QString oldType;
-//    QString m_oldauto;
     int newIndex;
-//    QString m_newauto;
-//    QList<QList<QStringList> *> *m_cache;
-//    ProcessXmlListGenerator pxlg;
 
     EditorCacheList *ptrCache;
 

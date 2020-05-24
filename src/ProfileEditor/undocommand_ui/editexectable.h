@@ -18,20 +18,12 @@
 #define EXECTABLEOPERATION_H
 
 #include <QUndoCommand>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <uicommandmap.h>
 #include <editorcachelist.h>
 
 class EditExecTable : public QUndoCommand
 {
 public:
-//    EditExecTable(const int &targetindex
-//                       ,const int &tableindex
-//                       ,QString newstr
-//                       ,const int operation
-//                       ,QList<QList<QStringList> *> *cache
-//                       ,QUndoCommand *parent = nullptr);
-
     EditExecTable(const int &targetindex
                        ,const int &tableindex
                        ,const QString newstr
@@ -43,25 +35,16 @@ public:
     void redo() override;
 
     int id() const override;
-//    bool mergeWith(const QUndoCommand *other) override;
-
-    QString newStr;
 
     int operation() const;
 
-private:
-//    void updateIndex(int count);
-//    void updateCounter(bool ascend);
+    QString newStr;
 
+private:
     int index;
     int tableIndex;
     QString oldStr;
     int tableOperation;
-//    QList<QList<QStringList> *> *m_cache;
-
-//    ProcessXmlListGenerator pxlg;
-
-//    int SKIP;
 
     EditorCacheList *ptrCache;
 };

@@ -128,25 +128,6 @@ void EditGlobalVarTree::redo()
 
 int EditGlobalVarTree::id() const
 {
-//    ProcessXmlListGenerator pxg;
-
-//    switch (m_operation) {
-//    case UiCommandMap::GV_ADD_TREE:
-//        return pxg.getId(UNDOREDO_GV_ADD);
-
-//    case UiCommandMap::GV_EDIT_TREE:
-//        return pxg.getId(UNDOREDO_GV_EDIT);
-
-//    case UiCommandMap::GV_INS_TREE:
-//        return pxg.getId(UiCommandMap::Id(UiCommandMap::GV_INS_TREE));
-
-//    case UiCommandMap::GV_DEL_TREE:
-//        return pxg.getId(UiCommandMap::Id(UiCommandMap::GV_DEL_TREE));
-
-//    }
-
-//    //todo: no suitable difinition class
-//    return 9000;
     return m_operation;
 }
 
@@ -155,9 +136,3 @@ bool EditGlobalVarTree::mergeWith(const QUndoCommand *other)
     Q_UNUSED(other)
     return false;
 }
-
-//void EditGlobalVarTree::setStrBuilderFormat(QList<QStringList> *internal, QStringList *var)
-//{
-//    internal->append(QStringList() << "variant" << var->at(0));
-//    internal->append(QStringList() << "value" << var->at(1));
-//}

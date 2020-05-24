@@ -16,19 +16,6 @@
 
 #include "editlooparguments.h"
 
-//EditLoopArguments::EditLoopArguments(const int &targetindex
-//                                     , int newvalue
-//                                     , QList<QList<QStringList> *> *cache
-//                                     , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newValue = newvalue;
-//    m_cache = cache;
-
-//    oldValue = static_cast<QString>(pxlg.fetch(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, m_cache->at(index))).toInt();
-//}
-
 EditLoopArguments::EditLoopArguments(const int &targetindex
                                      , const int &newvalue
                                      , EditorCacheList *cache
@@ -44,11 +31,6 @@ EditLoopArguments::EditLoopArguments(const int &targetindex
 
 void EditLoopArguments::undo()
 {
-    // @deprecated
-//    {
-//    pxlg.replaceElementList(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, index, QString::number(oldValue), m_cache);
-//    }
-
     replaceValue(oldValue);
 
     setText(QObject::tr("Arguments count to %1").arg(newValue) \
@@ -57,11 +39,6 @@ void EditLoopArguments::undo()
 
 void EditLoopArguments::redo()
 {
-    // @deprecated
-//    {
-//    pxlg.replaceElementList(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, index, QString::number(newValue), m_cache);
-//    }
-
     replaceValue(newValue);
 
     setText(QObject::tr("Arguments count to %1").arg(oldValue) \
@@ -70,9 +47,6 @@ void EditLoopArguments::redo()
 
 int EditLoopArguments::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(I_RECURSIVE_LOOPARGCOUNT);
-
     return UiCommandMap::I_ARG_IN_ONELOOP_INT;
 }
 

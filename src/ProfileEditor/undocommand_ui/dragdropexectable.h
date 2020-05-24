@@ -18,19 +18,12 @@
 #define DRAGDROPEXECTABLE_H
 
 #include <QUndoCommand>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <uicommandmap.h>
 #include <editorcachelist.h>
 
 class DragDropExecTable : public QUndoCommand
 {
 public:
-//    DragDropExecTable(const int &targetindex
-//                      , const QList<int> tablebefore
-//                      , const int &tableafter
-//                      , QList<QList<QStringList> *> *cache
-//                      , QUndoCommand *parent = nullptr);
-
     DragDropExecTable(const int &targetindex
                       , const QList<int> &tablebefore
                       , const int &tableafter
@@ -41,20 +34,10 @@ public:
     void redo() override;
 
 private:
-//    void updateIndex(int count);
-
     int index;
     QList<int> indexBefore;
     int indexAfter;
-
     QHash<int, QString> oldStr;
-//    QString m_objname;
-
-//    QList<QList<QStringList> *> *m_cache;
-
-//    ProcessXmlListGenerator pxlg;
-
-//    int SKIP;
 
     EditorCacheList *ptrCache;
 

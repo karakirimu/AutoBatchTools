@@ -18,18 +18,12 @@
 #define EDITLOOPMAX_H
 
 #include <QUndoCommand>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 #include <uicommandmap.h>
 
 class EditLoopMax : public QUndoCommand
 {
 public:
-//    EditLoopMax(const int &targetindex
-//                , int newvalue
-//                , QList<QList<QStringList> *> *cache
-//                , QUndoCommand *parent = nullptr);
-
     EditLoopMax(const int &targetindex
                 , const int &newvalue
                 , EditorCacheList *cache
@@ -46,9 +40,6 @@ public:
 private:
     int index;
     int oldValue;
-//    QList<QList<QStringList> *> *m_cache;
-//    QHash<int, int> posinfo;
-//    ProcessXmlListGenerator pxlg;
 
     EditorCacheList *ptrCache;
 };

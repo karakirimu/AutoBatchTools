@@ -16,17 +16,6 @@
 
 #include "dragdropcommand.h"
 
-//DragDropCommand::DragDropCommand(const QList<int> &beforeindex
-//                                 , const int &afterindex
-//                                 , QList<QList<QStringList> *> *cache
-//                                 , QUndoCommand *parent)
-//    : QUndoCommand(parent)
-//{
-//    beforeIndex = beforeindex;
-//    afterIndex = afterindex;
-//    m_cache = cache;
-//}
-
 DragDropCommand::DragDropCommand(const QList<int> &beforeindex
                                  , const int &afterindex
                                  , EditorCacheList *cache
@@ -49,41 +38,6 @@ void DragDropCommand::undo()
 
     int before = 0;
     int deductnum = 1;
-
-//    QList<QStringList> *beforedata;
-//    int sourcecount = beforeIndex.count();
-
-//    for(int i = 0; i < sourcecount; i++){
-//        before = beforeIndex.last();
-
-//        if(before > afterIndex){
-
-//            //down to up operation
-//            if(!lastelement){
-//                lastelement = true;
-//                deleterow = afterIndex;
-//            }
-
-//            beforedata = m_cache->at(deleterow);
-
-//        }else{
-
-//            //up to down operation
-//            if(!firstelement){
-//                firstelement = true;
-//                deleterow = afterIndex - 1;
-//            }
-
-//            before = beforeIndex.first();
-
-//            beforedata = m_cache->at(deleterow);
-//            deductnum++;
-
-//        }
-
-//        m_cache->removeAt(deleterow);
-//        m_cache->insert(before, beforedata);
-//    }
 
     EditorCache beforedata;
     int sourcecount = beforeIndex.count();
@@ -140,39 +94,6 @@ void DragDropCommand::redo()
 
     int updown = 0;
     int before = 0;
-
-//    QList<QStringList> *beforedata;
-//    int sourcecount = beforeIndex.count();
-
-//    //multiple element move
-//    for(int i = 0; i < sourcecount; i++){
-//        before = beforeIndex.at(i);
-
-//        if(before > afterIndex){
-
-//            if(!lastelement){
-//                lastelement = true;
-//                deleterow = beforeIndex.last();
-//            }
-
-//            beforedata = m_cache->at(deleterow);
-//            updown = 0;
-
-//        }else{
-
-//            if(!firstelement){
-//                firstelement = true;
-//                deleterow = beforeIndex.first();
-//            }
-
-//            beforedata = m_cache->at(deleterow);
-//            updown = -1;
-
-//        }
-
-//        m_cache->removeAt(deleterow);
-//        m_cache->insert(afterIndex + updown, beforedata);
-//    }
 
     EditorCache beforedata;
     int sourcecount = beforeIndex.count();

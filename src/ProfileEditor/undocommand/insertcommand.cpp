@@ -16,18 +16,6 @@
 
 #include "insertcommand.h"
 
-//InsertCommand::InsertCommand(const int &targetindex
-//                             , QList<QStringList> *inserted
-//                             , QList<QList<QStringList> *> *cache
-//                             , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-////    m_inserted = inserted;
-//    m_inscopy.append(*inserted);
-//    m_cache = cache;
-//}
-
 InsertCommand::InsertCommand(const int &targetindex
                              ,const EditorCache &insert
                              , EditorCacheList *cache
@@ -41,13 +29,6 @@ InsertCommand::InsertCommand(const int &targetindex
 
 void InsertCommand::undo()
 {
-    // @deprecated
-//    {
-//    if(m_cache->isEmpty()) return;
-////    delete m_inserted;
-//    m_cache->removeAt(index);
-//    }
-
     if(ptrCache->isEmpty()) return;
     ptrCache->removeAt(index);
 
@@ -57,12 +38,6 @@ void InsertCommand::undo()
 
 void InsertCommand::redo()
 {
-    // @deprecated
-//    {
-////    m_inserted = new QList<QStringList>(m_inscopy);
-//    m_cache->insert(index, new QList<QStringList>(m_inscopy));
-//    }
-
     ptrCache->insert(index, insertCache);
 
     setText(QObject::tr("Insert item at %1").arg(index) \

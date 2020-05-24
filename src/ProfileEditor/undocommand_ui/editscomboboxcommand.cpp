@@ -16,30 +16,6 @@
 
 #include "editscomboboxcommand.h"
 
-//EditScomboBoxCommand::EditScomboBoxCommand(const int &targetindex
-//                                           , const QString &newstring
-//                                           , const int &newsearchindex
-//                                           , QList<QList<QStringList> *> *cache
-//                                           , QUndoCommand *parent)
-//    : QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newString = newstring;
-//    m_cache = cache;
-
-//    newIndex = newsearchindex;
-
-//    if(index > 1){
-//        // sname
-//        oldString = pxlg.fetch(S_NAME, ATTR_NONE, m_cache->at(index));
-//        oldIndex = static_cast<QString>(pxlg.fetch(S_NAME, ATTR_POSNUM, m_cache->at(index))).toInt();
-//    }else {
-//        //info "fsname" position
-//        oldString = pxlg.fetch(I_FILESEARCH_NAME, ATTR_NONE, m_cache->at(index));
-//        oldIndex = static_cast<QString>(pxlg.fetch(I_FILESEARCH_NAME, ATTR_POSNUM, m_cache->at(index))).toInt();
-//    }
-//}
-
 EditScomboBoxCommand::EditScomboBoxCommand(const int &targetindex
                                            , const QString &newstring
                                            , const int &newsearchindex
@@ -68,58 +44,16 @@ EditScomboBoxCommand::EditScomboBoxCommand(const int &targetindex
 
 void EditScomboBoxCommand::undo()
 {
-    // @deprecated
-//    {
-//    if(index > 1){
-//        pxlg.replaceElementList(S_NAME, ATTR_NONE, index, oldString, m_cache);
-//        pxlg.replaceElementList(S_NAME, ATTR_POSNUM, index, QString::number(oldIndex), m_cache);
-
-//        setText(QObject::tr("Search profile to") + oldString \
-//                + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
-//    }else{
-//        pxlg.replaceElementList(I_FILESEARCH_NAME, ATTR_NONE, index, oldString, m_cache);
-//        pxlg.replaceElementList(I_FILESEARCH_NAME, ATTR_POSNUM, index, QString::number(oldIndex), m_cache);
-
-//        setText(QObject::tr("Input search profile to") + oldString \
-//                + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
-//    }
-//    }
-
     replace(oldString, oldIndex);
 }
 
 void EditScomboBoxCommand::redo()
 {
-    // @deprecated
-//    {
-//    if(index > 1){
-//        pxlg.replaceElementList(S_NAME, ATTR_NONE, index, newString, m_cache);
-//        pxlg.replaceElementList(S_NAME, ATTR_POSNUM, index, QString::number(newIndex), m_cache);
-
-//        setText(QObject::tr("Search profile to") + newString \
-//                + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
-//    }else{
-//        pxlg.replaceElementList(I_FILESEARCH_NAME, ATTR_NONE, index, newString, m_cache);
-//        pxlg.replaceElementList(I_FILESEARCH_NAME, ATTR_POSNUM, index, QString::number(newIndex), m_cache);
-
-//        setText(QObject::tr("Input search profile to") + newString \
-//                + QString(" ^(%1,%2)").arg(index).arg(UNDOREDO_EDIT));
-//    }
-//    }
-
     replace(newString, newIndex);
 }
 
 int EditScomboBoxCommand::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    if(index > 1){
-//        // sname
-//        return pxg.getId(S_NAME);
-//    }else {
-//        //info "fsname" position
-//        return pxg.getId(I_FILESEARCH_NAME);
-//    }
     if(index > 1){
         // sname
         return UiCommandMap::FS_NAME_HA1;

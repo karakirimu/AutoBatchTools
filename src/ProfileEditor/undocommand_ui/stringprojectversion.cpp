@@ -16,25 +16,6 @@
 
 #include "stringprojectversion.h"
 
-//StringProjectVersion::StringProjectVersion(const int &targetindex
-//                                           , QString newstring
-//                                           , QList<QList<QStringList> *> *cache
-//                                           , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newStr = newstring;
-
-//    m_cache = cache;
-////    ProcessXmlListGenerator x;
-////    x.getListStructure(cache->at(m_targetindex), &posinfo);
-
-//    //info version
-////    m_oldstring = m_cache->at(m_targetindex)->at(2).at(1);
-//    oldStr = pxlg.fetch(I_VERSION, ATTR_NONE, m_cache->at(index));
-
-//}
-
 StringProjectVersion::StringProjectVersion(const int &targetindex
                                            , const QString &newstring
                                            , EditorCacheList *cache
@@ -49,14 +30,6 @@ StringProjectVersion::StringProjectVersion(const int &targetindex
 
 void StringProjectVersion::undo()
 {
-//    if(m_cache->isEmpty()) return;
-
-//    QStringList alist = m_cache->at(m_targetindex)->at(2);
-//    alist.replace(1, m_oldstring);
-//    m_cache->at(m_targetindex)->replace(2, alist);
-    // @deprecated
-//    pxlg.replaceElementList(I_VERSION, ATTR_NONE, index, oldStr, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.info.version = oldStr;
     ptrCache->replace(index, ec);
@@ -67,12 +40,6 @@ void StringProjectVersion::undo()
 
 void StringProjectVersion::redo()
 {
-//    QStringList alist = m_cache->at(m_targetindex)->at(2);
-//    alist.replace(1, m_newstring);
-//    m_cache->at(m_targetindex)->replace(2, alist);
-    // @deprecated
-//    pxlg.replaceElementList(I_VERSION, ATTR_NONE, index, newStr, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.info.version = newStr;
     ptrCache->replace(index, ec);
@@ -83,8 +50,6 @@ void StringProjectVersion::redo()
 
 int StringProjectVersion::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(I_VERSION);
     return UiCommandMap::I_VERSION;
 }
 

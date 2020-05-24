@@ -65,7 +65,6 @@ private:
     void insertRow(int row); //ui
     void insertRow(int row, int section); //from redo/undo
     void insertRow(int row, QModelIndex *index); //internal function
-//    void deleteRow(int row);
     void deleteRow(int row, int section);
     void deleteRowItems();
 

@@ -16,19 +16,6 @@
 
 #include "stringprojectname.h"
 
-//StringProjectName::StringProjectName(const int &targetindex
-//                                     , QString newstring
-//                                     , QList<QList<QStringList> *> *cache
-//                                     , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newStr = newstring;
-
-//    m_cache = cache;
-//    oldStr = pxlg.fetch(I_NAME, ATTR_NONE, m_cache->at(index));
-//}
-
 StringProjectName::StringProjectName(const int &targetindex
                                      , const QString &newstring
                                      , EditorCacheList *cache
@@ -43,9 +30,6 @@ StringProjectName::StringProjectName(const int &targetindex
 
 void StringProjectName::undo()
 {
-    // @dprecated
-//    pxlg.replaceElementList(I_NAME, ATTR_NONE, index, oldStr, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.info.name = oldStr;
     ptrCache->replace(index, ec);
@@ -56,9 +40,6 @@ void StringProjectName::undo()
 
 void StringProjectName::redo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(I_NAME, ATTR_NONE, index, newStr, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.info.name = newStr;
     ptrCache->replace(index, ec);
@@ -69,8 +50,6 @@ void StringProjectName::redo()
 
 int StringProjectName::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(I_NAME);
     return UiCommandMap::I_NAME;
 }
 

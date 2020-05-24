@@ -16,18 +16,6 @@
 
 #include "addcommand.h"
 
-//AddCommand::AddCommand(const int &targetindex
-//                       , QList<QStringList> *added
-//                       , QList<QList<QStringList> *> *cache
-//                       , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-////    m_added = added;
-//    m_cache = cache;
-//    m_addcopy.append(*added);
-//}
-
 AddCommand::AddCommand(const int &targetindex
                        , EditorCacheList *cache
                        , QUndoCommand *parent)
@@ -39,14 +27,6 @@ AddCommand::AddCommand(const int &targetindex
 
 void AddCommand::undo()
 {
-    // @deprecated
-//    {
-//    if(m_cache->isEmpty()) return;
-
-////    delete m_added;
-//    m_cache->removeAt(index);
-//    }
-
     if(ptrCache->isEmpty()) return;
     ptrCache->removeAt(index);
 
@@ -56,12 +36,6 @@ void AddCommand::undo()
 
 void AddCommand::redo()
 {
-    // @deprecated
-//    {
-////    m_added = ;
-//    m_cache->append(new QList<QStringList>(m_addcopy));
-//    }
-
     EditorCache add;
     // init
     FunctionType ft;

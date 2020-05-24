@@ -62,36 +62,6 @@ EditorCache ListMimeData::getListData(const ListMimeData *lmime)
     return result;
 }
 
-//QList<QStringList> ListMimeData::getListData(const ListMimeData *lmime)
-//{
-//    QList<QStringList> encodedlist;
-//    if(!lmime->hasFormat(LISTMIMEDATA_MIMETYPE)) return encodedlist;
-
-//    QByteArray dat = lmime->data(LISTMIMEDATA_MIMETYPE);
-//    QString dats = QString::fromLocal8Bit(dat);
-//    QStringList ilist = dats.split("\n\"");
-
-//    QStringList tmp;
-//    int count = ilist.count();
-//    for(int i = 0; i < count - 1; i++){
-//        tmp.clear();
-//        tmp = static_cast<QString>(ilist.at(i)).split("\\\" \\\"");
-
-//        tmp.replace(0, static_cast<QString>(tmp.at(0)).remove(0,2));
-//        QString inner = static_cast<QString>(tmp.at(tmp.count() - 1));
-//        tmp.replace(tmp.count() - 1, inner.left(inner.size() - 4));
-
-//        QStringList::iterator it;
-//        for (it = tmp.begin(); it != tmp.end(); ++it){
-//            (*it).replace("\\\\","\\");
-//        }
-
-//        encodedlist.append(tmp);
-//    }
-
-//    return encodedlist;
-//}
-
 QStringList ListMimeData::formats() const
 {
     return QStringList(LISTMIMEDATA_MIMETYPE);

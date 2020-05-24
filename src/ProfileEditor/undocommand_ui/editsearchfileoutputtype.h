@@ -18,18 +18,12 @@
 #define EDITSEARCHFILEOUTPUTTYPE_H
 
 #include <QUndoCommand>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 #include <uicommandmap.h>
 
 class EditSearchFileOutputType : public QUndoCommand
 {
 public:
-//    EditSearchFileOutputType(const int &targetindex
-//                             , int newvalue
-//                             , QList<QList<QStringList> *> *cache
-//                             , QUndoCommand *parent = nullptr);
-
     EditSearchFileOutputType(const int &targetindex
                              , const int &newvalue
                              , EditorCacheList *cache
@@ -48,8 +42,6 @@ private:
 
     int index;
     int oldValue;
-//    QList<QList<QStringList> *> *m_cache;
-//    ProcessXmlListGenerator pxlg;
 
     EditorCacheList *ptrCache;
 };

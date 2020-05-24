@@ -18,28 +18,13 @@
 #define EDITLOCALVARTABLE_H
 
 #include <QUndoCommand>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 #include <uicommandmap.h>
 #include <QDebug>
 
-/**
- * @brief The EditLocalVarTable class
- * newstrlist structure
- * 0       :1       :
- * variant :value   :
- */
-
 class EditLocalVarTable : public QUndoCommand
 {
 public:
-//    EditLocalVarTable(const int &targetindex
-//                      , const int &tableindex
-//                      , QStringList newstrlist
-//                      , const int operation
-//                      , QList<QList<QStringList> *> *cache
-//                      , QUndoCommand *parent = nullptr);
-
     EditLocalVarTable(const int &targetindex
                       , const int &tableindex
                       , const QString newVariant
@@ -52,26 +37,13 @@ public:
     void redo() override;
 
     int id() const override;
-    //bool mergeWith(const QUndoCommand *other) override;
 
-//    QStringList m_newvar;
     VariantPair newVar;
-//    QString m_newval;
 
-//    int operation() const;
 private:
-//    void updateIndex(int count);
-//    void updateCounter(bool ascend);
-
     int index;
     int tableIndex;
-//    QStringList m_oldvar;
     int tableOperation;
-//    QList<QList<QStringList> *> *m_cache;
-
-//    ProcessXmlListGenerator pxlg;
-
-//    int SKIP;
 
     VariantPair oldVar;
     EditorCacheList *ptrCache;

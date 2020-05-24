@@ -16,19 +16,6 @@
 
 #include "edittimeout.h"
 
-//EditTimeout::EditTimeout(const int &targetindex
-//                         , int newvalue
-//                         , QList<QList<QStringList> *> *cache
-//                         , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newValue = newvalue;
-//    m_cache = cache;
-
-//    oldValue = static_cast<QString>(pxlg.fetch(E_TIMEOUT, ATTR_TIMEOUTMS, m_cache->at(index))).toInt();
-//}
-
 EditTimeout::EditTimeout(const int &targetindex
                             , const int &newvalue
                             , EditorCacheList *cache
@@ -44,11 +31,6 @@ EditTimeout::EditTimeout(const int &targetindex
 
 void EditTimeout::undo()
 {
-    // @deprecated
-//    {
-//    pxlg.replaceElementList(E_TIMEOUT, ATTR_TIMEOUTMS, index, QString::number(oldValue), m_cache);
-//    }
-
     EditorCache ec = ptrCache->at(index);
     ec.exec.timeout = oldValue;
     ptrCache->replace(index, ec);
@@ -59,11 +41,6 @@ void EditTimeout::undo()
 
 void EditTimeout::redo()
 {
-    // @deprecated
-//    {
-//    pxlg.replaceElementList(E_TIMEOUT, ATTR_TIMEOUTMS, index, QString::number(newValue), m_cache);
-//    }
-
     EditorCache ec = ptrCache->at(index);
     ec.exec.timeout = newValue;
     ptrCache->replace(index, ec);
@@ -74,8 +51,6 @@ void EditTimeout::redo()
 
 int EditTimeout::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(E_TIMEOUT);
     return UiCommandMap::E_TIMEOUT_INT;
 }
 

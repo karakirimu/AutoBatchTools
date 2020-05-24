@@ -16,19 +16,6 @@
 
 #include "checkonlyschedulerplugin.h"
 
-//CheckOnlySchedulerPlugin::CheckOnlySchedulerPlugin(const int &targetindex
-//                                                   , const bool &newcheck
-//                                                   , QList<QList<QStringList> *> *cache
-//                                                   , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    m_newcheck = VariantConverter::boolToString(newcheck);
-//    m_cache = cache;
-
-//    m_oldcheck = pxlg.fetch(ALL_TYPE, TYPE_SCRIPT, ATTR_ONLY_SCHEDULER, m_cache->at(index));
-//}
-
 CheckOnlySchedulerPlugin::CheckOnlySchedulerPlugin(const int &targetindex
                                                    , const bool &newcheck
                                                    , EditorCacheList *cache
@@ -43,9 +30,6 @@ CheckOnlySchedulerPlugin::CheckOnlySchedulerPlugin(const int &targetindex
 
 void CheckOnlySchedulerPlugin::undo()
 {
-    // @deprecated
-//    pxlg.replaceTypeElement(TYPE_SCRIPT, ATTR_ONLY_SCHEDULER, index, m_oldcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.plugin.schedulerOnly = oldCheck;
     ptrCache->replace(index, ec);
@@ -56,9 +40,6 @@ void CheckOnlySchedulerPlugin::undo()
 
 void CheckOnlySchedulerPlugin::redo()
 {
-    // @deprecated
-//    pxlg.replaceTypeElement(TYPE_SCRIPT, ATTR_ONLY_SCHEDULER, index, m_newcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.plugin.schedulerOnly = newCheck;
     ptrCache->replace(index, ec);
@@ -69,7 +50,5 @@ void CheckOnlySchedulerPlugin::redo()
 
 int CheckOnlySchedulerPlugin::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(PL_ONLY_SCHEDULER);
     return UiCommandMap::PL_ONLY_SCHEDULER;
 }

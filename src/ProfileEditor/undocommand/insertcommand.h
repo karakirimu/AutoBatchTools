@@ -19,17 +19,11 @@
 
 #include <QUndoCommand>
 #include <CommandMap.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 
 class InsertCommand : public QUndoCommand
 {
 public:
-//    InsertCommand(const int &targetindex
-//                  , QList<QStringList> *inserted
-//                  , QList<QList<QStringList> *> *cache
-//                  , QUndoCommand *parent = nullptr);
-
     InsertCommand(const int &targetindex
                   , const EditorCache &insert
                   , EditorCacheList *cache
@@ -40,9 +34,6 @@ public:
 
 private:
     int index;
-//    QList<QStringList> *m_inserted;
-//    QList<QStringList> m_inscopy;
-//    QList<QList<QStringList> *> *m_cache;
 
     EditorCache insertCache;
     EditorCacheList *ptrCache;

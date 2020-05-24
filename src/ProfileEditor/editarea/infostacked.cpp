@@ -136,42 +136,6 @@ void InfoStacked::setInfoDataList(int after, int unused1, int function)
     // update information ui
     this->blockSignals(true);
 
-//    QList<QStringList> *list = new QList<QStringList>();
-
-//    if(!editop->read(after, list)){
-//        delete list;
-//        return;
-//    }
-
-//    ProcessXmlListGenerator pxlg;
-
-//    name->setText(pxlg.fetch(I_NAME, ATTR_NONE, list));
-//    ver->setText(pxlg.fetch(I_VERSION, ATTR_NONE, list));
-//    author->setText(pxlg.fetch(I_AUTHOR, ATTR_NONE, list));
-//    desc->setText(pxlg.fetch(I_DESCRIPTION, ATTR_NONE, list));
-
-//    finput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT, ATTR_NONE, list)));
-//    sinput->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list)));
-
-//    fscombo->reloadComboBoxItem();
-//    fscombo->setCurrentText(pxlg.fetch(I_FILESEARCH_NAME, ATTR_NONE, list));
-//    rloop->setChecked(VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list)));
-//    rloopmax->setText(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_MAXCOUNT, list));
-//    rlargs->setText(pxlg.fetch(I_RECURSIVE_LOOPARGCOUNT, ATTR_NONE, list));
-//    reloop->setText(pxlg.fetch(I_RECURSIVE_LOOPCOUNT, ATTR_NONE, list));
-
-//    bool check = VariantConverter::stringToBool(pxlg.fetch(I_FILEINPUT_SEARCHCHECK, ATTR_NONE, list));
-//    addbutton->setVisible(check);
-//    editbutton->setVisible(check);
-//    deletebutton->setVisible(check);
-//    fscombo->setVisible(check);
-
-//    check = VariantConverter::stringToBool(pxlg.fetch(I_RECURSIVE_LOOP, ATTR_NONE, list));
-//    rlabel->setVisible(!check);
-//    rloopmax->setVisible(!check);
-
-//    delete list;
-
     EditorCache list;
 
     if(!editop->read(after, &list)){

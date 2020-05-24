@@ -18,26 +18,12 @@
 #define EXTRATABLECOMMAND_H
 
 #include <QUndoCommand>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <uicommandmap.h>
 #include <editorcachelist.h>
 
 class EditPluginTable : public QUndoCommand
 {
 public:
-//    EditPluginTable(const int &targetindex
-//                      ,const int &tableindex
-//                      ,QString newstr
-//                      ,const int operation
-//                      ,QList<QList<QStringList> *> *cache
-//                      ,QUndoCommand *parent = nullptr);
-
-//    EditPluginTable(const int &targetindex
-//                     , QStringList newstrlist
-//                     , const int operation
-//                     , QList<QList<QStringList> *> *cache
-//                     , QUndoCommand *parent = nullptr);
-
     EditPluginTable(const int &targetindex
                       ,const int &tableindex
                       ,const QString newstr
@@ -61,21 +47,11 @@ public:
     QStringList newStrList;
 
 private:
-//    void updateIndex(int count);
-//    void updateCounter(bool ascend);
-
     int index;
     int tableIndex;
     QString oldStr;
     QStringList oldStrList;
     int tableOperation;
-//    QList<QList<QStringList> *> *m_cache;
-//    QHash<int, int> posinfo;
-
-//    ProcessXmlListGenerator pxlg;
-
-    //! First position of PluginCommandTable
-//    int SKIP;
 
     EditorCacheList *ptrCache;
 };

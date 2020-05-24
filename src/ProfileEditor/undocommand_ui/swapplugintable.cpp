@@ -16,22 +16,6 @@
 
 #include "swapplugintable.h"
 
-//SwapPluginTable::SwapPluginTable(const int &targetindex
-//                                 , const int &tablebefore
-//                                 , const int &tableafter
-//                                 , QList<QList<QStringList> *> *cache
-//                                 , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    indexBefore = tablebefore;
-//    indexAfter = tableafter;
-//    m_cache = cache;
-
-//    SKIP = pxlg.fetchCmdFirstPos(PL_CMD, m_cache->at(index));
-
-//}
-
 SwapPluginTable::SwapPluginTable(const int &targetindex
                                  , const int &tablebefore
                                  , const int &tableafter
@@ -47,76 +31,18 @@ SwapPluginTable::SwapPluginTable(const int &targetindex
 
 void SwapPluginTable::undo()
 {
-//    QStringList temp;
-//    temp = m_cache->at(index)->at(indexBefore + SKIP);
-
-//    //swap
-//    m_cache->at(index)->replace(indexBefore + SKIP
-//                                        , m_cache->at(index)->at(indexAfter + SKIP));
-//    m_cache->at(index)->replace(indexAfter + SKIP, temp);
-
-//    int condition = indexAfter - indexBefore;
-//    switch (condition) {
-//    case 1:
-//        //UP
-//        setText(QObject::tr("Up plugin at %1").arg(temp.at(1)) \
-//                + QString(" ^(%1,%2,%3)").arg(indexAfter).arg(indexBefore).arg(UNDOREDO_PL_TABLESWAP));
-//        break;
-//    case -1:
-//        //DOWN
-//        setText(QObject::tr("Down plugin at %1").arg(temp.at(1)) \
-//                + QString(" ^(%1,%2,%3)").arg(indexAfter).arg(indexBefore).arg(UNDOREDO_PL_TABLESWAP));
-//        break;
-//    default:
-//        //SWAP
-//        setText(QObject::tr("Swap plugin at %1 %2 to %3").arg(temp.at(1)).arg(indexBefore).arg(indexAfter) \
-//                + QString(" ^(%1,%2,%3)").arg(indexAfter).arg(indexBefore).arg(UNDOREDO_PL_TABLESWAP));
-//        break;
-//    }
-
     replaceValue(indexAfter, indexBefore);
     setTextByCondition(indexAfter, indexBefore);
-
 }
 
 void SwapPluginTable::redo()
 {
-//    QStringList temp;
-//    temp = m_cache->at(index)->at(indexAfter + SKIP);
-
-//    //swap
-//    m_cache->at(index)->replace(indexAfter + SKIP
-//                                        , m_cache->at(index)->at(indexBefore + SKIP));
-//    m_cache->at(index)->replace(indexBefore + SKIP, temp);
-
-//    int condition = indexAfter - indexBefore;
-//    switch (condition) {
-//    case 1:
-//        //UP
-//        setText(QObject::tr("Up plugin at %1").arg(temp.at(1)) \
-//                + QString(" ^(%1,%2,%3)").arg(indexBefore).arg(indexAfter).arg(UNDOREDO_PL_TABLESWAP));
-//        break;
-//    case -1:
-//        //DOWN
-//        setText(QObject::tr("Down plugin at %1").arg(temp.at(1)) \
-//                + QString(" ^(%1,%2,%3)").arg(indexBefore).arg(indexAfter).arg(UNDOREDO_PL_TABLESWAP));
-//        break;
-//    default:
-//        //SWAP
-//        setText(QObject::tr("Swap plugin at %1 %2 to %3").arg(temp.at(1)).arg(indexBefore).arg(indexAfter) \
-//                + QString(" ^(%1,%2,%3)").arg(indexBefore).arg(indexAfter).arg(UNDOREDO_PL_TABLESWAP));
-//        break;
-//    }
-
     replaceValue(indexBefore, indexAfter);
     setTextByCondition(indexBefore, indexAfter);
-
 }
 
 int SwapPluginTable::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(PL_CMDARGCOUNT);
     return UiCommandMap::PL_SWAP_TABLE;
 }
 

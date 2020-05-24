@@ -16,20 +16,6 @@
 
 #include "stringprojectauthor.h"
 
-//StringProjectAuthor::StringProjectAuthor(const int &targetindex
-//                                         , QString newstring
-//                                         , QList<QList<QStringList> *> *cache
-//                                         , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newStr = newstring;
-
-//    m_cache = cache;
-//    oldStr = pxlg.fetch(I_AUTHOR, ATTR_NONE, m_cache->at(index));
-
-//}
-
 StringProjectAuthor::StringProjectAuthor(const int &targetindex
                                          , const QString &newstring
                                          , EditorCacheList *cache
@@ -44,9 +30,6 @@ StringProjectAuthor::StringProjectAuthor(const int &targetindex
 
 void StringProjectAuthor::undo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(I_AUTHOR, ATTR_NONE, index, oldStr, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.info.author = oldStr;
     ptrCache->replace(index, ec);
@@ -56,8 +39,6 @@ void StringProjectAuthor::undo()
 
 void StringProjectAuthor::redo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(I_AUTHOR, ATTR_NONE, index, newStr, m_cache);
     EditorCache ec = ptrCache->at(index);
     ec.info.author = newStr;
     ptrCache->replace(index, ec);
@@ -67,8 +48,6 @@ void StringProjectAuthor::redo()
 
 int StringProjectAuthor::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(I_AUTHOR);
     return UiCommandMap::I_AUTHOR;
 }
 

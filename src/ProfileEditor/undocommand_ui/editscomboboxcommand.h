@@ -18,7 +18,6 @@
 #define EDITSCOMBOBOXCOMMAND_H
 
 #include <QUndoCommand>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <uicommandmap.h>
 #include <editorcachelist.h>
 
@@ -26,12 +25,6 @@
 class EditScomboBoxCommand : public QUndoCommand
 {
 public:
-//    EditScomboBoxCommand(const int &targetindex
-//                         , const QString &newstring
-//                         , const int &newsearchindex
-//                         , QList<QList<QStringList> *> *cache
-//                         , QUndoCommand *parent = nullptr);
-
     EditScomboBoxCommand(const int &targetindex
                          , const QString &newstring
                          , const int &newsearchindex
@@ -53,14 +46,7 @@ private:
 
     FunctionType::TYPE select;
 
-//    QList<QList<QStringList> *> *m_cache;
-//    QHash<int, int> posinfo;
-//    int m_indexpos = 0;
-
     EditorCacheList *ptrCache;
-
-//    ProcessXmlListGenerator pxlg;
-
 };
 
 #endif // EDITSCOMBOBOXCOMMAND_H

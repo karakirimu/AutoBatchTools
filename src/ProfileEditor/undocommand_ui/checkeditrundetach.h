@@ -17,22 +17,13 @@
 #ifndef CHECKEDITSKIPRUN_H
 #define CHECKEDITSKIPRUN_H
 
-#include <QHash>
 #include <QUndoCommand>
-//#include <QRegularExpression>
 #include <editorcachelist.h>
 #include <uicommandmap.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
-//#include <../variantconverter/variantconverter.h>
 
 class CheckEditRunDetach : public QUndoCommand
 {
 public:
-//    CheckEditRunDetach(const int &targetindex
-//                     , const bool &newcheck
-//                     , QList<QList<QStringList> *> *cache
-//                     , QUndoCommand *parent = nullptr);
-
     CheckEditRunDetach(const int &targetindex
                      , const bool &newcheck
                      , EditorCacheList *cache
@@ -45,10 +36,6 @@ public:
 
  private:
     int index;
-//    QString m_oldcheck;
-//    QString m_newcheck;
-//    QList<QList<QStringList> *> *m_cache;
-//    ProcessXmlListGenerator pxlg;
 
     bool oldCheck;
     bool newCheck;

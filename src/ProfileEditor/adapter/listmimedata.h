@@ -30,7 +30,6 @@ public:
 
     void setListData(const EditorCache list);
 
-//    static QList<QStringList> getListData(const ListMimeData *lmime);
     static EditorCache getListData(const ListMimeData *lmime);
 
     QStringList formats() const override;

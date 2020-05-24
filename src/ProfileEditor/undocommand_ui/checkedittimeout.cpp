@@ -16,19 +16,6 @@
 
 #include "checkedittimeout.h"
 
-//CheckEditTimeout::CheckEditTimeout(const int &targetindex
-//                                         , const bool &newcheck
-//                                         , QList<QList<QStringList> *> *cache
-//                                         , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    m_newcheck = VariantConverter::boolToString(newcheck);
-//    m_cache = cache;
-
-//    m_oldcheck = pxlg.fetch(E_TIMEOUT, ATTR_NONE, m_cache->at(index));
-//}
-
 CheckEditTimeout::CheckEditTimeout(const int &targetindex
                                    , const bool &newcheck
                                    , EditorCacheList *cache
@@ -43,9 +30,6 @@ CheckEditTimeout::CheckEditTimeout(const int &targetindex
 
 void CheckEditTimeout::undo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(E_TIMEOUT, ATTR_NONE, index, m_oldcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.exec.timeoutEnabled = oldCheck;
     ptrCache->replace(index, ec);
@@ -56,9 +40,6 @@ void CheckEditTimeout::undo()
 
 void CheckEditTimeout::redo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(E_TIMEOUT, ATTR_NONE, index, m_newcheck, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.exec.timeoutEnabled = newCheck;
     ptrCache->replace(index, ec);
@@ -69,7 +50,5 @@ void CheckEditTimeout::redo()
 
 int CheckEditTimeout::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(E_TIMEOUT);
     return UiCommandMap::E_TIMEOUT_BOOL_HA1;
 }

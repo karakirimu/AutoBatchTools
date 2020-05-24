@@ -16,21 +16,6 @@
 
 #include "stringfileoutput.h"
 
-//StringFileOutput::StringFileOutput(const int &targetindex
-//                                   , QString newstring
-//                                   , QList<QList<QStringList> *> *cache
-//                                   , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newStr = newstring;
-
-//    m_cache = cache;
-
-//    oldStr = pxlg.fetch(S_OUTPUTFILE, ATTR_NONE, m_cache->at(index));
-
-//}
-
 StringFileOutput::StringFileOutput(const int &targetindex
                                    , const QString &newstring
                                    , EditorCacheList *cache
@@ -45,9 +30,6 @@ StringFileOutput::StringFileOutput(const int &targetindex
 
 void StringFileOutput::undo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(S_OUTPUTFILE, ATTR_NONE, index, oldStr, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.filesearch.filePath = oldStr;
     ptrCache->replace(index, ec);
@@ -58,9 +40,6 @@ void StringFileOutput::undo()
 
 void StringFileOutput::redo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(S_OUTPUTFILE, ATTR_NONE, index, newStr, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.filesearch.filePath = newStr;
     ptrCache->replace(index, ec);
@@ -71,8 +50,6 @@ void StringFileOutput::redo()
 
 int StringFileOutput::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(S_OUTPUTFILE);
     return UiCommandMap::FS_FILEPATH_HA1;
 }
 

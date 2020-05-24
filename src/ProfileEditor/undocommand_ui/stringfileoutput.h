@@ -19,17 +19,11 @@
 
 #include <QUndoCommand>
 #include <editorcachelist.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <uicommandmap.h>
 
 class StringFileOutput : public QUndoCommand
 {
 public:
-//    StringFileOutput(const int &targetindex
-//                     , QString newstring
-//                     , QList<QList<QStringList> *> *cache
-//                     , QUndoCommand *parent = nullptr);
-
     StringFileOutput(const int &targetindex
                      , const QString &newstring
                      , EditorCacheList *cache
@@ -45,8 +39,6 @@ public:
 private:
     int index;
     QString oldStr;
-//    QList<QList<QStringList> *> *m_cache;
-//    ProcessXmlListGenerator pxlg;
 
     EditorCacheList *ptrCache;
 };

@@ -16,20 +16,6 @@
 
 #include "editsearchfileoutputtype.h"
 
-//EditSearchFileOutputType::EditSearchFileOutputType(const int &targetindex
-//                                                   , int newvalue
-//                                                   , QList<QList<QStringList> *> *cache
-//                                                   , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newValue = newvalue;
-//    m_cache = cache;
-
-//    oldValue = static_cast<QString>(pxlg.fetch(S_OUTPUTFILETYPE, ATTR_NONE, m_cache->at(index))).toInt();
-
-//}
-
 EditSearchFileOutputType::EditSearchFileOutputType(const int &targetindex
                                                    , const int &newvalue
                                                    , EditorCacheList *cache
@@ -45,13 +31,6 @@ EditSearchFileOutputType::EditSearchFileOutputType(const int &targetindex
 
 void EditSearchFileOutputType::undo()
 {
-    // @deprecated
-//    {
-//    if(m_cache->isEmpty()) return;
-
-//    pxlg.replaceElementList(S_OUTPUTFILETYPE, ATTR_NONE, index, QString::number(oldValue), m_cache);
-//    }
-
     replaceValue(oldValue);
 
     setText(QObject::tr("Change output file method") \
@@ -60,11 +39,6 @@ void EditSearchFileOutputType::undo()
 
 void EditSearchFileOutputType::redo()
 {
-    // @deprecated
-//    {
-//    pxlg.replaceElementList(S_OUTPUTFILETYPE, ATTR_NONE, index, QString::number(newValue), m_cache);
-//    }
-
     replaceValue(newValue);
 
     setText(QObject::tr("Change output file method") \
@@ -73,8 +47,6 @@ void EditSearchFileOutputType::redo()
 
 int EditSearchFileOutputType::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(ATTR_NONE);
     return UiCommandMap::FS_WRITEOPTION_INT;
 }
 

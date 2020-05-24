@@ -105,17 +105,17 @@ public:
     explicit EditOperator(QObject *parent = nullptr);
     ~EditOperator();
 
-//    bool read(int id, QList<QStringList> *list);
     bool read(int id, EditorCache *list);
-//    void readAll(QList<QList<QStringList> *> *list);
     void readAll(QList<EditorCache> *list);
-    //editor editindex code (not contain tables)
 
     QUndoStack *getUndostack() const;
     int getCacheSize() const;
     QString getLoadfile() const;
 
     int getCurrentCommandType();
+
+    //gui functions
+    QRect getMainWindowGeometry();
 
     /**
      * @brief
@@ -134,9 +134,6 @@ public:
         SELECT
     };
 
-    //gui functions
-    QRect getMainWindowGeometry();
-
 signals:
     void loadfileChanged(QString);
 
@@ -146,12 +143,10 @@ signals:
 
     //Communication from profileeditor or flowtable widget to editortab
     void processIndexUpdate(int after, int before, int function);
-//    void ui_scrollReachBottom();
 
 public slots:
     //operate main process editor functions
     void addAction();
-//    void insertAction(int id, QList<QStringList> *xmlstruct);
     void insertAction(int index, EditorCache *editorcache);
     void deleteAction(int id);
     void newAction();
@@ -161,7 +156,6 @@ public slots:
     void exportAction(QString filepath);
     void abortAction();
 
-//    void editAction(int id, int innerid, int editcode, QList<QStringList> xmlstruct);
     void editTabAction(int id, int newindex);
 
     //checkbox operation
@@ -230,9 +224,6 @@ public slots:
 protected:
     void timerEvent(QTimerEvent *event);
 
-//private slots:
-//    void appendcache();
-
 private:
     void save();
     void reset();
@@ -240,14 +231,8 @@ private:
     //internal function
     void loadcache(int amount);
 
-    //cache data
-//    QList<QList<QStringList> *> *cache;
-
     // Thread safe cache
     EditorCacheList *editorCache;
-
-    // editorCache use undostack;
-//    QUndoStack *undoStack2;
 
     //undo stack
     QUndoStack *undostack;
@@ -260,7 +245,6 @@ private:
 
     //loaded
     QString loadfile;
-//    int loadedxmlid = 0;
 
     //parent geometry
     QMainWindow *parentwid;

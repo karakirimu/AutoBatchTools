@@ -16,22 +16,6 @@
 
 #include "swapexectable.h"
 
-//SwapExecTable::SwapExecTable(const int &targetindex
-//                             , const int &tablebefore
-//                             , const int &tableafter
-//                             , QList<QList<QStringList> *> *cache
-//                             , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    indexBefore = tablebefore;
-//    indexAfter = tableafter;
-//    m_cache = cache;
-
-//    SKIP = pxlg.fetchCmdFirstPos(E_CMD, m_cache->at(index));
-
-//}
-
 SwapExecTable::SwapExecTable(const int &targetindex
                              , const int &tablebefore
                              , const int &tableafter
@@ -43,90 +27,23 @@ SwapExecTable::SwapExecTable(const int &targetindex
     indexBefore = tablebefore;
     indexAfter = tableafter;
     ptrCache = cache;
-
-    //SKIP = pxlg.fetchCmdFirstPos(E_CMD, m_cache->at(m_targetindex));
-
 }
 
 void SwapExecTable::undo()
 {
-    // @deprecated
-//    {
-//    QStringList temp;
-//    temp = m_cache->at(index)->at(m_indexbefore + SKIP);
-
-//    //swap
-//    m_cache->at(index)->replace(m_indexbefore + SKIP
-//                                        , m_cache->at(index)->at(m_indexafter + SKIP));
-//    m_cache->at(index)->replace(m_indexafter + SKIP, temp);
-
-//    int condition = m_indexafter - m_indexbefore;
-//    switch (condition) {
-//    case 1:
-//        //UP
-//        setText(QObject::tr("Up exec arg '%1'").arg(temp.at(1)) \
-//                + QString(" ^(%1,%2,%3)").arg(m_indexafter).arg(m_indexbefore).arg(UNDOREDO_E_TABLESWAP));
-//        break;
-//    case -1:
-//        //DOWN
-//        setText(QObject::tr("Down exec arg '%1'").arg(temp.at(1)) \
-//                + QString(" ^(%1,%2,%3)").arg(m_indexafter).arg(m_indexbefore).arg(UNDOREDO_E_TABLESWAP));
-//        break;
-//    default:
-//        //SWAP
-//        setText(QObject::tr("Swap exec arg '%1' at %2 to %3").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter) \
-//                + QString(" ^(%1,%2,%3)").arg(m_indexafter).arg(m_indexbefore).arg(UNDOREDO_E_TABLESWAP));
-//        break;
-//    }
-//    }
-
     replaceValue(indexAfter, indexBefore);
     setTextByCondition(indexAfter, indexBefore);
-
 }
 
 void SwapExecTable::redo()
 {
-    // @deprecated
-//    {
-//    QStringList temp;
-//    temp = m_cache->at(index)->at(m_indexafter + SKIP);
-
-//    //swap
-//    m_cache->at(index)->replace(m_indexafter + SKIP
-//                                        , m_cache->at(index)->at(m_indexbefore + SKIP));
-//    m_cache->at(index)->replace(m_indexbefore + SKIP, temp);
-
-//    int condition = m_indexafter - m_indexbefore;
-//    switch (condition) {
-//    case 1:
-//        //UP
-//        setText(QObject::tr("Up exec arg '%1'").arg(temp.at(1)) \
-//                + QString(" ^(%1,%2,%3)").arg(m_indexbefore).arg(m_indexafter).arg(UNDOREDO_E_TABLESWAP));
-//        break;
-//    case -1:
-//        //DOWN
-//        setText(QObject::tr("Down exec arg '%1'").arg(temp.at(1)) \
-//                + QString(" ^(%1,%2,%3)").arg(m_indexbefore).arg(m_indexafter).arg(UNDOREDO_E_TABLESWAP));
-//        break;
-//    default:
-//        //SWAP
-//        setText(QObject::tr("Swap exec arg '%1' at %2 to %3").arg(temp.at(1)).arg(m_indexbefore).arg(m_indexafter) \
-//                + QString(" ^(%1,%2,%3)").arg(m_indexbefore).arg(m_indexafter).arg(UNDOREDO_E_TABLESWAP));
-//        break;
-//    }
-//    }
-
     replaceValue(indexBefore, indexAfter);
     setTextByCondition(indexBefore, indexAfter);
-
 }
 
 int SwapExecTable::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(E_SWAP_TABLE);
-return UiCommandMap::E_SWAP_TABLE;
+    return UiCommandMap::E_SWAP_TABLE;
 }
 
 void SwapExecTable::replaceValue(int source, int dest)

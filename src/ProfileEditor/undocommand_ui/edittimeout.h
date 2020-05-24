@@ -18,18 +18,12 @@
 #define EDITTIMEOUT_H
 
 #include <QUndoCommand>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <uicommandmap.h>
 #include <editorcachelist.h>
 
 class EditTimeout : public QUndoCommand
 {
 public:
-//    EditTimeout(const int &targetindex
-//                     , int newvalue
-//                     , QList<QList<QStringList> *> *cache
-//                     , QUndoCommand *parent = nullptr);
-
     EditTimeout(const int &targetindex
                     , const int &newvalue
                     , EditorCacheList *cache
@@ -46,8 +40,6 @@ public:
 private:
     int index;
     int oldValue;
-//    QList<QList<QStringList> *> *m_cache;
-//    ProcessXmlListGenerator pxlg;
 
     EditorCacheList *ptrCache;
 

@@ -20,7 +20,6 @@
 #include <QObject>
 #include <QWidget>
 #include <editoperator.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <../basictable/basictable.h>
 
 class VariantTable : public BasicTable
@@ -65,12 +64,9 @@ private:
     bool setLocalListItem(int itemid);
     void tableItemSwap(int from , int to);
     QStringList getTableData(int targetrow, int tablerow);
-
-//    void getLocalList(QList<QStringList> *newlist);
     QStringList getLocalVariants(int index);
 
     EditOperator *editop;
-//    ProcessXmlListGenerator xgen;
 
     QAction *m_new;
     QAction *m_add;

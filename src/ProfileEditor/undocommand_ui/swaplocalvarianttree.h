@@ -19,18 +19,11 @@
 
 #include <QUndoCommand>
 #include <editorcachelist.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <uicommandmap.h>
 
 class SwapLocalVariantTree : public QUndoCommand
 {
 public:
-//    SwapLocalVariantTree(const int &localindex
-//                         , const int &before
-//                         , const int &after
-//                         , QList<QList<QStringList> *> *cache
-//                         , QUndoCommand *parent = nullptr);
-
     SwapLocalVariantTree(const int &localindex
                          , const int &before
                          , const int &after
@@ -48,13 +41,6 @@ private:
     int index;
     int indexBefore;
     int indexAfter;
-//    QString m_objname;
-
-//    QList<QList<QStringList> *> *m_cache;
-
-//    ProcessXmlListGenerator pxlg;
-
-//    int SKIP;
 
     EditorCacheList *ptrCache;
 };

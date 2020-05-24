@@ -16,19 +16,6 @@
 
 #include "deletecommand.h"
 
-//DeleteCommand::DeleteCommand(const int &targetindex
-//                             , QList<QStringList> *deleted
-//                             , QList<QList<QStringList> *> *cache
-//                             , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-////    m_deleted = deleted;
-//    m_delcopy.append(*deleted);
-//    m_cache = cache;
-
-//}
-
 DeleteCommand::DeleteCommand(const int &targetindex
                              , const EditorCache &remove
                              , EditorCacheList *cache
@@ -42,12 +29,6 @@ DeleteCommand::DeleteCommand(const int &targetindex
 
 void DeleteCommand::undo()
 {
-    // @deprecated
-//    {
-////    m_deleted = new QList<QStringList>(m_delcopy);
-//    m_cache->insert(index, new QList<QStringList>(m_delcopy));
-//    }
-
     ptrCache->insert(index, removeCache);
 
     setText(QObject::tr("Remove item at %1").arg(index) \
@@ -56,14 +37,6 @@ void DeleteCommand::undo()
 
 void DeleteCommand::redo()
 {
-    // @deprecated
-//    {
-//    if(m_cache->isEmpty()) return;
-
-////    delete m_deleted;
-//    m_cache->removeAt(index);
-//    }
-
     if(ptrCache->isEmpty()) return;
     ptrCache->removeAt(index);
 

@@ -19,17 +19,11 @@
 
 #include <QUndoCommand>
 #include <editorcachelist.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <uicommandmap.h>
 
 class StringSearchSep : public QUndoCommand
 {
 public:
-//    StringSearchSep(const int &targetindex
-//                        , QString newstring
-//                        , QList<QList<QStringList> *> *cache
-//                        , QUndoCommand *parent = nullptr);
-
     StringSearchSep(const int &targetindex
                         , const QString &newstring
                         , EditorCacheList *cache
@@ -45,11 +39,8 @@ public:
 private:
     int index;
     QString oldStr;
-//    QList<QList<QStringList> *> *m_cache;
-//    ProcessXmlListGenerator pxlg;
 
     EditorCacheList *ptrCache;
-
 };
 
 #endif // EDITSEARCHSEPARATOR_H

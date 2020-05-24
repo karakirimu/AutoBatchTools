@@ -16,20 +16,6 @@
 
 #include "stringsearchsep.h"
 
-//StringSearchSep::StringSearchSep(const int &targetindex
-//                                         , QString newstring
-//                                         , QList<QList<QStringList> *> *cache
-//                                         , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newStr = newstring;
-//    m_cache = cache;
-
-//    oldStr = pxlg.fetch(S_SEPARATOR, ATTR_NONE, m_cache->at(index));
-
-//}
-
 StringSearchSep::StringSearchSep(const int &targetindex
                                  , const QString &newstring
                                  , EditorCacheList *cache
@@ -44,9 +30,6 @@ StringSearchSep::StringSearchSep(const int &targetindex
 
 void StringSearchSep::undo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(S_SEPARATOR, ATTR_NONE, index, oldStr, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.filesearch.separator = oldStr;
     ptrCache->replace(index, ec);
@@ -57,9 +40,6 @@ void StringSearchSep::undo()
 
 void StringSearchSep::redo()
 {
-    // @deprecated
-//    pxlg.replaceElementList(S_SEPARATOR, ATTR_NONE, index, newStr, m_cache);
-
     EditorCache ec = ptrCache->at(index);
     ec.filesearch.separator = newStr;
     ptrCache->replace(index, ec);
@@ -70,8 +50,6 @@ void StringSearchSep::redo()
 
 int StringSearchSep::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(S_SEPARATOR);
     return UiCommandMap::FS_SEPARATOR;
 }
 

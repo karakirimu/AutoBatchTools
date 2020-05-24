@@ -86,7 +86,6 @@ private slots:
 
     void editCheckAction(bool check);
     void editRadioAction(bool);
-//    void editValueAction(QString value);
     void editTextAction(QString text);
     void editTableAction(int index, QString str, int function);
     void editPluginTableAction(QStringList strlist, int function);

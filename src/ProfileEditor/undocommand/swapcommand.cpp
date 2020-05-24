@@ -16,17 +16,6 @@
 
 #include "swapcommand.h"
 
-//SwapCommand::SwapCommand(const int &beforeindex
-//                         , const int &afterindex
-//                         , QList<QList<QStringList> *> *cache
-//                         , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    beforeIndex = beforeindex;
-//    afterIndex = afterindex;
-//    m_cache = cache;
-//}
-
 SwapCommand::SwapCommand(const int &beforeindex
                          , const int &afterindex
                          , EditorCacheList *cache
@@ -40,18 +29,7 @@ SwapCommand::SwapCommand(const int &beforeindex
 
 void SwapCommand::undo()
 {
-    // @deprecated
-//    if(m_cache->isEmpty()) return;
-//    QList<QStringList> *tmp = m_cache->at(m_afterindex);
-//    m_cache->replace(m_afterindex, m_cache->at(m_beforeindex));
-//    m_cache->replace(m_beforeindex, tmp);
-
     if(ptrCache->isEmpty()) return;
-
-//    EditorCache tmp = ptrCache->at(afterIndex);
-//    ptrCache->replace(afterIndex, ptrCache->at(beforeIndex));
-//    ptrCache->replace(beforeIndex, tmp);
-
     ptrCache->move(afterIndex, beforeIndex);
 
     setText(QString("Swap item at %1 and %2").arg(beforeIndex).arg(afterIndex) \
@@ -60,19 +38,7 @@ void SwapCommand::undo()
 
 void SwapCommand::redo()
 {
-    // @deprecated
-//    if(m_cache->isEmpty()) return;
-//    QList<QStringList> *tmp = m_cache->at(m_beforeindex);
-
-//    m_cache->replace(m_beforeindex, m_cache->at(m_afterindex));
-//    m_cache->replace(m_afterindex, tmp);
-
     if(ptrCache->isEmpty()) return;
-
-//    EditorCache tmp = ptrCache->at(beforeIndex);
-//    ptrCache->replace(beforeIndex, ptrCache->at(afterIndex));
-//    ptrCache->replace(afterIndex, tmp);
-
     ptrCache->move(beforeIndex, afterIndex);
 
     setText(QString("Swap item at %1 and %2 ").arg(beforeIndex).arg(afterIndex) \

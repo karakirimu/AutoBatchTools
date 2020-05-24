@@ -17,22 +17,13 @@
 #ifndef EDITALLOWINPUT_H
 #define EDITALLOWINPUT_H
 
-#include <QHash>
 #include <QUndoCommand>
-#include <QRegularExpression>
 #include <uicommandmap.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
-//#include <../variantconverter/variantconverter.h>
 #include <editorcachelist.h>
 
 class CheckEditAllowInput : public QUndoCommand
 {
 public:
-//    CheckEditAllowInput(const int &targetindex
-//                   , const bool &newcheck
-//                   , QList<QList<QStringList> *> *cache
-//                   , QUndoCommand *parent = nullptr);
-
     CheckEditAllowInput(const int &targetindex
                    , const bool &newcheck
                    , EditorCacheList *cache
@@ -46,10 +37,6 @@ public:
 private:
 
     int index;
-//    QString m_oldcheck;
-//    QString m_newcheck;
-//    QList<QList<QStringList> *> *m_cache;
-//    ProcessXmlListGenerator pxlg;
 
     bool oldCheck;
     bool newCheck;

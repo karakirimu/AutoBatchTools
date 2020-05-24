@@ -16,20 +16,6 @@
 
 #include "editsearchoutput.h"
 
-//EditSearchOutput::EditSearchOutput(const int &targetindex
-//                                   , int newvalue
-//                                   , QList<QList<QStringList> *> *cache
-//                                   , QUndoCommand *parent)
-//    :QUndoCommand(parent)
-//{
-//    index = targetindex;
-//    newValue = newvalue;
-//    m_cache = cache;
-
-//    oldValue = static_cast<QString>(pxlg.fetch(S_OUTPUTFILE, ATTR_RADIOBUTTONPOS, m_cache->at(index))).toInt();
-
-//}
-
 EditSearchOutput::EditSearchOutput(const int &targetindex
                                    , const int &newvalue
                                    , EditorCacheList *cache
@@ -45,12 +31,6 @@ EditSearchOutput::EditSearchOutput(const int &targetindex
 
 void EditSearchOutput::undo()
 {
-    // @deprecated
-//    {
-//    if(m_cache->isEmpty()) return;
-//    pxlg.replaceElementList(S_OUTPUTFILE, ATTR_RADIOBUTTONPOS, index, QString::number(oldValue), m_cache);
-//    }
-
     replaceValue(oldValue);
 
     setText(QObject::tr("Output Select") \
@@ -59,11 +39,6 @@ void EditSearchOutput::undo()
 
 void EditSearchOutput::redo()
 {
-    // @deprecated
-//    {
-//    pxlg.replaceElementList(S_OUTPUTFILE, ATTR_RADIOBUTTONPOS, index, QString::number(newValue), m_cache);
-//    }
-
     replaceValue(newValue);
 
     setText(QObject::tr("Output Select") \
@@ -72,8 +47,6 @@ void EditSearchOutput::redo()
 
 int EditSearchOutput::id() const
 {
-//    ProcessXmlListGenerator pxg;
-//    return pxg.getId(ATTR_RADIOBUTTONPOS);
     return UiCommandMap::FS_OUTPUTOPTION_INT;
 }
 
