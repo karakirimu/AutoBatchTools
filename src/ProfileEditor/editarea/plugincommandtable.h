@@ -24,7 +24,7 @@ class PluginCommandTable : public CommandTable
     Q_OBJECT
 public:
     explicit PluginCommandTable(QWidget *parent = nullptr);
-    ~PluginCommandTable();
+    ~PluginCommandTable() override;
 
     void updateTableList(QStringList *list);
 
@@ -33,6 +33,16 @@ signals:
 
 public slots:
     void insertSettingUpdate(QStringList list);
+
+private slots:
+    void addAction() override;
+    void deleteAction() override;
+    void cutAction() override;
+    void pasteAction() override;
+    void pasteSpaceAction() override;
+    void pasteEnterAction() override;
+
+    void editedAction(int row, int column) override;
 };
 
 #endif // PLUGINCOMMANDTABLE_H

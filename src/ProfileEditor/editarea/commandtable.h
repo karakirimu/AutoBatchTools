@@ -19,8 +19,9 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <uicommandmap.h>
 #include <../basictable/basictable.h>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class CommandTable : public BasicTable
 {
@@ -47,21 +48,22 @@ protected slots:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
 
+    virtual void addAction();
+    virtual void deleteAction();
+    virtual void cutAction();
+    virtual void pasteAction();
+    virtual void pasteSpaceAction();
+    virtual void pasteEnterAction();
+
+    virtual void editedAction(int row, int column);
+
 private slots:
-    void addAction();
     void editAction();
-    void deleteAction();
-    void cutAction();
     void copyAction();
-    void pasteAction();
-    void pasteSpaceAction();
-    void pasteEnterAction();
     void upAction();
     void downAction();
     void openFileAction();
     void openDirectoryAction();
-
-    void editedAction(int row, int column);
 
 private:
     void setPopupActionTop();

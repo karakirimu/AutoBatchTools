@@ -206,12 +206,12 @@ public:
     enum{NORMAL, SEARCH, PLUGINS, OTHER};
 
     //inner table operation
-    enum{TABLE_ADD,TABLE_EDIT,TABLE_INSERT,TABLE_DELETE
-         ,TABLE_CUT,TABLE_PASTE,TABLE_DRAGDROP,TABLE_UP,TABLE_DOWN,TABLE_SWAP
-         ,TABLE_ALLUPDATE};
+//    enum{TABLE_ADD,TABLE_EDIT,TABLE_INSERT,TABLE_DELETE
+//         ,TABLE_CUT,TABLE_PASTE,TABLE_DRAGDROP,TABLE_UP,TABLE_DOWN,TABLE_SWAP
+//         ,TABLE_ALLUPDATE};
 
     //connect ui to xml operation of tree
-    enum{TREE_ADD,TREE_EDIT,TREE_INSERT,TREE_DELETE,TREE_UP,TREE_DOWN,TREE_SWAP};
+//    enum{TREE_ADD,TREE_EDIT,TREE_INSERT,TREE_DELETE,TREE_UP,TREE_DOWN,TREE_SWAP};
 
     //change combined structure to separated structure
     void createSeparateList(QList<QStringList> *ctos);
@@ -231,74 +231,25 @@ public:
 private:
 
     //xml attributes (temp)
-    const QString ALL_TYPE                   = "type";
-
-    // info
-    const QString I_NAME                     = "iname";
-    const QString I_VERSION                  = "ver";
-    const QString I_AUTHOR                   = "author";
-    const QString I_DESCRIPTION              = "desc";
-    const QString I_FILEINPUT                = "finput";
-    const QString I_FILEINPUT_SEARCHCHECK    = "sinput";
-    const QString I_FILESEARCH_NAME          = "fsname";
-    const QString I_RECURSIVE_LOOP           = "rloop";
-    const QString I_RECURSIVE_LOOPARGCOUNT   = "rlarg";
-    const QString I_RECURSIVE_LOOPCOUNT      = "reloop";
-
-    // search
-    const QString S_NAME                     = "sname";
-    const QString S_SEPARATOR                = "sep";
-    const QString S_VARIANT                  = "var";
-    const QString S_OUTPUTFILE               = "output";
-    const QString S_OUTPUTFILETYPE           = "fitype";
-
-    // profile
-
-    // XML tag "prname";
-    const QString PR_FILEPATH                = "prfile";
 
     // exec(normal)
-    const QString E_TIMEOUT                  = "timeout";
-    const QString E_RUNDETACH                = "detach";
     const QString E_CMD                      = "exc";
     const QString E_CMDARGCOUNT              = "cmdc";
 
     // plugin(extrafunc)
-    const QString PL_NAME                    = "plname";
-    const QString PL_FILEPATH                = "plfile";
     const QString PL_CMD                     = "plc";
     const QString PL_CMDARGCOUNT             = "pcmdc";
 
-    // temp
-    const QString TE_STACKEDWIDGET_POSITION  = "istack";
-
-    // local
-    const QString L_VARIANT                  = "lvar";
-    const QString L_VAR_COUNT                = "localc";
-
     // value define (index 1)
-    const QString TYPE_INFO                  = "info";
     const QString TYPE_EXEC                  = "normal";
     const QString TYPE_SEARCH                = "search";
     const QString TYPE_SCRIPT                = "script";
     const QString TYPE_ANOTHER               = "other";
 
-    const QString TYPE_ALLINCLUDE            = "temp";
-    const QString TYPE_LOCAL                 = "local";
-
     // attribute define (index 2)
     // all
-    const QString ATTR_ONLY_SCHEDULER        = "only";
-    const QString ATTR_POSNUM                = "id";
-    const QString ATTR_RADIOBUTTONPOS        = "radio";
-    const QString ATTR_MAXCOUNT              = "max";
     const QString ATTR_NONE                  = "";
 
-    // normal
-    const QString ATTR_TIMEOUTMS             = "dur";
-
-    // local
-    const QString ATTR_LOCALVALUE            = "lval";
 };
 
 #endif // PROCESSXMLLISTGENERATOR_H

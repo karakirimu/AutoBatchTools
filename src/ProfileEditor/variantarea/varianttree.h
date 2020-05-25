@@ -31,7 +31,7 @@
 #include <QDropEvent>
 
 #include <editoperator.h>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <../stringxmlbuilder/stringxmlbuilder.h>
 
 class VariantTree : public QTreeWidget {
@@ -107,7 +107,7 @@ private:
     void ignoreDataChangedSignal(bool valid);
 
     EditOperator *editop;
-    ProcessXmlListGenerator xgen;
+//    ProcessXmlListGenerator xgen;
     StringXmlBuilder *builder;
 
     QAction *m_file;
@@ -127,7 +127,7 @@ private:
     static const int LOCALINDEX = 1;
 
     // order of root element
-    enum{TREE_GLOBAL,TREE_LOCAL,TREE_INTERNAL};
+    enum{TREE_GLOBAL,TREE_LOCAL/*,TREE_INTERNAL*/};
 };
 
 #endif // VARIANTTREE_H

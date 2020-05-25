@@ -99,7 +99,7 @@ void VariantTable::addAction()
 {
     int row = this->rowCount();
     setRowCount(row + 1);
-    editop->tableEditVariantAction(LOCALINDEX, row, getLocalVariants(row), ProcessXmlListGenerator::TABLE_ADD);
+    editop->tableEditVariantAction(LOCALINDEX, row, getLocalVariants(row), UiCommandMap::LV_ADD);
 
     //for usability
     this->setCurrentItem(itemAt(row,0));
@@ -130,7 +130,7 @@ void VariantTable::deleteAction()
         qDebug() << "VariantTable::deleteAction : selectrow : " << lists.at(i).row();
 
         editop->tableEditVariantAction(LOCALINDEX, lists.at(i).row(), \
-                                       getLocalVariants(-1), ProcessXmlListGenerator::TABLE_DELETE);
+                                       getLocalVariants(-1), UiCommandMap::LV_DELETE);
     }
 
     //delete file items
@@ -153,7 +153,7 @@ void VariantTable::cutAction()
         tmp.append("\n");
 
         editop->tableEditVariantAction(LOCALINDEX, mlist.at(i).row(), \
-                                       getLocalVariants(-1), ProcessXmlListGenerator::TABLE_DELETE);
+                                       getLocalVariants(-1), UiCommandMap::LV_DELETE);
     }
 
     //force delete
@@ -209,7 +209,7 @@ void VariantTable::pasteAction()
                this->setItem(row, 1, new QTableWidgetItem(intext.at(1)));
            }
        }
-       editop->tableEditVariantAction(LOCALINDEX, i, intext, ProcessXmlListGenerator::TABLE_INSERT);
+       editop->tableEditVariantAction(LOCALINDEX, i, intext, UiCommandMap::LV_INSERT);
     }
 
     //save to backup file
@@ -254,7 +254,7 @@ void VariantTable::textEditedAction(int row, int column)
     qDebug() << "VariantTable::textEditedAction : row:" << row
              << " col:" << column;
 
-    editop->tableEditVariantAction(LOCALINDEX, row, getLocalVariants(row), ProcessXmlListGenerator::TABLE_EDIT);
+    editop->tableEditVariantAction(LOCALINDEX, row, getLocalVariants(row), UiCommandMap::LV_EDIT);
 }
 
 void VariantTable::insertItem(int row)

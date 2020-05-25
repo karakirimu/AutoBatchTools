@@ -165,10 +165,10 @@ void VariantTree::addAction()
 
     if(rootindex == TREE_GLOBAL){
         editop->treeEditGVariantAction(count, getEmptyVariants() \
-                                       , ProcessXmlListGenerator::TREE_ADD);
+                                       , UiCommandMap::GV_ADD_TREE);
     }else if(rootindex == TREE_LOCAL){
         editop->treeEditLVariantAction(count, getEmptyVariants() \
-                                       , ProcessXmlListGenerator::TREE_ADD, LOCALINDEX);
+                                       , UiCommandMap::LV_ADD, LOCALINDEX);
     }
 
     this->insertRow(count);
@@ -206,10 +206,10 @@ void VariantTree::deleteAction()
 
             if(rootindex == TREE_GLOBAL){
                 editop->treeEditGVariantAction(indexFromItem(tmp).row() \
-                        , getVariants(tmp), ProcessXmlListGenerator::TREE_DELETE);
+                        , getVariants(tmp), UiCommandMap::GV_DEL_TREE);
             }else if(rootindex == TREE_LOCAL){
                 editop->treeEditLVariantAction(indexFromItem(tmp).row() \
-                        , getVariants(tmp), ProcessXmlListGenerator::TREE_DELETE, LOCALINDEX);
+                        , getVariants(tmp), UiCommandMap::LV_DELETE, LOCALINDEX);
             }
 
             tmp->parent()->removeChild(tmp);
@@ -243,10 +243,10 @@ void VariantTree::cutAction()
 
             if(rootindex == TREE_GLOBAL){
                 editop->treeEditGVariantAction(indexFromItem(tmp).row() \
-                        , getVariants(tmp), ProcessXmlListGenerator::TREE_DELETE);
+                        , getVariants(tmp), UiCommandMap::GV_DEL_TREE);
             }else if(rootindex == TREE_LOCAL){
                 editop->treeEditLVariantAction(indexFromItem(tmp).row() \
-                        , getVariants(tmp), ProcessXmlListGenerator::TREE_DELETE, LOCALINDEX);
+                        , getVariants(tmp), UiCommandMap::LV_DELETE, LOCALINDEX);
             }
 
             tmp->parent()->removeChild(tmp);
@@ -319,10 +319,10 @@ void VariantTree::pasteAction()
        //insert
        if(rootindex == TREE_GLOBAL){
            editop->treeEditGVariantAction(row \
-                   , intext, ProcessXmlListGenerator::TREE_INSERT);
+                   , intext, UiCommandMap::GV_INS_TREE);
        }else if(rootindex == TREE_LOCAL){
            editop->treeEditLVariantAction(row \
-                   , intext, ProcessXmlListGenerator::TREE_INSERT, LOCALINDEX);
+                   , intext, UiCommandMap::LV_INSERT, LOCALINDEX);
        }
     }
 
@@ -441,10 +441,10 @@ void VariantTree::itemDataUpdate(const QModelIndex &topLeft, const QModelIndex &
     int rootindex = this->currentIndex().parent().row();
     if(rootindex == TREE_GLOBAL){
         editop->treeEditGVariantAction(this->currentIndex().row() \
-                , getVariants(this->currentItem()), ProcessXmlListGenerator::TREE_EDIT);
+                , getVariants(this->currentItem()), UiCommandMap::GV_EDIT_TREE);
     }else if(rootindex == TREE_LOCAL){
         editop->treeEditLVariantAction(this->currentIndex().row() \
-                , getVariants(this->currentItem()), ProcessXmlListGenerator::TREE_EDIT, LOCALINDEX);
+                , getVariants(this->currentItem()), UiCommandMap::LV_EDIT, LOCALINDEX);
     }
 
 }
@@ -724,19 +724,19 @@ void VariantTree::dropEvent(QDropEvent *event)
 
             if(sourceindex == TREE_GLOBAL){
                 editop->treeEditGVariantAction(mlist.at(i).row() \
-                        , getVariants(itemFromIndex(mlist.at(i))), ProcessXmlListGenerator::TREE_DELETE);
+                        , getVariants(itemFromIndex(mlist.at(i))), UiCommandMap::GV_DEL_TREE);
             }else if(sourceindex == TREE_LOCAL){
                 editop->treeEditLVariantAction(mlist.at(i).row() \
-                        , getVariants(itemFromIndex(mlist.at(i))), ProcessXmlListGenerator::TREE_DELETE, LOCALINDEX);
+                        , getVariants(itemFromIndex(mlist.at(i))), UiCommandMap::GV_DEL_TREE, LOCALINDEX);
             }
 
             //dest insert
             if(destindex == TREE_GLOBAL){
                 editop->treeEditGVariantAction(droppedIndex.row() + i \
-                        , getVariants(itemFromIndex(mlist.at(i))), ProcessXmlListGenerator::TREE_INSERT);
+                        , getVariants(itemFromIndex(mlist.at(i))), UiCommandMap::GV_INS_TREE);
             }else if(destindex == TREE_LOCAL){
                 editop->treeEditLVariantAction(droppedIndex.row() + i \
-                        , getVariants(itemFromIndex(mlist.at(i))), ProcessXmlListGenerator::TREE_INSERT, LOCALINDEX);
+                        , getVariants(itemFromIndex(mlist.at(i))), UiCommandMap::GV_INS_TREE, LOCALINDEX);
             }
 
             qDebug()<< "[VariantTree::dropEvent] source : " << mlist.at(i).row() \

@@ -186,7 +186,7 @@ void CommandTable::addAction()
 {
     int row = this->rowCount();
     this->insertRow(row);
-    emit updateTable(row, "", ProcessXmlListGenerator::TABLE_ADD);
+    emit updateTable(row, "", UiCommandMap::E_ADD_TABLE);
 
     //for useability
     this->setCurrentItem(itemAt(row,0));
@@ -215,7 +215,7 @@ void CommandTable::deleteAction()
 
     while(!lists.empty()){
         this->removeRow(lists.at(0).row());
-        emit updateTable(lists.at(0).row(), "", ProcessXmlListGenerator::TABLE_DELETE);
+        emit updateTable(lists.at(0).row(), "", UiCommandMap::E_DELETE_TABLE);
 
         lists = this->selectedIndexes();
     }
@@ -238,7 +238,7 @@ void CommandTable::cutAction()
         tmp.append(mlist.at(i).data().toString());
         if(i < rows) tmp.append("\t");
 
-        emit updateTable(mlist.at(i).row(), "", ProcessXmlListGenerator::TABLE_CUT);
+        emit updateTable(mlist.at(i).row(), "", UiCommandMap::E_CUT_TABLE);
     }
 
     //force delete
@@ -291,7 +291,7 @@ void CommandTable::pasteAction()
        this->blockSignals(true);
        this->setItem(row, 0, new QTableWidgetItem(text.at(i)));
        this->blockSignals(false);
-       emit updateTable(row, text.at(i), ProcessXmlListGenerator::TABLE_PASTE);
+       emit updateTable(row, text.at(i), UiCommandMap::E_PASTE_TABLE);
     }
 }
 
@@ -315,9 +315,8 @@ void CommandTable::pasteSpaceAction()
        this->blockSignals(true);
        this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
        this->blockSignals(false);
-       emit updateTable(row + i, text.at(i), ProcessXmlListGenerator::TABLE_PASTE);
+       emit updateTable(row + i, text.at(i), UiCommandMap::E_PASTE_TABLE);
     }
-
 }
 
 void CommandTable::pasteEnterAction()
@@ -342,7 +341,7 @@ void CommandTable::pasteEnterAction()
        this->blockSignals(true);
        this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
        this->blockSignals(false);
-       emit updateTable(row + i, text.at(i), ProcessXmlListGenerator::TABLE_PASTE);
+       emit updateTable(row + i, text.at(i), UiCommandMap::E_PASTE_TABLE);
     }
 }
 
@@ -398,7 +397,7 @@ void CommandTable::openDirectoryAction()
 void CommandTable::editedAction(int row, int column)
 {
     qDebug() << "[CommandTable : editedAction]";
-     emit updateTable(row, this->item(row, column)->text(), ProcessXmlListGenerator::TABLE_EDIT);
+    emit updateTable(row, this->item(row, column)->text(), UiCommandMap::E_EDIT_TABLE);
 }
 
 /**
