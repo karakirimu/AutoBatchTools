@@ -52,7 +52,7 @@ void EditLoopMax::redo()
 
 int EditLoopMax::id() const
 {
-    return UiCommandMap::I_RECURSIVE_LOOPMAX_INT;
+    return UiCommandMap::I_PROCESSMAX_INT;
 }
 
 bool EditLoopMax::mergeWith(const QUndoCommand *other)
