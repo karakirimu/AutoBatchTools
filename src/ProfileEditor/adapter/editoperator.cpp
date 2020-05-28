@@ -45,10 +45,11 @@ EditOperator::~EditOperator()
 }
 
 /**
- * @brief EditOperator::read
- * @param id
- * @param list
- * @return
+ * @fn EditOperator::read
+ * @brief Read cache data corresponding to id
+ * @param id   Row number to read, starting from 0
+ * @param list Pointer to store the result
+ * @return Returns true if successful
  */
 bool EditOperator::read(int id, EditorCache *list)
 {
@@ -65,7 +66,7 @@ bool EditOperator::read(int id, EditorCache *list)
 /**
  * @fn EditOperator::readAll
  * @brief Get cache data pointer
- * @param list Pointer of EditorCacheList
+ * @param list Pointer to store the result
  */
 void EditOperator::readAll(QList<EditorCache> *list)
 {
@@ -99,7 +100,7 @@ void EditOperator::insertAction(int index, EditorCache *editorcache)
 /**
  * @fn EditOperator::deleteAction
  * @brief Delete specified XML index.
- * @param id Deleted XML index
+ * @param id Row number to read, starting from 0
  */
 void EditOperator::deleteAction(int id)
 {
@@ -113,7 +114,7 @@ void EditOperator::deleteAction(int id)
 /**
  * @fn EditOperator::editTabAction
  * @brief Called when the function tab is changed
- * @param id       Cache data id
+ * @param id       Row number to read, starting from 0
  * @param newindex New tab position
  */
 void EditOperator::editTabAction(int id, int newindex)
@@ -127,7 +128,7 @@ void EditOperator::editTabAction(int id, int newindex)
 /**
  * @fn EditOperator::comboboxLocalValAction
  * @brief Called when changing the combo box of the file search return variable
- * @param id    Cache data id
+ * @param id    Row number to read, starting from 0
  * @param mnew  Changed variable name
  */
 void EditOperator::comboboxLocalValAction(int id, QString mnew)
@@ -144,7 +145,7 @@ void EditOperator::comboboxLocalValAction(int id, QString mnew)
 /**
  * @fn EditOperator::comboboxSearchAction
  * @brief Called when the file search setting name is changed
- * @param id     Cache data id
+ * @param id     Row number to read, starting from 0
  * @param newstr New setting name
  * @param newval New setting combobox index
  */
@@ -158,8 +159,9 @@ void EditOperator::comboboxSearchAction(int id, QString newstr, int newval)
 }
 
 /**
- * @brief EditOperator::comboboxPluginAction
- * @param id      Cache data id
+ * @fn EditOperator::comboboxPluginAction
+ * @brief The function of the plug-in selection combo box on the Plugin tab
+ * @param id      Row number to read, starting from 0
  * @param newstr  New setting name
  * @param newfile New setting plugin file path
  */
@@ -172,10 +174,11 @@ void EditOperator::comboboxPluginAction(int id, QString newstr, QString newfile)
 }
 
 /**
- * @brief EditOperator::comboboxProfileAction
- * @param id
- * @param newstr
- * @param newfile
+ * @fn EditOperator::comboboxProfileAction
+ * @brief The function of the profile selection combo box on the ProfileLoad tab
+ * @param id      Row number to read, starting from 0
+ * @param newstr  New selected profile name
+ * @param newfile New selected profile file path
  */
 void EditOperator::comboboxProfileAction(int id, QString newstr, QString newfile)
 {
@@ -190,9 +193,10 @@ void EditOperator::comboboxProfileAction(int id, QString newstr, QString newfile
 
 
 /**
- * @brief EditOperator::spinTimeoutAction
- * @param id
- * @param newvalue
+ * @fn EditOperator::spinTimeoutAction
+ * @brief The function of timeout value in spin box on the Execute tab
+ * @param id       Row number to read, starting from 0
+ * @param newvalue Timeout time in ms
  */
 void EditOperator::spinTimeoutAction(int id, int newvalue)
 {
@@ -203,9 +207,10 @@ void EditOperator::spinTimeoutAction(int id, int newvalue)
 }
 
 /**
- * @brief EditOperator::spinLoopMaxAction
- * @param id
- * @param newvalue
+ * @fn EditOperator::spinLoopMaxAction
+ * @brief The function to set the maximum number of input file processing
+ * @param id       Row number to read, starting from 0
+ * @param newvalue Maximum number of file inputs
  */
 void EditOperator::spinLoopMaxAction(int id, int newvalue)
 {
@@ -216,9 +221,10 @@ void EditOperator::spinLoopMaxAction(int id, int newvalue)
 }
 
 /**
- * @brief EditOperator::spinLoopArgumentsAction
- * @param id
- * @param newvalue
+ * @fn EditOperator::spinLoopArgumentsAction
+ * @brief The function of setting arguments in one process loop in spin box on the Information tab
+ * @param id       Row number to read, starting from 0
+ * @param newvalue Number of arguments used in one process loop
  */
 void EditOperator::spinLoopArgumentsAction(int id, int newvalue)
 {
@@ -229,9 +235,10 @@ void EditOperator::spinLoopArgumentsAction(int id, int newvalue)
 }
 
 /**
- * @brief EditOperator::spinLoopRecursiveAction
- * @param id
- * @param newvalue
+ * @fn EditOperator::spinLoopRecursiveAction
+ * @brief The function of maximum recursive count value in the spin box on the Information tab
+ * @param id       Row number to read, starting from 0
+ * @param newvalue Maximum count in a recursive loop
  */
 void EditOperator::spinLoopRecursiveAction(int id, int newvalue)
 {
@@ -242,9 +249,10 @@ void EditOperator::spinLoopRecursiveAction(int id, int newvalue)
 }
 
 /**
- * @brief EditOperator::radioSearchOutputAction
- * @param id
- * @param newvalue
+ * @fn EditOperator::radioSearchOutputAction
+ * @brief The function that determines the output destination of search results on the FileSearch tab
+ * @param id       Row number to read, starting from 0
+ * @param newvalue Variant : 0, External file : 1
  */
 void EditOperator::radioSearchOutputAction(int id, int newvalue)
 {
@@ -255,9 +263,11 @@ void EditOperator::radioSearchOutputAction(int id, int newvalue)
 }
 
 /**
- * @brief EditOperator::radioSearchFileOutputTypeAction
- * @param id
- * @param newvalue
+ * @fn EditOperator::radioSearchFileOutputTypeAction
+ * @brief The function that determines the writing method
+ *        when outputting an external file on the FileSearch tab
+ * @param id       Row number to read, starting from 0
+ * @param newvalue Append : 0, Overwrite : 1
  */
 void EditOperator::radioSearchFileOutputTypeAction(int id, int newvalue)
 {
@@ -271,10 +281,11 @@ void EditOperator::radioSearchFileOutputTypeAction(int id, int newvalue)
 
 
 /**
- * @brief EditOperator::tableSwapExecAction
- * @param id
- * @param beforeid
- * @param afterid
+ * @fn EditOperator::tableSwapExecAction
+ * @brief Swap arguments in the table on the Execute tab
+ * @param id       Row number to read, starting from 0
+ * @param beforeid The row of the source table in the argument list of selected id
+ * @param afterid  The row of the destination table in the argument list of the selected id
  */
 void EditOperator::tableSwapExecAction(int id, int beforeid, int afterid)
 {
@@ -285,10 +296,11 @@ void EditOperator::tableSwapExecAction(int id, int beforeid, int afterid)
 }
 
 /**
- * @brief EditOperator::tableSwapPluginAction
- * @param id
- * @param beforeid
- * @param afterid
+ * @fn EditOperator::tableSwapPluginAction
+ * @brief Swap arguments in the table on the Plugin tab
+ * @param id       Row number to read, starting from 0
+ * @param beforeid The row of the source table in the argument list of selected id
+ * @param afterid  The row of the destination table in the argument list of the selected id
  */
 void EditOperator::tableSwapPluginAction(int id, int beforeid, int afterid)
 {
@@ -302,11 +314,12 @@ void EditOperator::tableSwapPluginAction(int id, int beforeid, int afterid)
 
 
 /**
- * @brief EditOperator::tableEditVariantAction
- * @param id
- * @param tableid
- * @param variants
- * @param operation
+ * @fn EditOperator::tableEditVariantAction
+ * @brief The function to edit the argument at the specified position in the table on the Variant tree
+ * @param id        Row number to read, starting from 0
+ * @param tableid   The line number of the edited argument table in the Variant tree
+ * @param variants  Variant and value pair
+ * @param operation Operation defined in UiCommandMap
  */
 void EditOperator::tableEditVariantAction(int id, int tableid, QStringList variants, int operation)
 {
@@ -317,11 +330,12 @@ void EditOperator::tableEditVariantAction(int id, int tableid, QStringList varia
 }
 
 /**
- * @brief EditOperator::tableEditExecAction
- * @param id
- * @param tableid
- * @param newstr
- * @param operation
+ * @fn EditOperator::tableEditExecAction
+ * @brief The function to edit the argument at the specified position in the table on the Execute tab
+ * @param id        Row number to read, starting from 0
+ * @param tableid   The line number of the edited argument table in the Execute tab
+ * @param newstr    Argument value
+ * @param operation Operation defined in UiCommandMap
  */
 void EditOperator::tableEditExecAction(int id, int tableid, QString newstr, int operation)
 {
@@ -332,11 +346,12 @@ void EditOperator::tableEditExecAction(int id, int tableid, QString newstr, int 
 }
 
 /**
- * @brief EditOperator::tableEditPluginAction
- * @param id
- * @param tableid
- * @param newstr
- * @param operation
+ * @fn EditOperator::tableEditPluginAction
+ * @brief The function to edit the argument at the specified position in the table on the Plugin tab
+ * @param id        Row number to read, starting from 0
+ * @param tableid   The line number of the edited argument table in the Plugin tab
+ * @param newstr    Argument value
+ * @param operation Operation defined in UiCommandMap
  */
 void EditOperator::tableEditPluginAction(int id, int tableid, QString newstr, int operation)
 {
@@ -347,10 +362,11 @@ void EditOperator::tableEditPluginAction(int id, int tableid, QString newstr, in
 }
 
 /**
- * @brief EditOperator::tableEditPluginAction
- * @param id
- * @param newstrlist
- * @param operation
+ * @fn EditOperator::tableEditPluginAction
+ * @brief The function to update all argument list tables in plugin tab
+ * @param id         Row number to read, starting from 0
+ * @param newstrlist Argument list edited on the Plugins tab
+ * @param operation  Operation defined in UiCommandMap
  */
 void EditOperator::tableEditPluginAction(int id, QStringList newstrlist, int operation)
 {
@@ -361,10 +377,11 @@ void EditOperator::tableEditPluginAction(int id, QStringList newstrlist, int ope
 }
 
 /**
- * @brief EditOperator::tableDragDropExecAction
- * @param id
- * @param beforeid
- * @param afterid
+ * @fn EditOperator::tableDragDropExecAction
+ * @brief The function when dragging and dropping in the table on the Execute tab
+ * @param id       Row number to read, starting from 0
+ * @param beforeid The row of the source table in the argument list of selected id
+ * @param afterid  The row of the destination table in the argument list of the selected id
  */
 void EditOperator::tableDragDropExecAction(int id, QList<int> beforeid, int afterid)
 {
@@ -375,10 +392,11 @@ void EditOperator::tableDragDropExecAction(int id, QList<int> beforeid, int afte
 }
 
 /**
- * @brief EditOperator::tableDragDropPluginAction
- * @param id
- * @param beforeid
- * @param afterid
+ * @fn EditOperator::tableDragDropPluginAction
+ * @brief The function when dragging and dropping in the table on the Plugin tab
+ * @param id       Row number to read, starting from 0
+ * @param beforeid The row of the source table in the argument list of selected id
+ * @param afterid  The row of the destination table in the argument list of the selected id
  */
 void EditOperator::tableDragDropPluginAction(int id, QList<int> beforeid, int afterid)
 {
@@ -389,10 +407,11 @@ void EditOperator::tableDragDropPluginAction(int id, QList<int> beforeid, int af
 }
 
 /**
- * @brief EditOperator::treeEditGVariantAction
- * @param id
- * @param variants
- * @param operation
+ * @fn EditOperator::treeEditGVariantAction
+ * @brief The function called when the Global value is edited on the Variant tree
+ * @param id Row number to read, starting from 0
+ * @param variants The list containing variable and value
+ * @param operation Operation defined in UiCommandMap
  */
 void EditOperator::treeEditGVariantAction(int id, QStringList variants, int operation)
 {
@@ -401,9 +420,10 @@ void EditOperator::treeEditGVariantAction(int id, QStringList variants, int oper
 }
 
 /**
- * @brief EditOperator::treeSwapGVariantAction
- * @param beforeid
- * @param afterid
+ * @fn EditOperator::treeSwapGVariantAction
+ * @brief Swap positions of variant and value pair in the table on the Variant tree
+ * @param beforeid The row of the source table in the argument list
+ * @param afterid  The row of the destination table in the argument list
  */
 void EditOperator::treeSwapGVariantAction(int beforeid, int afterid)
 {
@@ -412,11 +432,12 @@ void EditOperator::treeSwapGVariantAction(int beforeid, int afterid)
 }
 
 /**
- * @brief EditOperator::treeEditLVariantAction
- * @param id
- * @param variants
- * @param operation
- * @param localindex
+ * @fn EditOperator::treeEditLVariantAction
+ * @brief The function called when the Local value is edited on the Variant tree
+ * @param id         Row number to read, starting from 0
+ * @param variants   The list containing variable and value
+ * @param operation  Operation defined in UiCommandMap
+ * @param localindex Row number in Local variant (Current index: 1)
  */
 void EditOperator::treeEditLVariantAction(int id, QStringList variants, int operation, int localindex)
 {
@@ -425,10 +446,11 @@ void EditOperator::treeEditLVariantAction(int id, QStringList variants, int oper
 }
 
 /**
- * @brief EditOperator::treeSwapLVariantAction
- * @param beforeid
- * @param afterid
- * @param localindex
+ * @fn EditOperator::treeSwapLVariantAction
+ * @brief Swap positions of variant and value pair in the table on the Variant tree
+ * @param beforeid   The row of the source table in the argument list of selected id
+ * @param afterid    The row of the destination table in the argument list of the selected id
+ * @param localindex Row number in Local variant (Current index: 1)
  */
 void EditOperator::treeSwapLVariantAction(int beforeid, int afterid, int localindex)
 {
@@ -441,9 +463,10 @@ void EditOperator::treeSwapLVariantAction(int beforeid, int afterid, int localin
 
 
 /**
- * @brief EditOperator::textFileOutputAction
- * @param id
- * @param newstr
+ * @fn EditOperator::textFileOutputAction
+ * @brief The output file path in QLineEdit on FileSearch tab
+ * @param id Row number to read, starting from 0
+ * @param newstr Output file path
  */
 void EditOperator::textFileOutputAction(int id, QString newstr)
 {
@@ -454,9 +477,10 @@ void EditOperator::textFileOutputAction(int id, QString newstr)
 }
 
 /**
- * @brief EditOperator::textProjectAuthorAction
- * @param id
- * @param newstr
+ * @fn EditOperator::textProjectAuthorAction
+ * @brief Author name in QLineEdit on the Information tab
+ * @param id     Row number to read, starting from 0
+ * @param newstr Author name
  */
 void EditOperator::textProjectAuthorAction(int id, QString newstr)
 {
@@ -467,9 +491,10 @@ void EditOperator::textProjectAuthorAction(int id, QString newstr)
 }
 
 /**
- * @brief EditOperator::textProjectDescriptAction
- * @param id
- * @param newstr
+ * @fn EditOperator::textProjectDescriptAction
+ * @brief Project description in QLineEdit on the Information tab
+ * @param id     Row number to read, starting from 0
+ * @param newstr Project description
  */
 void EditOperator::textProjectDescriptAction(int id, QString newstr)
 {
@@ -480,9 +505,10 @@ void EditOperator::textProjectDescriptAction(int id, QString newstr)
 }
 
 /**
- * @brief EditOperator::textProjectNameAction
- * @param id
- * @param newstr
+ * @fn EditOperator::textProjectNameAction
+ * @brief Project name in QLineEdit on the Information tab
+ * @param id     Row number to read, starting from 0
+ * @param newstr Project name
  */
 void EditOperator::textProjectNameAction(int id, QString newstr)
 {
@@ -493,9 +519,10 @@ void EditOperator::textProjectNameAction(int id, QString newstr)
 }
 
 /**
- * @brief EditOperator::textProjectVerAction
- * @param id
- * @param newstr
+ * @fn EditOperator::textProjectVerAction
+ * @brief Project version in QLineEdit on the Information tab
+ * @param id     Row number to read, starting from 0
+ * @param newstr Project version
  */
 void EditOperator::textProjectVerAction(int id, QString newstr)
 {
@@ -506,9 +533,11 @@ void EditOperator::textProjectVerAction(int id, QString newstr)
 }
 
 /**
- * @brief EditOperator::textSearchSeparateAction
- * @param id
- * @param newstr
+ * @fn EditOperator::textSearchSeparateAction
+ * @brief The function of QLineEdit to enter the character
+ *        that separates the search result file name of FileSearch tab
+ * @param id     Row number to read, starting from 0
+ * @param newstr New separator text
  */
 void EditOperator::textSearchSeparateAction(int id, QString newstr)
 {
@@ -522,9 +551,10 @@ void EditOperator::textSearchSeparateAction(int id, QString newstr)
 
 
 /**
- * @brief EditOperator::checkAllowInputAction
- * @param id
- * @param newcheck
+ * @fn EditOperator::checkAllowInputAction
+ * @brief The function to allow or disallow input files to profile
+ * @param id       Row number to read, starting from 0
+ * @param newcheck True if enabled
  */
 void EditOperator::checkAllowInputAction(int id, bool newcheck)
 {
@@ -535,9 +565,10 @@ void EditOperator::checkAllowInputAction(int id, bool newcheck)
 }
 
 /**
- * @brief EditOperator::checkLoopInfAction
- * @param id
- * @param newcheck
+ * @fn EditOperator::checkLoopInfAction
+ * @brief The function of the checkbox to decide whether to process all input files
+ * @param id       Row number to read, starting from 0
+ * @param newcheck True if enabled
  */
 void EditOperator::checkLoopInfAction(int id, bool newcheck)
 {
@@ -548,9 +579,11 @@ void EditOperator::checkLoopInfAction(int id, bool newcheck)
 }
 
 /**
- * @brief EditOperator::checkSearchInputAction
- * @param id
- * @param newcheck
+ * @fn EditOperator::checkSearchInputAction
+ * @brief Checkbox for the function that substitutes the input file
+ *        list at profile startup from the output of the search profile
+ * @param id       Row number to read, starting from 0
+ * @param newcheck True if enabled
  */
 void EditOperator::checkSearchInputAction(int id, bool newcheck)
 {
@@ -561,9 +594,10 @@ void EditOperator::checkSearchInputAction(int id, bool newcheck)
 }
 
 /**
- * @brief EditOperator::checkTimeoutAction
- * @param id
- * @param newcheck
+ * @fn EditOperator::checkTimeoutAction
+ * @brief The function to enable timeout when an application does not work
+ * @param id       Row number to read, starting from 0
+ * @param newcheck True if enabled
  */
 void EditOperator::checkTimeoutAction(int id, bool newcheck)
 {
@@ -574,9 +608,11 @@ void EditOperator::checkTimeoutAction(int id, bool newcheck)
 }
 
 /**
- * @brief EditOperator::checkRunDetachAction
- * @param id
- * @param newcheck
+ * @fn EditOperator::checkRunDetachAction
+ * @brief The function to decide whether to execute the next process
+ *        without waiting for the end after starting the application
+ * @param id       Row number to read, starting from 0
+ * @param newcheck True if enabled
  */
 void EditOperator::checkRunDetachAction(int id, bool newcheck)
 {
@@ -587,9 +623,10 @@ void EditOperator::checkRunDetachAction(int id, bool newcheck)
 }
 
 /**
- * @brief EditOperator::checkOnlyNormalAction
- * @param id
- * @param newcheck
+ * @fn EditOperator::checkOnlyNormalAction
+ * @brief The function to select whether to execute only when executed by AutoBatchScheduler
+ * @param id       Row number to read, starting from 0
+ * @param newcheck True if enabled
  */
 void EditOperator::checkOnlyNormalAction(int id, bool newcheck)
 {
@@ -600,9 +637,10 @@ void EditOperator::checkOnlyNormalAction(int id, bool newcheck)
 }
 
 /**
- * @brief EditOperator::checkOnlySearchAction
- * @param id
- * @param newcheck
+ * @fn EditOperator::checkOnlySearchAction
+ * @brief The function to select whether to execute only when executed by AutoBatchScheduler
+ * @param id       Row number to read, starting from 0
+ * @param newcheck True if enabled
  */
 void EditOperator::checkOnlySearchAction(int id, bool newcheck)
 {
@@ -613,9 +651,10 @@ void EditOperator::checkOnlySearchAction(int id, bool newcheck)
 }
 
 /**
- * @brief EditOperator::checkOnlyPluginAction
- * @param id
- * @param newcheck
+ * @fn EditOperator::checkOnlyPluginAction
+ * @brief The function to select whether to execute only when executed by AutoBatchScheduler
+ * @param id       Row number to read, starting from 0
+ * @param newcheck True if enabled
  */
 void EditOperator::checkOnlyPluginAction(int id, bool newcheck)
 {
@@ -626,9 +665,10 @@ void EditOperator::checkOnlyPluginAction(int id, bool newcheck)
 }
 
 /**
- * @brief EditOperator::checkOnlyOtherAction
- * @param id
- * @param newcheck
+ * @fn EditOperator::checkOnlyOtherAction
+ * @brief The function to select whether to execute only when executed by AutoBatchScheduler
+ * @param id       Row number to read, starting from 0
+ * @param newcheck True if enabled
  */
 void EditOperator::checkOnlyOtherAction(int id, bool newcheck)
 {
@@ -643,7 +683,7 @@ void EditOperator::checkOnlyOtherAction(int id, bool newcheck)
 
 /**
  * @brief EditOperator::cutAction
- * @param id
+ * @param id Row number to read, starting from 0
  */
 void EditOperator::cutAction(int id)
 {
@@ -675,9 +715,10 @@ void EditOperator::pasteAction(int id)
 }
 
 /**
- * @brief EditOperator::swapAction
- * @param before
- * @param after
+ * @fn EditOperator::swapAction
+ * @brief Process table swap operation
+ * @param before The row of the source table in the argument list of selected index
+ * @param after  The row of the destination table in the argument list of the selected index
  */
 void EditOperator::swapAction(int before, int after)
 {
@@ -700,11 +741,11 @@ void EditOperator::dragDropAction(QList<int> before, int after)
     undostack->push(com);
 }
 
-bool EditOperator::elementDiffCheck()
-{
+//bool EditOperator::elementDiffCheck()
+//{
 
-    return false;
-}
+//    return false;
+//}
 
 void EditOperator::newAction()
 {

@@ -219,7 +219,7 @@ public slots:
     void dragDropAction(QList<int> before, int after);
 
     //check difference
-    bool elementDiffCheck();
+//    bool elementDiffCheck();
 
 protected:
     void timerEvent(QTimerEvent *event);
