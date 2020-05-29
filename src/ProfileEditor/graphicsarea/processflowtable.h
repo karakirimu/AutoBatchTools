@@ -55,6 +55,7 @@ private slots:
     void insertItem(int id);
     void swapItem(int before, int after);
     void replaceItem(int id);
+//    void moveItem(int before, int beforecount, int after);
 
     //table selection changed
     void selectChanged(int crow, int ccol, int prow, int pcol);

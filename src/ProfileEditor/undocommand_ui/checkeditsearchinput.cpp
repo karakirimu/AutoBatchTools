@@ -31,7 +31,7 @@ CheckEditSearchInput::CheckEditSearchInput(const int &targetindex
 void CheckEditSearchInput::undo()
 {
     EditorCache ec = ptrCache->at(index);
-    ec.info.fileInput = oldCheck;
+    ec.info.fileInputSearch = oldCheck;
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Search input %1").arg(newCheck) \
@@ -41,7 +41,7 @@ void CheckEditSearchInput::undo()
 void CheckEditSearchInput::redo()
 {
     EditorCache ec = ptrCache->at(index);
-    ec.info.fileInput = newCheck;
+    ec.info.fileInputSearch = newCheck;
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Search input %1").arg(newCheck) \

@@ -103,20 +103,36 @@ bool InfoStacked::switchStackedWidget(int after, int function)
 void InfoStacked::updateIndex(QString operation)
 {
     QStringList sep = operation.split(",");
+    int command = sep.last().toInt();
 
-    if(sep.at(0) == "0" && sep.at(1) == QString(UiCommandMap::UNDOREDO_EDIT)){
-        //edit
-        setInfoDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
+    switch (command) {
+    case UiCommandMap::UNDOREDO_EDIT:
+        if(sep.at(0) == "0") setInfoDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
                             EditOperator::SELECT);
-    }else if(sep.at(0) == "2" && sep.at(1) == QString(CommandMap::UNDOREDO_DELETE)){
-        //change stack
-        switchStackedWidget(0, EditOperator::SELECT);
-
-    }else if(sep.at(0) == "2" && sep.at(1) == QString(CommandMap::UNDOREDO_ADD)){
-        //change stack
-        switchStackedWidget(1, EditOperator::SELECT);
-
+        break;
+    case CommandMap::UNDOREDO_DELETE:
+        if(sep.at(0) == "2") switchStackedWidget(0, EditOperator::SELECT);
+        break;
+    case CommandMap::UNDOREDO_ADD:
+        if(sep.at(0) == "2") switchStackedWidget(1, EditOperator::SELECT);
+        break;
+    default:
+        break;
     }
+
+//    if(sep.at(0) == "0" && sep.at(1) == QString(UiCommandMap::UNDOREDO_EDIT)){
+//        //edit
+//        setInfoDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
+//                            EditOperator::SELECT);
+//    }else if(sep.at(0) == "2" && sep.at(1) == QString(CommandMap::UNDOREDO_DELETE)){
+//        //change stack
+//        switchStackedWidget(0, EditOperator::SELECT);
+
+//    }else if(sep.at(0) == "2" && sep.at(1) == QString(CommandMap::UNDOREDO_ADD)){
+//        //change stack
+//        switchStackedWidget(1, EditOperator::SELECT);
+
+//    }
 }
 
 void InfoStacked::reloadAction()

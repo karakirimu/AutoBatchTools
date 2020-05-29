@@ -65,8 +65,12 @@ bool ProcessFlowTable::eventFilter(QObject *obj, QEvent *event)
 {
     QKeyEvent *keyEvent;
 
-    auto mdCheck = [&keyEvent](){
+    auto cmCheck = [&keyEvent](){
         return static_cast<bool>(keyEvent->modifiers() & Qt::ControlModifier);
+    };
+
+    auto amCheck = [&keyEvent](){
+        return static_cast<bool>(keyEvent->modifiers() & Qt::AltModifier);
     };
 
     if (event->type() == QEvent::KeyPress) {
@@ -74,11 +78,11 @@ bool ProcessFlowTable::eventFilter(QObject *obj, QEvent *event)
         switch (keyEvent->key())
         {
         case Qt::Key_Return:
-        case Qt::Key_Enter:  if (mdCheck()) addAction();    break;
-        case Qt::Key_Delete: if (mdCheck()) deleteAction(); break;
+        case Qt::Key_Enter:  if (cmCheck()) addAction();    break;
+        case Qt::Key_Delete: if (cmCheck()) deleteAction(); break;
 
         case Qt::Key_Up:
-            if(mdCheck()){
+            if(amCheck()){
                 upAction();
             }else{
                 if(this->currentRow() != 0)
@@ -87,7 +91,7 @@ bool ProcessFlowTable::eventFilter(QObject *obj, QEvent *event)
             break;
 
         case Qt::Key_Down:
-            if(mdCheck()){
+            if(amCheck()){
                 downAction();
             }else{
                 if(this->rowCount() - 1 != this->currentRow())
@@ -95,10 +99,10 @@ bool ProcessFlowTable::eventFilter(QObject *obj, QEvent *event)
             }
             break;
 
-        case Qt::Key_X:  if(mdCheck()) cutAction();    break;
-        case Qt::Key_C:  if(mdCheck()) copyAction();   break;
-        case Qt::Key_V:  if(mdCheck()) pasteAction();  break;
-        case Qt::Key_R:  if(mdCheck()) reloadAction(); break;
+        case Qt::Key_X:  if(cmCheck()) cutAction();    break;
+        case Qt::Key_C:  if(cmCheck()) copyAction();   break;
+        case Qt::Key_V:  if(cmCheck()) pasteAction();  break;
+        case Qt::Key_R:  if(cmCheck()) reloadAction(); break;
 
         default:
             //qDebug("Ate key press %d", keyEvent->key());
@@ -226,6 +230,8 @@ void ProcessFlowTable::reloadAction()
 #ifdef QT_DEBUG
     qDebug() << "[ProcessFlowTable::reloadAction] elapsed : " << time.elapsed() << "ms";
 #endif
+
+    clearSelection();
     this->blockSignals(false);
 
     selectRow(cur);
@@ -365,11 +371,72 @@ void ProcessFlowTable::replaceItem(int id)
 {
     qDebug() << "[ProcessFlowTable::replaceItem] rowpos " << id;
 
-    this->takeItem(dataToUiIndex(id), 0);
+//    this->takeItem(dataToUiIndex(id), 0);
     this->removeCellWidget(dataToUiIndex(id), 0);
 
     setFlowItem(id);
 }
+
+//void ProcessFlowTable::moveItem(int before, int beforecount, int after)
+//{
+//    QHash<int, QString> column0;
+//    QHash<int, QTableWidgetItem> column1;
+
+//    if(before < after){
+//        for (int i = 0; i < beforecount; i++) {
+//            column0.insert(before + i, this->model()->index(before + i, 0).data().toString());
+//            column1.insert(before + i, *this->item(before + i, 1));
+//        }
+
+//    }else{
+//        int bc = before - beforecount + 1;
+//        for (int i = 0; i < beforecount; i++) {
+//            column0.insert(bc + i, this->model()->index(bc + i, 0).data().toString());
+//            column1.insert(bc + i, *this->item(bc + i, 1));
+//        }
+//    }
+
+//    int deleterow = 0;
+//    bool firstelement = false;
+//    bool lastelement = false;
+
+//    //    int updown = 0;
+//    QString beforedata;
+//    QTableWidgetItem beforeval;
+//    int deductnum = 0;
+
+//    for (int i = 0; i < beforecount; i++) {
+
+//        if(before > after){
+
+//            if(!lastelement){
+//                lastelement = true;
+//                deleterow = before;
+//            }
+
+//            beforedata = column0.value(before - deductnum);
+//            beforeval = column1.value(before - deductnum);
+//            deductnum++;
+
+//        }else{
+
+//            if(!firstelement){
+//                firstelement = true;
+//                deleterow = before;
+//            }
+
+//            beforedata = column0.value(before + i);
+//            beforeval = column1.value(before + i);
+//        }
+
+//        this->blockSignals(true);
+//        this->removeRow(deleterow);
+//        this->insertRow(after);
+//        this->setItem(after, 0, new QTableWidgetItem(beforedata));
+//        this->setItem(after, 1, new QTableWidgetItem(beforeval));
+//        this->blockSignals(false);
+//    }
+//}
 
 void ProcessFlowTable::selectChanged(int crow, int ccol, int prow, int pcol)
 {
@@ -462,8 +529,8 @@ void ProcessFlowTable::setPopupActionDefault()
 
 void ProcessFlowTable::setPopupActionBottom()
 {
-    m_up = addTableAction(ACTION::UP, Qt::CTRL + Qt::Key_Up);
-    m_down = addTableAction(ACTION::DOWN, Qt::CTRL + Qt::Key_Down);
+    m_up = addTableAction(ACTION::UP, Qt::ALT + Qt::Key_Up);
+    m_down = addTableAction(ACTION::DOWN, Qt::ALT + Qt::Key_Down);
 
     contextMenu->addSeparator();
 
@@ -485,7 +552,7 @@ void ProcessFlowTable::setFlowItem(int itemid)
     }
 
     switch (ft.getType(list.type)) {
-    case ft.TYPE::ALLINCLUDE:  setAllIncludeItem(&list, itemid);        break;
+    case ft.TYPE::ALLINCLUDE:  setAllIncludeItem(&list, itemid);  break;
     case ft.TYPE::INFORMATION: setInfoItem(&list, itemid);        break;
     case ft.TYPE::LOCAL:       break;
     case ft.TYPE::EXECUTE:     setExecuteItem(&list, itemid);     break;
@@ -510,7 +577,7 @@ void ProcessFlowTable::setAllFlowItem()
         inner = list.at(n);
 
         switch (ft.getType(inner.type)) {
-        case ft.TYPE::ALLINCLUDE:  setAllIncludeItem(&inner, n);        break;
+        case ft.TYPE::ALLINCLUDE:  setAllIncludeItem(&inner, n);  break;
         case ft.TYPE::INFORMATION: setInfoItem(&inner, n);        break;
         case ft.TYPE::LOCAL:       break;
         case ft.TYPE::EXECUTE:     setExecuteItem(&inner, n);     break;
