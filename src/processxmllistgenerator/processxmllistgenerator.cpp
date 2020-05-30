@@ -31,7 +31,8 @@ ProcessXmlListGenerator::~ProcessXmlListGenerator()
 void ProcessXmlListGenerator::createSeparateList(QList<QStringList> *ctos)
 {
     //get selected index
-    int index = static_cast<QString>(ctos->at(1).at(1)).toInt();
+    int index = static_cast<QString>(fetch(pxc.TAG_FUNCTIONSELECT, ctos)).toInt();
+//    int index = static_cast<QString>(ctos->at(1).at(1)).toInt();
 //    int index = static_cast<QString>(fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, ctos)).toInt();
 
     //remove till first header
@@ -55,22 +56,22 @@ void ProcessXmlListGenerator::createSeparateList(QList<QStringList> *ctos)
     }
 }
 
-void ProcessXmlListGenerator::getListStructure(QList<QStringList> *ctos, QHash<int, int> *posinfo)
-{
-    //dynamic first index generator
-    //take each attributes count
-    QMutableListIterator<QStringList> i(*ctos);
+//void ProcessXmlListGenerator::getListStructure(QList<QStringList> *ctos, QHash<int, int> *posinfo)
+//{
+//    //dynamic first index generator
+//    //take each attributes count
+//    QMutableListIterator<QStringList> i(*ctos);
 
-    int c = 0;
-    int cur = -1;
-    while(i.hasNext()){
-        cur = getType(i.next().at(1));
-        if(cur > -1){
-            posinfo->insert(cur, c);
-        }
-        c++;
-    }
-}
+//    int c = 0;
+//    int cur = -1;
+//    while(i.hasNext()){
+//        cur = static_cast<int>(getType(i.next().at(1)));
+//        if(cur > -1){
+//            posinfo->insert(cur, c);
+//        }
+//        c++;
+//    }
+//}
 
 /**
  * @fn ProcessXmlListGenerator::getType
@@ -80,11 +81,11 @@ void ProcessXmlListGenerator::getListStructure(QList<QStringList> *ctos, QHash<i
  */
 int ProcessXmlListGenerator::getType(QString type)
 {
-    if(type == TYPE_EXEC) return NORMAL;
-    if(type == TYPE_SEARCH) return SEARCH;
-    if(type == TYPE_SCRIPT) return PLUGINS;
-    if(type == TYPE_ANOTHER) return OTHER;
-    return -1;
+    if(type == fs.getString(fs.TYPE::EXECUTE))     return static_cast<int>(TAB::EXECUTE);
+    if(type == fs.getString(fs.TYPE::FILESEARCH))  return static_cast<int>(TAB::FILESEARCH);
+    if(type == fs.getString(fs.TYPE::PLUGIN))      return static_cast<int>(TAB::PLUGINS);
+    if(type == fs.getString(fs.TYPE::PROFILELOAD)) return static_cast<int>(TAB::PROFILELOAD);
+    return static_cast<int>(TAB::INVALID);
 }
 
 /**
@@ -100,8 +101,8 @@ int ProcessXmlListGenerator::fetchCmdFirstPos(QString tag, const QList<QStringLi
     int count = loadbase->count();
     int i = 0;
 
-    if(tag == E_CMD)  tag = E_CMDARGCOUNT;
-    if(tag == PL_CMD) tag = PL_CMDARGCOUNT;
+    if(tag == pxc.TAG_E_CMD_HA1)  tag = pxc.TAG_E_COMMANDCOUNT_INT;
+    if(tag == pxc.TAG_P_CMD_HA1) tag = pxc.TAG_P_COMMANDCOUNT_INT;
 
     while(i < count){
         if(tag == loadbase->at(i).at(0)){
@@ -113,6 +114,11 @@ int ProcessXmlListGenerator::fetchCmdFirstPos(QString tag, const QList<QStringLi
     //cannot find
     return -1;
 
+}
+
+QString ProcessXmlListGenerator::fetch(QString tag, const QList<QStringList> *loadbase)
+{
+    return this->fetch(tag, ATTR_NONE, loadbase, 0);
 }
 
 // If there is no element of "attr", assign PROCESS_NONE to "attr"

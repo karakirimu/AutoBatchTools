@@ -728,7 +728,8 @@ void ProcessFlowTable::setProfileLoadItem(EditorCache *list, int dataid)
         tpxb.setLoadPath(curdata);
 
         if(tpxb.readItem(0, &tlist)){
-            curdata = pxlg.fetch("iname"/*I_NAME*/, ""/*ATTR_NONE*/, &tlist);
+            ProcessXmlConstant pxc;
+            curdata = pxlg.fetch(pxc.TAG_I_NAME, &tlist);
             curdata.append(" - ");
             curdata.append(profile.baseName());
         }

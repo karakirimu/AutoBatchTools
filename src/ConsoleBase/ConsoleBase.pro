@@ -4,12 +4,15 @@
 #
 #-------------------------------------------------
 
+QT       -= gui
 QT       += widgets
 
-QT       -= gui
+# Prevent automatic conversion of dll name
+CONFIG += skip_target_version_ext
 
 TARGET = ConsoleBase
 TEMPLATE = lib
+VERSION = 1.0.0
 
 DEFINES += CONSOLEBASE_LIBRARY
 
@@ -22,7 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 include($$PWD/../build_library_path.pri)
 

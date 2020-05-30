@@ -4,6 +4,8 @@
 #include "processxmlbuilder_global.h"
 #include <../xmlbuilder/xmlbuilder.h>
 #include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <../share/process/processxmlconstant.h>
+#include <../share/process/functiontype.h>
 
 /**
  * @class profile*_xml
@@ -150,75 +152,78 @@ private:
     const QString FIRSTLAYER = "order";
     const QString ATTR = "id";
 
-    //xml attributes (temp)
-    const QString ALL_TYPE                   = "type";
+    ProcessXmlConstant pxc;
+    FunctionType fs;
 
-    // info
-    const QString I_NAME                     = "iname";
-    const QString I_VERSION                  = "ver";
-    const QString I_AUTHOR                   = "author";
-    const QString I_DESCRIPTION              = "desc";
-    const QString I_FILEINPUT                = "finput";
-    const QString I_FILEINPUT_SEARCHCHECK    = "sinput";
-    const QString I_FILESEARCH_NAME          = "fsname";
-    const QString I_RECURSIVE_LOOP           = "rloop";
-    const QString I_RECURSIVE_LOOPARGCOUNT   = "rlarg";
-    const QString I_RECURSIVE_LOOPCOUNT      = "reloop";
+//    //xml attributes (temp)
+//    const QString ALL_TYPE                   = "type";
 
-    // search
-    const QString S_NAME                     = "sname";
-    const QString S_SEPARATOR                = "sep";
-    const QString S_VARIANT                  = "var";
-    const QString S_OUTPUTFILE               = "output";
-    const QString S_OUTPUTFILETYPE           = "fitype";
+//    // info
+//    const QString I_NAME                     = "iname";
+//    const QString I_VERSION                  = "ver";
+//    const QString I_AUTHOR                   = "author";
+//    const QString I_DESCRIPTION              = "desc";
+//    const QString I_FILEINPUT                = "finput";
+//    const QString I_FILEINPUT_SEARCHCHECK    = "sinput";
+//    const QString I_FILESEARCH_NAME          = "fsname";
+//    const QString I_RECURSIVE_LOOP           = "rloop";
+//    const QString I_RECURSIVE_LOOPARGCOUNT   = "rlarg";
+//    const QString I_RECURSIVE_LOOPCOUNT      = "reloop";
 
-    // profile
+//    // search
+//    const QString S_NAME                     = "sname";
+//    const QString S_SEPARATOR                = "sep";
+//    const QString S_VARIANT                  = "var";
+//    const QString S_OUTPUTFILE               = "output";
+//    const QString S_OUTPUTFILETYPE           = "fitype";
 
-    // XML tag "prname";
-    const QString PR_FILEPATH                = "prfile";
+//    // profile
 
-    // exec(normal)
-    const QString E_TIMEOUT                  = "timeout";
-    const QString E_RUNDETACH                = "detach";
-    const QString E_CMD                      = "exc";
-    const QString E_CMDARGCOUNT              = "cmdc";
+//    // XML tag "prname";
+//    const QString PR_FILEPATH                = "prfile";
 
-    // plugin(extrafunc)
-    const QString PL_NAME                    = "plname";
-    const QString PL_FILEPATH                = "plfile";
-    const QString PL_CMD                     = "plc";
-    const QString PL_CMDARGCOUNT             = "pcmdc";
+//    // exec(normal)
+//    const QString E_TIMEOUT                  = "timeout";
+//    const QString E_RUNDETACH                = "detach";
+//    const QString E_CMD                      = "exc";
+//    const QString E_CMDARGCOUNT              = "cmdc";
 
-    // temp
-    const QString TE_STACKEDWIDGET_POSITION  = "istack";
+//    // plugin(extrafunc)
+//    const QString PL_NAME                    = "plname";
+//    const QString PL_FILEPATH                = "plfile";
+//    const QString PL_CMD                     = "plc";
+//    const QString PL_CMDARGCOUNT             = "pcmdc";
 
-    // local
-    const QString L_VARIANT                  = "lvar";
-    const QString L_VAR_COUNT                = "localc";
+//    // temp
+//    const QString TE_STACKEDWIDGET_POSITION  = "istack";
 
-    // value define (index 1)
-    const QString TYPE_INFO                  = "info";
-    const QString TYPE_EXEC                  = "normal";
-    const QString TYPE_SEARCH                = "search";
-    const QString TYPE_SCRIPT                = "script";
-    const QString TYPE_ANOTHER               = "other";
+//    // local
+//    const QString L_VARIANT                  = "lvar";
+//    const QString L_VAR_COUNT                = "localc";
 
-    const QString TYPE_ALLINCLUDE            = "temp";
-    const QString TYPE_LOCAL                 = "local";
+//    // value define (index 1)
+//    const QString TYPE_INFO                  = "info";
+//    const QString TYPE_EXEC                  = "normal";
+//    const QString TYPE_SEARCH                = "search";
+//    const QString TYPE_SCRIPT                = "script";
+//    const QString TYPE_ANOTHER               = "other";
 
-    // attribute define (index 2)
-    // all
-    const QString ATTR_ONLY_SCHEDULER        = "only";
-    const QString ATTR_POSNUM                = "id";
-    const QString ATTR_RADIOBUTTONPOS        = "radio";
-    const QString ATTR_MAXCOUNT              = "max";
-    const QString ATTR_NONE                  = "";
+//    const QString TYPE_ALLINCLUDE            = "temp";
+//    const QString TYPE_LOCAL                 = "local";
 
-    // normal
-    const QString ATTR_TIMEOUTMS             = "dur";
+//    // attribute define (index 2)
+//    // all
+//    const QString ATTR_ONLY_SCHEDULER        = "only";
+//    const QString ATTR_POSNUM                = "id";
+//    const QString ATTR_RADIOBUTTONPOS        = "radio";
+//    const QString ATTR_MAXCOUNT              = "max";
+//    const QString ATTR_NONE                  = "";
 
-    // local
-    const QString ATTR_LOCALVALUE            = "lval";
+//    // normal
+//    const QString ATTR_TIMEOUTMS             = "dur";
+
+//    // local
+//    const QString ATTR_LOCALVALUE            = "lval";
 
 };
 

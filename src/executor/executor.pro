@@ -7,6 +7,9 @@
 QT       -= gui
 QT       += widgets
 
+# Prevent automatic conversion of dll name
+CONFIG += skip_target_version_ext
+
 TARGET = executor
 TEMPLATE = lib
 VERSION = 1.0.0
@@ -26,6 +29,7 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 
 include($$PWD/../build_library_path.pri)
 include($$PWD/../plugins/plugininterface/plugininterface.pri)
+include($$PWD/../share/share.pri)
 
 SOURCES += \
         executor.cpp

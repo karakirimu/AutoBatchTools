@@ -110,25 +110,25 @@ void ProcessXmlBuilder::createDocument()
     QList<QStringList> newlist;
 
     //info element
-    newlist.append((QStringList() << ALL_TYPE << TYPE_INFO));
-    newlist.append((QStringList() << I_NAME << ""));
-    newlist.append((QStringList() << I_VERSION << ""));
-    newlist.append((QStringList() << I_AUTHOR << ""));
-    newlist.append((QStringList() << I_DESCRIPTION << ""));
+    newlist.append((QStringList() << pxc.TAG_TYPE << fs.getString(fs.TYPE::INFORMATION)));
+    newlist.append((QStringList() << pxc.TAG_I_NAME << ""));
+    newlist.append((QStringList() << pxc.TAG_I_VERSION << ""));
+    newlist.append((QStringList() << pxc.TAG_I_AUTHOR << ""));
+    newlist.append((QStringList() << pxc.TAG_I_DESCRIPTION << ""));
 //    newlist.append((QStringList() << FILEINPUT << "yes" << FILEINPUT_SEARCHCHECK << "no"));
-    newlist.append((QStringList() << I_FILEINPUT << "yes"));
-    newlist.append((QStringList() << I_FILEINPUT_SEARCHCHECK << "no"));
-    newlist.append((QStringList() << I_FILESEARCH_NAME << "" << ATTR_POSNUM << ""));
-    newlist.append((QStringList() << I_RECURSIVE_LOOP << "yes" << ATTR_MAXCOUNT << "1"));
-    newlist.append((QStringList() << I_RECURSIVE_LOOPARGCOUNT << "1"));
-    newlist.append((QStringList() << I_RECURSIVE_LOOPCOUNT << "0"));
+    newlist.append((QStringList() << pxc.TAG_I_FILEINPUT_BOOL << "yes"));
+    newlist.append((QStringList() << pxc.TAG_I_FILEINPUT_SEARCH_BOOL << "no"));
+    newlist.append((QStringList() << pxc.TAG_I_FILESEARCH_NAME << "" << pxc.ATTR_COMMAND_ID_INT << ""));
+    newlist.append((QStringList() << pxc.TAG_I_PROCESS_BOOL_HA1 << "yes" << pxc.ATTR_I_PROCESSMAX_INT << "1"));
+    newlist.append((QStringList() << pxc.TAG_I_ARG_IN_ONELOOP_INT << "1"));
+    newlist.append((QStringList() << pxc.TAG_I_RECURSIVE_LOOPMAX_INT << "0"));
 
     insertItem(&newlist, count());
     newlist.clear();
 
     //local element
-    newlist.append((QStringList() << ALL_TYPE << TYPE_LOCAL));
-    newlist.append((QStringList() << L_VAR_COUNT << "0"));
+    newlist.append((QStringList() << pxc.TAG_TYPE << fs.getString(fs.TYPE::LOCAL)));
+    newlist.append((QStringList() << pxc.TAG_L_VARIANTCOUNT_INT << "0"));
 
     insertItem(&newlist, count());
     newlist.clear();
@@ -153,72 +153,72 @@ void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *l
 //        list->append(QStringList() << element << rxml->readElementText());
 //    }
 
-    if(element == I_NAME
-            || element == I_VERSION
-            || element == S_VARIANT
-            || element == I_AUTHOR
-            || element == I_DESCRIPTION
-            || element == I_FILEINPUT
-            || element == I_FILEINPUT_SEARCHCHECK
-            || element == I_RECURSIVE_LOOPARGCOUNT
-            || element == I_RECURSIVE_LOOPCOUNT
-            || element == E_CMDARGCOUNT
-            || element == E_RUNDETACH
-            || element == L_VAR_COUNT
-            || element == S_SEPARATOR
-            || element == S_OUTPUTFILETYPE
-            || element == PR_FILEPATH
-            || element == PL_CMDARGCOUNT
-            || element == PL_NAME
-            || element == PL_FILEPATH
-            || element == TE_STACKEDWIDGET_POSITION)
+    if(element == pxc.TAG_I_NAME
+            || element == pxc.TAG_I_VERSION
+            || element == pxc.TAG_FS_VARIANT
+            || element == pxc.TAG_I_AUTHOR
+            || element == pxc.TAG_I_DESCRIPTION
+            || element == pxc.TAG_I_FILEINPUT_BOOL
+            || element == pxc.TAG_I_FILEINPUT_SEARCH_BOOL
+            || element == pxc.TAG_I_ARG_IN_ONELOOP_INT
+            || element == pxc.TAG_I_RECURSIVE_LOOPMAX_INT
+            || element == pxc.TAG_E_COMMANDCOUNT_INT
+            || element == pxc.TAG_E_DETACH_BOOL
+            || element == pxc.TAG_L_VARIANTCOUNT_INT
+            || element == pxc.TAG_FS_SEPARATOR
+            || element == pxc.TAG_FS_WRITEOPTION_INT
+            || element == pxc.TAG_PLOAD_FILEPATH
+            || element == pxc.TAG_P_COMMANDCOUNT_INT
+            || element == pxc.TAG_P_NAME
+            || element == pxc.TAG_P_FILEPATH
+            || element == pxc.TAG_FUNCTIONSELECT)
     {
         //add element and text
         list->append(QStringList() << element << rxml->readElementText());
     }
 
-    if(element == ALL_TYPE)
+    if(element == pxc.TAG_TYPE)
     {
         //add element and text, attributes and data
         list->append(QStringList() << element << rxml->readElementText()
-                     << ATTR_ONLY_SCHEDULER << rxml->attributes().value(ATTR_ONLY_SCHEDULER).toString());
+                     << pxc.ATTR_ONLY_SCHEDULER_BOOL << rxml->attributes().value(pxc.ATTR_ONLY_SCHEDULER_BOOL).toString());
     }
 
-    if(element == E_TIMEOUT)
+    if(element == pxc.TAG_E_TIMEOUT_BOOL_HA1)
     {
         //add element and text, attributes and data
         list->append(QStringList() << element << rxml->readElementText()
-                     << ATTR_TIMEOUTMS << rxml->attributes().value(ATTR_TIMEOUTMS).toString());
+                     << pxc.ATTR_TIMEOUT_INT << rxml->attributes().value(pxc.ATTR_TIMEOUT_INT).toString());
     }
 
-    if(element == I_RECURSIVE_LOOP)
+    if(element == pxc.TAG_I_PROCESS_BOOL_HA1)
     {
         //add element and text, attributes and data
         list->append(QStringList() << element << rxml->readElementText()
-                     << ATTR_MAXCOUNT << rxml->attributes().value(ATTR_MAXCOUNT).toString());
+                     << pxc.ATTR_I_PROCESSMAX_INT << rxml->attributes().value(pxc.ATTR_I_PROCESSMAX_INT).toString());
     }
 
     if(/*element == ALL_CMDVALUE*/
-            element == E_CMD
-            || element == PL_CMD
-            || element == S_NAME
-            || element == I_FILESEARCH_NAME)
+            element == pxc.TAG_E_CMD_HA1
+            || element == pxc.TAG_P_CMD_HA1
+            || element == pxc.TAG_FS_NAME_HA1
+            || element == pxc.TAG_I_FILESEARCH_NAME)
     {
         //add to QList
         list->append(QStringList() << element << rxml->readElementText()
-                     << ATTR_POSNUM << rxml->attributes().value(ATTR_POSNUM).toString());
+                     << pxc.ATTR_COMMAND_ID_INT << rxml->attributes().value(pxc.ATTR_COMMAND_ID_INT).toString());
     }
 
-    if(element == L_VARIANT)
+    if(element == pxc.TAG_L_VARIANT_HA1)
     {
         list->append(QStringList() << element << rxml->readElementText()
-                     << ATTR_LOCALVALUE << rxml->attributes().value(ATTR_LOCALVALUE).toString());
+                     << pxc.ATTR_L_VALUE << rxml->attributes().value(pxc.ATTR_L_VALUE).toString());
     }
 
-    if(element == S_OUTPUTFILE)
+    if(element == pxc.TAG_FS_FILEPATH_HA1)
     {
         list->append(QStringList() << element << rxml->readElementText()
-                     << ATTR_RADIOBUTTONPOS << rxml->attributes().value(ATTR_RADIOBUTTONPOS).toString());
+                     << pxc.ATTR_FS_OUTPUTOPTION_INT << rxml->attributes().value(pxc.ATTR_FS_OUTPUTOPTION_INT).toString());
     }
 
 }

@@ -425,7 +425,8 @@ void EditorTab::setProfileLoadDataList(EditorCache *list)
         tpxb.setLoadPath(curdata);
 
         if(tpxb.readItem(0, &tlist)){
-            curdata = xgen.fetch("iname"/*I_NAME*/, ""/*ATTR_NONE*/, &tlist);
+            ProcessXmlConstant pxc;
+            curdata = xgen.fetch(pxc.TAG_I_NAME, &tlist);
         }
 
     }else{

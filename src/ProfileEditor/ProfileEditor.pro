@@ -216,7 +216,9 @@ RESOURCES += \
 #include(undocommand/undocommand.pri)
 #include(undocommand_ui/undocommand_ui.pri)
 
+# direct loading files
 include($$PWD/../plugins/plugininterface/plugininterface.pri)
+include($$PWD/../share/share.pri)
 
 LIBS += \
         -L$$LIBRARYPATH -lVariantConverter \

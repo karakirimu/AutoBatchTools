@@ -16,7 +16,7 @@ win32-msvc* {
 
 SUBDIRS += \
           $$PWD\src\variantconverter \
-#          $$PWD\src\convertchecker \
+#         $$PWD\src\convertchecker \
 #1
           $$PWD\src\xmlbuilder \
           $$PWD\src\searchxmlbuilder \
