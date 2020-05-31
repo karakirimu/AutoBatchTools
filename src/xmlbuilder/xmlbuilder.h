@@ -61,7 +61,11 @@ protected:
 
     bool readItem(int itemid, QString firstlayername, QString attr, QList<QStringList> *itemlist);
     bool readAllItem(QString firstlayername, QString attr, QList<QList<QStringList> *> *itemlist);
-    bool writeAllItem(QString root, QString firstlayername, QString attr, const QList<QList<QStringList> *> *itemlist);
+
+    bool writeAllItem(QString root, QString rootattr, QString rootattrvalue,
+                      QString firstlayername, QString attr,
+                      const QList<QList<QStringList> *> *itemlist);
+
     bool deleteItem(int itemid, QString firstlayername, QString attr);
     void swapItem(int beforeitemid, int afteritemid, QString rootelement, QString firstlayername, QString attr);
     bool overwriteItem(int itemid, QString rootelement, QString firstlayername, QString attr, const QList<QStringList> *itemlist);

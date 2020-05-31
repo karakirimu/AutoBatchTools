@@ -36,7 +36,8 @@ public:
     explicit BaseXmlBuilder(QObject *parent = nullptr);
     virtual ~BaseXmlBuilder();
 
-    void createXmlBaseDocument(QString rootelement);
+//    void createXmlBaseDocument(QString rootelement);
+    void createXmlBaseDocument(QString rootelement, QString rootattr = "", QString rootattrvalue = "");
     int getElementItemsCount(QString element);
 
 protected:

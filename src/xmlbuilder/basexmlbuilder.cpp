@@ -66,7 +66,29 @@ void BaseXmlBuilder::setFileName(QString filename){
  *
  * @param rootelement : root tag.
  */
-void BaseXmlBuilder::createXmlBaseDocument(QString rootelement)
+//void BaseXmlBuilder::createXmlBaseDocument(QString rootelement)
+//{
+//    openFile(QIODevice::WriteOnly);
+//    //delete older characters
+//    clearFileText();
+
+//    //set device
+//    wxml->setDevice(file);
+
+//    //seek specified line
+//    wxml->setAutoFormatting(true);
+
+//    //set 1 tabs
+//    wxml->setAutoFormattingIndent(-1);
+
+//    wxml->writeStartDocument();
+//    wxml->writeTextElement(rootelement, endLineStr());
+//    wxml->writeEndDocument();
+
+//    closeFile();
+//}
+
+void BaseXmlBuilder::createXmlBaseDocument(QString rootelement, QString rootattr, QString rootattrvalue)
 {
     openFile(QIODevice::WriteOnly);
     //delete older characters
@@ -82,7 +104,15 @@ void BaseXmlBuilder::createXmlBaseDocument(QString rootelement)
     wxml->setAutoFormattingIndent(-1);
 
     wxml->writeStartDocument();
-    wxml->writeTextElement(rootelement, endLineStr());
+    wxml->writeStartElement(rootelement);
+
+    if(rootattr.length() > 0){
+        wxml->writeAttribute(rootattr, rootattrvalue);
+    }
+
+    wxml->writeCharacters(endLineStr());
+
+    wxml->writeEndElement();
     wxml->writeEndDocument();
 
     closeFile();
@@ -97,7 +127,7 @@ void BaseXmlBuilder::createXmlBaseDocument(QString rootelement)
  * @param value      : The value of the attribute.
  * @param withparent : whether to leave tags attr, value.
  *
- * @return
+ * @return True if the process was successful
  * @remarks if it can't get specified element, this function does nothing.
  */
 bool BaseXmlBuilder::deleteElementGroup(QString element, QString attr, int value, bool withparent)

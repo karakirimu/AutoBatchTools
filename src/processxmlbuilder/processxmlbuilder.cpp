@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "processxmlbuilder.h"
 
 ProcessXmlBuilder::ProcessXmlBuilder(QObject *)
@@ -39,7 +55,7 @@ void ProcessXmlBuilder::setLoadBlankPath(QString filepath)
         setFileName(filepath);
 
         if(count() == 0){
-            createXmlBaseDocument(ROOTELEMENT);
+            createXmlBaseDocument(pxc.TAG_ROOT, pxc.ATTR_ROOT, pxc.ATTRVALUE_ROOT);
         }
 
     }
@@ -60,7 +76,7 @@ bool ProcessXmlBuilder::readItem(int itemid, QList<QStringList> *itemlist)
 #ifdef QT_DEBUG
     qDebug() << "[ProcessXmlBuilder::readItem] :" << itemid;
 #endif
-    return Xmlbuilder::readItem(itemid, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::readItem(itemid, pxc.TAG_FIRSTLAYER, pxc.ATTR_COMMAND_ID_INT, itemlist);
 }
 
 bool ProcessXmlBuilder::readAllItem(QList<QList<QStringList> *> *itemlist)
@@ -68,7 +84,7 @@ bool ProcessXmlBuilder::readAllItem(QList<QList<QStringList> *> *itemlist)
 #ifdef QT_DEBUG
     qDebug() << "[ProcessXmlBuilder::readAllItem]";
 #endif
-    return Xmlbuilder::readAllItem(FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::readAllItem(pxc.TAG_FIRSTLAYER, pxc.ATTR_COMMAND_ID_INT, itemlist);
 }
 
 bool ProcessXmlBuilder::writeAllItem(const QList<QList<QStringList> *> *itemlist)
@@ -76,37 +92,39 @@ bool ProcessXmlBuilder::writeAllItem(const QList<QList<QStringList> *> *itemlist
 #ifdef QT_DEBUG
     qDebug() << "[ProcessXmlBuilder::writeAllItem]";
 #endif
-    return Xmlbuilder::writeAllItem(ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::writeAllItem(pxc.TAG_ROOT, pxc.ATTR_ROOT, pxc.ATTRVALUE_ROOT,
+                                    pxc.TAG_FIRSTLAYER, pxc.ATTR_COMMAND_ID_INT,
+                                    itemlist);
 }
 
 bool ProcessXmlBuilder::insertItem(const QList<QStringList> *itemlist, int index)
 {
-    return Xmlbuilder::overwriteItem(index, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::overwriteItem(index, pxc.TAG_ROOT, pxc.TAG_FIRSTLAYER, pxc.ATTR_COMMAND_ID_INT, itemlist);
 }
 
 bool ProcessXmlBuilder::deleteItem(int itemid)
 {
-    return Xmlbuilder::deleteItem(itemid, FIRSTLAYER, ATTR);
+    return Xmlbuilder::deleteItem(itemid, pxc.TAG_FIRSTLAYER, pxc.ATTR_COMMAND_ID_INT);
 }
 
 bool ProcessXmlBuilder::editItem(int itemid, const QList<QStringList> *itemlist)
 {
-    return Xmlbuilder::overwriteItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::overwriteItem(itemid, pxc.TAG_ROOT, pxc.TAG_FIRSTLAYER, pxc.ATTR_COMMAND_ID_INT, itemlist);
 }
 
 void ProcessXmlBuilder::swapItem(int beforeitemid, int afteritemid)
 {
-    Xmlbuilder::swapItem(beforeitemid, afteritemid, ROOTELEMENT, FIRSTLAYER, ATTR);
+    Xmlbuilder::swapItem(beforeitemid, afteritemid, pxc.TAG_ROOT, pxc.TAG_FIRSTLAYER, pxc.ATTR_COMMAND_ID_INT);
 }
 
 bool ProcessXmlBuilder::overwriteItem(int itemid, const QList<QStringList> *itemlist)
 {
-    return Xmlbuilder::overwriteItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::overwriteItem(itemid, pxc.TAG_ROOT, pxc.TAG_FIRSTLAYER, pxc.ATTR_COMMAND_ID_INT, itemlist);
 }
 
 void ProcessXmlBuilder::createDocument()
 {
-    createXmlBaseDocument(ROOTELEMENT);
+    createXmlBaseDocument(pxc.TAG_ROOT, pxc.ATTR_ROOT, pxc.ATTRVALUE_ROOT);
     QList<QStringList> newlist;
 
     //info element
@@ -142,7 +160,7 @@ void ProcessXmlBuilder::createDocument()
  */
 int ProcessXmlBuilder::count()
 {
-    return getElementItemsCount(FIRSTLAYER);
+    return getElementItemsCount(pxc.TAG_FIRSTLAYER);
 }
 
 void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)

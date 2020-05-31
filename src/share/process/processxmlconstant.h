@@ -21,6 +21,18 @@
 
 class ProcessXmlConstant {
 public:
+    //! Root element name "profile"
+    const QString TAG_ROOT                    = "profile";
+
+    //! ProfileEditor XML version code attribute "version"
+    const QString ATTR_ROOT                   = "version";
+
+    //! ProfileEditor XML version "1.00"
+    const QString ATTRVALUE_ROOT              = "1.00";
+
+    //! Tags that include tags after this tag
+    const QString TAG_FIRSTLAYER              = "order";
+
     //! Shared Tag
     const QString TAG_TYPE                    = "type";
 

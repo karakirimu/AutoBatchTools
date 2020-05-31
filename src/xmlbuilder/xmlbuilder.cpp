@@ -132,7 +132,8 @@ bool Xmlbuilder::readAllItem(QString firstlayername, QString attr,
  * @param itemlist        List of tags below firstlayername
  * @return True if the process is successful.
  */
-bool Xmlbuilder::writeAllItem(QString root, QString firstlayername, QString attr,
+bool Xmlbuilder::writeAllItem(QString root, QString rootattr, QString rootattrvalue,
+                              QString firstlayername, QString attr,
                               const QList<QList<QStringList> *> *itemlist)
 {
     // text clear and create root
@@ -152,6 +153,8 @@ bool Xmlbuilder::writeAllItem(QString root, QString firstlayername, QString attr
 
     wxml->writeStartDocument();
     wxml->writeStartElement(root);
+    wxml->writeAttribute(rootattr, rootattrvalue);
+    wxml->writeCharacters(endLineStr());
 
     int counter = itemlist->count();
     for(int i = 0; i < counter; i++){
