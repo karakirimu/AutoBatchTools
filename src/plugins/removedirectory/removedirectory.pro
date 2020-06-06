@@ -4,12 +4,16 @@
 #
 #-------------------------------------------------
 
-QT       += widgets
+QT       += core gui \
+            widgets
 
-QT       -= gui
-
-TARGET = removedirectory
+TARGET = RemoveDirectory
 TEMPLATE = lib
+
+CONFIG += skip_target_version_ext \ # Prevent automatic conversion of dll name
+          plugin
+
+VERSION = 1.0.0
 
 DEFINES += REMOVEDIRECTORY_LIBRARY
 
@@ -22,16 +26,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+include($$PWD/../plugininterface/plugininterface.pri)
 
 SOURCES += \
         removedirectory.cpp \
-        removedirectorydialog.cpp
+#        removedirectorydialog.cpp \
+        removedirectorywidget.cpp
 
 HEADERS += \
         removedirectory.h \
         removedirectory_global.h  \
-        removedirectorydialog.h
+#        removedirectorydialog.h \
+        removedirectorywidget.h
 
 unix {
     target.path = /usr/lib
@@ -39,7 +47,8 @@ unix {
 }
 
 FORMS += \
-    removedirectorydialog.ui
+#    removedirectorydialog.ui \
+    removedirectorywidget.ui
 
 DISTFILES += \
     removedirectory.json

@@ -1,9 +1,45 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "filetextreplace.h"
+
+FileTextReplace::FileTextReplace()
+{
+    PluginInformation pinfo;
+    pinfo.name = "FileTextReplace";
+    pinfo.version = "1.00";
+    pinfo.author = "karakirimu";
+    pinfo.tooltip = "";
+    pinfo.hassettingwidget = true;
+
+    ftwidget = new FileTextReplaceWidget();
+    pinfo.settingwidget = ftwidget;
+
+    setInformation(pinfo);
+}
+
+FileTextReplace::~FileTextReplace()
+{
+    delete ftwidget;
+}
 
 int FileTextReplace::functionMain(int argc, QStringList *args)
 {
     if(argc < 4){
-        setErrorMessage(tr("Argument is missing"));
+        functionMessage(tr("Argument is missing"), MessageType::Error);
         return -1;
     }
 
@@ -31,20 +67,20 @@ int FileTextReplace::functionMain(int argc, QStringList *args)
     return 0;
 }
 
-int FileTextReplace::launchSettingWidget(QStringList *currentargs, QStringList *resultargs
-                                         , QPoint parentpos, QString parentstylesheet)
-{
-    FileTextReplaceDialog *tdialog = new FileTextReplaceDialog(currentargs);
-    tdialog->move(parentpos - tdialog->rect().center());
-    tdialog->setStyleSheet(parentstylesheet);
+//int FileTextReplace::launchSettingWidget(QStringList *currentargs, QStringList *resultargs
+//                                         , QPoint parentpos, QString parentstylesheet)
+//{
+//    FileTextReplaceDialog *tdialog = new FileTextReplaceDialog(currentargs);
+//    tdialog->move(parentpos - tdialog->rect().center());
+//    tdialog->setStyleSheet(parentstylesheet);
 
-    if(tdialog->exec() == QDialog::Accepted){
-        *resultargs = tdialog->getargs();
-    }
+//    if(tdialog->exec() == QDialog::Accepted){
+//        *resultargs = tdialog->getargs();
+//    }
 
-    delete tdialog;
-    return 0;
-}
+//    delete tdialog;
+//    return 0;
+//}
 
 bool FileTextReplace::writeToText(QString filename, QString text)
 {

@@ -10,7 +10,9 @@ QT       += core gui \
 TARGET = BufferedCopy
 TEMPLATE = lib
 
-CONFIG += plugin
+CONFIG += skip_target_version_ext \ # Prevent automatic conversion of dll name
+          plugin
+
 VERSION = 1.0.0
 
 DEFINES += BUFFEREDCOPY_LIBRARY

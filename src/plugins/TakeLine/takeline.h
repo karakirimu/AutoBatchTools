@@ -14,38 +14,48 @@
  * limitations under the License.
  */
 
-#ifndef FILETEXTREPLACE_H
-#define FILETEXTREPLACE_H
+#ifndef TAKELINEPLUGIN_H
+#define TAKELINEPLUGIN_H
 
-#include "filetextreplace_global.h"
+#include "takeline_global.h"
+#include "takelinewidget.h"
 #include "../plugininterface/extraplugininterface.h"
-#include <QFile>
-#include <QFileInfo>
-#include <QTextStream>
-#include <QRegExp>
-#include <filetextreplacewidget.h>
-//#include <filetextreplacedialog.h>
+//#include "takelinedialog.h"
 
-class FILETEXTREPLACESHARED_EXPORT FileTextReplace
+#include <QFile>
+#include <QTextStream>
+
+class TAKELINEPLUGINSHARED_EXPORT TakeLinePlugin
         : public ExtraPluginInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "abr.ExtraPluginInterface.FileTextReplace" FILE "FileTextReplace.json")
+    Q_PLUGIN_METADATA(IID "abr.ExtraPluginInterface.TakeLinePlugin" FILE "takelineplugin.json")
     Q_INTERFACES(ExtraPluginInterface)
 
 public:
-    FileTextReplace();
-    ~FileTextReplace();
+    TakeLinePlugin();
+    ~TakeLinePlugin();
 
     int functionMain(int argc, QStringList *args);
+
+//    QString tooltipString(){
+//        return tr("This function can take line 'n'.\n"
+//                  "arguments 1 : filename or string with '\\n'\n"
+//                  "arguments 2 : line number(it starts 0)\n"
+//                  "arguments 3 : return local variant name");
+//    }
+
+//    QString version(){ return "v 1.0.0"; }
+//    QString vendor(){ return "karakirimu"; }
+
+//    bool existsSettingWidget(){return true;}
 
 //    int launchSettingWidget(QStringList *currentargs, QStringList *resultargs \
 //                            , QPoint parentpos, QString parentstylesheet);
 
 private:
-    bool writeToText(QString filename, QString text);
-
-    FileTextReplaceWidget *ftwidget;
+    enum {FILEORSTRING, LINENUM, VAR};
+    TakeLineWidget *tlwidget;
 };
 
-#endif // FILETEXTREPLACE_H
+#endif // TAKELINEPLUGIN_H

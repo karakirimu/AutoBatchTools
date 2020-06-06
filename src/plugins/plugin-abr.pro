@@ -11,15 +11,19 @@ win32-msvc* {
         message("msvc 2017")
     }
 
+    equals(MSVC_VER, 14.2){
+        message("msvc 2019")
+    }
+
     QMAKE_CXXFLAGS += /FS
 }
 
 SUBDIRS += \
-          $$PWD\TakeLinePlugin \
+          $$PWD\TakeLine \
           $$PWD\BufferedCopy \
           $$PWD\FFprobeExtpid \
           $$PWD\FileTextReplace \
-          RegExpInputRename \
-          Sleep \
-          makedirectory \
-          removedirectory
+#          RegExpInputRename \
+          $$PWD\Sleep \
+          $$PWD\makedirectory \
+          $$PWD\removedirectory

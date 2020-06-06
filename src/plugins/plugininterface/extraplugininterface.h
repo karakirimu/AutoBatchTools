@@ -74,6 +74,11 @@ protected:
      * @fn applicationVariant
      * @brief Get variables given from AutoBatchRunner etc.
      *        The type to be obtained is determined by InputType.
+     *
+     *        Global : QHash<QString, QString>
+     *        Local  : QHash<QString, QString>
+     *        File   : QStringList
+     *
      * @param type enum class of Input type
      * @param variant
      */

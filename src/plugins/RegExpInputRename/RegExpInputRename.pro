@@ -4,13 +4,18 @@
 #
 #-------------------------------------------------
 
+# obsoleted
+
 QT       += core gui \
             widgets
+
 TARGET = RegExpInputRename
 TEMPLATE = lib
-CONFIG += plugin
 
-VERSION = 1.0.0.0
+CONFIG += skip_target_version_ext \ # Prevent automatic conversion of dll name
+          plugin
+
+VERSION = 1.0.0
 
 DEFINES += REGEXPINPUTRENAME_LIBRARY
 
@@ -23,24 +28,30 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+include($$PWD/../plugininterface/plugininterface.pri)
 
 SOURCES += \
         regexpinputrename.cpp \
-        regexpinputrenamedialog.cpp
+#        regexpinputrenamedialog.cpp \
+        regexpinputrenamewidget.cpp
 
 HEADERS += \
         regexpinputrename.h \
         regexpinputrename_global.h  \
-        regexpinputrenamedialog.h
+#        regexpinputrenamedialog.h \
+        regexpinputrenamewidget.h
 
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
 
+FORMS += \
+#    regexpinputrenamedialog.ui \
+    regexpinputrenamewidget.ui
+
+
 DISTFILES += \
     regexpinputrename.json
-
-FORMS += \
-    regexpinputrenamedialog.ui
