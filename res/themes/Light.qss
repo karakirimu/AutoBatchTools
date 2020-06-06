@@ -434,8 +434,7 @@ QDialog#FileSearchDialog {
 /* ===== QWidget ===== */
 
 QWidget#guiPage,
-QWidget#blankWidget,
-QWidget#SettingWidget {
+QWidget#blankWidget {
     background-color: #f5f5f5;
 }
 

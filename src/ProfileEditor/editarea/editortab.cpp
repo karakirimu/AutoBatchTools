@@ -729,7 +729,10 @@ void EditorTab::loadPluginInstance(QString plfile)
             // set current table items (set first for later signal avoid)
             ext->getInformation()->settingwidget->receiveList(tmp);
 
-            scrollSettingWidget->setWidget(ext->getInformation()->settingwidget);
+            PluginWidget *pw = ext->getInformation()->settingwidget;
+            pw->setPalette(this->pluginPane->palette());
+
+            scrollSettingWidget->setWidget(pw);
 
             // connect to ctableplugin
             connect(ext->getInformation()->settingwidget, &PluginWidget::sendList, \

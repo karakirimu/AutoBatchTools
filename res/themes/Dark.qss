@@ -440,13 +440,11 @@ QDialog#FileSearchDialog {
 /* ===== QWidget ===== */
 
 QWidget#guiPage,
-QWidget#blankWidget,
-QWidget#SettingWidget {
+QWidget#blankWidget {
     background-color: #373737;
 }
 
 QWidget#StatusWidget,
-QWidget#SettingWidget,
 QWidget#AboutPE,
 QWidget#information,
 QWidget#changelog {
