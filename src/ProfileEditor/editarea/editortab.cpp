@@ -72,7 +72,7 @@ void EditorTab::setConnection()
     //connect action in plugin widget
     connect(addbutton_e, &QAbstractButton::clicked, plugincombobox, &PluginsComboBox::addItemAction);
     connect(deletebutton_e, &QAbstractButton::clicked, plugincombobox, &PluginsComboBox::deleteAction);
-    connect(plugincombobox, &PluginsComboBox::pluginChanged, this, &EditorTab::loadPluginInstance);
+    connect(plugincombobox, &PluginsComboBox::pluginChanged, this, &EditorTab::loadPluginInstanceFromUi);
     connect(pluginsetting, &QPushButton::clicked, this, &EditorTab::pluginSwitchSettingsClicked);
 
     //connect action in profile widget
@@ -174,7 +174,6 @@ void EditorTab::updateIndex(QString operation)
 
     switch (command) {
     case UiCommandMap::PL_ALLUPDATE_TABLE:
-        //exectabledel
         sep.removeLast();
         ctableplugins->updateTableList(&sep);
 
@@ -378,6 +377,7 @@ void EditorTab::setFileSearchDataList(EditorCache *list)
 void EditorTab::setPluginDataList(EditorCache *list)
 {
     this->blockSignals(true);
+    plugincombobox->blockSignals(true);
 
     //reset combobox
     plugincombobox->reloadComboBoxItem();
@@ -405,6 +405,7 @@ void EditorTab::setPluginDataList(EditorCache *list)
     autoonly_3->setChecked(list->plugin.schedulerOnly);
 
     this->blockSignals(false);
+    plugincombobox->blockSignals(false);
 }
 
 /**
@@ -657,6 +658,15 @@ void EditorTab::pluginSwitchSettingsClicked()
     }
 }
 
+void EditorTab::loadPluginInstanceFromUi(QString plfile)
+{
+    if(pluginloader != nullptr){
+        ctableplugins->setRowCount(0);
+    }
+
+    loadPluginInstance(plfile);
+}
+
 /**
  * @fn EditorTab::openSavefile
  * @brief Select an output file in FileSearch tab widget.
@@ -690,7 +700,9 @@ void EditorTab::loadPluginInstance(QString plfile)
                        ctableplugins, &PluginCommandTable::insertSettingUpdate);
         }
 
+
         pluginloader->unload();
+
         delete pluginloader;
         pluginloader = nullptr;
         plugininstance = nullptr;

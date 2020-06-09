@@ -30,6 +30,7 @@ ComboPluginSelect::ComboPluginSelect(const int &targetindex
 
     oldString = cache->at(index).plugin.name;
     oldFile = cache->at(index).plugin.filePath;
+    oldCommand = cache->at(index).plugin.command;
 }
 
 void ComboPluginSelect::undo()
@@ -37,6 +38,7 @@ void ComboPluginSelect::undo()
     EditorCache ec = ptrCache->at(index);
     ec.plugin.name = oldString;
     ec.plugin.filePath = oldFile;
+    ec.plugin.command = oldCommand;
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Plugins to %1").arg(oldString) \
@@ -48,6 +50,7 @@ void ComboPluginSelect::redo()
     EditorCache ec = ptrCache->at(index);
     ec.plugin.name = newString;
     ec.plugin.filePath = newFile;
+    ec.plugin.command.clear();
     ptrCache->replace(index, ec);
 
     setText(QObject::tr("Plugins to %1").arg(newString) \
@@ -59,11 +62,11 @@ int ComboPluginSelect::id() const
     return UiCommandMap::P_NAME;
 }
 
-bool ComboPluginSelect::mergeWith(const QUndoCommand *other)
-{
-    if (other->id() != id()) return false;
-    const ComboPluginSelect *com = static_cast<const ComboPluginSelect*>(other);
-    newString = com->newString;
-    newFile = com->newFile;
-    return true;
-}
+//bool ComboPluginSelect::mergeWith(const QUndoCommand *other)
+//{
+//    if (other->id() != id()) return false;
+//    const ComboPluginSelect *com = static_cast<const ComboPluginSelect*>(other);
+//    newString = com->newString;
+//    newFile = com->newFile;
+//    return true;
+//}

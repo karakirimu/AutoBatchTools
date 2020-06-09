@@ -34,14 +34,17 @@ public:
     void redo() override;
 
     int id() const override;
-    bool mergeWith(const QUndoCommand *other) override;
+//    bool mergeWith(const QUndoCommand *other) override;
+
+private:
+    int index;
+
+    QString oldString;
+    QString oldFile;
+    QStringList oldCommand;
 
     QString newString;
     QString newFile;
-private:
-    int index;
-    QString oldString;
-    QString oldFile;
 
     EditorCacheList *ptrCache;
 };

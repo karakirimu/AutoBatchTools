@@ -93,10 +93,11 @@ private slots:
     void editDragDropTableAction(QList<int> indexbefore, int indexafter);
 
     void pluginSwitchSettingsClicked();
-    void loadPluginInstance(QString plfile);
+    void loadPluginInstanceFromUi(QString plfile);
 
 private:
     void openSavefile();
+    void loadPluginInstance(QString plfile);
 
     EditOperator *editop;
     ProcessXmlListGenerator xgen;
