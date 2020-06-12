@@ -145,7 +145,7 @@ void PluginsComboBox::deleteAction()
     if(res == QMessageBox::Yes){
         //delete file item
         int current = this->currentIndex();
-        builder->deleteItem(current);
+        builder->deleteItem(current - 1);
 
         //reload
         reloadComboBoxItem();
@@ -165,9 +165,9 @@ void PluginsComboBox::pluginCheckAction(int index)
         ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
         const PluginInformation *pinfo = inter->getInformation();
 
-        if(pinfo->hassettingwidget){
+//        if(pinfo->hassettingwidget){
             emit pluginChanged(getCurrentExtraFile());
-        }
+//        }
 
         QString desc = pinfo->tooltip;
 
