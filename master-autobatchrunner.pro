@@ -11,6 +11,10 @@ win32-msvc* {
         message("msvc 2017")
     }
 
+    equals(MSVC_VER, 14.2){
+        message("msvc 2019")
+    }
+
     QMAKE_CXXFLAGS += /FS
 }
 
