@@ -661,9 +661,6 @@ bool Executor::loadTemp(QList<QStringList> *list)
     //TODO: dynamic index update
     TAB selected = static_cast<TAB>(xgen.fetch(pxc.TAG_FUNCTIONSELECT, list).toInt());
 
-//    QHash<int, int> hlist;
-//    xgen.getListStructure(list, &hlist);
-
     switch (selected) {
     case TAB::EXECUTE:     return loadNormal(list);
     case TAB::FILESEARCH:  return loadSearch(list);
@@ -783,18 +780,6 @@ void Executor::setProcessSettings(bool *fileinput, int *loopcount)
 
     qDebug() << "[Executor::setProcessSettings] Settings loaded";
 }
-
-//int Executor::getReadType(QString type)
-//{
-//    if(type == TYPE_INFO)       return INFO;
-//    if(type == TYPE_EXEC)       return NORMAL;
-//    if(type == TYPE_SEARCH)     return SEARCH;
-//    if(type == TYPE_SCRIPT)     return PLUGINS;
-//    if(type == TYPE_ANOTHER)    return OTHER;
-//    if(type == TYPE_ALLINCLUDE) return TEMP;
-//    if(type == TYPE_LOCAL)      return LOCAL;
-//    return -1;
-//}
 
 void Executor::resetdata()
 {

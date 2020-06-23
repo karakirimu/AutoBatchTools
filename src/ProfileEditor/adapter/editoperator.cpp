@@ -750,7 +750,7 @@ void EditOperator::dragDropAction(QList<int> before, int after)
 void EditOperator::newAction()
 {
 #ifdef QT_DEBUG
-    qDebug() << endl << "[EditOperator::newAction]";
+    qDebug() << "[EditOperator::newAction]";
 #endif
 
     reset();
@@ -912,8 +912,8 @@ void EditOperator::save()
     updater->setLoadBlankPath(autosavefile);
 
 #ifdef QT_DEBUG
-    qDebug() << endl << "[EditOperator::save] update Timer start";
-    QTime time;
+    qDebug() << "[EditOperator::save] update Timer start";
+    QElapsedTimer time;
     time.start();
 #endif
 
@@ -942,8 +942,8 @@ void EditOperator::loadcache(int amount)
     updater->setLoadPath(loadfile);
 
 #ifdef QT_DEBUG
-    qDebug() << endl << "[EditOperator::loadcache] Timer start";
-    QTime time;
+    qDebug() << "[EditOperator::loadcache] Timer start";
+    QElapsedTimer time;
     time.start();
 #endif
 

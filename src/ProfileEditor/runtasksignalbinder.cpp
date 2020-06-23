@@ -77,13 +77,8 @@ void RunTaskSignalBinder::start()
         QSettings settings( "./settings.ini", QSettings::IniFormat );
 
         settings.beginGroup("pe_testexec");
-        //executor->setDetached(settings.value("DETACH", false).toBool());
         executor->setLaunchedfrom(settings.value("FAKERES", false).toInt());
-        //executor->setSearchfileoverwrite(settings.value("FSUPDATE", true).toBool());
         settings.endGroup();
-
-//        executor->setGlobalList();
-//        executor->setLocalList();
 
         worker->start();
     }

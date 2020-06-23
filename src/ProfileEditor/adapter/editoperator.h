@@ -18,7 +18,7 @@
 #define EDITFILEOPERATOR_H
 
 #include <QEvent>
-#include <QDateTime>
+#include <QElapsedTimer>
 #include <QFileInfo>
 #include <QObject>
 #include <QDebug>

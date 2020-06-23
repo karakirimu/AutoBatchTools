@@ -221,7 +221,7 @@ void ProcessFlowTable::reloadAction()
 
 #ifdef QT_DEBUG
     qDebug()<< "[ProcessFlowTable::reloadAction] Timer start";
-    QTime time;
+    QElapsedTimer time;
     time.start();
 #endif
 
@@ -371,72 +371,10 @@ void ProcessFlowTable::replaceItem(int id)
 {
     qDebug() << "[ProcessFlowTable::replaceItem] rowpos " << id;
 
-//    this->takeItem(dataToUiIndex(id), 0);
     this->removeCellWidget(dataToUiIndex(id), 0);
 
     setFlowItem(id);
 }
-
-//void ProcessFlowTable::moveItem(int before, int beforecount, int after)
-//{
-//    QHash<int, QString> column0;
-//    QHash<int, QTableWidgetItem> column1;
-
-//    if(before < after){
-//        for (int i = 0; i < beforecount; i++) {
-//            column0.insert(before + i, this->model()->index(before + i, 0).data().toString());
-//            column1.insert(before + i, *this->item(before + i, 1));
-//        }
-
-//    }else{
-//        int bc = before - beforecount + 1;
-//        for (int i = 0; i < beforecount; i++) {
-//            column0.insert(bc + i, this->model()->index(bc + i, 0).data().toString());
-//            column1.insert(bc + i, *this->item(bc + i, 1));
-//        }
-//    }
-
-//    int deleterow = 0;
-//    bool firstelement = false;
-//    bool lastelement = false;
-
-//    //    int updown = 0;
-//    QString beforedata;
-//    QTableWidgetItem beforeval;
-//    int deductnum = 0;
-
-//    for (int i = 0; i < beforecount; i++) {
-
-//        if(before > after){
-
-//            if(!lastelement){
-//                lastelement = true;
-//                deleterow = before;
-//            }
-
-//            beforedata = column0.value(before - deductnum);
-//            beforeval = column1.value(before - deductnum);
-//            deductnum++;
-
-//        }else{
-
-//            if(!firstelement){
-//                firstelement = true;
-//                deleterow = before;
-//            }
-
-//            beforedata = column0.value(before + i);
-//            beforeval = column1.value(before + i);
-//        }
-
-//        this->blockSignals(true);
-//        this->removeRow(deleterow);
-//        this->insertRow(after);
-//        this->setItem(after, 0, new QTableWidgetItem(beforedata));
-//        this->setItem(after, 1, new QTableWidgetItem(beforeval));
-//        this->blockSignals(false);
-//    }
-//}
 
 void ProcessFlowTable::selectChanged(int crow, int ccol, int prow, int pcol)
 {

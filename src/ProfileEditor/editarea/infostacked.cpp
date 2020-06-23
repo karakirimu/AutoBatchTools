@@ -55,7 +55,6 @@ void InfoStacked::setEditOperator(EditOperator *op)
     rlabel = stackwidget->findChild<QLabel *>("loopMaxLabel");
 
     connect(editop, &EditOperator::processIndexUpdate, this, &InfoStacked::setInfoDataList);
-//    connect(editop, &EditOperator::ui_funcindexUpdate, this, &InnerStackedWidget::moveStacked);
 
     connect(name, &QLineEdit::textEdited, this, &InfoStacked::editProjectNameAction);
     connect(ver, &QLineEdit::textEdited, this, &InfoStacked::editVerAction);
@@ -69,8 +68,7 @@ void InfoStacked::setEditOperator(EditOperator *op)
 
     connect(finput, &QCheckBox::clicked, this, &InfoStacked::editCheckAction);
     connect(sinput, &QCheckBox::clicked, this, &InfoStacked::editCheckAction);
-    connect(fscombo, QOverload<const QString &>::of(&SearchComboBox::activated), \
-                                        this, &InfoStacked::editInitialSearch);
+    connect(fscombo, &SearchComboBox::currentTextChanged, this, &InfoStacked::editInitialSearch);
 
     connect(rloop, &QCheckBox::clicked, this, &InfoStacked::editCheckAction);
 
@@ -119,20 +117,6 @@ void InfoStacked::updateIndex(QString operation)
     default:
         break;
     }
-
-//    if(sep.at(0) == "0" && sep.at(1) == QString(UiCommandMap::UNDOREDO_EDIT)){
-//        //edit
-//        setInfoDataList(static_cast<QString>(sep.at(0)).toInt(), -1, \
-//                            EditOperator::SELECT);
-//    }else if(sep.at(0) == "2" && sep.at(1) == QString(CommandMap::UNDOREDO_DELETE)){
-//        //change stack
-//        switchStackedWidget(0, EditOperator::SELECT);
-
-//    }else if(sep.at(0) == "2" && sep.at(1) == QString(CommandMap::UNDOREDO_ADD)){
-//        //change stack
-//        switchStackedWidget(1, EditOperator::SELECT);
-
-//    }
 }
 
 void InfoStacked::reloadAction()

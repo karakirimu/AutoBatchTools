@@ -32,8 +32,6 @@ void ProcessXmlListGenerator::createSeparateList(QList<QStringList> *ctos)
 {
     //get selected index
     int index = static_cast<QString>(fetch(pxc.TAG_FUNCTIONSELECT, ctos)).toInt();
-//    int index = static_cast<QString>(ctos->at(1).at(1)).toInt();
-//    int index = static_cast<QString>(fetch(TE_STACKEDWIDGET_POSITION, ATTR_NONE, ctos)).toInt();
 
     //remove till first header
     while(!ctos->empty()){
@@ -55,23 +53,6 @@ void ProcessXmlListGenerator::createSeparateList(QList<QStringList> *ctos)
         }
     }
 }
-
-//void ProcessXmlListGenerator::getListStructure(QList<QStringList> *ctos, QHash<int, int> *posinfo)
-//{
-//    //dynamic first index generator
-//    //take each attributes count
-//    QMutableListIterator<QStringList> i(*ctos);
-
-//    int c = 0;
-//    int cur = -1;
-//    while(i.hasNext()){
-//        cur = static_cast<int>(getType(i.next().at(1)));
-//        if(cur > -1){
-//            posinfo->insert(cur, c);
-//        }
-//        c++;
-//    }
-//}
 
 /**
  * @fn ProcessXmlListGenerator::getType
@@ -113,7 +94,6 @@ int ProcessXmlListGenerator::fetchCmdFirstPos(QString tag, const QList<QStringLi
 
     //cannot find
     return -1;
-
 }
 
 QString ProcessXmlListGenerator::fetch(QString tag, const QList<QStringList> *loadbase)

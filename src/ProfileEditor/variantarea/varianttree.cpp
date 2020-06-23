@@ -125,7 +125,7 @@ void VariantTree::reloadAction()
     ignoreDataChangedSignal(true);
 
 #ifdef QT_DEBUG
-    QTime time;
+    QElapsedTimer time;
     time.start();
 #endif    
     this->clear();
@@ -286,7 +286,7 @@ void VariantTree::copyAction()
 void VariantTree::pasteAction()
 {
     QClipboard *clipboard = QApplication::clipboard();
-    QStringList text = clipboard->text().split(QRegularExpression("\\n|\\r\\n"), QString::SkipEmptyParts);
+    QStringList text = clipboard->text().split(QRegularExpression("\\n|\\r\\n"), Qt::SkipEmptyParts);
     QModelIndex index = getSectionFromUi();
 
     int row = 0;

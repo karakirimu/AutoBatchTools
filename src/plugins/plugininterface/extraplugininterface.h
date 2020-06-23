@@ -59,16 +59,6 @@ protected:
         setInformation(info);
     }
 
-    /**
-     * @fn functionWidgetSetting
-     * @brief Function to reflect the settings of Widget to ProfileEditor.
-     *        Not used when PluginInformation::issettingwidget is false.
-     * @param args Argument list used in functionMain function.
-     */
-//    void functionWidgetSetting(QStringList args){
-//        setWidgetMessage(&args);
-//    }
-
     template<typename T>
     /**
      * @fn applicationVariant

@@ -148,7 +148,7 @@
              </sizepolicy>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="settinggeneral">
              <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -629,11 +629,6 @@
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
                 </property>
-                <column>
-                 <property name="text">
-                  <string notr="true">1</string>
-                 </property>
-                </column>
                </widget>
               </item>
              </layout>

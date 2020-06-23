@@ -37,14 +37,8 @@ public:
     explicit ProcessXmlListGenerator(QObject *parent = nullptr);
     ~ProcessXmlListGenerator();
 
-    //tab and list connection map
-//    enum{NORMAL, SEARCH, PLUGINS, OTHER};
-
     //change combined structure to separated structure
     void createSeparateList(QList<QStringList> *ctos);
-
-    //get structure firstpos info
-//    void getListStructure(QList<QStringList> *ctos, QHash<int, int> *posinfo);
 
     int fetchCmdFirstPos(QString tag, const QList<QStringList> *loadbase);
 
@@ -59,22 +53,6 @@ private:
 
     ProcessXmlConstant pxc;
     FunctionType fs;
-
-    //xml attributes (temp)
-
-//    // exec(normal)
-//    const QString E_CMD                      = "exc";
-//    const QString E_CMDARGCOUNT              = "cmdc";
-
-//    // plugin(extrafunc)
-//    const QString PL_CMD                     = "plc";
-//    const QString PL_CMDARGCOUNT             = "pcmdc";
-
-//    // value define (index 1)
-//    const QString TYPE_EXEC                  = "normal";
-//    const QString TYPE_SEARCH                = "search";
-//    const QString TYPE_SCRIPT                = "script";
-//    const QString TYPE_ANOTHER               = "other";
 
     // attribute define (index 2)
     // all

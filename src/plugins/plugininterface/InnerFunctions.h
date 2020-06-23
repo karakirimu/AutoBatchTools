@@ -26,12 +26,10 @@ class InnerFunctions : public QObject
     Q_OBJECT
 public:
     explicit InnerFunctions(){
-//        widgetsettinglist = new QStringList();
         filevar = new QStringList();
     }
 
     ~InnerFunctions(){
-//        delete widgetsettinglist;
         delete filevar;
     }
 
@@ -70,8 +68,6 @@ public:
             break;
         case InputType::File:
             break;
-//        case InputType::WidgetSetting:
-//            break;
         }
     }
 
@@ -90,15 +86,11 @@ public:
         case InputType::File:
             filevar = variant;
             break;
-//        case InputType::WidgetSetting:
-//            widgetsettinglist = variant;
-//            break;
         }
     }
 
 signals:
     void updateMessage(QString);
-//    void updateSetting(QStringList);
 
 protected:
 
@@ -109,10 +101,6 @@ protected:
             InnerFunctions::messages.insert(static_cast<int>(type), message);
         }
     }
-
-//    void setWidgetMessage(QStringList *args){
-//        emit updateSetting(*args);
-//    }
 
     void setInformation(PluginInformation info){
         InnerFunctions::plugininfo = info;
@@ -131,7 +119,6 @@ protected:
         case InputType::Local: variant = localvar; break;
         case InputType::Global: *variant = globalvar; break;
         case InputType::File: break;
-//        case InputType::WidgetSetting: break;
         }
     }
 
@@ -142,7 +129,6 @@ protected:
         case InputType::Local: break;
         case InputType::Global: break;
         case InputType::File: variant = filevar; break;
-//        case InputType::WidgetSetting: variant = widgetsettinglist; break;
         }
     }
 
@@ -153,9 +139,7 @@ private:
     QHash<QString, QString> *localvar;
     QHash<QString, QString> globalvar;
     QStringList *filevar;
-    //QStringList *widgetsettinglist;
 
-    //static PLUGININFO pinfo;
     PluginInformation plugininfo;
 
 };
