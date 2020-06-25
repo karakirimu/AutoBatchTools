@@ -16,7 +16,8 @@
 
 #include "infostacked.h"
 
-InfoStacked::InfoStacked(QWidget *parent) : QStackedWidget(parent)
+InfoStacked::InfoStacked(QWidget *parent)
+    : QStackedWidget(parent)
 {
 }
 
@@ -68,7 +69,7 @@ void InfoStacked::setEditOperator(EditOperator *op)
 
     connect(finput, &QCheckBox::clicked, this, &InfoStacked::editCheckAction);
     connect(sinput, &QCheckBox::clicked, this, &InfoStacked::editCheckAction);
-    connect(fscombo, &SearchComboBox::currentTextChanged, this, &InfoStacked::editInitialSearch);
+    connect(fscombo, &SearchComboBox::textActivated, this, &InfoStacked::editInitialSearch);
 
     connect(rloop, &QCheckBox::clicked, this, &InfoStacked::editCheckAction);
 

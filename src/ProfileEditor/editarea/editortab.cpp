@@ -129,10 +129,10 @@ void EditorTab::setEditOperator(EditOperator *op)
 
     connect(autoonly, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
 
-    connect(searchcombobox, &SearchComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    connect(searchcombobox, &SearchComboBox::textActivated, this, &EditorTab::editTextAction);
 
     connect(separatorLineEdit, &QLineEdit::textEdited, this, &EditorTab::editTextAction);
-    connect(localVariantComboBox, &VariantComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    connect(localVariantComboBox, &VariantComboBox::textActivated, this, &EditorTab::editTextAction);
 
     connect(outputLineEdit, &QLineEdit::textEdited, this, &EditorTab::editTextAction);
     connect(autoonly_2, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
@@ -141,11 +141,11 @@ void EditorTab::setEditOperator(EditOperator *op)
     connect(fileOverWrite, &QRadioButton::clicked, this, &EditorTab::editRadioAction);
     connect(fileAppend, &QRadioButton::clicked, this, &EditorTab::editRadioAction);
 
-    connect(plugincombobox, &PluginsComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    connect(plugincombobox, &PluginsComboBox::textActivated, this, &EditorTab::editTextAction);
 
     connect(autoonly_3, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
 
-    connect(profilecombobox, &ProfileComboBox::currentTextChanged, this, &EditorTab::editTextAction);
+    connect(profilecombobox, &ProfileComboBox::textActivated, this, &EditorTab::editTextAction);
     connect(autoonly_4, &QCheckBox::clicked, this, &EditorTab::editCheckAction);
 
     //index edit (table only)
