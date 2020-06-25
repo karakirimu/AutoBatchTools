@@ -298,10 +298,10 @@ void EditorTab::setAllIncludeDataList(int itemid, int unused1, int unused2)
         break;
     case ft.TYPE::INFORMATION: break;
     case ft.TYPE::LOCAL:       break;
-    case ft.TYPE::EXECUTE:     setExecuteDataList(&list);     break;
-    case ft.TYPE::FILESEARCH:  setFileSearchDataList(&list);  break;
-    case ft.TYPE::PLUGIN:      setPluginDataList(&list);      break;
-    case ft.TYPE::PROFILELOAD: setProfileLoadDataList(&list); break;
+    case ft.TYPE::EXECUTE:     setCurrentIndex(list.functionSelect); setExecuteDataList(&list);     break;
+    case ft.TYPE::FILESEARCH:  setCurrentIndex(list.functionSelect); setFileSearchDataList(&list);  break;
+    case ft.TYPE::PLUGIN:      setCurrentIndex(list.functionSelect); setPluginDataList(&list);      break;
+    case ft.TYPE::PROFILELOAD: setCurrentIndex(list.functionSelect); setProfileLoadDataList(&list); break;
     case ft.TYPE::INVALID: break;
     }
 
