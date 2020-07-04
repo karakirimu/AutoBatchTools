@@ -59,7 +59,6 @@ protected:
         setInformation(info);
     }
 
-    template<typename T>
     /**
      * @fn applicationVariant
      * @brief Get variables given from AutoBatchRunner etc.
@@ -68,12 +67,11 @@ protected:
      *        Global : QHash<QString, QString>
      *        Local  : QHash<QString, QString>
      *        File   : QStringList
-     *
-     * @param type enum class of Input type
-     * @param variant
+     *e
+     * @param variant global, local and file
      */
-    void applicationVariant(InputType type, T *variant){
-        getVariant<T>(type, variant);
+    void applicationVariant(PluginVariant *variant){
+        getVariant(variant);
     }
 
 

@@ -17,21 +17,14 @@
 #ifndef INNERFUNCTIONS_H
 #define INNERFUNCTIONS_H
 
-#include <QStringList>
-#include <QHash>
 #include "pluginvariants.h"
 
 class InnerFunctions : public QObject
 {
     Q_OBJECT
 public:
-    explicit InnerFunctions(){
-        filevar = new QStringList();
-    }
-
-    ~InnerFunctions(){
-        delete filevar;
-    }
+    explicit InnerFunctions(){}
+    ~InnerFunctions(){}
 
     /**
      * @fn getMessage
@@ -61,10 +54,10 @@ public:
     void setValue(QHash<QString, QString> *variant, InputType type){
         switch (type) {
         case InputType::Local:
-            InnerFunctions::localvar = variant;
+            pluginvariant.localvar = variant;
             break;
         case InputType::Global:
-            InnerFunctions::globalvar = *variant;
+            pluginvariant.globalvar = *variant;
             break;
         case InputType::File:
             break;
@@ -84,7 +77,7 @@ public:
         case InputType::Global:
             break;
         case InputType::File:
-            filevar = variant;
+            pluginvariant.filevar = variant;
             break;
         }
     }
@@ -106,40 +99,13 @@ protected:
         InnerFunctions::plugininfo = info;
     }
 
-    template<typename T>
-    void getVariant(InputType type, T *variant){
-        Q_UNUSED(type)
-        variant = nullptr;
-    }
-
-    template<>
-    void getVariant(InputType type, QHash<QString, QString> *variant){
-        variant = nullptr;
-        switch (type) {
-        case InputType::Local: variant = localvar; break;
-        case InputType::Global: *variant = globalvar; break;
-        case InputType::File: break;
-        }
-    }
-
-    template<>
-    void getVariant(InputType type, QStringList *variant){
-        variant = nullptr;
-        switch (type) {
-        case InputType::Local: break;
-        case InputType::Global: break;
-        case InputType::File: variant = filevar; break;
-        }
+    void getVariant(PluginVariant *variant){
+        variant = &pluginvariant;
     }
 
 private:
-
     QHash<int, QString> messages;
-
-    QHash<QString, QString> *localvar;
-    QHash<QString, QString> globalvar;
-    QStringList *filevar;
-
+    PluginVariant pluginvariant;
     PluginInformation plugininfo;
 
 };

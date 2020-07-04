@@ -19,6 +19,8 @@
 
 #include "pluginwidget.h"
 #include <QString>
+#include <QStringList>
+#include <QHash>
 
 class PluginInformation {
 public:
@@ -42,6 +44,21 @@ public:
     PluginWidget *settingwidget;
 };
 
+class PluginVariant {
+public:
+    PluginVariant() { filevar = new QStringList(); }
+    ~PluginVariant() { delete filevar; }
+
+    //! local variant
+    QHash<QString, QString> *localvar;
+
+    //! global variant
+    QHash<QString, QString> globalvar;
+
+    //! input file variant
+    QStringList *filevar;
+};
+
 enum class MessageType {
     //! 0
     Update,
@@ -58,9 +75,6 @@ enum class InputType {
     Global,
     //! value: 2 type: QStringList
     File
-    //! value: 3 type: QStringList
-    //! Not used if issettingwidget is false.
-//    WidgetSetting
 };
 
 #endif // PLUGINVARIANTS_H

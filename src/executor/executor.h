@@ -144,7 +144,7 @@ private:
     bool processStopHandleChecker();
 
     //for execution task variant
-    typedef struct{
+    typedef struct _WorkingParam{
         //status part
         bool working = false;
         bool paused = false;
@@ -154,7 +154,7 @@ private:
     }WorkingParam;
 
     //execution setting task variant (normal)
-    typedef struct{
+    typedef struct _SettingParam{
         int launched = DEFAULT;
         int argumentscount;
         int othernestmax = 1;
@@ -162,7 +162,7 @@ private:
     }SettingParam;
 
     //execution setting task variant (test for profileeditor)
-    typedef struct{
+    typedef struct _TestParam{
         int startnum = 0;
         int endnum = -1;
     }TestParam;

@@ -74,9 +74,9 @@ int TakeLinePlugin::functionMain(int argc, QStringList *args)
     }
 
     if(str != ""){
-        QHash<QString, QString> local;
-        applicationVariant(InputType::Local, &local);
-        if(local.contains(args->at(VAR))) local.insert(args->at(VAR), str);
+        PluginVariant local;
+        applicationVariant(&local);
+        if(local.localvar->contains(args->at(VAR))) local.localvar->insert(args->at(VAR), str);
         functionMessage(tr("Take line ") + QString::number(targetline) + tr("."), MessageType::Success);
         return 0;
 

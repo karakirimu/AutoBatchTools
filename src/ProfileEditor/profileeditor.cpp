@@ -210,7 +210,7 @@ ProfileEditor::~ProfileEditor()
     settings.setValue("profileeditor/variant", ui->actionVariant->isChecked());
     settings.setValue("profileeditor/runset", ui->actionRunSetting->isChecked());
     settings.setValue("profileeditor/console", ui->actionRunConsole->isChecked());
-    settings.setValue( "profileeditor/autohide", ui->actionAutohide->isChecked());
+    settings.setValue("profileeditor/autohide", ui->actionAutohide->isChecked());
 
     delete actionRunSetting;
     delete runToolBar;
