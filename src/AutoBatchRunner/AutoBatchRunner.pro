@@ -61,7 +61,7 @@ include(textedit/textedit.pri)
 include(dialog/dialog.pri)
 
 LIBS += \
-    -L$$LIBRARYPATH -lVariantConverter \
+    -L$$LIBRARYPATH -lvariantconverter \
     -L$$LIBRARYPATH -lxmlbuilder \
     -L$$LIBRARYPATH -lstringxmlbuilder \
     -L$$LIBRARYPATH -lsearchxmlbuilder \

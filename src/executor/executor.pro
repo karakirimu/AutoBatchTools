@@ -39,7 +39,7 @@ HEADERS += \
         executor_global.h 
 
 LIBS += \
-    -L$$DESTDIR -lVariantConverter \
+    -L$$DESTDIR -lvariantconverter \
     -L$$DESTDIR -lfilesearchloader \
     -L$$DESTDIR -lxmlbuilder \
     -L$$DESTDIR -lstringxmlbuilder \

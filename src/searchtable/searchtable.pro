@@ -37,9 +37,9 @@ RESOURCES += \
 LIBS += \
     -L$$DESTDIR -lxmlbuilder \
     -L$$DESTDIR -lbasictable \
-    -L$$DESTDIR -lVariantConverter \
+    -L$$DESTDIR -lvariantconverter \
     -L$$DESTDIR -lsearchxmlbuilder \
-    -L$$DESTDIR -lVariantConverter \
+    -L$$DESTDIR -lvariantconverter \
     -L$$DESTDIR -lfilesearchdialog
 
 unix {

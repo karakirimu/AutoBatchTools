@@ -34,7 +34,7 @@ HEADERS += \
         basefilesearch.h
 
 LIBS += \
-    -L$$DESTDIR -lVariantConverter \
+    -L$$DESTDIR -lvariantconverter \
     -L$$DESTDIR -lxmlbuilder \
     -L$$DESTDIR -lsearchxmlbuilder
 

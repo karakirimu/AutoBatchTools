@@ -69,7 +69,7 @@ include(systemtray/systemtray.pri)
 include(statusarea/statusarea.pri)
 
 LIBS += \
-    -L$$LIBRARYPATH -lVariantConverter \
+    -L$$LIBRARYPATH -lvariantconverter \
     -L$$LIBRARYPATH -lxmlbuilder \
     -L$$LIBRARYPATH -lbasictable \
     -L$$LIBRARYPATH -lprofilexmlbuilder \
