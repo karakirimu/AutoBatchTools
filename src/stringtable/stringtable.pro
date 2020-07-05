@@ -33,7 +33,7 @@ HEADERS += \
 include($$PWD/../build_library_path.pri)
 
 RESOURCES += \
-    ..\..\res\resources.qrc
+    ../../res/resources.qrc
 
 LIBS += \
     -L$$DESTDIR -lxmlbuilder \
