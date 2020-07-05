@@ -19,11 +19,11 @@ win32-msvc* {
 }
 
 SUBDIRS += \
-          $$PWD\TakeLine \
-          $$PWD\BufferedCopy \
-          $$PWD\FFprobeExtpid \
-          $$PWD\FileTextReplace \
+          $$PWD/TakeLine \
+          $$PWD/BufferedCopy \
+          $$PWD/FFprobeExtpid \
+          $$PWD/FileTextReplace \
 #          RegExpInputRename \
-          $$PWD\Sleep \
-          $$PWD\makedirectory \
-          $$PWD\removedirectory
+          $$PWD/Sleep \
+          $$PWD/makedirectory \
+          $$PWD/removedirectory
