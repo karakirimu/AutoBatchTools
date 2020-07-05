@@ -6,7 +6,7 @@
 
 QT       += widgets
 
-TARGET = FileQueueTable
+TARGET = filequeuetable
 TEMPLATE = lib
 
 DEFINES += FILEQUEUETABLE_LIBRARY

@@ -232,7 +232,7 @@ LIBS += \
         -L$$LIBRARYPATH -lprofilecombobox \
         -L$$LIBRARYPATH -lbasictable \
         -L$$LIBRARYPATH -lfilesearchloader \
-        -L$$LIBRARYPATH -lFileQueueTable \
+        -L$$LIBRARYPATH -lfilequeuetable \
         -L$$LIBRARYPATH -lsearchtable \
         -L$$LIBRARYPATH -lstringtable \
         -L$$LIBRARYPATH -lfileinfodialog \

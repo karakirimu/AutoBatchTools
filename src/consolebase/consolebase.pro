@@ -10,7 +10,7 @@ QT       += widgets
 # Prevent automatic conversion of dll name
 CONFIG += skip_target_version_ext
 
-TARGET = ConsoleBase
+TARGET = consolebase
 TEMPLATE = lib
 VERSION = 1.0.0
 

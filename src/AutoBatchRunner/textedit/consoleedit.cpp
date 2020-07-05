@@ -21,13 +21,11 @@ void ConsoleEdit::sendMessage()
 {
     QString text = this->text();
     if(text == ""){
-#ifdef Q_OS_WIN
         mlTask->sendInput(this->objectName(), "\n");
-#else
-        mlTask->>sendInput(this->objectName(), "\r\n");
-#endif
+
     }else{
         mlTask->sendInput(this->objectName(), text);
         this->clear();
+
     }
 }
