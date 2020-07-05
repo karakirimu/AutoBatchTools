@@ -27,6 +27,7 @@
 #include <QFileDialog>
 #include <QProgressBar>
 #include <QSignalMapper>
+#include <QLineEdit>
 
 #include <settingdialog/settingdialog.h>
 #include <autosaveselectiondialog.h>

@@ -40,7 +40,7 @@ PluginsTree::~PluginsTree()
 void PluginsTree::reloadAction()
 {
 #ifdef QT_DEBUG
-    QTime time;
+    QElapsedTimer time;
     time.start();
 #endif
     this->clear();

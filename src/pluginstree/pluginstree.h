@@ -15,7 +15,7 @@
 #include <../plugins/plugininterface/extraplugininterface.h>
 
 #ifdef QT_DEBUG
-    #include <QTime>
+    #include <QElapsedTimer>
 #endif
 
 class PLUGINSTREESHARED_EXPORT PluginsTree : public QTreeWidget

@@ -2,7 +2,7 @@
 #define MULTITASKP_H
 
 #include <QObject>
-#include <QTime>
+#include <QRandomGenerator>
 #include <runtasksignalbinder.h>
 
 // this class is almost copy of autobatchrunner/multitask.cpp

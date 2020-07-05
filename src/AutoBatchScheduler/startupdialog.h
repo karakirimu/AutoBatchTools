@@ -10,6 +10,7 @@
 #include <QDateTime>
 #include <QFileInfo>
 #include <QDebug>
+#include <QRandomGenerator>
 
 namespace Ui {
 class StartupDialog;

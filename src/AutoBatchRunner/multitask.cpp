@@ -7,9 +7,10 @@ MultiTask::MultiTask(QObject *parent)
     basemutex = new QMutex();
 
     //time based seed set
-    QTime *ti = new QTime();
-    qsrand(static_cast<uint>(ti->currentTime().msecsSinceStartOfDay() ^ 123456789));
-    delete ti;
+//    QTime *ti = new QTime();
+//    rgen = QRandomGenerator(static_cast<uint>(ti->currentTime().msecsSinceStartOfDay() ^ 123456789));
+//    qsrand(static_cast<uint>(ti->currentTime().msecsSinceStartOfDay() ^ 123456789));
+//    delete ti;
 }
 
 MultiTask::~MultiTask()
@@ -140,7 +141,7 @@ QString MultiTask::generateRandom(int length)
     int pos = possibleCharacters.size() - 1;
     int random;
     while(pos > 1){
-        random = qrand() % pos;
+        random = static_cast<int>(QRandomGenerator::global()->generate()) % pos;
         QChar tmp = possibleCharacters.at(random);
         possibleCharacters.replace(random, 1, possibleCharacters.at(pos));
         possibleCharacters.replace(pos, 1, tmp);
@@ -151,7 +152,7 @@ QString MultiTask::generateRandom(int length)
     QString randomString;
     for(int i=0; i < length; ++i)
     {
-        int index = qrand() % length;
+        int index = static_cast<int>(QRandomGenerator::global()->generate()) % length;
         QChar nextChar = possibleCharacters.at(index);
         randomString.append(nextChar);
     }

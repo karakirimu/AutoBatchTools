@@ -47,7 +47,7 @@ StartupDialog::StartupDialog(QWidget *parent) :
     QDateTime time = QDateTime::currentDateTime();
     ui->scheduleDateTimeEdit->setDateTime(time);
 
-    qsrand(static_cast<uint>(time.currentSecsSinceEpoch() ^ 987465123));
+//    qsrand(static_cast<uint>(time.currentSecsSinceEpoch() ^ 987465123));
 }
 
 StartupDialog::~StartupDialog()
@@ -222,7 +222,7 @@ QString StartupDialog::getRandomString(int length)
     int pos = possibleCharacters.size() - 1;
     int random;
     while(pos > 1){
-        random = qrand() % pos;
+        random = static_cast<int>(QRandomGenerator::global()->generate()) % pos;
         QChar tmp = possibleCharacters.at(random);
         possibleCharacters.replace(random, 1, possibleCharacters.at(pos));
         possibleCharacters.replace(pos, 1, tmp);
@@ -233,7 +233,7 @@ QString StartupDialog::getRandomString(int length)
     QString randomString;
     for(int i=0; i < length; ++i)
     {
-        int index = qrand() % length;
+        int index = static_cast<int>(QRandomGenerator::global()->generate()) % length;
         QChar nextChar = possibleCharacters.at(index);
         randomString.append(nextChar);
     }

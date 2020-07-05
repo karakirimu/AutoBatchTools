@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTime>
 #include <entrytask.h>
+#include <QRandomGenerator>
 
 class MultiTask : public QObject
 {
@@ -64,6 +65,7 @@ private:
 
     QHash<QString, EntryTask *> *task;
     QMutex *basemutex;
+//    QRandomGenerator rgen;
 };
 
 #endif // MULTITASK_H
