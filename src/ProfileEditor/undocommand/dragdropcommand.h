@@ -18,7 +18,7 @@
 #define DRAGDROPCOMMAND_H
 
 #include <QUndoCommand>
-#include <CommandMap.h>
+#include <commandmap.h>
 //#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 

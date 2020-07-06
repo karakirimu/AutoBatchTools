@@ -80,3 +80,8 @@ LIBS += \
     -L$$LIBRARYPATH -lconsolebase \
     -L$$LIBRARYPATH -lpluginstree \
     -L$$LIBRARYPATH -lexecutor
+
+unix {
+    LIBS+= \
+        -L$$LIBRARYPATH -lprocessxmllistgenerator
+}

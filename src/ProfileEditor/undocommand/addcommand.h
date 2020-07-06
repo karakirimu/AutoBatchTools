@@ -18,7 +18,7 @@
 #define ADDCOMMAND_H
 
 #include <QUndoCommand>
-#include <CommandMap.h>
+#include <commandmap.h>
 #include <editorcachelist.h>
 
 class AddCommand : public QUndoCommand

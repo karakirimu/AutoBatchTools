@@ -76,3 +76,12 @@ LIBS += \
     -L$$LIBRARYPATH -lprofilecombobox \
     -L$$LIBRARYPATH -lexecutor \
     -L$$LIBRARYPATH -lconsolebase
+
+unix {
+    LIBS+= \
+        -L$$LIBRARYPATH -lstringxmlbuilder \
+        -L$$LIBRARYPATH -lsearchxmlbuilder \
+        -L$$LIBRARYPATH -lprocessxmlbuilder \
+        -L$$LIBRARYPATH -lfilesearchloader \
+        -L$$LIBRARYPATH -lprocessxmllistgenerator
+}

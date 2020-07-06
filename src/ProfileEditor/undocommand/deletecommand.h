@@ -19,7 +19,7 @@
 
 #include <QUndoCommand>
 //#include <../processxmllistgenerator/processxmllistgenerator.h>
-#include <CommandMap.h>
+#include <commandmap.h>
 #include <editorcachelist.h>
 
 class DeleteCommand : public QUndoCommand

@@ -18,7 +18,7 @@
 #define SWAPCOMMAND_H
 
 #include <QUndoCommand>
-#include <CommandMap.h>
+#include <commandmap.h>
 #include <editorcachelist.h>
 
 class SwapCommand : public QUndoCommand
