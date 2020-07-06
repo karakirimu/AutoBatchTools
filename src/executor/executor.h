@@ -191,7 +191,6 @@ private:
     ProcessXmlBuilder *pbuilder;
     ProcessXmlListGenerator xgen;
     ProcessXmlConstant pxc;
-    FunctionType ft;
     bool profileloaded = false;
 
     //plugin part

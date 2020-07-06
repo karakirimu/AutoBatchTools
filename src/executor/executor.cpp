@@ -271,6 +271,7 @@ bool Executor::Execute()
         //read each list
         if(pbuilder->readItem(execlist->at(i), list)){
 
+            FunctionType ft;
             switch (ft.getType(list->at(0).at(1))) {
             case ft.TYPE::INFORMATION: checker = loadInfo(list);    break;
             case ft.TYPE::EXECUTE:     checker = loadNormal(list);  break;
@@ -352,6 +353,7 @@ bool Executor::loadInfo(QList<QStringList> *list)
 
 bool Executor::loadNormal(QList<QStringList> *list)
 {
+    FunctionType ft;
     //scheduler only or not
     if(VariantConverter::stringToBool(xgen.fetch(pxc.TAG_TYPE, ft.getString(ft.TYPE::EXECUTE), pxc.ATTR_ONLY_SCHEDULER_BOOL, list))
             && setting->launched == DEFAULT) return true;
@@ -415,6 +417,7 @@ bool Executor::loadNormal(QList<QStringList> *list)
 
 bool Executor::loadSearch(QList<QStringList> *list)
 {
+    FunctionType ft;
     //scheduler only or not
     if(VariantConverter::stringToBool(xgen.fetch(pxc.TAG_TYPE, ft.getString(ft.TYPE::FILESEARCH), pxc.ATTR_ONLY_SCHEDULER_BOOL, list))
             && setting->launched == DEFAULT) return true;
@@ -514,6 +517,7 @@ bool Executor::loadSearch(QList<QStringList> *list)
 bool Executor::loadPlugins(QList<QStringList> *list)
 {
     //scheduler only or not
+    FunctionType ft;
     if(VariantConverter::stringToBool(xgen.fetch(pxc.TAG_TYPE, ft.getString(ft.TYPE::PLUGIN), pxc.ATTR_ONLY_SCHEDULER_BOOL, list))
             && setting->launched == DEFAULT) return true;
 
@@ -571,6 +575,7 @@ bool Executor::loadPlugins(QList<QStringList> *list)
 
 bool Executor::loadProject(QList<QStringList> *list)
 {
+    FunctionType ft;
     //scheduler only or not
     if(VariantConverter::stringToBool(xgen.fetch(pxc.TAG_TYPE, ft.getString(ft.TYPE::PROFILELOAD), pxc.ATTR_ONLY_SCHEDULER_BOOL, list))
             && setting->launched == DEFAULT) return true;
@@ -621,8 +626,9 @@ bool Executor::loadProject(QList<QStringList> *list)
         if(pbuilder->readItem(execlist->at(i), ilist)){
 
             //scheduler only or not
+            FunctionType ft;
             switch (ft.getType(ilist->at(0).at(1))) {
-            case ft.TYPE::INFORMATION: checker = loadInfo(ilist);    break;
+            case FunctionType::TYPE::INFORMATION: checker = loadInfo(ilist);    break;
             case ft.TYPE::EXECUTE:     checker = loadNormal(ilist);  break;
             case ft.TYPE::FILESEARCH:  checker = loadSearch(ilist);  break;
             case ft.TYPE::PLUGIN:      checker = loadPlugins(ilist); break;
