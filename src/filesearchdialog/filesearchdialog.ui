@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>440</width>
-    <height>550</height>
+    <height>571</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -116,6 +116,12 @@
       </item>
       <item row="3" column="3">
        <widget class="QToolButton" name="openToolButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>...</string>
         </property>
@@ -151,7 +157,7 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <widget class="QWidget" name="searchAdditionalConditionsPage" native="true">
+     <widget class="QWidget" name="searchAdditionalConditionsPage">
       <attribute name="title">
        <string>Additional Conditions</string>
       </attribute>
@@ -624,12 +630,16 @@
           </widget>
          </item>
          <item row="1" column="0" colspan="3">
-          <widget class="SearchDialogTable" name="resultTableWidget"/>
+          <widget class="SearchDialogTable" name="resultTableWidget">
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+          </widget>
          </item>
          <item row="0" column="0" colspan="2">
           <widget class="QLineEdit" name="directoryTestLineEdit">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>

@@ -92,44 +92,21 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QScrollArea" name="scrollArea">
+       <widget class="QStackedWidget" name="stackedWidget">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="styleSheet">
-         <string notr="true"/>
+        <property name="autoFillBackground">
+         <bool>false</bool>
         </property>
-        <property name="lineWidth">
-         <number>1</number>
+        <property name="currentIndex">
+         <number>0</number>
         </property>
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="scrollWidget">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>485</width>
-           <height>440</height>
-          </rect>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
+        <widget class="QWidget" name="settinggeneral">
+         <layout class="QVBoxLayout" name="verticalLayout_4">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -146,617 +123,110 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QStackedWidget" name="stackedWidget">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QTabWidget" name="tabWidget">
             <property name="autoFillBackground">
              <bool>false</bool>
             </property>
             <property name="currentIndex">
              <number>0</number>
             </property>
-            <widget class="QWidget" name="settinggeneral">
-             <layout class="QVBoxLayout" name="verticalLayout_4">
-              <property name="spacing">
-               <number>0</number>
-              </property>
+            <widget class="QWidget" name="baseSettingTab">
+             <attribute name="title">
+              <string>General</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
               <property name="leftMargin">
-               <number>0</number>
+               <number>6</number>
               </property>
               <property name="topMargin">
-               <number>0</number>
+               <number>6</number>
               </property>
               <property name="rightMargin">
-               <number>0</number>
+               <number>6</number>
               </property>
               <property name="bottomMargin">
-               <number>0</number>
+               <number>6</number>
               </property>
               <item>
-               <widget class="QTabWidget" name="tabWidget">
-                <property name="autoFillBackground">
-                 <bool>false</bool>
-                </property>
-                <property name="currentIndex">
+               <layout class="QGridLayout" name="gridLayout">
+                <property name="topMargin">
                  <number>0</number>
                 </property>
-                <widget class="QWidget" name="baseSettingTab">
-                 <attribute name="title">
-                  <string>General</string>
-                 </attribute>
-                 <layout class="QVBoxLayout" name="verticalLayout_5">
-                  <property name="leftMargin">
-                   <number>0</number>
+                <property name="horizontalSpacing">
+                 <number>0</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_9">
+                  <property name="text">
+                   <string>Theme</string>
                   </property>
-                  <property name="topMargin">
-                   <number>0</number>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QFontComboBox" name="windowFontComboBox"/>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label">
+                  <property name="text">
+                   <string>Window Font</string>
                   </property>
-                  <property name="rightMargin">
-                   <number>0</number>
+                 </widget>
+                </item>
+                <item row="1" column="2">
+                 <widget class="QSpinBox" name="windowFontSizeSpinBox">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
                   </property>
-                  <property name="bottomMargin">
-                   <number>0</number>
+                  <property name="minimum">
+                   <number>1</number>
                   </property>
+                  <property name="maximum">
+                   <number>100</number>
+                  </property>
+                  <property name="singleStep">
+                   <number>1</number>
+                  </property>
+                  <property name="value">
+                   <number>9</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1" colspan="2">
+                 <widget class="QComboBox" name="themeComboBox">
                   <item>
-                   <widget class="QFrame" name="frame_8">
-                    <property name="frameShape">
-                     <enum>QFrame::StyledPanel</enum>
-                    </property>
-                    <property name="frameShadow">
-                     <enum>QFrame::Raised</enum>
-                    </property>
-                    <layout class="QHBoxLayout" name="horizontalLayout_6">
-                     <property name="leftMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="rightMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="bottomMargin">
-                      <number>0</number>
-                     </property>
-                    </layout>
-                   </widget>
+                   <property name="text">
+                    <string>Default</string>
+                   </property>
                   </item>
                   <item>
-                   <layout class="QGridLayout" name="gridLayout">
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="horizontalSpacing">
-                     <number>0</number>
-                    </property>
-                    <item row="0" column="0">
-                     <widget class="QLabel" name="label_9">
-                      <property name="text">
-                       <string>Theme</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="1">
-                     <widget class="QFontComboBox" name="windowFontComboBox"/>
-                    </item>
-                    <item row="1" column="0">
-                     <widget class="QLabel" name="label">
-                      <property name="text">
-                       <string>Window Font</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="1" column="2">
-                     <widget class="QSpinBox" name="windowFontSizeSpinBox">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="minimum">
-                       <number>1</number>
-                      </property>
-                      <property name="maximum">
-                       <number>100</number>
-                      </property>
-                      <property name="singleStep">
-                       <number>1</number>
-                      </property>
-                      <property name="value">
-                       <number>9</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="1" colspan="2">
-                     <widget class="QComboBox" name="themeComboBox">
-                      <item>
-                       <property name="text">
-                        <string>Default</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>Light</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>Dark</string>
-                       </property>
-                      </item>
-                     </widget>
-                    </item>
-                   </layout>
+                   <property name="text">
+                    <string>Light</string>
+                   </property>
                   </item>
                   <item>
-                   <spacer name="verticalSpacer">
-                    <property name="orientation">
-                     <enum>Qt::Vertical</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>20</width>
-                      <height>40</height>
-                     </size>
-                    </property>
-                   </spacer>
+                   <property name="text">
+                    <string>Dark</string>
+                   </property>
                   </item>
-                 </layout>
-                </widget>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="settingprofileload">
-             <layout class="QVBoxLayout" name="verticalLayout_3">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QFrame" name="frame">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_3">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QPushButton" name="pAddButton">
-                   <property name="text">
-                    <string>Add</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pDeleteButton">
-                   <property name="text">
-                    <string>Delete</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pEditButton">
-                   <property name="text">
-                    <string>Edit</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/edit.png</normaloff>:/default_icons/edit.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pUpButton">
-                   <property name="text">
-                    <string>Up</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="pDownButton">
-                   <property name="text">
-                    <string>Down</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
+                 </widget>
+                </item>
+               </layout>
               </item>
               <item>
-               <widget class="ProfileTable" name="profileTableWidget">
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
+               <spacer name="verticalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
                 </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
                 </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="settingstring">
-             <layout class="QVBoxLayout" name="verticalLayout_6">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QFrame" name="frame_5">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_2">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QPushButton" name="vAddButton">
-                   <property name="text">
-                    <string>Add</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="vDeleteButton">
-                   <property name="text">
-                    <string>Delete</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="vCopyButton">
-                   <property name="text">
-                    <string>Copy</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/copy.png</normaloff>:/default_icons/copy.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="vUpButton">
-                   <property name="text">
-                    <string>Up</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="vDownButton">
-                   <property name="text">
-                    <string>Down</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="StringTable" name="variantTableWidget">
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="selectionMode">
-                 <enum>QAbstractItemView::SingleSelection</enum>
-                </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="settingsearch">
-             <layout class="QVBoxLayout" name="verticalLayout_10">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QFrame" name="frame_4">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_5">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QPushButton" name="sAddButton">
-                   <property name="text">
-                    <string>Add</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="sDeleteButton">
-                   <property name="text">
-                    <string>Delete</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="sCopyButton">
-                   <property name="text">
-                    <string>Copy</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/copy.png</normaloff>:/default_icons/copy.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="sUpButton">
-                   <property name="text">
-                    <string>Up</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="sDownButton">
-                   <property name="text">
-                    <string>Down</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="SearchTable" name="searchTableWidget">
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="selectionMode">
-                 <enum>QAbstractItemView::SingleSelection</enum>
-                </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="settingplugins">
-             <layout class="QVBoxLayout" name="verticalLayout_12">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QFrame" name="frame_6">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <layout class="QHBoxLayout" name="horizontalLayout_7">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QPushButton" name="eAddButton">
-                   <property name="text">
-                    <string>Add</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="eDeleteButton">
-                   <property name="text">
-                    <string>Delete</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="eUpButton">
-                   <property name="text">
-                    <string>Up</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="eDownButton">
-                   <property name="text">
-                    <string>Down</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../../res/resources.qrc">
-                     <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
-              <item>
-               <widget class="PluginsTree" name="pluginsTreeWidget">
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
-                </property>
-               </widget>
+               </spacer>
               </item>
              </layout>
             </widget>
@@ -764,10 +234,458 @@
           </item>
          </layout>
         </widget>
+        <widget class="QWidget" name="settingprofileload">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QFrame" name="frame">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="pAddButton">
+               <property name="text">
+                <string>Add</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pDeleteButton">
+               <property name="text">
+                <string>Delete</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pEditButton">
+               <property name="text">
+                <string>Edit</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/edit.png</normaloff>:/default_icons/edit.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pUpButton">
+               <property name="text">
+                <string>Up</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pDownButton">
+               <property name="text">
+                <string>Down</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="ProfileTable" name="profileTableWidget">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="settingstring">
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QFrame" name="frame_5">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="vAddButton">
+               <property name="text">
+                <string>Add</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="vDeleteButton">
+               <property name="text">
+                <string>Delete</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="vCopyButton">
+               <property name="text">
+                <string>Copy</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/copy.png</normaloff>:/default_icons/copy.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="vUpButton">
+               <property name="text">
+                <string>Up</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="vDownButton">
+               <property name="text">
+                <string>Down</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="StringTable" name="variantTableWidget">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="settingsearch">
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QFrame" name="frame_4">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="sAddButton">
+               <property name="text">
+                <string>Add</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="sDeleteButton">
+               <property name="text">
+                <string>Delete</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="sCopyButton">
+               <property name="text">
+                <string>Copy</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/copy.png</normaloff>:/default_icons/copy.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="sUpButton">
+               <property name="text">
+                <string>Up</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="sDownButton">
+               <property name="text">
+                <string>Down</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="SearchTable" name="searchTableWidget">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="settingplugins">
+         <layout class="QVBoxLayout" name="verticalLayout_12">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QFrame" name="frame_6">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="eAddButton">
+               <property name="text">
+                <string>Add</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/add.png</normaloff>:/default_icons/add.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="eDeleteButton">
+               <property name="text">
+                <string>Delete</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/remove.png</normaloff>:/default_icons/remove.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="eUpButton">
+               <property name="text">
+                <string>Up</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/arrow_up.png</normaloff>:/default_icons/arrow_up.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="eDownButton">
+               <property name="text">
+                <string>Down</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../../res/resources.qrc">
+                 <normaloff>:/default_icons/arrow_down.png</normaloff>:/default_icons/arrow_down.png</iconset>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="PluginsTree" name="pluginsTreeWidget">
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_7">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
         <property name="leftMargin">
          <number>9</number>
         </property>
@@ -781,7 +699,26 @@
          <number>9</number>
         </property>
         <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <widget class="QDialogButtonBox" name="buttonBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>

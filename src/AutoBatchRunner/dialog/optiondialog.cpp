@@ -63,7 +63,7 @@ OptionDialog::~OptionDialog()
 
 void OptionDialog::setupItem(){
     ui->listWidget->addItem(tr("General"));
-    ui->listWidget->addItem(tr("Project"));
+    ui->listWidget->addItem(tr("Profile"));
     ui->listWidget->addItem(tr("Global Variant"));
     ui->listWidget->addItem(tr("Search"));
     ui->listWidget->addItem(tr("Plugins"));
