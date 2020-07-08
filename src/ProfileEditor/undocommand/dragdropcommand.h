@@ -19,17 +19,11 @@
 
 #include <QUndoCommand>
 #include <commandmap.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <editorcachelist.h>
 
 class DragDropCommand : public QUndoCommand
 {
 public:
-//    DragDropCommand(const QList<int> &beforeindex
-//                    , const int &afterindex
-//                    , QList<QList<QStringList> *> *cache
-//                    , QUndoCommand *parent = nullptr);
-
     DragDropCommand(const QList<int> &beforeindex
                     , const int &afterindex
                     , EditorCacheList *cache
@@ -42,7 +36,6 @@ private:
     QList<int> beforeIndex;
     int afterIndex;
 
-//    QList<QList<QStringList> *> *m_cache;
     EditorCacheList *ptrCache;
 };
 

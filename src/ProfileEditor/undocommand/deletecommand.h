@@ -18,18 +18,12 @@
 #define DELETECOMMAND_H
 
 #include <QUndoCommand>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <commandmap.h>
 #include <editorcachelist.h>
 
 class DeleteCommand : public QUndoCommand
 {
 public:
-//    DeleteCommand(const int &targetindex
-//                  , QList<QStringList> *deleted
-//                  , QList<QList<QStringList> *> *cache
-//                  , QUndoCommand *parent = nullptr);
-
     DeleteCommand(const int &targetindex
                   , const EditorCache &remove
                   , EditorCacheList *cache
@@ -40,9 +34,6 @@ public:
 
 private:
     int index;
-//    QList<QStringList> *m_deleted;
-//    QList<QStringList> m_delcopy;
-//    QList<QList<QStringList> *> *m_cache;
 
     EditorCache removeCache;
     EditorCacheList *ptrCache;
