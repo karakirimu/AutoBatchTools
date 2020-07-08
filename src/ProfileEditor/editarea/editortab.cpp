@@ -427,7 +427,7 @@ void EditorTab::setProfileLoadDataList(EditorCache *list)
         }
 
     }else{
-        curdata = tr("(file is not exist)");
+        curdata = tr("(no file)");
     }
 
     profilecombobox->reloadComboBoxItem();
