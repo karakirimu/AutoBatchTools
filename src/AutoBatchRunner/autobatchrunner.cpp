@@ -198,7 +198,6 @@ void AutoBatchRunner::initStatusBar()
     QLabel *label = new QLabel();
     label->setAlignment(Qt::AlignLeft);
     ui->statusBar->addPermanentWidget(label, 3);
-//    connect(this, SIGNAL(rowPosChanged(QString)), label, SLOT(setText(QString)));
 
     QProgressBar *progressbar = new QProgressBar();
     progressbar->setAlignment(Qt::AlignCenter);
@@ -245,7 +244,11 @@ void AutoBatchRunner::themeChangeAction()
 
     if(stylecolor != "Default"){
 #ifdef QT_DEBUG
-        QFile file(QString("C:/Users/mr/Dropbox/Qt Creator/master-autobatchrunner/res/themes/%1.qss").arg(stylecolor));
+#ifdef Q_OS_WIN
+        QFile file(QString("../../res/themes/%1.qss").arg(stylecolor));
+#else
+        QFile file(QString("../AutoBatchRunner-master/res/themes/%1.qss").arg(stylecolor));
+#endif
 #else
         QFile file(QString(":/themes/%1.qss").arg(stylecolor));
 #endif

@@ -19,13 +19,10 @@
 
 #include <QMainWindow>
 #include <QSettings>
-//#include <systemtray.h>
 #include <QProgressBar>
 #include <QLabel>
 #include <optiondialog.h>
 #include <multitask.h>
-//#include <mainprocessloader.h>
-//#include <profileeditor.h>
 
 namespace Ui {
 class AutoBatchRunner;
