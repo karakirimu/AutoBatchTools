@@ -67,6 +67,9 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     //set menu action
     connect(ui->actionExit, &QAction::triggered, qApp, &QCoreApplication::quit);
 
+    // Help
+    connect(ui->actionAbout, &QAction::triggered, this, &AutoBatchRunner::about);
+
     //set dock autohide TODO: not saved menu
     ui->consoleDock->setAutohide(ui->actionAutohide->isChecked());
 
@@ -204,6 +207,14 @@ void AutoBatchRunner::initStatusBar()
     ui->statusBar->addPermanentWidget(progressbar, 1);
     connect(mlTask, &MultiTask::processInitCount, progressbar, &QProgressBar::setRange);
     connect(mlTask, &MultiTask::processCurrent, progressbar, &QProgressBar::setValue);
+}
+
+void AutoBatchRunner::about()
+{
+    AboutPR *ab = new AboutPR;
+    ab->setStyleSheet(this->styleSheet());
+    ab->move(this->geometry().center() - ab->rect().center());
+    ab->show();
 }
 
 void AutoBatchRunner::on_profileEditToolButton_clicked()

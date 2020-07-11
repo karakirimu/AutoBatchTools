@@ -23,6 +23,7 @@
 #include <QMouseEvent>
 #include <QSettings>
 #include <systemtray.h>
+#include <aboutps.h>
 
 namespace Ui {
 class MainScheduler;
@@ -47,6 +48,7 @@ private:
     void saveSettings();
     void restoreSettings();
     void themeChangeAction();
+    void about();
 
     Ui::MainScheduler *ui;
     SystemTray *sysTray;

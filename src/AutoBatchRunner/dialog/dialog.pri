@@ -1,19 +1,13 @@
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    $$PWD/optiondialog.h \
-#    $$PWD/fileinfodialog.h \
-#    $$PWD/filesearchdialog.h \
-#    $$PWD/startupdialog.h
+    $$PWD/aboutpr.h \
+    $$PWD/optiondialog.h
 
 SOURCES += \
-    $$PWD/optiondialog.cpp \
-#    $$PWD/fileinfodialog.cpp \
-#    $$PWD/filesearchdialog.cpp \
-#    $$PWD/startupdialog.cpp
+    $$PWD/aboutpr.cpp \
+    $$PWD/optiondialog.cpp
 
 FORMS += \
-    $$PWD/optiondialog.ui \
-#    $$PWD/fileinfodialog.ui \
-#    $$PWD/filesearchdialog.ui \
-#    $$PWD/startupdialog.ui
+    $$PWD/aboutpr.ui \
+    $$PWD/optiondialog.ui

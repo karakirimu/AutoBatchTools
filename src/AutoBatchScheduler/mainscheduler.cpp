@@ -36,6 +36,9 @@ MainScheduler::MainScheduler(QWidget *parent) :
     connect(ui->actionSchedule, &QAction::triggered, this, &MainScheduler::onSchedulerButtonClicked);
     connect(ui->actionOption, &QAction::triggered, this, &MainScheduler::onOptionButtonClicked);
 
+    //Help
+    connect(ui->actionAbout, &QAction::triggered, this, &MainScheduler::about);
+
     //restore settings
     restoreSettings();
 
@@ -194,5 +197,13 @@ void MainScheduler::themeChangeAction()
     }
 
     QApplication::setFont(settingfont);
+}
+
+void MainScheduler::about()
+{
+    AboutPS *ab = new AboutPS;
+    ab->setStyleSheet(this->styleSheet());
+    ab->move(this->geometry().center() - ab->rect().center());
+    ab->show();
 }
 

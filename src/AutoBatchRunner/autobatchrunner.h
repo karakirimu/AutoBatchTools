@@ -23,6 +23,7 @@
 #include <QLabel>
 #include <optiondialog.h>
 #include <multitask.h>
+#include <aboutpr.h>
 
 namespace Ui {
 class AutoBatchRunner;
@@ -57,6 +58,7 @@ private:
     void setRunButtonState(bool run, bool pause, bool stop);
     void themeChangeAction();
     void initStatusBar();
+    void about();
 
     Ui::AutoBatchRunner *ui;
     OptionDialog *opdialog;

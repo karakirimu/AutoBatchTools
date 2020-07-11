@@ -45,6 +45,7 @@ DEPENDPATH += $$OUT_PWD/../../library/
 LIBRARYPATH = $$OUT_PWD/../../library/
 
 SOURCES += \
+        aboutps.cpp \
         main.cpp \
         mainscheduler.cpp \
         startupxmlbuilder.cpp \
@@ -52,12 +53,14 @@ SOURCES += \
         startupdialog.cpp
 
 HEADERS += \
+        aboutps.h \
         mainscheduler.h \
         startupxmlbuilder.h \
         startuptable.h \
         startupdialog.h
 
 FORMS += \
+        aboutps.ui \
         mainscheduler.ui \
         startupdialog.ui
 
