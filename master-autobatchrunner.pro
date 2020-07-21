@@ -18,6 +18,10 @@ win32-msvc* {
     QMAKE_CXXFLAGS += /FS
 }
 
+TRANSLATIONS += \
+    src/translation/abt_en.ts \
+    src/translation/abt_ja.ts
+
 SUBDIRS += \
           $$PWD/src/variantconverter \
 #1
@@ -42,7 +46,7 @@ SUBDIRS += \
           $$PWD/src/searchtable \
           $$PWD/src/stringtable \
           $$PWD/src/filequeuetable \
-          $$PWD/src/extrafunctionstable \
+#          $$PWD/src/extrafunctionstable \
           $$PWD/src/pluginstree \
 #6
           $$PWD/src/AutoBatchRunner \

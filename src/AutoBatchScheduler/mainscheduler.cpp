@@ -26,10 +26,13 @@ MainScheduler::MainScheduler(QWidget *parent) :
     //initial selected position
     ui->optionStackedWidget->setCurrentIndex(0);
     ui->actionSchedule->setChecked(true);
-    setWindowTitle("ProfileScheduler");
+    setWindowTitle("AutoBatchScheduler");
 
     //set window icon
     setWindowIcon(QIcon(":/app_icons/app_abs_24x24.ico"));
+
+    //update language combobox
+    initLanguageSelection();
 
     //set toolbar buttons
     connect(ui->actionExit, &QAction::triggered, this, &MainScheduler::close);
@@ -136,6 +139,9 @@ void MainScheduler::saveSettings()
     settings.setValue("THEMECOLOR", ui->themeComboBox->currentText());
     settings.setValue("WINDOWFONT", ui->windowFontComboBox->currentText());
     settings.setValue("WINDOWFONTSIZE", ui->windowFontSizeSpinBox->value());
+
+    storeLanguageSelection(&settings);
+
     settings.endGroup();
 }
 
@@ -164,6 +170,9 @@ void MainScheduler::restoreSettings()
     ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Default").toString());
     ui->windowFontComboBox->setCurrentFont(QFont(settings.value("WINDOWFONT", QApplication::font().toString()).toString()));
     ui->windowFontSizeSpinBox->setValue(settings.value("WINDOWFONTSIZE", QApplication::font().pointSize()).toInt());
+
+    loadLanguageSelection(&settings);
+
     settings.endGroup();
 }
 
@@ -201,9 +210,50 @@ void MainScheduler::themeChangeAction()
 
 void MainScheduler::about()
 {
-    AboutPS *ab = new AboutPS;
+    AboutABS *ab = new AboutABS;
     ab->setStyleSheet(this->styleSheet());
     ab->move(this->geometry().center() - ab->rect().center());
     ab->show();
+}
+
+void MainScheduler::initLanguageSelection()
+{
+#ifdef QT_DEBUG
+    QDirIterator dit("../../src/AutoBatchScheduler/translation", QStringList() << "*.qm", QDir::Files);
+#else
+    QDirIterator dit("translation", QStringList() << "*.qm", QDir::Files);
+#endif
+
+    QStringList files;
+
+    while (dit.hasNext()){
+        QFileInfo file(dit.next());
+        QString strloc = file.baseName().split("_").last();
+        QLocale locale(strloc);
+        ui->languageComboBox->addItem(QLocale::languageToString(locale.language()));
+    }
+}
+
+void MainScheduler::storeLanguageSelection(QSettings *setting)
+{
+    QString selected = ui->languageComboBox->currentText();
+
+    QList<QLocale> locales = QLocale::matchingLocales(QLocale::AnyLanguage,
+                                                      QLocale::AnyScript,
+                                                      QLocale::AnyCountry);
+
+    for(QLocale loc : locales){
+        if(QLocale::languageToString(loc.language()) == selected){
+            setting->setValue("abs/language", loc.bcp47Name());
+            break;
+        }
+    }
+}
+
+void MainScheduler::loadLanguageSelection(QSettings *setting)
+{
+    QLocale defloc;
+    QLocale locale(setting->value("abs/language", defloc.bcp47Name()).toString());
+    ui->languageComboBox->setCurrentText(QLocale::languageToString(locale.language()));
 }
 

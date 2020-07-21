@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>AutoBatchRunner - Runner</string>
+   <string>AutoBatchRunner</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -351,7 +351,7 @@ border: 0px</string>
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Automatically hide</string>
+    <string>Hide Title Bar</string>
    </property>
   </action>
   <action name="actionAbout">

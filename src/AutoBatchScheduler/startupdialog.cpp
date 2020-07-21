@@ -78,7 +78,7 @@ void StartupDialog::loadSettingList(int index, const QList<QStringList> *data)
     if(data->count() != 9) return;
 
     //window title
-    setWindowTitle(tr("Editing-") + data->at(0).at(1));
+    setWindowTitle(tr("Editing - ") + data->at(0).at(1));
 
     //set edit flags
     editflag = true;

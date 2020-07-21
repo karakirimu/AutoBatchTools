@@ -137,7 +137,7 @@ void SearchTable::addAction()
     FileSearchDialog *fs = new FileSearchDialog();
     fs->setStyleSheet(this->styleSheet());
     fs->move(this->mapToGlobal(this->geometry().center()) - fs->rect().center());
-    fs->setWindowTitle(tr("Editing - untitled*"));
+    fs->setWindowTitle(tr("Editing - Untitled*"));
     if(fs->exec() == QDialog::Accepted){
         int index = this->rowCount();
         setRowCount(index + 1);

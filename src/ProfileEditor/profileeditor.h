@@ -33,7 +33,7 @@
 #include <autosaveselectiondialog.h>
 #include <editoperator.h>
 #include <multitaskp.h>
-#include <aboutpe.h>
+#include <aboutabe.h>
 
 namespace Ui {
 class ProfileEditor;

@@ -54,6 +54,9 @@ OptionDialog::OptionDialog(QWidget *parent) :
     connect(ui->eDeleteButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::deleteAction);
     connect(ui->eUpButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::upAction);
     connect(ui->eDownButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::downAction);
+
+    //langcombobox
+    initLanguageSelection();
 }
 
 OptionDialog::~OptionDialog()
@@ -83,9 +86,10 @@ void OptionDialog::setSettings()
     QSettings settings( "./settings.ini", QSettings::IniFormat );
 
     settings.beginGroup("abr_settings");
-    settings.setValue("THEMECOLOR", ui->themeComboBox->currentText());
-    settings.setValue("WINDOWFONT", ui->windowFontComboBox->currentText());
-    settings.setValue("WINDOWFONTSIZE", ui->windowFontSizeSpinBox->value());
+    settings.setValue("abr/theme", ui->themeComboBox->currentText());
+    settings.setValue("abr/font", ui->windowFontComboBox->currentText());
+    settings.setValue("abr/fontsize", ui->windowFontSizeSpinBox->value());
+    storeLanguageSelection(&settings);
     settings.endGroup();
 }
 
@@ -94,10 +98,52 @@ void OptionDialog::loadSettings()
     QSettings settings( "./settings.ini", QSettings::IniFormat );
 
     settings.beginGroup("abr_settings");
-    ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Default").toString());
-    ui->windowFontComboBox->setCurrentFont(QFont(settings.value("WINDOWFONT", QApplication::font().toString()).toString()));
-    ui->windowFontSizeSpinBox->setValue(settings.value("WINDOWFONTSIZE", QApplication::font().pointSize()).toInt());
+    ui->themeComboBox->setCurrentText(settings.value("abr/theme", "Default").toString());
+    ui->windowFontComboBox->setCurrentFont(QFont(settings.value("abr/font", QApplication::font().toString()).toString()));
+    ui->windowFontSizeSpinBox->setValue(settings.value("abr/fontsize", QApplication::font().pointSize()).toInt());
+    loadLanguageSelection(&settings);
     settings.endGroup();
+}
+
+void OptionDialog::initLanguageSelection()
+{
+#ifdef QT_DEBUG
+    QDirIterator dit("../../src/AutoBatchRunner/translation", QStringList() << "*.qm", QDir::Files);
+#else
+    QDirIterator dit("translation", QStringList() << "*.qm", QDir::Files);
+#endif
+
+    QStringList files;
+
+    while (dit.hasNext()){
+        QFileInfo file(dit.next());
+        QString strloc = file.baseName().split("_").last();
+        QLocale locale(strloc);
+        ui->languageComboBox->addItem(QLocale::languageToString(locale.language()));
+    }
+}
+
+void OptionDialog::storeLanguageSelection(QSettings *setting)
+{
+    QString selected = ui->languageComboBox->currentText();
+
+    QList<QLocale> locales = QLocale::matchingLocales(QLocale::AnyLanguage,
+                             QLocale::AnyScript,
+                             QLocale::AnyCountry);
+
+    for(QLocale loc : locales){
+        if(QLocale::languageToString(loc.language()) == selected){
+            setting->setValue("abr/language", loc.bcp47Name());
+            break;
+        }
+    }
+}
+
+void OptionDialog::loadLanguageSelection(QSettings *setting)
+{
+    QLocale defloc;
+    QLocale locale(setting->value("abr/language", defloc.bcp47Name()).toString());
+    ui->languageComboBox->setCurrentText(QLocale::languageToString(locale.language()));
 }
 
 //change list to stackedwidget

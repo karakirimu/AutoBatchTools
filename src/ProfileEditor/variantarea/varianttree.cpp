@@ -581,8 +581,8 @@ void VariantTree::setPopupActionTop()
     m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"), tr("Edit"));
     m_edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
     contextMenu->addSeparator();
-    m_file = contextMenu->addAction(QIcon(":/default_icons/file.png"), tr("Select File..."));
-    m_dir = contextMenu->addAction(QIcon(":/default_icons/folder.png"), tr("Select Dir..."));
+    m_file = contextMenu->addAction(QIcon(":/default_icons/file.png"), tr("Select File"));
+    m_dir = contextMenu->addAction(QIcon(":/default_icons/folder.png"), tr("Select Dir"));
     contextMenu->addSeparator();
 
     //connect signals

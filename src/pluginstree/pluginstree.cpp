@@ -47,7 +47,7 @@ void PluginsTree::reloadAction()
 
     //set treeitem
     QTreeWidgetItem *root_auto = new QTreeWidgetItem(this);
-    root_auto->setData(0, Qt::DisplayRole, QVariant(tr("Auto-Detected")));
+    root_auto->setData(0, Qt::DisplayRole, QVariant(tr("Auto Detected")));
     root_auto->setExpanded(true);
 
     QTreeWidgetItem *root_manual = new QTreeWidgetItem(this);
@@ -226,7 +226,7 @@ void PluginsTree::swapRow(int before, int after, QModelIndex *index)
 void PluginsTree::setPopupActionTop()
 {
     //set basic items
-    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add File(s)"));
+    m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add Files"));
     m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
     m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
     m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
@@ -518,5 +518,11 @@ QStringList PluginsTree::selectFiles(QString basedir)
 {
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::ExistingFiles);
-    return dialog.getOpenFileNames(this, tr("Open Plugins"), basedir, tr("Files (*.dll)"));
+
+#ifdef Q_OS_WIN
+    QString extension = "(*.dll)";
+#else
+    QString extension = "(*.*)";
+#endif
+    return dialog.getOpenFileNames(this, tr("Open Plugins"), basedir, tr("Plugin ") + extension);
 }

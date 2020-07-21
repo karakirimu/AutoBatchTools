@@ -58,7 +58,7 @@ void SearchDialogTable::copyAction()
 
     for(int i = 0; i < counter; i++){
         bindString.append(indexlist.at(i).data().toString());
-        bindString.append(tr("\n"));
+        bindString.append("\n");
     }
 
     clipboard->setText(bindString);

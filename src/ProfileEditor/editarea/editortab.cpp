@@ -669,7 +669,7 @@ void EditorTab::loadPluginInstanceFromUi(QString plfile)
  */
 void EditorTab::openSavefile()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Search file"),\
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save FileSearch Result"),\
                                          QDir::currentPath(), "File (*.*)");
 
     if(fileName != ""){

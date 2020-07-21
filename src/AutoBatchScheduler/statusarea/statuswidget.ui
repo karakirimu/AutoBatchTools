@@ -72,7 +72,7 @@
       <item>
        <widget class="QToolButton" name="settingToolButton">
         <property name="toolTip">
-         <string>show settings</string>
+         <string>Show Setting</string>
         </property>
         <property name="text">
          <string>...</string>
@@ -115,6 +115,9 @@
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../../../res/resources.qrc"/>
+  <include location="../../../res/resources.qrc"/>
+  <include location="../../../res/resources.qrc"/>
   <include location="../../../res/resources.qrc"/>
  </resources>
  <connections/>

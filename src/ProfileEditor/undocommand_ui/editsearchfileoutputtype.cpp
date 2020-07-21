@@ -33,7 +33,7 @@ void EditSearchFileOutputType::undo()
 {
     replaceValue(oldValue);
 
-    setText(QObject::tr("Change output file method") \
+    setText(QObject::tr("Change output save mode") \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -41,7 +41,7 @@ void EditSearchFileOutputType::redo()
 {
     replaceValue(newValue);
 
-    setText(QObject::tr("Change output file method") \
+    setText(QObject::tr("Change output save mode") \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

@@ -110,7 +110,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Setting name</string>
+         <string>Name</string>
         </property>
        </widget>
       </item>
@@ -217,7 +217,7 @@
          <item row="9" column="0">
           <widget class="QCheckBox" name="fsizeCheckBox">
            <property name="text">
-            <string>Filesize</string>
+            <string>File Size</string>
            </property>
           </widget>
          </item>
@@ -240,7 +240,7 @@
          <item row="2" column="0">
           <widget class="QCheckBox" name="recursiveCheckBox">
            <property name="text">
-            <string>Folder recursive search</string>
+            <string>Recursive (Folder)</string>
            </property>
           </widget>
          </item>
@@ -358,7 +358,7 @@
          <item row="4" column="0">
           <widget class="QCheckBox" name="secondsCheckBox">
            <property name="text">
-            <string>From search time</string>
+            <string>From Search Time</string>
            </property>
           </widget>
          </item>
@@ -684,7 +684,6 @@
   <tabstop>openToolButton</tabstop>
  </tabstops>
  <resources>
-  <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>

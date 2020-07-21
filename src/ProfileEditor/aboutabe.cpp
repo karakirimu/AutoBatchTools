@@ -14,25 +14,21 @@
  * limitations under the License.
  */
 
-#ifndef ABOUTPE_H
-#define ABOUTPE_H
+#include "aboutabe.h"
+#include "ui_aboutabe.h"
 
-#include <QWidget>
+AboutABE::AboutABE(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::AboutABE)
+{
+    setAttribute(Qt::WA_DeleteOnClose);
+    ui->setupUi(this);
+    QIcon icons(":/app_icons/app_pe.ico");
+    ui->icon->setPixmap(icons.pixmap(128,128));
 
-namespace Ui {
-class AboutPE;
 }
 
-class AboutPR : public QWidget
+AboutABE::~AboutABE()
 {
-    Q_OBJECT
-
-public:
-    explicit AboutPR(QWidget *parent = nullptr);
-    ~AboutPR();
-
-private:
-    Ui::AboutPE *ui;
-};
-
-#endif // ABOUTPE_H
+    delete ui;
+}

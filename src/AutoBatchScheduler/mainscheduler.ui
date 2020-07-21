@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainScheduler</string>
+   <string>AutoBatchScheduler</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -54,6 +54,9 @@
         </property>
         <item>
          <widget class="StartupTable" name="startupTableWidget">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
@@ -84,11 +87,11 @@
            <enum>QTabWidget::North</enum>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="settingservice">
            <attribute name="title">
-            <string>Startup</string>
+            <string>General</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <property name="spacing">
@@ -109,7 +112,7 @@
             <item>
              <widget class="QCheckBox" name="minimizeLaunchCheckBox">
               <property name="text">
-               <string>Minimize screen at startup</string>
+               <string>Store window in the task tray on startup</string>
               </property>
              </widget>
             </item>
@@ -134,23 +137,11 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="1" colspan="2">
-               <widget class="QComboBox" name="themeComboBox">
-                <item>
-                 <property name="text">
-                  <string>Default</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Light</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Dark</string>
-                 </property>
-                </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label">
+                <property name="text">
+                 <string>Window Font</string>
+                </property>
                </widget>
               </item>
               <item row="2" column="2">
@@ -172,12 +163,50 @@
               <item row="2" column="1">
                <widget class="QFontComboBox" name="windowFontComboBox"/>
               </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label">
+              <item row="1" column="1" colspan="2">
+               <widget class="QComboBox" name="themeComboBox">
+                <item>
+                 <property name="text">
+                  <string>Default</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Light</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Dark</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <spacer name="verticalSpacer_5">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>8</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_2">
                 <property name="text">
-                 <string>Window Font</string>
+                 <string>Language</string>
                 </property>
                </widget>
+              </item>
+              <item row="4" column="1" colspan="2">
+               <widget class="QComboBox" name="languageComboBox"/>
               </item>
              </layout>
             </item>
@@ -218,18 +247,28 @@
               <property name="topMargin">
                <number>0</number>
               </property>
-              <item row="3" column="0">
-               <widget class="QCheckBox" name="timerStopShowCheckBox">
+              <item row="7" column="0">
+               <widget class="QCheckBox" name="taskStartShowCheckBox">
                 <property name="text">
-                 <string>Timer finished</string>
+                 <string>Started</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
-               <spacer name="verticalSpacer_3">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="minimizeShowCheckBox">
+                <property name="text">
+                 <string>Minimized</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <spacer name="verticalSpacer_4">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
                 </property>
@@ -239,13 +278,23 @@
                 <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
-                  <height>6</height>
+                  <height>9</height>
                  </size>
                 </property>
                </spacer>
               </item>
-              <item row="3" column="1">
-               <widget class="QSpinBox" name="timerStopSpinBox">
+              <item row="9" column="0">
+               <widget class="QCheckBox" name="taskUnselectShowCheckBox">
+                <property name="text">
+                 <string>Cancelled</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="1">
+               <widget class="QSpinBox" name="taskUnselectSpinBox">
                 <property name="suffix">
                  <string> ms</string>
                 </property>
@@ -263,17 +312,7 @@
                 </property>
                </widget>
               </item>
-              <item row="7" column="0">
-               <widget class="QCheckBox" name="taskUnselectShowCheckBox">
-                <property name="text">
-                 <string>Task canceled</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="1">
+              <item row="7" column="1">
                <widget class="QSpinBox" name="taskStartSpinBox">
                 <property name="suffix">
                  <string> ms</string>
@@ -292,10 +331,39 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="minimizeShowCheckBox">
+              <item row="8" column="1">
+               <widget class="QSpinBox" name="taskEndSpinBox">
+                <property name="suffix">
+                 <string> ms</string>
+                </property>
+                <property name="minimum">
+                 <number>500</number>
+                </property>
+                <property name="maximum">
+                 <number>1000000</number>
+                </property>
+                <property name="singleStep">
+                 <number>100</number>
+                </property>
+                <property name="value">
+                 <number>2500</number>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="0">
+               <widget class="QCheckBox" name="taskEndShowCheckBox">
                 <property name="text">
-                 <string>Minimized</string>
+                 <string>Finished</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QCheckBox" name="timerStopShowCheckBox">
+                <property name="text">
+                 <string>Finished</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
@@ -321,8 +389,34 @@
                 </property>
                </widget>
               </item>
-              <item row="7" column="1">
-               <widget class="QSpinBox" name="taskUnselectSpinBox">
+              <item row="3" column="0">
+               <widget class="QCheckBox" name="timerStartShowCheckBox">
+                <property name="text">
+                 <string>Started</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <spacer name="verticalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeType">
+                 <enum>QSizePolicy::Fixed</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>9</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="4" column="1">
+               <widget class="QSpinBox" name="timerStopSpinBox">
                 <property name="suffix">
                  <string> ms</string>
                 </property>
@@ -340,26 +434,7 @@
                 </property>
                </widget>
               </item>
-              <item row="6" column="1">
-               <widget class="QSpinBox" name="taskEndSpinBox">
-                <property name="suffix">
-                 <string> ms</string>
-                </property>
-                <property name="minimum">
-                 <number>500</number>
-                </property>
-                <property name="maximum">
-                 <number>1000000</number>
-                </property>
-                <property name="singleStep">
-                 <number>100</number>
-                </property>
-                <property name="value">
-                 <number>2500</number>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
+              <item row="3" column="1">
                <widget class="QSpinBox" name="timerStartSpinBox">
                 <property name="suffix">
                  <string> ms</string>
@@ -378,51 +453,19 @@
                 </property>
                </widget>
               </item>
-              <item row="6" column="0">
-               <widget class="QCheckBox" name="taskEndShowCheckBox">
-                <property name="text">
-                 <string>Task finished</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
               <item row="2" column="0">
-               <widget class="QCheckBox" name="timerStartShowCheckBox">
+               <widget class="QLabel" name="label_3">
                 <property name="text">
-                 <string>Timer started</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
+                 <string>Timer</string>
                 </property>
                </widget>
               </item>
-              <item row="5" column="0">
-               <widget class="QCheckBox" name="taskStartShowCheckBox">
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_4">
                 <property name="text">
-                 <string>Task started</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
+                 <string>Task</string>
                 </property>
                </widget>
-              </item>
-              <item row="4" column="0">
-               <spacer name="verticalSpacer_4">
-                <property name="orientation">
-                 <enum>Qt::Vertical</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>20</width>
-                  <height>6</height>
-                 </size>
-                </property>
-               </spacer>
               </item>
              </layout>
             </item>
@@ -544,10 +587,10 @@
      <normaloff>:/default_icons/settings.png</normaloff>:/default_icons/settings.png</iconset>
    </property>
    <property name="text">
-    <string>Options</string>
+    <string>Settings</string>
    </property>
    <property name="toolTip">
-    <string>Options</string>
+    <string>Settings</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -565,7 +608,6 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>

@@ -20,19 +20,19 @@
 #include <QWidget>
 
 namespace Ui {
-class AboutPE;
+class AboutABE;
 }
 
-class AboutPS : public QWidget
+class AboutABE : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit AboutPS(QWidget *parent = nullptr);
-    ~AboutPS();
+    explicit AboutABE(QWidget *parent = nullptr);
+    ~AboutABE();
 
 private:
-    Ui::AboutPE *ui;
+    Ui::AboutABE *ui;
 };
 
 #endif // ABOUTPE_H

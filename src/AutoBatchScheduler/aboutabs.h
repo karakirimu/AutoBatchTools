@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-#include "aboutps.h"
-#include "ui_aboutps.h"
+#ifndef ABOUTABS_H
+#define ABOUTABS_H
 
-AboutPS::AboutPS(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::AboutPE)
-{
-    setAttribute(Qt::WA_DeleteOnClose);
-    ui->setupUi(this);
-    QIcon icons(":/app_icons/app_abs.ico");
-    ui->icon->setPixmap(icons.pixmap(128,128));
+#include <QWidget>
 
+namespace Ui {
+class AboutABS;
 }
 
-AboutPS::~AboutPS()
+class AboutABS : public QWidget
 {
-    delete ui;
-}
+    Q_OBJECT
+
+public:
+    explicit AboutABS(QWidget *parent = nullptr);
+    ~AboutABS();
+
+private:
+    Ui::AboutABS *ui;
+};
+
+#endif // ABOUTPS_H

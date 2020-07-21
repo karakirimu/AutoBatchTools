@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-#ifndef ABOUTPE_H
-#define ABOUTPE_H
+#ifndef ABOUTPR_H
+#define ABOUTPR_H
 
 #include <QWidget>
 
 namespace Ui {
-class AboutPE;
+class AboutABR;
 }
 
-class AboutPE : public QWidget
+class AboutABR : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit AboutPE(QWidget *parent = nullptr);
-    ~AboutPE();
+    explicit AboutABR(QWidget *parent = nullptr);
+    ~AboutABR();
 
 private:
-    Ui::AboutPE *ui;
+    Ui::AboutABR *ui;
 };
 
-#endif // ABOUTPE_H
+#endif // ABOUTPR_H

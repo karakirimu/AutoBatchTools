@@ -65,7 +65,7 @@
      <item>
       <widget class="QLabel" name="message">
        <property name="text">
-        <string>ProfileEditor has found an autosave file.
+        <string>Application has found an autosave file.
 To recover files, select the following list and press [OK].</string>
        </property>
        <property name="scaledContents">

@@ -79,14 +79,14 @@ void EditScomboBoxCommand::replace(QString str, int i)
         ec.info.fileSearchName = str;
         ec.info.fileSearchIndex = i;
 
-        message = QObject::tr("Input search profile to ");
+        message = QObject::tr("Input filesearch profile to");
 
     }else{
         // sname
         ec.filesearch.name = str;
         ec.filesearch.nameIndex = i;
 
-        message = QObject::tr("Search profile to ");
+        message = QObject::tr("Filesearch profile to");
 
     }
     ptrCache->replace(index, ec);

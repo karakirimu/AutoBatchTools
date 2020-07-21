@@ -258,7 +258,7 @@ void ProfileEditor::openAction()
 
     // open file
     QString fileName = fdialog->getOpenFileName(this,\
-                                                tr("Open file"), settings.value("profileeditor/lastopened",\
+                                                tr("Open Profile"), settings.value("profileeditor/lastopened",\
                                                 QDir::currentPath()).toString(), "Profile (*.xml *.apro)");
 
     if(fileName != ""){
@@ -302,7 +302,7 @@ bool ProfileEditor::saveAction()
 
     QString fileName =
             fdialog->getSaveFileName(this,\
-                                     tr("Save Edit file"),\
+                                     tr("Save Profile"),\
                                      settings.value("profileeditor/lastsaved", QDir::currentPath()).toString(),\
                                      "APRO Files (*.apro)");
 
@@ -470,7 +470,7 @@ void ProfileEditor::overWriteSaveAction()
                 fdialog->getSaveFileName(this,\
                                          tr("Save Edit file"),\
                                          QDir::currentPath(),\
-                                         "APRO Files (*.apro)");
+                                         "APRO File (*.apro)");
 
         if(fileName != "") editop->saveAction(fileName);
     }else{
@@ -482,9 +482,9 @@ void ProfileEditor::exportAction()
 {
     QString fileName =
             fdialog->getSaveFileName(this,\
-                                     tr("Export XML file"),\
+                                     tr("Export"),\
                                      QDir::currentPath(),\
-                                     "XML Files (*.xml)");
+                                     "XML File (*.xml)");
     editop->exportAction(fileName);
 }
 
@@ -495,12 +495,12 @@ void ProfileEditor::reloadWindow(QString newload)
     lastedited = false;
 
     if(info.suffix() == "autosave"){
-        newtitle = tr("untitled");
+        newtitle = tr("Untitled");
     }else{
         newtitle = info.fileName();
     }
 
-    setWindowTitle(newtitle + " - ProfileEditor");
+    setWindowTitle(newtitle + " - AutoBatchEditor");
 
     initUi();
 }
@@ -538,7 +538,7 @@ void ProfileEditor::itemChangedAction(int after, int before, int function)
     qDebug() << "[ProfileEditor::itemChangedAction]   rowpos :" << after;
 
     //update show
-    emit statusLabelChanged(tr("Process selected: No. %1").arg(showdata));
+    emit statusLabelChanged(tr("No. %1 selected").arg(showdata));
 
     //update row position
     dataindexpos = after;
@@ -546,7 +546,7 @@ void ProfileEditor::itemChangedAction(int after, int before, int function)
 
 void ProfileEditor::about()
 {
-    AboutPE *ab = new AboutPE;
+    AboutABE *ab = new AboutABE;
     ab->setStyleSheet(this->styleSheet());
     ab->move(this->geometry().center() - ab->rect().center());
     ab->show();
@@ -564,7 +564,7 @@ void ProfileEditor::initRunToolBar()
     runToolBar->addAction(ui->actionStop);
 
     actionRunSetting = new QAction(QIcon(":/default_icons/string.png"), tr("Test"));
-    actionRunSetting->setToolTip(tr("'Run Test' Settings"));
+    actionRunSetting->setToolTip(tr("Test Settings"));
     connect(actionRunSetting, &QAction::triggered, this, &ProfileEditor::runTestSettingsTriggered);
     runToolBar->addAction(actionRunSetting);
 
@@ -583,15 +583,15 @@ void ProfileEditor::initRunToolBar()
 
 void ProfileEditor::initRunRangeToolBar()
 {
-    testRangeToolBar = new QToolBar(tr("TestRange"));
+    testRangeToolBar = new QToolBar(tr("Test Range"));
     testRangeToolBar->setObjectName("TestRangeToolBar");
     testRangeToolBar->setToolButtonStyle(ui->mainToolBar->toolButtonStyle());
 
     rangeLineEdit = new QLineEdit();
     rangeLineEdit->setMinimumWidth(150);
     rangeLineEdit->setMaximumWidth(200);
-    rangeLineEdit->setPlaceholderText(tr("execution range here"));
-    rangeLineEdit->setToolTip(tr("Specify the execution range.\nExample: 0-7 0, 1, 2, 3"));
+    rangeLineEdit->setPlaceholderText(tr("Input process range here ..."));
+    rangeLineEdit->setToolTip(tr("Specify the process range.\nExample: 0-7 0, 1, 2, 3"));
     connect(rangeLineEdit, &QLineEdit::textChanged, this, &ProfileEditor::updateRangeText);
     testRangeToolBar->addWidget(rangeLineEdit);
     this->addToolBar(testRangeToolBar);
@@ -745,7 +745,7 @@ void ProfileEditor::closeEvent(QCloseEvent *event)
 
     // Warning if the document has changed
     QMessageBox::StandardButton res = QMessageBox::question(this, tr("Alert"),\
-                                    tr("File was edited.\nDo you want to save this file ?"),\
+                                    tr("Profile was edited.\nDo you want to save this Profile ?"),\
                                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
 
     switch( res )

@@ -19,7 +19,7 @@
 
 CellInfoWidget::CellInfoWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::cellInfoWidget)
+    ui(new Ui::CellInfoWidget)
 {
     ui->setupUi(this);
 
@@ -124,7 +124,7 @@ void CellInfoWidget::onRunStatusChange(bool enabled)
         connect(ui->profileCheckBox, &QCheckBox::toggled, this, &CellInfoWidget::onRunStatusChange);
 
         //TEXT
-        updateErrorText(tr("To turn off task, need to stop current task."));
+        updateErrorText(tr("To turn off task, need to stop the current task."));
     }else{
         //task is not running
         setRunStatus(enabled);

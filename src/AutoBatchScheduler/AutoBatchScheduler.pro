@@ -11,14 +11,16 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = AutoBatchScheduler
 TEMPLATE = app
 
-TRANSLATIONS = abscheduler_ja_JP.ts
+#TRANSLATIONS += \
+#    translation/abs_en.ts \
+#    translation/abs_ja.ts
 
 VERSION = 1.0.0
 
 win32 {
     QMAKE_TARGET_COMPANY = karakirimu
-    QMAKE_TARGET_PRODUCT = AutoBatchRunner - ProfileScheduler
-    QMAKE_TARGET_DESCRIPTION = Schedule execution of apro file
+    QMAKE_TARGET_PRODUCT = AutoBatchScheduler
+    QMAKE_TARGET_DESCRIPTION = AutoBatchScheduler
     QMAKE_TARGET_COPYRIGHT = Copyright 2016-2020 karakirimu
     RC_ICONS = ../../res/app_icons/app_abs.ico
 }
@@ -45,7 +47,7 @@ DEPENDPATH += $$OUT_PWD/../../library/
 LIBRARYPATH = $$OUT_PWD/../../library/
 
 SOURCES += \
-        aboutps.cpp \
+        aboutabs.cpp \
         main.cpp \
         mainscheduler.cpp \
         startupxmlbuilder.cpp \
@@ -53,19 +55,23 @@ SOURCES += \
         startupdialog.cpp
 
 HEADERS += \
-        aboutps.h \
+        aboutabs.h \
         mainscheduler.h \
         startupxmlbuilder.h \
         startuptable.h \
         startupdialog.h
 
 FORMS += \
-        aboutps.ui \
+        aboutabs.ui \
         mainscheduler.ui \
         startupdialog.ui
 
 RESOURCES += \
     ../../res/resources.qrc
+
+#DISTFILES += \
+#    translation/abs_en.ts \
+#    translation/abs_ja.ts
 
 include(taskscheduler/taskscheduler.pri)
 include(systemtray/systemtray.pri)

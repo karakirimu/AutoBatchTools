@@ -17,10 +17,11 @@
 #include "autobatchrunner.h"
 #include "ui_autobatchrunner.h"
 
-///
-/// \brief AutoBatchRunner::AutoBatchRunner This is a main constructor of AutoBatchRunner.exe
-/// \param parent default QMainWindow
-///
+/**
+ * @fn AutoBatchRunner::AutoBatchRunner
+ * @brief This is a main constructor of AutoBatchRunner.exe
+ * @param parent default QMainWindow
+ */
 AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::AutoBatchRunner)
@@ -48,14 +49,14 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     setWindowTitle("ProfileRunner");
 
     QSettings settings( "./settings.ini", QSettings::IniFormat );
-    QVariant v = settings.value( "batchrunner/geometry" );
+    QVariant v = settings.value( "abr/geometry" );
     if (v.type() != QVariant::Invalid){
         // load window settings on MainWindow
-        restoreGeometry( settings.value( "batchrunner/geometry" ).toByteArray() );
-        restoreState( settings.value( "batchrunner/windowState" ).toByteArray() );
+        restoreGeometry( settings.value( "abr/geometry" ).toByteArray() );
+        restoreState( settings.value( "abr/windowState" ).toByteArray() );
 
         // load combobox previous position
-        int comboindex = settings.value("batchrunner/profilecombo").toInt();
+        int comboindex = settings.value("abr/profilecombo").toInt();
         if(comboindex < ui->comboBox->count()){
             ui->comboBox->setCurrentIndex(comboindex);
         }
@@ -97,9 +98,9 @@ AutoBatchRunner::~AutoBatchRunner()
 {
     //save window state
     QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.setValue( "batchrunner/geometry", saveGeometry() );
-    settings.setValue( "batchrunner/windowState", saveState() );
-    settings.setValue( "batchrunner/profilecombo", ui->comboBox->currentIndex());
+    settings.setValue( "abr/geometry", saveGeometry() );
+    settings.setValue( "abr/windowState", saveState() );
+    settings.setValue( "abr/profilecombo", ui->comboBox->currentIndex());
 
     delete opdialog;
     delete mlTask;
@@ -211,7 +212,7 @@ void AutoBatchRunner::initStatusBar()
 
 void AutoBatchRunner::about()
 {
-    AboutPR *ab = new AboutPR;
+    AboutABR *ab = new AboutABR;
     ab->setStyleSheet(this->styleSheet());
     ab->move(this->geometry().center() - ab->rect().center());
     ab->show();
@@ -224,7 +225,7 @@ void AutoBatchRunner::on_profileEditToolButton_clicked()
 #ifdef QT_DEBUG
     bool result = process.startDetached("./ProfileEditor.exe", \
                     (QStringList() << ui->comboBox->getCurrentFileName()));
-    if(!result) qDebug() << tr("ProfileEditor launch failed.");
+    if(!result) qDebug() << "ProfileEditor launch failed.";
 #else
 #ifdef Q_OS_WIN
     process.startDetached("./ProfileEditor.exe", QStringList() << ui->comboBox->getCurrentFileName());
@@ -248,9 +249,9 @@ void AutoBatchRunner::themeChangeAction()
 
     //theme settings
     settings.beginGroup("abr_settings");
-    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
-    QFont settingfont = QFont(settings.value("WINDOWFONT", QApplication::font().toString()).toString());
-    settingfont.setPointSize(settings.value("WINDOWFONTSIZE", QApplication::font().pointSize()).toInt());
+    QString stylecolor = settings.value("pr/theme", "Default").toString();
+    QFont settingfont = QFont(settings.value("pr/font", QApplication::font().toString()).toString());
+    settingfont.setPointSize(settings.value("pr/fontsize", QApplication::font().pointSize()).toInt());
     settings.endGroup();
 
     if(stylecolor != "Default"){

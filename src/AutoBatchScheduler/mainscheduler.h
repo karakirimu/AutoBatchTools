@@ -23,7 +23,7 @@
 #include <QMouseEvent>
 #include <QSettings>
 #include <systemtray.h>
-#include <aboutps.h>
+#include <aboutabs.h>
 
 namespace Ui {
 class MainScheduler;
@@ -49,6 +49,10 @@ private:
     void restoreSettings();
     void themeChangeAction();
     void about();
+
+    void initLanguageSelection();
+    void storeLanguageSelection(QSettings *setting);
+    void loadLanguageSelection(QSettings *setting);
 
     Ui::MainScheduler *ui;
     SystemTray *sysTray;

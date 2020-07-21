@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AboutPE</class>
- <widget class="QWidget" name="AboutPE">
+ <class>AboutABE</class>
+ <widget class="QWidget" name="AboutABE">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>About ProfileEditor</string>
+   <string>About AutoBatchEditor</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
@@ -124,13 +124,13 @@
             <property name="font">
              <font>
               <family>Arial</family>
-              <pointsize>18</pointsize>
+              <pointsize>16</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
             <property name="text">
-             <string notr="true">AutoBatchRunner - Profile Editor</string>
+             <string notr="true">AutoBatchEditor</string>
             </property>
            </widget>
           </item>

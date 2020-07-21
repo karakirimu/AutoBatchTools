@@ -23,7 +23,7 @@
 #include <QLabel>
 #include <optiondialog.h>
 #include <multitask.h>
-#include <aboutpr.h>
+#include <aboutabr.h>
 
 namespace Ui {
 class AutoBatchRunner;

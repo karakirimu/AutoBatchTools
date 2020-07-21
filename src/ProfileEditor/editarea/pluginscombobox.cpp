@@ -47,7 +47,7 @@ void PluginsComboBox::reloadComboBoxItem()
     FileSearchLoader fsload;
     buffer = fsload.searchFromStrList(&searchsettings);
 
-    this->addItem(tr("Select plugins ..."));
+    this->addItem(tr("Select plugin ..."));
 
     //read all manual list items
     QList<QStringList> item;
@@ -105,8 +105,14 @@ void PluginsComboBox::addItemAction()
     //add file
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::ExistingFile);
+
+#ifdef Q_OS_WIN
+    QString extension = "(*.dll)";
+#else
+    QString extension = "(*.*)";
+#endif
     QString file = dialog.getOpenFileName(this, tr("Select Plugin"), \
-                                          QDir::currentPath(), tr("dll (*.dll)"));
+                                          QDir::currentPath(), tr("Plugin ") + extension );
     QFileInfo info(file);
 
     if(info.exists()){
@@ -125,8 +131,8 @@ void PluginsComboBox::addItemAction()
             loader.unload();
 
         }else{
-            QMessageBox::warning(this, tr("ProfileEditor"),
-                                       tr("This dll file can not be applied."),
+            QMessageBox::warning(this, "AutoBatchEditor",
+                                       tr("This dll file cannot be applied."),
                                        QMessageBox::Ok);
         }
 

@@ -34,7 +34,7 @@ void StringProjectDescription::undo()
     ec.info.description = oldStr;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Description Text") \
+    setText(QObject::tr("Description changed") \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -44,7 +44,7 @@ void StringProjectDescription::redo()
     ec.info.description = newStr;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Description Text") \
+    setText(QObject::tr("Description changed") \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

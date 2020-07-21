@@ -11,14 +11,16 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = AutoBatchRunner
 TEMPLATE = app
 
-TRANSLATIONS = abrunner_ja_JP.ts
+#TRANSLATIONS += \
+#    translation/abr_en.ts \
+#    translation/abr_ja.ts
 
 VERSION = 1.0.0
 
 win32 {
     QMAKE_TARGET_COMPANY = karakirimu
-    QMAKE_TARGET_PRODUCT = AutoBatchRunner - ProfileRunner
-    QMAKE_TARGET_DESCRIPTION = Execution of apro file
+    QMAKE_TARGET_PRODUCT = AutoBatchRunner
+    QMAKE_TARGET_DESCRIPTION = AutoBatchRunner
     QMAKE_TARGET_COPYRIGHT = Copyright 2016-2020 karakirimu
     RC_ICONS = ../../res/app_icons/app_abr.ico
 }
@@ -51,6 +53,10 @@ FORMS    += \
 RESOURCES += \
     ../../res/resources.qrc
 
+#DISTFILES += \
+#    translation/abr_en.ts \
+#    translation/abr_ja.ts
+
 #include path
 #include(xml/xml.pri)
 #include(combobox/combobox.pri)
@@ -73,7 +79,7 @@ LIBS += \
     -L$$LIBRARYPATH -lfilequeuetable \
     -L$$LIBRARYPATH -lsearchtable \
     -L$$LIBRARYPATH -lstringtable \
-    -L$$LIBRARYPATH -lextrafunctionstable \
+#    -L$$LIBRARYPATH -lextrafunctionstable \
     -L$$LIBRARYPATH -lfileinfodialog \
     -L$$LIBRARYPATH -lfilesearchdialog \
     -L$$LIBRARYPATH -lfilesearchloader \

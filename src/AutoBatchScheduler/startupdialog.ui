@@ -49,7 +49,7 @@
       </font>
      </property>
      <property name="placeholderText">
-      <string>Schedule name ...</string>
+      <string>Schedule name</string>
      </property>
      <property name="clearButtonEnabled">
       <bool>false</bool>
@@ -146,47 +146,6 @@
        <property name="verticalSpacing">
         <number>0</number>
        </property>
-       <item row="3" column="2">
-        <widget class="QCheckBox" name="TueCheckBox">
-         <property name="text">
-          <string>Tue</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="6">
-        <widget class="QSpinBox" name="weeksSpinBox">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>9999</number>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="3">
-        <widget class="QCheckBox" name="WedCheckBox">
-         <property name="text">
-          <string>Wed</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="4" colspan="3">
-        <widget class="QLineEdit" name="secondsLineEdit"/>
-       </item>
-       <item row="3" column="7">
-        <widget class="QCheckBox" name="SunCheckBox">
-         <property name="text">
-          <string>Sun</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="7">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>week interval</string>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="5">
         <widget class="QCheckBox" name="FriCheckBox">
          <property name="text">
@@ -201,17 +160,54 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="4">
-        <widget class="QCheckBox" name="ThuCheckBox">
-         <property name="text">
-          <string>Thu</string>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="1">
         <widget class="QCheckBox" name="MonCheckBox">
          <property name="text">
           <string>Mon</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QCheckBox" name="everyDayCheckBox">
+         <property name="text">
+          <string>Everyday</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6" colspan="2">
+        <widget class="QDateTimeEdit" name="scheduleDateTimeEdit">
+         <property name="displayFormat">
+          <string>yyyy/MM/dd HH:mm:ss</string>
+         </property>
+         <property name="calendarPopup">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="5">
+        <widget class="QRadioButton" name="weeksRadioButton">
+         <property name="text">
+          <string>Day of the week and time</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">radioButtonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="4">
+        <widget class="QRadioButton" name="secondsRadioButton">
+         <property name="text">
+          <string>Time interval</string>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">radioButtonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item row="3" column="7">
+        <widget class="QCheckBox" name="SunCheckBox">
+         <property name="text">
+          <string>Sun</string>
          </property>
         </widget>
        </item>
@@ -234,6 +230,40 @@
          </item>
         </widget>
        </item>
+       <item row="3" column="3">
+        <widget class="QCheckBox" name="WedCheckBox">
+         <property name="text">
+          <string>Wed</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4" colspan="3">
+        <widget class="QLineEdit" name="secondsLineEdit"/>
+       </item>
+       <item row="2" column="6">
+        <widget class="QSpinBox" name="weeksSpinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>9999</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="6" colspan="2">
+        <widget class="QTimeEdit" name="scheduleTimeEdit">
+         <property name="displayFormat">
+          <string>HH:mm:ss</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QCheckBox" name="TueCheckBox">
+         <property name="text">
+          <string>Tue</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="0" colspan="3">
         <widget class="QRadioButton" name="oneshotRadioButton">
          <property name="text">
@@ -244,48 +274,18 @@
          </attribute>
         </widget>
        </item>
-       <item row="1" column="6" colspan="2">
-        <widget class="QTimeEdit" name="scheduleTimeEdit">
-         <property name="displayFormat">
-          <string>HH:mm:ss</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="6" colspan="2">
-        <widget class="QDateTimeEdit" name="scheduleDateTimeEdit">
-         <property name="displayFormat">
-          <string>yyyy/MM/dd HH:mm:ss</string>
-         </property>
-         <property name="calendarPopup">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QCheckBox" name="everyDayCheckBox">
+       <item row="2" column="7">
+        <widget class="QLabel" name="label_5">
          <property name="text">
-          <string>Everyday</string>
+          <string>week interval</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="5">
-        <widget class="QRadioButton" name="weeksRadioButton">
+       <item row="3" column="4">
+        <widget class="QCheckBox" name="ThuCheckBox">
          <property name="text">
-          <string>Day of the week and time</string>
+          <string>Thu</string>
          </property>
-         <attribute name="buttonGroup">
-          <string notr="true">radioButtonGroup</string>
-         </attribute>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="4">
-        <widget class="QRadioButton" name="secondsRadioButton">
-         <property name="text">
-          <string>Time interval</string>
-         </property>
-         <attribute name="buttonGroup">
-          <string notr="true">radioButtonGroup</string>
-         </attribute>
         </widget>
        </item>
       </layout>

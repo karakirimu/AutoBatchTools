@@ -35,7 +35,7 @@ ProfileTable::ProfileTable(QWidget *)
     horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 
     //set header label
-    setHorizontalHeaderLabels((QStringList() << tr("Setting Name") << tr("Description") << tr("Filename")));
+    setHorizontalHeaderLabels((QStringList() << tr("Profile") << tr("Description") << tr("File")));
 
     //set new xml builder
     builder = new ProfileXmlBuilder();
@@ -62,7 +62,7 @@ void ProfileTable::newAction()
     process.setProgram("./ProfileEditor.exe");
 #ifdef QT_DEBUG
     bool result = process.startDetached();
-    if(!result) qDebug() << tr("ProfileEditor launch failed.");
+    if(!result) qDebug() << "AutoBatchEditor launch failed.";
 #else
     process.startDetached();
 #endif

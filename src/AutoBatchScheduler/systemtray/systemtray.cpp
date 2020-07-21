@@ -251,7 +251,7 @@ void SystemTray::showTaskDisabled(QString objectname)
 
 void SystemTray::showProcessFileEmpty(QString profilename)
 {
-    trayIcon->showMessage(tr("Profile does not exist for execution"),\
+    trayIcon->showMessage(tr("The profile to be executed could not be loaded."),\
                           profilename\
                           +tr("\r\nIn order to execute this schedule, please reset the execution profile"),\
                           QSystemTrayIcon::Warning,\
@@ -260,7 +260,7 @@ void SystemTray::showProcessFileEmpty(QString profilename)
 
 void SystemTray::initTrayIcon()
 {
-    settingsAction = trayIconMenu->addAction(tr("Open settings ..."));
+    settingsAction = trayIconMenu->addAction(tr("Open Setting"));
 
     trayIconMenu->addSeparator();
     quitAction = trayIconMenu->addAction(tr("Quit"));

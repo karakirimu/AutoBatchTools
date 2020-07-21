@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-#include "aboutpr.h"
-#include "ui_aboutpr.h"
+#include "aboutabr.h"
+#include "ui_aboutabr.h"
 
-AboutPR::AboutPR(QWidget *parent) :
+AboutABR::AboutABR(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AboutPE)
+    ui(new Ui::AboutABR)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
@@ -28,7 +28,7 @@ AboutPR::AboutPR(QWidget *parent) :
 
 }
 
-AboutPR::~AboutPR()
+AboutABR::~AboutABR()
 {
     delete ui;
 }

@@ -188,7 +188,7 @@ bool Executor::runProcess()
 
     //file input existing check
     if(setting->initFilename == ""){
-        emit processCheckError(tr("## FILE IS NOT LOADED !!"));
+        emit processCheckError(tr("## [Fatal] The selected profile cannot be loaded."));
         emit processStopped();
         return false;
 
@@ -426,7 +426,7 @@ bool Executor::loadSearch(QList<QStringList> *list)
     QStringList result = loader->searchFromXml( \
                 static_cast<QString>(xgen.fetch(pxc.TAG_FS_NAME_HA1,pxc.ATTR_COMMAND_ID_INT, list)).toInt());
 
-    emit processMessage(tr("## [Search : %1] \n").arg(xgen.fetch(pxc.TAG_FS_NAME_HA1, list)) + \
+    emit processMessage(tr("## [FileSearch : %1] \n").arg(xgen.fetch(pxc.TAG_FS_NAME_HA1, list)) + \
                         QString::number(result.count()) + tr(" files found.\n"), SEARCH);
 
     //TODO : separation data detection ?
@@ -461,7 +461,7 @@ bool Executor::loadSearch(QList<QStringList> *list)
             //set data to variant
             overwriteLocalMacro(selectvar, combineresult);
         }else{
-            emit processMessage(tr("## [Search] No variant is defined."), ERROR);
+            emit processMessage(tr("## [FileSearch] The selected variant cannot be found."), ERROR);
         }
 
     }else{
@@ -551,19 +551,19 @@ bool Executor::loadPlugins(QList<QStringList> *list)
 
     const QString plname = ext->getInformation()->name;
 
-    emit processMessage(tr("## [%1] started").arg(plname), PLUGINS);
+    emit processMessage(tr("## [Plugin] %1 started.").arg(plname), PLUGINS);
 
     if(!ext->functionMain(cmdc, &tmp)){
         QString success = ext->getMessage(MessageType::Success);
         if(success == "") success = tr("successfully completed.");
 
-        emit processMessage(tr("## [%1] %2").arg(plname).arg(success), PLUGINS);
+        emit processMessage(tr("## [Plugin] %1 %2").arg(plname).arg(success), PLUGINS);
 
     }else{
         QString error = ext->getMessage(MessageType::Error);
-        if(error == "") error = tr("failed");
+        if(error == "") error = tr("failed.");
 
-        emit processMessage(tr("## [%1] %2").arg(plname).arg(error), PLUGINS);
+        emit processMessage(tr("## [Plugin] %1 %2").arg(plname).arg(error), PLUGINS);
         result = false;
     }
     disconnect(ext, &ExtraPluginInterface::updateMessage, this, &Executor::sendPluginMessage);
@@ -582,7 +582,7 @@ bool Executor::loadProject(QList<QStringList> *list)
 
     QFileInfo info(xgen.fetch(pxc.TAG_PLOAD_FILEPATH, list));
     if(!info.exists()){
-        emit processMessage(tr("## [Project] %1 is not existed.")
+        emit processMessage(tr("## [ProfileLoad] %1 cannot be loaded.")
                             .arg(info.fileName()), ERROR);
         return false;
     }
@@ -608,7 +608,7 @@ bool Executor::loadProject(QList<QStringList> *list)
     //set counter
     int counter = execlist->count();
 
-    emit processMessage(tr("## [Project : %1] (loop %2)")
+    emit processMessage(tr("## [ProfileLoad] %1 (loop %2)")
                         .arg(xgen.fetch(pxc.TAG_PLOAD_FILEPATH, list))
                         .arg(QString::number(builderstack.count()))
                         , OTHER);

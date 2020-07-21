@@ -16,7 +16,9 @@
 
 #include "autobatchrunner.h"
 #include <QApplication>
+#include <QLocale>
 #include <QTextCodec>
+#include <QTranslator>
 
 int main(int argc, char *argv[])
 {
@@ -24,6 +26,27 @@ int main(int argc, char *argv[])
 
     // set default text codec
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+
+
+    QTranslator translator;
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    settings.beginGroup("abr_settings");
+    QLocale locale;
+    QString lang = settings.value("abr/language", locale.bcp47Name()).toString();
+    settings.endGroup();
+
+#ifdef QT_DEBUG
+
+    bool success = false;
+    success = translator.load("../../src/AutoBatchRunner/translation/abr_" + lang);
+
+    qDebug() << "load : " << success << " Path : " << QDir::currentPath() << lang;
+
+#else
+    translator.load("translation/abr_" + lang);
+#endif
+
+    a.installTranslator(&translator);
 
 //#ifdef Q_OS_WIN
 //    QTextCodec::setCodecForLocale(QTextCodec::codecForName("Shift_JIS"));

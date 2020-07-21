@@ -151,9 +151,9 @@ QString BasicTable::getActionText(ACTION action)
     case ACTION::ENABLE:        text = tr("Enable");                    break;
     case ACTION::DISABLE:       text = tr("Disable");                   break;
     case ACTION::CLEAR:         text = tr("Clear");                     break;
-    case ACTION::FILE:          text = tr("Add File ...");              break;
-    case ACTION::FILES:         text = tr("Add Files ...");             break;
-    case ACTION::FOLDER:        text = tr("Add Folder ...");            break;
+    case ACTION::FILE:          text = tr("Add File");                  break;
+    case ACTION::FILES:         text = tr("Add Files");                 break;
+    case ACTION::FOLDER:        text = tr("Add Folder");                break;
     case ACTION::FILEINFO:      text = tr("File Info");                 break;
     case ACTION::CUT:           text = tr("Cut");                       break;
     case ACTION::COPY:          text = tr("Copy");                      break;

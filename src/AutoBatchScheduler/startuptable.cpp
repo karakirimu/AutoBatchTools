@@ -218,7 +218,7 @@ void StartupTable::addAction()
 {
     StartupDialog *sd = new StartupDialog();
     sd->setStyleSheet(this->styleSheet());
-    sd->setWindowTitle(tr("Editing - New_file*"));
+    sd->setWindowTitle(tr("Editing - Untitled*"));
     sd->move(this->window()->mapToGlobal(this->geometry().center()) - sd->rect().center());
     if(sd->exec() == QDialog::Accepted){
         int index = this->rowCount();

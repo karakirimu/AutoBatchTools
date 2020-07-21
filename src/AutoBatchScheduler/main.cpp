@@ -16,6 +16,8 @@
 
 #include "mainscheduler.h"
 #include <QApplication>
+#include <QLocale>
+#include <QTranslator>
 
 int main(int argc, char *argv[])
 {
@@ -24,13 +26,31 @@ int main(int argc, char *argv[])
     // set default text codec
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-    MainScheduler w;
-
     QSettings settings( "./settings.ini", QSettings::IniFormat );
     settings.beginGroup("scheduler_startup");
+
+    QLocale locale;
+    QString lang = settings.value("abs/language", locale.bcp47Name()).toString();
+
+    settings.endGroup();
+
+    QTranslator translator;
+#ifdef QT_DEBUG
+
+    bool success = false;
+    success = translator.load("../../src/AutoBatchScheduler/translation/abs_" + lang);
+
+    qDebug() << "load : " << success << " Path : " << QDir::currentPath() << lang;
+
+#else
+    translator.load("translation/abs_" + lang);
+#endif
+    a.installTranslator(&translator);
+
+    MainScheduler w;
     if(!settings.value("HIDEWINDOW", false).toBool()){
         w.show();
     }
-    settings.endGroup();
+
     return a.exec();
 }

@@ -91,7 +91,7 @@
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="settinggeneral">
          <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -137,6 +137,35 @@
                 <property name="horizontalSpacing">
                  <number>0</number>
                 </property>
+                <item row="2" column="0">
+                 <spacer name="verticalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>8</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="1" column="2" colspan="3">
+                 <widget class="QSpinBox" name="autosaveSpinBox">
+                  <property name="suffix">
+                   <string>min</string>
+                  </property>
+                  <property name="maximum">
+                   <number>1000</number>
+                  </property>
+                  <property name="value">
+                   <number>10</number>
+                  </property>
+                 </widget>
+                </item>
                 <item row="3" column="0">
                  <widget class="QLabel" name="label_9">
                   <property name="sizePolicy">
@@ -156,61 +185,10 @@
                   </property>
                  </widget>
                 </item>
-                <item row="3" column="2" colspan="3">
-                 <widget class="QComboBox" name="themeComboBox">
-                  <item>
-                   <property name="text">
-                    <string>Default</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Light</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>Dark</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-                <item row="1" column="2" colspan="3">
-                 <widget class="QSpinBox" name="autosaveSpinBox">
-                  <property name="suffix">
-                   <string>min</string>
-                  </property>
-                  <property name="maximum">
-                   <number>1000</number>
-                  </property>
-                  <property name="value">
-                   <number>10</number>
-                  </property>
-                 </widget>
-                </item>
-                <item row="4" column="0">
-                 <widget class="QLabel" name="label">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
+                <item row="6" column="0">
+                 <widget class="QLabel" name="label_3">
                   <property name="text">
-                   <string>Window Font</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_2">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="text">
-                   <string>Temporary file location</string>
+                   <string>Language</string>
                   </property>
                  </widget>
                 </item>
@@ -245,22 +223,6 @@
                    <number>9</number>
                   </property>
                  </widget>
-                </item>
-                <item row="2" column="0">
-                 <spacer name="verticalSpacer_3">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>8</height>
-                   </size>
-                  </property>
-                 </spacer>
                 </item>
                 <item row="0" column="4">
                  <widget class="QToolButton" name="openToolButton">
@@ -301,6 +263,67 @@
                   </property>
                  </widget>
                 </item>
+                <item row="3" column="2" colspan="3">
+                 <widget class="QComboBox" name="themeComboBox">
+                  <item>
+                   <property name="text">
+                    <string>Default</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Light</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Dark</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Temporary file location</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QLabel" name="label">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Window Font</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="0">
+                 <spacer name="verticalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>8</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                 <item row="0" column="1">
                  <spacer name="horizontalSpacer">
                   <property name="orientation">
@@ -316,6 +339,15 @@
                    </size>
                   </property>
                  </spacer>
+                </item>
+                <item row="6" column="2" colspan="3">
+                 <widget class="QComboBox" name="languageComboBox">
+                  <item>
+                   <property name="text">
+                    <string>System</string>
+                   </property>
+                  </item>
+                 </widget>
                 </item>
                </layout>
               </item>

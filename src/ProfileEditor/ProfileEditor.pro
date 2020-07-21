@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = ProfileEditor
 TEMPLATE = app
 
-TRANSLATIONS = peditor_ja_JP.ts
+#TRANSLATIONS = translation/pe.ja_JP.ts
 
 VERSION = 1.0.0
 
@@ -40,6 +40,7 @@ DEPENDPATH += $$OUT_PWD/../../library/
 LIBRARYPATH = $$OUT_PWD/../../library/
 
 HEADERS  += editarea/commandtable.h \
+    aboutabe.h \
     adapter/editorcache.h \
     adapter/editorcacheconverter.h \
     adapter/editorcachelist.h \
@@ -101,8 +102,7 @@ HEADERS  += editarea/commandtable.h \
     undocommand_ui/swapexectable.h \
     undocommand_ui/swapplugintable.h \
     undocommand_ui/uicommandmap.h \
-    variantarea/varianttable.h \
-    aboutpe.h \
+#    variantarea/varianttable.h \
     basedockwidget.h \
     multitaskp.h \
     profileeditor.h \
@@ -119,6 +119,7 @@ HEADERS  += editarea/commandtable.h \
     undocommand_ui/swapglobalvartree.h
 
 SOURCES += editarea/commandtable.cpp \
+    aboutabe.cpp \
     adapter/editorcache.cpp \
     adapter/editorcacheconverter.cpp \
     adapter/editorcachelist.cpp \
@@ -178,8 +179,7 @@ SOURCES += editarea/commandtable.cpp \
     undocommand_ui/stringsearchsep.cpp \
     undocommand_ui/swapexectable.cpp \
     undocommand_ui/swapplugintable.cpp \
-    variantarea/varianttable.cpp \
-    aboutpe.cpp \
+#    variantarea/varianttable.cpp \
     basedockwidget.cpp \
 #    main.cpp \
     multitaskp.cpp \
@@ -199,8 +199,8 @@ SOURCES += editarea/commandtable.cpp \
 SOURCES += main.cpp
 
 FORMS    += $$PWD/profileeditor.ui \
-    aboutpe.ui \
 #    graphicsarea/flowcellwidget.ui \
+    aboutabe.ui \
     autosaveselectiondialog.ui \
     settingdialog/settingdialog.ui
 
@@ -237,7 +237,7 @@ LIBS += \
         -L$$LIBRARYPATH -lstringtable \
         -L$$LIBRARYPATH -lfileinfodialog \
         -L$$LIBRARYPATH -lfilesearchdialog \
-        -L$$LIBRARYPATH -lextrafunctionstable \
+#        -L$$LIBRARYPATH -lextrafunctionstable \
         -L$$LIBRARYPATH -lpluginstree \
         -L$$LIBRARYPATH -lexecutor \
         -L$$LIBRARYPATH -lconsolebase

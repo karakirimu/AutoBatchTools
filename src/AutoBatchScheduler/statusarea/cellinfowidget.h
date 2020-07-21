@@ -22,7 +22,7 @@
 #include <taskschedulerconnector.h>
 
 namespace Ui {
-class cellInfoWidget;
+class CellInfoWidget;
 }
 
 class CellInfoWidget : public QWidget
@@ -77,7 +77,7 @@ private slots:
     void onStopButtonClicked();
 
 private:
-    Ui::cellInfoWidget *ui;
+    Ui::CellInfoWidget *ui;
 };
 
 #endif // CELLINFOWIDGET_H

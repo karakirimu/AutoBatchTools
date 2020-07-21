@@ -18,7 +18,7 @@ void SearchComboBox::reloadComboBoxItem()
     QList<QStringList> item;
     int counter = builder->count();
 
-    this->addItem(tr("Select search condition ..."));
+    this->addItem(tr("Select filesearch condition ..."));
 
     for(int i = 0; i < counter; i++){
         if(builder->readItem(i, &item)){
@@ -35,7 +35,7 @@ void SearchComboBox::addAction()
     FileSearchDialog *fs = new FileSearchDialog();
     fs->setStyleSheet(this->styleSheet());
 //    setTheme(fs);
-    fs->setWindowTitle(tr("Edit - untitled*"));
+    fs->setWindowTitle(tr("Editing - Untitled*"));
     if(fs->exec() == QDialog::Accepted){
         reloadComboBoxItem();
         this->setCurrentIndex(this->count() - 1);
