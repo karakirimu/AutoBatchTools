@@ -43,6 +43,9 @@ SettingDialog::SettingDialog(QWidget *parent) :
     connect(ui->plUpButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::upAction);
     connect(ui->plDownButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::downAction);
 
+    //langcombobox
+    initLanguageSelection();
+
 }
 
 SettingDialog::~SettingDialog()
@@ -84,6 +87,8 @@ void SettingDialog::setSettings()
     settings.setValue("THEMECOLOR", ui->themeComboBox->currentText());
     settings.setValue("WINDOWFONT", ui->windowFontComboBox->currentText());
     settings.setValue("WINDOWFONTSIZE", ui->windowFontSizeSpinBox->value());
+    storeLanguageSelection(&settings);
+    settings.endGroup();
 
     settings.beginGroup("pe_testexec");
     settings.setValue("FAKERES", ui->fakeresidentCheckBox->isChecked());
@@ -100,12 +105,54 @@ void SettingDialog::loadSettings()
     ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Default").toString());
     ui->windowFontComboBox->setCurrentFont(QFont(settings.value("WINDOWFONT", QApplication::font().toString()).toString()));
     ui->windowFontSizeSpinBox->setValue(settings.value("WINDOWFONTSIZE", QApplication::font().pointSize()).toInt());
+    loadLanguageSelection(&settings);
     settings.endGroup();
 
     settings.beginGroup("pe_testexec");
     ui->fakeresidentCheckBox->setChecked(settings.value("FAKERES", false).toBool());
     settings.endGroup();
 
+}
+
+void SettingDialog::initLanguageSelection()
+{
+#ifdef QT_DEBUG
+    QDirIterator dit("../../src/translation", QStringList() << "*.qm", QDir::Files);
+#else
+    QDirIterator dit("translation", QStringList() << "*.qm", QDir::Files);
+#endif
+
+    QStringList files;
+
+    while (dit.hasNext()){
+        QFileInfo file(dit.next());
+        QString strloc = file.baseName().split("_").last();
+        QLocale locale(strloc);
+        ui->languageComboBox->addItem(QLocale::languageToString(locale.language()));
+    }
+}
+
+void SettingDialog::storeLanguageSelection(QSettings *setting)
+{
+    QString selected = ui->languageComboBox->currentText();
+
+    QList<QLocale> locales = QLocale::matchingLocales(QLocale::AnyLanguage,
+                                                      QLocale::AnyScript,
+                                                      QLocale::AnyCountry);
+
+    for(QLocale loc : locales){
+        if(QLocale::languageToString(loc.language()) == selected){
+            setting->setValue("abe/language", loc.bcp47Name());
+            break;
+        }
+    }
+}
+
+void SettingDialog::loadLanguageSelection(QSettings *setting)
+{
+    QLocale defloc;
+    QLocale locale(setting->value("abe/language", defloc.bcp47Name()).toString());
+    ui->languageComboBox->setCurrentText(QLocale::languageToString(locale.language()));
 }
 
 //change list to stackedwidget

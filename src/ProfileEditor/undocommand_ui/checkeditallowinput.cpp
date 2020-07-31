@@ -34,7 +34,7 @@ void CheckEditAllowInput::undo()
     ec.info.fileInput = oldCheck;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Allow input %1").arg(newCheck) \
+    setText(QObject::tr("Allow file input: %1").arg(newCheck) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -44,7 +44,7 @@ void CheckEditAllowInput::redo()
     ec.info.fileInput = newCheck;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Allow input %1").arg(newCheck) \
+    setText(QObject::tr("Allow file input: %1").arg(newCheck) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

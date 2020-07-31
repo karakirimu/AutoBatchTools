@@ -304,7 +304,7 @@ bool ProfileEditor::saveAction()
             fdialog->getSaveFileName(this,\
                                      tr("Save Profile"),\
                                      settings.value("profileeditor/lastsaved", QDir::currentPath()).toString(),\
-                                     "APRO Files (*.apro)");
+                                     "Profile (*.apro)");
 
     if(fileName != ""){
         settings.setValue("profileeditor/lastsaved", QFileInfo(fileName).canonicalPath());
@@ -468,7 +468,7 @@ void ProfileEditor::overWriteSaveAction()
     if(editop->getLoadfile().contains(".autosave")) {
         QString fileName =
                 fdialog->getSaveFileName(this,\
-                                         tr("Save Edit file"),\
+                                         tr("Save Profile"),\
                                          QDir::currentPath(),\
                                          "APRO File (*.apro)");
 
@@ -590,8 +590,8 @@ void ProfileEditor::initRunRangeToolBar()
     rangeLineEdit = new QLineEdit();
     rangeLineEdit->setMinimumWidth(150);
     rangeLineEdit->setMaximumWidth(200);
-    rangeLineEdit->setPlaceholderText(tr("Input process range here ..."));
-    rangeLineEdit->setToolTip(tr("Specify the process range.\nExample: 0-7 0, 1, 2, 3"));
+    rangeLineEdit->setPlaceholderText(tr("Input process test range here ..."));
+    rangeLineEdit->setToolTip(tr("Specify the process test range.\nExample: 0-7 0, 1, 2, 3"));
     connect(rangeLineEdit, &QLineEdit::textChanged, this, &ProfileEditor::updateRangeText);
     testRangeToolBar->addWidget(rangeLineEdit);
     this->addToolBar(testRangeToolBar);
@@ -745,7 +745,7 @@ void ProfileEditor::closeEvent(QCloseEvent *event)
 
     // Warning if the document has changed
     QMessageBox::StandardButton res = QMessageBox::question(this, tr("Alert"),\
-                                    tr("Profile was edited.\nDo you want to save this Profile ?"),\
+                                    tr("Profile was edited.\nDo you want to save this?"),\
                                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
 
     switch( res )
@@ -860,7 +860,7 @@ int ProfileEditor::checkOverWrite()
 
     // Warning if document is edited by user.
     QMessageBox::StandardButton res = QMessageBox::question(this, tr("Alert"),\
-                                    tr("File was edited.\nDo you want to save this file ?"),\
+                                    tr("Profile was edited.\nDo you want to save this?"),\
                                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 
 

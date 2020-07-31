@@ -35,7 +35,7 @@ void EditComboBoxCommand::undo()
     ec.filesearch.variant = oldString;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Return variant to %1").arg(oldString) \
+    setText(QObject::tr("Set the return variant of No.%1 to '%2'").arg(index).arg(oldString) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -45,7 +45,7 @@ void EditComboBoxCommand::redo()
     ec.filesearch.variant = newString;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Return variant to %1").arg(newString) \
+    setText(QObject::tr("Set the return variant of No.%1 to '%2'").arg(index).arg(newString) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

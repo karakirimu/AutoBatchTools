@@ -67,7 +67,7 @@ void Executor::processWrite(QString code)
 void Executor::processKill()
 {
     work->process->kill();
-    emit processMessage(QObject::tr("Process killed."), INPUT);
+    emit processMessage(tr("Process killed."), INPUT);
 }
 
 void Executor::setMutex(QMutex *mutex)
@@ -331,7 +331,7 @@ bool Executor::loadInfo(QList<QStringList> *list)
     // line 2
     curdata = xgen.fetch(pxc.TAG_I_NAME, list);
     curdata = (curdata == "")? "(no name)" : curdata;
-    result.append(tr("Project : ")).append(curdata).append(tr(" \n"));
+    result.append(tr("Profile : ")).append(curdata).append(tr(" \n"));
 
     // line 3
     curdata = xgen.fetch(pxc.TAG_I_VERSION, list);
@@ -442,7 +442,7 @@ bool Executor::loadSearch(QList<QStringList> *list)
 
     int cre = result.count();
     for(int i = 0; i < cre; i++){
-        emit processMessage(tr("%1").arg(result.at(i)), SEARCH);
+        emit processMessage(QString("%1").arg(result.at(i)), SEARCH);
 
         combineresult.append(result.at(i));
         if(i < (cre-1)){
@@ -741,9 +741,7 @@ void Executor::checkExecList(QList<int> *elist)
     }else{
         for(int i = 0; i < excount; i++){
             if(!(elist->at(i) < buildermax)){
-                emit processMessage(tr("Index ")
-                                    + QString::number(elist->at(i))
-                                    + tr(" is not exist. \n"), ERROR);
+                emit processMessage(tr("No. %1 does not exist. \n").arg(QString::number(elist->at(i))), ERROR);
                 elist->removeAt(i);
             }
         }
@@ -768,7 +766,7 @@ void Executor::setProcessSettings(bool *fileinput, int *loopcount)
         FileSearchLoader loader;
         fileList.append(loader.searchFromXml( \
                         static_cast<QString>(xgen.fetch(pxc.TAG_I_FILESEARCH_NAME, pxc.ATTR_COMMAND_ID_INT, &list)).toInt()));
-        emit processMessage(tr("Input : ") + QString::number(fileList.count()) + tr(" files.\n"), SEARCH);
+        emit processMessage(tr("Input : %1 files.\n").arg(QString::number(fileList.count())), SEARCH);
     }
 
     //Whether to loop the read file to the end ( 1 : no loop or set max loop count )

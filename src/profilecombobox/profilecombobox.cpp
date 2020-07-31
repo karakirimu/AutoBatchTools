@@ -162,8 +162,8 @@ void ProfileComboBox::addItemAction()
     //add file
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::ExistingFile);
-    QString file = dialog.getOpenFileName(this, tr("Select Profile")
-                                          , "./", tr("Profile (*.apro *.xml)"));
+    QString file = dialog.getOpenFileName(this, tr("Add Profile")
+                                          , "./", tr("Profile ") + "(*.apro *.xml)");
 
     if(file == "") return;
 
@@ -203,7 +203,7 @@ void ProfileComboBox::deleteItemAction()
     // show delete warning
     QMessageBox::StandardButton res = QMessageBox::warning(
       this, tr("Alert")
-                , tr("Do you want to delete selected item ?\r\n(File is not delete)")
+                , tr("Do you want to exclude the selected item from the list?")
                 , QMessageBox::Yes | QMessageBox::No );
 
     if(res == QMessageBox::Yes){

@@ -38,12 +38,12 @@ int main(int argc, char *argv[])
 #ifdef QT_DEBUG
 
     bool success = false;
-    success = translator.load("../../src/AutoBatchScheduler/translation/abs_" + lang);
+    success = translator.load("../../src/translation/abt_" + lang);
 
     qDebug() << "load : " << success << " Path : " << QDir::currentPath() << lang;
 
 #else
-    translator.load("translation/abs_" + lang);
+    translator.load("translation/abt_" + lang);
 #endif
     a.installTranslator(&translator);
 

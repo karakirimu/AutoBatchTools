@@ -34,7 +34,7 @@ void CheckEditRunDetach::undo()
     ec.exec.detach = oldCheck;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Run detached %1").arg(newCheck) \
+    setText(QObject::tr("Wait for execution to end: %1").arg(newCheck) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -44,7 +44,7 @@ void CheckEditRunDetach::redo()
     ec.exec.detach = newCheck;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Run detached %1").arg(newCheck) \
+    setText(QObject::tr("Wait for execution to end: %1").arg(newCheck) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

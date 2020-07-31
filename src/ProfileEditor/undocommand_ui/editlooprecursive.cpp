@@ -33,7 +33,7 @@ void EditLoopRecursive::undo()
 {
     replaceValue(oldValue);
 
-    setText(QObject::tr("Loop recursive count to %1").arg(newValue) \
+    setText(QObject::tr("Number of recursive loops: %1").arg(newValue) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -41,7 +41,7 @@ void EditLoopRecursive::redo()
 {
     replaceValue(newValue);
 
-    setText(QObject::tr("Loop recursive count to %1").arg(oldValue) \
+    setText(QObject::tr("Number of recursive loops: %1").arg(oldValue) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

@@ -50,7 +50,7 @@ void EditLocalVariantTree::undo()
     case UiCommandMap::LV_ADD:
         // Delete
         ec.local.variantData.removeAt(treeIndex);
-        setText(QObject::tr("Add local at %1").arg(treeIndex) \
+        setText(QObject::tr("Add the local variable to row %1").arg(treeIndex) \
                 + QString(" ^(%1,%2)").arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_DELETE)));
 
         break;
@@ -58,7 +58,7 @@ void EditLocalVariantTree::undo()
     case UiCommandMap::LV_EDIT:
 
         ec.local.variantData.replace(treeIndex, oldVar);
-        setText(QObject::tr("Edit local at %1").arg(treeIndex) \
+        setText(QObject::tr("Edit the local variable '%1' on row %2").arg(newVar.variant).arg(treeIndex) \
                 + QString(" ^(%1,%2,%3)").arg(targetIndex).arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_EDIT)));
 
         break;
@@ -66,7 +66,7 @@ void EditLocalVariantTree::undo()
     case UiCommandMap::LV_INSERT:
 
         ec.local.variantData.removeAt(treeIndex);
-        setText(QObject::tr("Insert local at %1 \'%2\'").arg(treeIndex).arg(newVar.variant) \
+        setText(QObject::tr("Insert the local variable '%1' on row %2").arg(newVar.variant).arg(treeIndex) \
                 + QString(" ^(%1,%2)").arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_DELETE)));
 
         break;
@@ -74,7 +74,7 @@ void EditLocalVariantTree::undo()
     case UiCommandMap::LV_DELETE:
 
         ec.local.variantData.insert(treeIndex, oldVar);
-        setText(QObject::tr("Delete local at %1").arg(treeIndex) \
+        setText(QObject::tr("Delete the local variable of row %1").arg(treeIndex) \
                 + QString(" ^(%1,%2,%3)").arg(targetIndex).arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_INSERT)));
 
         break;
@@ -97,28 +97,28 @@ void EditLocalVariantTree::redo()
     case UiCommandMap::LV_ADD:
 
         ec.local.variantData.append(newVar);
-        setText(QObject::tr("Add local at %1").arg(treeIndex) \
+        setText(QObject::tr("Add the local variable to row %1").arg(treeIndex) \
                 + QString(" ^(%1,%2)").arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_ADD)));
 
         break;
     case UiCommandMap::LV_EDIT:
 
         ec.local.variantData.replace(treeIndex, newVar);
-        setText(QObject::tr("Edit local at %1").arg(treeIndex) \
+        setText(QObject::tr("Edit the local variable '%1' on row %2").arg(newVar.variant).arg(treeIndex) \
                 + QString(" ^(%1,%2,%3)").arg(targetIndex).arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_EDIT)));
 
         break;
     case UiCommandMap::LV_INSERT:
 
         ec.local.variantData.insert(treeIndex, newVar);
-        setText(QObject::tr("Insert local at %1 \'%2\'").arg(treeIndex).arg(newVar.variant) \
+        setText(QObject::tr("Insert the local variable '%1' on row %2").arg(newVar.variant).arg(treeIndex) \
                 + QString(" ^(%1,%2,%3)").arg(targetIndex).arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_INSERT)));
 
         break;
     case UiCommandMap::LV_DELETE:
 
         ec.local.variantData.removeAt(treeIndex);
-        setText(QObject::tr("Delete local at %1").arg(treeIndex) \
+        setText(QObject::tr("Delete the local variable of row %1").arg(treeIndex) \
                 + QString(" ^(%1,%2)").arg(treeIndex).arg(UiCommandMap::Id(UiCommandMap::LV_DELETE)));
 
         break;

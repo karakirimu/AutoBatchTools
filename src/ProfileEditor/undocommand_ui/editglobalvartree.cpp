@@ -48,7 +48,7 @@ void EditGlobalVarTree::undo()
         //delete
         sxml.deleteItem(m_treeindex);
 
-        setText(QObject::tr("Add global at %1").arg(m_treeindex) \
+        setText(QObject::tr("Add the global variable to row %1").arg(m_treeindex) \
                 + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_DEL_TREE)));
 
         break;
@@ -57,14 +57,14 @@ void EditGlobalVarTree::undo()
         sxml.createVarElement(&xmlformat, &m_oldvar);
         sxml.editItem(m_treeindex, &xmlformat);
 
-        setText(QObject::tr("Edit global at %1").arg(m_treeindex) \
+        setText(QObject::tr("Edit the global variable '%1' on row %2").arg(m_newvar.at(0)).arg(m_treeindex) \
                 + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_EDIT_TREE)));
         break;
 
     case UiCommandMap::GV_INS_TREE:
         sxml.deleteItem(m_treeindex);
 
-        setText(QObject::tr("Insert global at %1 \'%2\'").arg(m_treeindex).arg(m_newvar.at(0)) \
+        setText(QObject::tr("Insert the global variable '%1' on row %2").arg(m_newvar.at(0)).arg(m_treeindex) \
                 + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_DEL_TREE)));
         break;
 
@@ -72,7 +72,7 @@ void EditGlobalVarTree::undo()
         sxml.createVarElement(&xmlformat, &m_oldvar);
         sxml.insertItem(m_treeindex, &xmlformat);
 
-        setText(QObject::tr("Delete global at %1").arg(m_treeindex) \
+        setText(QObject::tr("Delete the global variable of row %1").arg(m_treeindex) \
                 + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_INS_TREE)));
         break;
 
@@ -93,7 +93,7 @@ void EditGlobalVarTree::redo()
         sxml.createVarElement(&xmlformat, &m_newvar);
         sxml.addItem(&xmlformat);
 
-        setText(QObject::tr("Add global at %1").arg(m_treeindex) \
+        setText(QObject::tr("Add the global variable to row %1").arg(m_treeindex) \
                 + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_ADD_TREE)));
         break;
 
@@ -101,7 +101,7 @@ void EditGlobalVarTree::redo()
         sxml.createVarElement(&xmlformat, &m_newvar);
         sxml.editItem(m_treeindex, &xmlformat);
 
-        setText(QObject::tr("Edit global at %1").arg(m_treeindex) \
+        setText(QObject::tr("Edit the global variable '%1' on row %2").arg(m_newvar.at(0)).arg(m_treeindex) \
                 + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_EDIT_TREE)));
         break;
 
@@ -109,7 +109,7 @@ void EditGlobalVarTree::redo()
         sxml.createVarElement(&xmlformat, &m_newvar);
         sxml.insertItem(m_treeindex, &xmlformat);
 
-        setText(QObject::tr("Insert global at %1 \'%2\'").arg(m_treeindex).arg(m_newvar.at(0)) \
+        setText(QObject::tr("Insert the global variable '%1' on row %2").arg(m_newvar.at(0)).arg(m_treeindex) \
                 + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_INS_TREE)));
         break;
 
@@ -117,7 +117,7 @@ void EditGlobalVarTree::redo()
         //add
         sxml.deleteItem(m_treeindex);
 
-        setText(QObject::tr("Delete global at %1").arg(m_treeindex) \
+        setText(QObject::tr("Delete the global variable of row %1").arg(m_treeindex) \
                 + QString(" ^(%1,%2)").arg(m_treeindex).arg(UiCommandMap::Id(UiCommandMap::GV_DEL_TREE)));
         break;
 

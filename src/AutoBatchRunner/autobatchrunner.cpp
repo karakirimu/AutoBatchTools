@@ -46,8 +46,6 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     ui->comboBox->reloadComboBoxItem();
 
     //Window init
-    setWindowTitle("ProfileRunner");
-
     QSettings settings( "./settings.ini", QSettings::IniFormat );
     QVariant v = settings.value( "abr/geometry" );
     if (v.type() != QVariant::Invalid){
@@ -249,9 +247,9 @@ void AutoBatchRunner::themeChangeAction()
 
     //theme settings
     settings.beginGroup("abr_settings");
-    QString stylecolor = settings.value("pr/theme", "Default").toString();
-    QFont settingfont = QFont(settings.value("pr/font", QApplication::font().toString()).toString());
-    settingfont.setPointSize(settings.value("pr/fontsize", QApplication::font().pointSize()).toInt());
+    QString stylecolor = settings.value("abr/theme", "Default").toString();
+    QFont settingfont = QFont(settings.value("abr/font", QApplication::font().toString()).toString());
+    settingfont.setPointSize(settings.value("abr/fontsize", QApplication::font().pointSize()).toInt());
     settings.endGroup();
 
     if(stylecolor != "Default"){

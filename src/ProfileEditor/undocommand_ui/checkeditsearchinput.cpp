@@ -34,7 +34,7 @@ void CheckEditSearchInput::undo()
     ec.info.fileInputSearch = oldCheck;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Search input %1").arg(newCheck) \
+    setText(QObject::tr("File input by search: %1").arg(newCheck) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -44,7 +44,7 @@ void CheckEditSearchInput::redo()
     ec.info.fileInputSearch = newCheck;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Search input %1").arg(newCheck) \
+    setText(QObject::tr("File input by search: %1").arg(newCheck) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

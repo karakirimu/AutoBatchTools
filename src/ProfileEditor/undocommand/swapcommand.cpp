@@ -32,7 +32,7 @@ void SwapCommand::undo()
     if(ptrCache->isEmpty()) return;
     ptrCache->move(afterIndex, beforeIndex);
 
-    setText(QString("Swap item at %1 and %2").arg(beforeIndex).arg(afterIndex) \
+    setText(QString("Swap item at No. %1 and No. %2").arg(beforeIndex).arg(afterIndex) \
             + QString(" ^(%1,%2,%3)").arg(afterIndex).arg(beforeIndex).arg(CommandMap::UNDOREDO_SWAP));
 }
 
@@ -41,6 +41,6 @@ void SwapCommand::redo()
     if(ptrCache->isEmpty()) return;
     ptrCache->move(beforeIndex, afterIndex);
 
-    setText(QString("Swap item at %1 and %2 ").arg(beforeIndex).arg(afterIndex) \
+    setText(QString("Swap item at No. %1 and No. %2 ").arg(beforeIndex).arg(afterIndex) \
             + QString(" ^(%1,%2,%3)").arg(beforeIndex).arg(afterIndex).arg(CommandMap::UNDOREDO_SWAP));
 }

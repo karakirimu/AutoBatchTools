@@ -111,7 +111,7 @@ void PluginsComboBox::addItemAction()
 #else
     QString extension = "(*.*)";
 #endif
-    QString file = dialog.getOpenFileName(this, tr("Select Plugin"), \
+    QString file = dialog.getOpenFileName(this, tr("Add Plugin"), \
                                           QDir::currentPath(), tr("Plugin ") + extension );
     QFileInfo info(file);
 
@@ -132,7 +132,7 @@ void PluginsComboBox::addItemAction()
 
         }else{
             QMessageBox::warning(this, "AutoBatchEditor",
-                                       tr("This dll file cannot be applied."),
+                                       tr("This file cannot be applied."),
                                        QMessageBox::Ok);
         }
 
@@ -146,7 +146,7 @@ void PluginsComboBox::deleteAction()
 
     // show delete warning
     QMessageBox::StandardButton res = QMessageBox::warning(
-      this, tr("Alert"), tr("Do you want to delete selected item ?"), QMessageBox::Yes | QMessageBox::No );
+      this, tr("Alert"), tr("Do you want to exclude the selected item from the list?"), QMessageBox::Yes | QMessageBox::No );
 
     if(res == QMessageBox::Yes){
         //delete file item

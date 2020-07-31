@@ -91,7 +91,7 @@
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="settinggeneral">
          <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -341,13 +341,7 @@
                  </spacer>
                 </item>
                 <item row="6" column="2" colspan="3">
-                 <widget class="QComboBox" name="languageComboBox">
-                  <item>
-                   <property name="text">
-                    <string>System</string>
-                   </property>
-                  </item>
-                 </widget>
+                 <widget class="QComboBox" name="languageComboBox"/>
                 </item>
                </layout>
               </item>
@@ -378,7 +372,7 @@
           <item>
            <widget class="QCheckBox" name="fakeresidentCheckBox">
             <property name="text">
-             <string>Run with the scheduler as the source</string>
+             <string>Run as the scheduler process</string>
             </property>
            </widget>
           </item>
@@ -675,7 +669,6 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../res/resources.qrc"/>
   <include location="../../../res/resources.qrc"/>
   <include location="../../../res/resources.qrc"/>
   <include location="../../../res/resources.qrc"/>

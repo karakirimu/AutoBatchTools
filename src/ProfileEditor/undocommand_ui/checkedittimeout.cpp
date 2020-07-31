@@ -34,7 +34,7 @@ void CheckEditTimeout::undo()
     ec.exec.timeoutEnabled = oldCheck;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Timeout %1").arg(newCheck) \
+    setText(QObject::tr("Timeout option at No. %1: %2").arg(index).arg(newCheck) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -44,7 +44,7 @@ void CheckEditTimeout::redo()
     ec.exec.timeoutEnabled = newCheck;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Timeout %1").arg(newCheck) \
+    setText(QObject::tr("Timeout option at No. %1: %2").arg(index).arg(newCheck) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

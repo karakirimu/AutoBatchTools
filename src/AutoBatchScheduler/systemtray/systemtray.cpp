@@ -100,7 +100,7 @@ void SystemTray::showNotCloseMessage()
     settings.beginGroup("scheduler_startup");
     if(settings.value("MINIMIZESHOW", true).toBool()){
         trayIcon->showMessage(tr("AutoBatchScheduler is running")
-                              , tr("To completely exit the program, right-click the icon in the task tray and choose Exit.")\
+                              , tr("To completely exit the program, right-click the icon in the task tray and choose Quit.")\
                               , QSystemTrayIcon::Information\
                               , settings.value("MINIMIZESHOWMS", 2500).toInt());
     }

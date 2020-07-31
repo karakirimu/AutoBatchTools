@@ -34,7 +34,7 @@ void StringSearchSep::undo()
     ec.filesearch.separator = oldStr;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Search Sep '%1'").arg(newStr) \
+    setText(QObject::tr("Search delimiter changed to '%1' at No. %2").arg(newStr).arg(index) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -44,7 +44,7 @@ void StringSearchSep::redo()
     ec.filesearch.separator = newStr;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Search Sep '%1'").arg(oldStr) \
+    setText(QObject::tr("Search delimiter changed to '%1' at No. %2").arg(oldStr).arg(index) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

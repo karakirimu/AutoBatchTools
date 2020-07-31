@@ -37,7 +37,8 @@ void EditTabCommand::undo()
     ec.functionSelect = oldIndex;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Type change") + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
+    setText(QObject::tr("Change No. %1 execution type").arg(index) \
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 void EditTabCommand::redo()
@@ -50,7 +51,8 @@ void EditTabCommand::redo()
     ec.functionSelect = newIndex;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Type change") + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
+    setText(QObject::tr("Change No. %1 execution type").arg(index) \
+            + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
 int EditTabCommand::id() const

@@ -189,7 +189,7 @@ public slots:
     //table operation
     void tableSwapExecAction(int id, int beforeid, int afterid);
     void tableSwapPluginAction(int id, int beforeid, int afterid);
-    void tableEditVariantAction(int id, int tableid, QStringList variants, int operation);
+    [[deprecated]] void tableEditVariantAction(int id, int tableid, QStringList variants, int operation);
     void tableEditExecAction(int id, int tableid, QString newstr, int operation);
     void tableEditPluginAction(int id, int tableid, QString newstr, int operation);
     void tableEditPluginAction(int id, QStringList newstrlist, int operation);

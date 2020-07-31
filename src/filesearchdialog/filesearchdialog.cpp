@@ -179,7 +179,7 @@ void FileSearchDialog::dirEditFinished(QString text)
 void FileSearchDialog::closeEvent(QCloseEvent *event)
 {
     QMessageBox::StandardButton res = QMessageBox::question(\
-      this, tr("Alert"), tr("Overwrite this file ?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
+      this, tr("Alert"), tr("Save this setting?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
 
     switch( res )
     {

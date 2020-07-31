@@ -35,13 +35,12 @@ public:
     int id() const override;
     bool mergeWith(const QUndoCommand *other) override;
 
-    int newValue;
-
 private:
     void replaceValue(int value);
 
     int index;
     int oldValue;
+    int newValue;
 
     EditorCacheList *ptrCache;
 };

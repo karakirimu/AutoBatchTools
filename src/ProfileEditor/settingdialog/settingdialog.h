@@ -51,6 +51,10 @@ private:
     void setupItem();
     void setSettings();
     void loadSettings();
+
+    void initLanguageSelection();
+    void storeLanguageSelection(QSettings *setting);
+    void loadLanguageSelection(QSettings *setting);
 };
 
 #endif // SETTINGDIALOG_H

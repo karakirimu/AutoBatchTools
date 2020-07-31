@@ -36,10 +36,10 @@ public:
     int id() const override;
     bool mergeWith(const QUndoCommand *other) override;
 
-    QString newString;
 private:
     int index;
     QString oldString;
+    QString newString;
 
     EditorCacheList *ptrCache;
 

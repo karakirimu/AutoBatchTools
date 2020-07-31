@@ -36,7 +36,7 @@ void EditLoopMax::undo()
     ec.info.processMaxCount = oldValue;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Loop Max count to %1").arg(newValue) \
+    setText(QObject::tr("Maximum number of loops: %1").arg(newValue) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -46,7 +46,7 @@ void EditLoopMax::redo()
     ec.info.processMaxCount = newValue;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Loop Max count to %1").arg(oldValue) \
+    setText(QObject::tr("Maximum number of loops: %1").arg(oldValue) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

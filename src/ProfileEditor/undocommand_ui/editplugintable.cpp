@@ -77,14 +77,14 @@ void EditPluginTable::undo()
     case UiCommandMap::PL_ADD_TABLE:
         // Delete
         list.removeAt(tableIndex);
-        setText(QObject::tr("Add plugin at %1").arg(QString::number(tableIndex)) \
+        setText(QObject::tr("Add the plugin argument to row %1 of No. %2").arg(tableIndex).arg(index) \
                 + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_DELETE_TABLE)));
         break;
 
     case UiCommandMap::PL_EDIT_TABLE:
 
         list.replace(tableIndex, oldStr);
-        setText(QObject::tr("Edit plugin at %2 arg \'%1\'").arg(oldStr).arg(QString::number(tableIndex)) \
+        setText(QObject::tr("Edit the plugin argument '%1' on row %2 of No. %3").arg(oldStr).arg(tableIndex).arg(index) \
                 + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_EDIT_TABLE)));
         break;
 
@@ -95,9 +95,9 @@ void EditPluginTable::undo()
 
         sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_DELETE_TABLE));
         if(tableOperation == UiCommandMap::PL_PASTE_TABLE){
-            setText(QObject::tr("Paste plugin at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) + sendcode);
+            setText(QObject::tr("Paste the plugin argument '%1' on row %2 of No. %3").arg(newStr).arg(tableIndex).arg(index) + sendcode);
         }else{
-            setText(QObject::tr("Insert plugin at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) + sendcode);
+            setText(QObject::tr("Insert the plugin argument '%1' on row %2 of No. %3").arg(newStr).arg(tableIndex).arg(index) + sendcode);
         }
         break;
 
@@ -109,9 +109,9 @@ void EditPluginTable::undo()
         sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_INSERT_TABLE));
 
         if(tableOperation == UiCommandMap::PL_CUT_TABLE){
-            setText(QObject::tr("Cut plugin at %1").arg(QString::number(tableIndex)) + sendcode);
+            setText(QObject::tr("Cut the plugin argument for row %1 of No. %2").arg(tableIndex).arg(index) + sendcode);
         }else{
-            setText(QObject::tr("Delete plugin at %1").arg(QString::number(tableIndex)) + sendcode);
+            setText(QObject::tr("Delete the plugin argument for row %1 of No. %2").arg(tableIndex).arg(index) + sendcode);
         }
         break;
 
@@ -126,7 +126,7 @@ void EditPluginTable::undo()
         }
 
         sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UiCommandMap::Id(UiCommandMap::PL_ALLUPDATE_TABLE));
-        setText(QObject::tr("Update plugin settings at %1").arg(QString::number(index)) + sendcode);
+        setText(QObject::tr("Update plugin settings at No. %1").arg(QString::number(index)) + sendcode);
         break;
     }
 
@@ -148,14 +148,14 @@ void EditPluginTable::redo()
     case UiCommandMap::PL_ADD_TABLE:
 
         list.append(newStr);
-        setText(QObject::tr("Add plugin %1").arg(QString::number(tableIndex)) \
+        setText(QObject::tr("Add the plugin argument to row %1 of No. %2").arg(tableIndex).arg(index) \
                 + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::Id(UiCommandMap::PL_ADD_TABLE)));
 
         break;
     case UiCommandMap::PL_EDIT_TABLE:
 
         list.replace(tableIndex, newStr);
-        setText(QObject::tr("Edit plugin at %2 arg \'%1\'").arg(newStr).arg(QString::number(tableIndex)) \
+        setText(QObject::tr("Edit the plugin argument '%1' on row %2 of No. %3").arg(newStr).arg(tableIndex).arg(index) \
                 + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_EDIT_TABLE)));
         break;
     case UiCommandMap::PL_INSERT_TABLE:
@@ -165,9 +165,9 @@ void EditPluginTable::redo()
 
         sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_INSERT_TABLE));
         if(tableOperation == UiCommandMap::PL_PASTE_TABLE){
-            setText(QObject::tr("Paste plugin at %1 arg \'%2\'").arg(QString::number(tableIndex).arg(newStr)) + sendcode);
+            setText(QObject::tr("Paste the plugin argument '%1' on row %2 of No. %3").arg(newStr).arg(tableIndex).arg(index) + sendcode);
         }else{
-            setText(QObject::tr("Insert plugin at %1 arg \'%2\'").arg(QString::number(tableIndex).arg(newStr)) + sendcode);
+            setText(QObject::tr("Insert the plugin argument '%1' on row %2 of No. %3").arg(newStr).arg(tableIndex).arg(index) + sendcode);
         }
 
         break;
@@ -178,9 +178,9 @@ void EditPluginTable::redo()
 
         sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::PL_DELETE_TABLE));
         if(tableOperation == UiCommandMap::PL_CUT_TABLE){
-            setText(QObject::tr("Cut plugin at %1").arg(QString::number(tableIndex)) + sendcode);
+            setText(QObject::tr("Cut the plugin argument for row %1 of No. %2").arg(tableIndex).arg(index)  + sendcode);
         }else{
-            setText(QObject::tr("Delete plugin at %1").arg(QString::number(tableIndex)) + sendcode);
+            setText(QObject::tr("Delete the plugin argument for row %1 of No. %2").arg(tableIndex).arg(index) + sendcode);
         }
 
         break;
@@ -195,7 +195,7 @@ void EditPluginTable::redo()
         }
 
         sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UiCommandMap::Id(UiCommandMap::PL_ALLUPDATE_TABLE));
-        setText(QObject::tr("Update plugin settings at %1").arg(QString::number(index)) + sendcode);
+        setText(QObject::tr("Update plugin settings at No. %1").arg(QString::number(index)) + sendcode);
         break;
     }
 

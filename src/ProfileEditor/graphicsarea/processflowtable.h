@@ -94,30 +94,31 @@ private:
     enum{FIRST, SECOND};
 
     //for reduce read time
-    const QString info_title = "Information";
-    const QPixmap info_pixmap = QIcon(":/default_icons/info.png").pixmap(16,16);
-    const QString info_style = "color: black; background-color: #e8e8e8;";
-    const QString info_frame = "background-color: #606060;";
+    const QString INFO_TITLE      = "Information";
+    const QPixmap INFO_PIXMAP     = QIcon(":/default_icons/info.png").pixmap(16,16);
+    const QString INFO_BACKGROUND = "#f8f8f8";
+    const QString INFO_FOREGROUND = "#000000";
 
-    const QString exec_title = "Executable";
-    const QPixmap exec_pixmap = QIcon(":/default_icons/terminal.png").pixmap(16,16);
-    const QString exec_style = "color: black; background-color: #e2f6ff;";
-    const QString exec_frame = "background-color: #b0c3cc;";
+    const QString EXEC_TITLE      = "Executable";
+    const QPixmap EXEC_PIXMAP     = QIcon(":/default_icons/terminal.png").pixmap(16,16);
+    const QString EXEC_BACKGROUND = "#e2f6ff";
+    const QString EXEC_FOREGROUND = "#000000";
 
-    const QString search_title = "FileSearch";
-    const QPixmap search_pixmap = QIcon(":/default_icons/search.png").pixmap(16,16);
-    const QString search_style = "color: black; background-color: #dcedc8;";
-    const QString search_frame = "background-color: #aabb97;";
+    const QString SEARCH_TITLE      = "FileSearch";
+    const QPixmap SEARCH_PIXMAP     = QIcon(":/default_icons/search.png").pixmap(16,16);
+    const QString SEARCH_BACKGROUND = "#dcedc8";
+    const QString SEARCH_FOREGROUND = "#000000";
 
-    const QString plugin_title = "Plugins";
-    const QPixmap plugin_pixmap = QIcon(":/default_icons/extras.png").pixmap(16,16);
-    const QString plugin_style = "color: black; background-color: #ffcdd2;";
-    const QString plugin_frame = "background-color: #cb9ca1;";
+    const QString PLUGIN_TITLE      = "Plugin";
+    const QPixmap PLUGIN_PIXMAP     = QIcon(":/default_icons/extras.png").pixmap(16,16);
+    const QString PLUGIN_BACKGROUND = "#ffcdd2";
+    const QString PLUGIN_FOREGROUND = "#000000";
 
-    const QString other_title = "ProjectLoad";
-    const QPixmap other_pixmap = QIcon(":/default_icons/others.png").pixmap(16,16);
-    const QString other_style = "color: black; background-color: #ffecb3;";
-    const QString other_frame = "background-color: #cbba83;";
+    const QString PROFILELOAD_TITLE      = "ProfileLoad";
+    const QPixmap PROFILELOAD_PIXMAP     = QIcon(":/default_icons/others.png").pixmap(16,16);
+    const QString PROFILELOAD_BACKGROUND = "#ffecb3";
+    const QString PROFILELOAD_FOREGROUND = "#000000";
+
 };
 
 #endif // FLOWTABLE_H

@@ -79,16 +79,16 @@ void EditScomboBoxCommand::replace(QString str, int i)
         ec.info.fileSearchName = str;
         ec.info.fileSearchIndex = i;
 
-        message = QObject::tr("Input filesearch profile to");
+        message = QObject::tr("Change input filesearch condition to %1").arg(str);
 
     }else{
         // sname
         ec.filesearch.name = str;
         ec.filesearch.nameIndex = i;
 
-        message = QObject::tr("Filesearch profile to");
+        message = QObject::tr("Change filesearch condition to %1").arg(str);
 
     }
     ptrCache->replace(index, ec);
-    setText(message + str + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
+    setText(message + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }

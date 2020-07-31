@@ -34,7 +34,7 @@ void CheckOnlySchedulerSearch::undo()
     ec.filesearch.schedulerOnly = oldCheck;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Scheduler only %1").arg(newCheck) \
+    setText(QObject::tr("Scheduler only: %1 at No. %2").arg(newCheck).arg(index) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -44,7 +44,7 @@ void CheckOnlySchedulerSearch::redo()
     ec.filesearch.schedulerOnly = newCheck;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Scheduler only %1").arg(newCheck) \
+    setText(QObject::tr("Scheduler only: %1 at No. %2").arg(newCheck).arg(index) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

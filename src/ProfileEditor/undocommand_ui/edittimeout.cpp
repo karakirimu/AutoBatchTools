@@ -35,7 +35,7 @@ void EditTimeout::undo()
     ec.exec.timeout = oldValue;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Timeout to %1ms").arg(newValue) \
+    setText(QObject::tr("No. %1 timeout changed to %2 ms").arg(index).arg(newValue) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -45,7 +45,7 @@ void EditTimeout::redo()
     ec.exec.timeout = newValue;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Timeout to %1ms").arg(oldValue) \
+    setText(QObject::tr("No. %1 timeout changed to %2 ms").arg(index).arg(oldValue) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

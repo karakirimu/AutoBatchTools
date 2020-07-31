@@ -32,7 +32,7 @@ void InsertCommand::undo()
     if(ptrCache->isEmpty()) return;
     ptrCache->removeAt(index);
 
-    setText(QObject::tr("Insert item at %1").arg(index) \
+    setText(QObject::tr("Insert item at No. %1").arg(index) \
             + QString(" ^(%1,%2)").arg(index).arg(CommandMap::UNDOREDO_DELETE));
 }
 
@@ -40,6 +40,6 @@ void InsertCommand::redo()
 {
     ptrCache->insert(index, insertCache);
 
-    setText(QObject::tr("Insert item at %1").arg(index) \
+    setText(QObject::tr("Insert item at No. %1").arg(index) \
             + QString(" ^(%1,%2)").arg(index).arg(CommandMap::UNDOREDO_INSERT));
 }

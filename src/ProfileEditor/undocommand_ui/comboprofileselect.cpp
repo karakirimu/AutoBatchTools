@@ -38,7 +38,7 @@ void ComboProfileSelect::undo()
     ec.profileload.filePath = oldFile;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Profile change to %1").arg(newString) \
+    setText(QObject::tr("ProfileLoad '%1' selected").arg(newString) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -48,7 +48,7 @@ void ComboProfileSelect::redo()
     ec.profileload.filePath = newFile;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Profile change to %1").arg(newString) \
+    setText(QObject::tr("ProfileLoad '%1' selected").arg(newString) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

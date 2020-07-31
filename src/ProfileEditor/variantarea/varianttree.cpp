@@ -61,6 +61,8 @@ void VariantTree::updateIndex(QString operation)
     QStringList sep = operation.split(",");
     if(sep.count() < 2) return;
 
+    this->blockSignals(true);
+
     //get operation code
     int command = sep.last().toInt();
     int rowpos = -1;
@@ -118,6 +120,8 @@ void VariantTree::updateIndex(QString operation)
     default:
         break;
     }
+
+    this->blockSignals(false);
 }
 
 void VariantTree::reloadAction()

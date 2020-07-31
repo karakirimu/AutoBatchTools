@@ -37,7 +37,7 @@ StartupTable::StartupTable(QWidget *parent)
     //adjust column
     horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     //set header label
-    setHorizontalHeaderLabels((QStringList() << tr("Setting Name") << tr("Profile") << tr("Run Progress")));
+    setHorizontalHeaderLabels((QStringList() << tr("Setting Name") << tr("Profile") << tr("State")));
 
     //set header style
     verticalHeader()->setProperty("VerticalHeaderStyle", 1);

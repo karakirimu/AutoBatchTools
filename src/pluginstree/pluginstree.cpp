@@ -505,7 +505,7 @@ bool PluginsTree::deleteCheckMessage()
 {
     // show delete warning
     QMessageBox::StandardButton res = QMessageBox::warning(
-      this, tr("Alert"), tr("Do you want to delete selected variants ?"), QMessageBox::Yes | QMessageBox::No );
+      this, tr("Alert"), tr("Do you want to exclude the selected plugin from the list?"), QMessageBox::Yes | QMessageBox::No );
 
     if(res == QMessageBox::Yes){
         return true;
@@ -524,5 +524,5 @@ QStringList PluginsTree::selectFiles(QString basedir)
 #else
     QString extension = "(*.*)";
 #endif
-    return dialog.getOpenFileNames(this, tr("Open Plugins"), basedir, tr("Plugin ") + extension);
+    return dialog.getOpenFileNames(this, tr("Add Plugins"), basedir, tr("Plugin ") + extension);
 }

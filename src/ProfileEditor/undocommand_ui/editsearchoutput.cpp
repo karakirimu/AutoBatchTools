@@ -33,7 +33,7 @@ void EditSearchOutput::undo()
 {
     replaceValue(oldValue);
 
-    setText(QObject::tr("Output Select") \
+    setText(QObject::tr("Output method of filesearch changed") \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -41,7 +41,7 @@ void EditSearchOutput::redo()
 {
     replaceValue(newValue);
 
-    setText(QObject::tr("Output Select") \
+    setText(QObject::tr("Output method of filesearch changed") \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

@@ -63,17 +63,17 @@ void SwapExecTable::setTextByCondition(int source, int dest)
     switch (condition) {
     case 1:
         //UP
-        setText(QObject::tr("Up exec arg '%1'").arg(arg) \
+        setText(QObject::tr("Move execution argument '%1': Up").arg(arg) \
                 + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UiCommandMap::Id(UiCommandMap::E_SWAP_TABLE)));
         break;
     case -1:
         //DOWN
-        setText(QObject::tr("Down exec arg '%1'").arg(arg) \
+        setText(QObject::tr("Move execution argument '%1': Down").arg(arg) \
                 + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UiCommandMap::Id(UiCommandMap::E_SWAP_TABLE)));
         break;
     default:
         //SWAP
-        setText(QObject::tr("Swap exec arg '%1' at %2 to %3").arg(arg).arg(source).arg(dest) \
+        setText(QObject::tr("Swap execution argument '%1' and '%2'").arg(arg).arg(ptrCache->at(index).exec.command.at(source)) \
                 + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UiCommandMap::Id(UiCommandMap::E_SWAP_TABLE)));
         break;
     }

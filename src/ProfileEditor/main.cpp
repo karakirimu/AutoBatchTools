@@ -26,10 +26,25 @@ int main(int argc, char *argv[])
     // set default text codec
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-//    QTranslator myappTranslator;
-//    myappTranslator.load("peditor_ja_JP");
-//    a.installTranslator(&myappTranslator);
+    QTranslator translator;
+    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    settings.beginGroup("pe_general");
+    QLocale locale;
+    QString lang = settings.value("abe/language", locale.bcp47Name()).toString();
+    settings.endGroup();
 
+#ifdef QT_DEBUG
+
+    bool success = false;
+    success = translator.load("../../src/translation/abt_" + lang);
+
+    qDebug() << "load : " << success << " Path : " << QDir::currentPath() << lang;
+
+#else
+    translator.load("translation/abt_" + lang);
+#endif
+
+    a.installTranslator(&translator);
     ProfileEditor w(a.arguments());
     w.show();
 

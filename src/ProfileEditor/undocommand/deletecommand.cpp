@@ -31,7 +31,7 @@ void DeleteCommand::undo()
 {
     ptrCache->insert(index, removeCache);
 
-    setText(QObject::tr("Remove item at %1").arg(index) \
+    setText(QObject::tr("Remove item at No. %1").arg(index) \
             + QString(" ^(%1,%2)").arg(index).arg(CommandMap::UNDOREDO_INSERT));
 }
 
@@ -40,6 +40,6 @@ void DeleteCommand::redo()
     if(ptrCache->isEmpty()) return;
     ptrCache->removeAt(index);
 
-    setText(QObject::tr("Remove item at %1").arg(index) \
+    setText(QObject::tr("Remove item at No. %1").arg(index) \
             + QString(" ^(%1,%2)").arg(index).arg(CommandMap::UNDOREDO_DELETE));
 }

@@ -219,7 +219,7 @@ void MainScheduler::about()
 void MainScheduler::initLanguageSelection()
 {
 #ifdef QT_DEBUG
-    QDirIterator dit("../../src/AutoBatchScheduler/translation", QStringList() << "*.qm", QDir::Files);
+    QDirIterator dit("../../src/translation", QStringList() << "*.qm", QDir::Files);
 #else
     QDirIterator dit("translation", QStringList() << "*.qm", QDir::Files);
 #endif

@@ -48,14 +48,14 @@ void EditExecTable::undo()
     case UiCommandMap::E_ADD_TABLE:
         // Delete
         list.removeAt(tableIndex);
-        setText(QObject::tr("Add exec at %1").arg(QString::number(tableIndex)) \
+        setText(QObject::tr("Add the execution argument to row %1 of No. %2").arg(tableIndex).arg(index) \
                 + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_DELETE_TABLE)));
 
         break;
     case UiCommandMap::E_EDIT_TABLE:
 
         list.replace(tableIndex, oldStr);
-        setText(QObject::tr("Edit exec at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) \
+        setText(QObject::tr("Edit the execution argument '%1' on row %2 of No. %3").arg(newStr).arg(tableIndex).arg(index) \
                 + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_EDIT_TABLE)));
         break;
     case UiCommandMap::E_INSERT_TABLE:
@@ -65,9 +65,9 @@ void EditExecTable::undo()
 
         sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_DELETE_TABLE));
         if(tableOperation == UiCommandMap::E_PASTE_TABLE){
-            setText(QObject::tr("Paste exec at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) + sendcode);
+            setText(QObject::tr("Paste the execution argument '%1' on row %2 of No. %3").arg(newStr).arg(tableIndex).arg(index) + sendcode);
         }else{
-            setText(QObject::tr("Insert exec at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) + sendcode);
+            setText(QObject::tr("Insert the execution argument '%1' on row %2 of No. %3").arg(newStr).arg(tableIndex).arg(index) + sendcode);
         }
 
         break;
@@ -78,9 +78,9 @@ void EditExecTable::undo()
 
         sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_INSERT_TABLE));
         if(tableOperation == UiCommandMap::E_CUT_TABLE){
-            setText(QObject::tr("Cut exec at %1").arg(QString::number(tableIndex)) + sendcode);
+            setText(QObject::tr("Cut the execution argument of row %1 of No. %2").arg(tableIndex).arg(index) + sendcode);
         }else{
-            setText(QObject::tr("Delete exec at %1").arg(QString::number(tableIndex)) + sendcode);
+            setText(QObject::tr("Delete the execution argument of row %1 of No. %2").arg(tableIndex).arg(index) + sendcode);
         }
 
         break;
@@ -103,7 +103,7 @@ void EditExecTable::redo()
     case UiCommandMap::E_ADD_TABLE:
 
         list.append(newStr);
-        setText(QObject::tr("Add exec at %1").arg(QString::number(tableIndex)) \
+        setText(QObject::tr("Add the execution argument to row %1 of No. %2").arg(tableIndex).arg(index) \
                 + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_ADD_TABLE)));
 
         break;
@@ -111,7 +111,7 @@ void EditExecTable::redo()
 
         list.replace(tableIndex, newStr);
         // this is only all update
-        setText(QObject::tr("Edit exec at %1 arg \'%2\'").arg(QString::number(tableIndex)).arg(newStr) \
+        setText(QObject::tr("Edit the execution argument '%1' on row %2 of No. %3").arg(newStr).arg(tableIndex).arg(index) \
                 + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_EDIT_TABLE)));
 
         break;
@@ -122,9 +122,9 @@ void EditExecTable::redo()
         sendcode = QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_INSERT_TABLE));
 
         if(tableOperation == UiCommandMap::E_PASTE_TABLE){
-            setText(QObject::tr("Paste exec at %1 arg \'%2\'").arg(QString::number(tableIndex).arg(newStr)) + sendcode);
+            setText(QObject::tr("Paste the execution argument '%1' on row %2 of No. %3").arg(newStr).arg(tableIndex).arg(index) + sendcode);
         }else{
-            setText(QObject::tr("Insert exec at %1 arg \'%2\'").arg(QString::number(tableIndex).arg(newStr)) + sendcode);
+            setText(QObject::tr("Insert the execution argument '%1' on row %2 of No. %3").arg(newStr).arg(tableIndex).arg(index) + sendcode);
         }
 
         break;
@@ -135,9 +135,9 @@ void EditExecTable::redo()
         sendcode = QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::E_DELETE_TABLE));
 
         if(tableOperation == UiCommandMap::E_CUT_TABLE){
-            setText(QObject::tr("Cut exec at %1").arg(QString::number(tableIndex)) + sendcode);
+            setText(QObject::tr("Cut the execution argument of row %1 of No. %2").arg(tableIndex).arg(index) + sendcode);
         }else{
-            setText(QObject::tr("Delete exec at %1").arg(QString::number(tableIndex)) + sendcode);
+            setText(QObject::tr("Delete the execution argument of row %1 of No. %2").arg(tableIndex).arg(index) + sendcode);
         }
 
         break;

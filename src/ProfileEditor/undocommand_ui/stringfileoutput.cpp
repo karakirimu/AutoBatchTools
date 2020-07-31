@@ -34,7 +34,7 @@ void StringFileOutput::undo()
     ec.filesearch.filePath = oldStr;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Change filesearch output at %1").arg(index) \
+    setText(QObject::tr("Change filesearch output at No. %1").arg(index) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -44,7 +44,7 @@ void StringFileOutput::redo()
     ec.filesearch.filePath = newStr;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Change filesearch output at %1").arg(index) \
+    setText(QObject::tr("Change filesearch output at No. %1").arg(index) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

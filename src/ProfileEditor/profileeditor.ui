@@ -45,7 +45,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="info">
        <property name="styleSheet">
@@ -388,7 +388,7 @@
               <item row="0" column="0">
                <widget class="QLabel" name="label">
                 <property name="text">
-                 <string>Arguments in one loop</string>
+                 <string>Number of File Input in one loop</string>
                 </property>
                </widget>
               </item>
@@ -443,7 +443,7 @@
                  <bool>true</bool>
                 </property>
                 <property name="text">
-                 <string>Number of loops</string>
+                 <string>Maximum number of loops</string>
                 </property>
                </widget>
               </item>
@@ -678,7 +678,7 @@
                    <item row="1" column="0">
                     <widget class="QCheckBox" name="runDetachCheckBox">
                      <property name="text">
-                      <string>Run detach</string>
+                      <string>Do not wait for execution to end</string>
                      </property>
                     </widget>
                    </item>
@@ -841,7 +841,7 @@
                   </size>
                  </property>
                  <property name="placeholderText">
-                  <string>Delimiter</string>
+                  <string>Search result delimiter</string>
                  </property>
                 </widget>
                </item>
@@ -858,7 +858,7 @@
               </property>
               <widget class="QWidget" name="SearchOutputPage">
                <attribute name="title">
-                <string>Output</string>
+                <string>Result</string>
                </attribute>
                <layout class="QVBoxLayout" name="verticalLayout_4">
                 <property name="leftMargin">
@@ -876,7 +876,7 @@
                 <item>
                  <widget class="QRadioButton" name="variRadioButton">
                   <property name="text">
-                   <string>Store search results to variant</string>
+                   <string>Store to variant</string>
                   </property>
                   <property name="checked">
                    <bool>true</bool>
@@ -922,7 +922,7 @@
                       </size>
                      </property>
                      <property name="toolTip">
-                      <string>variable name</string>
+                      <string/>
                      </property>
                      <property name="editable">
                       <bool>false</bool>
@@ -960,7 +960,7 @@
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>Output search result to file</string>
+                   <string>Output to file</string>
                   </property>
                   <attribute name="buttonGroup">
                    <string notr="true">searchButtonGroup</string>
@@ -1054,7 +1054,7 @@
                    <item row="0" column="0">
                     <widget class="QLabel" name="label_4">
                      <property name="text">
-                      <string>Save Mode</string>
+                      <string>Format</string>
                      </property>
                     </widget>
                    </item>
@@ -1267,7 +1267,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>100</width>
-                     <height>30</height>
+                     <height>24</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_25">
@@ -2293,39 +2293,6 @@ border: none;</string>
    </property>
    <property name="text">
     <string>Process</string>
-   </property>
-  </action>
-  <action name="actionFileVariant">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>File</string>
-   </property>
-  </action>
-  <action name="actionAppVariant">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>App</string>
-   </property>
-  </action>
-  <action name="actionEditor">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Editor</string>
    </property>
   </action>
   <action name="actionRunConsole">

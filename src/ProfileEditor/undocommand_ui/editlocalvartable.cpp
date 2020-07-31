@@ -51,7 +51,7 @@ void EditLocalVarTable::undo()
     case UiCommandMap::LV_ADD:
         // Delete
         list.removeAt(tableIndex);
-        setText(QObject::tr("Add local at %1").arg(tableIndex) \
+        setText(QObject::tr("Add the local variable to row %1").arg(tableIndex) \
                 + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_DELETE)));
 
         break;
@@ -59,7 +59,7 @@ void EditLocalVarTable::undo()
     case UiCommandMap::LV_EDIT:
 
         list.replace(tableIndex, oldVar);
-        setText(QObject::tr("Edit local at %1").arg(tableIndex) \
+        setText(QObject::tr("Edit the local variable '%1' on row %2").arg(newVar.variant).arg(tableIndex) \
                 + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_EDIT)));
 
         break;
@@ -68,14 +68,14 @@ void EditLocalVarTable::undo()
         // Delete
         list.removeAt(tableIndex);
 
-        setText(QObject::tr("Insert local at %1 \'%2\'").arg(tableIndex).arg(newVar.variant) \
+        setText(QObject::tr("Insert the local variable '%1' on row %2").arg(newVar.variant).arg(tableIndex) \
                 + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_DELETE)));
         break;
 
     case UiCommandMap::LV_DELETE:
         // Insert
         list.insert(tableIndex, oldVar);
-        setText(QObject::tr("Delete local at %1").arg(tableIndex) \
+        setText(QObject::tr("Delete the local variable of row %1").arg(tableIndex) \
                 + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_INSERT)));
         break;
 
@@ -99,26 +99,26 @@ void EditLocalVarTable::redo()
     case UiCommandMap::LV_ADD:
 
         list.append(newVar);
-        setText(QObject::tr("Add local %1").arg(tableIndex) \
+        setText(QObject::tr("Add the local variable to row %1").arg(tableIndex) \
                 + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_ADD)));
 
         break;
     case UiCommandMap::LV_EDIT:
 
         list.replace(tableIndex, newVar);
-        setText(QObject::tr("Edit local at %1").arg(tableIndex) \
+        setText(QObject::tr("Edit the local variable '%1' on row %2").arg(newVar.variant).arg(tableIndex) \
                 + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_EDIT)));
         break;
     case UiCommandMap::LV_INSERT:
 
         list.insert(tableIndex, newVar);
-        setText(QObject::tr("Insert local at %1 \'%2\'").arg(tableIndex).arg(newVar.variant) \
+        setText(QObject::tr("Insert the local variable '%1' on row %2").arg(newVar.variant).arg(tableIndex) \
                 + QString(" ^(%1,%2,%3)").arg(index).arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_INSERT)));
         break;
     case UiCommandMap::LV_DELETE:
 
         list.removeAt(tableIndex);
-        setText(QObject::tr("Delete local at %1").arg(tableIndex) \
+        setText(QObject::tr("Delete the local variable of row %1").arg(tableIndex) \
                 + QString(" ^(%1,%2)").arg(tableIndex).arg(UiCommandMap::Id(UiCommandMap::LV_DELETE)));
         break;
     default:

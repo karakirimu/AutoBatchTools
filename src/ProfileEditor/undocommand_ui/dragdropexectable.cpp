@@ -92,7 +92,7 @@ void DragDropExecTable::undo()
     sendcode = QString(" ^(%1,%2,%3,%4,%5)").arg(index).arg(deleterow) \
                                          .arg(indexBefore.count()).arg(before) \
                                          .arg(UiCommandMap::Id(UiCommandMap::E_MOVE_TABLE));
-    setText(QObject::tr("Move exec element at %1").arg(QString::number(indexAfter)) + sendcode);
+    setText(QObject::tr("Move execution argument to row '%1'").arg(QString::number(indexAfter)) + sendcode);
 }
 
 void DragDropExecTable::redo()
@@ -154,5 +154,5 @@ void DragDropExecTable::redo()
                                          .arg(indexBefore.count()).arg(indexAfter) \
                                          .arg(UiCommandMap::Id(UiCommandMap::E_MOVE_TABLE));
 
-    setText(QObject::tr("Move exec element at %1").arg(QString::number(indexAfter)) + sendcode);
+    setText(QObject::tr("Move execution argument to row '%1'").arg(QString::number(indexAfter)) + sendcode);
 }

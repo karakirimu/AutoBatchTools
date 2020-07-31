@@ -81,7 +81,7 @@ void DragDropCommand::undo()
     sendcode = QString(" ^(%1,%2,%3,%4)").arg(deleterow) \
                                          .arg(beforeIndex.count()).arg(before) \
                                          .arg(CommandMap::UNDOREDO_MOVE);
-    setText(QObject::tr("Move item at %1").arg(QString::number(afterIndex)) + sendcode);
+    setText(QObject::tr("Move item at No. %1").arg(QString::number(afterIndex)) + sendcode);
 }
 
 void DragDropCommand::redo()
@@ -135,6 +135,6 @@ void DragDropCommand::redo()
                                          .arg(beforeIndex.count()).arg(afterIndex) \
                                          .arg(CommandMap::UNDOREDO_MOVE);
 
-    setText(QObject::tr("Move item at %1").arg(QString::number(afterIndex)) + sendcode);
+    setText(QObject::tr("Move item at No. %1").arg(QString::number(afterIndex)) + sendcode);
 
 }

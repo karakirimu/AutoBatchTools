@@ -557,13 +557,11 @@ void ProcessFlowTable::setInfoItem(EditorCache *list, int dataid)
     QString curdata = list->info.name;
     curdata = (curdata == "")? "(no name)" : curdata;
 
-    QColor color(tr("#f8f8f8"));
-
     this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(curdata));
 
-    QTableWidgetItem *item = new QTableWidgetItem(QIcon(info_pixmap), info_title);
-    item->setBackground(QBrush(color));
-    item->setForeground(QBrush(QColor(Qt::black)));
+    QTableWidgetItem *item = new QTableWidgetItem(QIcon(INFO_PIXMAP), INFO_TITLE);
+    item->setBackground(QBrush(QColor(INFO_BACKGROUND)));
+    item->setForeground(QBrush(QColor(INFO_FOREGROUND)));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 }
 
@@ -581,14 +579,11 @@ void ProcessFlowTable::setExecuteItem(EditorCache *list, int dataid)
         tmp.append(" " + list->exec.command.at(i));
     }
 
-    QColor color;
-    color.setNamedColor(tr("#e2f6ff"));
-
     this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(tmp));
 
-    QTableWidgetItem *item = new QTableWidgetItem(QIcon(exec_pixmap), exec_title);
-    item->setBackground(QBrush(color));
-    item->setForeground(QBrush(QColor(Qt::black)));
+    QTableWidgetItem *item = new QTableWidgetItem(QIcon(EXEC_PIXMAP), EXEC_TITLE);
+    item->setBackground(QBrush(QColor(EXEC_BACKGROUND)));
+    item->setForeground(QBrush(QColor(EXEC_FOREGROUND)));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 }
 
@@ -620,13 +615,11 @@ void ProcessFlowTable::setFileSearchItem(EditorCache *list, int dataid)
         tmp.append(QString("outpath:%1").arg(cur3));
     }
 
-    QColor color(tr("#dcedc8"));
-
     this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(tmp));
 
-    QTableWidgetItem *item = new QTableWidgetItem(QIcon(search_pixmap), search_title);
-    item->setBackground(QBrush(color));
-    item->setForeground(QBrush(QColor(Qt::black)));
+    QTableWidgetItem *item = new QTableWidgetItem(QIcon(SEARCH_PIXMAP), SEARCH_TITLE);
+    item->setBackground(QBrush(QColor(SEARCH_BACKGROUND)));
+    item->setForeground(QBrush(QColor(SEARCH_FOREGROUND)));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 }
 
@@ -643,13 +636,11 @@ void ProcessFlowTable::setPluginItem(EditorCache *list, int dataid)
         tmp.append(" " + com);
     }
 
-    QColor color(tr("#ffcdd2"));
-
     this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(curdata));
 
-    QTableWidgetItem *item = new QTableWidgetItem(QIcon(plugin_pixmap), plugin_title);
-    item->setBackground(QBrush(color));
-    item->setForeground(QBrush(QColor(Qt::black)));
+    QTableWidgetItem *item = new QTableWidgetItem(QIcon(PLUGIN_PIXMAP), PLUGIN_TITLE);
+    item->setBackground(QBrush(QColor(PLUGIN_BACKGROUND)));
+    item->setForeground(QBrush(QColor(PLUGIN_FOREGROUND)));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 }
 
@@ -678,12 +669,10 @@ void ProcessFlowTable::setProfileLoadItem(EditorCache *list, int dataid)
 
     if(curdata == "") curdata = "(not selected)";
 
-    QColor color(tr("#ffecb3"));
-
     this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(curdata));
 
-    QTableWidgetItem *item = new QTableWidgetItem(QIcon(other_pixmap), other_title);
-    item->setBackground(QBrush(color));
-    item->setForeground(QBrush(QColor(Qt::black)));
+    QTableWidgetItem *item = new QTableWidgetItem(QIcon(PROFILELOAD_PIXMAP), PROFILELOAD_TITLE);
+    item->setBackground(QBrush(QColor(PROFILELOAD_BACKGROUND)));
+    item->setForeground(QBrush(QColor(PROFILELOAD_FOREGROUND)));
     this->setItem(dataToUiIndex(dataid), SECOND, item);
 }

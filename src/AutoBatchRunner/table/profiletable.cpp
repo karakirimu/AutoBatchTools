@@ -189,7 +189,7 @@ void ProfileTable::addAction()
     QString fileName =
             QFileDialog::getOpenFileName(this, tr("Open Profile"),\
                                          QDir::currentPath(),\
-                                         tr("Profile (*.xml *.apro)"));
+                                         tr("Profile ") + "(*.xml *.apro)");
     if (fileName.isEmpty())
         return;
 
@@ -213,7 +213,7 @@ void ProfileTable::editAction()
 #ifdef QT_DEBUG
         bool result = process.startDetached("./ProfileEditor.exe", \
                         (QStringList() << list->at(2).at(1)));
-       if(!result) qDebug() << tr("ProfileEditor launch failed.");
+       if(!result) qDebug() << "AutoBatchEditor launch failed.";
 #else
     #ifdef Q_OS_WIN
         process.startDetached("./ProfileEditor.exe", QStringList() << list->at(2).at(1));

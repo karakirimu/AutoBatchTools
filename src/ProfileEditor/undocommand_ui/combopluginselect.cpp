@@ -41,7 +41,7 @@ void ComboPluginSelect::undo()
     ec.plugin.command = oldCommand;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Plugins to %1").arg(oldString) \
+    setText(QObject::tr("Plugin '%1' selected").arg(oldString) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -53,7 +53,7 @@ void ComboPluginSelect::redo()
     ec.plugin.command.clear();
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Plugins to %1").arg(newString) \
+    setText(QObject::tr("Plugin '%1' selected").arg(newString) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

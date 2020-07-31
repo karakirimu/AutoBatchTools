@@ -33,7 +33,7 @@ FileQueueTable::FileQueueTable(QWidget *parent)
     setRowCount(0);
 
     //set header label
-    setHorizontalHeaderLabels((QStringList() << tr("File/Folder Path")));
+    setHorizontalHeaderLabels((QStringList() << tr("File / Folder Path")));
 
     //adjust column
     horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);

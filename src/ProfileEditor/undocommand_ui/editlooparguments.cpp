@@ -33,7 +33,7 @@ void EditLoopArguments::undo()
 {
     replaceValue(oldValue);
 
-    setText(QObject::tr("Arguments count to %1").arg(newValue) \
+    setText(QObject::tr("Number of File Input in one loop: %1").arg(newValue) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -41,7 +41,7 @@ void EditLoopArguments::redo()
 {
     replaceValue(newValue);
 
-    setText(QObject::tr("Arguments count to %1").arg(oldValue) \
+    setText(QObject::tr("Number of File Input in one loop: %1").arg(oldValue) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 

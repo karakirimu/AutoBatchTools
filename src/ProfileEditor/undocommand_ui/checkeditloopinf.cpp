@@ -34,7 +34,7 @@ void CheckEditLoopInf::undo()
     ec.info.processAll = oldCheck;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Loop infinity %1").arg(newCheck) \
+    setText(QObject::tr("Process all entered files: %1").arg(newCheck) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -44,6 +44,6 @@ void CheckEditLoopInf::redo()
     ec.info.processAll = newCheck;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Loop infinity %1").arg(newCheck) \
+    setText(QObject::tr("Process all entered files: %1").arg(newCheck) \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }

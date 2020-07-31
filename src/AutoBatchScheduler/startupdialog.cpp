@@ -153,25 +153,20 @@ void StartupDialog::everyDaySelected(bool checked)
 
 void StartupDialog::closeEvent(QCloseEvent *event)
 {
-    // ドキュメントが変更されている場合の警告
     QMessageBox::StandardButton res = QMessageBox::question(\
-      this, tr("Alert"), tr("Overwrite this file ?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
+      this, tr("Alert"), tr("Save this setting?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
 
     switch( res )
     {
     case QMessageBox::Yes:
-      // 保存できたなら、閉じてOK
       onAccept();
-      //if (saved())  event->accept();
       break;
 
     case QMessageBox::No:
-      // 保存しなくて、そのまま閉じてOK
       reject();
       break;
 
     case QMessageBox::Cancel:
-      // キャンセルして作業に戻る
       event->ignore();
       break;
 

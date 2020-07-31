@@ -314,6 +314,7 @@ void EditOperator::tableSwapPluginAction(int id, int beforeid, int afterid)
 
 
 /**
+ * @deprecated
  * @fn EditOperator::tableEditVariantAction
  * @brief The function to edit the argument at the specified position in the table on the Variant tree
  * @param id        Row number to read, starting from 0
