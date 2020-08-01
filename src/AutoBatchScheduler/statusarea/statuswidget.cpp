@@ -30,13 +30,6 @@ StatusWidget::StatusWidget(QWidget *parent) :
 
     connect(ui->settingToolButton, &QToolButton::clicked, this, &StatusWidget::settingsClicked);
 
-//    //test
-//    CellInfoWidget *widget = new CellInfoWidget();
-//    ui->enabledTableWidget->setRowCount(1);
-//    //adjust row (test)
-//    ui->enabledTableWidget->setRowHeight(0, 60);
-//    ui->enabledTableWidget->setColumnCount(1);
-//    ui->enabledTableWidget->setCellWidget(0,0,widget);
 }
 
 StatusWidget::~StatusWidget()
@@ -54,23 +47,12 @@ void StatusWidget::showWidget()
 {
     this->show();
 
-#if QT_VERSION < 0x050900
-    //DEPRECATED:
-    // exclude taskbar
-    QRect rec = QApplication::desktop()->screenGeometry();
-
-    // include taskbar
-    QRect ava = QApplication::desktop()->availableGeometry();
-#else
-    //TODO:MAY CAUSE PROBLEM IN LINUX
-
     QList<QScreen *> scr = QGuiApplication::screens();
     // exclude taskbar
     QRect rec = scr.at(0)->geometry();
 
     // include taskbar
     QRect ava = scr.at(0)->availableGeometry();
-#endif
 
 #ifdef QT_DEBUG
     qDebug() << "height" << rec.height() << ava.height();

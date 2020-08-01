@@ -21,7 +21,6 @@
 #include <QClipboard>
 #include <uicommandmap.h>
 #include <../basictable/basictable.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class CommandTable : public BasicTable
 {

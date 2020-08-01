@@ -11,10 +11,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = AutoBatchRunner
 TEMPLATE = app
 
-#TRANSLATIONS += \
-#    translation/abr_en.ts \
-#    translation/abr_ja.ts
-
 VERSION = 1.0.0
 
 win32 {
@@ -53,16 +49,7 @@ FORMS    += \
 RESOURCES += \
     ../../res/resources.qrc
 
-#DISTFILES += \
-#    translation/abr_en.ts \
-#    translation/abr_ja.ts
-
-#include path
-#include(xml/xml.pri)
-#include(combobox/combobox.pri)
 include(table/table.pri)
-#include(timemanager/timemanager.pri)
-#include(systemtray/systemtray.pri)
 include(textedit/textedit.pri)
 include(dialog/dialog.pri)
 
@@ -79,7 +66,6 @@ LIBS += \
     -L$$LIBRARYPATH -lfilequeuetable \
     -L$$LIBRARYPATH -lsearchtable \
     -L$$LIBRARYPATH -lstringtable \
-#    -L$$LIBRARYPATH -lextrafunctionstable \
     -L$$LIBRARYPATH -lfileinfodialog \
     -L$$LIBRARYPATH -lfilesearchdialog \
     -L$$LIBRARYPATH -lfilesearchloader \

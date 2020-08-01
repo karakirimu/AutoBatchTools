@@ -175,7 +175,6 @@ void SystemTray::showTimerStopped(QString objectname, int type)
         //change action checkstate
         int itemid = getStartupXmlIndex(objectname);
         if(itemid >= 0) changeXmlValidState(itemid);
-//        updateCheckStateChanged(objectname);
         taskc->disableTask(objectname);
         break;
     }

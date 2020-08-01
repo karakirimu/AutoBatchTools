@@ -186,7 +186,6 @@ void FileSearchDialog::closeEvent(QCloseEvent *event)
     case QMessageBox::Yes:
       // save
       onAccept();
-      //if (saved())  event->accept();
       break;
 
     case QMessageBox::No:

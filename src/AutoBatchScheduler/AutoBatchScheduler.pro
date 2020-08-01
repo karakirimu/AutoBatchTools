@@ -69,10 +69,6 @@ FORMS += \
 RESOURCES += \
     ../../res/resources.qrc
 
-#DISTFILES += \
-#    translation/abs_en.ts \
-#    translation/abs_ja.ts
-
 include(taskscheduler/taskscheduler.pri)
 include(systemtray/systemtray.pri)
 include(statusarea/statusarea.pri)

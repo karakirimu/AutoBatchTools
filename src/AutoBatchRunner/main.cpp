@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
     // set default text codec
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-
     QTranslator translator;
     QSettings settings( "./settings.ini", QSettings::IniFormat );
     settings.beginGroup("abr_settings");
@@ -47,12 +46,6 @@ int main(int argc, char *argv[])
 #endif
 
     a.installTranslator(&translator);
-
-//#ifdef Q_OS_WIN
-//    QTextCodec::setCodecForLocale(QTextCodec::codecForName("Shift_JIS"));
-//#else
-//    QTextCodec::setCodecForLocale(QTextCodec::codecForLocale());
-//#endif
 
     AutoBatchRunner w;
     w.show();

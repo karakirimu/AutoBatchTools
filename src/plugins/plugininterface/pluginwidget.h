@@ -36,6 +36,4 @@ private:
 
 };
 
-//Q_DECLARE_INTERFACE(PluginWidget, "abr.PluginWidget/1.0")
-
 #endif // PLUGINWIDGET_H

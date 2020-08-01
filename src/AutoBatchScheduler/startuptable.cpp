@@ -50,9 +50,6 @@ StartupTable::StartupTable(QWidget *parent)
     //init table (reload read file.)
     reloadAction();
 
-    //set current time
-//    QDateTime time = QDateTime::currentDateTime();
-//    qsrand(static_cast<uint>(time.currentSecsSinceEpoch() ^ 165423987));
 }
 
 StartupTable::~StartupTable()
@@ -118,7 +115,6 @@ bool StartupTable::eventFilter(QObject *obj, QEvent *event)
         return static_cast<bool>(keyEvent->modifiers() & Qt::ControlModifier);
     };
 
-    //qDebug() << event->type();
     if (event->type() == QEvent::KeyPress) {
         keyEvent = static_cast<QKeyEvent *>(event);
         switch (keyEvent->key())

@@ -27,7 +27,6 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     ui(new Ui::AutoBatchRunner)
 {
     //set dockwidget occupied area
-//    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
     setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 
     //setup ui

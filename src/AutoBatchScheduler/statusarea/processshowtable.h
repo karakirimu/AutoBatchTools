@@ -41,11 +41,6 @@ signals:
     void pause(QString);
     void stop(QString);
 
-    //to cellwidget
-//    void setProgress(QString, int, int);
-//    void updateProgress(QString, int);
-//    void updateProcess(QString, QString, int);
-
     //to systemtray
     void infoNofile(QString);
 

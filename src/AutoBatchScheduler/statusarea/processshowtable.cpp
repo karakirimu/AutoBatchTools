@@ -355,11 +355,6 @@ void ProcessShowTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
     connect(taskc, &TaskSchedulerConnector::taskEnabled, this, &ProcessShowTable::enableItem);
     connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &ProcessShowTable::disableItem);
 
-//    connect(taskc, &TaskSchedulerConnector::tableInserted, this, &ProcessShowTable::insertItem);
-//    connect(taskc, &TaskSchedulerConnector::tableDeleted, this, &ProcessShowTable::removeItem);
-//    connect(taskc, &TaskSchedulerConnector::tableReplaced, this, &ProcessShowTable::replaceItem);
-//    connect(taskc, &TaskSchedulerConnector::tableEnabled, this, &ProcessShowTable::enableItem);
-//    connect(taskc, &TaskSchedulerConnector::tableDisabled, this, &ProcessShowTable::disableItem);
     connect(taskc, &TaskSchedulerConnector::tableMessenger, this, &ProcessShowTable::tableChanged);
 
     connect(this, &ProcessShowTable::pause, taskc, &TaskSchedulerConnector::processPause);
@@ -384,24 +379,3 @@ void ProcessShowTable::tableChanged(QString message, TaskSchedulerConnector::TAB
     case TaskSchedulerConnector::TABLE::SWAP: break;
     }
 }
-
-
-//bool ProcessShowTable::eventFilter(QObject *obj, QEvent *event)
-//{
-//    if(event->type() == QEvent::Leave){
-//        this->horizontalScrollBar()->hide();
-//        this->verticalScrollBar()->hide();
-//    }
-
-//    if(event->type() == QEvent::ToolTip){
-//        if(this->mapFromGlobal(QCursor::pos()).y() > (this->height() - RANGE)){
-//            this->horizontalScrollBar()->show();
-//        }
-//        if(this->mapFromGlobal(QCursor::pos()).x() > (this->width() - RANGE)){
-//            this->verticalScrollBar()->show();
-//        }
-//    }
-
-//    // standard event processing
-//    return QObject::eventFilter(obj, event);
-//}

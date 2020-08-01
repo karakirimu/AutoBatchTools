@@ -38,10 +38,8 @@ public:
 
     QString generateRandom(int length);
 signals:
-    //from EntryTask to ui-------------------------------------------------
-//  For multitask ui manage function
-//    void processInitCount(QString objectname, int start, int end);
-//    void processCurrent(QString objectname, int currentnum);
+    // from EntryTask to ui-------------------------------------------------
+    // For multitask ui manage function
     void processInitCount(int start, int end);
     void processCurrent(int currentnum);
 
@@ -60,10 +58,8 @@ public slots:
     void processStop(QString objectname);
     void sendInput(QString objectname, QString text);
 
-    //from EntryTask-----------------------------------------------------------
-// For multitask ui manage. Currently it does singletask.
-//    void receiveInitCount(int start, int end) { emit processInitCount(sender()->objectName(), start, end); }
-//    void receiveCurrent(int currentnum){emit processCurrent(sender()->objectName(), currentnum); }
+    // from EntryTask-----------------------------------------------------------
+    // For multitask ui manage. Currently it does singletask.
     void receiveInitCount(int start, int end) { emit processInitCount(start, end); }
     void receiveCurrent(int currentnum){emit processCurrent(currentnum); }
 
@@ -71,10 +67,10 @@ public slots:
     void receiveErrorText(QString str){emit processErrorText(sender()->objectName(), str); }
     void receiveMessage(QString message, int type){emit processMessage(sender()->objectName(), message, type); }
 
-    void receiveStarted(int runfrom){emit processStarted(sender()->objectName(), runfrom); /*emit processStarted_action(true);*/}
-    void receivePaused(){emit processPaused(sender()->objectName()); /*emit processPaused_action(true);*/}
-    void receiveStopped(){emit processStopped(sender()->objectName()); /*emit processStopped_action(true);*/}
-    void receiveEnd(int type){emit processEnd(sender()->objectName(), type); /*emit processEnd_action(true);*/}
+    void receiveStarted(int runfrom){emit processStarted(sender()->objectName(), runfrom); }
+    void receivePaused(){emit processPaused(sender()->objectName()); }
+    void receiveStopped(){emit processStopped(sender()->objectName()); }
+    void receiveEnd(int type){emit processEnd(sender()->objectName(), type); }
 
 private:
     bool processAliveCheck(QString objectname);

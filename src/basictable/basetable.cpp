@@ -47,7 +47,6 @@ QStringList BaseTable::droppedFromOutside(QDropEvent *event)
 {
     QStringList droppeddata;
 
-    //QUrlに取得した複数URLを1つずつ代入する。
     for(QUrl url: event->mimeData()->urls()){
         droppeddata.append(url.toLocalFile());
     }

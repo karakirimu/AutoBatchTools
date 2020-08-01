@@ -40,9 +40,7 @@
 #include <QStackedWidget>
 
 #include <../variantconverter/variantconverter.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <../plugins/plugininterface/extraplugininterface.h>
-//#include <uicommandmap.h>
 
 //ui object strings
 #define SEARCH_ADD      "searchAddButton"
@@ -66,12 +64,6 @@ public:
 
 private slots:
     //DEPENDS_XML data -> ui functions
-//    void setNormalDataList(QList<QStringList> *list);
-//    void setSearchDataList(QList<QStringList> *list);
-//    void setPluginDataList(QList<QStringList> *list);
-//    void setOtherDataList(QList<QStringList> *list);
-//    void setCombinedDataList(int after, int before, int function);
-
     void setAllIncludeDataList(int itemid, int unused1 = -1, int unused2 = -1);
     void setExecuteDataList(EditorCache *list);
     void setFileSearchDataList(EditorCache *list);

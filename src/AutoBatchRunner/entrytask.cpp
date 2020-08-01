@@ -114,10 +114,7 @@ void EntryTask::stop()
 void EntryTask::updateFileList(QStringList *need)
 {
     if(need->empty()) return;
-//    QSettings settings( "./settings.ini", QSettings::IniFormat );
-//    settings.beginGroup("pe_testexec");
     executor->addInputFiles(*need, -1);
-//    settings.endGroup();
 }
 
 void EntryTask::processCompleted()
