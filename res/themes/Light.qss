@@ -439,7 +439,9 @@ QWidget#blankWidget {
 }
 
 QWidget#StatusWidget,
-QWidget#AboutPE,
+QWidget#AboutABR,
+QWidget#AboutABS,
+QWidget#AboutABE,
 QWidget#information,
 QWidget#changelog {
     background-color: #f5f5f5;
