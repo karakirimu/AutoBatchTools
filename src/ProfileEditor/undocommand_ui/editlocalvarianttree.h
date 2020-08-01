@@ -39,12 +39,11 @@ public:
     int id() const override;
     bool mergeWith(const QUndoCommand *other) override;
 
-    VariantPair newVar;
-
 private:
     int targetIndex;
     int treeIndex;
     VariantPair oldVar;
+    VariantPair newVar;
     int tableOperation;
 
     EditorCacheList *ptrCache;

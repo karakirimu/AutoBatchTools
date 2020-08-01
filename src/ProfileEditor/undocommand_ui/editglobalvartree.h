@@ -43,11 +43,10 @@ public:
     int id() const override;
     bool mergeWith(const QUndoCommand *other) override;
 
-    QStringList m_newvar;
-
 private:
     int m_treeindex;
     int m_tableindex;
+    QStringList m_newvar;
     QStringList m_oldvar;
     int m_operation;
 

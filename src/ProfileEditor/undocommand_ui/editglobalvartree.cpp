@@ -133,6 +133,10 @@ int EditGlobalVarTree::id() const
 
 bool EditGlobalVarTree::mergeWith(const QUndoCommand *other)
 {
-    Q_UNUSED(other)
-    return false;
+    if (other->id() != id()) return false;
+    if(m_operation == UiCommandMap::GV_EDIT_TREE){
+        const EditGlobalVarTree *com = static_cast<const EditGlobalVarTree*>(other);
+        m_newvar = com->m_newvar;
+    }
+    return true;
 }

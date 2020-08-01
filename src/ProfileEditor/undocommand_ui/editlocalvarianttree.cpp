@@ -137,6 +137,10 @@ int EditLocalVariantTree::id() const
 
 bool EditLocalVariantTree::mergeWith(const QUndoCommand *other)
 {
-    Q_UNUSED(other)
-    return false;
+    if (other->id() != id()) return false;
+    if(tableOperation == UiCommandMap::LV_EDIT){
+        const EditLocalVariantTree *com = static_cast<const EditLocalVariantTree*>(other);
+        newVar = com->newVar;
+    }
+    return true;
 }
