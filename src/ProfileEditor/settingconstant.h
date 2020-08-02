@@ -27,16 +27,16 @@ public:
     const QString HIDE_TITLEBAR =          "abe_dock#autohide";
 
     const QString GROUP_ABE =              "abe";
-    const QString ABE_LANGUAGE =           "abe#language";
-    const QString ABE_RECENTLY_OPENED =    "abe#lastopened";
-    const QString ABE_RECENT_FILES =       "abe#recentfiles";
-    const QString ABE_LAST_SAVED_DIR =     "abe#lastsaved";
-    const QString ABE_THEME =              "abe#theme";
-    const QString ABE_FONT =               "abe#font";
-    const QString ABE_FONTSIZE =           "abe#fontsize";
-    const QString ABE_AUTOSAVE_DIR =       "abe#tempdir";
-    const QString ABE_AUTOSAVE_PERIOD =    "abe#autosaveperiod";
-    const QString ABE_RUNAS_SCHEDULER =    "abe#test#runas";
+    const QString ABE_LANGUAGE =           "abe-language";
+    const QString ABE_RECENTLY_OPENED =    "abe-lastopened";
+    const QString ABE_RECENT_FILES =       "abe-recentfiles";
+    const QString ABE_LAST_SAVED_DIR =     "abe-lastsaved";
+    const QString ABE_THEME =              "abe-theme";
+    const QString ABE_FONT =               "abe-font";
+    const QString ABE_FONTSIZE =           "abe-fontsize";
+    const QString ABE_AUTOSAVE_DIR =       "abe-tempdir";
+    const QString ABE_AUTOSAVE_PERIOD =    "abe-autosaveperiod";
+    const QString ABE_RUNAS_SCHEDULER =    "abe-test-runas";
 
 };
 
