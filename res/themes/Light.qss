@@ -652,7 +652,7 @@ QSpinBox::up-arrow {
 }
 
 QSpinBox::down-arrow {
-    image: url(:/default_icons/tree_open.png);
+    image: url(:/default_icons/flowarrow.png);
     height: 6px;
     width: 6px;
 }
