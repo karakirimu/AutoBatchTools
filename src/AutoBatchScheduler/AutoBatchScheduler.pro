@@ -57,6 +57,7 @@ SOURCES += \
 HEADERS += \
         aboutabs.h \
         mainscheduler.h \
+        settingconstant.h \
         startupxmlbuilder.h \
         startuptable.h \
         startupdialog.h

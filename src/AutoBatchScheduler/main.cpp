@@ -18,6 +18,7 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+#include "settingconstant.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,12 +27,13 @@ int main(int argc, char *argv[])
     // set default text codec
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("scheduler_startup");
+    SettingConstant sc;
+    QSettings settings( sc.OUTPUT_FILE_ABS, QSettings::IniFormat );
+    settings.beginGroup(sc.GROUP_ABS);
 
     QLocale locale;
-    QString lang = settings.value("abs/language", locale.bcp47Name()).toString();
-
+    QString lang = settings.value(sc.ABS_LANGUAGE, locale.bcp47Name()).toString();
+    bool minimizewindow = settings.value(sc.ABS_MINIMIZE_WINDOW, false).toBool();
     settings.endGroup();
 
     QTranslator translator;
@@ -48,7 +50,7 @@ int main(int argc, char *argv[])
     a.installTranslator(&translator);
 
     MainScheduler w;
-    if(!settings.value("HIDEWINDOW", false).toBool()){
+    if(!minimizewindow){
         w.show();
     }
 

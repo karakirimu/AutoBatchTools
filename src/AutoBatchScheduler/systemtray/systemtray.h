@@ -25,6 +25,7 @@
 #include <statuswidget.h>
 #include <taskschedulerconnector.h>
 #include <QSettings>
+#include <settingconstant.h>
 #include "processshowtable.h"
 
 class SystemTray : public QWidget
@@ -78,6 +79,8 @@ private:
 
     StartupXmlBuilder *builder;
     TaskSchedulerConnector *taskc;
+
+    SettingConstant sc;
 
 };
 

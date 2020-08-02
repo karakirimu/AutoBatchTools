@@ -115,30 +115,30 @@ void MainScheduler::closeEvent(QCloseEvent *event)
 void MainScheduler::saveSettings()
 {
     //save settings when close window
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE_ABS, QSettings::IniFormat );
 
-    settings.beginGroup("scheduler_startup");
+    settings.beginGroup(sc.GROUP_ABS);
     //message tab
-    settings.setValue("MINIMIZESHOW", ui->minimizeShowCheckBox->isChecked());
-    settings.setValue("MINIMIZESHOWMS", ui->minimizeSpinBox->value());
+    settings.setValue(sc.ABS_MINIMIZE, ui->minimizeShowCheckBox->isChecked());
+    settings.setValue(sc.ABS_MINIMIZE_MS, ui->minimizeSpinBox->value());
 
-    settings.setValue("TIMERSTART", ui->timerStartShowCheckBox->isChecked());
-    settings.setValue("TIMERSTARTMS", ui->timerStartSpinBox->value());
-    settings.setValue("TIMERSTOP", ui->timerStopShowCheckBox->isChecked());
-    settings.setValue("TIMERSTOPMS", ui->timerStopSpinBox->value());
+    settings.setValue(sc.ABS_TIMERSTART, ui->timerStartShowCheckBox->isChecked());
+    settings.setValue(sc.ABS_TIMERSTART_MS, ui->timerStartSpinBox->value());
+    settings.setValue(sc.ABS_TIMERSTOP, ui->timerStopShowCheckBox->isChecked());
+    settings.setValue(sc.ABS_TIMERSTOP_MS, ui->timerStopSpinBox->value());
 
-    settings.setValue("TASKSTART", ui->taskStartShowCheckBox->isChecked());
-    settings.setValue("TASKSTARTMS", ui->taskStartSpinBox->value());
-    settings.setValue("TASKEND", ui->taskEndShowCheckBox->isChecked());
-    settings.setValue("TASKENDMS", ui->taskEndSpinBox->value());
+    settings.setValue(sc.ABS_TASKSTART, ui->taskStartShowCheckBox->isChecked());
+    settings.setValue(sc.ABS_TASKSTART_MS, ui->taskStartSpinBox->value());
+    settings.setValue(sc.ABS_TASKFINISHED, ui->taskEndShowCheckBox->isChecked());
+    settings.setValue(sc.ABS_TASKFINISHED_MS, ui->taskEndSpinBox->value());
 
-    settings.setValue("TASKUNSELECT", ui->taskUnselectShowCheckBox->isChecked());
-    settings.setValue("TASKUNSELECTMS", ui->taskUnselectSpinBox->value());
+    settings.setValue(sc.ABS_TASKUNSELECTED, ui->taskUnselectShowCheckBox->isChecked());
+    settings.setValue(sc.ABS_TASKUNSELECTED_MS, ui->taskUnselectSpinBox->value());
 
-    settings.setValue("HIDEWINDOW", ui->minimizeLaunchCheckBox->isChecked());
-    settings.setValue("THEMECOLOR", ui->themeComboBox->currentText());
-    settings.setValue("WINDOWFONT", ui->windowFontComboBox->currentText());
-    settings.setValue("WINDOWFONTSIZE", ui->windowFontSizeSpinBox->value());
+    settings.setValue(sc.ABS_MINIMIZE_WINDOW, ui->minimizeLaunchCheckBox->isChecked());
+    settings.setValue(sc.ABS_THEME, ui->themeComboBox->currentText());
+    settings.setValue(sc.ABS_FONT, ui->windowFontComboBox->currentText());
+    settings.setValue(sc.ABS_FONTSIZE, ui->windowFontSizeSpinBox->value());
 
     storeLanguageSelection(&settings);
 
@@ -147,29 +147,29 @@ void MainScheduler::saveSettings()
 
 void MainScheduler::restoreSettings()
 {
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("scheduler_startup");
+    QSettings settings( sc.OUTPUT_FILE_ABS, QSettings::IniFormat );
+    settings.beginGroup(sc.GROUP_ABS);
     //restore settings
-    ui->minimizeShowCheckBox->setChecked(settings.value("MINIMIZESHOW", true).toBool());
-    ui->minimizeSpinBox->setValue(settings.value("MINIMIZESHOWMS", 2500).toInt());
+    ui->minimizeShowCheckBox->setChecked(settings.value(sc.ABS_MINIMIZE, true).toBool());
+    ui->minimizeSpinBox->setValue(settings.value(sc.ABS_MINIMIZE_MS, 2500).toInt());
 
-    ui->timerStartShowCheckBox->setChecked(settings.value("TIMERSTART", true).toBool());
-    ui->timerStartSpinBox->setValue(settings.value("TIMERSTARTMS", 2500).toInt());
-    ui->timerStopShowCheckBox->setChecked(settings.value("TIMERSTOP", true).toBool());
-    ui->timerStopSpinBox->setValue(settings.value("TIMERSTOPMS", 2500).toInt());
+    ui->timerStartShowCheckBox->setChecked(settings.value(sc.ABS_TIMERSTART, true).toBool());
+    ui->timerStartSpinBox->setValue(settings.value(sc.ABS_TIMERSTART_MS, 2500).toInt());
+    ui->timerStopShowCheckBox->setChecked(settings.value(sc.ABS_TIMERSTOP, true).toBool());
+    ui->timerStopSpinBox->setValue(settings.value(sc.ABS_TIMERSTOP_MS, 2500).toInt());
 
-    ui->taskStartShowCheckBox->setChecked(settings.value("TASKSTART", true).toBool());
-    ui->taskStartSpinBox->setValue(settings.value("TASKSTARTMS", 2500).toInt());
-    ui->taskEndShowCheckBox->setChecked(settings.value("TASKEND", true).toBool());
-    ui->taskEndSpinBox->setValue(settings.value("TASKENDMS", 2500).toInt());
+    ui->taskStartShowCheckBox->setChecked(settings.value(sc.ABS_TASKSTART, true).toBool());
+    ui->taskStartSpinBox->setValue(settings.value(sc.ABS_TASKSTART_MS, 2500).toInt());
+    ui->taskEndShowCheckBox->setChecked(settings.value(sc.ABS_TASKFINISHED, true).toBool());
+    ui->taskEndSpinBox->setValue(settings.value(sc.ABS_TASKFINISHED_MS, 2500).toInt());
 
-    ui->taskUnselectShowCheckBox->setChecked(settings.value("TASKUNSELECT", true).toBool());
-    ui->taskUnselectSpinBox->setValue(settings.value("TASKUNSELECTMS", 2500).toInt());
+    ui->taskUnselectShowCheckBox->setChecked(settings.value(sc.ABS_TASKUNSELECTED, true).toBool());
+    ui->taskUnselectSpinBox->setValue(settings.value(sc.ABS_TASKUNSELECTED_MS, 2500).toInt());
 
-    ui->minimizeLaunchCheckBox->setChecked(settings.value("HIDEWINDOW", false).toBool());
-    ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Default").toString());
-    ui->windowFontComboBox->setCurrentFont(QFont(settings.value("WINDOWFONT", QApplication::font().toString()).toString()));
-    ui->windowFontSizeSpinBox->setValue(settings.value("WINDOWFONTSIZE", QApplication::font().pointSize()).toInt());
+    ui->minimizeLaunchCheckBox->setChecked(settings.value(sc.ABS_MINIMIZE_WINDOW, false).toBool());
+    ui->themeComboBox->setCurrentText(settings.value(sc.ABS_THEME, "Default").toString());
+    ui->windowFontComboBox->setCurrentFont(QFont(settings.value(sc.ABS_FONT, QApplication::font().toString()).toString()));
+    ui->windowFontSizeSpinBox->setValue(settings.value(sc.ABS_FONTSIZE, QApplication::font().pointSize()).toInt());
 
     loadLanguageSelection(&settings);
 
@@ -179,13 +179,13 @@ void MainScheduler::restoreSettings()
 //QSS_THEME
 void MainScheduler::themeChangeAction()
 {
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE_ABS, QSettings::IniFormat );
 
     //theme settings
-    settings.beginGroup("scheduler_startup");
-    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
-    QFont settingfont = QFont(settings.value("WINDOWFONT", QApplication::font().toString()).toString());
-    settingfont.setPointSize(settings.value("WINDOWFONTSIZE", QApplication::font().pointSize()).toInt());
+    settings.beginGroup(sc.GROUP_ABS);
+    QString stylecolor = settings.value(sc.ABS_THEME, "Default").toString();
+    QFont settingfont = QFont(settings.value(sc.ABS_FONT, QApplication::font().toString()).toString());
+    settingfont.setPointSize(settings.value(sc.ABS_FONTSIZE, QApplication::font().pointSize()).toInt());
     settings.endGroup();
 
     if(stylecolor != "Default"){
@@ -244,7 +244,7 @@ void MainScheduler::storeLanguageSelection(QSettings *setting)
 
     for(QLocale loc : locales){
         if(QLocale::languageToString(loc.language()) == selected){
-            setting->setValue("abs/language", loc.bcp47Name());
+            setting->setValue(sc.ABS_LANGUAGE, loc.bcp47Name());
             break;
         }
     }
@@ -253,7 +253,7 @@ void MainScheduler::storeLanguageSelection(QSettings *setting)
 void MainScheduler::loadLanguageSelection(QSettings *setting)
 {
     QLocale defloc;
-    QLocale locale(setting->value("abs/language", defloc.bcp47Name()).toString());
+    QLocale locale(setting->value(sc.ABS_LANGUAGE, defloc.bcp47Name()).toString());
     ui->languageComboBox->setCurrentText(QLocale::languageToString(locale.language()));
 }
 

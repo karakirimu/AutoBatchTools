@@ -17,6 +17,7 @@
 #ifndef MAINSCHEDULER_H
 #define MAINSCHEDULER_H
 
+#include "settingconstant.h"
 #include "taskschedulerconnector.h"
 
 #include <QMainWindow>
@@ -57,6 +58,7 @@ private:
     Ui::MainScheduler *ui;
     SystemTray *sysTray;
     TaskSchedulerConnector *taskscheduler;
+    SettingConstant sc;
 };
 
 #endif // MAINSCHEDULER_H

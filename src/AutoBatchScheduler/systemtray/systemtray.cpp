@@ -96,13 +96,13 @@ void SystemTray::trayActivated(QSystemTrayIcon::ActivationReason reason)
 
 void SystemTray::showNotCloseMessage()
 {
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("scheduler_startup");
-    if(settings.value("MINIMIZESHOW", true).toBool()){
+    QSettings settings( sc.OUTPUT_FILE_ABS, QSettings::IniFormat );
+    settings.beginGroup(sc.GROUP_ABS);
+    if(settings.value(sc.ABS_MINIMIZE, true).toBool()){
         trayIcon->showMessage(tr("AutoBatchScheduler is running")
                               , tr("To completely exit the program, right-click the icon in the task tray and choose Quit.")\
                               , QSystemTrayIcon::Information\
-                              , settings.value("MINIMIZESHOWMS", 2500).toInt());
+                              , settings.value(sc.ABS_MINIMIZE_MS, 2500).toInt());
     }
     settings.endGroup();
 }
@@ -113,10 +113,10 @@ void SystemTray::showTimerStart(QString objectname, QDateTime time)
     int itemid = getStartupXmlIndex(objectname);
 
     // load setting datas
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("scheduler_startup");
-    bool started = settings.value("TIMERSTART", true).toBool();
-    int timerms = settings.value("TIMERSTARTMS", 2500).toInt();
+    QSettings settings( sc.OUTPUT_FILE_ABS, QSettings::IniFormat );
+    settings.beginGroup(sc.GROUP_ABS);
+    bool started = settings.value(sc.ABS_TIMERSTART, true).toBool();
+    int timerms = settings.value(sc.ABS_TIMERSTART_MS, 2500).toInt();
     settings.endGroup();
 
     qDebug() << "(timer started)";
@@ -154,13 +154,13 @@ void SystemTray::showTimerStopped(QString objectname, int type)
     case SchedulerWait::FINISHED:
     {
         //show message
-        QSettings settings( "./settings.ini", QSettings::IniFormat );
-        settings.beginGroup("scheduler_startup");
-        if(settings.value("TIMERSTOP", true).toBool()){
+        QSettings settings( sc.OUTPUT_FILE_ABS, QSettings::IniFormat );
+        settings.beginGroup(sc.GROUP_ABS);
+        if(settings.value(sc.ABS_TIMERSTOP, true).toBool()){
             trayIcon->showMessage(tr("Timer has ended"),\
                                   getNameByActions(objectname),\
                                   QSystemTrayIcon::Information,\
-                                  settings.value("TIMERSTOPMS", 2500).toInt());
+                                  settings.value(sc.ABS_TIMERSTOP_MS, 2500).toInt());
         }
         settings.endGroup();
         break;
@@ -187,13 +187,13 @@ void SystemTray::showProcessStart(QString objectname, int runfrom)
 {
     if(runfrom == Executor::SCHEDULER){
         //show message
-        QSettings settings( "./settings.ini", QSettings::IniFormat );
-        settings.beginGroup("scheduler_startup");
-        if(settings.value("TASKSTART", true).toBool()){
+        QSettings settings( sc.OUTPUT_FILE_ABS, QSettings::IniFormat );
+        settings.beginGroup(sc.GROUP_ABS);
+        if(settings.value(sc.ABS_TASKSTART, true).toBool()){
             trayIcon->showMessage(tr("Task started"),\
                                   getNameByActions(objectname),\
                                   QSystemTrayIcon::Information,\
-                                  settings.value("TASKSTOPMS", 2500).toInt());
+                                  settings.value(sc.ABS_TASKSTART_MS, 2500).toInt());
         }
         settings.endGroup();
     }
@@ -221,13 +221,13 @@ void SystemTray::showProcessEnded(QString objectname, int type)
 {
     if(type == Executor::SCHEDULER){
         //show message
-        QSettings settings( "./settings.ini", QSettings::IniFormat );
-        settings.beginGroup("scheduler_startup");
-        if(settings.value("TASKEND", true).toBool()){
+        QSettings settings( sc.OUTPUT_FILE_ABS, QSettings::IniFormat );
+        settings.beginGroup(sc.GROUP_ABS);
+        if(settings.value(sc.ABS_TASKFINISHED, true).toBool()){
             trayIcon->showMessage(tr("Task ended normally"),\
                                   getNameByActions(objectname),\
                                   QSystemTrayIcon::Information,\
-                                  settings.value("TASKENDMS", 2500).toInt());
+                                  settings.value(sc.ABS_TASKFINISHED_MS, 2500).toInt());
         }
         settings.endGroup();
 
@@ -237,13 +237,13 @@ void SystemTray::showProcessEnded(QString objectname, int type)
 void SystemTray::showTaskDisabled(QString objectname)
 {
     //show message
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("scheduler_startup");
-    if(settings.value("TASKUNSELECT", true).toBool()){
+    QSettings settings( sc.OUTPUT_FILE_ABS, QSettings::IniFormat );
+    settings.beginGroup(sc.GROUP_ABS);
+    if(settings.value(sc.ABS_TASKUNSELECTED, true).toBool()){
         trayIcon->showMessage(tr("Task canceled"),\
                               getNameByActions(objectname),\
                               QSystemTrayIcon::Information,\
-                              settings.value("TASKUNSELECTMS", 2500).toInt());
+                              settings.value(sc.ABS_TASKUNSELECTED_MS, 2500).toInt());
     }
     settings.endGroup();
 }
@@ -351,11 +351,11 @@ QString SystemTray::encodeDayOfWeek(int dayofweek)
 //QSS_THEME
 void SystemTray::themeChangeAction()
 {
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE_ABS, QSettings::IniFormat );
 
     //theme settings
-    settings.beginGroup("scheduler_startup");
-    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
+    settings.beginGroup(sc.GROUP_ABS);
+    QString stylecolor = settings.value(sc.ABS_THEME, "Default").toString();
     settings.endGroup();
 
     if(stylecolor != "Default"){
