@@ -20,6 +20,7 @@
 #include <QAbstractButton>
 #include <QDialog>
 #include <QSettings>
+#include "settingconstant.h"
 
 namespace Ui {
 class SettingDialog;
@@ -43,8 +44,6 @@ private slots:
     void openDir();
 
 private:
-    Ui::SettingDialog *ui;
-
     void showEvent(QShowEvent *event);
     void closeEvent(QCloseEvent *event);
 
@@ -55,6 +54,9 @@ private:
     void initLanguageSelection();
     void storeLanguageSelection(QSettings *setting);
     void loadLanguageSelection(QSettings *setting);
+
+    Ui::SettingDialog *ui;
+    SettingConstant sc;
 };
 
 #endif // SETTINGDIALOG_H

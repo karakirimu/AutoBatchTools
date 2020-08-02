@@ -79,37 +79,31 @@ void SettingDialog::setupItem(){
 
 void SettingDialog::setSettings()
 {
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
 
-    settings.beginGroup("pe_general");
-    settings.setValue("profileeditor/tempdir", ui->tempEdit->text());
-    settings.setValue("profileeditor/autosaveperiod", ui->autosaveSpinBox->value());
-    settings.setValue("THEMECOLOR", ui->themeComboBox->currentText());
-    settings.setValue("WINDOWFONT", ui->windowFontComboBox->currentText());
-    settings.setValue("WINDOWFONTSIZE", ui->windowFontSizeSpinBox->value());
+    settings.beginGroup(sc.GROUP_ABE);
+    settings.setValue(sc.ABE_AUTOSAVE_DIR, ui->tempEdit->text());
+    settings.setValue(sc.ABE_AUTOSAVE_PERIOD, ui->autosaveSpinBox->value());
+    settings.setValue(sc.ABE_THEME, ui->themeComboBox->currentText());
+    settings.setValue(sc.ABE_FONT, ui->windowFontComboBox->currentText());
+    settings.setValue(sc.ABE_FONTSIZE, ui->windowFontSizeSpinBox->value());
     storeLanguageSelection(&settings);
-    settings.endGroup();
-
-    settings.beginGroup("pe_testexec");
-    settings.setValue("FAKERES", ui->fakeresidentCheckBox->isChecked());
+    settings.setValue(sc.ABE_RUNAS_SCHEDULER, ui->fakeresidentCheckBox->isChecked());
     settings.endGroup();
 }
 
 void SettingDialog::loadSettings()
 {
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
 
-    settings.beginGroup("pe_general");
-    ui->tempEdit->setText(settings.value("profileeditor/tempdir", "./").toString());
-    ui->autosaveSpinBox->setValue(settings.value("profileeditor/autosaveperiod", 1).toInt());
-    ui->themeComboBox->setCurrentText(settings.value("THEMECOLOR", "Default").toString());
-    ui->windowFontComboBox->setCurrentFont(QFont(settings.value("WINDOWFONT", QApplication::font().toString()).toString()));
-    ui->windowFontSizeSpinBox->setValue(settings.value("WINDOWFONTSIZE", QApplication::font().pointSize()).toInt());
+    settings.beginGroup(sc.GROUP_ABE);
+    ui->tempEdit->setText(settings.value(sc.ABE_AUTOSAVE_DIR, "./").toString());
+    ui->autosaveSpinBox->setValue(settings.value(sc.ABE_AUTOSAVE_PERIOD, 1).toInt());
+    ui->themeComboBox->setCurrentText(settings.value(sc.ABE_THEME, "Default").toString());
+    ui->windowFontComboBox->setCurrentFont(QFont(settings.value(sc.ABE_FONT, QApplication::font().toString()).toString()));
+    ui->windowFontSizeSpinBox->setValue(settings.value(sc.ABE_FONTSIZE, QApplication::font().pointSize()).toInt());
     loadLanguageSelection(&settings);
-    settings.endGroup();
-
-    settings.beginGroup("pe_testexec");
-    ui->fakeresidentCheckBox->setChecked(settings.value("FAKERES", false).toBool());
+    ui->fakeresidentCheckBox->setChecked(settings.value(sc.ABE_RUNAS_SCHEDULER, false).toBool());
     settings.endGroup();
 
 }
@@ -142,7 +136,7 @@ void SettingDialog::storeLanguageSelection(QSettings *setting)
 
     for(QLocale loc : locales){
         if(QLocale::languageToString(loc.language()) == selected){
-            setting->setValue("abe/language", loc.bcp47Name());
+            setting->setValue(sc.ABE_LANGUAGE, loc.bcp47Name());
             break;
         }
     }
@@ -151,7 +145,7 @@ void SettingDialog::storeLanguageSelection(QSettings *setting)
 void SettingDialog::loadLanguageSelection(QSettings *setting)
 {
     QLocale defloc;
-    QLocale locale(setting->value("abe/language", defloc.bcp47Name()).toString());
+    QLocale locale(setting->value(sc.ABE_LANGUAGE, defloc.bcp47Name()).toString());
     ui->languageComboBox->setCurrentText(QLocale::languageToString(locale.language()));
 }
 

@@ -30,23 +30,24 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     setTabPosition(Qt::RightDockWidgetArea, QTabWidget::TabPosition::East);
 
     //Window data restore
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    QVariant v = settings.value( "profileeditor/geometry" );
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
+    QVariant v = settings.value( sc.GEOMETRY );
     if (v.type() != QVariant::Invalid){
 
         // load window settings on MainWindow
-        restoreGeometry( settings.value( "profileeditor/geometry" ).toByteArray() );
-        restoreState( settings.value( "profileeditor/windowState" ).toByteArray() );
+        restoreGeometry( settings.value( sc.GEOMETRY ).toByteArray() );
+        restoreState( settings.value( sc.WINDOW_STATE ).toByteArray() );
 
         // load window check settings
-        ui->actionToolBarEdit->setChecked(settings.value("profileeditor/toolbar/edit", true).toBool());
-        ui->actionProcess->setChecked(settings.value("profileeditor/process", true).toBool());
-        ui->actionVariant->setChecked(settings.value("profileeditor/variant", true).toBool());
-        ui->actionRunSetting->setChecked(settings.value("profileeditor/runset", true).toBool());
-        ui->actionRunConsole->setChecked(settings.value("profileeditor/console", true).toBool());
+        ui->actionToolBarEdit->setChecked(settings.value(sc.SHOW_TOOLBAR_EDIT, true).toBool());
+
+        ui->actionProcess->setChecked(settings.value(sc.SHOW_PROCESS, true).toBool());
+        ui->actionVariant->setChecked(settings.value(sc.SHOW_VARIANT, true).toBool());
+        ui->actionRunSetting->setChecked(settings.value(sc.SHOW_TEST, true).toBool());
+        ui->actionRunConsole->setChecked(settings.value(sc.SHOW_CONSOLE, true).toBool());
 
         // load action autohide settings
-        bool autohide = settings.value("profileeditor/autohide", true).toBool();
+        bool autohide = settings.value(sc.HIDE_TITLEBAR, true).toBool();
         ui->actionAutohide->setChecked(autohide);
         ui->processDockWidget->setAutohide(autohide);
         ui->setTestDockWidget->setAutohide(autohide);
@@ -197,20 +198,20 @@ ProfileEditor::ProfileEditor(QStringList cuiargs, QWidget *parent)
 ProfileEditor::~ProfileEditor()
 {
     //save window state
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.setValue( "profileeditor/geometry", saveGeometry() );
-    settings.setValue( "profileeditor/windowState", saveState() );
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
+    settings.setValue( sc.GEOMETRY, saveGeometry() );
+    settings.setValue( sc.WINDOW_STATE, saveState() );
 
     //window menu
-    settings.setValue("profileeditor/toolbar/edit", ui->actionToolBarEdit->isChecked());
-    settings.setValue("profileeditor/toolbar/run", actionToolBarRun->isChecked());
-    settings.setValue("profileeditor/toolbar/testrange", actionToolBarTestRange->isChecked());
+    settings.setValue(sc.SHOW_TOOLBAR_EDIT, ui->actionToolBarEdit->isChecked());
+    settings.setValue(sc.SHOW_TOOLBAR_RUN, actionToolBarRun->isChecked());
+    settings.setValue(sc.SHOW_TOOLBAR_RANGE, actionToolBarTestRange->isChecked());
 
-    settings.setValue("profileeditor/process", ui->actionProcess->isChecked());
-    settings.setValue("profileeditor/variant", ui->actionVariant->isChecked());
-    settings.setValue("profileeditor/runset", ui->actionRunSetting->isChecked());
-    settings.setValue("profileeditor/console", ui->actionRunConsole->isChecked());
-    settings.setValue("profileeditor/autohide", ui->actionAutohide->isChecked());
+    settings.setValue(sc.SHOW_PROCESS, ui->actionProcess->isChecked());
+    settings.setValue(sc.SHOW_VARIANT, ui->actionVariant->isChecked());
+    settings.setValue(sc.SHOW_TEST, ui->actionRunSetting->isChecked());
+    settings.setValue(sc.SHOW_CONSOLE, ui->actionRunConsole->isChecked());
+    settings.setValue(sc.HIDE_TITLEBAR, ui->actionAutohide->isChecked());
 
     delete actionRunSetting;
     delete runToolBar;
@@ -254,16 +255,16 @@ void ProfileEditor::newfileAction()
 void ProfileEditor::openAction()
 {
     if(checkOverWrite() == CANCEL) return;
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
 
     // open file
     QString fileName = fdialog->getOpenFileName(this,\
-                                                tr("Open Profile"), settings.value("profileeditor/lastopened",\
+                                                tr("Open Profile"), settings.value(sc.ABE_RECENTLY_OPENED,\
                                                 QDir::currentPath()).toString(), "Profile (*.xml *.apro)");
 
     if(fileName != ""){
         // save last opened folder
-        settings.setValue("profileeditor/lastopened", QFileInfo(fileName).canonicalPath());
+        settings.setValue(sc.ABE_RECENTLY_OPENED, QFileInfo(fileName).canonicalPath());
         editop->openAction(fileName);
 
         // reset recent open menu
@@ -288,8 +289,8 @@ void ProfileEditor::clearOpenRecentAction()
 void ProfileEditor::openLastClosedAction()
 {
     if(checkOverWrite() == CANCEL) return;
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    QStringList list = settings.value("profileeditor/recentfiles").value<QStringList>();
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
+    QStringList list = settings.value(sc.ABE_RECENT_FILES).value<QStringList>();
     editop->openAction(list.first());
 }
 
@@ -298,16 +299,16 @@ void ProfileEditor::openLastClosedAction()
 bool ProfileEditor::saveAction()
 {
     // copy only in save action
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
 
     QString fileName =
             fdialog->getSaveFileName(this,\
                                      tr("Save Profile"),\
-                                     settings.value("profileeditor/lastsaved", QDir::currentPath()).toString(),\
+                                     settings.value(sc.ABE_LAST_SAVED_DIR, QDir::currentPath()).toString(),\
                                      "Profile (*.apro)");
 
     if(fileName != ""){
-        settings.setValue("profileeditor/lastsaved", QFileInfo(fileName).canonicalPath());
+        settings.setValue(sc.ABE_LAST_SAVED_DIR, QFileInfo(fileName).canonicalPath());
         editop->saveAction(fileName);
     }else{
         return false;
@@ -428,13 +429,13 @@ void ProfileEditor::launchSettingAction()
 //QSS_THEME
 void ProfileEditor::themeChangeAction()
 {
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
 
     //theme settings
-    settings.beginGroup("pe_general");
-    QString stylecolor = settings.value("THEMECOLOR", "Default").toString();
-    QFont settingfont = QFont(settings.value("WINDOWFONT", QApplication::font().toString()).toString());
-    settingfont.setPointSize(settings.value("WINDOWFONTSIZE", QApplication::font().pointSize()).toInt());
+    settings.beginGroup(sc.GROUP_ABE);
+    QString stylecolor = settings.value(sc.ABE_THEME, "Default").toString();
+    QFont settingfont = QFont(settings.value(sc.ABE_FONT, QApplication::font().toString()).toString());
+    settingfont.setPointSize(settings.value(sc.ABE_FONTSIZE, QApplication::font().pointSize()).toInt());
     settings.endGroup();
 
     if(stylecolor != "Default"){
@@ -571,10 +572,10 @@ void ProfileEditor::initRunToolBar()
     this->addToolBar(runToolBar);
 
     // add menu action
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
     actionToolBarRun = new QAction(runToolBar->windowTitle());
     actionToolBarRun->setCheckable(true);
-    actionToolBarRun->setChecked(settings.value("profileeditor/toolbar/run", true).toBool());
+    actionToolBarRun->setChecked(settings.value(sc.SHOW_TOOLBAR_RUN, true).toBool());
     connect(actionToolBarRun, &QAction::triggered, runToolBar, &QToolBar::setVisible);
     ui->menuToolBar->addAction(actionToolBarRun);
 
@@ -597,10 +598,10 @@ void ProfileEditor::initRunRangeToolBar()
     this->addToolBar(testRangeToolBar);
 
     // add menu action
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
     actionToolBarTestRange = new QAction(testRangeToolBar->windowTitle());
     actionToolBarTestRange->setCheckable(true);
-    actionToolBarTestRange->setChecked(settings.value("profileeditor/toolbar/testrange", true).toBool());
+    actionToolBarTestRange->setChecked(settings.value(sc.SHOW_TOOLBAR_RANGE, true).toBool());
     connect(actionToolBarTestRange, &QAction::triggered, testRangeToolBar, &QToolBar::setVisible);
     ui->menuToolBar->addAction(actionToolBarTestRange);
 
@@ -807,8 +808,8 @@ void ProfileEditor::initUi()
  */
 void ProfileEditor::clearOpenRecent(bool deletelist)
 {
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    QStringList list = settings.value("profileeditor/recentfiles").value<QStringList>();
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
+    QStringList list = settings.value(sc.ABE_RECENT_FILES).value<QStringList>();
 
     QList<QAction *> acts = ui->menuOpenRecent->actions();
 
@@ -821,7 +822,7 @@ void ProfileEditor::clearOpenRecent(bool deletelist)
         }
     }
 
-    if(deletelist) settings.setValue("profileeditor/recentfiles", QStringList());
+    if(deletelist) settings.setValue(sc.ABE_RECENT_FILES, QStringList());
 }
 
 /**
@@ -830,8 +831,8 @@ void ProfileEditor::clearOpenRecent(bool deletelist)
  */
 void ProfileEditor::setOpenRecent()
 {
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    QStringList list = settings.value("profileeditor/recentfiles").value<QStringList>();
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
+    QStringList list = settings.value(sc.ABE_RECENT_FILES).value<QStringList>();
 
     for (QString file : list) {
         QAction *action = new QAction(file);
@@ -880,13 +881,13 @@ int ProfileEditor::checkOverWrite()
  */
 bool ProfileEditor::checkAutoSave()
 {
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
 
     QStringList slist = QStringList() << "*.autosave";
 
     QStringList result;
     BaseFileSearch search;
-    result = search.listFiles(settings.value("profileeditor/tempdir", "./").toString(), &slist);
+    result = search.listFiles(settings.value(sc.ABE_AUTOSAVE_DIR, "./").toString(), &slist);
 
     // get filtered result
     search.setRegularExpressionCondition(&result, "(\\.~\\$new_\\w+\\.autosave)$");

@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QThread>
 #include "../executor/executor.h"
+#include "settingconstant.h"
 
 class RunTaskSignalBinder : public QObject
 {

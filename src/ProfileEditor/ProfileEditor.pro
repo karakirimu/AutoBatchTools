@@ -55,6 +55,7 @@ HEADERS  += editarea/commandtable.h \
 #    graphicsarea/flowcellwidget.h \
 #    graphicsarea/flowtable.h \
 #    processlistarea/profiletreewidget.h \
+    settingconstant.h \
     settingdialog/settingdialog.h \
     console/consoleedit.h \
     console/consoleview.h \

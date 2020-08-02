@@ -62,6 +62,7 @@
 //radiobutton operation
 #include <editsearchoutput.h>
 #include <editsearchfileoutputtype.h>
+#include <settingconstant.h>
 
 //table operation
 #include <swapexectable.h>
@@ -248,6 +249,9 @@ private:
 
     //parent geometry
     QMainWindow *parentwid;
+
+    //Setting ini constant
+    SettingConstant sc;
 };
 
 #endif // EDITFILEOPERATOR_H

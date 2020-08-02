@@ -24,11 +24,11 @@ EditOperator::EditOperator(QObject *parent)
 
     parentwid = qobject_cast<QMainWindow *>(parent);
 
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
 
     //init timer (ms)
-    settings.beginGroup("pe_general");
-    timerid = startTimer(settings.value("profileeditor/autosaveperiod", 1).toInt() * 60000);
+    settings.beginGroup(sc.GROUP_ABE);
+    timerid = startTimer(settings.value(sc.ABE_AUTOSAVE_PERIOD, 1).toInt() * 60000);
     settings.endGroup();
 }
 
@@ -756,8 +756,8 @@ void EditOperator::newAction()
 
     reset();
 
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    autosavefile = settings.value("profileeditor/tempdir", "./").toString();
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
+    autosavefile = settings.value(sc.ABE_AUTOSAVE_DIR, "./").toString();
 
     autosavefile.append(QString(".~$new_") \
                         .append(QString::number(QDateTime::currentSecsSinceEpoch())) \
@@ -816,15 +816,15 @@ void EditOperator::openAction(QString filepath)
     loadcache(0);
 
     // save recent files list (max: 10)
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    QStringList list = settings.value("profileeditor/recentfiles").value<QStringList>();
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
+    QStringList list = settings.value(sc.ABE_RECENT_FILES).value<QStringList>();
     int recentcount = list.count();
 
     list.removeOne(loadfile);
     list.insert(0, loadfile);
 
     if(recentcount > 10) list.removeLast();
-    settings.setValue("profileeditor/recentfiles", list);
+    settings.setValue(sc.ABE_RECENT_FILES, list);
 
     emit loadfileChanged(loadfile);
 }

@@ -91,7 +91,7 @@
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="settinggeneral">
          <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -157,6 +157,9 @@
                  <widget class="QSpinBox" name="autosaveSpinBox">
                   <property name="suffix">
                    <string>min</string>
+                  </property>
+                  <property name="minimum">
+                   <number>1</number>
                   </property>
                   <property name="maximum">
                    <number>1000</number>

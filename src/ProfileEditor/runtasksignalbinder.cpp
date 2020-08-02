@@ -90,10 +90,11 @@ void RunTaskSignalBinder::start()
 
     }else{
         //load static settings
-        QSettings settings( "./settings.ini", QSettings::IniFormat );
+        SettingConstant sc;
+        QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
 
-        settings.beginGroup("pe_testexec");
-        executor->setLaunchedfrom(settings.value("FAKERES", false).toInt());
+        settings.beginGroup(sc.GROUP_ABE);
+        executor->setLaunchedfrom(settings.value(sc.ABE_RUNAS_SCHEDULER, false).toInt());
         settings.endGroup();
 
         worker->start();

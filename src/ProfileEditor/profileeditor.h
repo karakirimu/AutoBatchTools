@@ -21,6 +21,8 @@
 #define Q_TEST_OBJECT
 #endif
 
+#include "settingconstant.h"
+
 #include <QMainWindow>
 #include <QDateTime>
 #include <QSettings>
@@ -174,6 +176,8 @@ private:
     //key is thread name
     MultiTaskP *mlTask;
     QString key;
+
+    SettingConstant sc;
 
 };
 
