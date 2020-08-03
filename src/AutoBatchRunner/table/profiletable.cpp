@@ -34,6 +34,9 @@ ProfileTable::ProfileTable(QWidget *)
     //adjust column
     horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 
+    //set vertical header style
+    verticalHeader()->setProperty("VerticalHeaderStyle", 1);
+
     //set header label
     setHorizontalHeaderLabels((QStringList() << tr("Profile") << tr("Description") << tr("File")));
 
