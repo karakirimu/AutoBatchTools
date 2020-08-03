@@ -45,15 +45,15 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     ui->comboBox->reloadComboBoxItem();
 
     //Window init
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    QVariant v = settings.value( "abr/geometry" );
+    QSettings settings( sc.OUTPUT_FILE_ABR, QSettings::IniFormat );
+    QVariant v = settings.value( sc.ABR_GEOMETRY );
     if (v.type() != QVariant::Invalid){
         // load window settings on MainWindow
-        restoreGeometry( settings.value( "abr/geometry" ).toByteArray() );
-        restoreState( settings.value( "abr/windowState" ).toByteArray() );
+        restoreGeometry( settings.value( sc.ABR_GEOMETRY ).toByteArray() );
+        restoreState( settings.value( sc.ABR_WINDOWSTATE ).toByteArray() );
 
         // load combobox previous position
-        int comboindex = settings.value("abr/profilecombo").toInt();
+        int comboindex = settings.value(sc.ABR_PROFILECOMBO).toInt();
         if(comboindex < ui->comboBox->count()){
             ui->comboBox->setCurrentIndex(comboindex);
         }
@@ -94,10 +94,10 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
 AutoBatchRunner::~AutoBatchRunner()
 {
     //save window state
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.setValue( "abr/geometry", saveGeometry() );
-    settings.setValue( "abr/windowState", saveState() );
-    settings.setValue( "abr/profilecombo", ui->comboBox->currentIndex());
+    QSettings settings( sc.OUTPUT_FILE_ABR, QSettings::IniFormat );
+    settings.setValue( sc.ABR_GEOMETRY, saveGeometry() );
+    settings.setValue( sc.ABR_WINDOWSTATE, saveState() );
+    settings.setValue( sc.ABR_PROFILECOMBO, ui->comboBox->currentIndex());
 
     delete opdialog;
     delete mlTask;
@@ -242,13 +242,13 @@ void AutoBatchRunner::setRunButtonState(bool run, bool pause, bool stop)
 //QSS_THEME
 void AutoBatchRunner::themeChangeAction()
 {
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE_ABR, QSettings::IniFormat );
 
     //theme settings
-    settings.beginGroup("abr_settings");
-    QString stylecolor = settings.value("abr/theme", "Default").toString();
-    QFont settingfont = QFont(settings.value("abr/font", QApplication::font().toString()).toString());
-    settingfont.setPointSize(settings.value("abr/fontsize", QApplication::font().pointSize()).toInt());
+    settings.beginGroup(sc.GROUP_ABR);
+    QString stylecolor = settings.value(sc.ABR_THEME, "Default").toString();
+    QFont settingfont = QFont(settings.value(sc.ABR_FONT, QApplication::font().toString()).toString());
+    settingfont.setPointSize(settings.value(sc.ABR_FONTSIZE, QApplication::font().pointSize()).toInt());
     settings.endGroup();
 
     if(stylecolor != "Default"){

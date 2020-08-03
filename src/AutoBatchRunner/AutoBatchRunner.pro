@@ -41,7 +41,8 @@ HEADERS  += \
     basedockwidget.h \
     autobatchrunner.h \
     entrytask.h \
-    multitask.h
+    multitask.h \
+    settingconstant.h
 
 FORMS    += \
     autobatchrunner.ui

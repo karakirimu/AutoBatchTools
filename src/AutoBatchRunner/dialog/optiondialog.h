@@ -19,6 +19,7 @@
 
 #include <QDialog>
 #include <QSettings>
+#include <settingconstant.h>
 
 namespace Ui {
 class OptionDialog;
@@ -49,6 +50,8 @@ private:
     void initLanguageSelection();
     void storeLanguageSelection(QSettings *setting);
     void loadLanguageSelection(QSettings *setting);
+
+    SettingConstant sc;
 };
 
 #endif // OPTIONDIALOG_H

@@ -17,6 +17,8 @@
 #ifndef AUTOBATCHRUNNER_H
 #define AUTOBATCHRUNNER_H
 
+#include "settingconstant.h"
+
 #include <QMainWindow>
 #include <QSettings>
 #include <QProgressBar>
@@ -67,6 +69,8 @@ private:
     //this variable is temporary.
     //currently, this program can run only one task.
     QString key = "";
+
+    SettingConstant sc;
 };
 
 #endif // AUTOBATCHRUNNER_H

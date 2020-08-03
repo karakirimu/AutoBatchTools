@@ -83,24 +83,24 @@ void OptionDialog::setupItem(){
 
 void OptionDialog::setSettings()
 {
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE_ABR, QSettings::IniFormat );
 
-    settings.beginGroup("abr_settings");
-    settings.setValue("abr/theme", ui->themeComboBox->currentText());
-    settings.setValue("abr/font", ui->windowFontComboBox->currentText());
-    settings.setValue("abr/fontsize", ui->windowFontSizeSpinBox->value());
+    settings.beginGroup(sc.GROUP_ABR);
+    settings.setValue(sc.ABR_THEME, ui->themeComboBox->currentText());
+    settings.setValue(sc.ABR_FONT, ui->windowFontComboBox->currentText());
+    settings.setValue(sc.ABR_FONTSIZE, ui->windowFontSizeSpinBox->value());
     storeLanguageSelection(&settings);
     settings.endGroup();
 }
 
 void OptionDialog::loadSettings()
 {
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
+    QSettings settings( sc.OUTPUT_FILE_ABR, QSettings::IniFormat );
 
-    settings.beginGroup("abr_settings");
-    ui->themeComboBox->setCurrentText(settings.value("abr/theme", "Default").toString());
-    ui->windowFontComboBox->setCurrentFont(QFont(settings.value("abr/font", QApplication::font().toString()).toString()));
-    ui->windowFontSizeSpinBox->setValue(settings.value("abr/fontsize", QApplication::font().pointSize()).toInt());
+    settings.beginGroup(sc.GROUP_ABR);
+    ui->themeComboBox->setCurrentText(settings.value(sc.ABR_THEME, "Default").toString());
+    ui->windowFontComboBox->setCurrentFont(QFont(settings.value(sc.ABR_FONT, QApplication::font().toString()).toString()));
+    ui->windowFontSizeSpinBox->setValue(settings.value(sc.ABR_FONTSIZE, QApplication::font().pointSize()).toInt());
     loadLanguageSelection(&settings);
     settings.endGroup();
 }
@@ -133,7 +133,7 @@ void OptionDialog::storeLanguageSelection(QSettings *setting)
 
     for(QLocale loc : locales){
         if(QLocale::languageToString(loc.language()) == selected){
-            setting->setValue("abr/language", loc.bcp47Name());
+            setting->setValue(sc.ABR_LANGUAGE, loc.bcp47Name());
             break;
         }
     }
@@ -142,7 +142,7 @@ void OptionDialog::storeLanguageSelection(QSettings *setting)
 void OptionDialog::loadLanguageSelection(QSettings *setting)
 {
     QLocale defloc;
-    QLocale locale(setting->value("abr/language", defloc.bcp47Name()).toString());
+    QLocale locale(setting->value(sc.ABR_LANGUAGE, defloc.bcp47Name()).toString());
     ui->languageComboBox->setCurrentText(QLocale::languageToString(locale.language()));
 }
 

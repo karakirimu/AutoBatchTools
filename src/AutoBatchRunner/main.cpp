@@ -28,10 +28,11 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
     QTranslator translator;
-    QSettings settings( "./settings.ini", QSettings::IniFormat );
-    settings.beginGroup("abr_settings");
+    SettingConstant sc;
+    QSettings settings( sc.OUTPUT_FILE_ABR, QSettings::IniFormat );
+    settings.beginGroup(sc.GROUP_ABR);
     QLocale locale;
-    QString lang = settings.value("abr/language", locale.bcp47Name()).toString();
+    QString lang = settings.value(sc.ABR_LANGUAGE, locale.bcp47Name()).toString();
     settings.endGroup();
 
 #ifdef QT_DEBUG
