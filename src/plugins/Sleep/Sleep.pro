@@ -28,17 +28,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+TRANSLATIONS += \
+        $$PWD/translation/sleep_en.ts \
+        $$PWD/translation/sleep_ja.ts
+
 include($$PWD/../plugininterface/plugininterface.pri)
 
 SOURCES += \
         sleep.cpp \
-#        sleepdialog.cpp \
         sleepwidget.cpp
 
 HEADERS += \
         sleep.h \
         sleep_global.h  \
-#        sleepdialog.h \
         sleepwidget.h
 
 unix {
@@ -47,7 +49,6 @@ unix {
 }
 
 FORMS += \
-#    sleepdialog.ui \
     sleepwidget.ui
 
 DISTFILES += \

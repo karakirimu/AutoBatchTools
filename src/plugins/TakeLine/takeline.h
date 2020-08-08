@@ -38,21 +38,6 @@ public:
 
     int functionMain(int argc, QStringList *args);
 
-//    QString tooltipString(){
-//        return tr("This function can take line 'n'.\n"
-//                  "arguments 1 : filename or string with '\\n'\n"
-//                  "arguments 2 : line number(it starts 0)\n"
-//                  "arguments 3 : return local variant name");
-//    }
-
-//    QString version(){ return "v 1.0.0"; }
-//    QString vendor(){ return "karakirimu"; }
-
-//    bool existsSettingWidget(){return true;}
-
-//    int launchSettingWidget(QStringList *currentargs, QStringList *resultargs \
-//                            , QPoint parentpos, QString parentstylesheet);
-
 private:
     enum {FILEORSTRING, LINENUM, VAR};
     TakeLineWidget *tlwidget;

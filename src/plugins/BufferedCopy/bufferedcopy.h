@@ -38,9 +38,6 @@ public:
 
     int functionMain(int argc, QStringList *args);
 
-//private slots:
-//    void widgetUpdate(QStringList list);
-
 private:
     bool copyData(QString source, QString dest, long cachesize);
     bool checkHash(QString source, QString dest);

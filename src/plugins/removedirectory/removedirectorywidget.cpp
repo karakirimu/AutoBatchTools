@@ -19,7 +19,7 @@
 
 RemoveDirectoryWidget::RemoveDirectoryWidget(QWidget *parent) :
     PluginWidget(parent),
-    ui(new Ui::RemoveDirectryWidget)
+    ui(new Ui::RemoveDirectoryWidget)
 {
     ui->setupUi(this);
 }

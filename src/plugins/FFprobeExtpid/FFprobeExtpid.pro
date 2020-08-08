@@ -28,17 +28,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+TRANSLATIONS += \
+        $$PWD/translation/ffprobeextpid_en.ts \
+        $$PWD/translation/ffprobeextpid_ja.ts
+
 include($$PWD/../plugininterface/plugininterface.pri)
 
 SOURCES += \
         ffprobeextpid.cpp \
-#        ffprobeextpiddialog.cpp \
         ffprobeextpidwidget.cpp
 
 HEADERS += \
         ffprobeextpid.h \
         ffprobeextpid_global.h \
-#        ffprobeextpiddialog.h \
         ffprobeextpidwidget.h
 
 unix {
@@ -47,7 +49,6 @@ unix {
 }
 
 FORMS += \
-#    ffprobeextpiddialog.ui \
     ffprobeextpidwidget.ui
 
 DISTFILES += \

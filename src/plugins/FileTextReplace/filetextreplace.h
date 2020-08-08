@@ -24,7 +24,6 @@
 #include <QTextStream>
 #include <QRegExp>
 #include <filetextreplacewidget.h>
-//#include <filetextreplacedialog.h>
 
 class FILETEXTREPLACESHARED_EXPORT FileTextReplace
         : public ExtraPluginInterface
@@ -38,9 +37,6 @@ public:
     ~FileTextReplace();
 
     int functionMain(int argc, QStringList *args);
-
-//    int launchSettingWidget(QStringList *currentargs, QStringList *resultargs \
-//                            , QPoint parentpos, QString parentstylesheet);
 
 private:
     bool writeToText(QString filename, QString text);

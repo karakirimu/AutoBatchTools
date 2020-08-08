@@ -40,9 +40,6 @@ public:
 
     int functionMain(int argc, QStringList *args);
 
-//    int launchSettingWidget(QStringList *currentargs, QStringList *resultargs \
-//                            , QPoint parentpos, QString parentstylesheet);
-
 private:
     RemoveDirectoryWidget *swidget;
 

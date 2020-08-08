@@ -37,7 +37,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="labelDest">
        <property name="text">
-        <string>Destination folder</string>
+        <string>Destination</string>
        </property>
       </widget>
      </item>
@@ -51,14 +51,14 @@
      <item row="0" column="0">
       <widget class="QLabel" name="labelSource">
        <property name="text">
-        <string>Source file/dir</string>
+        <string>Source</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
       <widget class="QLineEdit" name="lineEditRename">
        <property name="placeholderText">
-        <string>(file name)</string>
+        <string>New file name</string>
        </property>
       </widget>
      </item>
@@ -68,28 +68,28 @@
         <string/>
        </property>
        <property name="placeholderText">
-        <string>(source file)</string>
+        <string>File or directory path</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
       <widget class="QLineEdit" name="lineEditDestination">
        <property name="placeholderText">
-        <string>(destination dir)</string>
+        <string>Directory path</string>
        </property>
       </widget>
      </item>
      <item row="3" column="0">
       <widget class="QCheckBox" name="checkBoxCache">
        <property name="text">
-        <string>Cache size (kB)</string>
+        <string>Copy cache size (kB)</string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
       <widget class="QLineEdit" name="lineEditCache">
        <property name="placeholderText">
-        <string>(default 512kB)</string>
+        <string>Default 512kB</string>
        </property>
       </widget>
      </item>

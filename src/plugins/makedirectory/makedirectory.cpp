@@ -37,7 +37,7 @@ MakeDirectory::~MakeDirectory()
 int MakeDirectory::functionMain(int argc, QStringList *args)
 {
     if(argc < 1){
-        functionMessage(tr("Argument is missing"), MessageType::Error);
+        functionMessage(tr("The argument is missing."), MessageType::Error);
         return -1;
     }
 
@@ -47,14 +47,3 @@ int MakeDirectory::functionMain(int argc, QStringList *args)
 
     return dirbool ? 0 : -1;
 }
-
-//int MakeDirectory::launchSettingWidget(QStringList *currentargs, QStringList *resultargs \
-//                                       , QPoint parentpos, QString parentstylesheet)
-//{
-//    Q_UNUSED(currentargs)
-//    Q_UNUSED(resultargs)
-//    Q_UNUSED(parentpos)
-//    Q_UNUSED(parentstylesheet)
-
-//    return 0;
-//}

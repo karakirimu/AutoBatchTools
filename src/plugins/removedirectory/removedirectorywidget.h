@@ -21,7 +21,7 @@
 #include <QHash>
 
 namespace Ui {
-class RemoveDirectryWidget;
+class RemoveDirectoryWidget;
 }
 
 class RemoveDirectoryWidget : public PluginWidget
@@ -43,7 +43,7 @@ private slots:
 private:
     void updateArguments();
 
-    Ui::RemoveDirectryWidget *ui;
+    Ui::RemoveDirectoryWidget *ui;
 
     enum RemoveDirectoryList{
         RemovePath,

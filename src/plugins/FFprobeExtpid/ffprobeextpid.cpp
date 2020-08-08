@@ -39,7 +39,7 @@ FFprobeExtpid::~FFprobeExtpid()
 int FFprobeExtpid::functionMain(int argc, QStringList *args)
 {
     if(argc < 3){
-        functionMessage(tr("Argument is missing"), MessageType::Error);
+        functionMessage(tr("The argument is missing."), MessageType::Error);
         return -1;
     }
 
@@ -87,21 +87,6 @@ int FFprobeExtpid::functionMain(int argc, QStringList *args)
     writeToText(args->at(2), audiopid);
     return 0;
 }
-
-//int FFprobeExtpid::launchSettingWidget(QStringList *currentargs, QStringList *resultargs
-//                                       , QPoint parentpos, QString parentstylesheet)
-//{
-//    FFprobeExtpidDialog *tdialog = new FFprobeExtpidDialog(currentargs);
-//    tdialog->move(parentpos - tdialog->rect().center());
-//    tdialog->setStyleSheet(parentstylesheet);
-
-//    if(tdialog->exec() == QDialog::Accepted){
-//        *resultargs = tdialog->getargs();
-//    }
-
-//    delete tdialog;
-//    return 0;
-//}
 
 bool FFprobeExtpid::writeToText(QString filename, QString text)
 {

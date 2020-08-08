@@ -41,7 +41,7 @@ RemoveDirectory::~RemoveDirectory()
 int RemoveDirectory::functionMain(int argc, QStringList *args)
 {
     if(argc < 1){
-        functionMessage(tr("Argument is missing"), MessageType::Error);
+        functionMessage(tr("The argument is missing."), MessageType::Error);
         return -1;
     }
 
@@ -72,18 +72,3 @@ int RemoveDirectory::functionMain(int argc, QStringList *args)
 
     return dirbool ? 0 : -1;
 }
-
-//int RemoveDirectory::launchSettingWidget(QStringList *currentargs, QStringList *resultargs \
-//                                         , QPoint parentpos, QString parentstylesheet)
-//{
-//    RemoveDirectoryDialog *tdialog = new RemoveDirectoryDialog(currentargs);
-//    tdialog->move(parentpos - tdialog->rect().center());
-//    tdialog->setStyleSheet(parentstylesheet);
-
-//    if(tdialog->exec() == QDialog::Accepted){
-//        *resultargs = tdialog->getargs();
-//    }
-
-//    delete tdialog;
-//    return 0;
-//}

@@ -22,10 +22,8 @@ TakeLinePlugin::TakeLinePlugin()
     pinfo.name = "TakeLine";
     pinfo.version = "1.00";
     pinfo.author = "karakirimu";
-    pinfo.tooltip = tr("This function can take line 'n'.\n"
-                       "arguments 1 : filename or string with '\\n'\n"
-                       "arguments 2 : line number(it starts 0)\n"
-                       "arguments 3 : return local variant name");
+    pinfo.tooltip = tr("Delete a specified line number from file or text.");
+
     pinfo.hassettingwidget = true;
     tlwidget = new TakeLineWidget();
     pinfo.settingwidget = tlwidget;
@@ -77,26 +75,11 @@ int TakeLinePlugin::functionMain(int argc, QStringList *args)
         PluginVariant local;
         applicationVariant(&local);
         if(local.localvar->contains(args->at(VAR))) local.localvar->insert(args->at(VAR), str);
-        functionMessage(tr("Take line ") + QString::number(targetline) + tr("."), MessageType::Success);
+        functionMessage(tr("Delete line ") + QString::number(targetline), MessageType::Success);
         return 0;
 
     }else{
-        functionMessage(tr("Can't take line."), MessageType::Error);
+        functionMessage(tr("Can't delete line."), MessageType::Error);
         return -1;
     }
 }
-
-//int TakeLinePlugin::launchSettingWidget(QStringList *currentargs, QStringList *resultargs \
-//                                        , QPoint parentpos, QString parentstylesheet)
-//{
-//    TakeLineDialog *tdialog = new TakeLineDialog(currentargs);
-//    tdialog->move(parentpos - tdialog->rect().center());
-//    tdialog->setStyleSheet(parentstylesheet);
-
-//    if(tdialog->exec() == QDialog::Accepted){
-//        *resultargs = tdialog->getargs();
-//    }
-
-//    delete tdialog;
-//    return 0;
-//}

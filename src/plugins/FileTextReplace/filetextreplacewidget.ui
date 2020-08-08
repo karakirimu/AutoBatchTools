@@ -61,21 +61,21 @@
       <item row="1" column="2">
        <widget class="QLineEdit" name="outputEdit">
         <property name="placeholderText">
-         <string>Output filepath ...</string>
+         <string>Output file path</string>
         </property>
        </widget>
       </item>
       <item row="0" column="2">
        <widget class="QLineEdit" name="inputEdit">
         <property name="placeholderText">
-         <string>Input filepath ...</string>
+         <string>Input file path</string>
         </property>
        </widget>
       </item>
       <item row="2" column="2">
        <widget class="QLineEdit" name="searchEdit">
         <property name="placeholderText">
-         <string>Regular expression ...</string>
+         <string>Regular expression</string>
         </property>
        </widget>
       </item>
@@ -96,7 +96,7 @@
       <item row="4" column="2">
        <widget class="QLineEdit" name="replaceEdit">
         <property name="placeholderText">
-         <string>Replace word ...</string>
+         <string>Replace word</string>
         </property>
        </widget>
       </item>

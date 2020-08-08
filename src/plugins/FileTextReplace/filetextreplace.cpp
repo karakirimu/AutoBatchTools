@@ -39,7 +39,7 @@ FileTextReplace::~FileTextReplace()
 int FileTextReplace::functionMain(int argc, QStringList *args)
 {
     if(argc < 4){
-        functionMessage(tr("Argument is missing"), MessageType::Error);
+        functionMessage(tr("The argument is missing."), MessageType::Error);
         return -1;
     }
 
@@ -66,21 +66,6 @@ int FileTextReplace::functionMain(int argc, QStringList *args)
 
     return 0;
 }
-
-//int FileTextReplace::launchSettingWidget(QStringList *currentargs, QStringList *resultargs
-//                                         , QPoint parentpos, QString parentstylesheet)
-//{
-//    FileTextReplaceDialog *tdialog = new FileTextReplaceDialog(currentargs);
-//    tdialog->move(parentpos - tdialog->rect().center());
-//    tdialog->setStyleSheet(parentstylesheet);
-
-//    if(tdialog->exec() == QDialog::Accepted){
-//        *resultargs = tdialog->getargs();
-//    }
-
-//    delete tdialog;
-//    return 0;
-//}
 
 bool FileTextReplace::writeToText(QString filename, QString text)
 {

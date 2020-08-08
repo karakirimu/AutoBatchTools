@@ -31,7 +31,7 @@
      <item row="0" column="1">
       <widget class="QLineEdit" name="input">
        <property name="placeholderText">
-        <string>ffprobe stdout text file here ...</string>
+        <string>ffprobe stdout text file</string>
        </property>
       </widget>
      </item>
@@ -45,7 +45,7 @@
      <item row="1" column="1">
       <widget class="QLineEdit" name="out_videopid">
        <property name="placeholderText">
-        <string>video pid text output file here ...</string>
+        <string>video pid text output file</string>
        </property>
       </widget>
      </item>
@@ -66,7 +66,7 @@
      <item row="2" column="1">
       <widget class="QLineEdit" name="out_audiopid">
        <property name="placeholderText">
-        <string>audio pid text output file here ...</string>
+        <string>audio pid text output file</string>
        </property>
       </widget>
      </item>

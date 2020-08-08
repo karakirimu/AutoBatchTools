@@ -38,9 +38,6 @@ public:
 
     int functionMain(int argc, QStringList *args);
 
-//    int launchSettingWidget(QStringList *currentargs, QStringList *resultargs \
-//                            , QPoint parentpos, QString parentstylesheet);
-
 private:
     bool writeToText(QString filename, QString text);
 
