@@ -20,6 +20,14 @@
 #include <QTranslator>
 #include "settingconstant.h"
 
+#ifdef QT_DEBUG
+constexpr const char *TR_PATH = "../../src/translation/abt_";
+constexpr const char *PL_TR_PATH = "../../src/translation/plugin";
+#else
+constexpr const char *TR_PATH = "translation/abt_";
+constexpr const char *PL_TR_PATH = "translation/plugin";
+#endif
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -27,32 +35,43 @@ int main(int argc, char *argv[])
     // set default text codec
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
-    SettingConstant sc;
-    QSettings settings( sc.OUTPUT_FILE_ABS, QSettings::IniFormat );
-    settings.beginGroup(sc.GROUP_ABS);
-
+    QSettings settings( SettingConstant().OUTPUT_FILE_ABS, QSettings::IniFormat );
+    settings.beginGroup(SettingConstant().GROUP_ABS);
     QLocale locale;
-    QString lang = settings.value(sc.ABS_LANGUAGE, locale.bcp47Name()).toString();
-    bool minimizewindow = settings.value(sc.ABS_MINIMIZE_WINDOW, false).toBool();
+    QString lang = settings.value(SettingConstant().ABS_LANGUAGE, locale.bcp47Name()).toString();
+    bool minimizewindow = settings.value(SettingConstant().ABS_MINIMIZE_WINDOW, false).toBool();
     settings.endGroup();
 
+    // Load tranlation
     QTranslator translator;
-#ifdef QT_DEBUG
-
-    bool success = false;
-    success = translator.load("../../src/translation/abt_" + lang);
-
-    qDebug() << "load : " << success << " Path : " << QDir::currentPath() << lang;
-
-#else
-    translator.load("translation/abt_" + lang);
-#endif
+    if(!translator.load(TR_PATH + lang)){
+        qDebug() << "Translation file load failed. " << " Path : " << QDir::currentPath() << lang;
+    }
     a.installTranslator(&translator);
+
+    // Load plugin translation
+    QDirIterator dit(PL_TR_PATH, QStringList() << ("*_" + lang + ".qm"), QDir::Files);
+    QList<QTranslator *> translatorlist;
+    while (dit.hasNext()){
+        QTranslator *trans = new QTranslator();
+        QString path = dit.next();
+        trans->load(path);
+        a.installTranslator(trans);
+        translatorlist.append(trans);
+    }
 
     MainScheduler w;
     if(!minimizewindow){
         w.show();
     }
 
-    return a.exec();
+    // Execution
+    int result = a.exec();
+
+    // Delete translator instance
+    for(QTranslator *t : translatorlist){
+        delete t;
+    }
+
+    return result;
 }
