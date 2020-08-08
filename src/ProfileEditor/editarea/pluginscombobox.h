@@ -51,6 +51,7 @@ private:
 
     //file list buffer
     QStringList buffer;
+    int autodetectcounter;
 
     //auto search settings
     QList<QStringList> searchsettings;

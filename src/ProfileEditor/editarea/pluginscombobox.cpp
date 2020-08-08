@@ -26,6 +26,7 @@ PluginsComboBox::PluginsComboBox(QObject *)
     searchsettings.append(QStringList() << "keyword" << "*.dll");
     searchsettings.append(QStringList() << "dir" << "./plugins");
 
+    autodetectcounter = 0;
 }
 
 PluginsComboBox::~PluginsComboBox()
@@ -42,10 +43,12 @@ void PluginsComboBox::reloadComboBoxItem()
     //clear lists
     this->clear();
     buffer.clear();
+    autodetectcounter = 0;
 
     //read all auto list items
     FileSearchLoader fsload;
     buffer = fsload.searchFromStrList(&searchsettings);
+    autodetectcounter = buffer.count();
 
     this->addItem(tr("Select plugin ..."));
 
@@ -196,10 +199,19 @@ void PluginsComboBox::pluginCheckAction(int index)
 QString PluginsComboBox::getCurrentExtraFile()
 {
     int selected = this->currentIndex();
-    if(selected > 0){
-        // -1 means avoid combobox default text.
-        return buffer.at(selected - 1);
+
+     // 0 means avoid combobox default text.
+    if(selected <= 0) return "";
+
+    int bufferindex = selected - 1;
+
+    QString filepath = buffer.at(bufferindex);
+
+    if(bufferindex < autodetectcounter){
+        // Convert absolute path to relative path
+        QDir dir(QDir::currentPath());
+        filepath = dir.relativeFilePath(filepath);
     }
 
-    return "";
+    return filepath;
 }
