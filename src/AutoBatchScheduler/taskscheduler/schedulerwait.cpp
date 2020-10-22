@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016-2020 karakirimu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include "schedulerwait.h"
 
 SchedulerWait::SchedulerWait(QObject *parent) : QObject(parent)
@@ -11,44 +27,45 @@ SchedulerWait::~SchedulerWait()
     delete builder;
 }
 
-int SchedulerWait::getSelectedxmlindex() const
-{
-    return selectedxmlindex;
-}
+//int SchedulerWait::getSelectedxmlindex() const
+//{
+//    return selectedxmlindex;
+//}
 
-void SchedulerWait::setSelectedxmlindex(QString objectname)
-{
-    selectedxmlindex = getStartupXmlIndex(objectname);
-}
+//void SchedulerWait::setSelectedxmlindex(QString objectname)
+//{
+//    selectedxmlindex = getStartupXmlIndex(objectname);
+//}
 
-QDateTime SchedulerWait::getSchedate() const
-{
-    return schedate;
-}
+//QDateTime SchedulerWait::getSchedate() const
+//{
+//    return schedate;
+//}
 
-bool SchedulerWait::getRunning() const
-{
-    return running;
-}
+//bool SchedulerWait::getRunning() const
+//{
+//    return running;
+//}
 
-qint64 SchedulerWait::getRefreshms() const
-{
-    return refreshms;
-}
+//qint64 SchedulerWait::getRefreshms() const
+//{
+//    return refreshms;
+//}
 
-void SchedulerWait::setRefreshms(const qint64 &value)
-{
-    refreshms = value;
-}
+//void SchedulerWait::setRefreshms(const qint64 &value)
+//{
+//    refreshms = value;
+//}
 
-void SchedulerWait::setMutex(QMutex *value)
-{
-    mutex = value;
-}
+//void SchedulerWait::setMutex(QMutex *value)
+//{
+//    mutex = value;
+//}
 
 qint64 SchedulerWait::getLestSeconds(QString scheduledDateTime)
 {
-    QDateTime scheduled = QDateTime::fromString(scheduledDateTime, "yyyy/MM/dd HH:mm:ss");
+    QDateTime scheduled \
+            = QDateTime::fromString(scheduledDateTime, "yyyy/MM/dd HH:mm:ss");
     return QDateTime::currentDateTime().secsTo(scheduled);
 }
 
@@ -82,32 +99,62 @@ QDateTime SchedulerWait::init_GetScheduledTimeFromXml(int itemid)
     QList<QStringList> *list = new QList<QStringList>();
     QDateTime time;
 
-    if(builder->readItem(itemid, list)){
-        if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"){
-            switch(((QString)list->at(StartupXmlBuilder::SELECTEDTYPE).at(1)).toInt()){
-            case StartupXmlBuilder::ONESHOT:
-                time = QDateTime::fromString(list->at(StartupXmlBuilder::SC_DATETIME).at(1)
-                                            , "yyyy/MM/dd HH:mm:ss");
-                loopschedule = false;
-                break;
+//    if(builder->readItem(itemid, list)){
+//        if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"){
+//            switch(((QString)list->at(StartupXmlBuilder::SELECTEDTYPE).at(1)).toInt()){
+//            case StartupXmlBuilder::ONESHOT:
+//                time = QDateTime::fromString(list->at(StartupXmlBuilder::SC_DATETIME).at(1)
+//                                            , "yyyy/MM/dd HH:mm:ss");
+//                loopschedule = false;
+//                break;
 
-            case StartupXmlBuilder::WEEKLOOP:
-                time = getNextDateTime(getNextDaysCount(list->at(StartupXmlBuilder::SC_DAY).at(1)
+//            case StartupXmlBuilder::WEEKLOOP:
+//                time = getNextDateTime(getNextDaysCount(list->at(StartupXmlBuilder::SC_DAY).at(1)
+//                                                        , list->at(StartupXmlBuilder::SC_TIME).at(1))
+//                                                        , list->at(StartupXmlBuilder::SC_TIME).at(1));
+//                loopschedule = true;
+//                break;
+
+//            case StartupXmlBuilder::TIMELOOP:
+//                time = QDateTime::currentDateTime() \
+//                        .addSecs((static_cast<QString>(list->at(5).at(1))).toInt());
+//                loopschedule = true;
+//                break;
+
+//            default:
+//                break;
+//            }
+//        }
+//    }
+
+    if(!builder->readItem(itemid, list)) return time;
+
+    if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"){
+        switch((static_cast<QString>(list->at(StartupXmlBuilder::SELECTEDTYPE).at(1))).toInt()){
+        case StartupXmlBuilder::ONESHOT:
+            time = QDateTime::fromString(list->at(StartupXmlBuilder::SC_DATETIME).at(1)
+                                             , "yyyy/MM/dd HH:mm:ss");
+            loopschedule = false;
+            break;
+
+        case StartupXmlBuilder::WEEKLOOP:
+            time = getNextDateTime(getNextDaysCount(list->at(StartupXmlBuilder::SC_DAY).at(1)
                                                         , list->at(StartupXmlBuilder::SC_TIME).at(1))
-                                                        , list->at(StartupXmlBuilder::SC_TIME).at(1));
-                loopschedule = true;
-                break;
+                                       , list->at(StartupXmlBuilder::SC_TIME).at(1));
+            loopschedule = true;
+            break;
 
-            case StartupXmlBuilder::TIMELOOP:
-                time = QDateTime::currentDateTime().addSecs(((QString)list->at(5).at(1)).toInt());
-                loopschedule = true;
-                break;
+        case StartupXmlBuilder::TIMELOOP:
+            time = QDateTime::currentDateTime() \
+                        .addSecs((static_cast<QString>(list->at(5).at(1))).toInt());
+            loopschedule = true;
+            break;
 
-            default:
-                break;
-            }
+        default:
+            break;
         }
     }
+
     qDebug() << "select num" << list->at(StartupXmlBuilder::SELECTEDTYPE).at(1);
     qDebug() << "SchedulerCalc::init_GetScheduledTimeFromXml(int itemid) : " << time;
     return time;
@@ -120,13 +167,14 @@ QDateTime SchedulerWait::getNextTimeFromXml(int itemid, QDateTime current)
 
     if(builder->readItem(itemid, list)){
         if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"
-                && ((QString)list->at(3).at(1)).toInt() == 2){
-            time = current.addSecs(((QString)list->at(5).at(1)).toInt());
+            && (static_cast<QString>(list->at(3).at(1))).toInt() == 2){
+            time = current.addSecs((static_cast<QString>(list->at(5).at(1))).toInt());
         }
         if(list->at(StartupXmlBuilder::VALID).at(1) == "yes"
-                && ((QString)list->at(3).at(1)).toInt() == 1){
-            time = getNextDateTime(getNextDaysCount(list->at(7).at(1), list->at(6).at(1))
-                                   , list->at(6).at(1));
+            && (static_cast<QString>(list->at(3).at(1))).toInt() == 1){
+            time = getNextDateTime(getNextDaysCount(list->at(7).at(1)
+                                                    ,list->at(6).at(1))
+                                                    , list->at(6).at(1));
         }
     }
 
@@ -198,8 +246,10 @@ void SchedulerWait::start()
 
     while(running){
         lesttime = getLestSeconds(scheduledDateTime);
-        if(lesttime > 0){
-            QThread::msleep(refreshms);
+        if(lesttime > 3000){
+            QThread::msleep(slowRefreshTime);
+        }else if(lesttime > 0){
+            QThread::msleep(fastRefreshTime);
         }else{
             mutex->lock();
             emit encounterScheduledTime();
@@ -258,7 +308,7 @@ int SchedulerWait::getNextDaysCount(QString datecode, QString timedata)
     }
 
     //add weeks
-    result += (((QString)datecode.at(0)).toInt() - 1) * 7;
+    result += ((static_cast<QString>(datecode.at(0))).toInt() - 1) * 7;
 
     return result;
 }

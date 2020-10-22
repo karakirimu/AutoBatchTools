@@ -31,7 +31,7 @@ public:
     ~EntryScheduler();
 
     bool isStarted();
-    void setRefreshTime(int sec); //preset
+    void setRefreshTime(ulong milliseconds); //preset
 //    void setXmlItemId(int itemid); //preset
     void setMutex(QMutex *mutex); //preset
 

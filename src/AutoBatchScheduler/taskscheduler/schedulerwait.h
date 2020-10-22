@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef SCHEDULERCALC_H
-#define SCHEDULERCALC_H
+#ifndef SCHEDULERWAIT_H
+#define SCHEDULERWAIT_H
 
 #include <../variantconverter/variantconverter.h>
 #include <QObject>
@@ -33,17 +33,19 @@ public:
     explicit SchedulerWait(QObject *parent = nullptr);
     ~SchedulerWait();
 
-    void setMutex(QMutex *value); //preset
+    inline void setMutex(QMutex *value){ mutex = value; }
 
-    qint64 getRefreshms() const;
-    void setRefreshms(const qint64 &value);//preset
+//    inline ulong getRefreshms() const { return slowRefreshTime; }
+    inline void setRefreshms(const ulong &value){ slowRefreshTime = value; }
 
-    bool getRunning() const;
+    inline bool getRunning() const { return running; }
 
-    QDateTime getSchedate() const;
+    inline QDateTime getSchedate() const { return schedate; }
 
-    int getSelectedxmlindex() const;
-    void setSelectedxmlindex(QString objectname);//preset
+    inline int getSelectedxmlindex() const { return selectedxmlindex; }
+    inline void setSelectedxmlindex(QString objectname){
+        selectedxmlindex = getStartupXmlIndex(objectname);
+    }
 
     enum{FINISHED,EXPIRED};
 signals:
@@ -81,7 +83,8 @@ private:
     StartupXmlBuilder *builder;
 
     //variant for manage
-    qint64 refreshms = 1000;
+    ulong slowRefreshTime = 1000;
+    const ulong fastRefreshTime = 100;
     int selectedxmlindex = -1;
     QDateTime schedate;
     QMutex *mutex;
@@ -92,4 +95,4 @@ private:
     bool loopschedule = false;
 };
 
-#endif // SCHEDULERCALC_H
+#endif // SCHEDULERWAIT_H
