@@ -156,16 +156,16 @@ bool MultiTaskP::processAliveCheck(QString objectname)
 
 QString MultiTaskP::generateRandom(int length)
 {
-    QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.");
+    QString characters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.");
 
     //shuffle characters
-    int pos = possibleCharacters.size() - 1;
+    int pos = characters.size() - 1;
     int random;
     while(pos > 1){
-        random = static_cast<int>(QRandomGenerator::global()->generate()) % pos;
-        QChar tmp = possibleCharacters.at(random);
-        possibleCharacters.replace(random, 1, possibleCharacters.at(pos));
-        possibleCharacters.replace(pos, 1, tmp);
+        random = abs(static_cast<int>(QRandomGenerator::global()->generate()) % pos);
+        QChar tmp = characters.at(random);
+        characters.replace(random, 1, characters.at(pos));
+        characters.replace(pos, 1, tmp);
         pos--;
     }
 
@@ -173,8 +173,8 @@ QString MultiTaskP::generateRandom(int length)
     QString randomString;
     for(int i=0; i < length; ++i)
     {
-        int index = static_cast<int>(QRandomGenerator::global()->generate()) % length;
-        QChar nextChar = possibleCharacters.at(index);
+        int index = abs(static_cast<int>(QRandomGenerator::global()->generate()) % length);
+        QChar nextChar = characters.at(index);
         randomString.append(nextChar);
     }
     return randomString;
