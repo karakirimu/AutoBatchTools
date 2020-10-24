@@ -23,9 +23,9 @@ MultiTaskP::MultiTaskP(QObject *parent)
     basemutex = new QMutex();
 
     //time based seed set
-    QTime *ti = new QTime();
+//    QTime *ti = new QTime();
 //    qsrand(static_cast<uint>(ti->currentTime().msecsSinceStartOfDay()) ^ 123456789);
-    delete ti;
+//    delete ti;
 }
 
 MultiTaskP::~MultiTaskP()
@@ -57,22 +57,34 @@ void MultiTaskP::addTask(QString objectname, QString processfile)
     //new task set
     RunTaskSignalBinder *et = new RunTaskSignalBinder();
 
+//    connect(et, &RunTaskSignalBinder::processInitCount, this, &MultiTaskP::receiveInitCount);
+//    connect(et, &RunTaskSignalBinder::processCurrent, this, &MultiTaskP::receiveCurrent);
+//    connect(et, &RunTaskSignalBinder::processError, this, &MultiTaskP::receiveError);
+//    connect(et, &RunTaskSignalBinder::processErrorText, this, &MultiTaskP::receiveErrorText);
+//    connect(et, &RunTaskSignalBinder::processMessage, this, &MultiTaskP::receiveMessage);
+//    connect(et, &RunTaskSignalBinder::processStarted, this, &MultiTaskP::receiveStarted);
+//    connect(et, &RunTaskSignalBinder::processPaused, this, &MultiTaskP::receivePaused);
+//    connect(et, &RunTaskSignalBinder::processStopped, this, &MultiTaskP::receiveStopped);
+//    connect(et, &RunTaskSignalBinder::processEnd, this, &MultiTaskP::receiveEnd);
+
     //connect message
-    connect(et, &RunTaskSignalBinder::processInitCount, this, &MultiTaskP::receiveInitCount);
-    connect(et, &RunTaskSignalBinder::processCurrent, this, &MultiTaskP::receiveCurrent);
-    connect(et, &RunTaskSignalBinder::processError, this, &MultiTaskP::receiveError);
-    connect(et, &RunTaskSignalBinder::processErrorText, this, &MultiTaskP::receiveErrorText);
-    connect(et, &RunTaskSignalBinder::processMessage, this, &MultiTaskP::receiveMessage);
-    connect(et, &RunTaskSignalBinder::processStarted, this, &MultiTaskP::receiveStarted);
-    connect(et, &RunTaskSignalBinder::processPaused, this, &MultiTaskP::receivePaused);
-    connect(et, &RunTaskSignalBinder::processStopped, this, &MultiTaskP::receiveStopped);
-    connect(et, &RunTaskSignalBinder::processEnd, this, &MultiTaskP::receiveEnd);
+    Executor *ec = et->getExecutor();
+    connect(ec, &Executor::processStateCount, this, &MultiTaskP::receiveInitCount);
+    connect(ec, &Executor::processStateUpdate, this, &MultiTaskP::receiveCurrent);
+    connect(ec, &Executor::processCheckError, this, &MultiTaskP::receiveErrorText);
+    connect(ec, &Executor::processMessage, this, &MultiTaskP::receiveMessage);
+
+    connect(ec, &Executor::processStarted, this, &MultiTaskP::receiveStarted);
+    connect(ec, &Executor::processPaused, this, &MultiTaskP::receivePaused);
+    connect(ec, &Executor::processStopped, this, &MultiTaskP::receiveStopped);
+    connect(ec, &Executor::processEnded, this, &MultiTaskP::receiveEnd);
 
     //set task filename
     et->setFile(processfile);
 
     //set same objectname
     et->setObjectName(objectname);
+    ec->setObjectName(objectname);
 
     //set shared mutex (for secure running)
     et->setMutex(basemutex);
@@ -92,16 +104,27 @@ void MultiTaskP::removeTask(QString objectname)
     //stop process
     et->stop();
 
+//    disconnect(et, &RunTaskSignalBinder::processInitCount, this, &MultiTaskP::receiveInitCount);
+//    disconnect(et, &RunTaskSignalBinder::processCurrent, this, &MultiTaskP::receiveCurrent);
+//    disconnect(et, &RunTaskSignalBinder::processError, this, &MultiTaskP::receiveError);
+//    disconnect(et, &RunTaskSignalBinder::processErrorText, this, &MultiTaskP::receiveErrorText);
+//    disconnect(et, &RunTaskSignalBinder::processMessage, this, &MultiTaskP::receiveMessage);
+//    disconnect(et, &RunTaskSignalBinder::processStarted, this, &MultiTaskP::receiveStarted);
+//    disconnect(et, &RunTaskSignalBinder::processPaused, this, &MultiTaskP::receivePaused);
+//    disconnect(et, &RunTaskSignalBinder::processStopped, this, &MultiTaskP::receiveStopped);
+//    disconnect(et, &RunTaskSignalBinder::processEnd, this, &MultiTaskP::receiveEnd);
+
     //disconnect child object
-    disconnect(et, &RunTaskSignalBinder::processInitCount, this, &MultiTaskP::receiveInitCount);
-    disconnect(et, &RunTaskSignalBinder::processCurrent, this, &MultiTaskP::receiveCurrent);
-    disconnect(et, &RunTaskSignalBinder::processError, this, &MultiTaskP::receiveError);
-    disconnect(et, &RunTaskSignalBinder::processErrorText, this, &MultiTaskP::receiveErrorText);
-    disconnect(et, &RunTaskSignalBinder::processMessage, this, &MultiTaskP::receiveMessage);
-    disconnect(et, &RunTaskSignalBinder::processStarted, this, &MultiTaskP::receiveStarted);
-    disconnect(et, &RunTaskSignalBinder::processPaused, this, &MultiTaskP::receivePaused);
-    disconnect(et, &RunTaskSignalBinder::processStopped, this, &MultiTaskP::receiveStopped);
-    disconnect(et, &RunTaskSignalBinder::processEnd, this, &MultiTaskP::receiveEnd);
+    Executor *ec = et->getExecutor();
+    disconnect(ec, &Executor::processStateCount, this, &MultiTaskP::receiveInitCount);
+    disconnect(ec, &Executor::processStateUpdate, this, &MultiTaskP::receiveCurrent);
+    disconnect(ec, &Executor::processCheckError, this, &MultiTaskP::receiveErrorText);
+    disconnect(ec, &Executor::processMessage, this, &MultiTaskP::receiveMessage);
+
+    disconnect(ec, &Executor::processStarted, this, &MultiTaskP::receiveStarted);
+    disconnect(ec, &Executor::processPaused, this, &MultiTaskP::receivePaused);
+    disconnect(ec, &Executor::processStopped, this, &MultiTaskP::receiveStopped);
+    disconnect(ec, &Executor::processEnded, this, &MultiTaskP::receiveEnd);
 
     //delete register
     task->remove(objectname);

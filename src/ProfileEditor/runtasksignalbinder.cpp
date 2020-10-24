@@ -33,15 +33,15 @@ RunTaskSignalBinder::RunTaskSignalBinder(QObject *parent)
     connect(executor, &Executor::processStopped, worker, &QThread::quit);
 
     //connect executor
-    connect(executor, &Executor::processStarted, this, &RunTaskSignalBinder::receiveStarted);
-    connect(executor, &Executor::processEnded, this, &RunTaskSignalBinder::receiveEnd);
-    connect(executor, &Executor::processStopped, this, &RunTaskSignalBinder::receiveStopped);
-    connect(executor, &Executor::processPaused, this, &RunTaskSignalBinder::receivePaused);
+//    connect(executor, &Executor::processStarted, this, &RunTaskSignalBinder::receiveStarted);
+//    connect(executor, &Executor::processEnded, this, &RunTaskSignalBinder::receiveEnd);
+//    connect(executor, &Executor::processStopped, this, &RunTaskSignalBinder::receiveStopped);
+//    connect(executor, &Executor::processPaused, this, &RunTaskSignalBinder::receivePaused);
 
-    connect(executor, &Executor::processStateUpdate, this, &RunTaskSignalBinder::receiveCurrent);
-    connect(executor, &Executor::processStateCount, this, &RunTaskSignalBinder::receiveInitCount);
-    connect(executor, &Executor::processCheckError, this, &RunTaskSignalBinder::receiveErrorText);
-    connect(executor, &Executor::processMessage, this, &RunTaskSignalBinder::receiveMessage);
+//    connect(executor, &Executor::processStateUpdate, this, &RunTaskSignalBinder::receiveCurrent);
+//    connect(executor, &Executor::processStateCount, this, &RunTaskSignalBinder::receiveInitCount);
+//    connect(executor, &Executor::processCheckError, this, &RunTaskSignalBinder::receiveErrorText);
+//    connect(executor, &Executor::processMessage, this, &RunTaskSignalBinder::receiveMessage);
 
     //move to thread
     executor->moveToThread(worker);
@@ -77,6 +77,48 @@ void RunTaskSignalBinder::setFile(QString filepath)
     qDebug() << "RunTaskSignalBinder:: File Changed :" << filepath;
     executor->setProcessFile(filepath);
 }
+
+//void RunTaskSignalBinder::setConnect(MultiTaskP *task)
+//{
+//    connect(executor, &Executor::processStateCount
+//               , task, &MultiTaskP::receiveInitCount);
+//    connect(executor, &Executor::processStateUpdate
+//               , task, &MultiTaskP::receiveCurrent);
+//    connect(executor, &Executor::processCheckError
+//               , task, &MultiTaskP::receiveErrorText);
+//    connect(executor, &Executor::processMessage
+//               , task, &MultiTaskP::receiveMessage);
+
+//    connect(executor, &Executor::processStarted
+//               , task, &MultiTaskP::receiveStarted);
+//    connect(executor, &Executor::processPaused
+//               , task, &MultiTaskP::receivePaused);
+//    connect(executor, &Executor::processStopped
+//               , task, &MultiTaskP::receiveStopped);
+//    connect(executor, &Executor::processEnded
+//               , task, &MultiTaskP::receiveEnd);
+//}
+
+//void RunTaskSignalBinder::setDisconnect(MultiTaskP *task)
+//{
+//    disconnect(executor, &Executor::processStateCount
+//               , task, &MultiTaskP::receiveInitCount);
+//    disconnect(executor, &Executor::processStateUpdate
+//               , task, &MultiTaskP::receiveCurrent);
+//    disconnect(executor, &Executor::processCheckError
+//               , task, &MultiTaskP::receiveErrorText);
+//    disconnect(executor, &Executor::processMessage
+//               , task, &MultiTaskP::receiveMessage);
+
+//    disconnect(executor, &Executor::processStarted
+//               , task, &MultiTaskP::receiveStarted);
+//    disconnect(executor, &Executor::processPaused
+//               , task, &MultiTaskP::receivePaused);
+//    disconnect(executor, &Executor::processStopped
+//               , task, &MultiTaskP::receiveStopped);
+//    disconnect(executor, &Executor::processEnded
+//               , task, &MultiTaskP::receiveEnd);
+//}
 
 void RunTaskSignalBinder::sendInput(QString message)
 {
