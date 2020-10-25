@@ -18,7 +18,6 @@
 #define MULTITASK_H
 
 #include <QObject>
-#include <QTime>
 #include <entrytask.h>
 #include <QRandomGenerator>
 

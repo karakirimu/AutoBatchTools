@@ -59,21 +59,33 @@ void MultiTask::addTask(QString objectname, QString processfile)
     EntryTask *et = new EntryTask();
 
     //connect message
-    connect(et, &EntryTask::processInitCount, this, &MultiTask::receiveInitCount);
-    connect(et, &EntryTask::processCurrent, this, &MultiTask::receiveCurrent);
-    connect(et, &EntryTask::processError, this, &MultiTask::receiveError);
-    connect(et, &EntryTask::processErrorText, this, &MultiTask::receiveErrorText);
-    connect(et, &EntryTask::processMessage, this, &MultiTask::receiveMessage);
-    connect(et, &EntryTask::processStarted, this, &MultiTask::receiveStarted);
-    connect(et, &EntryTask::processPaused, this, &MultiTask::receivePaused);
-    connect(et, &EntryTask::processStopped, this, &MultiTask::receiveStopped);
-    connect(et, &EntryTask::processEnd, this, &MultiTask::receiveEnd);
+//    connect(et, &EntryTask::processInitCount, this, &MultiTask::receiveInitCount);
+//    connect(et, &EntryTask::processCurrent, this, &MultiTask::receiveCurrent);
+//    connect(et, &EntryTask::processError, this, &MultiTask::receiveError);
+//    connect(et, &EntryTask::processErrorText, this, &MultiTask::receiveErrorText);
+//    connect(et, &EntryTask::processMessage, this, &MultiTask::receiveMessage);
+//    connect(et, &EntryTask::processStarted, this, &MultiTask::receiveStarted);
+//    connect(et, &EntryTask::processPaused, this, &MultiTask::receivePaused);
+//    connect(et, &EntryTask::processStopped, this, &MultiTask::receiveStopped);
+//    connect(et, &EntryTask::processEnd, this, &MultiTask::receiveEnd);
+
+    //connect child object
+    Executor *ec = et->getExecutor();
+    connect(ec, &Executor::processStateCount, this, &MultiTask::receiveInitCount);
+    connect(ec, &Executor::processStateUpdate, this, &MultiTask::receiveCurrent);
+    connect(ec, &Executor::processCheckError, this, &MultiTask::receiveErrorText);
+    connect(ec, &Executor::processMessage, this, &MultiTask::receiveMessage);
+
+    connect(ec, &Executor::processStarted, this, &MultiTask::receiveStarted);
+    connect(ec, &Executor::processPaused, this, &MultiTask::receivePaused);
+    connect(ec, &Executor::processStopped, this, &MultiTask::receiveStopped);
+    connect(ec, &Executor::processEnded, this, &MultiTask::receiveEnd);
 
     //set task filename
     et->setFile(processfile);
 
     //set same objectname
-    et->setObjectName(objectname);
+    ec->setObjectName(objectname);
 
     //set shared mutex (for secure running)
     et->setMutex(basemutex);
@@ -94,15 +106,27 @@ void MultiTask::removeTask(QString objectname)
     et->stop();
 
     //disconnect child object
-    disconnect(et, &EntryTask::processInitCount, this, &MultiTask::receiveInitCount);
-    disconnect(et, &EntryTask::processCurrent, this, &MultiTask::receiveCurrent);
-    disconnect(et, &EntryTask::processError, this, &MultiTask::receiveError);
-    disconnect(et, &EntryTask::processErrorText, this, &MultiTask::receiveErrorText);
-    disconnect(et, &EntryTask::processMessage, this, &MultiTask::receiveMessage);
-    disconnect(et, &EntryTask::processStarted, this, &MultiTask::receiveStarted);
-    disconnect(et, &EntryTask::processPaused, this, &MultiTask::receivePaused);
-    disconnect(et, &EntryTask::processStopped, this, &MultiTask::receiveStopped);
-    disconnect(et, &EntryTask::processEnd, this, &MultiTask::receiveEnd);
+//    disconnect(et, &EntryTask::processInitCount, this, &MultiTask::receiveInitCount);
+//    disconnect(et, &EntryTask::processCurrent, this, &MultiTask::receiveCurrent);
+//    disconnect(et, &EntryTask::processError, this, &MultiTask::receiveError);
+//    disconnect(et, &EntryTask::processErrorText, this, &MultiTask::receiveErrorText);
+//    disconnect(et, &EntryTask::processMessage, this, &MultiTask::receiveMessage);
+//    disconnect(et, &EntryTask::processStarted, this, &MultiTask::receiveStarted);
+//    disconnect(et, &EntryTask::processPaused, this, &MultiTask::receivePaused);
+//    disconnect(et, &EntryTask::processStopped, this, &MultiTask::receiveStopped);
+//    disconnect(et, &EntryTask::processEnd, this, &MultiTask::receiveEnd);
+
+    //disconnect child object
+    const Executor *ec = et->getExecutor();
+    disconnect(ec, &Executor::processStateCount, this, &MultiTask::receiveInitCount);
+    disconnect(ec, &Executor::processStateUpdate, this, &MultiTask::receiveCurrent);
+    disconnect(ec, &Executor::processCheckError, this, &MultiTask::receiveErrorText);
+    disconnect(ec, &Executor::processMessage, this, &MultiTask::receiveMessage);
+
+    disconnect(ec, &Executor::processStarted, this, &MultiTask::receiveStarted);
+    disconnect(ec, &Executor::processPaused, this, &MultiTask::receivePaused);
+    disconnect(ec, &Executor::processStopped, this, &MultiTask::receiveStopped);
+    disconnect(ec, &Executor::processEnded, this, &MultiTask::receiveEnd);
 
     //delete register
     task->remove(objectname);
