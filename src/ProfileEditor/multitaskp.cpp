@@ -68,7 +68,7 @@ void MultiTaskP::addTask(QString objectname, QString processfile)
     et->setFile(processfile);
 
     //set same objectname
-//    et->setObjectName(objectname);
+    et->setObjectName(objectname);
     ec->setObjectName(objectname);
 
     //set shared mutex (for secure running)
