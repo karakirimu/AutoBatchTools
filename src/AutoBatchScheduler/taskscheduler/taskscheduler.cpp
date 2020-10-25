@@ -62,26 +62,43 @@ void TaskScheduler::addTask(QString objectname, QString processfile)
     EntryScheduler *es = new EntryScheduler();
 
     //connect child object
-    connect(et, &EntryTask::processInitCount, this, &TaskScheduler::receiveInitCount);
-    connect(et, &EntryTask::processCurrent, this, &TaskScheduler::receiveCurrent);
-    connect(et, &EntryTask::processError, this, &TaskScheduler::receiveError);
-    connect(et, &EntryTask::processErrorText, this, &TaskScheduler::receiveErrorText);
-    connect(et, &EntryTask::processMessage, this, &TaskScheduler::receiveMessage);
-    connect(et, &EntryTask::processStarted, this, &TaskScheduler::receiveStarted);
-    connect(et, &EntryTask::processPaused, this, &TaskScheduler::receivePaused);
-    connect(et, &EntryTask::processStopped, this, &TaskScheduler::receiveStopped);
-    connect(et, &EntryTask::processEnd, this, &TaskScheduler::receiveEnd);
+//    connect(et, &EntryTask::processInitCount, this, &TaskScheduler::receiveInitCount);
+//    connect(et, &EntryTask::processCurrent, this, &TaskScheduler::receiveCurrent);
+//    connect(et, &EntryTask::processError, this, &TaskScheduler::receiveError);
+//    connect(et, &EntryTask::processErrorText, this, &TaskScheduler::receiveErrorText);
+//    connect(et, &EntryTask::processMessage, this, &TaskScheduler::receiveMessage);
+//    connect(et, &EntryTask::processStarted, this, &TaskScheduler::receiveStarted);
+//    connect(et, &EntryTask::processPaused, this, &TaskScheduler::receivePaused);
+//    connect(et, &EntryTask::processStopped, this, &TaskScheduler::receiveStopped);
+//    connect(et, &EntryTask::processEnd, this, &TaskScheduler::receiveEnd);
+    Executor *ec = et->getExecutor();
+    connect(ec, &Executor::processStateCount, this, &TaskScheduler::receiveInitCount);
+    connect(ec, &Executor::processStateUpdate, this, &TaskScheduler::receiveCurrent);
+    connect(ec, &Executor::processCheckError, this, &TaskScheduler::receiveErrorText);
+    connect(ec, &Executor::processMessage, this, &TaskScheduler::receiveMessage);
 
-    connect(es, &EntryScheduler::timerStarted, this, &TaskScheduler::receiveTimerStarted);
-    connect(es, &EntryScheduler::timerFinished, this, &TaskScheduler::receiveTimerFinished);
-    connect(es, &EntryScheduler::encounteredScheduledTime, this, &TaskScheduler::receiveEncounter);
+    connect(ec, &Executor::processStarted, this, &TaskScheduler::receiveStarted);
+    connect(ec, &Executor::processPaused, this, &TaskScheduler::receivePaused);
+    connect(ec, &Executor::processStopped, this, &TaskScheduler::receiveStopped);
+    connect(ec, &Executor::processEnded, this, &TaskScheduler::receiveEnd);
+
+
+//    connect(es, &EntryScheduler::timerStarted, this, &TaskScheduler::receiveTimerStarted);
+//    connect(es, &EntryScheduler::timerFinished, this, &TaskScheduler::receiveTimerFinished);
+//    connect(es, &EntryScheduler::encounteredScheduledTime, this, &TaskScheduler::receiveEncounter);
+    SchedulerWait *sw = es->getSchedulerWait();
+    connect(sw, &SchedulerWait::timerStarted, this, &TaskScheduler::receiveTimerStarted);
+    connect(sw, &SchedulerWait::timerFinished, this, &TaskScheduler::receiveTimerFinished);
+    connect(sw, &SchedulerWait::encounterScheduledTime, this, &TaskScheduler::receiveEncounter);
 
     //set task filename
     et->setFile(processfile);
 
     //set same objectname
     et->setObjectName(objectname);
+    ec->setObjectName(objectname);
     es->setObjectName(objectname);
+    sw->setObjectName(objectname);
 
     //set shared mutex
     es->setMutex(basemutex);
@@ -107,19 +124,35 @@ void TaskScheduler::removeTask(QString objectname)
         es->stop();
 
         //disconnect child object
-        disconnect(et, &EntryTask::processInitCount, this, &TaskScheduler::receiveInitCount);
-        disconnect(et, &EntryTask::processCurrent, this, &TaskScheduler::receiveCurrent);
-        disconnect(et, &EntryTask::processError, this, &TaskScheduler::receiveError);
-        disconnect(et, &EntryTask::processErrorText, this, &TaskScheduler::receiveErrorText);
-        disconnect(et, &EntryTask::processMessage, this, &TaskScheduler::receiveMessage);
-        disconnect(et, &EntryTask::processStarted, this, &TaskScheduler::receiveStarted);
-        disconnect(et, &EntryTask::processPaused, this, &TaskScheduler::receivePaused);
-        disconnect(et, &EntryTask::processStopped, this, &TaskScheduler::receiveStopped);
-        disconnect(et, &EntryTask::processEnd, this, &TaskScheduler::receiveEnd);
+//        disconnect(et, &EntryTask::processInitCount, this, &TaskScheduler::receiveInitCount);
+//        disconnect(et, &EntryTask::processCurrent, this, &TaskScheduler::receiveCurrent);
+//        disconnect(et, &EntryTask::processError, this, &TaskScheduler::receiveError);
+//        disconnect(et, &EntryTask::processErrorText, this, &TaskScheduler::receiveErrorText);
+//        disconnect(et, &EntryTask::processMessage, this, &TaskScheduler::receiveMessage);
+//        disconnect(et, &EntryTask::processStarted, this, &TaskScheduler::receiveStarted);
+//        disconnect(et, &EntryTask::processPaused, this, &TaskScheduler::receivePaused);
+//        disconnect(et, &EntryTask::processStopped, this, &TaskScheduler::receiveStopped);
+//        disconnect(et, &EntryTask::processEnd, this, &TaskScheduler::receiveEnd);
 
-        disconnect(es, &EntryScheduler::timerStarted, this, &TaskScheduler::receiveTimerStarted);
-        disconnect(es, &EntryScheduler::timerFinished, this, &TaskScheduler::receiveTimerFinished);
-        disconnect(es, &EntryScheduler::encounteredScheduledTime, this, &TaskScheduler::receiveEncounter);
+        const Executor *ec = et->getExecutor();
+        disconnect(ec, &Executor::processStateCount, this, &TaskScheduler::receiveInitCount);
+        disconnect(ec, &Executor::processStateUpdate, this, &TaskScheduler::receiveCurrent);
+        disconnect(ec, &Executor::processCheckError, this, &TaskScheduler::receiveErrorText);
+        disconnect(ec, &Executor::processMessage, this, &TaskScheduler::receiveMessage);
+
+        disconnect(ec, &Executor::processStarted, this, &TaskScheduler::receiveStarted);
+        disconnect(ec, &Executor::processPaused, this, &TaskScheduler::receivePaused);
+        disconnect(ec, &Executor::processStopped, this, &TaskScheduler::receiveStopped);
+        disconnect(ec, &Executor::processEnded, this, &TaskScheduler::receiveEnd);
+
+//        disconnect(es, &EntryScheduler::timerStarted, this, &TaskScheduler::receiveTimerStarted);
+//        disconnect(es, &EntryScheduler::timerFinished, this, &TaskScheduler::receiveTimerFinished);
+//        disconnect(es, &EntryScheduler::encounteredScheduledTime, this, &TaskScheduler::receiveEncounter);
+
+        const SchedulerWait *sw = es->getSchedulerWait();
+        disconnect(sw, &SchedulerWait::timerStarted, this, &TaskScheduler::receiveTimerStarted);
+        disconnect(sw, &SchedulerWait::timerFinished, this, &TaskScheduler::receiveTimerFinished);
+        disconnect(sw, &SchedulerWait::encounterScheduledTime, this, &TaskScheduler::receiveEncounter);
 
         delete et;
         delete es;

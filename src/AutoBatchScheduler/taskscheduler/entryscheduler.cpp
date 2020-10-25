@@ -26,9 +26,9 @@ EntryScheduler::EntryScheduler(QObject *parent) : QObject(parent)
     //connect thread
     connect(worker, &QThread::started, swait, &SchedulerWait::start);
 
-    connect(swait, &SchedulerWait::timerStarted, this, &EntryScheduler::receiveStarted);
-    connect(swait, &SchedulerWait::timerFinished, this, &EntryScheduler::receiveFinished);
-    connect(swait, &SchedulerWait::encounterScheduledTime, this, &EntryScheduler::receiveEncounter);
+//    connect(swait, &SchedulerWait::timerStarted, this, &EntryScheduler::receiveStarted);
+//    connect(swait, &SchedulerWait::timerFinished, this, &EntryScheduler::receiveFinished);
+//    connect(swait, &SchedulerWait::encounterScheduledTime, this, &EntryScheduler::receiveEncounter);
 
     swait->moveToThread(worker);
 

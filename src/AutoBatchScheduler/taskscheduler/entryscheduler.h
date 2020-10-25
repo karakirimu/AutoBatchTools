@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef TIMESCHEDULERTHREAD_H
-#define TIMESCHEDULERTHREAD_H
+#ifndef ENTRYSCHEDULER_H
+#define ENTRYSCHEDULER_H
 
 #include <QObject>
 #include <QThread>
@@ -35,19 +35,21 @@ public:
 //    void setXmlItemId(int itemid); //preset
     void setMutex(QMutex *mutex); //preset
 
-signals:
-    void timerStarted(QDateTime);
-    void timerFinished(int);
-    void encounteredScheduledTime();
+    SchedulerWait *getSchedulerWait() const { return swait; }
+
+//signals:
+//    void timerStarted(QDateTime);
+//    void timerFinished(int);
+//    void encounteredScheduledTime();
 
 public slots:
     void start();
     void stop();
 
     //receive
-    void receiveStarted(QDateTime datetime){emit timerStarted(datetime);}
-    void receiveFinished(int value){emit timerFinished(value);}
-    void receiveEncounter(){emit encounteredScheduledTime();}
+//    void receiveStarted(QDateTime datetime){emit timerStarted(datetime);}
+//    void receiveFinished(int value){emit timerFinished(value);}
+//    void receiveEncounter(){emit encounteredScheduledTime();}
 
     void setXmlItemId(QString objname);
 
@@ -56,4 +58,4 @@ private:
     QThread *worker;
 };
 
-#endif // TIMESCHEDULERTHREAD_H
+#endif // ENTRYSCHEDULER_H

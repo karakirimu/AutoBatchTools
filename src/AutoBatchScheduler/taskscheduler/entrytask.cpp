@@ -35,15 +35,15 @@ EntryTask::EntryTask(QObject *parent)
     connect(executor, &Executor::processStopped, worker, &QThread::quit);
 
     //connect executor
-    connect(executor, &Executor::processStarted, this, &EntryTask::receiveStarted);
-    connect(executor, &Executor::processEnded, this, &EntryTask::receiveEnd);
-    connect(executor, &Executor::processStopped, this, &EntryTask::receiveStopped);
-    connect(executor, &Executor::processPaused, this, &EntryTask::receivePaused);
+//    connect(executor, &Executor::processStarted, this, &EntryTask::receiveStarted);
+//    connect(executor, &Executor::processEnded, this, &EntryTask::receiveEnd);
+//    connect(executor, &Executor::processStopped, this, &EntryTask::receiveStopped);
+//    connect(executor, &Executor::processPaused, this, &EntryTask::receivePaused);
 
-    connect(executor, &Executor::processStateUpdate, this, &EntryTask::receiveCurrent);
-    connect(executor, &Executor::processStateCount, this, &EntryTask::receiveInitCount);
-    connect(executor, &Executor::processCheckError, this, &EntryTask::receiveErrorText);
-    connect(executor, &Executor::processMessage, this, &EntryTask::receiveMessage);
+//    connect(executor, &Executor::processStateUpdate, this, &EntryTask::receiveCurrent);
+//    connect(executor, &Executor::processStateCount, this, &EntryTask::receiveInitCount);
+//    connect(executor, &Executor::processCheckError, this, &EntryTask::receiveErrorText);
+//    connect(executor, &Executor::processMessage, this, &EntryTask::receiveMessage);
 
     //move to thread
     executor->moveToThread(worker);
