@@ -34,17 +34,6 @@ EntryTask::EntryTask(QObject *parent)
     connect(executor, &Executor::processEnded, worker, &QThread::quit);
     connect(executor, &Executor::processStopped, worker, &QThread::quit);
 
-    //connect executor
-//    connect(executor, &Executor::processStarted, this, &EntryTask::receiveStarted);
-//    connect(executor, &Executor::processEnded, this, &EntryTask::receiveEnd);
-//    connect(executor, &Executor::processStopped, this, &EntryTask::receiveStopped);
-//    connect(executor, &Executor::processPaused, this, &EntryTask::receivePaused);
-
-//    connect(executor, &Executor::processStateUpdate, this, &EntryTask::receiveCurrent);
-//    connect(executor, &Executor::processStateCount, this, &EntryTask::receiveInitCount);
-//    connect(executor, &Executor::processCheckError, this, &EntryTask::receiveErrorText);
-//    connect(executor, &Executor::processMessage, this, &EntryTask::receiveMessage);
-
     //move to thread
     executor->moveToThread(worker);
 }
@@ -61,8 +50,7 @@ EntryTask::~EntryTask()
 
 void EntryTask::setFile(QString filepath)
 {
-    qDebug() << "EntryTask:: File Changed :" << filepath;
-//    loadfilepath = filepath;
+    qDebug() << "[EntryTask::setFile] File Changed :" << filepath;
     executor->setProcessFile(filepath);
 }
 
@@ -119,5 +107,5 @@ void EntryTask::updateFileList(QStringList *need)
 
 void EntryTask::processCompleted()
 {
-    qDebug() << "EntryTask::processComplete";
+    qDebug() << "[EntryTask::processCompleted]";
 }

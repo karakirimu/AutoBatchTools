@@ -58,7 +58,7 @@ public slots:
     void sendInput(QString objectname, QString text);
 
     // from EntryTask-----------------------------------------------------------
-    // For multitask ui manage. Currently it does singletask.
+    // For multitask ui manage.
     void receiveInitCount(int start, int end) { emit processInitCount(start, end); }
     void receiveCurrent(int currentnum){emit processCurrent(currentnum); }
 

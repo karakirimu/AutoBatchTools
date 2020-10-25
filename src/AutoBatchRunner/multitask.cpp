@@ -21,12 +21,6 @@ MultiTask::MultiTask(QObject *parent)
 {
     task = new QHash<QString, EntryTask *>();
     basemutex = new QMutex();
-
-    //time based seed set
-//    QTime *ti = new QTime();
-//    rgen = QRandomGenerator(static_cast<uint>(ti->currentTime().msecsSinceStartOfDay() ^ 123456789));
-//    qsrand(static_cast<uint>(ti->currentTime().msecsSinceStartOfDay() ^ 123456789));
-//    delete ti;
 }
 
 MultiTask::~MultiTask()
@@ -57,17 +51,6 @@ void MultiTask::addTask(QString objectname, QString processfile)
 {
     //new task set
     EntryTask *et = new EntryTask();
-
-    //connect message
-//    connect(et, &EntryTask::processInitCount, this, &MultiTask::receiveInitCount);
-//    connect(et, &EntryTask::processCurrent, this, &MultiTask::receiveCurrent);
-//    connect(et, &EntryTask::processError, this, &MultiTask::receiveError);
-//    connect(et, &EntryTask::processErrorText, this, &MultiTask::receiveErrorText);
-//    connect(et, &EntryTask::processMessage, this, &MultiTask::receiveMessage);
-//    connect(et, &EntryTask::processStarted, this, &MultiTask::receiveStarted);
-//    connect(et, &EntryTask::processPaused, this, &MultiTask::receivePaused);
-//    connect(et, &EntryTask::processStopped, this, &MultiTask::receiveStopped);
-//    connect(et, &EntryTask::processEnd, this, &MultiTask::receiveEnd);
 
     //connect child object
     Executor *ec = et->getExecutor();
@@ -104,17 +87,6 @@ void MultiTask::removeTask(QString objectname)
 
     //stop process
     et->stop();
-
-    //disconnect child object
-//    disconnect(et, &EntryTask::processInitCount, this, &MultiTask::receiveInitCount);
-//    disconnect(et, &EntryTask::processCurrent, this, &MultiTask::receiveCurrent);
-//    disconnect(et, &EntryTask::processError, this, &MultiTask::receiveError);
-//    disconnect(et, &EntryTask::processErrorText, this, &MultiTask::receiveErrorText);
-//    disconnect(et, &EntryTask::processMessage, this, &MultiTask::receiveMessage);
-//    disconnect(et, &EntryTask::processStarted, this, &MultiTask::receiveStarted);
-//    disconnect(et, &EntryTask::processPaused, this, &MultiTask::receivePaused);
-//    disconnect(et, &EntryTask::processStopped, this, &MultiTask::receiveStopped);
-//    disconnect(et, &EntryTask::processEnd, this, &MultiTask::receiveEnd);
 
     //disconnect child object
     const Executor *ec = et->getExecutor();
