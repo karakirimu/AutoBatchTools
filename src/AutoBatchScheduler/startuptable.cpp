@@ -62,6 +62,14 @@ void StartupTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
     taskc = task;
     connect(taskc, &TaskSchedulerConnector::taskEnabled, this, &StartupTable::updateItemEnabled);
     connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &StartupTable::updateItemEnabled);
+
+    //connect
+//    connect(taskc, &TaskSchedulerConnector::timerStarted, this, &SystemTray::showTimerStart);
+    connect(taskc, &TaskSchedulerConnector::timerFinished, this, &StartupTable::updateItemTimerEnd);
+//    connect(taskc, &TaskSchedulerConnector::processStarted, this, &SystemTray::showProcessStart);
+//    connect(taskc, &TaskSchedulerConnector::processStopped, this, &SystemTray::showProcessStopped);
+//    connect(taskc, &TaskSchedulerConnector::processPaused, this, &SystemTray::showProcessPause);
+//    connect(taskc, &TaskSchedulerConnector::processEnd, this, &SystemTray::showProcessEnded);
 }
 
 void StartupTable::setPopupActionTop()
@@ -389,6 +397,20 @@ void StartupTable::updateItemEnabled(QString objectname)
 {
     int itemid = getStartupXmlIndex(objectname);
     if(itemid > -1) setTableItem(itemid);
+}
+
+void StartupTable::updateItemTimerEnd(QString objectname, int status)
+{
+    Q_UNUSED(status)
+    qDebug() << "[StartupTable::updateItemTimerEnd] ";
+//    switch(status){
+//    case SchedulerWait::FINISHED:
+//        break;
+//    case SchedulerWait::EXPIRED:
+//        break;
+//    }
+
+    updateItemEnabled(objectname);
 }
 
 QString StartupTable::getRandomString(int length)
