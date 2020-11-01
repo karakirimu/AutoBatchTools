@@ -25,7 +25,7 @@
 #include "cellinfowidget.h"
 #include "consolewidget.h"
 
-#define RANGE 30
+//#define RANGE 30
 
 class ProcessShowTable : public QTableWidget
 {

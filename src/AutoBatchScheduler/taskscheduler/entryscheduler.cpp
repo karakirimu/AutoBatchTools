@@ -26,10 +26,6 @@ EntryScheduler::EntryScheduler(QObject *parent) : QObject(parent)
     //connect thread
     connect(worker, &QThread::started, swait, &SchedulerWait::start);
 
-//    connect(swait, &SchedulerWait::timerStarted, this, &EntryScheduler::receiveStarted);
-//    connect(swait, &SchedulerWait::timerFinished, this, &EntryScheduler::receiveFinished);
-//    connect(swait, &SchedulerWait::encounterScheduledTime, this, &EntryScheduler::receiveEncounter);
-
     swait->moveToThread(worker);
 
     connect(this, &EntryScheduler::objectNameChanged, this, &EntryScheduler::setXmlItemId);
@@ -54,11 +50,6 @@ void EntryScheduler::setRefreshTime(ulong milliseconds)
 {
     swait->setRefreshms(milliseconds);
 }
-
-//void EntryScheduler::setXmlItemId(int itemid)
-//{
-//    scalc->setSelectedxmlindex(itemid);
-//}
 
 void EntryScheduler::setMutex(QMutex *mutex)
 {
