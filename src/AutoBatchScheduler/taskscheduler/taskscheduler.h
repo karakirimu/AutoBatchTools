@@ -22,7 +22,6 @@
 #include <QObject>
 #include <entryscheduler.h>
 
-//#define SEEDLENGTH 32
 
 //task binder class with no gui signals or slots
 
@@ -36,15 +35,10 @@ public:
     bool taskRunningCheck(QString objectname);
 
 protected:
-    //to child class
-//    QString generateObjectName();
 
     //from creating celltablewidget class
     void addTask(QString objectname, QString processfile);
     void removeTask(QString objectname);
-
-//    void schedulerStart(QString objectname);
-//    void schedulerStop(QString objectname);
 
 signals:
     //from EntryScheduler to Binder--------------------------------------------
@@ -90,13 +84,11 @@ public slots:
     void receiveEnd(int type){emit processEnd(sender()->objectName(), type); /*emit processEnd_action(true);*/}
 
 private:
-//    QString generateRandomName(int length);
     bool processAliveCheck(QString objectname);
 
     QHash<QString, EntryTask *> *task;
     QHash<QString, EntryScheduler *> *scheduler;
     QMutex *basemutex;
-//    QString seed;
 };
 
 #endif // TASKSCHEDULER_H
