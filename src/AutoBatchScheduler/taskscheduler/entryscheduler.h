@@ -21,7 +21,7 @@
 #include <QThread>
 #include <QMutex>
 #include <schedulerwait.h>
-#include <startupxmlbuilder.h>
+#include <settingcache/startupxmlbuilder.h>
 
 class EntryScheduler : public QObject
 {
@@ -32,30 +32,20 @@ public:
 
     bool isStarted();
     void setRefreshTime(ulong milliseconds); //preset
-//    void setXmlItemId(int itemid); //preset
     void setMutex(QMutex *mutex); //preset
 
     SchedulerWait *getSchedulerWait() const { return swait; }
 
-//signals:
-//    void timerStarted(QDateTime);
-//    void timerFinished(int);
-//    void encounteredScheduledTime();
-
 public slots:
     void start();
     void stop();
-
-    //receive
-//    void receiveStarted(QDateTime datetime){emit timerStarted(datetime);}
-//    void receiveFinished(int value){emit timerFinished(value);}
-//    void receiveEncounter(){emit encounteredScheduledTime();}
 
     void setXmlItemId(QString objname);
 
 private:
     SchedulerWait *swait;
     QThread *worker;
+
 };
 
 #endif // ENTRYSCHEDULER_H

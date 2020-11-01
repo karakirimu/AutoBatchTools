@@ -18,10 +18,10 @@
 #define STARTUPTABLE_H
 
 #include <../basictable/basictable.h>
-#include "startupdialog.h"
-#include "startupxmlbuilder.h"
-#include "taskschedulerconnector.h"
+#include <settingcache/startupxmlbuilder.h>
 #include <../variantconverter/variantconverter.h>
+#include "startupdialog.h"
+#include "taskschedulerconnector.h"
 
 #include <QSettings>
 
@@ -48,6 +48,7 @@ private slots:
     void disableAction();
 
     void updateItemEnabled(QString objectname);
+    void updateItemTimerEnd(QString objectname, int status);
 
 private:
     void setPopupActionTop();

@@ -21,7 +21,7 @@
 #include <QMenu>
 #include <QWidget>
 #include <QSystemTrayIcon>
-#include <startupxmlbuilder.h>
+#include <settingcache/startupxmlbuilder.h>
 #include <statuswidget.h>
 #include <taskschedulerconnector.h>
 #include <QSettings>

@@ -17,7 +17,7 @@
 #ifndef STARTUPDIALOG_H
 #define STARTUPDIALOG_H
 
-#include <startupxmlbuilder.h>
+#include <settingcache/startupxmlbuilder.h>
 #include <../variantconverter/variantconverter.h>
 
 #include <QDialog>

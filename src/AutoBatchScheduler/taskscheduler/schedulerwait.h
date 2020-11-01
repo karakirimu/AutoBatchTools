@@ -22,9 +22,9 @@
 #include <QMutex>
 #include <QThread>
 #include <QDateTime>
-#include "startupxmlbuilder.h"
+#include <settingcache/startupxmlbuilder.h>
 
-#define WEEKDATA 8
+//#define WEEKDATA 8
 
 class SchedulerWait : public QObject
 {
