@@ -50,7 +50,6 @@ SOURCES += \
         aboutabs.cpp \
         main.cpp \
         mainscheduler.cpp \
-        startupxmlbuilder.cpp \
         startuptable.cpp \
         startupdialog.cpp
 
@@ -58,7 +57,6 @@ HEADERS += \
         aboutabs.h \
         mainscheduler.h \
         settingconstant.h \
-        startupxmlbuilder.h \
         startuptable.h \
         startupdialog.h
 
@@ -73,6 +71,7 @@ RESOURCES += \
 include(taskscheduler/taskscheduler.pri)
 include(systemtray/systemtray.pri)
 include(statusarea/statusarea.pri)
+include(settingcache/settingcache.pri)
 
 LIBS += \
     -L$$LIBRARYPATH -lvariantconverter \
