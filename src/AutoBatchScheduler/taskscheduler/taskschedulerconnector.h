@@ -35,11 +35,6 @@ signals:
 
     //for syncronize table
     //startuptable <-> processshowtable
-//    void tableInserted(int);
-//    void tableDeleted(int);
-//    void tableReplaced(int);
-//    void tableEnabled(QString);
-//    void tableDisabled(QString);
     void tableMessenger(QString message, TABLE func);
 
 public slots:

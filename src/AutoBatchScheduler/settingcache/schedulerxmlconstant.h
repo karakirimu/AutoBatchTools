@@ -17,4 +17,50 @@
 #ifndef SCHEDULERXMLCONSTANT_H
 #define SCHEDULERXMLCONSTANT_H
 
+class SchedulerXmlConstant {
+public:
+    //! Root element name "startup"
+    static constexpr char TAG_ROOT[]          = "startup";
+
+    //! Scheduler XML version code attribute "version"
+    static constexpr char ATTR_ROOT[]         = "version";
+
+    //! Scheduler XML version "1.00"
+    static constexpr char ATTRVALUE_ROOT[]    = "1.00";
+
+    //! Tags that include tags after this tag
+    static constexpr char TAG_FIRSTLAYER[]    = "item";
+
+    //! "name"
+    static constexpr char TAG_NAME[]          = "name";
+
+    //! "prof"
+    static constexpr char TAG_PROFILE[]       = "prof";
+
+    //! "valid"
+    static constexpr char TAG_SCHEDULED[]     = "valid";
+
+    //! "radio"
+    static constexpr char TAG_SCHEDULETYPE[]  = "radio";
+
+    //! "schdt"
+    static constexpr char TAG_DATETIME[]      = "schdt";
+
+    //! "schsec"
+    static constexpr char TAG_SECOND[]        = "schsec";
+
+    //! "scht"
+    static constexpr char TAG_TIME[]          = "scht";
+
+    //! "schday"
+    static constexpr char TAG_DATE[]          = "schday";
+
+    //! unique removed (deprecated)
+    static constexpr char TAG_UNIQUE[]        = "unique";
+
+    //!
+    static constexpr char ATTR_ITEM_ID_INT[]  = "id";
+
+};
+
 #endif // SCHEDULERXMLCONSTANT_H

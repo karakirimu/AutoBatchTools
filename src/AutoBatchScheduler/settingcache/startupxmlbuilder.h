@@ -17,6 +17,7 @@
 #ifndef STARTUPXMLBUILDER_H
 #define STARTUPXMLBUILDER_H
 
+#include <settingcache/SchedulerXmlConstant.h>
 #include <../xmlbuilder/xmlbuilder.h>
 /**
  * @class StartupSettings_xml
@@ -54,7 +55,10 @@ public:
     explicit StartupXmlBuilder(QObject *parent = nullptr);
     ~StartupXmlBuilder();
 
-    bool readItem(int itemid, QList<QStringList> *itemlist);
+    bool readAll(QList<QList<QStringList> *> *itemlist);
+    bool writeAll(const QList<QList<QStringList> *> *itemlist);
+
+    bool readItem(int itemid, QList<QStringList> *itemlist);   
     bool addItem(const QList<QStringList> *itemlist);
     bool deleteItem(int itemid);
     bool editItem(int itemid, const QList<QStringList> *itemlist);
@@ -70,9 +74,9 @@ public:
 private:
     void setSearchItemData(QString element, QList<QStringList> *list);
 
-    const QString ROOTELEMENT = "startup";
-    const QString FIRSTLAYER = "item";
-    const QString ATTR = "id";
+//    const QString ROOTELEMENT = "startup";
+//    const QString FIRSTLAYER = "item";
+//    const QString ATTR = "id";
 };
 
 #endif // STARTUPXMLBUILDER_H

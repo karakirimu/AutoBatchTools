@@ -34,62 +34,110 @@ StartupXmlBuilder::~StartupXmlBuilder()
 {
 }
 
+bool StartupXmlBuilder::readAll(QList<QList<QStringList> *> *itemlist)
+{
+#ifdef QT_DEBUG
+    qDebug() << "[StartupXmlBuilder::readAll]";
+#endif
+    return Xmlbuilder::readAllItem(SchedulerXmlConstant::TAG_FIRSTLAYER
+                                   , SchedulerXmlConstant::ATTR_ITEM_ID_INT
+                                   , itemlist);
+}
+
+bool StartupXmlBuilder::writeAll(const QList<QList<QStringList> *> *itemlist)
+{
+#ifdef QT_DEBUG
+    qDebug() << "[StartupXmlBuilder::writeAll]";
+#endif
+    return Xmlbuilder::writeAllItem(SchedulerXmlConstant::TAG_ROOT
+                                    , SchedulerXmlConstant::ATTR_ROOT
+                                    , SchedulerXmlConstant::ATTRVALUE_ROOT
+                                    , SchedulerXmlConstant::TAG_FIRSTLAYER
+                                    , SchedulerXmlConstant::ATTR_ITEM_ID_INT
+                                    , itemlist);
+}
+
 bool StartupXmlBuilder::readItem(int itemid, QList<QStringList> *itemlist)
 {
-    return Xmlbuilder::readItem(itemid, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::readItem(itemid
+                                , SchedulerXmlConstant::TAG_FIRSTLAYER
+                                , SchedulerXmlConstant::ATTR_ITEM_ID_INT
+                                , itemlist);
 }
 
 bool StartupXmlBuilder::addItem(const QList<QStringList> *itemlist)
 {
-    return Xmlbuilder::overwriteItem(count(), ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::overwriteItem(count()
+                                    , SchedulerXmlConstant::TAG_ROOT
+                                    , SchedulerXmlConstant::TAG_FIRSTLAYER
+                                    , SchedulerXmlConstant::ATTR_ITEM_ID_INT
+                                    , itemlist);
 }
 
 bool StartupXmlBuilder::deleteItem(int itemid)
 {
-    return Xmlbuilder::deleteItem(itemid, FIRSTLAYER, ATTR);
+    return Xmlbuilder::deleteItem(itemid
+                                  , SchedulerXmlConstant::TAG_FIRSTLAYER
+                                  , SchedulerXmlConstant::ATTR_ITEM_ID_INT);
 }
 
 bool StartupXmlBuilder::editItem(int itemid, const QList<QStringList> *itemlist)
 {
-    return Xmlbuilder::overwriteItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::overwriteItem(itemid
+                                     , SchedulerXmlConstant::TAG_ROOT
+                                     , SchedulerXmlConstant::TAG_FIRSTLAYER
+                                     , SchedulerXmlConstant::ATTR_ITEM_ID_INT
+                                     , itemlist);
 }
 
 void StartupXmlBuilder::swapItem(int beforeitemid, int afteritemid)
 {
-    Xmlbuilder::swapItem(beforeitemid, afteritemid, ROOTELEMENT, FIRSTLAYER, ATTR);
+    Xmlbuilder::swapItem(beforeitemid
+                         , afteritemid
+                         , SchedulerXmlConstant::TAG_ROOT
+                         , SchedulerXmlConstant::TAG_FIRSTLAYER
+                         , SchedulerXmlConstant::ATTR_ITEM_ID_INT);
 }
 
 void StartupXmlBuilder::copyItem(int itemid)
 {
-    Xmlbuilder::copyItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, "name");
+    Xmlbuilder::copyItem(itemid
+                         , SchedulerXmlConstant::TAG_ROOT
+                         , SchedulerXmlConstant::TAG_FIRSTLAYER
+                         , SchedulerXmlConstant::ATTR_ITEM_ID_INT
+                         , SchedulerXmlConstant::TAG_NAME);
 }
 
 bool StartupXmlBuilder::overwriteItem(int itemid, const QList<QStringList> *itemlist)
 {
-    return Xmlbuilder::overwriteItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::overwriteItem(itemid
+                                     , SchedulerXmlConstant::TAG_ROOT
+                                     , SchedulerXmlConstant::TAG_FIRSTLAYER
+                                     , SchedulerXmlConstant::ATTR_ITEM_ID_INT
+                                     , itemlist);
 }
 
 void StartupXmlBuilder::createDocument()
 {
-    createXmlBaseDocument(ROOTELEMENT);
+    createXmlBaseDocument(SchedulerXmlConstant::TAG_ROOT);
 }
 
 int StartupXmlBuilder::count()
 {
-    return getElementItemsCount(FIRSTLAYER);
+    return getElementItemsCount(SchedulerXmlConstant::TAG_FIRSTLAYER);
 }
 
 void StartupXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {
-    if(element == "name"
-            || element == "prof"
-            || element == "valid"
-            || element == "radio"
-            || element == "schdt"
-            || element == "schsec"
-            || element == "scht"
-            || element == "schday"
-            || element == "unique")
+    if(element == SchedulerXmlConstant::TAG_NAME
+            || element == SchedulerXmlConstant::TAG_PROFILE
+            || element == SchedulerXmlConstant::TAG_SCHEDULED
+            || element == SchedulerXmlConstant::TAG_SCHEDULETYPE
+            || element == SchedulerXmlConstant::TAG_DATETIME
+            || element == SchedulerXmlConstant::TAG_SECOND
+            || element == SchedulerXmlConstant::TAG_TIME
+            || element == SchedulerXmlConstant::TAG_DATE
+            || element == SchedulerXmlConstant::TAG_UNIQUE)
     {
         QStringList data;
         //add element and text
