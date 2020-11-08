@@ -26,13 +26,6 @@ TaskScheduler::TaskScheduler(QObject *parent)
 
 TaskScheduler::~TaskScheduler()
 {
-    //delete all left tasks
-    QHash<QString, EntryScheduler *>::iterator i = scheduler->begin();
-    while (i != scheduler->end()) {
-        removeTask(i.key());
-        ++i;
-    }
-
     delete task;
     delete scheduler;
     delete basemutex;
@@ -54,7 +47,7 @@ bool TaskScheduler::processAliveCheck(QString objectname)
     return task->contains(objectname) && scheduler->contains(objectname) ? true : false;
 }
 
-void TaskScheduler::addTask(QString objectname, QString processfile)
+void TaskScheduler::addTask(const SchedulerCache &sc)
 {
     //new task set
     EntryTask *et = new EntryTask();
@@ -78,13 +71,16 @@ void TaskScheduler::addTask(QString objectname, QString processfile)
     connect(sw, &SchedulerWait::encounterScheduledTime, this, &TaskScheduler::receiveEncounter);
 
     //set task filename
-    et->setFile(processfile);
+    et->setFile(sc.profilePath);
+
+    //set wait information
+    sw->setSchedulerCache(sc);
 
     //set same objectname
-    et->setObjectName(objectname);
-    ec->setObjectName(objectname);
-    es->setObjectName(objectname);
-    sw->setObjectName(objectname);
+    et->setObjectName(sc.objectName());
+    ec->setObjectName(sc.objectName());
+    es->setObjectName(sc.objectName());
+    sw->setObjectName(sc.objectName());
 
     //set shared mutex
     es->setMutex(basemutex);
@@ -92,11 +88,11 @@ void TaskScheduler::addTask(QString objectname, QString processfile)
     //TODO:refreshtime in scheduler
 
     //add pointer
-    task->insert(objectname, et);
-    scheduler->insert(objectname, es);
+    task->insert(sc.objectName(), et);
+    scheduler->insert(sc.objectName(), es);
 
     //start scheduler
-    scheduler->value(objectname)->start();
+    scheduler->value(sc.objectName())->start();
 }
 
 void TaskScheduler::removeTask(QString objectname)

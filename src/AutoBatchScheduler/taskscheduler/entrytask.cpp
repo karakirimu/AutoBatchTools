@@ -50,7 +50,7 @@ EntryTask::~EntryTask()
 
 void EntryTask::setFile(QString filepath)
 {
-    qDebug() << "EntryTask:: File Changed :" << filepath;
+    qDebug() << "[EntryTask::setFile] File Changed :" << filepath;
     executor->setProcessFile(filepath);
 }
 
@@ -113,5 +113,5 @@ void EntryTask::updateFileList(QHash<QString, int> *data)
 
 void EntryTask::processCompleted()
 {
-    qDebug() << "EntryTask::processComplete";
+    qDebug() << "EntryTask::processCompleted";
 }

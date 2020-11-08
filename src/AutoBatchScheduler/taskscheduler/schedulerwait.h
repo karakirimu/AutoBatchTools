@@ -22,7 +22,9 @@
 #include <QMutex>
 #include <QThread>
 #include <QDateTime>
-#include <settingcache/startupxmlbuilder.h>
+#include <settingcache/schedulercache.h>
+#include <QDebug>
+//#include <settingcache/startupxmlbuilder.h>
 
 //#define WEEKDATA 8
 
@@ -40,12 +42,14 @@ public:
 
     inline bool getRunning() const { return running; }
 
-    inline QDateTime getSchedate() const { return schedate; }
+//    inline QDateTime getSchedate() const { return schedate; }
 
-    inline int getSelectedxmlindex() const { return selectedxmlindex; }
-    inline void setSelectedxmlindex(QString objectname){
-        selectedxmlindex = getStartupXmlIndex(objectname);
-    }
+//    inline int getSelectedxmlindex() const { return selectedxmlindex; }
+//    inline void setSelectedxmlindex(QString objectname){
+//        selectedxmlindex = getIndex(objectname);
+//    }
+
+    inline void setSchedulerCache(const SchedulerCache &sc ){ cache = SchedulerCache(sc, false); }
 
     enum{FINISHED,EXPIRED};
 signals:
@@ -67,29 +71,32 @@ public slots:
 
 private:
     //inner calc functions
-    qint64 getLestSeconds(QString scheduledDateTime);
+//    [[deprecated]]qint64 getLestSeconds(QString scheduledDateTime);
     qint64 getLestSeconds(QDateTime scheduledDateTime);
-    QDateTime getNextDateTime(qint64 addseconds);
-    QDateTime init_GetScheduledTimeFromXml(int itemid);
-    QDateTime getNextTimeFromXml(int itemid, QDateTime current);
+//    [[deprecated]]QDateTime getNextDateTime(qint64 addseconds);
+    QDateTime initScheduledTime();
+    QDateTime getNextTime(const QDateTime &previous);
     int currentDayOfTheWeek();
 
-    int getNextDaysCount(QString datecode, QString timedata);
+    int getNextDaysCount(const QString &datecode, const QTime &time);
 //    int dateCheckedCounter(QString datecode);
-    QDateTime getNextDateTime(qint64 adddays, QString scheduledTime);
+    QDateTime getNextDateTime(const qint64 &adddays, const QTime &scheduledTime);
 
-    int getStartupXmlIndex(QString objectname);
+//    int getStartupXmlIndex(QString objectname);
 
-    StartupXmlBuilder *builder;
+//    StartupXmlBuilder *builder;
+    SchedulerCache cache;
 
     //variant for manage
     ulong slowRefreshTime = 1000;
     const ulong fastRefreshTime = 100;
-    int selectedxmlindex = -1;
-    QDateTime schedate;
+//    int selectedxmlindex = -1;
+//    QDateTime schedate;
+    QDateTime previousTime;
     QMutex *mutex;
 
-    bool running = false;
+    std::atomic<bool> launchFirst;
+    std::atomic<bool> running;
 
     //when schedule loop
     bool loopschedule = false;

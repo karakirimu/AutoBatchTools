@@ -47,17 +47,20 @@ signals:
 public slots:
     //create ui
 //    void addItem(QString objname);
-    void tableChanged(QString message, TaskSchedulerConnector::TABLE func);
+//    void tableChanged(QString message, TaskSchedulerConnector::TABLE func);
+    void stateChanged(int index, QString message, TaskSchedulerConnector::TABLE func);
 
-
-    //from startuptable
     void removeItem(int itemid);
     void insertItem(int itemid);
     void replaceItem(int itemid);
+    void moveItem(int before, int after);
+    void duplicateItem();
 
     //from tasksignalconnector
-    void enableItem(QString objname);
-    void disableItem(QString objname);
+    [[deprecated]] void enableItem(QString objname);
+    void enableItem(int index);
+    [[deprecated]] void disableItem(QString objname);
+    void disableItem(int index);
 
     //send command to parent
     void pauseClicked(QString objname){emit pause(objname);}
@@ -70,6 +73,7 @@ public slots:
 
     void encounterdTime(QString objname);
     void timerStarted(QString objname, QDateTime date);
+    void timerStopped(QString objectname, int type);
     void setProcessEnd(QString objname, int type);
     void setProcessStopped(QString objname);
     void setProcessError(QString objname, int currentnum);
@@ -80,17 +84,19 @@ public slots:
 
 private slots:
     void onCheckStateChanged(bool checked);
+    void initCellWidgets();
 
 private:
 //    bool eventFilter(QObject *obj, QEvent *event);
-    void initCellWidgets();
     void initCellWidget(int itemid);
-    void changeXmlValidState(int itemid);
-    int getStartupXmlIndex(QString objectname);
+    void initCellWidget(int itemid, const SchedulerCache &cache);
+//    void changeXmlValidState(int itemid);
+//    int getStartupXmlIndex(QString objectname);
+    int getIndex(QString objectname);
 
     CellInfoWidget *getCellWidget(QString objname);
 
-    StartupXmlBuilder *builder;
+//    StartupXmlBuilder *builder;
     TaskSchedulerConnector *taskc;
 };
 

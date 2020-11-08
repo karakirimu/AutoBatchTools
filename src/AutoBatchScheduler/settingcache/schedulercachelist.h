@@ -57,7 +57,7 @@ private:
 
     std::mutex mutex;
     QList<SchedulerCache> cache;
-    SchedulerCacheConverter *converter;
+    SchedulerCacheConverter converter;
 };
 
 #endif // SCHEDULERCACHELIST_H

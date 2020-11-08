@@ -274,10 +274,16 @@
    <item>
     <widget class="QFrame" name="consolearea">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>140</height>
+      </size>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>

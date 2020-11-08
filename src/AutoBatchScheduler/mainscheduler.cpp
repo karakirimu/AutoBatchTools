@@ -46,7 +46,7 @@ MainScheduler::MainScheduler(QWidget *parent) :
     restoreSettings();
 
     //make taskscheduler
-    taskscheduler = new TaskSchedulerConnector();
+    taskscheduler = new TaskSchedulerConnector(this);
 
     //launch systemtray
     sysTray = new SystemTray();
@@ -62,6 +62,9 @@ MainScheduler::MainScheduler(QWidget *parent) :
     //init ui theme
     themeChangeAction();
 
+    //load xml
+    taskscheduler->loadFile();
+
     sysTray->show();
 }
 
@@ -69,8 +72,8 @@ MainScheduler::~MainScheduler()
 {   
     sysTray->hide();
     delete sysTray;
-    delete taskscheduler;
     delete ui;
+    delete taskscheduler;
 }
 
 void MainScheduler::onSchedulerButtonClicked()
@@ -90,7 +93,7 @@ void MainScheduler::onOptionButtonClicked()
 void MainScheduler::showWindow()
 {
     //reflection startuptable
-    ui->startupTableWidget->reloadAction();
+//    ui->startupTableWidget->reloadAction();
 
     this->isMinimized() ? this->showNormal() : this->show();
 }

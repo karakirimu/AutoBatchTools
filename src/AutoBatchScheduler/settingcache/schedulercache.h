@@ -21,19 +21,38 @@
 #include <QString>
 #include <QUuid>
 
+enum class ScheduleType {
+    OneShot,
+    WeekLoop,
+    PeriodicSecond
+};
+
 class SchedulerCache {
 public:
-    SchedulerCache(){
+    explicit SchedulerCache(){
         settingName = "";
         profilePath = "";
         isScheduled = false;
-        scheduleType = 0;
+        scheduleType = ScheduleType::OneShot;
         oneShotDateTime = QDateTime::currentDateTime();
         periodicSeconds = 0;
-        everyWeekTime = "00:00:00";
+        everyWeekTime = QTime::currentTime();
         everyWeekDate = "10000000";
         unique = QUuid::createUuid().toString();
     }
+
+    SchedulerCache (const SchedulerCache &other, bool uuidupdate){
+        this->settingName = other.settingName;
+        this->profilePath = other.profilePath;
+        this->isScheduled = other.isScheduled;
+        this->scheduleType = other.scheduleType;
+        this->oneShotDateTime = other.oneShotDateTime;
+        this->periodicSeconds = other.periodicSeconds;
+        this->everyWeekTime = other.everyWeekTime;
+        this->everyWeekDate = other.everyWeekDate;
+        this->unique = uuidupdate ? QUuid::createUuid().toString() : other.unique;
+    }
+
     ~SchedulerCache(){}
 
     //! Scheduler setting name
@@ -46,7 +65,7 @@ public:
     bool isScheduled;
 
     //! Selected schedule type
-    int scheduleType;
+    ScheduleType scheduleType;
 
     //! Scheduled datetime
     QDateTime oneShotDateTime;
@@ -55,7 +74,7 @@ public:
     qint64 periodicSeconds;
 
     //! Scheduled time
-    QString everyWeekTime;
+    QTime everyWeekTime;
 
     //! Scheduled day of the week and weeks
     //!

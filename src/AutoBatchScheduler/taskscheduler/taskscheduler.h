@@ -30,14 +30,12 @@ class TaskScheduler : public QObject
     Q_OBJECT
 public:
     explicit TaskScheduler(QObject *parent = nullptr);
-    ~TaskScheduler();
+    virtual ~TaskScheduler();
 
     bool taskRunningCheck(QString objectname);
 
-protected:
-
-    //from creating celltablewidget class
-    void addTask(QString objectname, QString processfile);
+    //from TaskSchedulerConnector
+    void addTask(const SchedulerCache &sc);
     void removeTask(QString objectname);
 
 signals:

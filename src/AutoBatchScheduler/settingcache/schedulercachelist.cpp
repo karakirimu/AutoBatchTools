@@ -18,12 +18,10 @@
 
 SchedulerCacheList::SchedulerCacheList()
 {
-    converter = new SchedulerCacheConverter();
 }
 
 SchedulerCacheList::~SchedulerCacheList()
 {
-    delete converter;
 }
 
 /**
@@ -34,7 +32,7 @@ SchedulerCacheList::~SchedulerCacheList()
 void SchedulerCacheList::serialize(QList<QList<QStringList> *> *dest)
 {
     std::lock_guard<std::mutex> lock(mutex);
-    converter->convertToXml(&cache, dest);
+    converter.convertToXml(&cache, dest);
 }
 
 /**
@@ -45,7 +43,7 @@ void SchedulerCacheList::serialize(QList<QList<QStringList> *> *dest)
 void SchedulerCacheList::deSerialize(QList<QList<QStringList> *> *source)
 {
     std::lock_guard<std::mutex> lock(mutex);
-    converter->convertToSchedulerCache(source, &cache);
+    converter.convertToSchedulerCache(source, &cache);
 }
 
 const SchedulerCache SchedulerCacheList::at(int i)

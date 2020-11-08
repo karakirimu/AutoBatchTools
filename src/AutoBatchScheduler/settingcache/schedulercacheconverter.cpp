@@ -21,6 +21,11 @@ SchedulerCacheConverter::SchedulerCacheConverter()
 
 }
 
+SchedulerCacheConverter::~SchedulerCacheConverter()
+{
+
+}
+
 void SchedulerCacheConverter::convertToSchedulerCache(const QList<QList<QStringList> *> *source
                                                    , QList<SchedulerCache> *dest)
 {
@@ -51,12 +56,12 @@ void SchedulerCacheConverter::convertFromCache(const SchedulerCache *from
     to->append(QStringList() << SchedulerXmlConstant::TAG_SCHEDULED \
                                 << VariantConverter::boolToString(from->isScheduled));
     to->append(QStringList() << SchedulerXmlConstant::TAG_SCHEDULETYPE \
-                                << QString::number(from->scheduleType));
+                                << QString::number(static_cast<int>(from->scheduleType)));
     to->append(QStringList() << SchedulerXmlConstant::TAG_DATETIME \
                                 << from->oneShotDateTime.toString(DATE_FORMAT));
     to->append(QStringList() << SchedulerXmlConstant::TAG_SECOND \
                                 << QString::number(from->periodicSeconds));
-    to->append(QStringList() << SchedulerXmlConstant::TAG_TIME << from->everyWeekTime);
+    to->append(QStringList() << SchedulerXmlConstant::TAG_TIME << from->everyWeekTime.toString(TIME_FORMAT));
     to->append(QStringList() << SchedulerXmlConstant::TAG_DATE << from->everyWeekDate);
 //    to->append(QStringList() << SchedulerXmlConstant::TAG_UNIQUE << from->objectName());
 }
@@ -67,10 +72,10 @@ void SchedulerCacheConverter::convertToCache(SchedulerCache *to
     to->settingName = fetch(SchedulerXmlConstant::TAG_NAME, from);
     to->profilePath = fetch(SchedulerXmlConstant::TAG_PROFILE, from);
     to->isScheduled = VariantConverter::stringToBool(fetch(SchedulerXmlConstant::TAG_SCHEDULED, from));
-    to->scheduleType = fetch(SchedulerXmlConstant::TAG_SCHEDULETYPE, from).toInt();
+    to->scheduleType = static_cast<ScheduleType>(fetch(SchedulerXmlConstant::TAG_SCHEDULETYPE, from).toInt());
     to->oneShotDateTime = QDateTime::fromString(fetch(SchedulerXmlConstant::TAG_DATETIME, from), DATE_FORMAT);
     to->periodicSeconds = fetch(SchedulerXmlConstant::TAG_SECOND, from).toLongLong();
-    to->everyWeekTime = fetch(SchedulerXmlConstant::TAG_TIME, from);
+    to->everyWeekTime = QTime::fromString(fetch(SchedulerXmlConstant::TAG_TIME, from), TIME_FORMAT);
     to->everyWeekDate = fetch(SchedulerXmlConstant::TAG_DATE, from);
 }
 

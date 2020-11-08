@@ -42,6 +42,9 @@ public:
     bool isConsoleVisible();
     void setConsoleVisible(bool show);
 
+    QHash<int, QVariant> getState() const;
+    void restoreState(const QHash<int, QVariant> &state);
+
 signals:
     //send own objectname
     void consoleButtonClicked(QString);
@@ -62,7 +65,7 @@ public slots:
     void updateProcess(QString data, int type);
     void updateProgress(int num);
 
-    void setTimerEnd(QString date);
+    void setTimerEnd(const QString &date);
 
     void updateErrorProgress(int num);
     void updateErrorText(QString message);
@@ -77,6 +80,18 @@ private slots:
     void onStopButtonClicked();
 
 private:
+
+    enum TempSaveTag {
+        UpdateText = 0,
+        TimerText,
+//        Progress,
+        ConsoleText,
+        ProgressEnable,
+        PauseEnable,
+        StopEnable,
+        ConsoleVisible
+    };
+
     Ui::CellInfoWidget *ui;
 };
 

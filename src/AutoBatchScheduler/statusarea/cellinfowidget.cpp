@@ -65,6 +65,33 @@ void CellInfoWidget::setConsoleVisible(bool show)
     ui->consolearea->setVisible(show);
 }
 
+QHash<int, QVariant> CellInfoWidget::getState() const
+{
+    QHash<int, QVariant> saved;
+    saved.insert(UpdateText, ui->currentProcessLabel->text());
+    saved.insert(TimerText, ui->nextTimeLabel->text());
+//    saved.insert(Progress, ui->progressBar->value());
+    saved.insert(ConsoleText, ui->console->toHtml());
+    saved.insert(ProgressEnable, ui->progressBar->isEnabled());
+    saved.insert(PauseEnable, ui->pauseToolButton->isEnabled());
+    saved.insert(StopEnable, ui->stopToolButton->isEnabled());
+    saved.insert(ConsoleVisible, ui->consolearea->isVisible());
+
+    return saved;
+}
+
+void CellInfoWidget::restoreState(const QHash<int, QVariant> &state)
+{
+    ui->currentProcessLabel->setText(state[UpdateText].toString());
+    ui->nextTimeLabel->setText(state[TimerText].toString());
+//    ui->progressBar->setValue(state[Progress].toInt());
+    ui->console->setHtml(state[ConsoleText].toString());
+    ui->progressBar->setEnabled(state[ProgressEnable].toBool());
+    ui->pauseToolButton->setEnabled(state[PauseEnable].toBool());
+    ui->stopToolButton->setEnabled(state[StopEnable].toBool());
+    ui->consolearea->setVisible(state[ConsoleVisible].toBool());
+}
+
 void CellInfoWidget::setProfileName(QString name)
 {
     ui->profileCheckBox->setText(name);
@@ -122,6 +149,8 @@ void CellInfoWidget::onRunStatusChange(bool enabled)
         blockSignals(true);
 //        disconnect(ui->profileCheckBox, &QCheckBox::toggled, this, &CellInfoWidget::onRunStatusChange);
         ui->profileCheckBox->setChecked(true);
+        ui->currentProcessLabel->clear();
+        ui->progressBar->setValue(0);
 //        connect(ui->profileCheckBox, &QCheckBox::toggled, this, &CellInfoWidget::onRunStatusChange);
         blockSignals(false);
 
@@ -134,8 +163,9 @@ void CellInfoWidget::onRunStatusChange(bool enabled)
     }
 }
 
-void CellInfoWidget::setTimerEnd(QString date)
+void CellInfoWidget::setTimerEnd(const QString &date)
 {
+    qDebug() << "[CellInfoWidget::setTimerEnd] text : " << date;
     ui->nextTimeLabel->setText(date);
 }
 

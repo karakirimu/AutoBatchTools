@@ -33,10 +33,9 @@ public:
     ~StartupTable();
     void setTaskSchedulerConnector(TaskSchedulerConnector *task);
 
-public slots:
-    void reloadAction();
-
 private slots:
+    void stateChanged(int index, QString message, TaskSchedulerConnector::TABLE func);
+
     void addAction();
     void editTableAction(int row, int col);
     void editAction();
@@ -46,9 +45,10 @@ private slots:
     void downAction();
     void enableAction();
     void disableAction();
+    void reloadAction();
 
-    void updateItemEnabled(QString objectname);
-    void updateItemTimerEnd(QString objectname, int status);
+//    void updateItemEnabled(QString objectname);
+//    void updateItemTimerEnd(QString objectname, int status);
 
 private:
     void setPopupActionTop();
@@ -64,11 +64,13 @@ private:
     QAction *m_enable;
     QAction *m_disable;
 
-    StartupXmlBuilder *builder;
+//    StartupXmlBuilder *builder;
     TaskSchedulerConnector *taskc;
     void setTableItem(int row);
+    void setTableItem(int row, const SchedulerCache &sc);
+
     void replaceItem(int row);
-    QString getRandomString(int length);
+//    QString getRandomString(int length);
 };
 
 #endif // STARTUPTABLE_H

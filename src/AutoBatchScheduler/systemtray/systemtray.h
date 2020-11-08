@@ -57,14 +57,17 @@ private slots:
     void showTaskDisabled(QString objectname);
     void showProcessFileEmpty(QString profilename);
 
+    void stateChanged(int index, QString extra, TaskSchedulerConnector::TABLE action);
+
     void launchSettingsAction();
     void trayCloseAction();
 
 private:
     void initTrayIcon();
 
-    void changeXmlValidState(int itemid);
-    int getStartupXmlIndex(QString objectname);
+//    void changeXmlValidState(int itemid);
+    int getIndex(QString objectname);
+//    int getStartupXmlIndex(QString objectname);
     QString getNameByActions(QString objectname);
     QString encodeDayOfWeek(int dayofweek);
     void themeChangeAction();
@@ -77,7 +80,7 @@ private:
     ProcessShowTable *psw;
     StatusWidget *strw;
 
-    StartupXmlBuilder *builder;
+//    StartupXmlBuilder *builder;
     TaskSchedulerConnector *taskc;
 
     SettingConstant sc;
