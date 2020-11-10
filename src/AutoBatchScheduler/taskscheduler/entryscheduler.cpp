@@ -27,8 +27,6 @@ EntryScheduler::EntryScheduler(QObject *parent) : QObject(parent)
     connect(worker, &QThread::started, swait, &SchedulerWait::start);
 
     swait->moveToThread(worker);
-
-//    connect(this, &EntryScheduler::objectNameChanged, this, &EntryScheduler::setXmlItemId);
 }
 
 EntryScheduler::~EntryScheduler()
@@ -65,13 +63,4 @@ void EntryScheduler::stop()
 {
     swait->loopstop();
     swait->stop();
-//    if(worker->isRunning()){
-//        worker->quit();
-//        worker->wait();
-//    }
 }
-
-//void EntryScheduler::setXmlItemId(QString objname)
-//{
-//    swait->setSelectedxmlindex(objname);
-//}

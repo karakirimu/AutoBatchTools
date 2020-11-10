@@ -76,10 +76,10 @@ public slots:
     void receiveErrorText(QString str){emit processErrorText(sender()->objectName(), str); }
     void receiveMessage(QString message, int type){emit processMessage(sender()->objectName(), message, type); }
 
-    void receiveStarted(int runfrom){emit processStarted(sender()->objectName(), runfrom); /*emit processStarted_action(true);*/}
-    void receivePaused(){emit processPaused(sender()->objectName()); /*emit processPaused_action(true);*/}
-    void receiveStopped(){emit processStopped(sender()->objectName()); /*emit processStopped_action(true);*/}
-    void receiveEnd(int type){emit processEnd(sender()->objectName(), type); /*emit processEnd_action(true);*/}
+    void receiveStarted(int runfrom){emit processStarted(sender()->objectName(), runfrom); }
+    void receivePaused(){emit processPaused(sender()->objectName()); }
+    void receiveStopped(){emit processStopped(sender()->objectName()); }
+    void receiveEnd(int type){emit processEnd(sender()->objectName(), type); }
 
 private:
     bool processAliveCheck(QString objectname);

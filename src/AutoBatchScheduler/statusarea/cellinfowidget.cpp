@@ -147,11 +147,9 @@ void CellInfoWidget::onRunStatusChange(bool enabled)
     if(ui->stopToolButton->isEnabled()){
         //task is running
         blockSignals(true);
-//        disconnect(ui->profileCheckBox, &QCheckBox::toggled, this, &CellInfoWidget::onRunStatusChange);
         ui->profileCheckBox->setChecked(true);
         ui->currentProcessLabel->clear();
         ui->progressBar->setValue(0);
-//        connect(ui->profileCheckBox, &QCheckBox::toggled, this, &CellInfoWidget::onRunStatusChange);
         blockSignals(false);
 
         //TEXT

@@ -40,8 +40,6 @@ public slots:
     void start();
     void stop();
 
-//    void setXmlItemId(QString objname);
-
 private:
     SchedulerWait *swait;
     QThread *worker;

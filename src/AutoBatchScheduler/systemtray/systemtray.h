@@ -65,9 +65,7 @@ private slots:
 private:
     void initTrayIcon();
 
-//    void changeXmlValidState(int itemid);
     int getIndex(QString objectname);
-//    int getStartupXmlIndex(QString objectname);
     QString getNameByActions(QString objectname);
     QString encodeDayOfWeek(int dayofweek);
     void themeChangeAction();
@@ -80,9 +78,7 @@ private:
     ProcessShowTable *psw;
     StatusWidget *strw;
 
-//    StartupXmlBuilder *builder;
     TaskSchedulerConnector *taskc;
-
     SettingConstant sc;
 
 };

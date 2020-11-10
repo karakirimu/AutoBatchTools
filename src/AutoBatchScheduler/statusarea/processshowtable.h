@@ -24,8 +24,7 @@
 #include <taskschedulerconnector.h>
 #include "cellinfowidget.h"
 #include "consolewidget.h"
-
-//#define RANGE 30
+#include "statuswidget.h"
 
 class ProcessShowTable : public QTableWidget
 {
@@ -45,9 +44,6 @@ signals:
     void infoNofile(QString);
 
 public slots:
-    //create ui
-//    void addItem(QString objname);
-//    void tableChanged(QString message, TaskSchedulerConnector::TABLE func);
     void stateChanged(int index, QString message, TaskSchedulerConnector::TABLE func);
 
     void removeItem(int itemid);
@@ -57,9 +53,7 @@ public slots:
     void duplicateItem();
 
     //from tasksignalconnector
-    [[deprecated]] void enableItem(QString objname);
     void enableItem(int index);
-    [[deprecated]] void disableItem(QString objname);
     void disableItem(int index);
 
     //send command to parent
@@ -87,16 +81,12 @@ private slots:
     void initCellWidgets();
 
 private:
-//    bool eventFilter(QObject *obj, QEvent *event);
     void initCellWidget(int itemid);
     void initCellWidget(int itemid, const SchedulerCache &cache);
-//    void changeXmlValidState(int itemid);
-//    int getStartupXmlIndex(QString objectname);
     int getIndex(QString objectname);
 
     CellInfoWidget *getCellWidget(QString objname);
 
-//    StartupXmlBuilder *builder;
     TaskSchedulerConnector *taskc;
 };
 

@@ -42,19 +42,12 @@ StartupTable::StartupTable(QWidget *parent)
     //set header style
     verticalHeader()->setProperty("VerticalHeaderStyle", 1);
 
-//    builder = new StartupXmlBuilder();
-
     //set doubleclick action
     connect(this, &QTableWidget::cellDoubleClicked, this, &StartupTable::editTableAction);
-
-    //init table (reload read file.)
-//    reloadAction();
-
 }
 
 StartupTable::~StartupTable()
 {
-//    delete builder;
 }
 
 void StartupTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
@@ -62,17 +55,6 @@ void StartupTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
     taskc = task;
     connect(taskc, &TaskSchedulerConnector::fileLoadCompleted, this, &StartupTable::reloadAction);
     connect(taskc, &TaskSchedulerConnector::updateState, this, &StartupTable::stateChanged);
-
-//    connect(taskc, &TaskSchedulerConnector::taskEnabled, this, &StartupTable::updateItemEnabled);
-//    connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &StartupTable::updateItemEnabled);
-
-    //connect
-//    connect(taskc, &TaskSchedulerConnector::timerStarted, this, &SystemTray::showTimerStart);
-//    connect(taskc, &TaskSchedulerConnector::timerFinished, this, &StartupTable::updateItemTimerEnd);
-//    connect(taskc, &TaskSchedulerConnector::processStarted, this, &SystemTray::showProcessStart);
-//    connect(taskc, &TaskSchedulerConnector::processStopped, this, &SystemTray::showProcessStopped);
-//    connect(taskc, &TaskSchedulerConnector::processPaused, this, &SystemTray::showProcessPause);
-//    connect(taskc, &TaskSchedulerConnector::processEnd, this, &SystemTray::showProcessEnded);
 }
 
 void StartupTable::setPopupActionTop()
@@ -165,25 +147,10 @@ bool StartupTable::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 
-int StartupTable::getStartupXmlIndex(QString objectname)
+int StartupTable::getIndex(QString objectname)
 {
-//    copy of systemtray
-//    QList<QStringList> *list = new QList<QStringList>();
-
     //search valid data
     int itemid = -1;
-//    int count = builder->count();
-
-//    for(int i = 0; i < count; i++){
-//        list->clear();
-//        if(builder->readItem(i, list)
-//                && objectname == list->at(StartupXmlBuilder::UNIQUE).at(1)){
-//            itemid = i;
-//            break;
-//        }
-//    }
-
-//    delete list;
     QList<SchedulerCache> list = taskc->readAll();
 
     for(SchedulerCache sc : list){
@@ -196,29 +163,6 @@ int StartupTable::getStartupXmlIndex(QString objectname)
 
 void StartupTable::setTableItem(int row)
 {
-    //qDebug () << "setTableItem";
-//    QList<QStringList> *list = new QList<QStringList>();
-//    if(builder->readItem(row, list)){
-//        //set name
-//        this->setItem(row,0,new QTableWidgetItem(list->at(StartupXmlBuilder::NAME).at(1)));
-
-//        //set profile
-//        QFileInfo info(list->at(StartupXmlBuilder::PROF).at(1));
-//        this->setItem(row,1,new QTableWidgetItem(info.fileName()));
-
-//        //set icon
-//        QIcon icon;
-//        if(VariantConverter::stringToBool(list->at(StartupXmlBuilder::VALID).at(1))){
-//            icon = getIcon(ACTION::ENABLE);
-//        }else{
-//            icon = getIcon(ACTION::DISABLE);
-//        }
-
-//        this->setItem(row,2,new QTableWidgetItem(QIcon(icon),list->at(2).at(1)));
-//    }
-
-//    delete list;
-
     SchedulerCache sc = taskc->read(row);
     setTableItem(row, sc);
 
@@ -251,7 +195,6 @@ void StartupTable::addAction()
 {
     StartupDialog *sd = new StartupDialog();
     sd->setStyleSheet(this->styleSheet());
-//    sd->setWindowTitle(tr("Editing - Untitled*"));
     sd->move(this->window()->mapToGlobal(this->geometry().center()) - sd->rect().center());
 
     if(sd->exec() == QDialog::Accepted){
@@ -260,9 +203,6 @@ void StartupTable::addAction()
         int index = this->rowCount();
         setRowCount(index + 1);
         setTableItem(index);
-
-//        emit taskc->tableMessenger(index,\
-//                                   TaskSchedulerConnector::TABLE::ADD);
     }
 
     delete sd;
@@ -283,23 +223,14 @@ void StartupTable::editTableAction(int row, int col)
     sd->setStyleSheet(this->styleSheet());
     sd->move(this->window()->mapToGlobal(this->geometry().center()) - sd->rect().center());
 
-//    QList<QStringList> list;
-//    int rows = row;
-
-//    if(builder->readItem(rows, &list)){
-//        set title
-//        sd->loadSettingList(rows, &list);
-//    }
     sd->load(taskc->read(row));
 
-    if(sd->exec() == QDialog::Accepted){
+    if(sd->exec() == QDialog::Accepted) {
         SchedulerCache result = sd->getSavedSetting();
         taskc->replace(row, result);
         setTableItem(row);
     }
 
-//    emit taskc->tableMessenger(row,\
-//                               TaskSchedulerConnector::TABLE::EDIT);
     delete sd;
 }
 
@@ -309,38 +240,14 @@ void StartupTable::deleteAction()
     if(this->rowCount() == 0) return;
 
     //check delete warning message
-    if(deleteCheckMessage())
-    {
-//        QList<QStringList> list;
-//        if(builder->readItem(currentRow(), &list)
-//                && VariantConverter::stringToBool(list.at(StartupXmlBuilder::VALID).at(1))){
-//            taskc->disableTask(list.at(StartupXmlBuilder::UNIQUE).at(1));
-//        }
-
-//        //delete file item
-//        builder->deleteItem(currentRow());
-
-//        emit taskc->tableMessenger(currentRow(),\
-//                                   TaskSchedulerConnector::TABLE::DELETE);
-
-//        taskc->updateCache(currentRow(), TaskSchedulerConnector::DISABLE);
-//        taskc->updateCache(currentRow(), TaskSchedulerConnector::DELETE);
+    if(deleteCheckMessage()) {
         taskc->remove(currentRow());
-
-        //reload
         reloadAction();
     }
 }
 
 void StartupTable::reloadAction()
 {
-//    int count = builder->count();
-//    //set tables
-//    setRowCount(count);
-//    for(int i = 0; i < count; i++){
-//        setTableItem(i);
-//    }
-
     QList<SchedulerCache> list = taskc->readAll();
 
     int count = list.count();
@@ -378,31 +285,10 @@ void StartupTable::copyAction()
     int count = rowCount();
     if(count == 0) return;
 
-//    builder->copyItem(this->currentRow());
-
-    //update unique code
-//    int currentrow = this->rowCount();
-//    QList<QStringList> *list = new QList<QStringList>();
-//    if(builder->readItem(currentrow, list)){
-//        //modify unique strings
-//        list->removeAt(StartupXmlBuilder::UNIQUE);
-//        list->insert(StartupXmlBuilder::UNIQUE, QStringList() << "unique" << getRandomString(32));
-
-//        // update item
-//        builder->editItem(currentrow, list);
-
-//        emit taskc->tableMessenger(currentrow,\
-//                                   TaskSchedulerConnector::TABLE::INSERT);
-//    }
-//    taskc->updateCache(currentrow, TaskSchedulerConnector::DUPLICATE);
     taskc->duplicate(this->currentRow());
 
     setRowCount(count + 1);
     setTableItem(count);
-
-//    reloadAction();
-
-//    selectRow(currentrow);
 }
 
 void StartupTable::upAction()
@@ -410,13 +296,9 @@ void StartupTable::upAction()
     int current = this->currentRow();
     if(current == 0) return;
 
-//    builder->swapItem(current, current-1);
-//    taskc->updateCache(current, TaskSchedulerConnector::UP);
-
     taskc->move(current, current - 1);
 
     reloadAction();
-
     selectRow(current - 1);
 }
 
@@ -427,101 +309,22 @@ void StartupTable::downAction()
 
     if((current + 1) == counter) return;
 
-//    builder->swapItem(current, current+1);
-//    taskc->updateCache(current, TaskSchedulerConnector::DOWN);
     taskc->move(current, current + 1);
 
     reloadAction();
-
     selectRow(current + 1);
 }
 
 void StartupTable::enableAction(){
-
-    QList<QStringList> list;
     int row = this->currentRow();
 
-//    if(!builder->readItem(row, &list)) return;
-
-//    if(!VariantConverter::stringToBool(list.at(StartupXmlBuilder::VALID).at(1))){
-//        QFileInfo info(list.at(StartupXmlBuilder::PROF).at(1));
-
-//        if(info.exists()){
-
-//            //change validation
-////            emit taskc->tableMessenger(list.at(StartupXmlBuilder::UNIQUE).at(1),\
-////                                       TaskSchedulerConnector::TABLE::ENABLE);
-//            replaceItem(row);
-//        }
-
-//    }
     taskc->enableSchedule(row);
     replaceItem(row);
 }
 
 void StartupTable::disableAction(){
-    //FIXME: NO CONDITION APPLYED IN ... (maybe solved)
-
-    QList<QStringList> list;
     int row = this->currentRow();
-
-//    if(!builder->readItem(row, &list)) return;
-
-//    if(VariantConverter::stringToBool(list.at(StartupXmlBuilder::VALID).at(1))){
-
-//        //change validation
-////        emit taskc->tableMessenger(list.at(StartupXmlBuilder::UNIQUE).at(1),\
-////                                   TaskSchedulerConnector::TABLE::DISABLE);
-//        taskc->updateCache(row, TaskSchedulerConnector::DISABLE);
-//        replaceItem(row);
-//    }
 
     taskc->disableSchedule(row);
     replaceItem(row);
 }
-
-//void StartupTable::updateItemEnabled(QString objectname)
-//{
-//    int itemid = getStartupXmlIndex(objectname);
-//    if(itemid > -1) setTableItem(itemid);
-//}
-
-//void StartupTable::updateItemTimerEnd(QString objectname, int status)
-//{
-//    Q_UNUSED(status)
-//    qDebug() << "[StartupTable::updateItemTimerEnd] ";
-////    switch(status){
-////    case SchedulerWait::FINISHED:
-////        break;
-////    case SchedulerWait::EXPIRED:
-////        break;
-////    }
-
-//    updateItemEnabled(objectname);
-//}
-
-//QString StartupTable::getRandomString(int length)
-//{
-//    QString characters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.");
-
-//    //shuffle characters
-//    int pos = characters.size() - 1;
-//    int random;
-//    while(pos > 1){
-//        random = abs(static_cast<int>(QRandomGenerator::global()->generate()) % pos);
-//        QChar tmp = characters.at(random);
-//        characters.replace(random, 1, characters.at(pos));
-//        characters.replace(pos, 1, tmp);
-//        pos--;
-//    }
-
-//    //select characters
-//    QString randomString;
-//    for(int i=0; i < length; ++i)
-//    {
-//        int index = abs(static_cast<int>(QRandomGenerator::global()->generate()) % length);
-//        QChar nextChar = characters.at(index);
-//        randomString.append(nextChar);
-//    }
-//    return randomString;
-//}

@@ -18,7 +18,6 @@
 #define TASKSCHEDULERCONNECTOR_H
 
 #include "taskscheduler.h"
-
 #include <settingcache/schedulercachelist.h>
 
 class TaskSchedulerConnector : public TaskScheduler
@@ -38,8 +37,6 @@ public:
     //! table function
     enum TABLE {ADD,EDIT,INSERT,DELETE,ENABLE,DISABLE,DUPLICATE,DRAGDROP,UP,DOWN,SWAP,MOVE};
 
-//    void updateCache(int index, TABLE func);
-
     void add(const SchedulerCache &sc);
     void insert(int index, const SchedulerCache &sc);
     void remove(int index);
@@ -53,18 +50,9 @@ public:
 
 signals:
     void fileLoadCompleted();
-//    void taskDisabled(QString);
-//    void taskEnabled(QString);
 
     //for syncronize table
-    //startuptable <-> processshowtable
-//    void tableMessenger(int index, TABLE func);
     void updateState(int index, QString message, TABLE func);
-
-//public slots:
-    //from systemtray or settingdialog
-//    void enableTask(QString objectname, QString filepath); //set objectname
-//    void disableTask(QString objectname);
 
 private slots:
     void initializeTask();

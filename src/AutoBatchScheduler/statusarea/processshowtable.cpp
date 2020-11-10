@@ -15,7 +15,6 @@
  */
 
 #include "processshowtable.h"
-#include "statuswidget.h"
 
 ProcessShowTable::ProcessShowTable(QWidget *parent)
  : QTableWidget(parent)
@@ -30,14 +29,10 @@ ProcessShowTable::ProcessShowTable(QWidget *parent)
     verticalHeader()->hide();
 
     setEditTriggers(QTableWidget::NoEditTriggers);
-
-    //set new xml builder
-//    builder = new StartupXmlBuilder();
 }
 
 ProcessShowTable::~ProcessShowTable()
 {
-//    delete builder;
 }
 
 void ProcessShowTable::removeItem(int itemid)
@@ -48,40 +43,6 @@ void ProcessShowTable::removeItem(int itemid)
 
 void ProcessShowTable::insertItem(int itemid)
 {
-//    QList<QStringList> *list = new QList<QStringList>();
-//    insertRow(itemid);
-
-//    if(builder->readItem(itemid, list)){
-
-//        CellInfoWidget *widget = new CellInfoWidget();
-//        widget->setObjectName(list->at(StartupXmlBuilder::UNIQUE).at(1));
-//        widget->setConsoleTarget(taskc);
-
-//        //clicked operation
-//        connect(widget, &CellInfoWidget::consoleButtonClicked, this, &ProcessShowTable::launchConsole);
-//        connect(widget, &CellInfoWidget::pauseButtonClicked, this, &ProcessShowTable::pauseClicked);
-//        connect(widget, &CellInfoWidget::stopButtonClicked, this, &ProcessShowTable::stopClicked);
-
-//        //set operation
-//        widget->setProfileName(list->at(StartupXmlBuilder::NAME).at(1));
-
-//        bool isvalid = (list->at(StartupXmlBuilder::VALID).at(1) == "yes")? true : false;
-
-//        //set checked action
-//        widget->setRunStatus(isvalid);
-
-//        //insert tables
-
-//        setRowHeight(itemid, widget->indicateHeight());
-//        setCellWidget(itemid, 0, widget);
-
-//        //clicked operation after
-//        connect(widget, &CellInfoWidget::changeRunStatus, this, &ProcessShowTable::onCheckStateChanged);
-
-//    }
-
-//    delete list;
-
     SchedulerCache cache = taskc->read(itemid);
     insertRow(itemid);
 
@@ -136,30 +97,11 @@ void ProcessShowTable::duplicateItem()
     this->insertItem(count);
 }
 
-void ProcessShowTable::enableItem(QString objname)
-{
-    //TODO: case of no cellwidget (when Item add newly)
-    CellInfoWidget *ciw = getCellWidget(objname);
-
-    if(ciw != nullptr){
-        ciw->setRunStatus(true);
-    }
-}
-
 void ProcessShowTable::enableItem(int index)
 {
     if(index >= rowCount()) return;
     CellInfoWidget *ciw = qobject_cast<CellInfoWidget *>(this->cellWidget(index,0));
     ciw->setRunStatus(true);
-}
-
-void ProcessShowTable::disableItem(QString objname)
-{
-    CellInfoWidget *ciw = getCellWidget(objname);
-
-    if(ciw != nullptr){
-        ciw->setRunStatus(false);
-    }
 }
 
 void ProcessShowTable::disableItem(int index)
@@ -260,7 +202,6 @@ void ProcessShowTable::launchConsole(QString objname)
 
     CellInfoWidget *widget = (wid == nullptr)? nullptr : qobject_cast<CellInfoWidget *>(wid);
 
-
     if(widget->isConsoleVisible()){
         //hide console
         widget->setConsoleVisible(false);
@@ -279,42 +220,19 @@ void ProcessShowTable::launchConsole(QString objname)
 void ProcessShowTable::onCheckStateChanged(bool checked)
 {
     QString objname = this->sender()->objectName();
-//    int itemid = getStartupXmlIndex(objname);
     int itemid = getIndex(objname);
 
     if(itemid < 0) return;
 
     if(checked){
-//        QList<QStringList> list;
-//        if(builder->readItem(itemid, &list)){
-//            QFileInfo info(list.at(StartupXmlBuilder::PROF).at(1));
-//            if(info.exists()){
-//                //change xml data (warning : determined order)
-
-//                changeXmlValidState(itemid);
-//                taskc->enableTask(objname, info.canonicalFilePath());
-
-//            }else{
-//                //show message
-//                emit infoNofile(list.at(StartupXmlBuilder::NAME).at(1));
-//            }
-//        }
         taskc->enableSchedule(itemid);
     }else{
-        //change xml data
-//        changeXmlValidState(itemid);
-//        taskc->disableTask(objname);
         taskc->disableSchedule(itemid);
     }
 }
 
 void ProcessShowTable::initCellWidgets()
 {
-//    int count = builder->count();
-
-//    for(int i = 0; i < count; i++){
-//        initCellWidget(i);
-//    }
     QList<SchedulerCache> list = taskc->readAll();
     int count = list.count();
 
@@ -326,53 +244,6 @@ void ProcessShowTable::initCellWidgets()
 
 void ProcessShowTable::initCellWidget(int itemid)
 {
-//    QList<QStringList> *list = new QList<QStringList>();
-//    insertRow(itemid);
-
-//    if(builder->readItem(itemid, list)){
-
-//        CellInfoWidget *widget = new CellInfoWidget();
-//        widget->setObjectName(list->at(StartupXmlBuilder::UNIQUE).at(1));
-//        widget->setConsoleTarget(taskc);
-
-//        //clicked operation
-//        connect(widget, &CellInfoWidget::consoleButtonClicked, this, &ProcessShowTable::launchConsole);
-//        connect(widget, &CellInfoWidget::pauseButtonClicked, this, &ProcessShowTable::pauseClicked);
-//        connect(widget, &CellInfoWidget::stopButtonClicked, this, &ProcessShowTable::stopClicked);
-
-//        //set operation
-//        widget->setProfileName(list->at(StartupXmlBuilder::NAME).at(1));
-
-//        bool isvalid = (list->at(StartupXmlBuilder::VALID).at(1) == "yes")? true : false;
-
-//        //set checked action
-//        widget->setRunStatus(isvalid);
-
-//        //insert tables
-//        setRowHeight(itemid, widget->indicateHeight());
-//        setCellWidget(itemid, 0, widget);
-
-//        //start scheduler if checkbox is valid
-//        if(isvalid){
-//            QFileInfo info(list->at(StartupXmlBuilder::PROF).at(1));
-//            if(info.exists()){
-//                taskc->enableTask(list->at(StartupXmlBuilder::UNIQUE).at(1), info.canonicalFilePath());
-
-//            }else{
-//                //change xml data (warning : determined order)
-//                changeXmlValidState(itemid);
-//                //show message
-//                emit infoNofile(list->at(StartupXmlBuilder::NAME).at(1));
-//            }
-//        }
-
-//        //clicked operation after
-//        connect(widget, &CellInfoWidget::changeRunStatus, this, &ProcessShowTable::onCheckStateChanged);
-
-//    }
-
-//    delete list;
-
     SchedulerCache cache = taskc->read(itemid);
     initCellWidget(itemid, cache);
 }
@@ -412,7 +283,6 @@ void ProcessShowTable::initCellWidget(int itemid, const SchedulerCache &cache)
 int ProcessShowTable::getIndex(QString objectname)
 {
     QList<SchedulerCache> list = taskc->readAll();
-
     int count = list.count();
 
     for(int i = 0; i < count; i++){
@@ -423,45 +293,6 @@ int ProcessShowTable::getIndex(QString objectname)
 
     return -1;
 }
-
-//void ProcessShowTable::changeXmlValidState(int itemid)
-//{
-//    QList<QStringList> *list = new QList<QStringList>();
-
-//    if(builder->readItem(itemid, list)){
-
-//        QString identifier = (list->at(StartupXmlBuilder::VALID).at(1) == "yes")? "no" : "yes";
-
-//        //change validation
-//        list->removeAt(StartupXmlBuilder::VALID);
-//        list->insert(StartupXmlBuilder::VALID, QStringList() << "valid" << identifier);
-
-//        builder->editItem(itemid, list);
-//    }
-
-//    delete list;
-//}
-
-//int ProcessShowTable::getStartupXmlIndex(QString objectname)
-//{
-//    QList<QStringList> *list = new QList<QStringList>();
-
-//    //search valid data
-//    int itemid = -1;
-//    int count = builder->count();
-
-//    for(int i = 0; i < count; i++){
-//        list->clear();
-//        if(builder->readItem(i, list)
-//                && objectname == list->at(StartupXmlBuilder::UNIQUE).at(1)){
-//            itemid = i;
-//            break;
-//        }
-//    }
-
-//    delete list;
-//    return itemid;
-//}
 
 CellInfoWidget* ProcessShowTable::getCellWidget(QString objname)
 {
@@ -491,37 +322,15 @@ void ProcessShowTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
     connect(taskc, &TaskSchedulerConnector::encounteredScheduledTime, this, &ProcessShowTable::encounterdTime);
     connect(taskc, &TaskSchedulerConnector::processEnd, this, &ProcessShowTable::setProcessEnd);
     connect(taskc, &TaskSchedulerConnector::processStopped, this, &ProcessShowTable::setProcessStopped);
-//    connect(taskc, &TaskSchedulerConnector::taskEnabled, this, &ProcessShowTable::enableItem);
-//    connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &ProcessShowTable::disableItem);
 
-//    connect(taskc, &TaskSchedulerConnector::tableMessenger, this, &ProcessShowTable::tableChanged);
     connect(taskc, &TaskSchedulerConnector::updateState, this, &ProcessShowTable::stateChanged);
 
     connect(this, &ProcessShowTable::pause, taskc, &TaskSchedulerConnector::processPause);
     connect(this, &ProcessShowTable::stop, taskc, &TaskSchedulerConnector::processStop);
 
-
     connect(taskc, &TaskSchedulerConnector::fileLoadCompleted
             , this, &ProcessShowTable::initCellWidgets);
 }
-
-//void ProcessShowTable::tableChanged(QString message, TaskSchedulerConnector::TABLE func)
-//{
-//    switch (func) {
-//    case TaskSchedulerConnector::TABLE::ADD:
-//    case TaskSchedulerConnector::TABLE::INSERT:   insertItem(message.toInt());   break;
-//    case TaskSchedulerConnector::TABLE::DELETE:   removeItem(message.toInt());   break;
-//    case TaskSchedulerConnector::TABLE::EDIT:     replaceItem(message.toInt());  break;
-//    case TaskSchedulerConnector::TABLE::ENABLE:   enableItem(message);           break;
-//    case TaskSchedulerConnector::TABLE::DISABLE:  disableItem(message);          break;
-//    case TaskSchedulerConnector::TABLE::DUPLICATE: break;
-//    case TaskSchedulerConnector::TABLE::DRAGDROP: break;
-//    case TaskSchedulerConnector::TABLE::UP: break;
-//    case TaskSchedulerConnector::TABLE::DOWN: break;
-//    case TaskSchedulerConnector::TABLE::SWAP: break;
-//    case TaskSchedulerConnector::TABLE::MOVE: break;
-//    }
-//}
 
 void ProcessShowTable::stateChanged(int index, QString message, TaskSchedulerConnector::TABLE func)
 {

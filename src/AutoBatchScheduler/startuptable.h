@@ -47,15 +47,12 @@ private slots:
     void disableAction();
     void reloadAction();
 
-//    void updateItemEnabled(QString objectname);
-//    void updateItemTimerEnd(QString objectname, int status);
-
 private:
     void setPopupActionTop();
     void setPopupActionDefault();
     void setPopupActionBottom();
     bool eventFilter(QObject *obj, QEvent *event);
-    int getStartupXmlIndex(QString objectname);
+    int getIndex(QString objectname);
 
     QAction *m_add;
     QAction *m_edit;
@@ -64,13 +61,11 @@ private:
     QAction *m_enable;
     QAction *m_disable;
 
-//    StartupXmlBuilder *builder;
     TaskSchedulerConnector *taskc;
     void setTableItem(int row);
     void setTableItem(int row, const SchedulerCache &sc);
 
     void replaceItem(int row);
-//    QString getRandomString(int length);
 };
 
 #endif // STARTUPTABLE_H

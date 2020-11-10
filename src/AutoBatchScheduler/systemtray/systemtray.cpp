@@ -16,8 +16,6 @@
 
 #include "systemtray.h"
 
-#include <QSettings>
-
 SystemTray::SystemTray(QWidget *parent) : QWidget(parent)
 {
     //init trayicon and menu
@@ -39,16 +37,12 @@ SystemTray::SystemTray(QWidget *parent) : QWidget(parent)
 
     trayIconMenu = new QMenu(this);
 
-    //set new xml builder
-//    builder = new StartupXmlBuilder();
-
     themeChangeAction();
 
 }
 
 SystemTray::~SystemTray()
 {
-//    delete builder;
     delete trayIconMenu;
     delete strw;
     delete trayIcon;
@@ -59,7 +53,6 @@ void SystemTray::setTaskSchedulerConnector(TaskSchedulerConnector *task)
     taskc = task;
     strw->setTaskSchedulerConnector(task);
 
-    //connect
     connect(taskc, &TaskSchedulerConnector::timerStarted, this, &SystemTray::showTimerStart);
     connect(taskc, &TaskSchedulerConnector::timerFinished, this, &SystemTray::showTimerStopped);
     connect(taskc, &TaskSchedulerConnector::processStarted, this, &SystemTray::showProcessStart);
@@ -67,11 +60,9 @@ void SystemTray::setTaskSchedulerConnector(TaskSchedulerConnector *task)
     connect(taskc, &TaskSchedulerConnector::processPaused, this, &SystemTray::showProcessPause);
     connect(taskc, &TaskSchedulerConnector::processEnd, this, &SystemTray::showProcessEnded);
 
-    //not timer this is whole task
-//    connect(taskc, &TaskSchedulerConnector::taskDisabled, this, &SystemTray::showTaskDisabled);
+    // Receive other ui or scheduler action change.
     connect(taskc, &TaskSchedulerConnector::updateState, this, &SystemTray::stateChanged);
 
-    //set trayicon actions (task function is need for this.)
     initTrayIcon();
 }
 
@@ -111,7 +102,6 @@ void SystemTray::showNotCloseMessage()
 void SystemTray::showTimerStart(QString objectname, QDateTime time)
 {
     //search valid data
-//    int itemid = getStartupXmlIndex(objectname);
     int itemid = getIndex(objectname);
 
     // load setting datas
@@ -124,32 +114,17 @@ void SystemTray::showTimerStart(QString objectname, QDateTime time)
     qDebug() << "[SystemTray::showTimerStart] Timer started.";
 
     if(itemid >= 0 && started){
-        //get newtime from xml
-//        QList<QStringList> *list = new QList<QStringList>();
-
-//        QString textdata;
-        //maybe slow
-//        if(builder->readItem(itemid, list)){
-//            textdata.append(list->at(StartupXmlBuilder::NAME).at(1));
-//            textdata.append("\r\n");
-//            textdata.append(time.toString("yyyy/MM/dd HH:mm:ss"));
-//            textdata.append(" ");
-//            textdata.append(encodeDayOfWeek(time.date().dayOfWeek()));
-
-//        }
         SchedulerCache cache = taskc->read(itemid);
         QString textdata = QString("%1\n%2 %3")
                                .arg(cache.settingName)
                                .arg(time.toString(tr("yyyy/MM/dd HH:mm:ss")))
                                .arg(encodeDayOfWeek(time.date().dayOfWeek()));
 
-
         //show message
         trayIcon->showMessage(tr("Timer started"), textdata \
                               , QSystemTrayIcon::Information \
                               , timerms);
 
-//        delete list;
     }
 }
 
@@ -180,16 +155,9 @@ void SystemTray::showTimerStopped(QString objectname, int type)
                               getNameByActions(objectname),\
                               QSystemTrayIcon::Warning,\
                               3500);
-        //change action checkstate
-//        int itemid = getStartupXmlIndex(objectname);
-//        if(itemid >= 0) changeXmlValidState(itemid);
-//        taskc->disableTask(objectname);
+
         int itemid = getIndex(objectname);
-        if(itemid >= 0){
-//            this->blockSignals(true);
-            taskc->disableSchedule(itemid);
-//            this->blockSignals(false);
-        }
+        if(itemid >= 0) taskc->disableSchedule(itemid);
         break;
     }
     default:
@@ -306,25 +274,6 @@ void SystemTray::initTrayIcon()
     trayIcon->setContextMenu(trayIconMenu);
 }
 
-//void SystemTray::changeXmlValidState(int itemid)
-//{
-//    QList<QStringList> *list = new QList<QStringList>();
-
-//    if(builder->readItem(itemid, list)){
-
-//        QString identifier = (list->at(StartupXmlBuilder::VALID).at(1) == "yes")? "no" : "yes";
-
-//        //change validation
-//        list->removeAt(StartupXmlBuilder::VALID);
-//        list->insert(StartupXmlBuilder::VALID, QStringList() << "valid" << identifier);
-
-//        builder->editItem(itemid, list);
-
-//    }
-
-//    delete list;
-//}
-
 int SystemTray::getIndex(QString objectname)
 {
     QList<SchedulerCache> list = taskc->readAll();
@@ -338,27 +287,6 @@ int SystemTray::getIndex(QString objectname)
 
     return -1;
 }
-
-//int SystemTray::getStartupXmlIndex(QString objectname)
-//{
-//    QList<QStringList> *list = new QList<QStringList>();
-
-//    //search valid data
-//    int itemid = -1;
-//    int count = builder->count();
-
-//    for(int i = 0; i < count; i++){
-//        list->clear();
-//        if(builder->readItem(i, list)
-//                && objectname == list->at(StartupXmlBuilder::UNIQUE).at(1)){
-//            itemid = i;
-//            break;
-//        }
-//    }
-
-//    delete list;
-//    return itemid;
-//}
 
 QString SystemTray::getNameByActions(QString objectname)
 {
@@ -377,22 +305,14 @@ QString SystemTray::getNameByActions(QString objectname)
 QString SystemTray::encodeDayOfWeek(int dayofweek)
 {
     switch (dayofweek) {
-    case 1:
-        return tr("Monday");
-    case 2:
-        return tr("Tuesday");
-    case 3:
-        return tr("Wednesday");
-    case 4:
-        return tr("Thursday");
-    case 5:
-        return tr("Friday");
-    case 6:
-        return tr("Saturday");
-    case 7:
-        return tr("Sunday");
-    default:
-        break;
+    case 1:  return tr("Monday");
+    case 2:  return tr("Tuesday");
+    case 3:  return tr("Wednesday");
+    case 4:  return tr("Thursday");
+    case 5:  return tr("Friday");
+    case 6:  return tr("Saturday");
+    case 7:  return tr("Sunday");
+    default: break;
     }
     return "";
 }

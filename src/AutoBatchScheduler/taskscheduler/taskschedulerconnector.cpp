@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 karakirimu
+ * Copyright 2016-2020 karakirimu
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,6 @@ TaskSchedulerConnector::~TaskSchedulerConnector()
     for(SchedulerCache sc : list){
         if(sc.isScheduled){
             removeTask(sc.objectName());
-//            emit updateState(i, sc.objectName(), DISABLE);
         }
         i++;
     }
@@ -175,63 +174,3 @@ void TaskSchedulerConnector::initializeTask()
         i++;
     }
 }
-
-//void TaskSchedulerConnector::enableTask(QString objectname, QString filepath)
-//{
-//    scheduler->addTask(objectname, filepath);
-//    emit taskEnabled(objectname);
-//}
-
-//void TaskSchedulerConnector::disableTask(QString objectname)
-//{
-//    scheduler->removeTask(objectname);
-//    emit taskDisabled(objectname);
-//}
-
-//void TaskSchedulerConnector::updateCache(int index
-//                                         , TaskSchedulerConnector::TABLE func)
-//{
-//    switch (func) {
-//    case TABLE::DELETE:
-//        cache->removeAt(index);
-//        break;
-//    case TABLE::UP:
-//        cache->move(index, index-1);
-//        break;
-//    case TABLE::DOWN:
-//        cache->move(index, index+1);
-//        break;
-//    case TABLE::COPY:
-//    {
-//        SchedulerCache sc(cache->at(index), true);
-//        cache->insert(index,sc);
-//        break;
-//    }
-//    case TABLE::ENABLE:
-//    {
-//        SchedulerCache sc = cache->at(index);
-//        if(!sc.isScheduled){
-//            sc.isScheduled = true;
-//            cache->replace(index, sc);
-//            emit updateSchedulerState(index, cache->at(index).objectName(), ENABLE);
-//        }
-//        break;
-//    }
-//    case TABLE::DISABLE:
-//    {
-//        SchedulerCache sc = cache->at(index);
-//        if(sc.isScheduled){
-//            sc.isScheduled = false;
-//            cache->replace(index, sc);
-//            emit updateSchedulerState(index, cache->at(index).objectName(), DISABLE);
-//        }
-//        break;
-//    }
-//    case TABLE::ADD:
-//    case TABLE::INSERT:
-//    case TABLE::EDIT:
-//    case TABLE::SWAP:
-//    case TABLE::DRAGDROP:
-//        break;
-//    }
-//}

@@ -17,17 +17,14 @@
 #ifndef STARTUPDIALOG_H
 #define STARTUPDIALOG_H
 
-#include <settingcache/schedulercache.h>
-//#include <settingcache/startupxmlbuilder.h>
-#include <../variantconverter/variantconverter.h>
-
 #include <QDialog>
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QDateTime>
-#include <QFileInfo>
 #include <QDebug>
-#include <QRandomGenerator>
+
+#include <settingcache/schedulercache.h>
+#include <../variantconverter/variantconverter.h>
 
 namespace Ui {
 class StartupDialog;
@@ -40,9 +37,9 @@ public:
     explicit StartupDialog(QWidget *parent = nullptr);
     ~StartupDialog();
 
-//    void loadSettingList(int index, const QList<QStringList> *data);
     void load(const SchedulerCache &setting);
     const SchedulerCache getSavedSetting() { return settingCache; }
+
 protected slots:
     void onAccept();
     void onReject();
@@ -52,22 +49,15 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private:
-    Ui::StartupDialog *ui;
-//    StartupXmlBuilder *builder;
-//    bool editflag;
-//    int editindex;
-//    QString uniquecode;
-
-    SchedulerCache settingCache;
-
-//    void createList(QList<QStringList> *newlist);
     void updateSetting();
 
     QString daySelectToString();
-//    QString getRandomString(int length);
     QString timeToSeconds(QString data);
     QString secondsToTime(qint64 num);
     void StringToDaySelect(QString data);
+
+    Ui::StartupDialog *ui;
+    SchedulerCache settingCache;
 };
 
 #endif // STARTUPDIALOG_H
