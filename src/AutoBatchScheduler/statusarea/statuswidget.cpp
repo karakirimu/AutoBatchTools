@@ -60,17 +60,16 @@ void StatusWidget::showWidget()
     qDebug() << "y" << rec.y() << ava.y();
     qDebug() << "x" << rec.x() << ava.x();
 
-#endif
-
+#endif    
     if(rec.height() > ava.height()){
         int taskbarsize = rec.height() - ava.height();
         if(rec.y() < ava.y()){
             //top
-            this->move(rec.width() - this->width() - 30, taskbarsize + 10);
+            this->move(rec.width() - this->width() - 10, taskbarsize);
 
         }else{
             //bottom
-            this->move(rec.width() - this->width() - 30, rec.height() - this->height() - taskbarsize - 10);
+            this->move(rec.width() - this->width() - 10, rec.height() - this->height() - taskbarsize);
 
         }
     }else {
@@ -79,11 +78,11 @@ void StatusWidget::showWidget()
 
         if(rec.x() < ava.x()){
             //left
-            this->move(taskbarsize + 10, rec.height() - this->height() - 10);
+            this->move(taskbarsize, rec.height() - this->height() - 10);
 
         }else{
             //right
-            this->move(rec.width() - this->width() - taskbarsize - 10, rec.height() - this->height() - 10);
+            this->move(rec.width() - this->width() - taskbarsize, rec.height() - this->height() - 10);
 
         }
     }
