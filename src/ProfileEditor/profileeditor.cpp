@@ -161,6 +161,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->mainToolBar, &QToolBar::visibilityChanged, ui->actionToolBarEdit, &QAction::setChecked);
     connect(ui->setTestDockWidget, &BaseDockWidget::visibilityChanged, ui->actionRunSetting, &QAction::setChecked);
     connect(ui->consoleDockWidget, &BaseDockWidget::visibilityChanged, ui->actionRunConsole, &QAction::setChecked);
+    connect(ui->variantDockWidget, &BaseDockWidget::visibilityChanged, ui->actionVariant, &QAction::setChecked);
 
     connect(ui->actionAutohide, &QAction::triggered, ui->processDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->setTestDockWidget, &BaseDockWidget::setAutohide);
