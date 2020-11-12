@@ -21,6 +21,8 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ProfileEditor)
 {
+    qDebug() << "[ProfileEditor::ProfileEditor] default constructor";
+
     ui->setupUi(this);
 
     //dock position
@@ -188,10 +190,15 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
 ProfileEditor::ProfileEditor(QStringList cuiargs, QWidget *parent)
     : ProfileEditor(parent)
 {
+    qDebug() << "[ProfileEditor::ProfileEditor] arguments constructor";
+
     QString lfile = cuiargs.last();
 
     if(cuiargs.count() == 2 && lfile.contains("apro")){
         editop->openAction(lfile);
+    }else{
+        // it must be zero.
+        QTimer::singleShot(0, this, &ProfileEditor::initFileLoad);
     }
 }
 
@@ -238,8 +245,6 @@ void ProfileEditor::showEvent(QShowEvent *event)
         return;
     }
 
-    // it must be zero.
-    QTimer::singleShot(0, this, &ProfileEditor::initFileLoad);
     showfirst = false;
     event->accept();
 }
