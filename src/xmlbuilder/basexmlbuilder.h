@@ -48,18 +48,18 @@ protected:
     qint64 getElementFirstLineNumber(QString element, QString attr, QString attrvalue);
     qint64 getElementEndLineNumber(QString element, QString attr, int value);
     void openedFileReset();
-    void clearFileText();
+    inline void clearFileText(){ file->resize(0); }
     bool openFile(QFlags<QIODevice::OpenModeFlag> flags);
 
-    //close file if it is opened
-    void closeFile();
+    // close file if it is opened
+    inline void closeFile(){ if(file->isOpen()) file->close(); }
 
     void checkXmlError();
     QString getTabbedXmlString(QTemporaryFile *tmp, int indent);
     QString appendTabIndent(int num);
 
-    //All unified with LF (Unix style)
-    QString endLineStr();
+    // LF (Unix style)
+    inline QString endLineStr(){ return "\n"; }
 
     QXmlStreamReader *rxml;
     QXmlStreamWriter *wxml;

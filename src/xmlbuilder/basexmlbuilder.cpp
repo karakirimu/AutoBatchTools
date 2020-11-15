@@ -222,9 +222,8 @@ qint64 BaseXmlBuilder::getElementFirstLineNumber(QString element)
 
     while (!(rxml->atEnd() || rxml->hasError()))
     {
-        rxml->readNext();
-        if (rxml->isStartElement()
-                && rxml->name().toString() == element)
+        if (rxml->readNext() == QXmlStreamReader::StartElement
+            && rxml->name() == element)
         {
             line = rxml->lineNumber();
             break;
@@ -259,9 +258,8 @@ qint64 BaseXmlBuilder::getElementFirstLineNumber(QString element, QString attr, 
 
     while (!(rxml->atEnd() || rxml->hasError()))
     {
-        rxml->readNext();
-        if (rxml->isStartElement()
-                && rxml->name().toString() == element
+        if (rxml->readNext() == QXmlStreamReader::StartElement
+                && rxml->name() == element
                 && rxml->attributes().value(attr) == attrvalue)
         {
             line = rxml->lineNumber();
@@ -332,8 +330,8 @@ int BaseXmlBuilder::getElementItemsCount(QString element)
 
     while (!(rxml->atEnd() || rxml->hasError()))
     {
-        rxml->readNext();
-        if (rxml->isStartElement() && rxml->name().toString() == element)
+        if (rxml->readNext() == QXmlStreamReader::StartElement
+            && rxml->name() == element)
         {
             count++;
         }
@@ -366,16 +364,6 @@ QString BaseXmlBuilder::appendTabIndent(int num)
 }
 
 /**
- * @fn BaseXmlBuilder::endLineStr
- * @brief Returns the line feed code that matches the OS.
- *
- * @return Line feed code suitable for OS.
- */
-QString BaseXmlBuilder::endLineStr(){
-    return "\n";
-}
-
-/**
  * @fn BaseXmlBuilder::checkXmlError
  * @brief xml file reading error check.
  */
@@ -397,8 +385,6 @@ void BaseXmlBuilder::openedFileReset(){
     rxml->setDevice(file);
 }
 
-void BaseXmlBuilder::clearFileText(){ file->resize(0); }
-
 /**
  * @fn BaseXmlBuilder::openFile
  * @brief Open file.
@@ -416,12 +402,6 @@ bool BaseXmlBuilder::openFile(QFlags<QIODevice::OpenModeFlag> flags)
 
     return true;
 }
-
-/**
- * @fn BaseXmlBuilder::closeFile
- * @brief Close file if open.
- */
-void BaseXmlBuilder::closeFile(){ if(file->isOpen()) file->close(); }
 
 /**
  * @fn BaseXmlBuilder::getTabbedXmlString
