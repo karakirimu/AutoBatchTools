@@ -39,11 +39,12 @@ private:
     QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase);
 
     //! Date format
-    static constexpr char DATE_FORMAT[] = "yyyy/MM/dd HH:mm:ss";
+    const QString DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
 
     //! Time format
-    static constexpr char TIME_FORMAT[] = "HH:mm:ss";
+    const QString TIME_FORMAT = "HH:mm:ss";
 
+    SchedulerXmlConstant sxc;
 };
 
 #endif // SCHEDULERCACHECONVERTER_H

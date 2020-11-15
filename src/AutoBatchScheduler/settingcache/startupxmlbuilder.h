@@ -77,6 +77,7 @@ private:
 //    const QString ROOTELEMENT = "startup";
 //    const QString FIRSTLAYER = "item";
 //    const QString ATTR = "id";
+    SchedulerXmlConstant sxc;
 };
 
 #endif // STARTUPXMLBUILDER_H

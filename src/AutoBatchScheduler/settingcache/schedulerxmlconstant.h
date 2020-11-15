@@ -17,49 +17,54 @@
 #ifndef SCHEDULERXMLCONSTANT_H
 #define SCHEDULERXMLCONSTANT_H
 
+#include <QString>
+
 class SchedulerXmlConstant {
 public:
+    SchedulerXmlConstant(){}
+    ~SchedulerXmlConstant(){}
+
     //! Root element name "startup"
-    static constexpr char TAG_ROOT[]          = "startup";
+    const QString TAG_ROOT          = "startup";
 
     //! Scheduler XML version code attribute "version"
-    static constexpr char ATTR_ROOT[]         = "version";
+    const QString ATTR_ROOT         = "version";
 
     //! Scheduler XML version "1.00"
-    static constexpr char ATTRVALUE_ROOT[]    = "1.00";
+    const QString ATTRVALUE_ROOT    = "1.00";
 
     //! Tags that include tags after this tag
-    static constexpr char TAG_FIRSTLAYER[]    = "item";
+    const QString TAG_FIRSTLAYER    = "item";
 
     //! "name"
-    static constexpr char TAG_NAME[]          = "name";
+    const QString TAG_NAME          = "name";
 
     //! "prof"
-    static constexpr char TAG_PROFILE[]       = "prof";
+    const QString TAG_PROFILE       = "prof";
 
     //! "valid"
-    static constexpr char TAG_SCHEDULED[]     = "valid";
+    const QString TAG_SCHEDULED     = "valid";
 
     //! "radio"
-    static constexpr char TAG_SCHEDULETYPE[]  = "radio";
+    const QString TAG_SCHEDULETYPE  = "radio";
 
     //! "schdt"
-    static constexpr char TAG_DATETIME[]      = "schdt";
+    const QString TAG_DATETIME      = "schdt";
 
     //! "schsec"
-    static constexpr char TAG_SECOND[]        = "schsec";
+    const QString TAG_SECOND        = "schsec";
 
     //! "scht"
-    static constexpr char TAG_TIME[]          = "scht";
+    const QString TAG_TIME          = "scht";
 
     //! "schday"
-    static constexpr char TAG_DATE[]          = "schday";
+    const QString TAG_DATE          = "schday";
 
     //! unique removed (deprecated)
-    static constexpr char TAG_UNIQUE[]        = "unique";
+    const QString TAG_UNIQUE        = "unique";
 
     //!
-    static constexpr char ATTR_ITEM_ID_INT[]  = "id";
+    const QString ATTR_ITEM_ID_INT  = "id";
 
 };
 

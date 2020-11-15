@@ -39,8 +39,8 @@ bool StartupXmlBuilder::readAll(QList<QList<QStringList> *> *itemlist)
 #ifdef QT_DEBUG
     qDebug() << "[StartupXmlBuilder::readAll]";
 #endif
-    return Xmlbuilder::readAllItem(SchedulerXmlConstant::TAG_FIRSTLAYER
-                                   , SchedulerXmlConstant::ATTR_ITEM_ID_INT
+    return Xmlbuilder::readAllItem(sxc.TAG_FIRSTLAYER
+                                   , sxc.ATTR_ITEM_ID_INT
                                    , itemlist);
 }
 
@@ -49,44 +49,44 @@ bool StartupXmlBuilder::writeAll(const QList<QList<QStringList> *> *itemlist)
 #ifdef QT_DEBUG
     qDebug() << "[StartupXmlBuilder::writeAll]";
 #endif
-    return Xmlbuilder::writeAllItem(SchedulerXmlConstant::TAG_ROOT
-                                    , SchedulerXmlConstant::ATTR_ROOT
-                                    , SchedulerXmlConstant::ATTRVALUE_ROOT
-                                    , SchedulerXmlConstant::TAG_FIRSTLAYER
-                                    , SchedulerXmlConstant::ATTR_ITEM_ID_INT
+    return Xmlbuilder::writeAllItem(sxc.TAG_ROOT
+                                    , sxc.ATTR_ROOT
+                                    , sxc.ATTRVALUE_ROOT
+                                    , sxc.TAG_FIRSTLAYER
+                                    , sxc.ATTR_ITEM_ID_INT
                                     , itemlist);
 }
 
 bool StartupXmlBuilder::readItem(int itemid, QList<QStringList> *itemlist)
 {
     return Xmlbuilder::readItem(itemid
-                                , SchedulerXmlConstant::TAG_FIRSTLAYER
-                                , SchedulerXmlConstant::ATTR_ITEM_ID_INT
+                                , sxc.TAG_FIRSTLAYER
+                                , sxc.ATTR_ITEM_ID_INT
                                 , itemlist);
 }
 
 bool StartupXmlBuilder::addItem(const QList<QStringList> *itemlist)
 {
     return Xmlbuilder::overwriteItem(count()
-                                    , SchedulerXmlConstant::TAG_ROOT
-                                    , SchedulerXmlConstant::TAG_FIRSTLAYER
-                                    , SchedulerXmlConstant::ATTR_ITEM_ID_INT
+                                    , sxc.TAG_ROOT
+                                    , sxc.TAG_FIRSTLAYER
+                                    , sxc.ATTR_ITEM_ID_INT
                                     , itemlist);
 }
 
 bool StartupXmlBuilder::deleteItem(int itemid)
 {
     return Xmlbuilder::deleteItem(itemid
-                                  , SchedulerXmlConstant::TAG_FIRSTLAYER
-                                  , SchedulerXmlConstant::ATTR_ITEM_ID_INT);
+                                  , sxc.TAG_FIRSTLAYER
+                                  , sxc.ATTR_ITEM_ID_INT);
 }
 
 bool StartupXmlBuilder::editItem(int itemid, const QList<QStringList> *itemlist)
 {
     return Xmlbuilder::overwriteItem(itemid
-                                     , SchedulerXmlConstant::TAG_ROOT
-                                     , SchedulerXmlConstant::TAG_FIRSTLAYER
-                                     , SchedulerXmlConstant::ATTR_ITEM_ID_INT
+                                     , sxc.TAG_ROOT
+                                     , sxc.TAG_FIRSTLAYER
+                                     , sxc.ATTR_ITEM_ID_INT
                                      , itemlist);
 }
 
@@ -94,50 +94,50 @@ void StartupXmlBuilder::swapItem(int beforeitemid, int afteritemid)
 {
     Xmlbuilder::swapItem(beforeitemid
                          , afteritemid
-                         , SchedulerXmlConstant::TAG_ROOT
-                         , SchedulerXmlConstant::TAG_FIRSTLAYER
-                         , SchedulerXmlConstant::ATTR_ITEM_ID_INT);
+                         , sxc.TAG_ROOT
+                         , sxc.TAG_FIRSTLAYER
+                         , sxc.ATTR_ITEM_ID_INT);
 }
 
 void StartupXmlBuilder::copyItem(int itemid)
 {
     Xmlbuilder::copyItem(itemid
-                         , SchedulerXmlConstant::TAG_ROOT
-                         , SchedulerXmlConstant::TAG_FIRSTLAYER
-                         , SchedulerXmlConstant::ATTR_ITEM_ID_INT
-                         , SchedulerXmlConstant::TAG_NAME);
+                         , sxc.TAG_ROOT
+                         , sxc.TAG_FIRSTLAYER
+                         , sxc.ATTR_ITEM_ID_INT
+                         , sxc.TAG_NAME);
 }
 
 bool StartupXmlBuilder::overwriteItem(int itemid, const QList<QStringList> *itemlist)
 {
     return Xmlbuilder::overwriteItem(itemid
-                                     , SchedulerXmlConstant::TAG_ROOT
-                                     , SchedulerXmlConstant::TAG_FIRSTLAYER
-                                     , SchedulerXmlConstant::ATTR_ITEM_ID_INT
+                                     , sxc.TAG_ROOT
+                                     , sxc.TAG_FIRSTLAYER
+                                     , sxc.ATTR_ITEM_ID_INT
                                      , itemlist);
 }
 
 void StartupXmlBuilder::createDocument()
 {
-    createXmlBaseDocument(SchedulerXmlConstant::TAG_ROOT);
+    createXmlBaseDocument(sxc.TAG_ROOT);
 }
 
 int StartupXmlBuilder::count()
 {
-    return getElementItemsCount(SchedulerXmlConstant::TAG_FIRSTLAYER);
+    return getElementItemsCount(sxc.TAG_FIRSTLAYER);
 }
 
 void StartupXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {
-    if(element == SchedulerXmlConstant::TAG_NAME
-            || element == SchedulerXmlConstant::TAG_PROFILE
-            || element == SchedulerXmlConstant::TAG_SCHEDULED
-            || element == SchedulerXmlConstant::TAG_SCHEDULETYPE
-            || element == SchedulerXmlConstant::TAG_DATETIME
-            || element == SchedulerXmlConstant::TAG_SECOND
-            || element == SchedulerXmlConstant::TAG_TIME
-            || element == SchedulerXmlConstant::TAG_DATE
-            || element == SchedulerXmlConstant::TAG_UNIQUE)
+    if(element == sxc.TAG_NAME
+            || element == sxc.TAG_PROFILE
+            || element == sxc.TAG_SCHEDULED
+            || element == sxc.TAG_SCHEDULETYPE
+            || element == sxc.TAG_DATETIME
+            || element == sxc.TAG_SECOND
+            || element == sxc.TAG_TIME
+            || element == sxc.TAG_DATE
+            || element == sxc.TAG_UNIQUE)
     {
         QStringList data;
         //add element and text
