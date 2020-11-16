@@ -221,7 +221,6 @@ QHeaderView::section {
     padding-top: 3px;
     border-bottom: 1px solid #c6c6c6;
     padding-bottom: 3px;
-    padding-left: 8px;
     color: #c6c6c6;
 }
 
@@ -229,6 +228,7 @@ QHeaderView[VerticalHeaderStyle="1"]::section
 {
     background-color: #373737;
     border-top: 0px;
+    padding-left: 8px;
     border-bottom: 1px solid #303030;
     color: #c6c6c6;
 }

@@ -41,7 +41,11 @@ ProcessFlowTable::ProcessFlowTable(QWidget *parent)
     horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 
     //set header style
+    verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
     verticalHeader()->setProperty("VerticalHeaderStyle", 1);
+
+    //set delegate
+    setItemDelegateForColumn(SECOND, new TypeIconDelegate(this));
 
     //set selection changed
     connect(this, &ProcessFlowTable::currentCellChanged, this, &ProcessFlowTable::selectChanged);
@@ -378,12 +382,15 @@ void ProcessFlowTable::replaceItem(int id)
 
 void ProcessFlowTable::selectChanged(int crow, int ccol, int prow, int pcol)
 {
-    Q_UNUSED(ccol)
+//    Q_UNUSED(ccol)
     Q_UNUSED(pcol)
     if(crow == prow) return;
 
     qDebug() << "[ProcessFlowTable::selectChanged]    rowpos : " << uiIndexToData();
-    this->currentItem()->setToolTip(this->currentItem()->text());
+
+    if(ccol == FIRST){
+        this->currentItem()->setToolTip(this->currentItem()->text());
+    }
 
     emit editop->processIndexUpdate(uiIndexToData(), -1, EditOperator::SELECT);
 }
@@ -429,16 +436,6 @@ int ProcessFlowTable::uiIndexToData()
     return uiIndexToData(this->currentRow());
 }
 
-int ProcessFlowTable::dataToUiIndex(int id)
-{
-    return (id > 1)? id - 1 : 0;
-}
-
-int ProcessFlowTable::uiIndexToData(int id)
-{
-    return (id > 0)? id + 1 : 0;
-}
-
 void ProcessFlowTable::setPopupActionTop()
 {
     //set basic items
@@ -479,27 +476,37 @@ void ProcessFlowTable::setPopupActionBottom()
     connect(m_ref, &QAction::triggered, this, &ProcessFlowTable::reloadAction);
 }
 
-void ProcessFlowTable::setFlowItem(int itemid)
+void ProcessFlowTable::setFlowItem(int dataid)
 {
     EditorCache list;
     FunctionType ft;
 
     //reading failure
-    if(!editop->read(itemid, &list)){
+    if(!editop->read(dataid, &list)){
         return;
     }
 
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
+    settings.beginGroup(sc.GROUP_ABE);
+    bool deschide = settings.value(sc.ABE_PROCESS_HIDE_DESC, false).toBool();
+    settings.endGroup();
+
+    TableOption op;
+    op.dataid = dataid;
+    op.hidedescription = deschide;
+
     switch (ft.getType(list.type)) {
-    case ft.TYPE::ALLINCLUDE:  setAllIncludeItem(&list, itemid);  break;
-    case ft.TYPE::INFORMATION: setInfoItem(&list, itemid);        break;
+    case ft.TYPE::ALLINCLUDE:  setAllIncludeItem(&list, &op);  break;
+    case ft.TYPE::INFORMATION: setInfoItem(&list, &op);        break;
     case ft.TYPE::LOCAL:       break;
-    case ft.TYPE::EXECUTE:     setExecuteItem(&list, itemid);     break;
-    case ft.TYPE::FILESEARCH:  setFileSearchItem(&list, itemid);  break;
-    case ft.TYPE::PLUGIN:      setPluginItem(&list, itemid);      break;
-    case ft.TYPE::PROFILELOAD: setProfileLoadItem(&list, itemid); break;
+    case ft.TYPE::EXECUTE:     setExecuteItem(&list, &op);     break;
+    case ft.TYPE::FILESEARCH:  setFileSearchItem(&list, &op);  break;
+    case ft.TYPE::PLUGIN:      setPluginItem(&list, &op);      break;
+    case ft.TYPE::PROFILELOAD: setProfileLoadItem(&list, &op); break;
     case ft.TYPE::INVALID:     break;
     }
 
+    resizeColumnToContents(SECOND);
 }
 
 void ProcessFlowTable::setAllFlowItem()
@@ -510,41 +517,51 @@ void ProcessFlowTable::setAllFlowItem()
     EditorCache inner;
     FunctionType ft;
 
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
+    settings.beginGroup(sc.GROUP_ABE);
+    bool deschide = settings.value(sc.ABE_PROCESS_HIDE_DESC, false).toBool();
+    settings.endGroup();
+
     int count = list.count();
     for (int n = 0; n < count; n++) {
         inner = list.at(n);
 
+        TableOption op;
+        op.dataid = n;
+        op.hidedescription = deschide;
+
         switch (ft.getType(inner.type)) {
-        case ft.TYPE::ALLINCLUDE:  setAllIncludeItem(&inner, n);  break;
-        case ft.TYPE::INFORMATION: setInfoItem(&inner, n);        break;
+        case ft.TYPE::ALLINCLUDE:  setAllIncludeItem(&inner, &op);  break;
+        case ft.TYPE::INFORMATION: setInfoItem(&inner, &op);        break;
         case ft.TYPE::LOCAL:       break;
-        case ft.TYPE::EXECUTE:     setExecuteItem(&inner, n);     break;
-        case ft.TYPE::FILESEARCH:  setFileSearchItem(&inner, n);  break;
-        case ft.TYPE::PLUGIN:      setPluginItem(&inner, n);      break;
-        case ft.TYPE::PROFILELOAD: setProfileLoadItem(&inner, n); break;
+        case ft.TYPE::EXECUTE:     setExecuteItem(&inner, &op);     break;
+        case ft.TYPE::FILESEARCH:  setFileSearchItem(&inner, &op);  break;
+        case ft.TYPE::PLUGIN:      setPluginItem(&inner, &op);      break;
+        case ft.TYPE::PROFILELOAD: setProfileLoadItem(&inner, &op); break;
         case ft.TYPE::INVALID:     break;
         }
     }
+
+    resizeColumnToContents(SECOND);
 }
 
-
-void ProcessFlowTable::setAllIncludeItem(EditorCache *list, int dataid)
+void ProcessFlowTable::setAllIncludeItem(EditorCache *list, TableOption *option)
 {
     switch (static_cast<TAB>(list->functionSelect)) {
     case TAB::EXECUTE:
-        setExecuteItem(list, dataid);
+        setExecuteItem(list, option);
         break;
 
     case TAB::FILESEARCH:
-        setFileSearchItem(list, dataid);
+        setFileSearchItem(list, option);
         break;
 
     case TAB::PLUGINS:
-        setPluginItem(list, dataid);
+        setPluginItem(list, option);
         break;
 
     case TAB::PROFILELOAD:
-        setProfileLoadItem(list, dataid);
+        setProfileLoadItem(list, option);
         break;
 
     case TAB::INVALID:
@@ -552,20 +569,27 @@ void ProcessFlowTable::setAllIncludeItem(EditorCache *list, int dataid)
     }
 }
 
-void ProcessFlowTable::setInfoItem(EditorCache *list, int dataid)
+void ProcessFlowTable::setInfoItem(EditorCache *list, TableOption *option)
 {
     QString curdata = list->info.name;
     curdata = (curdata == "")? "(no name)" : curdata;
 
-    this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(curdata));
+    this->setItem(dataToUiIndex(option->dataid), FIRST, new QTableWidgetItem(curdata));
 
-    QTableWidgetItem *item = new QTableWidgetItem(QIcon(INFO_PIXMAP), INFO_TITLE);
-    item->setBackground(QBrush(QColor(INFO_BACKGROUND)));
-    item->setForeground(QBrush(QColor(INFO_FOREGROUND)));
-    this->setItem(dataToUiIndex(dataid), SECOND, item);
+    option->foreground.setNamedColor(INFO_FOREGROUND);
+    option->background.setNamedColor(INFO_BACKGROUND);
+    setSecondColumn(INFO_PIXMAP, INFO_TITLE, option);
+
+//    QTableWidgetItem *item = new QTableWidgetItem();
+//    item->setIcon(QIcon(INFO_PIXMAP));
+//    if(!option.hidedescription) item->setText(INFO_TITLE);
+
+//    item->setBackground(QBrush(QColor(INFO_BACKGROUND)));
+//    item->setForeground(QBrush(QColor(INFO_FOREGROUND)));
+//    this->setItem(dataToUiIndex(option.dataid), SECOND, item);
 }
 
-void ProcessFlowTable::setExecuteItem(EditorCache *list, int dataid)
+void ProcessFlowTable::setExecuteItem(EditorCache *list, TableOption *option)
 {
     int cmdcount = list->exec.command.count();
 
@@ -579,15 +603,21 @@ void ProcessFlowTable::setExecuteItem(EditorCache *list, int dataid)
         tmp.append(" " + list->exec.command.at(i));
     }
 
-    this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(tmp));
+    this->setItem(dataToUiIndex(option->dataid), FIRST, new QTableWidgetItem(tmp));
 
-    QTableWidgetItem *item = new QTableWidgetItem(QIcon(EXEC_PIXMAP), EXEC_TITLE);
-    item->setBackground(QBrush(QColor(EXEC_BACKGROUND)));
-    item->setForeground(QBrush(QColor(EXEC_FOREGROUND)));
-    this->setItem(dataToUiIndex(dataid), SECOND, item);
+    option->foreground.setNamedColor(EXEC_FOREGROUND);
+    option->background.setNamedColor(EXEC_BACKGROUND);
+    setSecondColumn(EXEC_PIXMAP, EXEC_TITLE, option);
+//    QTableWidgetItem *item = new QTableWidgetItem();
+//    item->setIcon(QIcon(EXEC_PIXMAP));
+//    if(!option.hidedescription) item->setText(EXEC_TITLE);
+
+//    item->setBackground(QBrush(QColor(EXEC_BACKGROUND)));
+//    item->setForeground(QBrush(QColor(EXEC_FOREGROUND)));
+//    this->setItem(dataToUiIndex(option.dataid), SECOND, item);
 }
 
-void ProcessFlowTable::setFileSearchItem(EditorCache *list, int dataid)
+void ProcessFlowTable::setFileSearchItem(EditorCache *list, TableOption *option)
 {
     QString curdata;
     curdata = list->filesearch.name;
@@ -615,15 +645,19 @@ void ProcessFlowTable::setFileSearchItem(EditorCache *list, int dataid)
         tmp.append(QString("outpath:%1").arg(cur3));
     }
 
-    this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(tmp));
+    this->setItem(dataToUiIndex(option->dataid), FIRST, new QTableWidgetItem(tmp));
 
-    QTableWidgetItem *item = new QTableWidgetItem(QIcon(SEARCH_PIXMAP), SEARCH_TITLE);
-    item->setBackground(QBrush(QColor(SEARCH_BACKGROUND)));
-    item->setForeground(QBrush(QColor(SEARCH_FOREGROUND)));
-    this->setItem(dataToUiIndex(dataid), SECOND, item);
+    option->foreground.setNamedColor(SEARCH_FOREGROUND);
+    option->background.setNamedColor(SEARCH_BACKGROUND);
+    setSecondColumn(SEARCH_PIXMAP, SEARCH_TITLE, option);
+
+//    QTableWidgetItem *item = new QTableWidgetItem(QIcon(SEARCH_PIXMAP), SEARCH_TITLE);
+//    item->setBackground(QBrush(QColor(SEARCH_BACKGROUND)));
+//    item->setForeground(QBrush(QColor(SEARCH_FOREGROUND)));
+//    this->setItem(dataToUiIndex(option.dataid), SECOND, item);
 }
 
-void ProcessFlowTable::setPluginItem(EditorCache *list, int dataid)
+void ProcessFlowTable::setPluginItem(EditorCache *list, TableOption *option)
 {
     QString curdata = list->plugin.filePath;
 
@@ -636,15 +670,18 @@ void ProcessFlowTable::setPluginItem(EditorCache *list, int dataid)
         tmp.append(" " + com);
     }
 
-    this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(curdata));
+    this->setItem(dataToUiIndex(option->dataid), FIRST, new QTableWidgetItem(curdata));
 
-    QTableWidgetItem *item = new QTableWidgetItem(QIcon(PLUGIN_PIXMAP), PLUGIN_TITLE);
-    item->setBackground(QBrush(QColor(PLUGIN_BACKGROUND)));
-    item->setForeground(QBrush(QColor(PLUGIN_FOREGROUND)));
-    this->setItem(dataToUiIndex(dataid), SECOND, item);
+    option->foreground.setNamedColor(PLUGIN_FOREGROUND);
+    option->background.setNamedColor(PLUGIN_BACKGROUND);
+    setSecondColumn(PLUGIN_PIXMAP, PLUGIN_TITLE, option);
+//    QTableWidgetItem *item = new QTableWidgetItem(QIcon(PLUGIN_PIXMAP), PLUGIN_TITLE);
+//    item->setBackground(QBrush(QColor(PLUGIN_BACKGROUND)));
+//    item->setForeground(QBrush(QColor(PLUGIN_FOREGROUND)));
+//    this->setItem(dataToUiIndex(dataid), SECOND, item);
 }
 
-void ProcessFlowTable::setProfileLoadItem(EditorCache *list, int dataid)
+void ProcessFlowTable::setProfileLoadItem(EditorCache *list, TableOption *option)
 {
     QString curdata = list->profileload.filePath;
     QFileInfo profile(curdata);
@@ -669,10 +706,33 @@ void ProcessFlowTable::setProfileLoadItem(EditorCache *list, int dataid)
 
     if(curdata == "") curdata = "(not selected)";
 
-    this->setItem(dataToUiIndex(dataid), FIRST, new QTableWidgetItem(curdata));
+    this->setItem(dataToUiIndex(option->dataid), FIRST, new QTableWidgetItem(curdata));
 
-    QTableWidgetItem *item = new QTableWidgetItem(QIcon(PROFILELOAD_PIXMAP), PROFILELOAD_TITLE);
-    item->setBackground(QBrush(QColor(PROFILELOAD_BACKGROUND)));
-    item->setForeground(QBrush(QColor(PROFILELOAD_FOREGROUND)));
-    this->setItem(dataToUiIndex(dataid), SECOND, item);
+    option->foreground.setNamedColor(PROFILELOAD_FOREGROUND);
+    option->background.setNamedColor(PROFILELOAD_BACKGROUND);
+    setSecondColumn(PROFILELOAD_PIXMAP, PROFILELOAD_TITLE, option);
+//    QTableWidgetItem *item = new QTableWidgetItem(QIcon(PROFILELOAD_PIXMAP), PROFILELOAD_TITLE);
+//    item->setBackground(QBrush(QColor(PROFILELOAD_BACKGROUND)));
+//    item->setForeground(QBrush(QColor(PROFILELOAD_FOREGROUND)));
+//    this->setItem(dataToUiIndex(dataid), SECOND, item);
+}
+
+void ProcessFlowTable::setSecondColumn(const QPixmap &icon
+                                       , const QString &text
+                                       , const TableOption *option)
+{
+    QTableWidgetItem *item = new QTableWidgetItem();
+    item->setToolTip(text);
+    item->setBackground(QBrush(option->background));
+    item->setForeground(QBrush(option->foreground));
+
+    if(option->hidedescription){
+        item->setData(Qt::UserRole, QVariant::fromValue(QIcon(icon)));
+
+    }else{
+        item->setIcon(icon);
+        item->setText(text);
+    }
+
+    this->setItem(dataToUiIndex(option->dataid), SECOND, item);
 }

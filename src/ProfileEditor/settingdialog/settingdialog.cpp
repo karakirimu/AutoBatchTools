@@ -89,6 +89,7 @@ void SettingDialog::setSettings()
     settings.setValue(sc.ABE_FONTSIZE, ui->windowFontSizeSpinBox->value());
     storeLanguageSelection(&settings);
     settings.setValue(sc.ABE_RUNAS_SCHEDULER, ui->fakeresidentCheckBox->isChecked());
+    settings.setValue(sc.ABE_PROCESS_HIDE_DESC, ui->showDescCheckBox->isChecked());
     settings.endGroup();
 }
 
@@ -104,6 +105,7 @@ void SettingDialog::loadSettings()
     ui->windowFontSizeSpinBox->setValue(settings.value(sc.ABE_FONTSIZE, QApplication::font().pointSize()).toInt());
     loadLanguageSelection(&settings);
     ui->fakeresidentCheckBox->setChecked(settings.value(sc.ABE_RUNAS_SCHEDULER, false).toBool());
+    ui->showDescCheckBox->setChecked(settings.value(sc.ABE_PROCESS_HIDE_DESC, false).toBool());
     settings.endGroup();
 
 }

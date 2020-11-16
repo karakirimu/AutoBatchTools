@@ -55,6 +55,7 @@ HEADERS  += editarea/commandtable.h \
 #    graphicsarea/flowcellwidget.h \
 #    graphicsarea/flowtable.h \
 #    processlistarea/profiletreewidget.h \
+    graphicsarea/typeicondelegate.h \
     settingconstant.h \
     settingdialog/settingdialog.h \
     console/consoleedit.h \
@@ -135,6 +136,7 @@ SOURCES += editarea/commandtable.cpp \
 #    graphicsarea/flowcellwidget.cpp \
 #    graphicsarea/flowtable.cpp \
 #    processlistarea/profiletreewidget.cpp \
+    graphicsarea/typeicondelegate.cpp \
     settingdialog/settingdialog.cpp \
     console/consoleedit.cpp \
     console/consoleview.cpp \

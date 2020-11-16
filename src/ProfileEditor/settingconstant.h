@@ -53,6 +53,7 @@ public:
     const QString ABE_AUTOSAVE_DIR =       "abe-tempdir";
     const QString ABE_AUTOSAVE_PERIOD =    "abe-autosaveperiod";
     const QString ABE_RUNAS_SCHEDULER =    "abe-test-runas";
+    const QString ABE_PROCESS_HIDE_DESC =  "abe-process-hide-description";
 
 };
 

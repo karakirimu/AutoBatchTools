@@ -18,7 +18,12 @@
 #define FLOWTABLE_H
 
 #include <../basictable/basictable.h>
+#include <QLabel>
+#include <QPainter>
+#include <QHBoxLayout>
 #include <editoperator.h>
+#include <qsspropertyconstant.h>
+#include "typeicondelegate.h"
 
 class ProcessFlowTable : public BasicTable
 {
@@ -63,25 +68,41 @@ private slots:
 
 private:
     int uiIndexToData();
-    inline int dataToUiIndex(int id);
+    inline int dataToUiIndex(int id){ return (id > 1)? id - 1 : 0; }
 
     //from ui index to xml data
-    inline int uiIndexToData(int id);
+    inline int uiIndexToData(int id){ return (id > 0)? id + 1 : 0; }
 
     void setPopupActionTop();
     void setPopupActionDefault();
     void setPopupActionBottom();
 
-    void setFlowItem(int itemid);
     void setAllFlowItem();
 
-    void setAllIncludeItem(EditorCache *list, int dataid);
-    void setInfoItem(EditorCache *list, int dataid);
-    void setExecuteItem(EditorCache *list, int dataid);
-    void setFileSearchItem(EditorCache *list, int dataid);
-    void setPluginItem(EditorCache *list, int dataid);
-    void setProfileLoadItem(EditorCache *list, int dataid);
+    struct TableOption {
 
+        //! Data index number (It must be >= 0)
+        int dataid = -1;
+
+        //! Hide description setting
+        bool hidedescription = false;
+
+        //! Foreground color
+        QColor foreground;
+
+        //! Background color
+        QColor background;
+    };
+
+    void setFlowItem(int dataid);
+    void setAllIncludeItem(EditorCache *list, TableOption *option);
+    void setInfoItem(EditorCache *list, TableOption *option);
+    void setExecuteItem(EditorCache *list, TableOption *option);
+    void setFileSearchItem(EditorCache *list, TableOption *option);
+    void setPluginItem(EditorCache *list, TableOption *option);
+    void setProfileLoadItem(EditorCache *list, TableOption *option);
+
+    void setSecondColumn(const QPixmap &icon, const QString &text, const TableOption *option);
 
     QAction *m_add;
     QAction *m_delete;
@@ -119,6 +140,8 @@ private:
     const QString PROFILELOAD_BACKGROUND = "#ffecb3";
     const QString PROFILELOAD_FOREGROUND = "#000000";
 
+    SettingConstant sc;
+    QssPropertyConstant qpc;
 };
 
 #endif // FLOWTABLE_H
