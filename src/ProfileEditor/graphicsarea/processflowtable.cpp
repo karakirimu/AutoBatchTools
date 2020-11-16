@@ -48,7 +48,8 @@ ProcessFlowTable::ProcessFlowTable(QWidget *parent)
     setItemDelegateForColumn(SECOND, new TypeIconDelegate(this));
 
     //set selection changed
-    connect(this, &ProcessFlowTable::currentCellChanged, this, &ProcessFlowTable::selectChanged);
+    connect(this, &ProcessFlowTable::currentCellChanged \
+                , this, &ProcessFlowTable::selectChanged);
 
 }
 
@@ -61,8 +62,10 @@ void ProcessFlowTable::setEditOperator(EditOperator *op)
 {
     editop = op;
 
-    connect(editop, &EditOperator::editUpdate, this, &ProcessFlowTable::replaceItem);
-    connect(editop, &EditOperator::processIndexUpdate, this, &ProcessFlowTable::onItemStatusChanged);
+    connect(editop, &EditOperator::editUpdate
+                , this, &ProcessFlowTable::replaceItem);
+    connect(editop, &EditOperator::processIndexUpdate
+                , this, &ProcessFlowTable::onItemStatusChanged);
 }
 
 bool ProcessFlowTable::eventFilter(QObject *obj, QEvent *event)
@@ -232,7 +235,8 @@ void ProcessFlowTable::reloadAction()
     setAllFlowItem();
 
 #ifdef QT_DEBUG
-    qDebug() << "[ProcessFlowTable::reloadAction] elapsed : " << time.elapsed() << "ms";
+    qDebug() << "[ProcessFlowTable::reloadAction] elapsed : " \
+             << time.elapsed() << "ms";
 #endif
 
     clearSelection();
@@ -289,7 +293,8 @@ void ProcessFlowTable::updateIndex(QString operation)
 
 void ProcessFlowTable::dragEnterEvent(QDragEnterEvent *event)
 {
-    qDebug() << "[ProcessFlowTable::dragEnterEvent] Object : " << event->source()->objectName();
+    qDebug() << "[ProcessFlowTable::dragEnterEvent] Object : " \
+                                << event->source()->objectName();
     if(event->source() != nullptr
             && this->indexAt(event->pos()).row() > 0 ){
         event->acceptProposedAction();
@@ -298,7 +303,8 @@ void ProcessFlowTable::dragEnterEvent(QDragEnterEvent *event)
 
 void ProcessFlowTable::dragMoveEvent(QDragMoveEvent *event)
 {
-    qDebug() << "[ProcessFlowTable::dragMoveEvent] Object : " << event->source()->objectName();
+    qDebug() << "[ProcessFlowTable::dragMoveEvent] Object : " \
+                                << event->source()->objectName();
     if(event->source() != nullptr
             && this->indexAt(event->pos()).row() > 0 ){
         event->accept();
@@ -382,7 +388,7 @@ void ProcessFlowTable::replaceItem(int id)
 
 void ProcessFlowTable::selectChanged(int crow, int ccol, int prow, int pcol)
 {
-//    Q_UNUSED(ccol)
+    Q_UNUSED(ccol)
     Q_UNUSED(pcol)
     if(crow == prow) return;
 
@@ -579,14 +585,6 @@ void ProcessFlowTable::setInfoItem(EditorCache *list, TableOption *option)
     option->foreground.setNamedColor(INFO_FOREGROUND);
     option->background.setNamedColor(INFO_BACKGROUND);
     setSecondColumn(INFO_PIXMAP, INFO_TITLE, option);
-
-//    QTableWidgetItem *item = new QTableWidgetItem();
-//    item->setIcon(QIcon(INFO_PIXMAP));
-//    if(!option.hidedescription) item->setText(INFO_TITLE);
-
-//    item->setBackground(QBrush(QColor(INFO_BACKGROUND)));
-//    item->setForeground(QBrush(QColor(INFO_FOREGROUND)));
-//    this->setItem(dataToUiIndex(option.dataid), SECOND, item);
 }
 
 void ProcessFlowTable::setExecuteItem(EditorCache *list, TableOption *option)
@@ -608,13 +606,6 @@ void ProcessFlowTable::setExecuteItem(EditorCache *list, TableOption *option)
     option->foreground.setNamedColor(EXEC_FOREGROUND);
     option->background.setNamedColor(EXEC_BACKGROUND);
     setSecondColumn(EXEC_PIXMAP, EXEC_TITLE, option);
-//    QTableWidgetItem *item = new QTableWidgetItem();
-//    item->setIcon(QIcon(EXEC_PIXMAP));
-//    if(!option.hidedescription) item->setText(EXEC_TITLE);
-
-//    item->setBackground(QBrush(QColor(EXEC_BACKGROUND)));
-//    item->setForeground(QBrush(QColor(EXEC_FOREGROUND)));
-//    this->setItem(dataToUiIndex(option.dataid), SECOND, item);
 }
 
 void ProcessFlowTable::setFileSearchItem(EditorCache *list, TableOption *option)
@@ -650,11 +641,6 @@ void ProcessFlowTable::setFileSearchItem(EditorCache *list, TableOption *option)
     option->foreground.setNamedColor(SEARCH_FOREGROUND);
     option->background.setNamedColor(SEARCH_BACKGROUND);
     setSecondColumn(SEARCH_PIXMAP, SEARCH_TITLE, option);
-
-//    QTableWidgetItem *item = new QTableWidgetItem(QIcon(SEARCH_PIXMAP), SEARCH_TITLE);
-//    item->setBackground(QBrush(QColor(SEARCH_BACKGROUND)));
-//    item->setForeground(QBrush(QColor(SEARCH_FOREGROUND)));
-//    this->setItem(dataToUiIndex(option.dataid), SECOND, item);
 }
 
 void ProcessFlowTable::setPluginItem(EditorCache *list, TableOption *option)
@@ -675,10 +661,6 @@ void ProcessFlowTable::setPluginItem(EditorCache *list, TableOption *option)
     option->foreground.setNamedColor(PLUGIN_FOREGROUND);
     option->background.setNamedColor(PLUGIN_BACKGROUND);
     setSecondColumn(PLUGIN_PIXMAP, PLUGIN_TITLE, option);
-//    QTableWidgetItem *item = new QTableWidgetItem(QIcon(PLUGIN_PIXMAP), PLUGIN_TITLE);
-//    item->setBackground(QBrush(QColor(PLUGIN_BACKGROUND)));
-//    item->setForeground(QBrush(QColor(PLUGIN_FOREGROUND)));
-//    this->setItem(dataToUiIndex(dataid), SECOND, item);
 }
 
 void ProcessFlowTable::setProfileLoadItem(EditorCache *list, TableOption *option)
@@ -711,10 +693,6 @@ void ProcessFlowTable::setProfileLoadItem(EditorCache *list, TableOption *option
     option->foreground.setNamedColor(PROFILELOAD_FOREGROUND);
     option->background.setNamedColor(PROFILELOAD_BACKGROUND);
     setSecondColumn(PROFILELOAD_PIXMAP, PROFILELOAD_TITLE, option);
-//    QTableWidgetItem *item = new QTableWidgetItem(QIcon(PROFILELOAD_PIXMAP), PROFILELOAD_TITLE);
-//    item->setBackground(QBrush(QColor(PROFILELOAD_BACKGROUND)));
-//    item->setForeground(QBrush(QColor(PROFILELOAD_FOREGROUND)));
-//    this->setItem(dataToUiIndex(dataid), SECOND, item);
 }
 
 void ProcessFlowTable::setSecondColumn(const QPixmap &icon

@@ -102,7 +102,8 @@ private:
     void setPluginItem(EditorCache *list, TableOption *option);
     void setProfileLoadItem(EditorCache *list, TableOption *option);
 
-    void setSecondColumn(const QPixmap &icon, const QString &text, const TableOption *option);
+    void setSecondColumn(const QPixmap &icon, const QString &text \
+                                            , const TableOption *option);
 
     QAction *m_add;
     QAction *m_delete;
