@@ -20,6 +20,7 @@
 #include "filequeuetable_global.h"
 #include "../basictable/basictable.h"
 #include "../fileinfodialog/fileinfodialog.h"
+#include <../share/qss/qsspropertyconstant.h>
 
 class FILEQUEUETABLESHARED_EXPORT FileQueueTable : public BasicTable
 {

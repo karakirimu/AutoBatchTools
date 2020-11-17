@@ -24,6 +24,7 @@
 #include <QHeaderView>
 #include <QApplication>
 #include <../fileinfodialog/fileinfodialog.h>
+#include <../share/qss/qsspropertyconstant.h>
 
 class SearchDialogTable : public BasicTable
 {

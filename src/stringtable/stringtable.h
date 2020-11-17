@@ -23,6 +23,7 @@
 #include "stringtable_global.h"
 #include "../basictable/basictable.h"
 #include "../stringxmlbuilder/stringxmlbuilder.h"
+#include <../share/qss/qsspropertyconstant.h>
 
 class STRINGTABLESHARED_EXPORT StringTable : public BasicTable
 {

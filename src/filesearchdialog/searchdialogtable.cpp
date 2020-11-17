@@ -34,7 +34,9 @@ SearchDialogTable::SearchDialogTable(QWidget *)
     horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 
     //set vertical header style
-    verticalHeader()->setProperty("VerticalHeaderStyle", 1);
+    QssPropertyConstant qpc;
+    verticalHeader()->setProperty(qpc.VERTICAL_HEADER_STYLE \
+                                  , qpc.VERTICAL_HEADER_ENABLE);
 
     //set header sort settings
     connect(horizontalHeader(), SIGNAL(sectionClicked(int)), this, SLOT(selectAll()));

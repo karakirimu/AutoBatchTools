@@ -21,6 +21,7 @@
 #include <../basictable/basictable.h>
 #include <../profilexmlbuilder/profilexmlbuilder.h>
 #include <../processxmlbuilder/processxmlbuilder.h>
+#include <../share/qss/qsspropertyconstant.h>
 
 class ProfileTable : public BasicTable
 {

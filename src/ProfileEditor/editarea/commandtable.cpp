@@ -39,7 +39,9 @@ CommandTable::CommandTable(QWidget *parent)
     horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 
     //set vertical header style
-    verticalHeader()->setProperty("VerticalHeaderStyle", 1);
+    QssPropertyConstant qpc;
+    verticalHeader()->setProperty(qpc.VERTICAL_HEADER_STYLE \
+                                    , qpc.VERTICAL_HEADER_ENABLE);
 
     //set header label
     setHorizontalHeaderLabels((QStringList() << tr("Executable file / Arguments")));

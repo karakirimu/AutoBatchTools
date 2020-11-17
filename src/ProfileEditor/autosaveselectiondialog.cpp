@@ -41,7 +41,9 @@ AutoSaveSelectionDialog::AutoSaveSelectionDialog(QWidget *parent) :
             ->setSectionResizeMode(0, QHeaderView::Stretch);
 
     //set header style
-    ui->fileListTableWidget->verticalHeader()->setProperty("VerticalHeaderStyle", 1);
+    QssPropertyConstant qpc;
+    ui->fileListTableWidget->verticalHeader() \
+        ->setProperty(qpc.VERTICAL_HEADER_STYLE, qpc.VERTICAL_HEADER_ENABLE);
 
 }
 

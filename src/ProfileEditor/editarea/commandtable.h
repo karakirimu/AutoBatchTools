@@ -21,6 +21,7 @@
 #include <QClipboard>
 #include <uicommandmap.h>
 #include <../basictable/basictable.h>
+#include <../share/qss/qsspropertyconstant.h>
 
 class CommandTable : public BasicTable
 {

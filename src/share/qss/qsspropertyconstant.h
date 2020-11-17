@@ -14,32 +14,17 @@
  * limitations under the License.
  */
 
-#ifndef AUTOSAVESELECTIONDIALOG_H
-#define AUTOSAVESELECTIONDIALOG_H
+#ifndef QSSPROPERTYCONSTANT_H
+#define QSSPROPERTYCONSTANT_H
 
-#include <QDialog>
-#include <QFileInfo>
-#include <QDateTime>
-#include <../share/qss/qsspropertyconstant.h>
+#include <QString>
 
-namespace Ui {
-class AutoSaveSelectionDialog;
-}
-
-class AutoSaveSelectionDialog : public QDialog
-{
-    Q_OBJECT
-
+class QssPropertyConstant {
 public:
-    explicit AutoSaveSelectionDialog(QWidget *parent = nullptr);
-    ~AutoSaveSelectionDialog();
 
-    void setAutoSaveFileList(QStringList *list);
-    QString execDialog();
+    const char *VERTICAL_HEADER_STYLE   = "VerticalHeaderStyle";
+    const int VERTICAL_HEADER_ENABLE    = 0x00000001;
 
-private:
-    Ui::AutoSaveSelectionDialog *ui;
-    QStringList *filelist;
 };
 
-#endif // AUTOSAVESELECTIONDIALOG_H
+#endif // QSSPROPERTYCONSTANT_H

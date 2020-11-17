@@ -39,7 +39,9 @@ FileQueueTable::FileQueueTable(QWidget *parent)
     horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 
     //set header style
-    verticalHeader()->setProperty("VerticalHeaderStyle", 1);
+    QssPropertyConstant qpc;
+    verticalHeader()->setProperty(qpc.VERTICAL_HEADER_STYLE \
+                                  , qpc.VERTICAL_HEADER_ENABLE);
 
     //set header sort settings
     connect(horizontalHeader(), &QHeaderView::sectionClicked, this, &FileQueueTable::horizontalHeaderClicked);

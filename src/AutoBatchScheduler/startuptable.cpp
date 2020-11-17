@@ -40,7 +40,9 @@ StartupTable::StartupTable(QWidget *parent)
     setHorizontalHeaderLabels((QStringList() << tr("Setting Name") << tr("Profile") << tr("State")));
 
     //set header style
-    verticalHeader()->setProperty("VerticalHeaderStyle", 1);
+    QssPropertyConstant qpc;
+    verticalHeader()->setProperty(qpc.VERTICAL_HEADER_STYLE \
+                                    , qpc.VERTICAL_HEADER_ENABLE);
 
     //set doubleclick action
     connect(this, &QTableWidget::cellDoubleClicked, this, &StartupTable::editTableAction);

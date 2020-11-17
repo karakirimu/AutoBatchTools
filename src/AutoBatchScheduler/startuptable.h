@@ -22,6 +22,7 @@
 #include <../variantconverter/variantconverter.h>
 #include "startupdialog.h"
 #include "taskschedulerconnector.h"
+#include <../share/qss/qsspropertyconstant.h>
 
 #include <QSettings>
 

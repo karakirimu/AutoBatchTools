@@ -2,5 +2,5 @@
 # shared functions used in multiple places
 INCLUDEPATH += $$PWD
 
-include($$PWD/process/process.pri)
-include($$PWD/qss/qss.pri))
+HEADERS += \
+        $$PWD/qsspropertyconstant.h \

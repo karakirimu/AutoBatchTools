@@ -42,7 +42,7 @@ ProcessFlowTable::ProcessFlowTable(QWidget *parent)
 
     //set header style
     verticalHeader()->setDefaultAlignment(Qt::AlignCenter);
-    verticalHeader()->setProperty("VerticalHeaderStyle", 1);
+    verticalHeader()->setProperty(qpc.VERTICAL_HEADER_STYLE, qpc.VERTICAL_HEADER_ENABLE);
 
     //set delegate
     setItemDelegateForColumn(SECOND, new TypeIconDelegate(this));
