@@ -578,7 +578,7 @@ void ProcessFlowTable::setAllIncludeItem(EditorCache *list, TableOption *option)
 void ProcessFlowTable::setInfoItem(EditorCache *list, TableOption *option)
 {
     QString curdata = list->info.name;
-    curdata = (curdata == "")? "(no name)" : curdata;
+    curdata = (curdata == "")? tr("(no name)") : curdata;
 
     this->setItem(dataToUiIndex(option->dataid), FIRST, new QTableWidgetItem(curdata));
 
@@ -591,8 +591,8 @@ void ProcessFlowTable::setExecuteItem(EditorCache *list, TableOption *option)
 {
     int cmdcount = list->exec.command.count();
 
-    QString curdata = (cmdcount == 0)? "(no command)" : list->exec.command.first();
-    if(curdata == "") curdata = "(no command)";
+    QString curdata = (cmdcount == 0)? tr("(no command)") : list->exec.command.first();
+    if(curdata == "") curdata = tr("(no command)");
 
     QFileInfo info(curdata);
     QString tmp = info.isFile() ? info.fileName() : curdata;
@@ -612,28 +612,28 @@ void ProcessFlowTable::setFileSearchItem(EditorCache *list, TableOption *option)
 {
     QString curdata;
     curdata = list->filesearch.name;
-    curdata = (curdata == "")? "(not selected) " : (curdata + " ");
+    curdata = (curdata == "")? tr("(no selection) ") : (curdata + " ");
 
     QString curdata2;
     curdata2 = list->filesearch.separator;
-    curdata2 = (curdata2 == "")? "(not defined) " : curdata2;
+    curdata2 = (curdata2 == "")? tr("(none) ") : curdata2;
 
-    QString tmp = curdata + QString("sep:%1 ").arg(curdata2);
+    QString tmp = curdata + tr("Separator: %1 ").arg(curdata2);
 
     //variant or output
     QString cur3;
     if(list->filesearch.outputOption == list->filesearch.VARIANT){
 
         cur3 = list->filesearch.variant;
-        cur3 = (cur3 == "")? "(not defined) " : cur3;
+        cur3 = (cur3 == "")? tr("(none) ") : cur3;
 
-        tmp.append(QString("var:%1").arg(cur3));
+        tmp.append(tr("Output Variant: %1").arg(cur3));
     }else{
 
         cur3 = list->filesearch.filePath;
-        cur3 = (cur3 == "")? "(not selected) " : cur3;
+        cur3 = (cur3 == "")? tr("(no selection) ") : cur3;
 
-        tmp.append(QString("outpath:%1").arg(cur3));
+        tmp.append(tr("Output path: %1").arg(cur3));
     }
 
     this->setItem(dataToUiIndex(option->dataid), FIRST, new QTableWidgetItem(tmp));
@@ -650,7 +650,7 @@ void ProcessFlowTable::setPluginItem(EditorCache *list, TableOption *option)
     QFileInfo info(curdata);
     QString tmp = (info.isFile() ? info.baseName() : curdata);
 
-    curdata = (curdata == "")? "(not selected)" : tmp;
+    curdata = (curdata == "")? tr("(no selection)") : tmp;
 
     for(QString com : list->plugin.command){
         tmp.append(" " + com);
@@ -686,7 +686,7 @@ void ProcessFlowTable::setProfileLoadItem(EditorCache *list, TableOption *option
         curdata = tr("(file is not exist)");
     }
 
-    if(curdata == "") curdata = "(not selected)";
+    if(curdata == "") curdata = tr("(no selection)");
 
     this->setItem(dataToUiIndex(option->dataid), FIRST, new QTableWidgetItem(curdata));
 

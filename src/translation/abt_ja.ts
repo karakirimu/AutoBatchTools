@@ -214,17 +214,17 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>BaseTable</name>
     <message>
-        <location filename="../basictable/basetable.cpp" line="288"/>
+        <location filename="../basictable/basetable.cpp" line="287"/>
         <source>Open File</source>
         <translation>ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../basictable/basetable.cpp" line="288"/>
+        <location filename="../basictable/basetable.cpp" line="287"/>
         <source>File (*.*)</source>
         <translation>ファイル (*.*)</translation>
     </message>
     <message>
-        <location filename="../basictable/basetable.cpp" line="294"/>
+        <location filename="../basictable/basetable.cpp" line="293"/>
         <source>Open Folder</source>
         <translation>フォルダを開く</translation>
     </message>
@@ -380,12 +380,12 @@ To recover files, select the following list and press [OK].</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/statusarea/cellinfowidget.ui" line="324"/>
+        <location filename="../AutoBatchScheduler/statusarea/cellinfowidget.ui" line="330"/>
         <source>&gt; Press Enter to send command ...</source>
         <translation>&gt; Enterでコマンドを送信...</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/statusarea/cellinfowidget.cpp" line="127"/>
+        <location filename="../AutoBatchScheduler/statusarea/cellinfowidget.cpp" line="156"/>
         <source>To turn off task, need to stop the current task.</source>
         <translation>タスクを終了するためには、現在実行されている処理を停止する必要があります。</translation>
     </message>
@@ -393,7 +393,7 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>CommandTable</name>
     <message>
-        <location filename="../ProfileEditor/editarea/commandtable.cpp" line="45"/>
+        <location filename="../ProfileEditor/editarea/commandtable.cpp" line="47"/>
         <source>Executable file / Arguments</source>
         <translation>実行ファイル / 引数</translation>
     </message>
@@ -647,12 +647,12 @@ To recover files, select the following list and press [OK].</source>
         <translation>ファイル / フォルダパス</translation>
     </message>
     <message>
-        <location filename="../filequeuetable/filequeuetable.cpp" line="76"/>
+        <location filename="../filequeuetable/filequeuetable.cpp" line="78"/>
         <source>Open Files</source>
         <translation>ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../filequeuetable/filequeuetable.cpp" line="77"/>
+        <location filename="../filequeuetable/filequeuetable.cpp" line="79"/>
         <source>Files (*.*)</source>
         <translation>ファイル (*.*)</translation>
     </message>
@@ -1093,32 +1093,32 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>PluginsComboBox</name>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="50"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="53"/>
         <source>Select plugin ...</source>
         <translation>プラグインを選択 ...</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="114"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="117"/>
         <source>Add Plugin</source>
         <translation>プラグインを追加</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="115"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="118"/>
         <source>Plugin </source>
         <translation>プラグイン </translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="135"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="138"/>
         <source>This file cannot be applied.</source>
         <translation>ファイルを読み込めませんでした。</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="149"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="152"/>
         <source>Alert</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="149"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="152"/>
         <source>Do you want to exclude the selected item from the list?</source>
         <translation>選択したアイテムをリストから除外しますか?</translation>
     </message>
@@ -1214,9 +1214,91 @@ To recover files, select the following list and press [OK].</source>
         <translation>種類</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="667"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="581"/>
+        <source>(no name)</source>
+        <translation>(設定名なし)</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="587"/>
+        <source>Information</source>
+        <translation>情報</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="594"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="595"/>
+        <source>(no command)</source>
+        <translation>(未設定)</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="608"/>
+        <source>Executable</source>
+        <translation>実行</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="615"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="634"/>
+        <source>(no selection) </source>
+        <translation>(未選択) </translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="619"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="628"/>
+        <source>(none) </source>
+        <translation>(なし) </translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="653"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="689"/>
+        <source>(no selection)</source>
+        <translation>(未選択)</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="621"/>
+        <source>Separator: %1 </source>
+        <translation>区切り文字: %1 </translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="630"/>
+        <source>Output Variant: %1</source>
+        <translation>出力変数 %1</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="636"/>
+        <source>Output path: %1</source>
+        <translation>出力パス %1</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="643"/>
+        <source>FileSearch</source>
+        <translation>検索</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="663"/>
+        <source>Plugin</source>
+        <translation>プラグイン</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="686"/>
         <source>(file is not exist)</source>
         <translation>(ファイルなし)</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="695"/>
+        <source>ProfileLoad</source>
+        <translation>プロファイル</translation>
+    </message>
+</context>
+<context>
+    <name>ProcessShowTable</name>
+    <message>
+        <location filename="../AutoBatchScheduler/statusarea/processshowtable.cpp" line="142"/>
+        <source>yyyy/MM/dd HH:mm:ss</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../AutoBatchScheduler/statusarea/processshowtable.cpp" line="156"/>
+        <source> It is already passed the starting time.</source>
+        <translation>設定された時間をすでに過ぎています。</translation>
     </message>
 </context>
 <context>
@@ -1600,7 +1682,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="2108"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="485"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="492"/>
         <source>Export</source>
         <translation>エクスポート</translation>
     </message>
@@ -1656,7 +1738,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="2194"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="558"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="565"/>
         <source>Run</source>
         <translation>実行</translation>
     </message>
@@ -1746,48 +1828,48 @@ To recover files, select the following list and press [OK].</source>
         <translation>最後に開いたファイルを開く</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="261"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="268"/>
         <source>Open Profile</source>
         <translation>プロファイルを開く</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="305"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="471"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="312"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="478"/>
         <source>Save Profile</source>
         <translation>プロファイルを保存</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="498"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="505"/>
         <source>Untitled</source>
         <translation>無題</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="541"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="548"/>
         <source>No. %1 selected</source>
         <translation>No. %1 選択中</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="566"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="573"/>
         <source>Test</source>
         <translation>テスト</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="567"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="574"/>
         <source>Test Settings</source>
         <translation>テスト設定</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="586"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="593"/>
         <source>Test Range</source>
         <translation>テスト範囲</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="593"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="600"/>
         <source>Input process test range here ...</source>
         <translation>処理テスト範囲をここに入力 ...</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="594"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="601"/>
         <source>Specify the process test range.
 Example: 0-7 0, 1, 2, 3</source>
         <translation>処理テストの範囲を指定します。
@@ -1798,24 +1880,24 @@ Example: 0-7 0, 1, 2, 3</source>
         <translation type="vanished">実行処理範囲をここに入力 ...</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="724"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="731"/>
         <source>Undo %1</source>
         <translation>戻る %1</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="735"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="742"/>
         <source>Redo %1</source>
         <translation>進む %1</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="747"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="862"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="754"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="869"/>
         <source>Alert</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="748"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="863"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="755"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="870"/>
         <source>Profile was edited.
 Do you want to save this?</source>
         <translation>プロファイルが編集されました。
@@ -1825,27 +1907,27 @@ Do you want to save this?</source>
 <context>
     <name>ProfileTable</name>
     <message>
-        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="38"/>
+        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="43"/>
         <source>Profile</source>
         <translation>プロファイル</translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="38"/>
+        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="43"/>
         <source>Description</source>
         <translation>詳細</translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="38"/>
+        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="43"/>
         <source>File</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="190"/>
+        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="195"/>
         <source>Open Profile</source>
         <translation>プロファイルを開く</translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="192"/>
+        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="197"/>
         <source>Profile </source>
         <translation>プロファイル </translation>
     </message>
@@ -2288,117 +2370,127 @@ Do you want to save this?</source>
 <context>
     <name>SettingDialog</name>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="14"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="17"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="117"/>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="63"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="123"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="66"/>
         <source>General</source>
         <translation>一般</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="159"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="165"/>
         <source>min</source>
         <translation>分</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="184"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="193"/>
         <source>Theme</source>
         <translation>テーマ</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="191"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="200"/>
         <source>Language</source>
         <translation>言語</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="236"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="245"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="249"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="258"/>
         <source>Autosave interval</source>
         <translation>自動保存の間隔</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="270"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="279"/>
         <source>Default</source>
         <translation>デフォルト</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="275"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="284"/>
         <source>Light</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="280"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="289"/>
         <source>Dark</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="294"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="303"/>
         <source>Temporary file location</source>
         <translation>一時ファイルの場所</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="307"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="316"/>
         <source>Window Font</source>
         <translation>フォント</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="375"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="374"/>
+        <source>Process</source>
+        <translation>処理</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="380"/>
+        <source>Hide the description of the &quot;Type&quot; column</source>
+        <translation>”種類”列の説明を非表示にする</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="411"/>
         <source>Run as the scheduler process</source>
         <translation>スケジューラ処理として実行</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="438"/>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="552"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="474"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="588"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="449"/>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="563"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="485"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="599"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="460"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="496"/>
         <source>Copy</source>
         <translation>コピー</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="471"/>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="574"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="507"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="610"/>
         <source>Up</source>
         <translation>上へ</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="482"/>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="585"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="518"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="621"/>
         <source>Down</source>
         <translation>下へ</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="64"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="67"/>
         <source>Test</source>
         <translation>テスト</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="65"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="68"/>
         <source>Search</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="66"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="69"/>
         <source>Plugins</source>
         <translation>プラグイン</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="131"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="174"/>
         <source>Open Folder</source>
         <translation>フォルダを開く</translation>
     </message>
@@ -2512,17 +2604,22 @@ Do you want to save this?</source>
         <translation>木</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="81"/>
+        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="49"/>
+        <source>Editing - Untitled*</source>
+        <translation>編集中 - 無題*</translation>
+    </message>
+    <message>
+        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="72"/>
         <source>Editing - </source>
         <translation>編集中 - </translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="157"/>
+        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="122"/>
         <source>Alert</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="157"/>
+        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="122"/>
         <source>Save this setting?</source>
         <translation>この設定を保存しますか?</translation>
     </message>
@@ -2545,9 +2642,8 @@ Do you want to save this?</source>
         <translation>状態</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startuptable.cpp" line="221"/>
         <source>Editing - Untitled*</source>
-        <translation>編集中 - 無題*</translation>
+        <translation type="vanished">編集中 - 無題*</translation>
     </message>
 </context>
 <context>
@@ -2584,109 +2680,114 @@ Do you want to save this?</source>
 <context>
     <name>SystemTray</name>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="102"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="94"/>
         <source>AutoBatchScheduler is running</source>
         <translation>AutoBatchSchedulerは起動中です</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="103"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="95"/>
         <source>To completely exit the program, right-click the icon in the task tray and choose Quit.</source>
         <translation>プログラムを完全に終了するには、タスクトレイのアイコンを右クリックし、終了を選択します。</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="140"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="120"/>
+        <source>yyyy/MM/dd HH:mm:ss</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="124"/>
         <source>Timer started</source>
         <translation>タイマーが開始されました</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="160"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="143"/>
         <source>Timer has ended</source>
         <translation>タイマーが終了しました</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="171"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="154"/>
         <source>The set time has already passed</source>
         <translation>設定された時間をすでに過ぎています</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="194"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="175"/>
         <source>Task started</source>
         <translation>実行処理が開始されました</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="206"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="187"/>
         <source>The specified task is paused</source>
         <translation>指定された実行処理が一時停止されました</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="215"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="196"/>
         <source>Task stopped</source>
         <translation>実行処理が停止しました</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="228"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="209"/>
         <source>Task ended normally</source>
         <translation>実行処理は正常終了しました</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="244"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="225"/>
         <source>Task canceled</source>
         <translation>実行処理はキャンセルされました</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="254"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="235"/>
         <source>The profile to be executed could not be loaded.</source>
         <translation>実行するプロファイルを読み込めませんでした。</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="256"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="237"/>
         <source><byte value="xd"/>
 In order to execute this schedule, please reset the execution profile</source>
         <translation>
 このスケジュールを実行するには、実行プロファイルをリセットしてください</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="263"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="265"/>
         <source>Open Setting</source>
         <translation>設定を開く</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="266"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="268"/>
         <source>Quit</source>
         <translation>終了</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="333"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="308"/>
         <source>Monday</source>
         <translation>月</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="335"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="309"/>
         <source>Tuesday</source>
         <translation>火</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="337"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="310"/>
         <source>Wednesday</source>
         <translation>水</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="339"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="311"/>
         <source>Thursday</source>
         <translation>木</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="341"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="312"/>
         <source>Friday</source>
         <translation>金</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="343"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="313"/>
         <source>Saturday</source>
         <translation>土</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="345"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="314"/>
         <source>Sunday</source>
         <translation>日</translation>
     </message>

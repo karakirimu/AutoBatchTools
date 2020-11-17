@@ -377,7 +377,7 @@
               <item row="0" column="0">
                <widget class="QCheckBox" name="showDescCheckBox">
                 <property name="text">
-                 <string>Hide description Text</string>
+                 <string>Hide the description of the &quot;Type&quot; column</string>
                 </property>
                </widget>
               </item>
