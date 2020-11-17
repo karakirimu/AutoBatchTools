@@ -1,5 +1,7 @@
 TEMPLATE = subdirs 
-CONFIG += ordered
+CONFIG += \
+        ordered
+
 
 win32-msvc* {
     MSVC_VER = $$(VisualStudioVersion)
