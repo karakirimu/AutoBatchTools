@@ -584,7 +584,7 @@ void ProcessFlowTable::setInfoItem(EditorCache *list, TableOption *option)
 
     option->foreground.setNamedColor(INFO_FOREGROUND);
     option->background.setNamedColor(INFO_BACKGROUND);
-    setSecondColumn(INFO_PIXMAP, INFO_TITLE, option);
+    setSecondColumn(INFO_PIXMAP, tr("Information"), option);
 }
 
 void ProcessFlowTable::setExecuteItem(EditorCache *list, TableOption *option)
@@ -605,7 +605,7 @@ void ProcessFlowTable::setExecuteItem(EditorCache *list, TableOption *option)
 
     option->foreground.setNamedColor(EXEC_FOREGROUND);
     option->background.setNamedColor(EXEC_BACKGROUND);
-    setSecondColumn(EXEC_PIXMAP, EXEC_TITLE, option);
+    setSecondColumn(EXEC_PIXMAP, tr("Executable"), option);
 }
 
 void ProcessFlowTable::setFileSearchItem(EditorCache *list, TableOption *option)
@@ -640,7 +640,7 @@ void ProcessFlowTable::setFileSearchItem(EditorCache *list, TableOption *option)
 
     option->foreground.setNamedColor(SEARCH_FOREGROUND);
     option->background.setNamedColor(SEARCH_BACKGROUND);
-    setSecondColumn(SEARCH_PIXMAP, SEARCH_TITLE, option);
+    setSecondColumn(SEARCH_PIXMAP, tr("FileSearch"), option);
 }
 
 void ProcessFlowTable::setPluginItem(EditorCache *list, TableOption *option)
@@ -660,7 +660,7 @@ void ProcessFlowTable::setPluginItem(EditorCache *list, TableOption *option)
 
     option->foreground.setNamedColor(PLUGIN_FOREGROUND);
     option->background.setNamedColor(PLUGIN_BACKGROUND);
-    setSecondColumn(PLUGIN_PIXMAP, PLUGIN_TITLE, option);
+    setSecondColumn(PLUGIN_PIXMAP, tr("Plugin"), option);
 }
 
 void ProcessFlowTable::setProfileLoadItem(EditorCache *list, TableOption *option)
@@ -692,7 +692,7 @@ void ProcessFlowTable::setProfileLoadItem(EditorCache *list, TableOption *option
 
     option->foreground.setNamedColor(PROFILELOAD_FOREGROUND);
     option->background.setNamedColor(PROFILELOAD_BACKGROUND);
-    setSecondColumn(PROFILELOAD_PIXMAP, PROFILELOAD_TITLE, option);
+    setSecondColumn(PROFILELOAD_PIXMAP, tr("ProfileLoad"), option);
 }
 
 void ProcessFlowTable::setSecondColumn(const QPixmap &icon
