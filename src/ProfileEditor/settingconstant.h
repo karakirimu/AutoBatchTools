@@ -41,6 +41,7 @@ public:
     const QString SHOW_TEST =              "abe_dock#runset";
     const QString SHOW_CONSOLE =           "abe_dock#console";
     const QString HIDE_TITLEBAR =          "abe_dock#autohide";
+    const QString HIDE_TOOLBARTEXT =       "abe_toolbar#hidetext";
 
     const QString GROUP_ABE =              "abe";
     const QString ABE_LANGUAGE =           "abe-language";

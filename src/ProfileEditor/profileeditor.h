@@ -105,6 +105,9 @@ private slots:
     void pauseTriggered();
     void stopTriggered();
 
+    //update hide
+    void hideToolBarDesc(bool state);
+
     //launch test setting in direct
     void runTestSettingsTriggered();
 

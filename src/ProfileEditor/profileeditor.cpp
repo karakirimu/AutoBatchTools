@@ -34,6 +34,8 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     //Window data restore
     QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
     QVariant v = settings.value( sc.GEOMETRY );
+    bool toolbartexthide = false;
+
     if (v.type() != QVariant::Invalid){
 
         // load window settings on MainWindow
@@ -55,6 +57,10 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
         ui->setTestDockWidget->setAutohide(autohide);
         ui->consoleDockWidget->setAutohide(autohide);
         ui->variantDockWidget->setAutohide(autohide);
+
+        // toolbar text settings
+        toolbartexthide = settings.value(sc.HIDE_TOOLBARTEXT, false).toBool();
+        ui->actionToolBarHideDesc->setChecked(toolbartexthide);
 
         // load recent opened files
         setOpenRecent();
@@ -83,6 +89,8 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     //test
 //    ui->graphicsView->hide();
 //    qDebug() << "profileeditor" << geometry().center();
+
+//    ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
 
     //provide function object
     ui->console->setMultiTask(mlTask);
@@ -168,6 +176,8 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(ui->actionAutohide, &QAction::triggered, ui->consoleDockWidget, &BaseDockWidget::setAutohide);
     connect(ui->actionAutohide, &QAction::triggered, ui->variantDockWidget, &BaseDockWidget::setAutohide);
 
+    connect(ui->actionToolBarHideDesc, &QAction::triggered, this, &ProfileEditor::hideToolBarDesc);
+
     //Infomation
     connect(ui->actionAbout, &QAction::triggered, this, &ProfileEditor::about);
     connect(ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
@@ -182,6 +192,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     // set additional toobar
     initRunRangeToolBar();
     initRunToolBar();
+    hideToolBarDesc(toolbartexthide);
 
     // set statusbar
     initStatusBar();
@@ -220,6 +231,8 @@ ProfileEditor::~ProfileEditor()
     settings.setValue(sc.SHOW_TEST, ui->actionRunSetting->isChecked());
     settings.setValue(sc.SHOW_CONSOLE, ui->actionRunConsole->isChecked());
     settings.setValue(sc.HIDE_TITLEBAR, ui->actionAutohide->isChecked());
+
+    settings.setValue(sc.HIDE_TOOLBARTEXT, ui->actionToolBarHideDesc->isChecked());
 
     delete actionRunSetting;
     delete runToolBar;
@@ -583,7 +596,8 @@ void ProfileEditor::initRunToolBar()
     actionToolBarRun->setCheckable(true);
     actionToolBarRun->setChecked(settings.value(sc.SHOW_TOOLBAR_RUN, true).toBool());
     connect(actionToolBarRun, &QAction::triggered, runToolBar, &QToolBar::setVisible);
-    ui->menuToolBar->addAction(actionToolBarRun);
+//    ui->menuToolBar->addAction(actionToolBarRun);
+    ui->menuToolBar->insertAction(ui->actionToolBarEdit, actionToolBarRun);
 
     runToolBar->setVisible(actionToolBarRun->isChecked());
 }
@@ -609,7 +623,8 @@ void ProfileEditor::initRunRangeToolBar()
     actionToolBarTestRange->setCheckable(true);
     actionToolBarTestRange->setChecked(settings.value(sc.SHOW_TOOLBAR_RANGE, true).toBool());
     connect(actionToolBarTestRange, &QAction::triggered, testRangeToolBar, &QToolBar::setVisible);
-    ui->menuToolBar->addAction(actionToolBarTestRange);
+//    ui->menuToolBar->addAction(actionToolBarTestRange);
+    ui->menuToolBar->insertAction(ui->actionToolBarEdit, actionToolBarTestRange);
 
     testRangeToolBar->setVisible(actionToolBarTestRange->isChecked());
 }
@@ -704,6 +719,17 @@ void ProfileEditor::stopTriggered()
     key = "";
     ui->console->setReadObjectName(key);
     ui->consolemessage->setObjectName(key);
+}
+
+void ProfileEditor::hideToolBarDesc(bool state)
+{
+    if(state){
+        ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        runToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    }else{
+        ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        runToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    }
 }
 
 void ProfileEditor::runTestSettingsTriggered()

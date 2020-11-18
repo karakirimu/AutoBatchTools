@@ -1539,7 +1539,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="1202"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2122"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2124"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
@@ -1560,7 +1560,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="1548"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2372"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2374"/>
         <source>Edit</source>
         <translation>編集</translation>
     </message>
@@ -1576,94 +1576,99 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="1578"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1617"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1619"/>
         <source>ToolBar</source>
         <translation>ツールバー</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1595"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1597"/>
         <source>Tools</source>
         <translation>ツール</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1652"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2295"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1654"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2297"/>
         <source>Process</source>
         <translation>処理</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1753"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2328"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1755"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2330"/>
         <source>Input File</source>
         <translation>入力ファイル</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1847"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2306"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1849"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2308"/>
         <source>Console</source>
         <translation>コンソール</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1958"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1960"/>
         <source> &gt; </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1985"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1987"/>
         <source>Press Enter to send command ...</source>
         <translation>Enterでコマンドを送信...</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2003"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2339"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2005"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2341"/>
         <source>Variant</source>
         <translation>変数</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2049"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2051"/>
         <source>Save As</source>
         <translation>名前を付けて保存</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2052"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2054"/>
         <source>Ctrl+Shift+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2057"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2059"/>
         <source>Quit</source>
         <translation>終了</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2060"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2255"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2062"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2257"/>
         <source>Ctrl+X</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2069"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2071"/>
         <source>Open</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2072"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2074"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2081"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2083"/>
         <source>New</source>
         <translation>新規</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2084"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2086"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2096"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2098"/>
         <source>Save</source>
         <translation>上書き保存</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2382"/>
+        <source>Hide Description</source>
+        <translation>テキストを隠す</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="1057"/>
@@ -1676,200 +1681,200 @@ To recover files, select the following list and press [OK].</source>
         <translation>結果</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2099"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2101"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2108"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="492"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2110"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="505"/>
         <source>Export</source>
         <translation>エクスポート</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2113"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2115"/>
         <source>About</source>
         <translation>このソフトウェアについて</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2125"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2127"/>
         <source>Alt+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2134"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2136"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2137"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2139"/>
         <source>Ctrl+Enter</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2149"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2151"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2152"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2154"/>
         <source>Del</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2164"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2166"/>
         <source>Up</source>
         <translation>上へ</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2167"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2169"/>
         <source>Ctrl+Up</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2179"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2181"/>
         <source>Down</source>
         <translation>下へ</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2182"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2184"/>
         <source>Ctrl+Down</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2194"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="565"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2196"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="578"/>
         <source>Run</source>
         <translation>実行</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2197"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2199"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2209"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2211"/>
         <source>Pause</source>
         <translation>一時停止</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2221"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2223"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2229"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2231"/>
         <source>Undo</source>
         <translation>戻る</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2232"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2234"/>
         <source>Ctrl+Z</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2240"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2242"/>
         <source>Redo</source>
         <translation>進む</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2243"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2245"/>
         <source>Ctrl+Y</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2252"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2254"/>
         <source>Cut</source>
         <translation>切り取り</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2264"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2266"/>
         <source>Copy</source>
         <translation>コピー</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2267"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2269"/>
         <source>Ctrl+C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2276"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2278"/>
         <source>Paste</source>
         <translation>貼り付け</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2279"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2281"/>
         <source>Ctrl+V</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2284"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2286"/>
         <source>About Qt ...</source>
         <translation>Qtについて ...</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2317"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2319"/>
         <source>Hide Title Bar</source>
         <translation>タイトルバーを隠す</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2348"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2350"/>
         <source>Reload</source>
         <translation>更新</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2356"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2358"/>
         <source>Clear History</source>
         <translation>履歴をクリア</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2361"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2363"/>
         <source>Open Last Opened File</source>
         <translation>最後に開いたファイルを開く</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="268"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="281"/>
         <source>Open Profile</source>
         <translation>プロファイルを開く</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="312"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="478"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="325"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="491"/>
         <source>Save Profile</source>
         <translation>プロファイルを保存</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="505"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="518"/>
         <source>Untitled</source>
         <translation>無題</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="548"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="561"/>
         <source>No. %1 selected</source>
         <translation>No. %1 選択中</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="573"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="586"/>
         <source>Test</source>
         <translation>テスト</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="574"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="587"/>
         <source>Test Settings</source>
         <translation>テスト設定</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="593"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="607"/>
         <source>Test Range</source>
         <translation>テスト範囲</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="600"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="614"/>
         <source>Input process test range here ...</source>
         <translation>処理テスト範囲をここに入力 ...</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="601"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="615"/>
         <source>Specify the process test range.
 Example: 0-7 0, 1, 2, 3</source>
         <translation>処理テストの範囲を指定します。
@@ -1880,24 +1885,24 @@ Example: 0-7 0, 1, 2, 3</source>
         <translation type="vanished">実行処理範囲をここに入力 ...</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="731"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="757"/>
         <source>Undo %1</source>
         <translation>戻る %1</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="742"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="768"/>
         <source>Redo %1</source>
         <translation>進む %1</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="754"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="869"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="780"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="895"/>
         <source>Alert</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="755"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="870"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="781"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="896"/>
         <source>Profile was edited.
 Do you want to save this?</source>
         <translation>プロファイルが編集されました。
