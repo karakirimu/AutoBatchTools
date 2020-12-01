@@ -102,6 +102,8 @@ private:
     void setPluginItem(EditorCache *list, TableOption *option);
     void setProfileLoadItem(EditorCache *list, TableOption *option);
 
+    void setColorSetting(const QString background, const QString text
+                                            , TableOption *option);
     void setSecondColumn(const QPixmap &icon, const QString &text \
                                             , const TableOption *option);
 
@@ -118,28 +120,28 @@ private:
     //for reduce read time
 //    const QString INFO_TITLE      = "Information";
     const QPixmap INFO_PIXMAP     = QIcon(":/default_icons/info.png").pixmap(16,16);
-    const QString INFO_BACKGROUND = "#f8f8f8";
-    const QString INFO_FOREGROUND = "#000000";
+//    const QString INFO_BACKGROUND = "#f8f8f8";
+//    const QString INFO_FOREGROUND = "#000000";
 
 //    const QString EXEC_TITLE      = "Executable";
     const QPixmap EXEC_PIXMAP     = QIcon(":/default_icons/terminal.png").pixmap(16,16);
-    const QString EXEC_BACKGROUND = "#e2f6ff";
-    const QString EXEC_FOREGROUND = "#000000";
+//    const QString EXEC_BACKGROUND = "#e2f6ff";
+//    const QString EXEC_FOREGROUND = "#000000";
 
 //    const QString SEARCH_TITLE      = "FileSearch";
     const QPixmap SEARCH_PIXMAP     = QIcon(":/default_icons/search.png").pixmap(16,16);
-    const QString SEARCH_BACKGROUND = "#dcedc8";
-    const QString SEARCH_FOREGROUND = "#000000";
+//    const QString SEARCH_BACKGROUND = "#dcedc8";
+//    const QString SEARCH_FOREGROUND = "#000000";
 
 //    const QString PLUGIN_TITLE      = "Plugin";
     const QPixmap PLUGIN_PIXMAP     = QIcon(":/default_icons/extras.png").pixmap(16,16);
-    const QString PLUGIN_BACKGROUND = "#ffcdd2";
-    const QString PLUGIN_FOREGROUND = "#000000";
+//    const QString PLUGIN_BACKGROUND = "#ffcdd2";
+//    const QString PLUGIN_FOREGROUND = "#000000";
 
 //    const QString PROFILELOAD_TITLE      = "ProfileLoad";
     const QPixmap PROFILELOAD_PIXMAP     = QIcon(":/default_icons/others.png").pixmap(16,16);
-    const QString PROFILELOAD_BACKGROUND = "#ffecb3";
-    const QString PROFILELOAD_FOREGROUND = "#000000";
+//    const QString PROFILELOAD_BACKGROUND = "#ffecb3";
+//    const QString PROFILELOAD_FOREGROUND = "#000000";
 
     SettingConstant sc;
     QssPropertyConstant qpc;

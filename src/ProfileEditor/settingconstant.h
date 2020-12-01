@@ -56,6 +56,28 @@ public:
     const QString ABE_RUNAS_SCHEDULER =    "abe-test-runas";
     const QString ABE_PROCESS_HIDE_DESC =  "abe-process-hide-description";
 
+    const QString ABE_INFO_BACKGROUND =      "abe-info-background";
+    const QString ABE_INFO_TEXTCOLOR  =      "abe-info-textcolor";
+    const QString ABE_EXEC_BACKGROUND =      "abe-exec-background";
+    const QString ABE_EXEC_TEXTCOLOR  =      "abe-exec-textcolor";
+    const QString ABE_SEARCH_BACKGROUND =    "abe-search-background";
+    const QString ABE_SEARCH_TEXTCOLOR  =    "abe-search-textcolor";
+    const QString ABE_PLUGIN_BACKGROUND =    "abe-plugin-background";
+    const QString ABE_PLUGIN_TEXTCOLOR  =    "abe-plugin-textcolor";
+    const QString ABE_PROFILE_BACKGROUND =   "abe-profile-background";
+    const QString ABE_PROFILE_TEXTCOLOR  =   "abe-profile-textcolor";
+
+    const QString ABE_INFO_BACKGROUND_DEFAULT =      "#f8f8f8";
+    const QString ABE_INFO_TEXTCOLOR_DEFAULT  =      "#000000";
+    const QString ABE_EXEC_BACKGROUND_DEFAULT =      "#e2f6ff";
+    const QString ABE_EXEC_TEXTCOLOR_DEFAULT  =      "#000000";
+    const QString ABE_SEARCH_BACKGROUND_DEFAULT =    "#dcedc8";
+    const QString ABE_SEARCH_TEXTCOLOR_DEFAULT  =    "#000000";
+    const QString ABE_PLUGIN_BACKGROUND_DEFAULT =    "#ffcdd2";
+    const QString ABE_PLUGIN_TEXTCOLOR_DEFAULT  =    "#000000";
+    const QString ABE_PROFILE_BACKGROUND_DEFAULT =   "#ffecb3";
+    const QString ABE_PROFILE_TEXTCOLOR_DEFAULT  =   "#000000";
+
 };
 
 #endif // SETTINGCONSTANT_H

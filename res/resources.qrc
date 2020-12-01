@@ -51,5 +51,6 @@
         <file>default_icons/normalize.png</file>
         <file>default_icons/blank.png</file>
         <file>default_icons/switch.png</file>
+        <file>default_icons/revert.png</file>
     </qresource>
 </RCC>

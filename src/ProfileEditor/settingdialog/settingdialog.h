@@ -20,6 +20,9 @@
 #include <QAbstractButton>
 #include <QDialog>
 #include <QSettings>
+#include <QColorDialog>
+#include <QLabel>
+#include <QLineEdit>
 #include "settingconstant.h"
 
 namespace Ui {
@@ -54,6 +57,12 @@ private:
     void initLanguageSelection();
     void storeLanguageSelection(QSettings *setting);
     void loadLanguageSelection(QSettings *setting);
+
+    void colorSelect(QLineEdit *editor);
+    void setColorLabel(QLabel *label, QString hexcolor);
+    void updateColor(QLineEdit *edit, QLabel *label);
+
+    const QString REGEXP_HEX = "#([0-9a-fA-F]){6}";
 
     Ui::SettingDialog *ui;
     SettingConstant sc;

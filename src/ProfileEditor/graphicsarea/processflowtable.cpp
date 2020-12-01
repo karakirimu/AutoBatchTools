@@ -582,8 +582,7 @@ void ProcessFlowTable::setInfoItem(EditorCache *list, TableOption *option)
 
     this->setItem(dataToUiIndex(option->dataid), FIRST, new QTableWidgetItem(curdata));
 
-    option->foreground.setNamedColor(INFO_FOREGROUND);
-    option->background.setNamedColor(INFO_BACKGROUND);
+    setColorSetting(sc.ABE_INFO_BACKGROUND, sc.ABE_INFO_TEXTCOLOR, option);
     setSecondColumn(INFO_PIXMAP, tr("Information"), option);
 }
 
@@ -603,8 +602,7 @@ void ProcessFlowTable::setExecuteItem(EditorCache *list, TableOption *option)
 
     this->setItem(dataToUiIndex(option->dataid), FIRST, new QTableWidgetItem(tmp));
 
-    option->foreground.setNamedColor(EXEC_FOREGROUND);
-    option->background.setNamedColor(EXEC_BACKGROUND);
+    setColorSetting(sc.ABE_EXEC_BACKGROUND, sc.ABE_EXEC_TEXTCOLOR, option);
     setSecondColumn(EXEC_PIXMAP, tr("Executable"), option);
 }
 
@@ -638,8 +636,7 @@ void ProcessFlowTable::setFileSearchItem(EditorCache *list, TableOption *option)
 
     this->setItem(dataToUiIndex(option->dataid), FIRST, new QTableWidgetItem(tmp));
 
-    option->foreground.setNamedColor(SEARCH_FOREGROUND);
-    option->background.setNamedColor(SEARCH_BACKGROUND);
+    setColorSetting(sc.ABE_SEARCH_BACKGROUND, sc.ABE_SEARCH_TEXTCOLOR, option);
     setSecondColumn(SEARCH_PIXMAP, tr("FileSearch"), option);
 }
 
@@ -658,8 +655,7 @@ void ProcessFlowTable::setPluginItem(EditorCache *list, TableOption *option)
 
     this->setItem(dataToUiIndex(option->dataid), FIRST, new QTableWidgetItem(curdata));
 
-    option->foreground.setNamedColor(PLUGIN_FOREGROUND);
-    option->background.setNamedColor(PLUGIN_BACKGROUND);
+    setColorSetting(sc.ABE_PLUGIN_BACKGROUND, sc.ABE_PLUGIN_TEXTCOLOR, option);
     setSecondColumn(PLUGIN_PIXMAP, tr("Plugin"), option);
 }
 
@@ -690,9 +686,19 @@ void ProcessFlowTable::setProfileLoadItem(EditorCache *list, TableOption *option
 
     this->setItem(dataToUiIndex(option->dataid), FIRST, new QTableWidgetItem(curdata));
 
-    option->foreground.setNamedColor(PROFILELOAD_FOREGROUND);
-    option->background.setNamedColor(PROFILELOAD_BACKGROUND);
+    setColorSetting(sc.ABE_PROFILE_BACKGROUND, sc.ABE_PROFILE_TEXTCOLOR, option);
     setSecondColumn(PROFILELOAD_PIXMAP, tr("ProfileLoad"), option);
+}
+
+void ProcessFlowTable::setColorSetting(const QString background
+                                       , const QString text
+                                       , TableOption *option)
+{
+    QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
+    settings.beginGroup(sc.GROUP_ABE);
+    option->foreground.setNamedColor(settings.value(text, false).toString());
+    option->background.setNamedColor(settings.value(background, false).toString());
+    settings.endGroup();
 }
 
 void ProcessFlowTable::setSecondColumn(const QPixmap &icon
