@@ -50,6 +50,7 @@ public:
     const QString TAG_I_PROCESS_BOOL_HA1      = "rloop";
     const QString TAG_I_ARG_IN_ONELOOP_INT    = "rlarg";
     const QString TAG_I_RECURSIVE_LOOPMAX_INT = "reloop";
+    const QString TAG_I_PROFILE_BASEPATH      = "basepath";
 
     //! Search Tag
     const QString TAG_FS_NAME_HA1             = "sname";

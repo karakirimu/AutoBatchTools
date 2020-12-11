@@ -140,6 +140,7 @@ void ProcessXmlBuilder::createDocument()
     newlist.append((QStringList() << pxc.TAG_I_PROCESS_BOOL_HA1 << "yes" << pxc.ATTR_I_PROCESSMAX_INT << "1"));
     newlist.append((QStringList() << pxc.TAG_I_ARG_IN_ONELOOP_INT << "1"));
     newlist.append((QStringList() << pxc.TAG_I_RECURSIVE_LOOPMAX_INT << "0"));
+    newlist.append((QStringList() << pxc.TAG_I_PROFILE_BASEPATH << "./"));
 
     insertItem(&newlist, count());
     newlist.clear();
@@ -179,6 +180,7 @@ void ProcessXmlBuilder::setSearchItemData(QString element, QList<QStringList> *l
             || element == pxc.TAG_I_FILEINPUT_BOOL
             || element == pxc.TAG_I_FILEINPUT_SEARCH_BOOL
             || element == pxc.TAG_I_ARG_IN_ONELOOP_INT
+            || element == pxc.TAG_I_PROFILE_BASEPATH
             || element == pxc.TAG_I_RECURSIVE_LOOPMAX_INT
             || element == pxc.TAG_E_COMMANDCOUNT_INT
             || element == pxc.TAG_E_DETACH_BOOL

@@ -115,6 +115,7 @@ void EditorCacheConverter::fromInfomationCache(const EditorCache *from, QList<QS
 
     to->append((QStringList() << pxc.TAG_I_ARG_IN_ONELOOP_INT << QString::number(from->info.argumentsInOneLoop)));
     to->append((QStringList() << pxc.TAG_I_RECURSIVE_LOOPMAX_INT << QString::number(from->info.recursiveLoopMax)));
+    to->append((QStringList() << pxc.TAG_I_PROFILE_BASEPATH << from->info.basefilepath));
 }
 
 void EditorCacheConverter::fromLocalCache(const EditorCache *from, QList<QStringList> *to)
@@ -242,6 +243,8 @@ void EditorCacheConverter::toInfomationCache(EditorCache *to, const QList<QStrin
     to->info.argumentsInOneLoop = fetch(pxc.TAG_I_ARG_IN_ONELOOP_INT, from).toInt();
 
     to->info.recursiveLoopMax = fetch(pxc.TAG_I_RECURSIVE_LOOPMAX_INT, from).toInt();
+
+    to->info.basefilepath = fetch(pxc.TAG_I_PROFILE_BASEPATH, from);
 }
 
 void EditorCacheConverter::toLocalCache(EditorCache *to, const QList<QStringList> *from)

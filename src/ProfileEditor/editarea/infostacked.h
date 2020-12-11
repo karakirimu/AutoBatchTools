@@ -31,6 +31,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPlainTextEdit>
+#include <QFileDialog>
 
 #include <editoperator.h>
 
@@ -74,6 +75,7 @@ private:
     QToolButton *addbutton;
     QToolButton *editbutton;
     QToolButton *deletebutton;
+    QToolButton *basepathopenbutton;
 
     QCheckBox *finput;
     QCheckBox *sinput;
@@ -82,6 +84,7 @@ private:
     QLineEdit *rloopmax;
     QLineEdit *rlargs;
     QLineEdit *reloop;
+    QLineEdit *basepath;
     QLabel *rlabel;
 };
 

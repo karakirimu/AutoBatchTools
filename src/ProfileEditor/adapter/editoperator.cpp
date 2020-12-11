@@ -548,8 +548,20 @@ void EditOperator::textSearchSeparateAction(int id, QString newstr)
     emit editUpdate(id);
 }
 
+/**
+ * @fn EditOperator::textBasePathAction
+ * @brief The function of QLineEdit to set the profile launch path
+ *        on the Information tab.
+ * @param id     Row number to read, starting from 0
+ * @param newstr New basepath text
+ */
+void EditOperator::textBasePathAction(int id, QString newstr)
+{
+    StringBasePath *com = new StringBasePath(id, newstr, editorCache);
 
-
+    undostack->push(com);
+    emit editUpdate(id);
+}
 
 /**
  * @fn EditOperator::checkAllowInputAction

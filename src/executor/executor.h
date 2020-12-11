@@ -158,6 +158,7 @@ private:
         int launched = DEFAULT;
         int argumentscount;
         int othernestmax = 1;
+        QString basepath = "";
         QString initFilename = "";
     }SettingParam;
 

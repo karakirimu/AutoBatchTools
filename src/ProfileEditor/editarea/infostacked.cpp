@@ -38,6 +38,7 @@ void InfoStacked::setEditOperator(EditOperator *op)
     addbutton = stackwidget->findChild<QToolButton *>("addInputToolButton");
     editbutton = stackwidget->findChild<QToolButton *>("editInputToolButton");
     deletebutton = stackwidget->findChild<QToolButton *>("removeInputToolButton");
+    basepathopenbutton = stackwidget->findChild<QToolButton *>("workingDirectoryToolButton");
 
     finput = stackwidget->findChild<QCheckBox *>("allowInputCheckBox");
     sinput = stackwidget->findChild<QCheckBox *>("searchInputCheckBox");
@@ -47,6 +48,8 @@ void InfoStacked::setEditOperator(EditOperator *op)
     rloopmax = stackwidget->findChild<QLineEdit *>("loopMaxLineEdit");
     rlargs = stackwidget->findChild<QLineEdit *>("loopArgumentsLineEdit");
     reloop = stackwidget->findChild<QLineEdit *>("loopRecursiveLineEdit");
+
+    basepath = stackwidget->findChild<QLineEdit *>("workingDirectoryLineEdit");
 
     rloopmax->setValidator(new QIntValidator(0, 100000000, this));
     rlargs->setValidator(new QIntValidator(0, 100000000, this));
@@ -67,6 +70,20 @@ void InfoStacked::setEditOperator(EditOperator *op)
     connect(editbutton, &QToolButton::clicked, fscombo, &SearchComboBox::editAction);
     connect(deletebutton, &QToolButton::clicked, fscombo, &SearchComboBox::deleteAction);
 
+    connect(basepathopenbutton, &QToolButton::clicked, [=](){
+        // open file
+        QString fileName = QFileDialog().getExistingDirectory(
+                                                this,\
+                                                tr("Open Path"),
+                                                basepath->text(),
+                                                QFileDialog::ShowDirsOnly
+                                                | QFileDialog::HideNameFilterDetails);
+
+        if(fileName != ""){
+            basepath->setText(fileName);
+        }
+    });
+
     connect(finput, &QCheckBox::clicked, this, &InfoStacked::editCheckAction);
     connect(sinput, &QCheckBox::clicked, this, &InfoStacked::editCheckAction);
     connect(fscombo, &SearchComboBox::textActivated, this, &InfoStacked::editInitialSearch);
@@ -77,6 +94,7 @@ void InfoStacked::setEditOperator(EditOperator *op)
     connect(rlargs, &QLineEdit::textEdited, this, &InfoStacked::editTextValueAction);
     connect(reloop, &QLineEdit::textEdited, this, &InfoStacked::editTextValueAction);
 
+    connect(basepath, &QLineEdit::textChanged, this, &InfoStacked::editTextValueAction);
 }
 
 /**
@@ -157,6 +175,7 @@ void InfoStacked::setInfoDataList(int after, int unused1, int function)
     rloopmax->setText(QString::number(list.info.processMaxCount));
     rlargs->setText(QString::number(list.info.argumentsInOneLoop));
     reloop->setText(QString::number(list.info.recursiveLoopMax));
+    basepath->setText(list.info.basefilepath);
 
     bool check = list.info.fileInputSearch;
     addbutton->setVisible(check);
@@ -256,5 +275,7 @@ void InfoStacked::editTextValueAction(QString value)
     }else if(objname == "loopRecursiveLineEdit"){
         editop->spinLoopRecursiveAction(0,value.toInt());
 
+    }else if(objname == "workingDirectoryLineEdit"){
+        editop->textBasePathAction(0, value);
     }
 }

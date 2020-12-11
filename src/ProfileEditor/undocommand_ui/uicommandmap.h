@@ -58,6 +58,9 @@ public:
     //! Undo ID: 0x00000110 (XML Tag: "max")
     static constexpr int I_PROCESSMAX_INT        = 0x00000110;
 
+    //! Undo ID: 0x00000110 (XML Tag: "basepath")
+    static constexpr int I_PROFILE_BASEPATH      = 0x00000111;
+
 
     //! Local Tag
     //! Undo ID: 0x00000200 (XML Tag: "lvar")

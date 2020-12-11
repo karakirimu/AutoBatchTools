@@ -95,6 +95,7 @@ HEADERS  += editarea/commandtable.h \
     undocommand_ui/edittabcommand.h \
 #    undocommand_ui/edittextcommand.h \
     undocommand_ui/edittimeout.h \
+    undocommand_ui/stringbasepath.h \
     undocommand_ui/stringfileoutput.h \
     undocommand_ui/stringprojectauthor.h \
     undocommand_ui/stringprojectdescription.h \
@@ -174,6 +175,7 @@ SOURCES += editarea/commandtable.cpp \
     undocommand_ui/edittabcommand.cpp \
 #    undocommand_ui/edittextcommand.cpp \
     undocommand_ui/edittimeout.cpp \
+    undocommand_ui/stringbasepath.cpp \
     undocommand_ui/stringfileoutput.cpp \
     undocommand_ui/stringprojectauthor.cpp \
     undocommand_ui/stringprojectdescription.cpp \

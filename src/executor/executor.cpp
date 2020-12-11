@@ -194,6 +194,13 @@ bool Executor::runProcess()
 
     }
 
+    // Set profile directory when basepath is empty.
+    if(QDir::isRelativePath(setting->basepath)){
+        QFileInfo profile(setting->initFilename);
+        QString workingpath = profile.dir().path().append("/").append(setting->basepath);
+        setting->basepath = QDir::cleanPath(workingpath);
+    }
+
     //load init xmlfile
     pbuilder->setLoadPath(setting->initFilename);
 
@@ -372,6 +379,8 @@ bool Executor::loadNormal(QList<QStringList> *list)
 
     app = macroConvert(list->at(cmdfirst).at(1));
 
+    work->process->setWorkingDirectory(setting->basepath);
+
     for(int i = 1; i < cmdc; i++){
         arguments.append(macroConvert(list->at(cmdfirst + i).at(1)));
     }
@@ -467,6 +476,11 @@ bool Executor::loadSearch(QList<QStringList> *list)
     }else{
         //TODO: create data to File
         QString outputfile = xgen.fetch(pxc.TAG_FS_FILEPATH_HA1, list);
+
+        // path to absolute
+        if(!outputfile.isEmpty() && QDir::isRelativePath(outputfile)){
+            outputfile = QDir::cleanPath(setting->basepath + '/' + outputfile);
+        }
 
         if(outputfile != ""){
             // 0: overwrite, 1: append
@@ -780,6 +794,8 @@ void Executor::setProcessSettings(bool *fileinput, int *loopcount)
     //load other profile nest counter
     setting->othernestmax = static_cast<QString>( \
                 xgen.fetch(pxc.TAG_I_RECURSIVE_LOOPMAX_INT, &list)).toInt();
+
+    setting->basepath = xgen.fetch(pxc.TAG_I_PROFILE_BASEPATH, &list);
 
 
     qDebug() << "[Executor::setProcessSettings] Settings loaded";

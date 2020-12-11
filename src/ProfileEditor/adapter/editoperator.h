@@ -86,6 +86,7 @@
 #include <stringprojectname.h>
 #include <stringprojectversion.h>
 #include <stringsearchsep.h>
+#include <stringbasepath.h>
 
 //direct data operation
 #include <addcommand.h>
@@ -211,6 +212,7 @@ public slots:
     void textProjectNameAction(int id, QString newstr);
     void textProjectVerAction(int id, QString newstr);
     void textSearchSeparateAction(int id, QString newstr);
+    void textBasePathAction(int id, QString newstr);
 
     //process functions
     void copyAction(int id);

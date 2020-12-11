@@ -63,6 +63,9 @@ struct Information {
     //! Maximum number of self-call loops with profileload
     int recursiveLoopMax = 0;
 
+    //! Profile working path
+    QString basefilepath = "";
+
 };
 
 /**
