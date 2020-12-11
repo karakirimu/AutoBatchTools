@@ -30,7 +30,18 @@ SchedulerConsoleEdit::~SchedulerConsoleEdit()
 void SchedulerConsoleEdit::setTaskSchedulerConnector(TaskSchedulerConnector *task)
 {
     taskc = task;
-    connect(this, &SchedulerConsoleEdit::returnPressed, this, &SchedulerConsoleEdit::sendMessage);
+}
+
+void SchedulerConsoleEdit::keyPressEvent(QKeyEvent *keyevent)
+{
+    if((keyevent->key() == Qt::Key_Enter
+         || keyevent->key() == Qt::Key_Return)
+        && keyevent->modifiers() == Qt::ControlModifier){
+        sendMessage();
+        return;
+    }
+
+    QLineEdit::keyPressEvent(keyevent);
 }
 
 void SchedulerConsoleEdit::sendMessage()
@@ -39,7 +50,7 @@ void SchedulerConsoleEdit::sendMessage()
     if(text == ""){
         taskc->sendInput(this->objectName(), "\n");
     }else{
-        taskc->sendInput(this->objectName(), text);
+        taskc->sendInput(this->objectName(), text + "\n");
         this->clear();
     }
 }

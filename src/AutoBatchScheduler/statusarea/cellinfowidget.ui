@@ -327,7 +327,7 @@ color: rgb(204, 204, 204);
 border: none;</string>
         </property>
         <property name="placeholderText">
-         <string>&gt; Press Enter to send command ...</string>
+         <string>&gt; Press Ctrl + Enter to send command ...</string>
         </property>
        </widget>
       </item>

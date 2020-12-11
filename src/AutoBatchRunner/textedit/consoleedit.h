@@ -19,14 +19,18 @@
 
 #include <QLineEdit>
 #include <multitask.h>
+#include <QKeyEvent>
 
 class ConsoleEdit : public QLineEdit
 {
 public:
     explicit ConsoleEdit(QWidget *parent = nullptr);
-    ~ConsoleEdit();
+    ~ConsoleEdit() override;
 
     void setMultiTask(MultiTask *mltask);
+
+protected:
+    void keyPressEvent(QKeyEvent *keyevent) override;
 
 private slots:
     void sendMessage();

@@ -2041,7 +2041,7 @@ border: none;</string>
               <bool>false</bool>
              </property>
              <property name="placeholderText">
-              <string>Press Enter to send command ...</string>
+              <string>Press Ctrl + Enter to send command ...</string>
              </property>
              <property name="clearButtonEnabled">
               <bool>false</bool>

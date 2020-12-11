@@ -266,7 +266,7 @@ border: 0px</string>
         <bool>false</bool>
        </property>
        <property name="placeholderText">
-        <string>&gt; Press Enter to send command ...</string>
+        <string>&gt; Press Ctrl + Enter to send command ...</string>
        </property>
       </widget>
      </item>
@@ -390,7 +390,6 @@ border: 0px</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>

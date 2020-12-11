@@ -19,14 +19,18 @@
 
 #include <QLineEdit>
 #include <taskschedulerconnector.h>
+#include <QKeyEvent>
 
 class SchedulerConsoleEdit : public QLineEdit
 {
 public:
     explicit SchedulerConsoleEdit(QWidget *parent = nullptr);
-    ~SchedulerConsoleEdit();
+    ~SchedulerConsoleEdit() override;
 
     void setTaskSchedulerConnector(TaskSchedulerConnector *task);
+
+protected:
+    void keyPressEvent(QKeyEvent *keyevent) override;
 
 private slots:
     void sendMessage();
