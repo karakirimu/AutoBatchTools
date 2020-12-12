@@ -378,9 +378,8 @@ void CommandTable::openFileAction()
     int current = this->currentRow();
     if(rowCount() == 0 || current < 0) return;
     QString str = selectFile(QDir::currentPath());
-    //this->in
-    this->setItem(current, 0, new QTableWidgetItem(str));
     if(str != ""){
+        this->setItem(current, 0, new QTableWidgetItem(str));
         editedAction(current, 0);
     }
 }
@@ -390,8 +389,8 @@ void CommandTable::openDirectoryAction()
     int current = this->currentRow();
     if(rowCount() == 0 || current < 0) return;
     QString str = selectFolder(QDir::currentPath());
-    this->setItem(current, 0, new QTableWidgetItem(str));
     if(str != ""){
+        this->setItem(current, 0, new QTableWidgetItem(str));
         editedAction(current, 0);
     }
 }
