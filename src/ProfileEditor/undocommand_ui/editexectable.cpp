@@ -155,6 +155,18 @@ int EditExecTable::id() const
     return tableOperation;
 }
 
+bool EditExecTable::mergeWith(const QUndoCommand *other)
+{
+    if (other->id() != id()) return false;
+    const EditExecTable *com = static_cast<const EditExecTable *>(other);
+    if(tableOperation == UiCommandMap::E_EDIT_TABLE){
+        newStr = com->newStr;
+    }else{
+        return false;
+    }
+    return true;
+}
+
 int EditExecTable::operation() const
 {
     return tableOperation;
