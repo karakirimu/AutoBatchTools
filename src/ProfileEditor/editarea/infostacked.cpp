@@ -94,7 +94,7 @@ void InfoStacked::setEditOperator(EditOperator *op)
     connect(rlargs, &QLineEdit::textEdited, this, &InfoStacked::editTextValueAction);
     connect(reloop, &QLineEdit::textEdited, this, &InfoStacked::editTextValueAction);
 
-    connect(basepath, &QLineEdit::textChanged, this, &InfoStacked::editTextValueAction);
+    connect(basepath, &QLineEdit::textEdited, this, &InfoStacked::editTextValueAction);
 }
 
 /**
