@@ -209,7 +209,7 @@
           </property>
           <widget class="QWidget" name="workspace">
            <attribute name="title">
-            <string>Workspace</string>
+            <string>Profile</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_22">
             <property name="leftMargin">
@@ -229,14 +229,14 @@
               <item row="0" column="0">
                <widget class="QLabel" name="label_5">
                 <property name="text">
-                 <string>Profile working directory</string>
+                 <string>Working directory</string>
                 </property>
                </widget>
               </item>
               <item row="0" column="1">
                <widget class="QLineEdit" name="workingDirectoryLineEdit">
                 <property name="text">
-                 <string>./</string>
+                 <string/>
                 </property>
                </widget>
               </item>
@@ -1324,7 +1324,7 @@
                      <x>0</x>
                      <y>0</y>
                      <width>100</width>
-                     <height>24</height>
+                     <height>30</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_25">

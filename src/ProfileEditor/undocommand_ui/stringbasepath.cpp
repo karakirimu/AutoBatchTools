@@ -34,7 +34,7 @@ void StringBasePath::undo()
     ec.info.basefilepath = oldStr;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Profile base path changed") \
+    setText(QObject::tr("Change the working directory") \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
@@ -44,7 +44,7 @@ void StringBasePath::redo()
     ec.info.basefilepath = newStr;
     ptrCache->replace(index, ec);
 
-    setText(QObject::tr("Profile base path changed") \
+    setText(QObject::tr("Change the working directory") \
             + QString(" ^(%1,%2)").arg(index).arg(UiCommandMap::UNDOREDO_EDIT));
 }
 
