@@ -133,7 +133,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../AutoBatchRunner/autobatchrunner.ui" line="269"/>
-        <source>&gt; Press Enter to send command ...</source>
+        <source>&gt; Press Ctrl + Enter to send command ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -219,114 +219,114 @@ To recover files, select the following list and press [OK].</source>
     <name>BasicTable</name>
     <message>
         <location filename="../basictable/basictable.cpp" line="42"/>
-        <location filename="../basictable/basictable.cpp" line="159"/>
+        <location filename="../basictable/basictable.cpp" line="162"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="45"/>
-        <location filename="../basictable/basictable.cpp" line="163"/>
+        <location filename="../basictable/basictable.cpp" line="166"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="48"/>
-        <location filename="../basictable/basictable.cpp" line="164"/>
+        <location filename="../basictable/basictable.cpp" line="167"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="61"/>
+        <location filename="../basictable/basictable.cpp" line="62"/>
         <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="61"/>
-        <source>Do you want to delete selected files ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basictable/basictable.cpp" line="147"/>
-        <source>New</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basictable/basictable.cpp" line="148"/>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basictable/basictable.cpp" line="149"/>
-        <source>Delete</source>
+        <location filename="../basictable/basictable.cpp" line="63"/>
+        <source>Do you want to delete selected item(s)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="150"/>
-        <source>Edit</source>
+        <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="151"/>
-        <source>Enable</source>
+        <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="152"/>
-        <source>Disable</source>
+        <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="153"/>
-        <source>Clear</source>
+        <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="154"/>
-        <source>Add File</source>
+        <source>Enable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="155"/>
-        <source>Add Files</source>
+        <source>Disable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="156"/>
-        <source>Add Folder</source>
+        <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="157"/>
-        <source>File Info</source>
+        <source>Add File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="158"/>
-        <source>Cut</source>
+        <source>Add Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basictable/basictable.cpp" line="159"/>
+        <source>Add Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="160"/>
-        <source>Paste</source>
+        <source>File Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="161"/>
+        <source>Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basictable/basictable.cpp" line="163"/>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basictable/basictable.cpp" line="164"/>
         <source>Paste (space separated)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="162"/>
+        <location filename="../basictable/basictable.cpp" line="165"/>
         <source>Paste (newline separated)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="165"/>
+        <location filename="../basictable/basictable.cpp" line="168"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="166"/>
+        <location filename="../basictable/basictable.cpp" line="169"/>
         <source>Property</source>
         <translation type="unfinished"></translation>
     </message>
@@ -367,7 +367,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../AutoBatchScheduler/statusarea/cellinfowidget.ui" line="330"/>
-        <source>&gt; Press Enter to send command ...</source>
+        <source>&gt; Press Ctrl + Enter to send command ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -464,109 +464,109 @@ To recover files, select the following list and press [OK].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="329"/>
-        <location filename="../executor/executor.cpp" line="347"/>
+        <location filename="../executor/executor.cpp" line="336"/>
+        <location filename="../executor/executor.cpp" line="354"/>
         <source>``` 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="334"/>
-        <location filename="../executor/executor.cpp" line="339"/>
-        <location filename="../executor/executor.cpp" line="344"/>
+        <location filename="../executor/executor.cpp" line="341"/>
+        <location filename="../executor/executor.cpp" line="346"/>
+        <location filename="../executor/executor.cpp" line="351"/>
         <source> 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="334"/>
+        <location filename="../executor/executor.cpp" line="341"/>
         <source>Profile : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="339"/>
+        <location filename="../executor/executor.cpp" line="346"/>
         <source>Version : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="344"/>
+        <location filename="../executor/executor.cpp" line="351"/>
         <source>Created : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="364"/>
+        <location filename="../executor/executor.cpp" line="371"/>
         <source>## [Execution] No execution command, it skips.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="383"/>
-        <location filename="../executor/executor.cpp" line="385"/>
+        <location filename="../executor/executor.cpp" line="392"/>
+        <location filename="../executor/executor.cpp" line="394"/>
         <source>## [</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="383"/>
-        <location filename="../executor/executor.cpp" line="385"/>
+        <location filename="../executor/executor.cpp" line="392"/>
+        <location filename="../executor/executor.cpp" line="394"/>
         <source>] 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="429"/>
+        <location filename="../executor/executor.cpp" line="438"/>
         <source>## [FileSearch : %1] 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="430"/>
+        <location filename="../executor/executor.cpp" line="439"/>
         <source> files found.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="464"/>
+        <location filename="../executor/executor.cpp" line="473"/>
         <source>## [FileSearch] The selected variant cannot be found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="554"/>
+        <location filename="../executor/executor.cpp" line="568"/>
         <source>## [Plugin] %1 started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="558"/>
+        <location filename="../executor/executor.cpp" line="572"/>
         <source>successfully completed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="560"/>
-        <location filename="../executor/executor.cpp" line="566"/>
+        <location filename="../executor/executor.cpp" line="574"/>
+        <location filename="../executor/executor.cpp" line="580"/>
         <source>## [Plugin] %1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="564"/>
+        <location filename="../executor/executor.cpp" line="578"/>
         <source>failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="585"/>
+        <location filename="../executor/executor.cpp" line="599"/>
         <source>## [ProfileLoad] %1 cannot be loaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="611"/>
+        <location filename="../executor/executor.cpp" line="625"/>
         <source>## [ProfileLoad] %1 (loop %2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="744"/>
+        <location filename="../executor/executor.cpp" line="758"/>
         <source>No. %1 does not exist. 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="769"/>
+        <location filename="../executor/executor.cpp" line="783"/>
         <source>Input : %1 files.
 </source>
         <translation type="unfinished"></translation>
@@ -823,6 +823,14 @@ To recover files, select the following list and press [OK].</source>
     <message>
         <location filename="../filesearchdialog/filesearchdialog.cpp" line="182"/>
         <source>Save this setting?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InfoStacked</name>
+    <message>
+        <location filename="../ProfileEditor/editarea/infostacked.cpp" line="77"/>
+        <source>Open Path</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1190,71 +1198,71 @@ To recover files, select the following list and press [OK].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="587"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="586"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="593"/>
         <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="594"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="595"/>
         <source>(no command)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="608"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="606"/>
         <source>Executable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="615"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="634"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="613"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="632"/>
         <source>(no selection) </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="619"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="628"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="617"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="626"/>
         <source>(none) </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="653"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="689"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="650"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="685"/>
         <source>(no selection)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="621"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="619"/>
         <source>Separator: %1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="630"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="628"/>
         <source>Output Variant: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="636"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="634"/>
         <source>Output path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="643"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="640"/>
         <source>FileSearch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="663"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="659"/>
         <source>Plugin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="686"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="682"/>
         <source>(file is not exist)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="695"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="690"/>
         <source>ProfileLoad</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1354,452 +1362,463 @@ To recover files, select the following list and press [OK].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="209"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="269"/>
         <source>File Input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="227"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="287"/>
         <source>Allow file input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="237"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="297"/>
         <source>Enter search results as input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="281"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="295"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="309"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1016"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1213"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1224"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="246"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="341"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="355"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="369"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1073"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1270"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1281"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="340"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="397"/>
         <source>Loop Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="375"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="417"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="432"/>
         <location filename="../ProfileEditor/profileeditor.ui" line="474"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="531"/>
         <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="391"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="448"/>
         <source>Number of File Input in one loop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="398"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="455"/>
         <source>Number of recursive loops</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="433"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="490"/>
         <source>Process all entered files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="446"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="503"/>
         <source>Maximum number of loops</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="560"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="617"/>
         <source>Executable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="598"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1108"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1342"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1468"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="655"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1165"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1399"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1525"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="661"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="718"/>
         <source>30000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="674"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1135"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1360"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1486"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="731"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1192"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1417"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1543"/>
         <source>Valid only when schedule is executed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="681"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="738"/>
         <source>Do not wait for execution to end</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="688"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="745"/>
         <source>Timeout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="701"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="758"/>
         <source>ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="720"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="777"/>
         <source>FileSearch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="781"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1424"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="838"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1481"/>
         <source>+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="792"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1435"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="849"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1492"/>
         <source>-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="803"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="860"/>
         <source>*</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="844"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="901"/>
         <source>Search result delimiter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="861"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="918"/>
         <source>Result</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="879"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="936"/>
         <source>Store to variant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="963"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1020"/>
         <source>Output to file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1009"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1066"/>
         <source>Filepath</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1064"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1121"/>
         <source>Overwrite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1074"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1131"/>
         <source>Append</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1151"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1208"/>
         <source>Plugin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1202"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2124"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1259"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2181"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1379"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1436"/>
         <source>ProfileLoad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1521"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1578"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1528"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1585"/>
         <source>Open Recent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1548"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2374"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1605"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2431"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1567"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1624"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1574"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1631"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1578"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1619"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1635"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1676"/>
         <source>ToolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1597"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1654"/>
         <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1654"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2297"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1711"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2354"/>
         <source>Process</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1755"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2330"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1812"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2387"/>
         <source>Input File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1849"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2308"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1906"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2365"/>
         <source>Console</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1960"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2017"/>
         <source> &gt; </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1987"/>
-        <source>Press Enter to send command ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2005"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2341"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2062"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2398"/>
         <source>Variant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2051"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2108"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2054"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2111"/>
         <source>Ctrl+Shift+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2059"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2116"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2062"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2257"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2119"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2314"/>
         <source>Ctrl+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2071"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2128"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2074"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2131"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2083"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2140"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2086"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2143"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2098"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2155"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2382"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2439"/>
         <source>Hide Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1057"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1114"/>
         <source>Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2101"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="212"/>
+        <source>Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/profileeditor.ui" line="232"/>
+        <source>Working directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2044"/>
+        <source>Press Ctrl + Enter to send command ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2158"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2110"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2167"/>
         <location filename="../ProfileEditor/profileeditor.cpp" line="505"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2115"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2172"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2127"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2184"/>
         <source>Alt+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2136"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2193"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2139"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2196"/>
         <source>Ctrl+Enter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2151"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2208"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2154"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2211"/>
         <source>Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2166"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2223"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2169"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2226"/>
         <source>Ctrl+Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2181"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2238"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2184"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2241"/>
         <source>Ctrl+Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2196"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2253"/>
         <location filename="../ProfileEditor/profileeditor.cpp" line="578"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2199"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2256"/>
         <source>F5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2211"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2268"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2223"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2280"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2231"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2288"/>
         <source>Undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2234"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2291"/>
         <source>Ctrl+Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2242"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2299"/>
         <source>Redo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2245"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2302"/>
         <source>Ctrl+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2254"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2311"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2266"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2323"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2269"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2326"/>
         <source>Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2278"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2335"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2281"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2338"/>
         <source>Ctrl+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2286"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2343"/>
         <source>About Qt ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2319"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2376"/>
         <source>Hide Title Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2350"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2407"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2358"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2415"/>
         <source>Clear History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2363"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2420"/>
         <source>Open Last Opened File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2282,6 +2301,12 @@ Do you want to save this?</source>
         <source>Change No. %1 execution type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ProfileEditor/undocommand_ui/stringbasepath.cpp" line="37"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringbasepath.cpp" line="47"/>
+        <source>Change the working directory</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchComboBox</name>
@@ -2346,7 +2371,7 @@ Do you want to save this?</source>
     </message>
     <message>
         <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="123"/>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="66"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="150"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2367,6 +2392,16 @@ Do you want to save this?</source>
     </message>
     <message>
         <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="245"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="435"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="477"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="516"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="529"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="601"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="637"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="719"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="807"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="834"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="847"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2406,61 +2441,101 @@ Do you want to save this?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="380"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="382"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="854"/>
+        <source>FileSearch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="389"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="562"/>
+        <source>ProfileLoad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="415"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="906"/>
+        <source>Plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="588"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="726"/>
+        <source>Executable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="696"/>
+        <source>Background Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="781"/>
+        <source>Text Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="814"/>
         <source>Hide the description of the &quot;Type&quot; column</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="411"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="821"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="861"/>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="1068"/>
         <source>Run as the scheduler process</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="474"/>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="588"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="1131"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="1245"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="485"/>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="599"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="1142"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="1256"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="496"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="1153"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="507"/>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="610"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="1164"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="1267"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="518"/>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="621"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="1175"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="1278"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="67"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="151"/>
         <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="68"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="152"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="69"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="153"/>
         <source>Plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="174"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="382"/>
         <source>Open Folder</source>
         <translation type="unfinished"></translation>
     </message>
