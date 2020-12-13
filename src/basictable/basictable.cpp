@@ -58,7 +58,10 @@ bool BasicTable::deleteCheckMessage()
 {
     // show delete warning
     QMessageBox::StandardButton res = QMessageBox::warning(
-      this, tr("Alert"), tr("Do you want to delete selected files ?"), QMessageBox::Yes | QMessageBox::No );
+        this
+        , tr("Alert")
+        , tr("Do you want to delete selected item(s)?")
+        , QMessageBox::Yes | QMessageBox::No );
 
     if(res == QMessageBox::Yes){
         return true;
