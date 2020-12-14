@@ -150,10 +150,6 @@ p, li { white-space: pre-wrap; }
         <translation>&gt; Ctrl + Enterでコマンドを送信...</translation>
     </message>
     <message>
-        <source>&gt; Press Enter to send command ...</source>
-        <translation type="vanished">&gt; Enterでコマンドを送信...</translation>
-    </message>
-    <message>
         <location filename="../AutoBatchRunner/autobatchrunner.ui" line="282"/>
         <location filename="../AutoBatchRunner/autobatchrunner.ui" line="285"/>
         <source>Open</source>
@@ -257,10 +253,6 @@ To recover files, select the following list and press [OK].</source>
         <location filename="../basictable/basictable.cpp" line="62"/>
         <source>Alert</source>
         <translation>警告</translation>
-    </message>
-    <message>
-        <source>Do you want to delete selected files ?</source>
-        <translation type="vanished">選択されたファイルを削除しますか?</translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="63"/>
@@ -391,10 +383,6 @@ To recover files, select the following list and press [OK].</source>
         <location filename="../AutoBatchScheduler/statusarea/cellinfowidget.ui" line="330"/>
         <source>&gt; Press Ctrl + Enter to send command ...</source>
         <translation>&gt; Ctrl + Enterでコマンドを送信...</translation>
-    </message>
-    <message>
-        <source>&gt; Press Enter to send command ...</source>
-        <translation type="vanished">&gt; Enterでコマンドを送信...</translation>
     </message>
     <message>
         <location filename="../AutoBatchScheduler/statusarea/cellinfowidget.cpp" line="156"/>
@@ -598,12 +586,6 @@ To recover files, select the following list and press [OK].</source>
         <source>No. %1 does not exist. 
 </source>
         <translation>No. %1 は存在しません。 
-</translation>
-    </message>
-    <message>
-        <source>No.%1 is not exist. 
-</source>
-        <translation type="vanished">No.%1 は存在しません。 
 </translation>
     </message>
     <message>
@@ -1625,13 +1607,8 @@ To recover files, select the following list and press [OK].</source>
         <translation>コンソール</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2017"/>
-        <source> &gt; </source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Press Enter to send command ...</source>
-        <translation type="vanished">Enterでコマンドを送信...</translation>
+        <source>&gt; Press Ctrl + Enter to send command ...</source>
+        <translation type="obsolete">&gt; Ctrl + Enterでコマンドを送信...</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="2062"/>
@@ -1711,9 +1688,14 @@ To recover files, select the following list and press [OK].</source>
         <translation>結果</translation>
     </message>
     <message>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2017"/>
+        <source> &gt; </source>
+        <translation></translation>
+    </message>
+    <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="2044"/>
         <source>Press Ctrl + Enter to send command ...</source>
-        <translation>&gt; Ctrl + Enterでコマンドを送信...</translation>
+        <translation>Ctrl + Enterでコマンドを送信...</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="2158"/>
@@ -1914,10 +1896,6 @@ To recover files, select the following list and press [OK].</source>
 Example: 0-7 0, 1, 2, 3</source>
         <translation>処理テストの範囲を指定します。
 例: 0-7 0,1,2,3</translation>
-    </message>
-    <message>
-        <source>Input process range here ...</source>
-        <translation type="vanished">実行処理範囲をここに入力 ...</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.cpp" line="757"/>
@@ -2736,10 +2714,6 @@ Do you want to save this?</source>
         <location filename="../AutoBatchScheduler/startuptable.cpp" line="40"/>
         <source>State</source>
         <translation>状態</translation>
-    </message>
-    <message>
-        <source>Editing - Untitled*</source>
-        <translation type="vanished">編集中 - 無題*</translation>
     </message>
 </context>
 <context>

@@ -1589,11 +1589,6 @@ To recover files, select the following list and press [OK].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2017"/>
-        <source> &gt; </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="2062"/>
         <location filename="../ProfileEditor/profileeditor.ui" line="2398"/>
         <source>Variant</source>
@@ -1663,6 +1658,11 @@ To recover files, select the following list and press [OK].</source>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="232"/>
         <source>Working directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2017"/>
+        <source> &gt; </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
