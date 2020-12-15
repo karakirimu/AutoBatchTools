@@ -102,8 +102,11 @@ private:
     void setPluginItem(EditorCache *list, TableOption *option);
     void setProfileLoadItem(EditorCache *list, TableOption *option);
 
-    void setColorSetting(const QString background, const QString text
-                                            , TableOption *option);
+    void setColorSetting(const QString background
+                         , const QString defaultbackground
+                         , const QString textcolor
+                         , const QString defaulttextcolor
+                         , TableOption *option);
     void setSecondColumn(const QPixmap &icon, const QString &text \
                                             , const TableOption *option);
 
