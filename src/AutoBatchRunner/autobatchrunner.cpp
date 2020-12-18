@@ -39,7 +39,7 @@ AutoBatchRunner::AutoBatchRunner(QWidget *parent) :
     mlTask = new MultiTask();
 
     //set window icon
-    setWindowIcon(QIcon(":/app_icons/app_abr_24x24.ico"));
+    setWindowIcon(QIcon(":/app_icons/app_abr.ico"));
 
     //init profilelist
     ui->comboBox->reloadComboBoxItem();

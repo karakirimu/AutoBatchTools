@@ -100,7 +100,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     connect(editop, &EditOperator::loadfileChanged, this, &ProfileEditor::reloadWindow);
 
     //set window icon
-    setWindowIcon(QIcon(":/app_icons/app_pe_24x24.ico"));
+    setWindowIcon(QIcon(":/app_icons/app_pe.ico"));
 
     //set radiobutton group id
     ui->searchButtonGroup->setId(ui->variRadioButton, 0);

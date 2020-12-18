@@ -29,7 +29,7 @@ MainScheduler::MainScheduler(QWidget *parent) :
     setWindowTitle("AutoBatchScheduler");
 
     //set window icon
-    setWindowIcon(QIcon(":/app_icons/app_abs_24x24.ico"));
+    setWindowIcon(QIcon(":/app_icons/app_abs.ico"));
 
     //update language combobox
     initLanguageSelection();

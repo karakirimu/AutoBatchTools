@@ -569,7 +569,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../res/resources.qrc">
-     <normaloff>:/default_icons/app_abs.png</normaloff>:/default_icons/app_abs.png</iconset>
+     <normaloff>:/app_icons/app_abs.ico</normaloff>:/app_icons/app_abs.ico</iconset>
    </property>
    <property name="text">
     <string>Schedule</string>
