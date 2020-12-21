@@ -24,10 +24,10 @@ public:
     //! Root element name "profile"
     const QString TAG_ROOT                    = "profile";
 
-    //! ProfileEditor XML version code attribute "version"
+    //! AutoBatchEditor XML version code attribute "version"
     const QString ATTR_ROOT                   = "version";
 
-    //! ProfileEditor XML version "1.00"
+    //! AutoBatchEditor XML version "1.00"
     const QString ATTRVALUE_ROOT              = "1.00";
 
     //! Tags that include tags after this tag

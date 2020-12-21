@@ -217,17 +217,17 @@ void AutoBatchRunner::about()
 
 void AutoBatchRunner::on_profileEditToolButton_clicked()
 {
-    //run ProfileEditor.exe
+    //run AutoBatchEditor.exe
     QProcess process;
 #ifdef QT_DEBUG
-    bool result = process.startDetached("./ProfileEditor.exe", \
+    bool result = process.startDetached("./AutoBatchEditor.exe", \
                     (QStringList() << ui->comboBox->getCurrentFileName()));
-    if(!result) qDebug() << "ProfileEditor launch failed.";
+    if(!result) qDebug() << "AutoBatchEditor launch failed.";
 #else
 #ifdef Q_OS_WIN
-    process.startDetached("./ProfileEditor.exe", QStringList() << ui->comboBox->getCurrentFileName());
+    process.startDetached("./AutoBatchEditor.exe", QStringList() << ui->comboBox->getCurrentFileName());
 #else
-    process.startDetached("./ProfileEditor", QStringList() << ui->comboBox->getCurrentFileName());
+    process.startDetached("./AutoBatchEditor", QStringList() << ui->comboBox->getCurrentFileName());
 #endif
 #endif
 }

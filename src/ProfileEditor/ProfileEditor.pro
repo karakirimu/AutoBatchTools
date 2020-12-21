@@ -8,17 +8,15 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = ProfileEditor
+TARGET = AutoBatchEditor
 TEMPLATE = app
-
-#TRANSLATIONS = translation/pe.ja_JP.ts
 
 VERSION = 1.0.0
 
 win32 {
     QMAKE_TARGET_COMPANY = karakirimu
-    QMAKE_TARGET_PRODUCT = AutoBatchRunner - ProfileEditor
-    QMAKE_TARGET_DESCRIPTION = AutoBatchRunner apro file editor
+    QMAKE_TARGET_PRODUCT = AutoBatchEditor
+    QMAKE_TARGET_DESCRIPTION = Process execution file editor.
     QMAKE_TARGET_COPYRIGHT = Copyright 2016-2020 karakirimu
     RC_ICONS = ../../res/app_icons/app_pe.ico
 }
@@ -46,15 +44,11 @@ HEADERS  += editarea/commandtable.h \
     adapter/editorcachelist.h \
     autosaveselectiondialog.h \
     editarea/editortab.h \
-#    editarea/profilecombobox.h \
     editarea/plugincommandtable.h \
     editarea/searchcombobox.h \
     editarea/variantcombobox.h \
     adapter/editoperator.h \
     adapter/listmimedata.h \
-#    graphicsarea/flowcellwidget.h \
-#    graphicsarea/flowtable.h \
-#    processlistarea/profiletreewidget.h \
     graphicsarea/typeicondelegate.h \
     settingconstant.h \
     settingdialog/settingdialog.h \
@@ -75,10 +69,8 @@ HEADERS  += editarea/commandtable.h \
     undocommand_ui/checkonlyschedulerother.h \
     undocommand_ui/checkonlyschedulerplugin.h \
     undocommand_ui/checkonlyschedulersearch.h \
-#    undocommand_ui/comboinitialsearchselect.h \
     undocommand_ui/combopluginselect.h \
     undocommand_ui/comboprofileselect.h \
-#    undocommand_ui/editcheckcommand.h \
     undocommand_ui/dragdropexectable.h \
     undocommand_ui/dragdropplugintable.h \
     undocommand_ui/editcomboboxcommand.h \
@@ -91,9 +83,7 @@ HEADERS  += editarea/commandtable.h \
     undocommand_ui/editscomboboxcommand.h \
     undocommand_ui/editsearchfileoutputtype.h \
     undocommand_ui/editsearchoutput.h \
-#    undocommand_ui/editsearchtextsep.h \
     undocommand_ui/edittabcommand.h \
-#    undocommand_ui/edittextcommand.h \
     undocommand_ui/edittimeout.h \
     undocommand_ui/stringbasepath.h \
     undocommand_ui/stringfileoutput.h \
@@ -105,15 +95,12 @@ HEADERS  += editarea/commandtable.h \
     undocommand_ui/swapexectable.h \
     undocommand_ui/swapplugintable.h \
     undocommand_ui/uicommandmap.h \
-#    variantarea/varianttable.h \
     basedockwidget.h \
     multitaskp.h \
     profileeditor.h \
     runtasksignalbinder.h \
     editarea/pluginscombobox.h \
     graphicsarea/processflowtable.h \
-#    undocommand_ui/editexectableswap.h \
-#    undocommand_ui/editplugintableswap.h
     editarea/infostacked.h \
     variantarea/varianttree.h \
     undocommand_ui/editlocalvarianttree.h \
@@ -128,15 +115,11 @@ SOURCES += editarea/commandtable.cpp \
     adapter/editorcachelist.cpp \
     autosaveselectiondialog.cpp \
     editarea/editortab.cpp \
-#    editarea/profilecombobox.cpp \
     editarea/plugincommandtable.cpp \
     editarea/searchcombobox.cpp \
     editarea/variantcombobox.cpp \
     adapter/editoperator.cpp \
     adapter/listmimedata.cpp \
-#    graphicsarea/flowcellwidget.cpp \
-#    graphicsarea/flowtable.cpp \
-#    processlistarea/profiletreewidget.cpp \
     graphicsarea/typeicondelegate.cpp \
     settingdialog/settingdialog.cpp \
     console/consoleedit.cpp \
@@ -155,10 +138,8 @@ SOURCES += editarea/commandtable.cpp \
     undocommand_ui/checkonlyschedulerother.cpp \
     undocommand_ui/checkonlyschedulerplugin.cpp \
     undocommand_ui/checkonlyschedulersearch.cpp \
-#    undocommand_ui/comboinitialsearchselect.cpp \
     undocommand_ui/combopluginselect.cpp \
     undocommand_ui/comboprofileselect.cpp \
-#    undocommand_ui/editcheckcommand.cpp \
     undocommand_ui/dragdropexectable.cpp \
     undocommand_ui/dragdropplugintable.cpp \
     undocommand_ui/editcomboboxcommand.cpp \
@@ -171,9 +152,7 @@ SOURCES += editarea/commandtable.cpp \
     undocommand_ui/editscomboboxcommand.cpp \
     undocommand_ui/editsearchfileoutputtype.cpp \
     undocommand_ui/editsearchoutput.cpp \
-#    undocommand_ui/editsearchtextsep.cpp \
     undocommand_ui/edittabcommand.cpp \
-#    undocommand_ui/edittextcommand.cpp \
     undocommand_ui/edittimeout.cpp \
     undocommand_ui/stringbasepath.cpp \
     undocommand_ui/stringfileoutput.cpp \
@@ -184,16 +163,12 @@ SOURCES += editarea/commandtable.cpp \
     undocommand_ui/stringsearchsep.cpp \
     undocommand_ui/swapexectable.cpp \
     undocommand_ui/swapplugintable.cpp \
-#    variantarea/varianttable.cpp \
     basedockwidget.cpp \
-#    main.cpp \
     multitaskp.cpp \
     profileeditor.cpp \
     runtasksignalbinder.cpp \
     editarea/pluginscombobox.cpp \
     graphicsarea/processflowtable.cpp \
-#    undocommand_ui/editexectableswap.cpp \
-#    undocommand_ui/editplugintableswap.cpp
     editarea/infostacked.cpp \
     variantarea/varianttree.cpp \
     undocommand_ui/editlocalvarianttree.cpp \
@@ -204,22 +179,12 @@ SOURCES += editarea/commandtable.cpp \
 SOURCES += main.cpp
 
 FORMS    += $$PWD/profileeditor.ui \
-#    graphicsarea/flowcellwidget.ui \
     aboutabe.ui \
     autosaveselectiondialog.ui \
     settingdialog/settingdialog.ui
 
 RESOURCES += \
     $$PWD/../../res/resources.qrc
-
-#include(graphicsarea/graphicsarea.pri)
-#include(editarea/editarea.pri)
-#include(variantarea/variantarea.pri)
-#include(settingdialog/settingdialog.pri)
-#include(console/console.pri)
-#include(adapter/adapter.pri)
-#include(undocommand/undocommand.pri)
-#include(undocommand_ui/undocommand_ui.pri)
 
 # direct loading files
 include($$PWD/../plugins/plugininterface/plugininterface.pri)
@@ -242,7 +207,6 @@ LIBS += \
         -L$$LIBRARYPATH -lstringtable \
         -L$$LIBRARYPATH -lfileinfodialog \
         -L$$LIBRARYPATH -lfilesearchdialog \
-#        -L$$LIBRARYPATH -lextrafunctionstable \
         -L$$LIBRARYPATH -lpluginstree \
         -L$$LIBRARYPATH -lexecutor \
         -L$$LIBRARYPATH -lconsolebase

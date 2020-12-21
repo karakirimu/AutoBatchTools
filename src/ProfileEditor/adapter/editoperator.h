@@ -143,7 +143,7 @@ signals:
     // It is necessary to implement it if it relates to flowtable
     void editUpdate(int);
 
-    //Communication from profileeditor or flowtable widget to editortab
+    //Communication from AutoBatchEditor or flowtable widget to editortab
     void processIndexUpdate(int after, int before, int function);
 
 public slots:

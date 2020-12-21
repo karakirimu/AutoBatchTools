@@ -39,7 +39,7 @@ public:
 
     /**
      * @fn getInformation
-     * @brief Return the set information to ProfileEditor etc.
+     * @brief Return the set information to AutoBatchEditor etc.
      * @return PluginInformation structure
      */
     const PluginInformation *getInformation(){return &plugininfo;}

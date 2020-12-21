@@ -162,7 +162,7 @@ private:
         QString initFilename = "";
     }SettingParam;
 
-    //execution setting task variant (test for profileeditor)
+    //execution setting task variant (test for AutoBatchEditor)
     typedef struct _TestParam{
         int startnum = 0;
         int endnum = -1;

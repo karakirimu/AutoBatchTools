@@ -62,9 +62,9 @@ ProfileTable::~ProfileTable()
 
 void ProfileTable::newAction()
 {
-    //run ProfileEditor.exe
+    //run AutoBatchEditor.exe
     QProcess process;
-    process.setProgram("./ProfileEditor.exe");
+    process.setProgram("./AutoBatchEditor.exe");
 #ifdef QT_DEBUG
     bool result = process.startDetached();
     if(!result) qDebug() << "AutoBatchEditor launch failed.";
@@ -156,7 +156,7 @@ void ProfileTable::createList(QString filename, QList<QStringList> *newlist)
     QStringList tmp;
     QList<QStringList> item;
 
-    //open profileeditorxmlbuilder
+    //open processxmlbuilder
     ProcessXmlBuilder *pbuilder = new ProcessXmlBuilder();
 
     //set file to read
@@ -216,14 +216,14 @@ void ProfileTable::editAction()
 
         QProcess process;
 #ifdef QT_DEBUG
-        bool result = process.startDetached("./ProfileEditor.exe", \
+        bool result = process.startDetached("./AutoBatchEditor.exe", \
                         (QStringList() << list->at(2).at(1)));
        if(!result) qDebug() << "AutoBatchEditor launch failed.";
 #else
     #ifdef Q_OS_WIN
-        process.startDetached("./ProfileEditor.exe", QStringList() << list->at(2).at(1));
+        process.startDetached("./AutoBatchEditor.exe", QStringList() << list->at(2).at(1));
     #else
-        process.startDetached("./ProfileEditor", QStringList() << list->at(2).at(1));
+        process.startDetached("./AutoBatchEditor", QStringList() << list->at(2).at(1));
     #endif
 #endif
     }

@@ -204,7 +204,7 @@ bool Executor::runProcess()
     //load init xmlfile
     pbuilder->setLoadPath(setting->initFilename);
 
-    //Execution range for ProfileEditor
+    //Execution range for AutoBatchEditor
     execlist = new QList<int>();
     if(userexeclist.count() > 0) execlist->append(userexeclist);
     checkExecList(execlist);
