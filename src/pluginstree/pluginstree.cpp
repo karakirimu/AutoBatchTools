@@ -68,23 +68,28 @@ void PluginsTree::addAction()
     QTreeWidgetItem *top = itemFromIndex(index);
     int rootindex = index.row();
 
-    if(rootindex == TREE_MANUAL){
-        int count = top->childCount();
-        QList<QStringList> tlist;
-        QStringList tmp;
-        // open files
-        QStringList strlist = selectFiles(QDir::currentPath());
-
-        for (int i = 0; i < strlist.count(); i++) {
-            tlist.clear();
-            tmp.clear();
-            tmp = loadPluginUiText(&(QStringList() << "" << "" << "" << strlist.at(i)));
-            tlist = createXmlVariants(&tmp);
-
-            builder->addItem(&tlist);
-            this->insertRow(count + i, &tmp);
-        }
+    if(rootindex == TREE_AUTO){
+        QModelIndex neighbor = index.siblingAtRow(TREE_MANUAL);
+        top = itemFromIndex(neighbor);
+        setCurrentItem(top);
     }
+
+    int count = top->childCount();
+    QList<QStringList> tlist;
+    QStringList tmp;
+    // open files
+    QStringList strlist = selectFiles(QDir::currentPath());
+
+    for (int i = 0; i < strlist.count(); i++) {
+        tlist.clear();
+        tmp.clear();
+        tmp = loadPluginUiText(&(QStringList() << "" << "" << "" << strlist.at(i)));
+        tlist = createXmlVariants(&tmp);
+
+        builder->addItem(&tlist);
+        this->insertRow(count + i, &tmp);
+    }
+
 }
 
 void PluginsTree::deleteAction()
