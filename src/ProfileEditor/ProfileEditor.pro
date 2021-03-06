@@ -17,7 +17,7 @@ win32 {
     QMAKE_TARGET_COMPANY = karakirimu
     QMAKE_TARGET_PRODUCT = AutoBatchEditor
     QMAKE_TARGET_DESCRIPTION = Process execution file editor.
-    QMAKE_TARGET_COPYRIGHT = Copyright 2016-2020 karakirimu
+    QMAKE_TARGET_COPYRIGHT = Copyright 2016-2021 karakirimu
     RC_ICONS = ../../res/app_icons/app_pe.ico
 }
 
