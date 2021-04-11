@@ -1158,47 +1158,47 @@ To recover files, select the following list and press [OK].</source>
         <translation>手動</translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="229"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="234"/>
         <source>Add Files</source>
         <translation>ファイルを追加</translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="231"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="236"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="242"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="247"/>
         <source>Up</source>
         <translation>上へ</translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="245"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="250"/>
         <source>Down</source>
         <translation>下へ</translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="256"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="261"/>
         <source>Reload</source>
         <translation>更新</translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="508"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="513"/>
         <source>Alert</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="508"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="513"/>
         <source>Do you want to exclude the selected plugin from the list?</source>
         <translation>選択したプラグインをリストから除外しますか?</translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="527"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="532"/>
         <source>Add Plugins</source>
         <translation>プラグインを追加</translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="527"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="532"/>
         <source>Plugin </source>
         <translation>プラグイン </translation>
     </message>
@@ -1221,71 +1221,71 @@ To recover files, select the following list and press [OK].</source>
         <translation>(設定名なし)</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="586"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="591"/>
         <source>Information</source>
         <translation>情報</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="593"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="594"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="598"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="599"/>
         <source>(no command)</source>
         <translation>(未設定)</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="606"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="616"/>
         <source>Executable</source>
         <translation>実行</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="613"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="632"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="623"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="642"/>
         <source>(no selection) </source>
         <translation>(未選択) </translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="617"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="626"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="627"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="636"/>
         <source>(none) </source>
         <translation>(なし) </translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="650"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="685"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="665"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="705"/>
         <source>(no selection)</source>
         <translation>(未選択)</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="619"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="629"/>
         <source>Separator: %1 </source>
         <translation>区切り文字: %1 </translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="628"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="638"/>
         <source>Output Variant: %1</source>
         <translation>出力変数 %1</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="634"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="644"/>
         <source>Output path: %1</source>
         <translation>出力パス %1</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="640"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="655"/>
         <source>FileSearch</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="659"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="679"/>
         <source>Plugin</source>
         <translation>プラグイン</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="682"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="702"/>
         <source>(file is not exist)</source>
         <translation>(ファイルなし)</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="690"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="715"/>
         <source>ProfileLoad</source>
         <translation>プロファイル</translation>
     </message>
@@ -1354,11 +1354,6 @@ To recover files, select the following list and press [OK].</source>
 </context>
 <context>
     <name>ProfileEditor</name>
-    <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="14"/>
-        <source>ProfileEditor</source>
-        <translation></translation>
-    </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="86"/>
         <source>Content Information</source>
@@ -2579,7 +2574,7 @@ Do you want to save this?</source>
     <message>
         <location filename="../AutoBatchScheduler/startupdialog.ui" line="52"/>
         <source>Schedule name</source>
-        <translation></translation>
+        <translation>スケジュール名</translation>
     </message>
     <message>
         <location filename="../AutoBatchScheduler/startupdialog.ui" line="102"/>
@@ -2712,8 +2707,22 @@ Do you want to save this?</source>
     </message>
     <message>
         <location filename="../AutoBatchScheduler/startuptable.cpp" line="40"/>
-        <source>State</source>
+        <source>Status</source>
         <translation>状態</translation>
+    </message>
+    <message>
+        <location filename="../AutoBatchScheduler/startuptable.cpp" line="184"/>
+        <source>Enabled</source>
+        <translation>有効</translation>
+    </message>
+    <message>
+        <location filename="../AutoBatchScheduler/startuptable.cpp" line="184"/>
+        <source>Disabled</source>
+        <translation>無効</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation type="vanished">状態</translation>
     </message>
 </context>
 <context>

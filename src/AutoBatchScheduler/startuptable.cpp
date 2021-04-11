@@ -37,7 +37,7 @@ StartupTable::StartupTable(QWidget *parent)
     //adjust column
     horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     //set header label
-    setHorizontalHeaderLabels((QStringList() << tr("Setting Name") << tr("Profile") << tr("State")));
+    setHorizontalHeaderLabels((QStringList() << tr("Setting Name") << tr("Profile") << tr("Status")));
 
     //set header style
     QssPropertyConstant qpc;
@@ -181,7 +181,7 @@ void StartupTable::setTableItem(int row, const SchedulerCache &sc)
 
     //set icon
     QIcon icon = getIcon(sc.isScheduled ? ACTION::ENABLE : ACTION::DISABLE);
-    QString state = VariantConverter::boolToString(sc.isScheduled);
+    QString state = sc.isScheduled ? tr("Enabled") : tr("Disabled");
     this->setItem(row,2,new QTableWidgetItem(QIcon(icon), state));
 }
 

@@ -1135,47 +1135,47 @@ To recover files, select the following list and press [OK].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="229"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="234"/>
         <source>Add Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="231"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="236"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="242"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="247"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="245"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="250"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="256"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="261"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="508"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="513"/>
         <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="508"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="513"/>
         <source>Do you want to exclude the selected plugin from the list?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="527"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="532"/>
         <source>Add Plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../pluginstree/pluginstree.cpp" line="527"/>
+        <location filename="../pluginstree/pluginstree.cpp" line="532"/>
         <source>Plugin </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1198,71 +1198,71 @@ To recover files, select the following list and press [OK].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="586"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="591"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="593"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="594"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="598"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="599"/>
         <source>(no command)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="606"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="616"/>
         <source>Executable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="613"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="632"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="623"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="642"/>
         <source>(no selection) </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="617"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="626"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="627"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="636"/>
         <source>(none) </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="650"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="685"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="665"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="705"/>
         <source>(no selection)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="619"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="629"/>
         <source>Separator: %1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="628"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="638"/>
         <source>Output Variant: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="634"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="644"/>
         <source>Output path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="640"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="655"/>
         <source>FileSearch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="659"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="679"/>
         <source>Plugin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="682"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="702"/>
         <source>(file is not exist)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="690"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="715"/>
         <source>ProfileLoad</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1331,11 +1331,6 @@ To recover files, select the following list and press [OK].</source>
 </context>
 <context>
     <name>ProfileEditor</name>
-    <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="14"/>
-        <source>ProfileEditor</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="86"/>
         <source>Content Information</source>
@@ -2683,7 +2678,17 @@ Do you want to save this?</source>
     </message>
     <message>
         <location filename="../AutoBatchScheduler/startuptable.cpp" line="40"/>
-        <source>State</source>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../AutoBatchScheduler/startuptable.cpp" line="184"/>
+        <source>Enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../AutoBatchScheduler/startuptable.cpp" line="184"/>
+        <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
