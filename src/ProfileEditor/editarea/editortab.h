@@ -40,7 +40,7 @@
 #include <QStackedWidget>
 
 #include <../variantconverter/variantconverter.h>
-#include <../plugins/plugininterface/extraplugininterface.h>
+#include <../plugininterface/extraplugininterface.h>
 
 //ui object strings
 #define SEARCH_ADD      "searchAddButton"

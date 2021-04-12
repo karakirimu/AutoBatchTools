@@ -22,7 +22,7 @@
 #include <QPluginLoader>
 #include <QMessageBox>
 #include <../pluginsxmlbuilder/pluginsxmlbuilder.h>
-#include <../plugins/plugininterface/extraplugininterface.h>
+#include <../plugininterface/extraplugininterface.h>
 #include <../filesearchloader/filesearchloader.h>
 #include <QFileDialog>
 

@@ -187,7 +187,7 @@ RESOURCES += \
     $$PWD/../../res/resources.qrc
 
 # direct loading files
-include($$PWD/../plugins/plugininterface/plugininterface.pri)
+include($$PWD/../plugininterface/plugininterface.pri)
 include($$PWD/../share/share.pri)
 
 LIBS += \

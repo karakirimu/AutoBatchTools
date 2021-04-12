@@ -23,7 +23,7 @@
 #include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <../variantconverter/variantconverter.h>
 #include <../filesearchloader/filesearchloader.h>
-#include <../plugins/plugininterface/extraplugininterface.h>
+#include <../plugininterface/extraplugininterface.h>
 #include "../share/process/processxmlconstant.h"
 #include "../share/process/functiontype.h"
 

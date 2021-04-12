@@ -48,7 +48,6 @@ SUBDIRS += \
           $$PWD/src/searchtable \
           $$PWD/src/stringtable \
           $$PWD/src/filequeuetable \
-#          $$PWD/src/extrafunctionstable \
           $$PWD/src/pluginstree \
 #6
           $$PWD/src/AutoBatchRunner \
