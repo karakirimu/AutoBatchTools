@@ -25,6 +25,7 @@ AboutABR::AboutABR(QWidget *parent) :
     ui->setupUi(this);
     QIcon icons(":/app_icons/app_abr.ico");
     ui->icon->setPixmap(icons.pixmap(128,128));
+    ui->version->setText(QString("Version %1").arg(CURRENT_VERSION));
 
 }
 

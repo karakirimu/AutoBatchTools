@@ -25,7 +25,7 @@ AboutABE::AboutABE(QWidget *parent) :
     ui->setupUi(this);
     QIcon icons(":/app_icons/app_pe.ico");
     ui->icon->setPixmap(icons.pixmap(128,128));
-
+    ui->version->setText(QString("Version %1").arg(CURRENT_VERSION));
 }
 
 AboutABE::~AboutABE()

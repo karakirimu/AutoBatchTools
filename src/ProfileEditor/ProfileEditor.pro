@@ -12,6 +12,7 @@ TARGET = AutoBatchEditor
 TEMPLATE = app
 
 VERSION = 1.0.0
+DEFINES += CURRENT_VERSION=\"\\\"$${VERSION}\\\"\"
 
 win32 {
     QMAKE_TARGET_COMPANY = karakirimu

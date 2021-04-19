@@ -11,11 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = AutoBatchScheduler
 TEMPLATE = app
 
-#TRANSLATIONS += \
-#    translation/abs_en.ts \
-#    translation/abs_ja.ts
-
 VERSION = 1.0.0
+DEFINES += CURRENT_VERSION=\"\\\"$${VERSION}\\\"\"
 
 win32 {
     QMAKE_TARGET_COMPANY = karakirimu
