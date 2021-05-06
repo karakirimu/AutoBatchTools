@@ -578,12 +578,12 @@ void VariantTree::setPopupActionTop()
 {
     //set basic items
     m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add"));
-    m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
+    m_add->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_Enter));
     m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
     m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
     contextMenu->addSeparator();
     m_edit = contextMenu->addAction(QIcon(":/default_icons/edit.png"), tr("Edit"));
-    m_edit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
+    m_edit->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_E));
     contextMenu->addSeparator();
     m_file = contextMenu->addAction(QIcon(":/default_icons/file.png"), tr("Select File"));
     m_dir = contextMenu->addAction(QIcon(":/default_icons/folder.png"), tr("Select Dir"));
@@ -603,21 +603,21 @@ void VariantTree::setPopupActionDefault()
 {
     //set basic items
     m_cut = contextMenu->addAction(QIcon(":/default_icons/cut.png"), tr("Cut"));
-    m_cut->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_X));
+    m_cut->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_X));
 
     m_copy = contextMenu->addAction(QIcon(":/default_icons/copy.png"), tr("Copy"));
-    m_copy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
+    m_copy->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_C));
 
     m_paste = contextMenu->addAction(QIcon(":/default_icons/paste.png"), tr("Paste"));
-    m_paste->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_V));
+    m_paste->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_V));
 
     contextMenu->addSeparator();
 
     m_up = contextMenu->addAction(QIcon(":/default_icons/arrow_up.png"), tr("Up"));
-    m_up->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Up));
+    m_up->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_Up));
 
     m_down = contextMenu->addAction(QIcon(":/default_icons/arrow_down.png"), tr("Down"));
-    m_down->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
+    m_down->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_Down));
 
     //connect signals
     connect(m_cut, &QAction::triggered, this, &VariantTree::cutAction);
@@ -631,7 +631,7 @@ void VariantTree::setPopupActionBottom()
 {
     contextMenu->addSeparator();
     m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
-    m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
+    m_ref->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_R));
 
     connect(m_ref, &QAction::triggered, this, &VariantTree::reloadAction);
 }

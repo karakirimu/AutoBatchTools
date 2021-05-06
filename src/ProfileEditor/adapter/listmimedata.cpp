@@ -67,7 +67,8 @@ QStringList ListMimeData::formats() const
     return QStringList(LISTMIMEDATA_MIMETYPE);
 }
 
-QVariant ListMimeData::retrieveData(const QString &mimetype, QVariant::Type preferredType) const
+QVariant ListMimeData::retrieveData(const QString &mimetype,
+                                    QMetaType preferredType) const
 {
     return QMimeData::retrieveData(mimetype, preferredType);
 }

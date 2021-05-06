@@ -232,7 +232,7 @@ void PluginsTree::setPopupActionTop()
 {
     //set basic items
     m_add = contextMenu->addAction(QIcon(":/default_icons/add.png"),tr("Add Files"));
-    m_add->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Enter));
+    m_add->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_Enter));
     m_delete = contextMenu->addAction(QIcon(":/default_icons/remove.png"), tr("Delete"));
     m_delete->setShortcut(QKeySequence(Qt::Key_Delete));
     contextMenu->addSeparator();
@@ -245,10 +245,10 @@ void PluginsTree::setPopupActionTop()
 void PluginsTree::setPopupActionDefault()
 {
     m_up = contextMenu->addAction(QIcon(":/default_icons/arrow_up.png"), tr("Up"));
-    m_up->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Up));
+    m_up->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_Up));
 
     m_down = contextMenu->addAction(QIcon(":/default_icons/arrow_down.png"), tr("Down"));
-    m_down->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
+    m_down->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_Down));
 
     //connect signals
     connect(m_up, &QAction::triggered, this, &PluginsTree::upAction);
@@ -259,7 +259,7 @@ void PluginsTree::setPopupActionBottom()
 {
     contextMenu->addSeparator();
     m_ref = contextMenu->addAction(QIcon(":/default_icons/refresh.png"), tr("Reload"));
-    m_ref->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
+    m_ref->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_R));
 
     connect(m_ref, &QAction::triggered, this, &PluginsTree::reloadAction);
 }

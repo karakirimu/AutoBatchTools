@@ -81,8 +81,8 @@ void SearchDialogTable::propertyAction()
 void SearchDialogTable::setPopupActionTop()
 {
     //init menu context
-    m_copy = addTableAction(ACTION::COPY, Qt::CTRL + Qt::Key_C);
-    m_property = addTableAction(ACTION::PROPERTY, Qt::CTRL + Qt::Key_P);
+    m_copy = addTableAction(ACTION::COPY, Qt::CTRL, Qt::Key_C);
+    m_property = addTableAction(ACTION::PROPERTY, Qt::CTRL, Qt::Key_P);
 
     // connect signals
     connect(m_copy, &QAction::triggered, this, &SearchDialogTable::copyAction);

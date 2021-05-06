@@ -315,10 +315,10 @@ void Executor::loadNormalStandardOutput()
 {
     //TODO: it needs to detect various application's encode
     QByteArray read = work->process->readAll();
-    QString encode = QTextCodec::codecForLocale()->toUnicode(read);
-//    QString encode = QTextCodec::codecForUtfText(read, QTextCodec::codecForLocale())->toUnicode(read);
-//    QString encode = QTextCodec::codecForUtfText(read)->toUnicode(read);
-    emit processMessage(encode, NORMAL);
+    auto toUtf16 = QStringDecoder(QStringDecoder::Encoding::System);
+    QString decode = toUtf16(read);
+
+    emit processMessage(decode, NORMAL);
 }
 
 /**

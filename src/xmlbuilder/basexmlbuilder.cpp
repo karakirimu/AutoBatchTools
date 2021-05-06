@@ -22,10 +22,6 @@ BaseXmlBuilder::BaseXmlBuilder(QObject *parent)
     file = new QFile();
     rxml = new QXmlStreamReader();
     wxml = new QXmlStreamWriter();
-
-    //Set UTF-8 Codec
-    wxml->setCodec(QTextCodec::codecForName("UTF-8"));
-
 }
 
 BaseXmlBuilder::~BaseXmlBuilder()

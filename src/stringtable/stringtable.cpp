@@ -58,11 +58,11 @@ StringTable::~StringTable()
 void StringTable::setPopupActionTop()
 {
     //set basic items
-    m_add = addTableAction(ACTION::ADD, Qt::CTRL + Qt::Key_Enter);
+    m_add = addTableAction(ACTION::ADD, Qt::CTRL, Qt::Key_Enter);
     m_delete = addTableAction(ACTION::REMOVE, Qt::Key_Delete);
     contextMenu->addSeparator();
 
-    m_edit = addTableAction(ACTION::EDIT, Qt::CTRL + Qt::Key_E);
+    m_edit = addTableAction(ACTION::EDIT, Qt::CTRL, Qt::Key_E);
     contextMenu->addSeparator();
 
     m_file = addTableAction(ACTION::FILE);
@@ -80,14 +80,14 @@ void StringTable::setPopupActionTop()
 void StringTable::setPopupActionDefault()
 {
     //set basic items
-    m_cut = addTableAction(ACTION::CUT, Qt::CTRL + Qt::Key_X);
-    m_copy = addTableAction(ACTION::COPY, Qt::CTRL + Qt::Key_C);
-    m_paste = addTableAction(ACTION::PASTE, Qt::CTRL + Qt::Key_V);
+    m_cut = addTableAction(ACTION::CUT, Qt::CTRL, Qt::Key_X);
+    m_copy = addTableAction(ACTION::COPY, Qt::CTRL, Qt::Key_C);
+    m_paste = addTableAction(ACTION::PASTE, Qt::CTRL, Qt::Key_V);
 
     contextMenu->addSeparator();
 
-    m_up = addTableAction(ACTION::UP, Qt::CTRL + Qt::Key_Up);
-    m_down = addTableAction(ACTION::DOWN, Qt::CTRL + Qt::Key_Down);
+    m_up = addTableAction(ACTION::UP, Qt::CTRL, Qt::Key_Up);
+    m_down = addTableAction(ACTION::DOWN, Qt::CTRL, Qt::Key_Down);
 
     //connect signals
     connect(m_cut, &QAction::triggered, this, &StringTable::cutAction);
@@ -101,7 +101,7 @@ void StringTable::setPopupActionBottom()
 {
     contextMenu->addSeparator();
 
-    m_ref = addTableAction(ACTION::REFRESH, Qt::CTRL + Qt::Key_R);
+    m_ref = addTableAction(ACTION::REFRESH, Qt::CTRL, Qt::Key_R);
 
     connect(m_ref, &QAction::triggered, this, &StringTable::reloadAction);
 }

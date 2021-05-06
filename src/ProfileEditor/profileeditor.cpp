@@ -533,11 +533,11 @@ void ProfileEditor::onFileEdited(bool edited)
     lastedited = edited;
     if(edited){
         //add * first
-        if(title.at(0) != "*") setWindowTitle("*" + title);
+        if(title.at(0) != '*') setWindowTitle("*" + title);
 
     }else{
         //remove first *
-        if(title.at(0) == "*") setWindowTitle(title.remove(0,1));
+        if(title.at(0) == '*') setWindowTitle(title.remove(0,1));
     }
 }
 

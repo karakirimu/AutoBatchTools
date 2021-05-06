@@ -19,7 +19,6 @@
 
 #include <QMouseEvent>
 #include <QWidget>
-#include <QDesktopWidget>
 #include <QItemDelegate>
 #include <QScreen>
 #include <taskschedulerconnector.h>

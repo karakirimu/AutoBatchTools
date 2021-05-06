@@ -445,8 +445,8 @@ int ProcessFlowTable::uiIndexToData()
 void ProcessFlowTable::setPopupActionTop()
 {
     //set basic items
-    m_add = addTableAction(ACTION::ADD, Qt::CTRL + Qt::Key_Enter);
-    m_delete = addTableAction(ACTION::REMOVE, Qt::CTRL + Qt::Key_Delete);
+    m_add = addTableAction(ACTION::ADD, Qt::CTRL, Qt::Key_Enter);
+    m_delete = addTableAction(ACTION::REMOVE, Qt::CTRL, Qt::Key_Delete);
 
     contextMenu->addSeparator();
 
@@ -457,9 +457,9 @@ void ProcessFlowTable::setPopupActionTop()
 
 void ProcessFlowTable::setPopupActionDefault()
 {
-    m_cut = addTableAction(ACTION::CUT, Qt::CTRL + Qt::Key_X);
-    m_copy = addTableAction(ACTION::COPY, Qt::CTRL + Qt::Key_C);
-    m_paste = addTableAction(ACTION::PASTE, Qt::CTRL + Qt::Key_V);
+    m_cut = addTableAction(ACTION::CUT, Qt::CTRL, Qt::Key_X);
+    m_copy = addTableAction(ACTION::COPY, Qt::CTRL, Qt::Key_C);
+    m_paste = addTableAction(ACTION::PASTE, Qt::CTRL, Qt::Key_V);
 
     contextMenu->addSeparator();
 
@@ -470,12 +470,12 @@ void ProcessFlowTable::setPopupActionDefault()
 
 void ProcessFlowTable::setPopupActionBottom()
 {
-    m_up = addTableAction(ACTION::UP, Qt::ALT + Qt::Key_Up);
-    m_down = addTableAction(ACTION::DOWN, Qt::ALT + Qt::Key_Down);
+    m_up = addTableAction(ACTION::UP, Qt::ALT, Qt::Key_Up);
+    m_down = addTableAction(ACTION::DOWN, Qt::ALT, Qt::Key_Down);
 
     contextMenu->addSeparator();
 
-    m_ref = addTableAction(ACTION::REFRESH, Qt::CTRL + Qt::Key_R);
+    m_ref = addTableAction(ACTION::REFRESH, Qt::CTRL, Qt::Key_R);
 
     connect(m_up, &QAction::triggered, this, &ProcessFlowTable::upAction);
     connect(m_down, &QAction::triggered, this, &ProcessFlowTable::downAction);

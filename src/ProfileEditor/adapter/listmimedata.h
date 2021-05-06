@@ -36,7 +36,8 @@ public:
     bool hasFormat(const QString &mimetype) const override;
 
 protected:
-    QVariant retrieveData(const QString &mimetype, QVariant::Type preferredType) const override;
+    virtual QVariant retrieveData(const QString &mimetype,
+                          QMetaType preferredType) const override;
 
 private:
     void setList(const QList<QStringList> *list);

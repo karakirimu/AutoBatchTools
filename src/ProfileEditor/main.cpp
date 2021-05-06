@@ -16,7 +16,7 @@
 
 #include <QApplication>
 #include <QTranslator>
-#include <QTextCodec>
+//#include <QTextCodec>
 #include "profileeditor.h"
 
 int main(int argc, char *argv[])
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     // set default text codec
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+//    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
     // Load language setting
     QSettings settings( SettingConstant().OUTPUT_FILE, QSettings::IniFormat );

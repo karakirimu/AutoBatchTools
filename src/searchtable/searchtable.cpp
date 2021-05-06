@@ -62,11 +62,11 @@ SearchTable::~SearchTable()
 void SearchTable::setPopupActionTop()
 {
     //set basic items
-    m_add = addTableAction(ACTION::ADD, Qt::CTRL + Qt::Key_Enter);
+    m_add = addTableAction(ACTION::ADD, Qt::CTRL, Qt::Key_Enter);
     m_delete = addTableAction(ACTION::REMOVE, Qt::Key_Delete);
     contextMenu->addSeparator();
 
-    m_edit = addTableAction(ACTION::EDIT, Qt::CTRL + Qt::Key_E);
+    m_edit = addTableAction(ACTION::EDIT, Qt::CTRL, Qt::Key_E);
     contextMenu->addSeparator();
 
     //connect signals
@@ -78,7 +78,7 @@ void SearchTable::setPopupActionTop()
 void SearchTable::setPopupActionBottom()
 {
     contextMenu->addSeparator();
-    m_ref = addTableAction(ACTION::REFRESH, Qt::CTRL + Qt::Key_R);
+    m_ref = addTableAction(ACTION::REFRESH, Qt::CTRL, Qt::Key_R);
 
     connect(m_ref, &QAction::triggered, this, &SearchTable::reloadAction);
 }

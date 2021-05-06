@@ -40,13 +40,13 @@ void BasicTable::setPopupActionDefault(QIcon copy, QIcon up, QIcon down)
 {
     //set basic items
     m_copy = contextMenu->addAction(copy, tr("Copy"));
-    m_copy->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_C));
+    m_copy->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_C));
 
     m_up = contextMenu->addAction(up, tr("Up"));
-    m_up->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Up));
+    m_up->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_Up));
 
     m_down = contextMenu->addAction(down, tr("Down"));
-    m_down->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
+    m_down->setShortcut(QKeySequence(Qt::CTRL, Qt::Key_Down));
 
     //connect signals
     connect(m_copy, &QAction::triggered, this, &BasicTable::copyAction);
@@ -78,16 +78,27 @@ bool BasicTable::deleteCheckMessage()
  *        defined in the class.
  *
  * @param action "enum ACTION" defined in this class
- * @param keycode QKeySequence keycode
+ * @param keycode1 QKeySequence keycode1 (optional)
+ * @param keycode2 QKeySequence keycode2 (optional)
+ * @param keycode3 QKeySequence keycode3 (optional)
+ * @param keycode4 QKeySequence keycode4 (optional)
  *
  * @return created action
  */
-QAction *BasicTable::addTableAction(ACTION action, int keycode)
+QAction *BasicTable::addTableAction(ACTION action,
+                                    int keycode1,
+                                    int keycode2,
+                                    int keycode3,
+                                    int keycode4)
 {
     QAction *res = contextMenu->addAction(getIcon(action), getActionText(action));
-    if(keycode != 0){
+    if(keycode1 != 0){
         res->setShortcutVisibleInContextMenu(true);
-        res->setShortcut(QKeySequence(keycode));
+        res->setShortcut(QKeySequence(keycode1,
+                                      keycode2,
+                                      keycode3,
+                                      keycode4)
+                         );
     }
     return res;
 }

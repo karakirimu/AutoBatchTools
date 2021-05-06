@@ -26,7 +26,6 @@
 #include <QTemporaryFile>
 #include <QTextStream>
 #include <QXmlStreamReader>
-#include <QTextCodec>
 #include "xmlbuilder_global.h"
 
 class XMLBUILDERSHARED_EXPORT BaseXmlBuilder : public QObject

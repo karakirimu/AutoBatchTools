@@ -26,6 +26,7 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <QHeaderView>
+#include <QDropEvent>
 
 class BASICTABLESHARED_EXPORT BaseTable : public QTableWidget
 {

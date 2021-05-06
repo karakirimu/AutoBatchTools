@@ -17,7 +17,7 @@
 #include "autobatchrunner.h"
 #include <QApplication>
 #include <QLocale>
-#include <QTextCodec>
+//#include <QTextCodec>
 #include <QTranslator>
 
 int main(int argc, char *argv[])
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     // set default text codec
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+//    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
     QSettings settings( SettingConstant().OUTPUT_FILE_ABR, QSettings::IniFormat );
     settings.beginGroup(SettingConstant().GROUP_ABR);

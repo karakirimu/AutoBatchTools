@@ -58,7 +58,7 @@ QStringList BaseTable::droppedFromOutside(QDropEvent *event)
 void BaseTable::insideDropRowMove(QDropEvent *event)
 {
     insertTableRow(this->row(this->selectedItems().at(0))
-                   ,this->indexAt(event->pos()).row());
+                       ,this->indexAt(event->position().toPoint()).row());
 }
 
 /**
@@ -75,7 +75,7 @@ void BaseTable::insideDropRowMove(QDropEvent *event)
 bool BaseTable::insideDropRowsMove(QDropEvent *event, QList<int> *selected)
 {   
     // Check dropped row
-    int droppedrow = this->indexAt(event->pos()).row();
+    int droppedrow = this->indexAt(event->position().toPoint()).row();
     if(droppedrow == -1) return false;
 
     QModelIndexList mlist = this->selectedIndexes();

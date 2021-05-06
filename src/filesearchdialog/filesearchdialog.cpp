@@ -30,9 +30,12 @@ FileSearchDialog::FileSearchDialog(QWidget *parent) :
     ui->setupUi(this);
 
     //set input number only.
-    ui->secondsLineEdit->setValidator(new QRegExpValidator(QRegExp("[0-9]*")));
-    ui->fsizeLineEdit1->setValidator(new QRegExpValidator(QRegExp("[0-9]*")));
-    ui->fsizeLineEdit2->setValidator(new QRegExpValidator(QRegExp("[0-9]*")));
+    ui->secondsLineEdit->setValidator(
+        new QRegularExpressionValidator(QRegularExpression("[0-9]*"), this));
+    ui->fsizeLineEdit1->setValidator(
+        new QRegularExpressionValidator(QRegularExpression("[0-9]*"), this));
+    ui->fsizeLineEdit2->setValidator(
+        new QRegularExpressionValidator(QRegularExpression("[0-9]*"), this));
 
     //connect action
     connect( ui->buttonBox, &QDialogButtonBox::accepted, this, &FileSearchDialog::onAccept);

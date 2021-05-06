@@ -164,8 +164,8 @@ void FileQueueTable::setPopupActionDefault()
 {
     contextMenu->addSeparator();
     //set basic items
-    m_up = addTableAction(ACTION::UP, Qt::CTRL + Qt::Key_Up);
-    m_down = addTableAction(ACTION::DOWN, Qt::CTRL + Qt::Key_Down);
+    m_up = addTableAction(ACTION::UP, Qt::CTRL, Qt::Key_Up);
+    m_down = addTableAction(ACTION::DOWN, Qt::CTRL, Qt::Key_Down);
 
     //connect signals
     connect(m_up, &QAction::triggered, this, &FileQueueTable::upAction);

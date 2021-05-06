@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     // set default text codec
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+//    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 
     QSettings settings( SettingConstant().OUTPUT_FILE_ABS, QSettings::IniFormat );
     settings.beginGroup(SettingConstant().GROUP_ABS);

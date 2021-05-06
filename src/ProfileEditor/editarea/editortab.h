@@ -35,7 +35,6 @@
 #include <QTableWidget>
 #include <QRadioButton>
 #include <editoperator.h>
-#include <QDesktopWidget>
 #include <QScrollArea>
 #include <QStackedWidget>
 

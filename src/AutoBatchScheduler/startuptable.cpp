@@ -62,11 +62,11 @@ void StartupTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
 void StartupTable::setPopupActionTop()
 {
     //set basic items
-    m_add = addTableAction(ACTION::ADD, Qt::CTRL + Qt::Key_Enter);
+    m_add = addTableAction(ACTION::ADD, Qt::CTRL, Qt::Key_Enter);
     m_delete = addTableAction(ACTION::REMOVE, Qt::Key_Delete);
     contextMenu->addSeparator();
 
-    m_edit = addTableAction(ACTION::EDIT, Qt::CTRL + Qt::Key_E);
+    m_edit = addTableAction(ACTION::EDIT, Qt::CTRL, Qt::Key_E);
     contextMenu->addSeparator();
 
     //connect signals
@@ -81,7 +81,7 @@ void StartupTable::setPopupActionDefault()
     m_disable = addTableAction(ACTION::DISABLE);
     contextMenu->addSeparator();
 
-    m_copy = addTableAction(ACTION::COPY, Qt::CTRL + Qt::Key_C);
+    m_copy = addTableAction(ACTION::COPY, Qt::CTRL, Qt::Key_C);
 
     contextMenu->addSeparator();
     connect(m_copy, &QAction::triggered, this, &StartupTable::copyAction);
@@ -91,11 +91,11 @@ void StartupTable::setPopupActionDefault()
 
 void StartupTable::setPopupActionBottom()
 {
-    m_up = addTableAction(ACTION::UP, Qt::CTRL + Qt::Key_Up);
-    m_down = addTableAction(ACTION::DOWN, Qt::CTRL + Qt::Key_Down);
+    m_up = addTableAction(ACTION::UP, Qt::CTRL, Qt::Key_Up);
+    m_down = addTableAction(ACTION::DOWN, Qt::CTRL, Qt::Key_Down);
 
     contextMenu->addSeparator();
-    m_ref = addTableAction(ACTION::REFRESH, Qt::CTRL + Qt::Key_R);
+    m_ref = addTableAction(ACTION::REFRESH, Qt::CTRL, Qt::Key_R);
 
     connect(m_up, &QAction::triggered, this, &StartupTable::upAction);
     connect(m_down, &QAction::triggered, this, &StartupTable::downAction);

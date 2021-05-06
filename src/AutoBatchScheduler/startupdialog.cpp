@@ -30,7 +30,8 @@ StartupDialog::StartupDialog(QWidget *parent) :
     ui->setupUi(this);
 
     //set input number only.
-    ui->secondsLineEdit->setValidator(new QRegExpValidator(QRegExp("[0-9]*")));
+    ui->secondsLineEdit->setValidator(
+        new QRegularExpressionValidator(QRegularExpression("[0-9]*"), this));
 
     //set button id
     ui->radioButtonGroup->setId(ui->oneshotRadioButton, 0);

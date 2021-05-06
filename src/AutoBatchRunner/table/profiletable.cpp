@@ -77,18 +77,18 @@ void ProfileTable::setPopupActionTop()
 {
     //set basic items
     m_new = addTableAction(ACTION::NEWFILE);
-    m_add = addTableAction(ACTION::ADD, Qt::CTRL + Qt::Key_Enter);
+    m_add = addTableAction(ACTION::ADD, Qt::CTRL, Qt::Key_Enter);
     m_delete = addTableAction(ACTION::REMOVE, Qt::Key_Delete);
     contextMenu->addSeparator();
 
-    m_edit = addTableAction(ACTION::EDIT, Qt::CTRL + Qt::Key_E);
+    m_edit = addTableAction(ACTION::EDIT, Qt::CTRL, Qt::Key_E);
     contextMenu->addSeparator();
 
-    m_copy = addTableAction(ACTION::COPY, Qt::CTRL + Qt::Key_C);
+    m_copy = addTableAction(ACTION::COPY, Qt::CTRL, Qt::Key_C);
     contextMenu->addSeparator();
 
-    m_up = addTableAction(ACTION::UP, Qt::CTRL + Qt::Key_Up);
-    m_down = addTableAction(ACTION::DOWN, Qt::CTRL + Qt::Key_Down);
+    m_up = addTableAction(ACTION::UP, Qt::CTRL, Qt::Key_Up);
+    m_down = addTableAction(ACTION::DOWN, Qt::CTRL, Qt::Key_Down);
 
     //connect signals
     connect(m_new, &QAction::triggered, this, &ProfileTable::newAction);

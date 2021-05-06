@@ -408,11 +408,11 @@ void CommandTable::editedAction(int row, int column)
 void CommandTable::setPopupActionTop()
 {
     //set basic items
-    m_add = addTableAction(ACTION::ADD, Qt::ALT + Qt::Key_Enter);
-    m_delete = addTableAction(ACTION::REMOVE, Qt::ALT + Qt::Key_Delete);
+    m_add = addTableAction(ACTION::ADD, Qt::ALT, Qt::Key_Enter);
+    m_delete = addTableAction(ACTION::REMOVE, Qt::ALT, Qt::Key_Delete);
     contextMenu->addSeparator();
 
-    m_edit = addTableAction(ACTION::EDIT, Qt::ALT + Qt::Key_E);
+    m_edit = addTableAction(ACTION::EDIT, Qt::ALT, Qt::Key_E);
     contextMenu->addSeparator();
 
     m_file = addTableAction(ACTION::FILE);
@@ -431,20 +431,20 @@ void CommandTable::setPopupActionTop()
 void CommandTable::setPopupActionDefault()
 {
     //set basic items
-    m_cut = addTableAction(ACTION::CUT, Qt::ALT + Qt::Key_X);
-    m_copy = addTableAction(ACTION::COPY, Qt::ALT + Qt::Key_C);
+    m_cut = addTableAction(ACTION::CUT, Qt::ALT, Qt::Key_X);
+    m_copy = addTableAction(ACTION::COPY, Qt::ALT, Qt::Key_C);
 
     contextMenu->addSeparator();
 
-    m_paste = addTableAction(ACTION::PASTE, Qt::ALT + Qt::Key_V);
+    m_paste = addTableAction(ACTION::PASTE, Qt::ALT, Qt::Key_V);
 
     m_pastespace = addTableAction(ACTION::PASTESPACE);
     m_pasteenter = addTableAction(ACTION::PASTENEWLINE);
 
     contextMenu->addSeparator();
 
-    m_up = addTableAction(ACTION::UP, Qt::ALT + Qt::Key_Up);
-    m_down = addTableAction(ACTION::DOWN, Qt::ALT + Qt::Key_Down);
+    m_up = addTableAction(ACTION::UP, Qt::ALT, Qt::Key_Up);
+    m_down = addTableAction(ACTION::DOWN, Qt::ALT, Qt::Key_Down);
 
     //connect signals
     connect(m_cut, &QAction::triggered, this, &CommandTable::cutAction);
