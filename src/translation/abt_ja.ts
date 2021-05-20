@@ -233,19 +233,19 @@ To recover files, select the following list and press [OK].</source>
     <name>BasicTable</name>
     <message>
         <location filename="../basictable/basictable.cpp" line="42"/>
-        <location filename="../basictable/basictable.cpp" line="162"/>
+        <location filename="../basictable/basictable.cpp" line="173"/>
         <source>Copy</source>
         <translation>コピー</translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="45"/>
-        <location filename="../basictable/basictable.cpp" line="166"/>
+        <location filename="../basictable/basictable.cpp" line="177"/>
         <source>Up</source>
         <translation>上へ</translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="48"/>
-        <location filename="../basictable/basictable.cpp" line="167"/>
+        <location filename="../basictable/basictable.cpp" line="178"/>
         <source>Down</source>
         <translation>下へ</translation>
     </message>
@@ -260,87 +260,87 @@ To recover files, select the following list and press [OK].</source>
         <translation>選択されたアイテムを削除しますか?</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="150"/>
+        <location filename="../basictable/basictable.cpp" line="161"/>
         <source>New</source>
         <translation>新規</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="151"/>
+        <location filename="../basictable/basictable.cpp" line="162"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="152"/>
+        <location filename="../basictable/basictable.cpp" line="163"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="153"/>
+        <location filename="../basictable/basictable.cpp" line="164"/>
         <source>Edit</source>
         <translation>編集</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="154"/>
+        <location filename="../basictable/basictable.cpp" line="165"/>
         <source>Enable</source>
         <translation>有効化</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="155"/>
+        <location filename="../basictable/basictable.cpp" line="166"/>
         <source>Disable</source>
         <translation>無効化</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="156"/>
+        <location filename="../basictable/basictable.cpp" line="167"/>
         <source>Clear</source>
         <translation>クリア</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="157"/>
+        <location filename="../basictable/basictable.cpp" line="168"/>
         <source>Add File</source>
         <translation>ファイルを追加</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="158"/>
+        <location filename="../basictable/basictable.cpp" line="169"/>
         <source>Add Files</source>
         <translation>ファイルを追加</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="159"/>
+        <location filename="../basictable/basictable.cpp" line="170"/>
         <source>Add Folder</source>
         <translation>フォルダを追加</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="160"/>
+        <location filename="../basictable/basictable.cpp" line="171"/>
         <source>File Info</source>
         <translation>ファイル情報</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="161"/>
+        <location filename="../basictable/basictable.cpp" line="172"/>
         <source>Cut</source>
         <translation>切り取り</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="163"/>
+        <location filename="../basictable/basictable.cpp" line="174"/>
         <source>Paste</source>
         <translation>貼り付け</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="164"/>
+        <location filename="../basictable/basictable.cpp" line="175"/>
         <source>Paste (space separated)</source>
         <translation>貼り付け (スペース区切り)</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="165"/>
+        <location filename="../basictable/basictable.cpp" line="176"/>
         <source>Paste (newline separated)</source>
         <translation>貼り付け (改行区切り)</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="168"/>
+        <location filename="../basictable/basictable.cpp" line="179"/>
         <source>Reload</source>
         <translation>更新</translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="169"/>
+        <location filename="../basictable/basictable.cpp" line="180"/>
         <source>Property</source>
         <translation>プロパティ</translation>
     </message>
@@ -829,22 +829,22 @@ To recover files, select the following list and press [OK].</source>
         <translation>検索</translation>
     </message>
     <message>
-        <location filename="../filesearchdialog/filesearchdialog.cpp" line="85"/>
+        <location filename="../filesearchdialog/filesearchdialog.cpp" line="88"/>
         <source>Editing - </source>
         <translation>編集中 - </translation>
     </message>
     <message>
-        <location filename="../filesearchdialog/filesearchdialog.cpp" line="150"/>
+        <location filename="../filesearchdialog/filesearchdialog.cpp" line="153"/>
         <source>Open Folder</source>
         <translation>フォルダを開く</translation>
     </message>
     <message>
-        <location filename="../filesearchdialog/filesearchdialog.cpp" line="182"/>
+        <location filename="../filesearchdialog/filesearchdialog.cpp" line="185"/>
         <source>Alert</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../filesearchdialog/filesearchdialog.cpp" line="182"/>
+        <location filename="../filesearchdialog/filesearchdialog.cpp" line="185"/>
         <source>Save this setting?</source>
         <translation>この設定を保存しますか?</translation>
     </message>
@@ -1095,32 +1095,32 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>PluginsComboBox</name>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="53"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="54"/>
         <source>Select plugin ...</source>
         <translation>プラグインを選択 ...</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="117"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="119"/>
         <source>Add Plugin</source>
         <translation>プラグインを追加</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="118"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="120"/>
         <source>Plugin </source>
         <translation>プラグイン </translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="138"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="144"/>
         <source>This file cannot be applied.</source>
         <translation>ファイルを読み込めませんでした。</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="152"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="159"/>
         <source>Alert</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="152"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="160"/>
         <source>Do you want to exclude the selected item from the list?</source>
         <translation>選択したアイテムをリストから除外しますか?</translation>
     </message>
@@ -1406,11 +1406,6 @@ To recover files, select the following list and press [OK].</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="397"/>
-        <source>Loop Condition</source>
-        <translation>ループ条件</translation>
-    </message>
-    <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="432"/>
         <location filename="../ProfileEditor/profileeditor.ui" line="474"/>
         <location filename="../ProfileEditor/profileeditor.ui" line="531"/>
@@ -1421,11 +1416,6 @@ To recover files, select the following list and press [OK].</source>
         <location filename="../ProfileEditor/profileeditor.ui" line="448"/>
         <source>Number of File Input in one loop</source>
         <translation>ループ1回でのファイル入力数</translation>
-    </message>
-    <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="455"/>
-        <source>Number of recursive loops</source>
-        <translation>再帰ループ数</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="490"/>
@@ -1504,11 +1494,6 @@ To recover files, select the following list and press [OK].</source>
         <location filename="../ProfileEditor/profileeditor.ui" line="901"/>
         <source>Search result delimiter</source>
         <translation>検索結果の区切り文字</translation>
-    </message>
-    <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="936"/>
-        <source>Store to variant</source>
-        <translation>変数に格納</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="1020"/>
@@ -1602,11 +1587,6 @@ To recover files, select the following list and press [OK].</source>
         <translation>コンソール</translation>
     </message>
     <message>
-        <source>&gt; Press Ctrl + Enter to send command ...</source>
-        <translation type="obsolete">&gt; Ctrl + Enterでコマンドを送信...</translation>
-    </message>
-    <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2062"/>
         <location filename="../ProfileEditor/profileeditor.ui" line="2398"/>
         <source>Variant</source>
         <translation>変数</translation>
@@ -1678,9 +1658,24 @@ To recover files, select the following list and press [OK].</source>
         <translation>作業フォルダ</translation>
     </message>
     <message>
+        <location filename="../ProfileEditor/profileeditor.ui" line="397"/>
+        <source>Loop Conditions</source>
+        <translation>ループ条件</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/profileeditor.ui" line="455"/>
+        <source>Recursive loop count</source>
+        <translation>再帰ループ回数</translation>
+    </message>
+    <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="918"/>
         <source>Result</source>
         <translation>結果</translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/profileeditor.ui" line="936"/>
+        <source>Store to variable</source>
+        <translation>変数に格納</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="2017"/>
@@ -1693,13 +1688,18 @@ To recover files, select the following list and press [OK].</source>
         <translation>Ctrl + Enterでコマンドを送信...</translation>
     </message>
     <message>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2062"/>
+        <source>Variables</source>
+        <translation>変数</translation>
+    </message>
+    <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="2158"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="2167"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="505"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="503"/>
         <source>Export</source>
         <translation>エクスポート</translation>
     </message>
@@ -1755,7 +1755,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="2253"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="578"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="576"/>
         <source>Run</source>
         <translation>実行</translation>
     </message>
@@ -1851,66 +1851,66 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.cpp" line="325"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="491"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="489"/>
         <source>Save Profile</source>
         <translation>プロファイルを保存</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="518"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="516"/>
         <source>Untitled</source>
         <translation>無題</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="561"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="559"/>
         <source>No. %1 selected</source>
         <translation>No. %1 選択中</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="586"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="584"/>
         <source>Test</source>
         <translation>テスト</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="587"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="585"/>
         <source>Test Settings</source>
         <translation>テスト設定</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="607"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="605"/>
         <source>Test Range</source>
         <translation>テスト範囲</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="614"/>
-        <source>Input process test range here ...</source>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="612"/>
+        <source>Enter the process test range here...</source>
         <translation>処理テスト範囲をここに入力 ...</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="615"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="613"/>
         <source>Specify the process test range.
 Example: 0-7 0, 1, 2, 3</source>
         <translation>処理テストの範囲を指定します。
 例: 0-7 0,1,2,3</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="757"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="755"/>
         <source>Undo %1</source>
         <translation>戻る %1</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="768"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="766"/>
         <source>Redo %1</source>
         <translation>進む %1</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="780"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="895"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="778"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="893"/>
         <source>Alert</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="781"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="896"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="779"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="894"/>
         <source>Profile was edited.
 Do you want to save this?</source>
         <translation>プロファイルが編集されました。
@@ -1935,12 +1935,12 @@ Do you want to save this?</source>
         <translation>ファイル</translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="195"/>
+        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="194"/>
         <source>Open Profile</source>
         <translation>プロファイルを開く</translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="197"/>
+        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="196"/>
         <source>Profile </source>
         <translation>プロファイル </translation>
     </message>
@@ -1986,7 +1986,7 @@ Do you want to save this?</source>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/editcomboboxcommand.cpp" line="38"/>
         <location filename="../ProfileEditor/undocommand_ui/editcomboboxcommand.cpp" line="48"/>
-        <source>Set the return variant of No.%1 to &apos;%2&apos;</source>
+        <source>Set the return variable of No.%1 to &apos;%2&apos;</source>
         <translation>No.%1の変数の返却先を &apos;%2&apos;に設定します</translation>
     </message>
     <message>
@@ -2101,43 +2101,43 @@ Do you want to save this?</source>
     </message>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="80"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="151"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="153"/>
         <source>Add the plugin argument to row %1 of No. %2</source>
         <translation>No.%2の行%1にプラグイン引数を追加します</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="87"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="158"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="160"/>
         <source>Edit the plugin argument &apos;%1&apos; on row %2 of No. %3</source>
         <translation>No.%3の行%2のプラグイン引数&apos;%1&apos;を編集します</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="98"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="168"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="170"/>
         <source>Paste the plugin argument &apos;%1&apos; on row %2 of No. %3</source>
         <translation>No.%3の行%2にプラグイン引数&apos;%1&apos;を貼り付けます</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="100"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="170"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="172"/>
         <source>Insert the plugin argument &apos;%1&apos; on row %2 of No. %3</source>
         <translation>No.%3の行%2にプラグイン引数&apos;%1&apos;を挿入します</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="112"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="181"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="183"/>
         <source>Cut the plugin argument for row %1 of No. %2</source>
         <translation>No.%2の行%1のプラグイン引数を切り取ります</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="114"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="183"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="185"/>
         <source>Delete the plugin argument for row %1 of No. %2</source>
         <translation>No.%2の行%1のプラグイン引数を削除します</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="129"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="198"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="130"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="201"/>
         <source>Update plugin settings at No. %1</source>
         <translation>No.%1のプラグイン設定を更新</translation>
     </message>
@@ -2559,7 +2559,7 @@ Do you want to save this?</source>
         <translation>プラグイン</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="382"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="379"/>
         <source>Open Folder</source>
         <translation>フォルダを開く</translation>
     </message>
@@ -2673,22 +2673,22 @@ Do you want to save this?</source>
         <translation>木</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="49"/>
+        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="50"/>
         <source>Editing - Untitled*</source>
         <translation>編集中 - 無題*</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="72"/>
+        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="73"/>
         <source>Editing - </source>
         <translation>編集中 - </translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="122"/>
+        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="123"/>
         <source>Alert</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="122"/>
+        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="123"/>
         <source>Save this setting?</source>
         <translation>この設定を保存しますか?</translation>
     </message>
@@ -2719,10 +2719,6 @@ Do you want to save this?</source>
         <location filename="../AutoBatchScheduler/startuptable.cpp" line="184"/>
         <source>Disabled</source>
         <translation>無効</translation>
-    </message>
-    <message>
-        <source>State</source>
-        <translation type="vanished">状態</translation>
     </message>
 </context>
 <context>
@@ -2875,13 +2871,13 @@ In order to execute this schedule, please reset the execution profile</source>
     <name>VariantTree</name>
     <message>
         <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="38"/>
-        <source>Variant</source>
-        <translation>変数</translation>
+        <source>Value</source>
+        <translation>値</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="38"/>
-        <source>Value</source>
-        <translation>値</translation>
+        <source>Variable</source>
+        <translation>変数</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="139"/>
@@ -2964,13 +2960,13 @@ In order to execute this schedule, please reset the execution profile</source>
         <translation>更新</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="898"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="895"/>
         <source>Alert</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="898"/>
-        <source>Do you want to delete selected variants ?</source>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="895"/>
+        <source>Do you want to delete selected variables?</source>
         <translation>選択した変数を削除しますか?</translation>
     </message>
 </context>

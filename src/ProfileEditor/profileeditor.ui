@@ -394,7 +394,7 @@
           </widget>
           <widget class="QWidget" name="fileloop">
            <attribute name="title">
-            <string>Loop Condition</string>
+            <string>Loop Conditions</string>
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_26">
             <property name="leftMargin">
@@ -452,7 +452,7 @@
               <item row="1" column="0">
                <widget class="QLabel" name="label_2">
                 <property name="text">
-                 <string>Number of recursive loops</string>
+                 <string>Recursive loop count</string>
                 </property>
                </widget>
               </item>
@@ -933,7 +933,7 @@
                 <item>
                  <widget class="QRadioButton" name="variRadioButton">
                   <property name="text">
-                   <string>Store to variant</string>
+                   <string>Store to variable</string>
                   </property>
                   <property name="checked">
                    <bool>true</bool>
@@ -1564,7 +1564,7 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -2059,7 +2059,7 @@ border: none;</string>
   </widget>
   <widget class="BaseDockWidget" name="variantDockWidget">
    <property name="windowTitle">
-    <string>Variant</string>
+    <string>Variables</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
