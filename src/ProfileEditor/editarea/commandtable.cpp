@@ -174,7 +174,7 @@ void CommandTable::dropEvent(QDropEvent *event)
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
 
-    int droppedrow = this->indexAt(event->pos()).row();
+    int droppedrow = this->indexAt(event->position().toPoint()).row();
 
     QList<int> beforeindex;
     if(!BaseTable::insideDropRowsMove(event, &beforeindex)) return;
@@ -235,7 +235,7 @@ void CommandTable::cutAction()
 
     QString tmp;
     QModelIndexList mlist = this->selectedIndexes();
-    int rows = mlist.count();
+    qsizetype rows = mlist.count();
     for(int i = 0; i < rows; i++){
         tmp.append(mlist.at(i).data().toString());
         if(i < rows) tmp.append("\t");
@@ -261,7 +261,7 @@ void CommandTable::copyAction()
 
     QString tmp;
     QModelIndexList mlist = this->selectedIndexes();
-    int rows = mlist.count();
+    qsizetype rows = mlist.count();
     for(int i = 0; i < rows; i++){
         tmp.append(mlist.at(i).data().toString());
         if(i < rows) tmp.append("\t");
@@ -285,7 +285,7 @@ void CommandTable::pasteAction()
     if(text.last() == "") text.removeLast();
 
     int row = this->rowCount();
-    int txcount = text.count();
+    qsizetype txcount = text.count();
 
     for(int i = 0; i < txcount; i++){
        if(row > 0) row = this->currentRow();
@@ -305,7 +305,7 @@ void CommandTable::pasteSpaceAction()
     if(text.last() == "") text.removeLast();
     if(text.first() == "") text.removeFirst();
 
-    int txcount = text.count();
+    qsizetype txcount = text.count();
     int row = this->currentRow();
     row = (row < 0) ? 0 : row;
 
@@ -331,7 +331,7 @@ void CommandTable::pasteEnterAction()
     if(text.last() == "") text.removeLast();
     if(text.first() == "") text.removeFirst();
 
-    int txcount = text.count();
+    qsizetype txcount = text.count();
     int row = this->currentRow();
     row = (row < 0) ? 0 : row;
 

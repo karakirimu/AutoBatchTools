@@ -273,7 +273,7 @@ void ProcessShowTable::initCellWidget(int itemid, const SchedulerCache &cache)
 
     //start scheduler if checkbox is valid
     if(cache.isScheduled){
-        taskc->updateState(itemid, cache.objectName(), TaskSchedulerConnector::ENABLE);
+        emit taskc->updateState(itemid, cache.objectName(), TaskSchedulerConnector::ENABLE);
     }
 
     //clicked operation after
@@ -283,7 +283,7 @@ void ProcessShowTable::initCellWidget(int itemid, const SchedulerCache &cache)
 int ProcessShowTable::getIndex(QString objectname)
 {
     QList<SchedulerCache> list = taskc->readAll();
-    int count = list.count();
+    qsizetype count = list.count();
 
     for(int i = 0; i < count; i++){
         if(objectname == list.at(i).objectName()){

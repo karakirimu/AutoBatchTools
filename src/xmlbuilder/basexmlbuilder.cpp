@@ -149,7 +149,7 @@ bool BaseXmlBuilder::deleteElementGroup(QString element, QString attr, int value
         }
 
         if(rxml->isEndElement() && hasid && rxml->name() == element){
-            hasid = false;
+//            hasid = false;
             endline = rxml->lineNumber();
             break;
         }
@@ -299,7 +299,7 @@ qint64 BaseXmlBuilder::getElementEndLineNumber(QString element, QString attr, in
         }
 
         if(flags && rxml->isEndElement() && rxml->name().toString() == element){
-            flags = false;
+//            flags = false;
             line = rxml->lineNumber();
             break;
         }

@@ -37,7 +37,7 @@ class AutoBatchRunner : public QMainWindow
 
 public:
     explicit AutoBatchRunner(QWidget *parent = nullptr);
-    ~AutoBatchRunner();
+    ~AutoBatchRunner() override;
 
 private slots:
 

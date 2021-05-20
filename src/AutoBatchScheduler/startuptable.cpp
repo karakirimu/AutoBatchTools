@@ -155,7 +155,7 @@ int StartupTable::getIndex(QString objectname)
     int itemid = -1;
     QList<SchedulerCache> list = taskc->readAll();
 
-    for(SchedulerCache sc : list){
+    for(const SchedulerCache& sc : list){
         itemid++;
         if(objectname == sc.objectName()) break;
     }

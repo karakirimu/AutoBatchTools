@@ -24,7 +24,7 @@ class InnerFunctions : public QObject
     Q_OBJECT
 public:
     explicit InnerFunctions(){}
-    ~InnerFunctions(){}
+    virtual ~InnerFunctions() override {}
 
     /**
      * @fn getMessage

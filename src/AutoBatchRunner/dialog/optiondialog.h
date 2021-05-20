@@ -31,7 +31,7 @@ class OptionDialog : public QDialog
 
 public:
     explicit OptionDialog(QWidget *parent = nullptr);
-    ~OptionDialog();
+    ~OptionDialog() override;
 
 private slots:
     void on_listWidget_currentRowChanged(int currentRow);
@@ -40,8 +40,8 @@ private slots:
 private:
     Ui::OptionDialog *ui;
 
-    void showEvent(QShowEvent *event);
-    void closeEvent(QCloseEvent *event);
+    void showEvent(QShowEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
 
     void setupItem();
     void setSettings();

@@ -39,7 +39,7 @@ EditorCache ListMimeData::getListData(const ListMimeData *lmime)
 
     QList<QStringList> encodedlist;
     QStringList tmp;
-    int count = ilist.count();
+    qsizetype count = ilist.count();
     for(int i = 0; i < count - 1; i++){
         tmp.clear();
         tmp = static_cast<QString>(ilist.at(i)).split("\\\" \\\"");
@@ -83,7 +83,7 @@ void ListMimeData::setList(const QList<QStringList> *list)
     QString convert = "";
 
     QStringList ilist;
-    int count = list->count();
+    qsizetype count = list->count();
     for(int i = 0; i < count; i++){
         ilist = list->at(i);
         for(int j = 0; j < ilist.count(); j++){

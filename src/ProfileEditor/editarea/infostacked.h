@@ -37,9 +37,10 @@
 
 class InfoStacked : public QStackedWidget
 {
+    Q_OBJECT
 public:
     explicit InfoStacked(QWidget *parent = nullptr);
-    ~InfoStacked();
+    ~InfoStacked() override;
 
     void setEditOperator(EditOperator *op);
 

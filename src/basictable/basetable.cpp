@@ -47,7 +47,7 @@ QStringList BaseTable::droppedFromOutside(QDropEvent *event)
 {
     QStringList droppeddata;
 
-    for(QUrl url: event->mimeData()->urls()){
+    for(const QUrl& url: event->mimeData()->urls()){
         droppeddata.append(url.toLocalFile());
     }
 
@@ -108,7 +108,7 @@ bool BaseTable::insideDropRowsMove(QDropEvent *event, QList<int> *selected)
     QList<QTableWidgetItem> beforedata;
     int deductnum = 0;
 
-    int rows = selectlist.count();
+    qsizetype rows = selectlist.count();
 
     for (int i = 0; i < rows; i++) {
 

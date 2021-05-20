@@ -41,7 +41,7 @@ void SchedulerCacheConverter::convertToXml(const QList<SchedulerCache> *source
                                            , QList<QList<QStringList> *> *dest)
 {
     dest->clear();
-    for(SchedulerCache cache : *source){
+    for(const SchedulerCache& cache : *source){
         QList<QStringList> *one = new QList<QStringList>();
         convertFromCache(&cache, one);
         dest->append(one);
@@ -90,7 +90,7 @@ QString SchedulerCacheConverter::fetch(QString tag
                                        , const QList<QStringList> *loadbase)
 {
     auto getAttribute = [&attr](QStringList &el){
-        int listnummax = el.count();
+        qsizetype listnummax = el.count();
         for(int pos = 2; pos < listnummax; pos += 2){
             if(attr == el.at(pos)){
                 return el.at(pos + 1);

@@ -32,7 +32,7 @@ class FILEINFODIALOGSHARED_EXPORT FileInfoDialog : public QDialog
 
 public:
     explicit FileInfoDialog(QWidget *parent = nullptr);
-    ~FileInfoDialog();
+    ~FileInfoDialog() override;
 
     void setFileInfo(QString file);
 private slots:

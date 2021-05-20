@@ -52,7 +52,9 @@ signals:
     void fileLoadCompleted();
 
     //for syncronize table
-    void updateState(int index, QString message, TABLE func);
+    void updateState(int index,
+                     QString message,
+                     TaskSchedulerConnector::TABLE func);
 
 private slots:
     void initializeTask();

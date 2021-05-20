@@ -32,7 +32,7 @@ TaskSchedulerConnector::~TaskSchedulerConnector()
 
     // disable all left tasks
     int i = 0;
-    for(SchedulerCache sc : list){
+    for(const SchedulerCache& sc : list){
         if(sc.isScheduled){
             removeTask(sc.objectName());
         }
@@ -165,7 +165,7 @@ void TaskSchedulerConnector::initializeTask()
     QList<SchedulerCache> list = readAll();
 
     int i = 0;
-    for(SchedulerCache sc : list){
+    for(const SchedulerCache& sc : list){
         QFileInfo info(sc.profilePath);
         if(sc.isScheduled && info.exists()){
             addTask(sc);

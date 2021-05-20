@@ -121,12 +121,14 @@ void EditPluginTable::undo()
 
         // set undo text
         QString strlistformat;
-        for(QString str : oldStrList){
+        for(const QString& str : oldStrList){
             strlistformat.append(str).append(",");
         }
 
-        sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UiCommandMap::Id(UiCommandMap::PL_ALLUPDATE_TABLE));
-        setText(QObject::tr("Update plugin settings at No. %1").arg(QString::number(index)) + sendcode);
+        sendcode = QString(" ^(%1%2)")
+                       .arg(strlistformat, UiCommandMap::Id(UiCommandMap::PL_ALLUPDATE_TABLE));
+        setText(QObject::tr("Update plugin settings at No. %1")
+                    .arg(QString::number(index)) + sendcode);
         break;
     }
 
@@ -190,11 +192,12 @@ void EditPluginTable::redo()
 
         // update string
         QString strlistformat;
-        for(QString str : newStrList){
+        for(const QString& str : newStrList){
             strlistformat.append(str).append(",");
         }
 
-        sendcode = QString(" ^(%1%2)").arg(strlistformat).arg(UiCommandMap::Id(UiCommandMap::PL_ALLUPDATE_TABLE));
+        sendcode = QString(" ^(%1%2)")
+                       .arg(strlistformat, UiCommandMap::Id(UiCommandMap::PL_ALLUPDATE_TABLE));
         setText(QObject::tr("Update plugin settings at No. %1").arg(QString::number(index)) + sendcode);
         break;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 karakirimu
+ * Copyright 2016-2021 karakirimu
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,16 +51,18 @@ bool Xmlbuilder::readItem(int itemid, QString firstlayername,
         rxml->readNextStartElement();
         name = rxml->name().toString();
 
-        if(name == firstlayername && !hasid
-                && rxml->attributes().value(attr).toInt() == itemid){
+        if(name == firstlayername
+            && !hasid
+            && rxml->attributes().value(attr).toInt() == itemid){
             hasid = true;
         }
 
         if(hasid) setSearchItemData(name, itemlist);
 
-        if(name == firstlayername && hasid
-                && rxml->isEndElement()/*rxml->name()*/){
-            hasid = false;
+        if(name == firstlayername
+            && hasid
+            && rxml->isEndElement()){
+//            hasid = false;
             break;
         }
 
@@ -90,7 +92,7 @@ bool Xmlbuilder::readAllItem(QString firstlayername, QString attr,
 {
     bool hasid = false;
     QString name = "";
-    QList<QStringList> *tmplist = nullptr;
+    QList<QStringList> tmplist;
 
     openFile(QFile::ReadOnly);
     openedFileReset();
@@ -101,18 +103,18 @@ bool Xmlbuilder::readAllItem(QString firstlayername, QString attr,
 
         if(name == firstlayername && !hasid
                 && rxml->attributes().hasAttribute(attr)){
-            tmplist = new QList<QStringList>();
+            tmplist.clear();
             hasid = true;
         }
 
         if(hasid){
-            setSearchItemData(name, tmplist);
+            setSearchItemData(name, &tmplist);
         }
 
         if(name == firstlayername && hasid
                 && rxml->isEndElement()){
             hasid = false;
-            itemlist->append(tmplist);
+            itemlist->append(new QList<QStringList>(tmplist));
         }
 
     }
@@ -156,7 +158,7 @@ bool Xmlbuilder::writeAllItem(QString root, QString rootattr, QString rootattrva
     wxml->writeAttribute(rootattr, rootattrvalue);
     wxml->writeCharacters(endLineStr());
 
-    int counter = itemlist->count();
+    int counter = static_cast<int>(itemlist->count());
     for(int i = 0; i < counter; i++){
         writeXmlItem(i, firstlayername, attr, itemlist->at(i));
     }
@@ -526,7 +528,6 @@ bool Xmlbuilder::insertItemId(int itemid
     //read lest data set
     //update dataset
     QString curline;
-    QString tmp;
     QRegularExpression re("<\\w+( \\w+=\"(\\w+)\")");
     int newid = itemid;
 
@@ -535,7 +536,12 @@ bool Xmlbuilder::insertItemId(int itemid
 
         if(curline.contains(re)){
             newid++;
-            lest.append(curline.replace(re, QString("<%1 %2=\"%3\"").arg(firstlayername).arg(attr).arg(newid)));
+            lest.append(curline.replace(
+                re,
+                QString("<%1 %2=\"%3\"")
+                    .arg(firstlayername)
+                    .arg(attr)
+                    .arg(newid)));
         }else{
             lest.append(curline);
         }

@@ -36,7 +36,7 @@ ProfileEditor::ProfileEditor(QWidget *parent) :
     QVariant v = settings.value( sc.GEOMETRY );
     bool toolbartexthide = false;
 
-    if (v.type() != QVariant::Invalid){
+    if (v.metaType().isValid()){
 
         // load window settings on MainWindow
         restoreGeometry( settings.value( sc.GEOMETRY ).toByteArray() );
@@ -345,9 +345,7 @@ void ProfileEditor::undoAction()
     QString text = editop->getUndostack()->redoText();
 
     //int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9]+)((,|)(|[0-9]+|\\w+))+\\)+$"));
-    int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\((,|\\w+|\\S){1,}\\)+$"));
-
-    QString rep = text.mid(0,lastindex);
+    qsizetype lastindex = text.lastIndexOf(QRegularExpression(".\\^\\((,|\\w+|\\S){1,}\\)+$"));
 
     // +3 means string of " ^(", -1 means string of ")";
     QString updop = text.mid(lastindex + 3, text.length() - lastindex - 4);
@@ -368,8 +366,8 @@ void ProfileEditor::redoAction()
     QString text = editop->getUndostack()->undoText();
 
     //int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\(([0-9]+)((,|)(|[0-9]+|\\w+))+\\)+$"));
-    int lastindex = text.lastIndexOf(QRegularExpression(".\\^\\((,|\\w+|\\S){1,}\\)+$"));
-    QString rep = text.mid(0,lastindex);
+    qsizetype lastindex
+        = text.lastIndexOf(QRegularExpression(".\\^\\((,|\\w+|\\S){1,}\\)+$"));
 
     // +3 means string of " ^(", -1 means string of ")";
     QString updop = text.mid(lastindex + 3, text.length() - lastindex - 4);
@@ -611,7 +609,7 @@ void ProfileEditor::initRunRangeToolBar()
     rangeLineEdit = new QLineEdit();
     rangeLineEdit->setMinimumWidth(150);
     rangeLineEdit->setMaximumWidth(200);
-    rangeLineEdit->setPlaceholderText(tr("Input process test range here ..."));
+    rangeLineEdit->setPlaceholderText(tr("Enter the process test range here..."));
     rangeLineEdit->setToolTip(tr("Specify the process test range.\nExample: 0-7 0, 1, 2, 3"));
     connect(rangeLineEdit, &QLineEdit::textChanged, this, &ProfileEditor::updateRangeText);
     testRangeToolBar->addWidget(rangeLineEdit);
@@ -846,7 +844,7 @@ void ProfileEditor::clearOpenRecent(bool deletelist)
     QList<QAction *> acts = ui->menuOpenRecent->actions();
 
     for (QAction *act : acts) {
-        for(QString recentfile : list) {
+        for(const QString &recentfile : list) {
             if(act->text() == recentfile){
                 ui->menuOpenRecent->removeAction(act);
                 break;
@@ -866,7 +864,7 @@ void ProfileEditor::setOpenRecent()
     QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
     QStringList list = settings.value(sc.ABE_RECENT_FILES).value<QStringList>();
 
-    for (QString file : list) {
+    for (const QString& file : list) {
         QAction *action = new QAction(file);
         connect(action, &QAction::triggered, [=](){
             emit openRecentClicked(file);

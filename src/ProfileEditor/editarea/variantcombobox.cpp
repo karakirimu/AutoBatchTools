@@ -52,7 +52,7 @@ void VariantComboBox::reloadComboBoxItem()
     editop->readAll(&ec);
     int index = 0;
 
-    for(EditorCache ect : ec){
+    for(const EditorCache& ect : ec){
         if(fs.getType(ect.type) != fs.TYPE::LOCAL){
             break;
         }
@@ -61,7 +61,7 @@ void VariantComboBox::reloadComboBoxItem()
 
     if(index == ec.count()) return;
 
-    for (VariantPair pair : ec.at(index).local.variantData) {
+    for (const VariantPair& pair : ec.at(index).local.variantData) {
         this->addItem(pair.variant);
     }
 

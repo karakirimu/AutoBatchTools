@@ -153,7 +153,6 @@ bool ProfileTable::eventFilter(QObject *obj, QEvent *event)
 
 void ProfileTable::createList(QString filename, QList<QStringList> *newlist)
 {
-    QStringList tmp;
     QList<QStringList> item;
 
     //open processxmlbuilder

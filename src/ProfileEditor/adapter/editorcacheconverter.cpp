@@ -32,7 +32,9 @@ EditorCacheConverter::~EditorCacheConverter()
  * @param source List from XML
  * @param dest Obtained data structure
  */
-void EditorCacheConverter::convertToEditorCache(const QList<QList<QStringList> *> *source, QList<EditorCache> *dest)
+void EditorCacheConverter::convertToEditorCache(
+                                        const QList<QList<QStringList> *> *source,
+                                        QList<EditorCache> *dest)
 {
     dest->clear();
     for(QList<QStringList> *one : *source){
@@ -48,10 +50,11 @@ void EditorCacheConverter::convertToEditorCache(const QList<QList<QStringList> *
  * @param source List from data structure
  * @param dest Obtained XML list
  */
-void EditorCacheConverter::convertToXml(const QList<EditorCache> *source, QList<QList<QStringList> *> *dest)
+void EditorCacheConverter::convertToXml(const QList<EditorCache> *source,
+                                        QList<QList<QStringList> *> *dest)
 {
     dest->clear();
-    for(EditorCache cache : *source){
+    for(auto& cache : *source){
         QList<QStringList> *one = new QList<QStringList>();
         convertFromCache(&cache, one);
         dest->append(one);
@@ -64,7 +67,8 @@ void EditorCacheConverter::convertToXml(const QList<EditorCache> *source, QList<
  * @param from Data structure for gui operation
  * @param to Data structure for xml output
  */
-void EditorCacheConverter::convertFromCache(const EditorCache *from, QList<QStringList> *to)
+void EditorCacheConverter::convertFromCache(const EditorCache *from,
+                                            QList<QStringList> *to)
 {
     switch (ft.getType(from->type)) {
     case ft.TYPE::ALLINCLUDE:
@@ -98,7 +102,8 @@ void EditorCacheConverter::convertFromCache(const EditorCache *from, QList<QStri
     }
 }
 
-void EditorCacheConverter::fromInfomationCache(const EditorCache *from, QList<QStringList> *to)
+void EditorCacheConverter::fromInfomationCache(const EditorCache *from,
+                                               QList<QStringList> *to)
 {
     to->append((QStringList() << pxc.TAG_TYPE << ft.getString(ft.TYPE::INFORMATION)));
     to->append((QStringList() << pxc.TAG_I_NAME << from->info.name));
@@ -123,7 +128,7 @@ void EditorCacheConverter::fromLocalCache(const EditorCache *from, QList<QString
     to->append((QStringList() << pxc.TAG_TYPE << ft.getString(ft.TYPE::LOCAL)));
     to->append((QStringList() << pxc.TAG_L_VARIANTCOUNT_INT << QString::number(from->local.variantData.count())));
 
-    for(VariantPair v : from->local.variantData){
+    for(auto& v : from->local.variantData){
         to->append(QStringList() << pxc.TAG_L_VARIANT_HA1 << v.variant << pxc.ATTR_L_VALUE << v.value);
     }
 }
@@ -136,11 +141,12 @@ void EditorCacheConverter::fromExecuteCache(const EditorCache *from, QList<QStri
                 << pxc.ATTR_TIMEOUT_INT << QString::number(from->exec.timeout)));
     to->append((QStringList() << pxc.TAG_E_DETACH_BOOL << VariantConverter::boolToString(from->exec.detach)));
 
-    int commandCount = from->exec.command.count();
+    qsizetype commandCount = from->exec.command.count();
     to->append((QStringList() << pxc.TAG_E_COMMANDCOUNT_INT << QString::number(commandCount)));
 
     for(int i = 0; i < commandCount; i++){
-        to->append(QStringList() << pxc.TAG_E_CMD_HA1 << from->exec.command.at(i) << pxc.ATTR_COMMAND_ID_INT << QString::number(i));
+        to->append(QStringList() << pxc.TAG_E_CMD_HA1 << from->exec.command.at(i)
+                                 << pxc.ATTR_COMMAND_ID_INT << QString::number(i));
     }
 }
 
@@ -164,11 +170,12 @@ void EditorCacheConverter::fromPluginCache(const EditorCache *from, QList<QStrin
     to->append((QStringList() << pxc.TAG_P_NAME << from->plugin.name));
     to->append((QStringList() << pxc.TAG_P_FILEPATH << from->plugin.filePath));
 
-    int commandCount = from->plugin.command.count();
+    int commandCount = static_cast<int>(from->plugin.command.count());
     to->append((QStringList() << pxc.TAG_P_COMMANDCOUNT_INT << QString::number(commandCount)));
 
     for(int i = 0; i < commandCount; i++){
-        to->append(QStringList() << pxc.TAG_P_CMD_HA1 << from->plugin.command.at(i) << pxc.ATTR_COMMAND_ID_INT << QString::number(i));
+        to->append(QStringList() << pxc.TAG_P_CMD_HA1 << from->plugin.command.at(i)
+                                 << pxc.ATTR_COMMAND_ID_INT << QString::number(i));
     }
 }
 
@@ -322,28 +329,38 @@ void EditorCacheConverter::toProfileLoadCache(EditorCache *to, const QList<QStri
  * @param loadbase List for XML
  * @return The retrieved value
  */
-QString EditorCacheConverter::fetch(QString tag, const QList<QStringList> *loadbase)
+QString EditorCacheConverter::fetch(QString tag,
+                                    const QList<QStringList> *loadbase)
 {
     return this->fetch(tag, "", loadbase, 0);
 }
 
-QString EditorCacheConverter::fetch(QString tag, QString attr, const QList<QStringList> *loadbase)
+QString EditorCacheConverter::fetch(QString tag,
+                                    QString attr,
+                                    const QList<QStringList> *loadbase)
 {
     return this->fetch(tag, attr, loadbase, 0);
 }
 
-QString EditorCacheConverter::fetch(QString tag, QString attr, const QList<QStringList> *loadbase, int firstpos)
+QString EditorCacheConverter::fetch(QString tag,
+                                    QString attr,
+                                    const QList<QStringList> *loadbase,
+                                    int firstpos)
 {
-    int count = loadbase->count();
+    int count = static_cast<int>(loadbase->count());
     int i = firstpos;
     int listnummax = 0;
     while(i < count){
         if(tag == loadbase->at(i).at(0)){
             if(attr == "") return loadbase->at(i).at(1);
 
-            listnummax = loadbase->at(i).count();
-            if(listnummax > 3 && attr == loadbase->at(i).at(2)) return loadbase->at(i).at(3);
-            if(listnummax > 5 && attr == loadbase->at(i).at(4)) return loadbase->at(i).at(5);
+            listnummax = static_cast<int>(loadbase->at(i).count());
+
+            if(listnummax > 3 && attr == loadbase->at(i).at(2))
+                return loadbase->at(i).at(3);
+
+            if(listnummax > 5 && attr == loadbase->at(i).at(4))
+                return loadbase->at(i).at(5);
         }
         i++;
     }
@@ -352,9 +369,12 @@ QString EditorCacheConverter::fetch(QString tag, QString attr, const QList<QStri
     return "";
 }
 
-QString EditorCacheConverter::fetch(QString tag, QString value, QString attr, const QList<QStringList> *loadbase)
+QString EditorCacheConverter::fetch(QString tag,
+                                    QString value,
+                                    QString attr,
+                                    const QList<QStringList> *loadbase)
 {
-    int count = loadbase->count();
+    int count = static_cast<int>(loadbase->count());
     int i = 0;
     int listnummax = 0;
     while(i < count){
@@ -362,9 +382,13 @@ QString EditorCacheConverter::fetch(QString tag, QString value, QString attr, co
                 && value == loadbase->at(i).at(1)){
             if(attr == "") return loadbase->at(i).at(1);
 
-            listnummax = loadbase->at(i).count();
-            if(listnummax > 3 && attr == loadbase->at(i).at(2)) return loadbase->at(i).at(3);
-            if(listnummax > 5 && attr == loadbase->at(i).at(4)) return loadbase->at(i).at(5);
+            listnummax = static_cast<int>(loadbase->at(i).count());
+
+            if(listnummax > 3 && attr == loadbase->at(i).at(2))
+                return loadbase->at(i).at(3);
+
+            if(listnummax > 5 && attr == loadbase->at(i).at(4))
+                return loadbase->at(i).at(5);
         }
         i++;
     }
@@ -381,9 +405,10 @@ QString EditorCacheConverter::fetch(QString tag, QString value, QString attr, co
  * @param loadbase List of elements selected in ProcessFlowTable.
  * @return The first position in the list of table elements, or -1 if not found.
  */
-int EditorCacheConverter::fetchCommandFirstPos(QString tag, const QList<QStringList> *loadbase)
+int EditorCacheConverter::fetchCommandFirstPos(QString tag,
+                                               const QList<QStringList> *loadbase)
 {
-    int count = loadbase->count();
+    int count = static_cast<int>(loadbase->count());
     int i = 0;
 
     if(tag == pxc.TAG_E_CMD_HA1)  tag = pxc.TAG_E_COMMANDCOUNT_INT;

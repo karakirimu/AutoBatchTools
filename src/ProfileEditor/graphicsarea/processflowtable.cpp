@@ -296,7 +296,7 @@ void ProcessFlowTable::dragEnterEvent(QDragEnterEvent *event)
     qDebug() << "[ProcessFlowTable::dragEnterEvent] Object : " \
                                 << event->source()->objectName();
     if(event->source() != nullptr
-            && this->indexAt(event->pos()).row() > 0 ){
+            && this->indexAt(event->position().toPoint()).row() > 0 ){
         event->acceptProposedAction();
     }
 }
@@ -306,7 +306,7 @@ void ProcessFlowTable::dragMoveEvent(QDragMoveEvent *event)
     qDebug() << "[ProcessFlowTable::dragMoveEvent] Object : " \
                                 << event->source()->objectName();
     if(event->source() != nullptr
-            && this->indexAt(event->pos()).row() > 0 ){
+            && this->indexAt(event->position().toPoint()).row() > 0 ){
         event->accept();
     }else{
         event->ignore();
@@ -317,7 +317,7 @@ void ProcessFlowTable::dropEvent(QDropEvent *event)
 {
     QList<int> beforeindex;
 
-    int droppedrow = this->indexAt(event->pos()).row();
+    int droppedrow = this->indexAt(event->position().toPoint()).row();
     if(droppedrow == 0) return;
 
     if(!BaseTable::insideDropRowsMove(event, &beforeindex)) return;
@@ -528,7 +528,7 @@ void ProcessFlowTable::setAllFlowItem()
     bool deschide = settings.value(sc.ABE_PROCESS_HIDE_DESC, false).toBool();
     settings.endGroup();
 
-    int count = list.count();
+    qsizetype count = list.count();
     for (int n = 0; n < count; n++) {
         inner = list.at(n);
 
@@ -593,7 +593,7 @@ void ProcessFlowTable::setInfoItem(EditorCache *list, TableOption *option)
 
 void ProcessFlowTable::setExecuteItem(EditorCache *list, TableOption *option)
 {
-    int cmdcount = list->exec.command.count();
+    qsizetype cmdcount = list->exec.command.count();
 
     QString curdata = (cmdcount == 0)? tr("(no command)") : list->exec.command.first();
     if(curdata == "") curdata = tr("(no command)");
@@ -664,7 +664,7 @@ void ProcessFlowTable::setPluginItem(EditorCache *list, TableOption *option)
 
     curdata = (curdata == "")? tr("(no selection)") : tmp;
 
-    for(QString com : list->plugin.command){
+    for(const QString& com : list->plugin.command){
         tmp.append(" " + com);
     }
 

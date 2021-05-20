@@ -246,7 +246,7 @@ void StringTable::copyAction()
     QModelIndexList mlist = this->selectedIndexes();
 
     // 2 column
-    int counter = mlist.count();
+    int counter = static_cast<int>(mlist.count());
     for(int i = 0; i < counter; i++){
         int crow = mlist.at(i).row();
 
@@ -273,7 +273,7 @@ void StringTable::pasteAction()
     if(text.count() > 1) text.removeLast();
 
     int row = this->rowCount();
-    int txcount = text.count();
+    int txcount = static_cast<int>(text.count());
 
     for(int i = 0; i < txcount; i++){
        if(row > 0) row = this->currentRow();
@@ -282,7 +282,7 @@ void StringTable::pasteAction()
        // One row table
        QStringList intext = (text.at(i)).split(QRegularExpression("\\t|,"));
 
-       int intxt = intext.count();
+       int intxt = static_cast<int>(intext.count());
        if(intxt > 0){
            this->setItem(row, 0, new QTableWidgetItem(intext.at(0)));
            if(intxt > 1){

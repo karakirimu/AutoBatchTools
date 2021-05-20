@@ -20,7 +20,8 @@ PluginsComboBox::PluginsComboBox(QObject *)
 {
     //set new xml builder
     builder = new PluginsXmlBuilder();
-    connect(this, SIGNAL(currentIndexChanged(int)), this, SLOT(pluginCheckAction(int)));
+    connect(this, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(pluginCheckAction(int)));
 
     searchsettings.append(QStringList() << "name" << "autoplug");
     searchsettings.append(QStringList() << "keyword" << "*.dll");
@@ -114,8 +115,9 @@ void PluginsComboBox::addItemAction()
 #else
     QString extension = "(*.*)";
 #endif
-    QString file = dialog.getOpenFileName(this, tr("Add Plugin"), \
-                                          QDir::currentPath(), tr("Plugin ") + extension );
+    QString file
+        = dialog.getOpenFileName(this, tr("Add Plugin"), \
+                                 QDir::currentPath(), tr("Plugin ") + extension );
     QFileInfo info(file);
 
     if(info.exists()){
@@ -123,8 +125,12 @@ void PluginsComboBox::addItemAction()
         QPluginLoader loader(file);
         if(loader.load()){
             QObject *plugin = loader.instance();
-            ExtraPluginInterface *inter = qobject_cast<ExtraPluginInterface *>(plugin);
-            list.append(QStringList () << builder->PL_XML_NAME << inter->getInformation()->name \
+
+            ExtraPluginInterface *inter
+                = qobject_cast<ExtraPluginInterface *>(plugin);
+
+            list.append(QStringList ()
+                        << builder->PL_XML_NAME << inter->getInformation()->name \
                         << builder->PL_XML_ATTR_FILE << file);
             builder->addItem(&list);
 
@@ -149,7 +155,10 @@ void PluginsComboBox::deleteAction()
 
     // show delete warning
     QMessageBox::StandardButton res = QMessageBox::warning(
-      this, tr("Alert"), tr("Do you want to exclude the selected item from the list?"), QMessageBox::Yes | QMessageBox::No );
+        this,
+        tr("Alert"),
+        tr("Do you want to exclude the selected item from the list?"),
+        QMessageBox::Yes | QMessageBox::No );
 
     if(res == QMessageBox::Yes){
         //delete file item

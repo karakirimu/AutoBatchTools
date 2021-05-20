@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 karakirimu
+ * Copyright 2016-2021 karakirimu
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,21 +27,21 @@ class SEARCHTABLESHARED_EXPORT SearchTable : public BasicTable
     Q_OBJECT
 public:
     explicit SearchTable(QWidget *parent = nullptr);
-    ~SearchTable();
+    virtual ~SearchTable() override;
 
 public slots:
-    void addAction();
-    void editAction();
-    void deleteAction();
+    void addAction() override;
+    void editAction() override;
+    void deleteAction() override;
     void reloadAction();
-    void copyAction();
-    void upAction();
-    void downAction();
+    void copyAction() override;
+    void upAction() override;
+    void downAction() override;
 
 private:
-    void setPopupActionTop();
-    void setPopupActionBottom();
-    bool eventFilter(QObject *obj, QEvent *event);
+    void setPopupActionTop() override;
+    void setPopupActionBottom() override;
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
     QAction *m_add;
     QAction *m_edit;

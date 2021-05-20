@@ -54,11 +54,11 @@ AutoSaveSelectionDialog::~AutoSaveSelectionDialog()
 
 void AutoSaveSelectionDialog::setAutoSaveFileList(QStringList *list)
 {
-    ui->fileListTableWidget->setRowCount(list->count());
+    ui->fileListTableWidget->setRowCount(static_cast<int>(list->count()));
     filelist = list;
 
     int i = 0;
-    for(QString path : *list){
+    for(const QString& path : *list){
         QFileInfo info(path);
         QString date = info.lastRead().toString("yyyy/MM/dd HH:mm:ss");
         ui->fileListTableWidget \

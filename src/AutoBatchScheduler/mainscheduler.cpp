@@ -227,8 +227,6 @@ void MainScheduler::initLanguageSelection()
     QDirIterator dit("translation", QStringList() << "*.qm", QDir::Files);
 #endif
 
-    QStringList files;
-
     while (dit.hasNext()){
         QFileInfo file(dit.next());
         QString strloc = file.baseName().split("_").last();
@@ -245,7 +243,7 @@ void MainScheduler::storeLanguageSelection(QSettings *setting)
                                                       QLocale::AnyScript,
                                                       QLocale::AnyCountry);
 
-    for(QLocale loc : locales){
+    for(const QLocale& loc : locales){
         if(QLocale::languageToString(loc.language()) == selected){
             setting->setValue(sc.ABS_LANGUAGE, loc.bcp47Name());
             break;

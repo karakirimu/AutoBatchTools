@@ -208,7 +208,7 @@ bool Executor::runProcess()
     execlist = new QList<int>();
     if(userexeclist.count() > 0) execlist->append(userexeclist);
     checkExecList(execlist);
-    emit processStateCount(0, execlist->count());
+    emit processStateCount(0, static_cast<int>(execlist->count()));
 
     //Read profile information (Info data must index 0)
     setProcessSettings(&fileinput, &loopcount);
@@ -264,7 +264,7 @@ bool Executor::Execute()
 {
     QList<QStringList> *list = new QList<QStringList>();
     bool checker = true;
-    int execlistcounter = execlist->count();
+    int execlistcounter = static_cast<int>(execlist->count());
 
     for(int i = 0; i < execlistcounter; i++){
 
@@ -394,7 +394,7 @@ bool Executor::loadNormal(QList<QStringList> *list)
         show.append(tr("## [") + app + tr("] \n"));
     }
 
-    for(QString var : arguments) {
+    for(const QString& var : arguments) {
         show.append(" ");
         show.append(var);
     }
@@ -449,7 +449,7 @@ bool Executor::loadSearch(QList<QStringList> *list)
     sepdata = sepdata.contains("\\r")    ? sepdata.replace("\\r","\r")      : sepdata;
     sepdata = sepdata.contains("\\t")    ? sepdata.replace("\\t","\t")      : sepdata;
 
-    int cre = result.count();
+    qsizetype cre = result.count();
     for(int i = 0; i < cre; i++){
         emit processMessage(QString("%1").arg(result.at(i)), SEARCH);
 
@@ -620,11 +620,11 @@ bool Executor::loadProject(QList<QStringList> *list)
     setLocalList();
 
     //set counter
-    int counter = execlist->count();
+    int counter = static_cast<int>(execlist->count());
 
     emit processMessage(tr("## [ProfileLoad] %1 (loop %2)")
-                        .arg(xgen.fetch(pxc.TAG_PLOAD_FILEPATH, list))
-                        .arg(QString::number(builderstack.count()))
+                        .arg(xgen.fetch(pxc.TAG_PLOAD_FILEPATH, list)
+                        , QString::number(builderstack.count()))
                         , OTHER);
 
     //init data
@@ -697,7 +697,7 @@ QString Executor::replaceInputMacro(QString original)
     QString pre = "$input_";
     QString result = original;
 
-    int maxcount = fileList.count();
+    qsizetype maxcount = fileList.count();
 
     for(int i = 0; i < maxcount; i++){
         QFileInfo info(fileList.at(i));
@@ -728,7 +728,7 @@ QString Executor::replaceMacro(QString original, QHash<QString, QString> *list)
 {
     QString result = original;
     QList<QString> il = list->keys();
-    int sizer = il.size();
+    qsizetype sizer = il.size();
     for(int i = 0; i < sizer; i++){
         result = result.replace(il.at(i), list->value(il.at(i)));
     }
@@ -743,7 +743,7 @@ void Executor::overwriteLocalMacro(QString key, QString value)
 
 void Executor::checkExecList(QList<int> *elist)
 {
-    int excount = elist->count();
+    qsizetype excount = elist->count();
     int buildermax = pbuilder->count();
 
     if(excount == 0){

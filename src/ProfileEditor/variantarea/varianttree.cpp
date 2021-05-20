@@ -35,7 +35,7 @@ VariantTree::VariantTree(QWidget *)
 
     //set header
     this->header()->setSectionResizeMode(QHeaderView::Stretch);
-    this->setHeaderLabels((QStringList() << tr("Variant") << tr("Value")));
+    this->setHeaderLabels((QStringList() << tr("Variable") << tr("Value")));
 
     //set new xml builder
     builder = new StringXmlBuilder();
@@ -271,7 +271,7 @@ void VariantTree::copyAction()
     QModelIndexList mlist = this->selectedIndexes();
 
     // 2 column
-    int counter = mlist.count();
+    qsizetype counter = mlist.count();
     for(int i = 0; i < counter; i++){
         int crow = mlist.at(i).row();
         tmp.append(this->selectionModel()->currentIndex().\
@@ -294,7 +294,7 @@ void VariantTree::pasteAction()
     QModelIndex index = getSectionFromUi();
 
     int row = 0;
-    int txcount = text.count();
+    qsizetype txcount = text.count();
 
     ignoreDataChangedSignal(true);
 
@@ -705,7 +705,7 @@ void VariantTree::onCustomContextMenu(const QPoint &point)
 //todo: moveto last index
 void VariantTree::dropEvent(QDropEvent *event)
 {
-    QModelIndex droppedIndex = indexAt( event->pos() );
+    QModelIndex droppedIndex = indexAt( event->position().toPoint() );
 
     if( droppedIndex.isValid() && droppedIndex.parent().isValid()){
         //item moving (to xml) (cut + paste)
@@ -768,15 +768,12 @@ bool VariantTree::setLocalListItems(QTreeWidgetItem *parent, int itemid)
 
     FunctionType fs;
 
-    //get type
-    QString type = list.type;
-
     //set root
     if(fs.getType(list.type) != fs.TYPE::LOCAL){
         return false;
     }
 
-    int counter = list.local.variantData.count();
+    qsizetype counter = list.local.variantData.count();
 
     for(int i = 0; i < counter; i++){
         VariantPair pair = list.local.variantData.at(i);
@@ -895,7 +892,7 @@ bool VariantTree::deleteCheckMessage()
 {
     // show delete warning
     QMessageBox::StandardButton res = QMessageBox::warning(
-      this, tr("Alert"), tr("Do you want to delete selected variants ?"), QMessageBox::Yes | QMessageBox::No );
+      this, tr("Alert"), tr("Do you want to delete selected variables?"), QMessageBox::Yes | QMessageBox::No );
 
     if(res == QMessageBox::Yes){
         return true;

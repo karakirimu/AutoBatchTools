@@ -35,7 +35,7 @@ signals:
 
 public:
     explicit PluginsComboBox(QObject *parent = nullptr);
-    ~PluginsComboBox();
+    ~PluginsComboBox() override;
 
     QString getCurrentExtraFile();
     void reloadComboBoxItem();
@@ -51,7 +51,7 @@ private:
 
     //file list buffer
     QStringList buffer;
-    int autodetectcounter;
+    qsizetype autodetectcounter;
 
     //auto search settings
     QList<QStringList> searchsettings;
