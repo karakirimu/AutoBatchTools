@@ -252,7 +252,7 @@ void EditOperator::spinLoopRecursiveAction(int id, int newvalue)
  * @fn EditOperator::radioSearchOutputAction
  * @brief The function that determines the output destination of search results on the FileSearch tab
  * @param id       Row number to read, starting from 0
- * @param newvalue Variant : 0, External file : 1
+ * @param newvalue Variable : 0, External file : 1
  */
 void EditOperator::radioSearchOutputAction(int id, int newvalue)
 {
@@ -319,7 +319,7 @@ void EditOperator::tableSwapPluginAction(int id, int beforeid, int afterid)
  * @brief The function to edit the argument at the specified position in the table on the Variant tree
  * @param id        Row number to read, starting from 0
  * @param tableid   The line number of the edited argument table in the Variant tree
- * @param variants  Variant and value pair
+ * @param variants  Variable and value pair
  * @param operation Operation defined in UiCommandMap
  */
 void EditOperator::tableEditVariantAction(int id, int tableid, QStringList variants, int operation)
@@ -422,7 +422,7 @@ void EditOperator::treeEditGVariantAction(int id, QStringList variants, int oper
 
 /**
  * @fn EditOperator::treeSwapGVariantAction
- * @brief Swap positions of variant and value pair in the table on the Variant tree
+ * @brief Swap positions of variable and value pair in the table on the Variant tree
  * @param beforeid The row of the source table in the argument list
  * @param afterid  The row of the destination table in the argument list
  */
@@ -438,7 +438,7 @@ void EditOperator::treeSwapGVariantAction(int beforeid, int afterid)
  * @param id         Row number to read, starting from 0
  * @param variants   The list containing variable and value
  * @param operation  Operation defined in UiCommandMap
- * @param localindex Row number in Local variant (Current index: 1)
+ * @param localindex Row number in Local variable (Current index: 1)
  */
 void EditOperator::treeEditLVariantAction(int id, QStringList variants, int operation, int localindex)
 {
@@ -448,10 +448,10 @@ void EditOperator::treeEditLVariantAction(int id, QStringList variants, int oper
 
 /**
  * @fn EditOperator::treeSwapLVariantAction
- * @brief Swap positions of variant and value pair in the table on the Variant tree
+ * @brief Swap positions of variable and value pair in the table on the Variant tree
  * @param beforeid   The row of the source table in the argument list of selected id
  * @param afterid    The row of the destination table in the argument list of the selected id
- * @param localindex Row number in Local variant (Current index: 1)
+ * @param localindex Row number in Local variable (Current index: 1)
  */
 void EditOperator::treeSwapLVariantAction(int beforeid, int afterid, int localindex)
 {

@@ -72,7 +72,7 @@
 #include <dragdropexectable.h>
 #include <dragdropplugintable.h>
 
-//tree variant operation
+//tree variable operation
 #include <editglobalvartree.h>
 #include <swapglobalvartree.h>
 

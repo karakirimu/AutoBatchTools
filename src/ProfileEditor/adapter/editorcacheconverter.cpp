@@ -128,7 +128,7 @@ void EditorCacheConverter::fromLocalCache(const EditorCache *from, QList<QString
     to->append((QStringList() << pxc.TAG_TYPE << ft.getString(ft.TYPE::LOCAL)));
     to->append((QStringList() << pxc.TAG_L_VARIANTCOUNT_INT << QString::number(from->local.variantData.count())));
 
-    for(auto& v : from->local.variantData){
+    for(VariantPair v : from->local.variantData){
         to->append(QStringList() << pxc.TAG_L_VARIANT_HA1 << v.variant << pxc.ATTR_L_VALUE << v.value);
     }
 }
@@ -256,10 +256,10 @@ void EditorCacheConverter::toInfomationCache(EditorCache *to, const QList<QStrin
 
 void EditorCacheConverter::toLocalCache(EditorCache *to, const QList<QStringList> *from)
 {
-    int variantCount = fetch(pxc.TAG_L_VARIANTCOUNT_INT, from).toInt();
+    int variableCount = fetch(pxc.TAG_L_VARIANTCOUNT_INT, from).toInt();
     int cmdfirst = fetchCommandFirstPos(pxc.TAG_L_VARIANTCOUNT_INT, from);
 
-    for(int i = 0; i < variantCount; i++){
+    for(int i = 0; i < variableCount; i++){
         VariantPair pair = {from->at(cmdfirst + i).at(1), from->at(cmdfirst + i).at(3)};
         to->local.variantData.append(pair);
     }
@@ -293,7 +293,7 @@ void EditorCacheConverter::toFileSearchCache(EditorCache *to, const QList<QStrin
     to->filesearch.variant = fetch(pxc.TAG_FS_VARIANT, from);
     to->filesearch.filePath = fetch(pxc.TAG_FS_FILEPATH_HA1, from);
 
-    // variant or outputfile
+    // variable or outputfile
     to->filesearch.outputOption = fetch(pxc.TAG_FS_FILEPATH_HA1,pxc.ATTR_FS_OUTPUTOPTION_INT, from).toInt();
 
     // overwrite or append

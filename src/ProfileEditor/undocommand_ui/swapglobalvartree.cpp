@@ -58,17 +58,17 @@ void SwapGlobalVarTree::setTextByCondition(int source, int dest)
     switch (condition) {
     case 1:
         //UP
-        setText(QObject::tr("Move global variant '%1': Up").arg(variantFrom(source)) \
+        setText(QObject::tr("Move the global variable '%1': Up").arg(variantFrom(source)) \
                 + QString(" ^(%1,%2,%3)").arg(indexBefore).arg(indexAfter).arg(UiCommandMap::Id(UiCommandMap::GV_SWAP_TREE)));
         break;
     case -1:
         //DOWN
-        setText(QObject::tr("Move global variant '%1': Down").arg(variantFrom(source)) \
+        setText(QObject::tr("Move the global variable '%1': Down").arg(variantFrom(source)) \
                 + QString(" ^(%1,%2,%3)").arg(indexBefore).arg(indexAfter).arg(UiCommandMap::Id(UiCommandMap::GV_SWAP_TREE)));
         break;
     default:
         //SWAP
-        setText(QObject::tr("Swap global variant '%1' and '%2'").arg(variantFrom(source)).arg(variantFrom(dest)) \
+        setText(QObject::tr("Swap the global variable '%1' and '%2'").arg(variantFrom(source)).arg(variantFrom(dest)) \
                 + QString(" ^(%1,%2,%3)").arg(indexBefore).arg(indexAfter).arg(UiCommandMap::Id(UiCommandMap::GV_SWAP_TREE)));
         break;
     }

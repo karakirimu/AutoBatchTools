@@ -35,7 +35,7 @@ void VariantComboBox::reloadComboBoxItem()
     QList<QStringList> item;
     int counter;
 
-    //this->addItem(tr("Select variant ..."));
+    //this->addItem(tr("Select variable ..."));
 
     //stringbuilder update (global)
     counter = sbuilder->count();
@@ -46,7 +46,7 @@ void VariantComboBox::reloadComboBoxItem()
         }
     }
 
-    //Variant cache update (Consider future XML changes) (local)
+    //Variable cache update (Consider future XML changes) (local)
     FunctionType fs;
     QList<EditorCache> ec;
     editop->readAll(&ec);

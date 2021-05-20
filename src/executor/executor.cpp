@@ -462,15 +462,15 @@ bool Executor::loadSearch(QList<QStringList> *list)
     int radiodata = static_cast<QString>( \
                 xgen.fetch(pxc.TAG_FS_FILEPATH_HA1, pxc.ATTR_FS_OUTPUTOPTION_INT, list)).toInt();
 
-    //save to variant
+    //save to variable
     if(radiodata == 0){
         QString selectvar = xgen.fetch(pxc.TAG_FS_VARIANT, list);
 
         if(selectvar != ""){
-            //set data to variant
+            //set data to variable
             overwriteLocalMacro(selectvar, combineresult);
         }else{
-            emit processMessage(tr("## [FileSearch] The selected variant cannot be found."), ERROR);
+            emit processMessage(tr("## [FileSearch] The selected variable cannot be found."), ERROR);
         }
 
     }else{

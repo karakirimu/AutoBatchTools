@@ -92,7 +92,7 @@ public:
         value = "";
     }
 
-    //! Variant
+    //! Variable
     QString variant = "";
 
     //! Value
@@ -108,7 +108,7 @@ struct Local {
     // Number of variant (using only XML)
     // int variantCount = 0;
 
-    //! Variant data
+    //! Variable data
     QList<VariantPair> variantData;
 };
 
@@ -167,7 +167,7 @@ struct FileSearch {
     //! Search result output options
     int outputOption = 0;
 
-    //! Search result return variant name
+    //! Search result return variable name
     QString variant = "";
 
     //! Search result return output file path

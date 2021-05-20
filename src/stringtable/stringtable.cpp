@@ -33,7 +33,7 @@ StringTable::StringTable(QWidget *parent) : BasicTable(parent)
     //adjust column
     horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     //set header label
-    setHorizontalHeaderLabels((QStringList() << tr("Global Variant") << tr("Value")));
+    setHorizontalHeaderLabels((QStringList() << tr("Variable") << tr("Value")));
 
     //set vertical header style
     QssPropertyConstant qpc;

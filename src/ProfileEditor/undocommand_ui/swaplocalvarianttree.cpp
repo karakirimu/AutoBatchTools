@@ -63,17 +63,17 @@ void SwapLocalVariantTree::setTextByCondition(int source, int dest)
     switch (condition) {
     case 1:
         //UP
-        setText(QObject::tr("Move local variant '%1': Up").arg(arg) \
+        setText(QObject::tr("Move local variable '%1': Up").arg(arg) \
                 + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UiCommandMap::Id(UiCommandMap::LV_SWAP)));
         break;
     case -1:
         //DOWN
-        setText(QObject::tr("Move local variant '%1': Down").arg(arg) \
+        setText(QObject::tr("Move local variable '%1': Down").arg(arg) \
                 + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UiCommandMap::Id(UiCommandMap::LV_SWAP)));
         break;
     default:
         //SWAP
-        setText(QObject::tr("Swap local variant '%1' and '%2'").arg(arg).arg(ptrCache->at(index).local.variantData.at(source).variant) \
+        setText(QObject::tr("Swap local variable '%1' and '%2'").arg(arg).arg(ptrCache->at(index).local.variantData.at(source).variant) \
                 + QString(" ^(%1,%2,%3)").arg(source).arg(dest).arg(UiCommandMap::Id(UiCommandMap::LV_SWAP)));
         break;
     }

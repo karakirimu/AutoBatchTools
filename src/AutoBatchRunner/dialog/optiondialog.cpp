@@ -35,21 +35,21 @@ OptionDialog::OptionDialog(QWidget *parent) :
     connect(ui->pDownButton, &QPushButton::clicked, ui->profileTableWidget, &ProfileTable::downAction);
     connect(ui->pEditButton, &QPushButton::clicked, ui->profileTableWidget, &ProfileTable::editAction);
 
-    //application variant
+    //application variable
     connect(ui->vAddButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::addAction);
     connect(ui->vCopyButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::copyAction);
     connect(ui->vDeleteButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::deleteAction);
     connect(ui->vUpButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::upAction);
     connect(ui->vDownButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::downAction);
 
-    //search variant
+    //search variable
     connect(ui->sAddButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::addAction);
     connect(ui->sCopyButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::copyAction);
     connect(ui->sDeleteButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::deleteAction);
     connect(ui->sDownButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::upAction);
     connect(ui->sUpButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::downAction);
 
-    //extend variant
+    //extend variable
     connect(ui->eAddButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::addAction);
     connect(ui->eDeleteButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::deleteAction);
     connect(ui->eUpButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::upAction);
@@ -67,7 +67,7 @@ OptionDialog::~OptionDialog()
 void OptionDialog::setupItem(){
     ui->listWidget->addItem(tr("General"));
     ui->listWidget->addItem(tr("Profile"));
-    ui->listWidget->addItem(tr("Global Variant"));
+    ui->listWidget->addItem(tr("Global Variables"));
     ui->listWidget->addItem(tr("Search"));
     ui->listWidget->addItem(tr("Plugins"));
 

@@ -49,13 +49,13 @@ public:
     PluginVariant() { filevar = new QStringList(); }
     ~PluginVariant() { delete filevar; }
 
-    //! local variant
+    //! local variable
     QHash<QString, QString> *localvar;
 
-    //! global variant
+    //! global variable
     QHash<QString, QString> globalvar;
 
-    //! input file variant
+    //! input file variable
     QStringList *filevar;
 };
 

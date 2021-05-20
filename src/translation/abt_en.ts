@@ -525,7 +525,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../executor/executor.cpp" line="473"/>
-        <source>## [FileSearch] The selected variant cannot be found.</source>
+        <source>## [FileSearch] The selected variable cannot be found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1055,7 +1055,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../AutoBatchRunner/dialog/optiondialog.cpp" line="70"/>
-        <source>Global Variant</source>
+        <source>Global Variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1238,7 +1238,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="638"/>
-        <source>Output Variant: %1</source>
+        <source>Output Variable: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1570,7 +1570,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="2398"/>
-        <source>Variant</source>
+        <source>Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2238,32 +2238,32 @@ Do you want to save this?</source>
     </message>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/swapglobalvartree.cpp" line="61"/>
-        <source>Move global variant &apos;%1&apos;: Up</source>
+        <source>Move the global variable &apos;%1&apos;: Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/swapglobalvartree.cpp" line="66"/>
-        <source>Move global variant &apos;%1&apos;: Down</source>
+        <source>Move the global variable &apos;%1&apos;: Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/swapglobalvartree.cpp" line="71"/>
-        <source>Swap global variant &apos;%1&apos; and &apos;%2&apos;</source>
+        <source>Swap the global variable &apos;%1&apos; and &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/swaplocalvarianttree.cpp" line="66"/>
-        <source>Move local variant &apos;%1&apos;: Up</source>
+        <source>Move local variable &apos;%1&apos;: Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/swaplocalvarianttree.cpp" line="71"/>
-        <source>Move local variant &apos;%1&apos;: Down</source>
+        <source>Move local variable &apos;%1&apos;: Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/swaplocalvarianttree.cpp" line="76"/>
-        <source>Swap local variant &apos;%1&apos; and &apos;%2&apos;</source>
+        <source>Swap local variable &apos;%1&apos; and &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2718,7 +2718,7 @@ Do you want to save this?</source>
     <name>StringTable</name>
     <message>
         <location filename="../stringtable/stringtable.cpp" line="36"/>
-        <source>Global Variant</source>
+        <source>Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

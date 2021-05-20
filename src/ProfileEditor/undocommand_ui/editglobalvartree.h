@@ -24,9 +24,9 @@
 
 /**
  * @brief The EditGlobalVarTree class
- * variants structure
+ * variables structure
  * 0       :1       :
- * variant :value   :
+ * variable :value   :
  */
 
 class EditGlobalVarTree : public QUndoCommand

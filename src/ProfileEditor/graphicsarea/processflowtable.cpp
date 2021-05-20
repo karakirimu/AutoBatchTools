@@ -628,14 +628,14 @@ void ProcessFlowTable::setFileSearchItem(EditorCache *list, TableOption *option)
 
     QString tmp = curdata + tr("Separator: %1 ").arg(curdata2);
 
-    //variant or output
+    //variable or output
     QString cur3;
     if(list->filesearch.outputOption == list->filesearch.VARIANT){
 
         cur3 = list->filesearch.variant;
         cur3 = (cur3 == "")? tr("(none) ") : cur3;
 
-        tmp.append(tr("Output Variant: %1").arg(cur3));
+        tmp.append(tr("Output Variable: %1").arg(cur3));
     }else{
 
         cur3 = list->filesearch.filePath;

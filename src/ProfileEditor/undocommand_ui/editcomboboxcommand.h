@@ -17,7 +17,7 @@
 #ifndef EDITCOMBOBOXCOMMAND_H
 #define EDITCOMBOBOXCOMMAND_H
 
-//for localvariant combobox
+//for localvariable combobox
 #include <QUndoCommand>
 #include <uicommandmap.h>
 #include <editorcachelist.h>

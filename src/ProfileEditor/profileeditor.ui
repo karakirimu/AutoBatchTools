@@ -2395,7 +2395,7 @@ border: none;</string>
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Variant</string>
+    <string>Variable</string>
    </property>
   </action>
   <action name="actionReloadProcess">
