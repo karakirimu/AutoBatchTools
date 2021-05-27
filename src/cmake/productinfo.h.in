@@ -1,0 +1,30 @@
+/* 
+ * Released under the MIT License.
+ * See LICENSE text for license details.
+ *
+ * SPDX-FileCopyrightText: Copyright (c) 2021 karakirimu
+ * SPDX-License-Identifier: MIT
+ */
+
+#ifndef PRODUCTINFO_H
+#define PRODUCTINFO_H
+
+#define ABT_ICON                  "@PROJECT_ICON@\0"
+#define ABT_FILE_VER_MAJOR        @PROJECT_VERSION_MAJOR@
+#define ABT_FILE_VER_MINOR        @PROJECT_VERSION_MINOR@
+#define ABT_FILE_VER_PATCH        @PROJECT_VERSION_PATCH@
+#define ABT_FILE_VER_STRING       "@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@.0\0"
+
+#define ABT_PRODUCT_VER_MAJOR     @CMAKE_PROJECT_VERSION_MAJOR@
+#define ABT_PRODUCT_VER_MINOR     @CMAKE_PROJECT_VERSION_MINOR@
+#define ABT_PRODUCT_VER_PATCH     @CMAKE_PROJECT_VERSION_PATCH@
+#define ABT_PRODUCT_VER_STRING    "@CMAKE_PROJECT_VERSION_MAJOR@.@CMAKE_PROJECT_VERSION_MINOR@.@CMAKE_PROJECT_VERSION_PATCH@.0\0"
+
+#define ABT_COPYRIGHT             "Copyright (c) 2021 karakirimu\0"
+#define ABT_COMPANY_NAME          "\0"
+#define ABT_FILE_DESC             "\0"
+#define ABT_INTERNAL_NAME         "@PROJECT_NAME@\0"
+#define ABT_ORIGINAL_NAME         "@PROJECT_NAME@\0"
+#define ABT_PRODUCT_NAME          "@CMAKE_PROJECT_NAME@\0"
+
+#endif // PRODUCTINFO_H
