@@ -1,0 +1,42 @@
+// Microsoft Visual C++ resource script.
+//
+#include "productinfo.h"
+#include <windows.h>
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION ABT_FILE_VER_MAJOR,ABT_FILE_VER_MINOR,ABT_FILE_VER_PATCH,0
+ PRODUCTVERSION ABT_PRODUCT_VER_MAJOR,ABT_PRODUCT_VER_MINOR,ABT_PRODUCT_VER_PATCH,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+    FILEFLAGS VS_FF_DEBUG
+#else
+    FILEFLAGS 0x0L
+#endif
+    FILEOS VOS_NT_WINDOWS32
+    FILETYPE VFT_DLL
+    FILESUBTYPE VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", ABT_COMPANY_NAME
+            VALUE "FileDescription", ABT_FILE_DESC
+            VALUE "FileVersion", ABT_FILE_VER_STRING
+            VALUE "InternalName", ABT_INTERNAL_NAME
+            VALUE "LegalCopyright", ABT_COPYRIGHT
+            VALUE "OriginalFilename", ABT_ORIGINAL_NAME
+            VALUE "ProductName", ABT_PRODUCT_NAME
+            VALUE "ProductVersion", ABT_PRODUCT_VER_STRING
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
