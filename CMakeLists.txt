@@ -13,14 +13,6 @@ if(SUPPRESS_MULTIPLE_DEFINITIONS)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif()
 
-get_cmake_property(_variableNames VARIABLES)
-list (SORT _variableNames)
-message(STATUS "--- Variables List Start ---")
-foreach (_variableName ${_variableNames})
-    message(STATUS "${_variableName}=${${_variableName}}")
-endforeach()
-message(STATUS "--- Variables List End ---")
-
 # Set build output directory
 string(
     REPLACE
