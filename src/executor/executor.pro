@@ -43,7 +43,6 @@ LIBS += \
     -L$$DESTDIR -lfilesearchloader \
     -L$$DESTDIR -lxmlbuilder \
     -L$$DESTDIR -lstringxmlbuilder \
-    -L$$DESTDIR -lfilesearchloader \
     -L$$DESTDIR -lprocessxmlbuilder \
     -L$$DESTDIR -lprocessxmllistgenerator
 
