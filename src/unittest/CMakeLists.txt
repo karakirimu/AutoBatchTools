@@ -9,6 +9,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_definitions(-DGTEST_LANGUAGE_CXX11)
 
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_compile_definitions(QT_NO_DEBUG_OUTPUT)
+endif()
+
 find_package(Threads REQUIRED)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets REQUIRED)
@@ -199,7 +203,7 @@ include_directories(
 
 add_executable(unittest
     main.cpp
-    tst_unittest.h
+    xmlbuilder.test.h
     ${STARTUPXMLBUILDER}
     ${GTestFiles}
 )

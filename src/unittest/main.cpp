@@ -1,4 +1,4 @@
-#include "tst_unittest.h"
+#include "xmlbuilder.test.h"
 
 #include <gtest/gtest.h>
 

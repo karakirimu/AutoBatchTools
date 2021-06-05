@@ -11,7 +11,7 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
-//#include <filesearchloader.h>
+
 #include <xmlbuilder.h>
 #include <searchxmlbuilder.h>
 #include <profilexmlbuilder.h>
@@ -22,6 +22,7 @@
 
 using namespace testing;
 
+//#include <filesearchloader.h>
 //class FileSearchLoaderTest : public ::testing::Test {
 
 //protected:
@@ -152,7 +153,8 @@ protected:
         QList<QStringList> res;
 
         //info element
-        res.append((QStringList() << pxc.TAG_TYPE << fs.getString(fs.TYPE::INFORMATION)));
+        res.append((QStringList() << pxc.TAG_TYPE
+                                  << fs.getString(fs.TYPE::INFORMATION)));
         res.append((QStringList() << pxc.TAG_I_NAME << ""));
         res.append((QStringList() << pxc.TAG_I_VERSION << ""));
         res.append((QStringList() << pxc.TAG_I_AUTHOR << ""));
@@ -174,7 +176,8 @@ protected:
         QList<QStringList> res;
 
         //local element
-        res.append((QStringList() << pxc.TAG_TYPE << fs.getString(fs.TYPE::LOCAL)));
+        res.append((QStringList() << pxc.TAG_TYPE
+                                  << fs.getString(fs.TYPE::LOCAL)));
         res.append((QStringList() << pxc.TAG_L_VARIANTCOUNT_INT << "1"));
         res.append(QStringList() << pxc.TAG_L_VARIANT_HA1 << "v.variant"
                                  << pxc.ATTR_L_VALUE << "v.value");
@@ -244,7 +247,8 @@ protected:
                                   << pxc.ATTR_ONLY_SCHEDULER_BOOL
                                   << "true"));
         res.append((QStringList() << pxc.TAG_P_NAME << "plugin@name"));
-        res.append((QStringList() << pxc.TAG_P_FILEPATH << "./fff/ggg/vvvv.dll"));
+        res.append((QStringList() << pxc.TAG_P_FILEPATH
+                                  << "./fff/ggg/vvvv.dll"));
 
         int commandCount = 5;
         res.append((QStringList() << pxc.TAG_P_COMMANDCOUNT_INT
@@ -363,8 +367,10 @@ protected:
     const QList<QStringList> GetTestElements(){
         QList<QStringList> res;
 
-        res.append(QStringList() << builder->PL_XML_NAME << "from->settingName"
-                                 << builder->PL_XML_ATTR_FILE << "./filepath/");
+        res.append(QStringList() << builder->PL_XML_NAME
+                                 << "from->settingName"
+                                 << builder->PL_XML_ATTR_FILE
+                                 << "./filepath/");
 
         return res;
     }
