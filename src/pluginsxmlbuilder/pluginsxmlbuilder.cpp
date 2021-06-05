@@ -1,3 +1,11 @@
+/*
+ * Released under the MIT License.
+ * See LICENSE text for license details.
+ *
+ * SPDX-FileCopyrightText: Copyright (c) 2021 karakirimu
+ * SPDX-License-Identifier: MIT
+ */
+
 #include "pluginsxmlbuilder.h"
 
 
@@ -66,17 +74,24 @@ int PluginsXmlBuilder::count()
     return getElementItemsCount(FIRSTLAYER);
 }
 
-void PluginsXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
+void PluginsXmlBuilder::setSearchItemData(QString element
+                                          , QList<QStringList> *list)
 {
     if(element == PL_XML_NAME)
     {
-//        QStringList data;
-//        //add element and text
-//        data.append(element);
-//        data.append(rxml->readElementText());
-//        list->append(data);
+        QStringList read;
+        QString attrname = "";
 
-        list->append(QStringList() << element << rxml->readElementText()
-                     << PL_XML_ATTR_FILE << rxml->attributes().value(PL_XML_ATTR_FILE).toString());
+        for(auto &attr : rxml->attributes()){
+            attrname = attr.name().toString();
+            if(attrname == PL_XML_ATTR_FILE){
+                read.append(attrname);
+                read.append(attr.value().toString());
+            }
+        }
+
+        read.prepend(rxml->readElementText());
+        read.prepend(element);
+        list->append(read);
     }
 }

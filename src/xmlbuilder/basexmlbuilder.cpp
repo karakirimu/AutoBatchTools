@@ -48,35 +48,9 @@ void BaseXmlBuilder::setFileName(QString filename){
     }
 }
 
-/**
- * @fn BaseXmlBuilder::createXmlBaseDocument
- * @brief Creating a document.
- *
- * @param rootelement : root tag.
- */
-//void BaseXmlBuilder::createXmlBaseDocument(QString rootelement)
-//{
-//    openFile(QIODevice::WriteOnly);
-//    //delete older characters
-//    clearFileText();
-
-//    //set device
-//    wxml->setDevice(file);
-
-//    //seek specified line
-//    wxml->setAutoFormatting(true);
-
-//    //set 1 tabs
-//    wxml->setAutoFormattingIndent(-1);
-
-//    wxml->writeStartDocument();
-//    wxml->writeTextElement(rootelement, endLineStr());
-//    wxml->writeEndDocument();
-
-//    closeFile();
-//}
-
-void BaseXmlBuilder::createXmlBaseDocument(QString rootelement, QString rootattr, QString rootattrvalue)
+void BaseXmlBuilder::createXmlBaseDocument(QString rootelement
+                                           , QString rootattr
+                                           , QString rootattrvalue)
 {
     openFile(QIODevice::WriteOnly);
     //delete older characters

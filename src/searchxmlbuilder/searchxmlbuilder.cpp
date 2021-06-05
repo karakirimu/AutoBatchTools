@@ -57,11 +57,6 @@ void SearchXmlBuilder::copyItem(int itemid)
     Xmlbuilder::copyItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, SEARCH_NAME);
 }
 
-bool SearchXmlBuilder::overwriteItem(int itemid, const QList<QStringList> *itemlist)
-{
-    return Xmlbuilder::overwriteItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
-}
-
 void SearchXmlBuilder::createDocument()
 {
     createXmlBaseDocument(ROOTELEMENT);
@@ -72,18 +67,24 @@ int SearchXmlBuilder::count()
     return getElementItemsCount(FIRSTLAYER);
 }
 
-QString SearchXmlBuilder::fetch(QString tag, QString attr, const QList<QStringList> *loadbase)
+QString SearchXmlBuilder::fetch(QString tag,
+                                QString attr,
+                                const QList<QStringList> *loadbase)
 {
-    int count = loadbase->count();
+    qsizetype count = loadbase->count();
     int i = 0;
-    int listnummax = 0;
+    qsizetype listnummax = 0;
     while(i < count){
         if(tag == loadbase->at(i).at(0)){
             if(attr == SEARCH_NONE) return loadbase->at(i).at(1);
 
             listnummax = loadbase->at(i).count();
-            if(listnummax > 3 && attr == loadbase->at(i).at(2)) return loadbase->at(i).at(3);
-            if(listnummax > 5 && attr == loadbase->at(i).at(4)) return loadbase->at(i).at(5);
+
+            if(listnummax > 3 && attr == loadbase->at(i).at(2))
+                return loadbase->at(i).at(3);
+
+            if(listnummax > 5 && attr == loadbase->at(i).at(4))
+                return loadbase->at(i).at(5);
         }
         i++;
     }
@@ -106,32 +107,30 @@ QString SearchXmlBuilder::fetch(QString tag, QString attr, const QList<QStringLi
 void SearchXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {
     if(element == SEARCH_NAME
-            || element == SEARCH_KEYWORD
-            || element == SEARCH_DIR
-            || element == SEARCH_RECURSIVE)
-    {
-        //add element and text
-        list->append(QStringList() << element << rxml->readElementText());
-    }
+        || element == SEARCH_KEYWORD
+        || element == SEARCH_DIR
+        || element == SEARCH_RECURSIVE
+        || element == SEARCH_SECONDS
+        || element == SEARCH_REGEX
+        || element == SEARCH_FSIZE_1
+        || element == SEARCH_FSIZE_2
+        || element == SEARCH_CREATION
+        || element == SEARCH_MODIFIED) {
 
-    if(element == SEARCH_SECONDS
-            || element == SEARCH_REGEX)
-    {
-        //add element and text, attributes and data
-        list->append(QStringList() << element << rxml->readElementText()
-                     << ENABLED << rxml->attributes().value(ENABLED).toString());
-    }
+        QStringList read;
+        QString attrname = "";
 
-    if(element == SEARCH_FSIZE_1
-            || element == SEARCH_FSIZE_2
-            || element == SEARCH_CREATION
-            || element == SEARCH_MODIFIED)
-    {
-        //add element and text, attributes and data
-        list->append(QStringList() << element << rxml->readElementText()
-                     << ENABLED << rxml->attributes().value(ENABLED).toString()
-                     << COMBO << rxml->attributes().value(COMBO).toString());
-    }
+        for(auto &attr : rxml->attributes()){
+            attrname = attr.name().toString();
+            if(attrname == ENABLED
+                || attrname == COMBO){
+                read.append(attrname);
+                read.append(attr.value().toString());
+            }
+        }
 
-    //qDebug() << "//" << element << "//";
+        read.prepend(rxml->readElementText());
+        read.prepend(element);
+        list->append(read);
+    }
 }

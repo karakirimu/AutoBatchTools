@@ -9,7 +9,7 @@
 #ifndef STARTUPXMLBUILDER_H
 #define STARTUPXMLBUILDER_H
 
-#include <settingcache/SchedulerXmlConstant.h>
+#include <settingcache/schedulerxmlconstant.h>
 #include <../xmlbuilder/xmlbuilder.h>
 /**
  * @class StartupSettings_xml
@@ -45,7 +45,7 @@ class StartupXmlBuilder : public Xmlbuilder
     Q_OBJECT
 public:
     explicit StartupXmlBuilder(QObject *parent = nullptr);
-    ~StartupXmlBuilder();
+    virtual ~StartupXmlBuilder() override;
 
     bool readAll(QList<QList<QStringList> *> *itemlist);
     bool writeAll(const QList<QList<QStringList> *> *itemlist);
@@ -55,20 +55,15 @@ public:
     bool deleteItem(int itemid);
     bool editItem(int itemid, const QList<QStringList> *itemlist);
     void swapItem(int beforeitemid, int afteritemid);
-    void copyItem(int itemid);
-    bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
     void createDocument();
-    int count();
 
     enum{ONESHOT,WEEKLOOP,TIMELOOP};
     enum{NAME,PROF,VALID,SELECTEDTYPE,SC_DATETIME,SC_SECONDS,SC_TIME,SC_DAY,UNIQUE};
 
 private:
-    void setSearchItemData(QString element, QList<QStringList> *list);
+    int count();
+    void setSearchItemData(QString element, QList<QStringList> *list) override;
 
-//    const QString ROOTELEMENT = "startup";
-//    const QString FIRSTLAYER = "item";
-//    const QString ATTR = "id";
     SchedulerXmlConstant sxc;
 };
 

@@ -1,3 +1,11 @@
+/*
+ * Released under the MIT License.
+ * See LICENSE text for license details.
+ *
+ * SPDX-FileCopyrightText: Copyright (c) 2021 karakirimu
+ * SPDX-License-Identifier: MIT
+ */
+
 #ifndef PLUGINSXMLBUILDER_H
 #define PLUGINSXMLBUILDER_H
 
@@ -13,7 +21,7 @@
  * Left Listnum:
  * Top  xmlelementname(StringListnum):
  * \    :        0:      1:
- * 0    :extras   :text   :
+ * 0    :manual   :text   :
  */
 
 class PLUGINSXMLBUILDERSHARED_EXPORT PluginsXmlBuilder : public Xmlbuilder
@@ -21,7 +29,7 @@ class PLUGINSXMLBUILDERSHARED_EXPORT PluginsXmlBuilder : public Xmlbuilder
     Q_OBJECT
 public:
     explicit PluginsXmlBuilder(QObject *parent = nullptr);
-    ~PluginsXmlBuilder();
+    ~PluginsXmlBuilder() override;
 
     bool readItem(int itemid, QList<QStringList> *itemlist);
     bool addItem(const QList<QStringList> *itemlist);
@@ -37,8 +45,8 @@ public:
     const QString PL_XML_ATTR_FILE = "file";
 
 private:
+    void setSearchItemData(QString element, QList<QStringList> *list) override;
 
-    void setSearchItemData(QString element, QList<QStringList> *list);
     const QString ROOTELEMENT = "plugins";
     const QString FIRSTLAYER = "item";
     const QString ATTR = "id";

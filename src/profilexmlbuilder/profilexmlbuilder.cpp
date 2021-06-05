@@ -69,14 +69,10 @@ int ProfileXmlBuilder::count()
 
 void ProfileXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {
-    if(element == "name"
-            || element == "desc"
-            || element == "file")
+    if(element == PROFILE_NAME
+            || element == PROFILE_DESCRIPTION
+            || element == PROFILE_FILE)
     {
-        QStringList data;
-        //add element and text
-        data.append(element);
-        data.append(rxml->readElementText());
-        list->append(data);
+        list->append(QStringList() << element << rxml->readElementText());
     }
 }

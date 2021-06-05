@@ -56,11 +56,6 @@ void StringXmlBuilder::swapItem(int beforeitemid, int afteritemid)
     Xmlbuilder::swapItem(beforeitemid, afteritemid, ROOTELEMENT, FIRSTLAYER, ATTR);
 }
 
-bool StringXmlBuilder::overwriteItem(int itemid, const QList<QStringList> *itemlist)
-{
-    return Xmlbuilder::overwriteItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
-}
-
 void StringXmlBuilder::createDocument()
 {
     createXmlBaseDocument(ROOTELEMENT);
@@ -73,14 +68,26 @@ int StringXmlBuilder::count()
 
 void StringXmlBuilder::createVarElement(QList<QStringList> *internal, QStringList *var)
 {
-    internal->append(QStringList() << "variant" << var->at(0));
-    internal->append(QStringList() << "value" << var->at(1));
+    if(internal->count() > 0){
+        qDebug() << "[StringXmlBuilder::createVarElement] "
+                 << "The first argument 'internal' needs empty list.";
+        return;
+    }
+
+    if(var->count() != 2){
+        qDebug() << "[StringXmlBuilder::createVarElement] "
+                 << "The second argument 'var' needs 2 data. variable and value.";
+        return;
+    }
+
+    internal->append(QStringList() << STRING_VARIANT << var->at(0));
+    internal->append(QStringList() << STRING_VALUE   << var->at(1));
 }
 
 void StringXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
 {
-    if(element == "variant"
-            || element == "value")
+    if(element == STRING_VARIANT
+            || element == STRING_VALUE)
     {
         QStringList data;
         //add element and text

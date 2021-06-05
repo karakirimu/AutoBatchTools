@@ -49,35 +49,91 @@ class XMLBUILDERSHARED_EXPORT Xmlbuilder : public BaseXmlBuilder
     Q_OBJECT
 protected:
     explicit Xmlbuilder(QObject *parent = nullptr);
-    virtual ~Xmlbuilder();
+    virtual ~Xmlbuilder() override;
 
-    bool readItem(int itemid, QString firstlayername, QString attr, QList<QStringList> *itemlist);
-    bool readAllItem(QString firstlayername, QString attr, QList<QList<QStringList> *> *itemlist);
+    bool readItem(int itemid
+                  , QString firstlayername
+                  , QString attr
+                  , QList<QStringList> *itemlist);
 
-    bool writeAllItem(QString root, QString rootattr, QString rootattrvalue,
-                      QString firstlayername, QString attr,
+    bool readAllItem(QString firstlayername
+                     , QString attr
+                     , QList<QList<QStringList> *> *itemlist);
+
+    bool writeAllItem(QString root
+                      , QString rootattr
+                      , QString rootattrvalue,
+                      QString firstlayername
+                      , QString attr,
                       const QList<QList<QStringList> *> *itemlist);
 
-    bool deleteItem(int itemid, QString firstlayername, QString attr);
-    void swapItem(int beforeitemid, int afteritemid, QString rootelement, QString firstlayername, QString attr);
-    bool overwriteItem(int itemid, QString rootelement, QString firstlayername, QString attr, const QList<QStringList> *itemlist);
-    bool insertItem(int itemid, QString rootelement, QString firstlayername, QString attr, const QList<QStringList> *itemlist);
+    bool deleteItem(int itemid
+                    , QString firstlayername
+                    , QString attr);
 
-    void copyItem(int itemid, QString rootelement, QString firstlayername, QString attr, QString exchangedata);
-    virtual void setSearchItemData(QString element, QList<QStringList> *list);
+    void swapItem(int beforeitemid
+                  , int afteritemid
+                  , QString rootelement
+                  , QString firstlayername
+                  , QString attr);
+
+    bool overwriteItem(int itemid
+                       , QString rootelement
+                       , QString firstlayername
+                       , QString attr
+                       , const QList<QStringList> *itemlist);
+
+    bool insertItem(int itemid
+                    , QString rootelement
+                    , QString firstlayername
+                    , QString attr
+                    , const QList<QStringList> *itemlist);
+
+    void copyItem(int itemid
+                  , QString rootelement
+                  , QString firstlayername
+                  , QString attr
+                  , QString exchangedata);
+
+    /**
+     * @fn Xmlbuilder::setSearchItemData
+     * @brief Implements a method of assigning a value to QStringList in QList
+     *        used when retrieving the specified element.
+     *
+     * @param element : An element that requires an assignment method.
+     * @param list    : A list where items are set. (same as itemlist)
+     */
+    virtual void setSearchItemData(QString element
+                                   , QList<QStringList> *list) = 0;
 
 private:
-    QString getStructureStr(int itemid, QString firstlayername, QString attr
-                            , int indentnum, const QList<QStringList> *list, bool withparent);
+    QString getStructureStr(int itemid
+                            , QString firstlayername
+                            , QString attr
+                            , int indentnum
+                            , const QList<QStringList> *list
+                            , bool withparent);
 
     qint64 getItemFirstLine(int tablenum, QString firstlayername, QString attr);
 
-    void writeXmlItem(int itemid, QString firstlayername, QString attr, const QList<QStringList> *list);
+    void writeXmlItem(int itemid
+                      , QString firstlayername
+                      , QString attr
+                      , const QList<QStringList> *list);
+
     void writeElementData(const QList<QStringList> *list);
 
-    bool insertItemId(int itemid, QString rootelement, QString firstlayername, QString attr, const QList<QStringList> *itemlist);
+    bool insertItemId(int itemid
+                      , QString rootelement
+                      , QString firstlayername
+                      , QString attr
+                      , const QList<QStringList> *itemlist);
 
-    bool deleteItemId(int destitemid, int fromitemid, QString firstlayername, QString attr);
+    bool deleteItemId(int destitemid
+                      , int fromitemid
+                      , QString firstlayername
+                      , QString attr);
+
     bool deleteItemIdToEnd(int deleteitemid, QString firstlayername, QString attr);
 
     int count(QString firstlayername);

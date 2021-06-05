@@ -25,19 +25,33 @@ class XMLBUILDERSHARED_EXPORT BaseXmlBuilder : public QObject
     Q_OBJECT
 public:
     explicit BaseXmlBuilder(QObject *parent = nullptr);
-    virtual ~BaseXmlBuilder();
+    virtual ~BaseXmlBuilder() override;
 
-//    void createXmlBaseDocument(QString rootelement);
-    void createXmlBaseDocument(QString rootelement, QString rootattr = "", QString rootattrvalue = "");
+    void createXmlBaseDocument(QString rootelement
+                               , QString rootattr = ""
+                               , QString rootattrvalue = "");
+
     int getElementItemsCount(QString element);
 
 protected:
 
     void setFileName(QString filename);
-    bool deleteElementGroup(QString element, QString attr, int value, bool withparent);
+
+    bool deleteElementGroup(QString element
+                            , QString attr
+                            , int value
+                            , bool withparent);
+
     qint64 getElementFirstLineNumber(QString element);
-    qint64 getElementFirstLineNumber(QString element, QString attr, QString attrvalue);
-    qint64 getElementEndLineNumber(QString element, QString attr, int value);
+
+    qint64 getElementFirstLineNumber(QString element
+                                     , QString attr
+                                     , QString attrvalue);
+
+    qint64 getElementEndLineNumber(QString element
+                                   , QString attr
+                                   , int value);
+
     void openedFileReset();
     inline void clearFileText(){ file->resize(0); }
     bool openFile(QFlags<QIODevice::OpenModeFlag> flags);

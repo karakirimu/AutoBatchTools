@@ -1,6 +1,15 @@
+/*
+ * Released under the MIT License.
+ * See LICENSE text for license details.
+ *
+ * SPDX-FileCopyrightText: Copyright (c) 2021 karakirimu
+ * SPDX-License-Identifier: MIT
+ */
+
 #include "profilexmlbuilder.h"
 
-ProfileXmlBuilder::ProfileXmlBuilder(QObject *)
+ProfileXmlBuilder::ProfileXmlBuilder(QObject *parent)
+    : Xmlbuilder(parent)
 {
     //set new file
     setFileName("./profilelist.xml");
@@ -52,7 +61,7 @@ void ProfileXmlBuilder::createDocument()
 
 int ProfileXmlBuilder::count()
 {
-    return getSpecifiedElementItemsCount(FIRSTLAYER);
+    return getElementItemsCount(FIRSTLAYER);
 }
 
 void ProfileXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
@@ -61,10 +70,6 @@ void ProfileXmlBuilder::setSearchItemData(QString element, QList<QStringList> *l
             || element == "desc"
             || element == "file")
     {
-        QStringList data;
-        //add element and text
-        data.append(element);
-        data.append(rxml->readElementText());
-        list->append(data);
+        list->append(QStringList() << element << rxml->readElementText());
     }
 }

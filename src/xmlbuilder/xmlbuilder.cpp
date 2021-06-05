@@ -8,7 +8,8 @@
 
 #include "xmlbuilder.h"
 
-Xmlbuilder::Xmlbuilder(QObject *)
+Xmlbuilder::Xmlbuilder(QObject *parent)
+    : BaseXmlBuilder(parent)
 {
 
 }
@@ -43,18 +44,19 @@ bool Xmlbuilder::readItem(int itemid, QString firstlayername,
         rxml->readNextStartElement();
         name = rxml->name().toString();
 
+        if(hasid){
+            setSearchItemData(name, itemlist);
+        }
+
         if(name == firstlayername
             && !hasid
             && rxml->attributes().value(attr).toInt() == itemid){
             hasid = true;
         }
 
-        if(hasid) setSearchItemData(name, itemlist);
-
-        if(name == firstlayername
-            && hasid
-            && rxml->isEndElement()){
-//            hasid = false;
+        if(rxml->isEndElement()
+            && name == firstlayername
+            && hasid){
             break;
         }
 
@@ -64,7 +66,7 @@ bool Xmlbuilder::readItem(int itemid, QString firstlayername,
     closeFile();
 
     //if item count is zero, return false
-    return (itemlist->count() > 0)? true: false;
+    return (itemlist->count() > 0);
 }
 
 /**
@@ -148,7 +150,9 @@ bool Xmlbuilder::writeAllItem(QString root, QString rootattr, QString rootattrva
     wxml->writeStartDocument();
     wxml->writeStartElement(root);
     wxml->writeAttribute(rootattr, rootattrvalue);
-    wxml->writeCharacters(endLineStr());
+
+    // set first tab for adjust
+    wxml->writeCharacters(endLineStr() + "\t");
 
     int counter = static_cast<int>(itemlist->count());
     for(int i = 0; i < counter; i++){
@@ -333,22 +337,6 @@ bool Xmlbuilder::deleteItem(int itemid, QString firstlayername, QString attr)
         //delete other items
         return deleteElementGroup(firstlayername, attr, lastindex, true);
     }
-}
-
-/**
- * @fn Xmlbuilder::setSearchItemData
- * @brief Implements a method of assigning a value to QStringList in QList
- *        used when retrieving the specified element.
- *
- * @param element : An element that requires an assignment method.
- * @param list    : A list where items are set. (same as itemlist)
- */
-void Xmlbuilder::setSearchItemData(QString element, QList<QStringList> *list)
-{
-    Q_UNUSED(element)
-    Q_UNUSED(*list)
-    //set search element
-    return;
 }
 
 /**

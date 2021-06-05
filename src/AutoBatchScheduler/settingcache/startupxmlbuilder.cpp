@@ -91,24 +91,6 @@ void StartupXmlBuilder::swapItem(int beforeitemid, int afteritemid)
                          , sxc.ATTR_ITEM_ID_INT);
 }
 
-void StartupXmlBuilder::copyItem(int itemid)
-{
-    Xmlbuilder::copyItem(itemid
-                         , sxc.TAG_ROOT
-                         , sxc.TAG_FIRSTLAYER
-                         , sxc.ATTR_ITEM_ID_INT
-                         , sxc.TAG_NAME);
-}
-
-bool StartupXmlBuilder::overwriteItem(int itemid, const QList<QStringList> *itemlist)
-{
-    return Xmlbuilder::overwriteItem(itemid
-                                     , sxc.TAG_ROOT
-                                     , sxc.TAG_FIRSTLAYER
-                                     , sxc.ATTR_ITEM_ID_INT
-                                     , itemlist);
-}
-
 void StartupXmlBuilder::createDocument()
 {
     createXmlBaseDocument(sxc.TAG_ROOT);
@@ -131,10 +113,7 @@ void StartupXmlBuilder::setSearchItemData(QString element, QList<QStringList> *l
             || element == sxc.TAG_DATE
             || element == sxc.TAG_UNIQUE)
     {
-        QStringList data;
         //add element and text
-        data.append(element);
-        data.append(rxml->readElementText());
-        list->append(data);
+        list->append(QStringList() << element << rxml->readElementText());
     }
 }

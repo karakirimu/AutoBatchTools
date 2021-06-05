@@ -12,6 +12,9 @@
 #include "profilexmlbuilder_global.h"
 #include <../xmlbuilder/xmlbuilder.h>
 
+constexpr char PROFILE_NAME[]        = "name";
+constexpr char PROFILE_DESCRIPTION[] = "desc";
+constexpr char PROFILE_FILE[]        = "file";
 
 /**
  * @class The ProfileXmlBuilder class
@@ -30,7 +33,7 @@ class PROFILEXMLBUILDERSHARED_EXPORT ProfileXmlBuilder : public Xmlbuilder
     Q_OBJECT
 public:
     explicit ProfileXmlBuilder(QObject *parent = nullptr);
-    ~ProfileXmlBuilder();
+    virtual ~ProfileXmlBuilder() override;
 
     bool readItem(int itemid, QList<QStringList> *itemlist);
     bool addItem(const QList<QStringList> *itemlist);
@@ -44,7 +47,7 @@ public:
     enum {NAME, DESCRIPTON, FILE};
 private:
 
-    void setSearchItemData(QString element, QList<QStringList> *list);
+    void setSearchItemData(QString element, QList<QStringList> *list) override;
     const QString ROOTELEMENT = "profilelist";
     const QString FIRSTLAYER = "item";
     const QString ATTR = "id";

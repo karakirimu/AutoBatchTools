@@ -1,3 +1,11 @@
+/*
+ * Released under the MIT License.
+ * See LICENSE text for license details.
+ *
+ * SPDX-FileCopyrightText: Copyright (c) 2021 karakirimu
+ * SPDX-License-Identifier: MIT
+ */
+
 #ifndef PROFILEXMLBUILDER_H
 #define PROFILEXMLBUILDER_H
 
@@ -20,8 +28,8 @@ class ProfileXmlBuilder : public Xmlbuilder
 {
     Q_OBJECT
 public:
-    explicit ProfileXmlBuilder(QObject *parent = 0);
-    ~ProfileXmlBuilder();
+    explicit ProfileXmlBuilder(QObject *parent = nullptr);
+    virtual ~ProfileXmlBuilder() override;
 
     bool readItem(int itemid, QList<QStringList> *itemlist);
     bool addItem(const QList<QStringList> *itemlist);
@@ -33,7 +41,7 @@ public:
     int count();
 private:
 
-    void setSearchItemData(QString element, QList<QStringList> *list);
+    void setSearchItemData(QString element, QList<QStringList> *list) override;
     const QString ROOTELEMENT = "profilelist";
     const QString FIRSTLAYER = "item";
     const QString ATTR = "id";

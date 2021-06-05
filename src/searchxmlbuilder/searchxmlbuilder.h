@@ -13,20 +13,20 @@
 #include <QObject>
 #include <../xmlbuilder/xmlbuilder.h>
 
-#define SEARCH_NAME         "name"
-#define SEARCH_KEYWORD      "keyword"
-#define SEARCH_REGEX        "regex"
-#define SEARCH_DIR          "dir"
-#define SEARCH_RECURSIVE    "recursive"
-#define SEARCH_SECONDS      "seconds"
-#define SEARCH_CREATION     "creation"
-#define SEARCH_MODIFIED     "modified"
-#define SEARCH_FSIZE_1      "fsize_1"
-#define SEARCH_FSIZE_2      "fsize_2"
+constexpr char SEARCH_NAME[]      = "name";
+constexpr char SEARCH_KEYWORD[]   = "keyword";
+constexpr char SEARCH_REGEX[]     = "regex";
+constexpr char SEARCH_DIR[]       = "dir";
+constexpr char SEARCH_RECURSIVE[] = "recursive";
+constexpr char SEARCH_SECONDS[]   = "seconds";
+constexpr char SEARCH_CREATION[]  = "creation";
+constexpr char SEARCH_MODIFIED[]  = "modified";
+constexpr char SEARCH_FSIZE_1[]   = "fsize_1";
+constexpr char SEARCH_FSIZE_2[]   = "fsize_2";
 
-#define ENABLED     "enabled"
-#define COMBO       "combo"
-#define SEARCH_NONE ""
+constexpr char ENABLED[]          = "enabled";
+constexpr char COMBO[]            = "combo";
+constexpr char SEARCH_NONE[]      = "";
 
 /**
  * @class SearchXmlBuilder
@@ -52,7 +52,7 @@ class SEARCHXMLBUILDERSHARED_EXPORT SearchXmlBuilder : public Xmlbuilder
     Q_OBJECT
 public:
    explicit SearchXmlBuilder(QObject *parent = nullptr);
-   ~SearchXmlBuilder();
+   ~SearchXmlBuilder() override;
 
    bool readItem(int itemid, QList<QStringList> *itemlist);
    bool addItem(const QList<QStringList> *itemlist);
@@ -60,13 +60,12 @@ public:
    bool editItem(int itemid, const QList<QStringList> *itemlist);
    void swapItem(int beforeitemid, int afteritemid);
    void copyItem(int itemid);
-   bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
    void createDocument();
    int count();
    QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase);
 private:
 
-    void setSearchItemData(QString element, QList<QStringList> *list);
+    void setSearchItemData(QString element, QList<QStringList> *list) override;
     const QString ROOTELEMENT = "search";
     const QString FIRSTLAYER = "item";
     const QString ATTR = "id";

@@ -28,7 +28,7 @@ class STRINGXMLBUILDERSHARED_EXPORT StringXmlBuilder : public Xmlbuilder
     Q_OBJECT
 public:
     explicit StringXmlBuilder(QObject *parent = nullptr);
-    ~StringXmlBuilder();
+    ~StringXmlBuilder() override;
 
     bool readItem(int itemid, QList<QStringList> *itemlist);
     bool addItem(const QList<QStringList> *itemlist);
@@ -36,18 +36,20 @@ public:
     bool deleteItem(int itemid);
     bool editItem(int itemid, const QList<QStringList> *itemlist);
     void swapItem(int beforeitemid, int afteritemid);
-    bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
-    void createDocument();
 
     int count();
     void createVarElement(QList<QStringList> *internal, QStringList *var);
 
 private:
+    void setSearchItemData(QString element, QList<QStringList> *list) override;
+    void createDocument();
 
-    void setSearchItemData(QString element, QList<QStringList> *list);
     const QString ROOTELEMENT = "string";
     const QString FIRSTLAYER = "item";
     const QString ATTR = "id";
+
+    const QString STRING_VARIANT = "variant";
+    const QString STRING_VALUE = "value";
 };
 
 #endif // STRINGXMLBUILDER_H
