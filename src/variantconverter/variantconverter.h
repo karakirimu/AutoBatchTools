@@ -10,17 +10,37 @@
 #define VARIANTCONVERTER_H
 
 #include "variantconverter_global.h"
-#include <QObject>
+#include <QString>
 
-class VARIANTCONVERTERSHARED_EXPORT VariantConverter : public QObject
+class VARIANTCONVERTERSHARED_EXPORT VariantConverter
 {
-    Q_OBJECT
 public:
-    explicit VariantConverter(QObject *parent = nullptr);
+    VariantConverter();
     ~VariantConverter();
 
-    static bool stringToBool(QString checked);
-    static QString boolToString(bool checked);
+    /**
+     * @fn VariantConverter::stringToBool
+     * @brief Converts "yes" and "no" strings to bool.
+     *
+     * @param checked : strings.
+     *
+     * @return true if yes, false if no.
+     */
+    static inline bool stringToBool(QString checked){
+        return checked == "yes" ? true : false;
+    }
+
+    /**
+     * @fn VariantConverter::boolToString
+     * @brief Converts bool to "yes" and "no" strings.
+     *
+     * @param checked : bool value
+     *
+     * @return "yes" or "no", on the string.
+     */
+    static inline QString boolToString(bool checked){
+        return checked ? "yes" : "no";
+    }
 };
 
 

@@ -13,9 +13,7 @@
 #include "../variantconverter/variantconverter.h"
 #include <processxmlconstant.h>
 
-class EditorCacheConverter : QObject
-{
-    Q_OBJECT
+class EditorCacheConverter {
 public:
     explicit EditorCacheConverter();
     ~EditorCacheConverter();

@@ -8,31 +8,10 @@
 
 #include "variantconverter.h"
 
-VariantConverter::VariantConverter(QObject *parent) : QObject(parent){}
-VariantConverter::~VariantConverter(){}
-
-/**
- * @fn VariantConverter::stringToBool
- * @brief Converts "yes" and "no" strings to bool.
- *
- * @param checked : strings.
- *
- * @return true if yes, false if no.
- */
-bool VariantConverter::stringToBool(QString checked)
+VariantConverter::VariantConverter()
 {
-    return checked == "yes" ? true : false;
 }
 
-/**
- * @fn VariantConverter::boolToString
- * @brief Converts bool to "yes" and "no" strings.
- *
- * @param checked : bool value
- *
- * @return "yes" or "no", on the string.
- */
-QString VariantConverter::boolToString(bool checked)
+VariantConverter::~VariantConverter()
 {
-    return checked ? "yes" : "no";
 }

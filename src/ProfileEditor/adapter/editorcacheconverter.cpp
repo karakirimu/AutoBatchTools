@@ -64,8 +64,10 @@ void EditorCacheConverter::convertFromCache(const EditorCache *from,
 {
     switch (ft.getType(from->type)) {
     case ft.TYPE::ALLINCLUDE:
-        to->append((QStringList() << pxc.TAG_TYPE << ft.getString(ft.TYPE::ALLINCLUDE)));
-        to->append((QStringList() << pxc.TAG_FUNCTIONSELECT << QString::number(from->functionSelect)));
+        to->append((QStringList() << pxc.TAG_TYPE
+                                  << ft.getString(ft.TYPE::ALLINCLUDE)));
+        to->append((QStringList() << pxc.TAG_FUNCTIONSELECT
+                                  << QString::number(from->functionSelect)));
         fromExecuteCache(from, to);
         fromFileSearchCache(from, to);
         fromPluginCache(from, to);
@@ -94,47 +96,65 @@ void EditorCacheConverter::convertFromCache(const EditorCache *from,
     }
 }
 
-void EditorCacheConverter::fromInfomationCache(const EditorCache *from,
-                                               QList<QStringList> *to)
+void EditorCacheConverter::fromInfomationCache(const EditorCache *from
+                                               , QList<QStringList> *to)
 {
     to->append((QStringList() << pxc.TAG_TYPE << ft.getString(ft.TYPE::INFORMATION)));
     to->append((QStringList() << pxc.TAG_I_NAME << from->info.name));
     to->append((QStringList() << pxc.TAG_I_VERSION << from->info.version));
     to->append((QStringList() << pxc.TAG_I_AUTHOR << from->info.author));
     to->append((QStringList() << pxc.TAG_I_DESCRIPTION << from->info.description));
-    to->append((QStringList() << pxc.TAG_I_FILEINPUT_BOOL << VariantConverter::boolToString(from->info.fileInput)));
-    to->append((QStringList() << pxc.TAG_I_FILEINPUT_SEARCH_BOOL << VariantConverter::boolToString(from->info.fileInputSearch)));
-    to->append((QStringList() << pxc.TAG_I_FILESEARCH_NAME << from->info.fileSearchName \
-                              << pxc.ATTR_COMMAND_ID_INT << QString::number(from->info.fileSearchIndex)));
+    to->append((QStringList() << pxc.TAG_I_FILEINPUT_BOOL
+                              << VariantConverter::boolToString(from->info.fileInput)));
+    to->append((QStringList() << pxc.TAG_I_FILEINPUT_SEARCH_BOOL
+                              << VariantConverter::boolToString(from->info.fileInputSearch)));
+    to->append((QStringList() << pxc.TAG_I_FILESEARCH_NAME
+                              << from->info.fileSearchName
+                              << pxc.ATTR_COMMAND_ID_INT
+                              << QString::number(from->info.fileSearchIndex)));
 
-    to->append((QStringList() << pxc.TAG_I_PROCESS_BOOL_HA1 << VariantConverter::boolToString(from->info.processAll) \
-                              << pxc.ATTR_I_PROCESSMAX_INT << QString::number(from->info.processMaxCount)));
+    to->append((QStringList() << pxc.TAG_I_PROCESS_BOOL_HA1
+                              << VariantConverter::boolToString(from->info.processAll)
+                              << pxc.ATTR_I_PROCESSMAX_INT
+                              << QString::number(from->info.processMaxCount)));
 
-    to->append((QStringList() << pxc.TAG_I_ARG_IN_ONELOOP_INT << QString::number(from->info.argumentsInOneLoop)));
-    to->append((QStringList() << pxc.TAG_I_RECURSIVE_LOOPMAX_INT << QString::number(from->info.recursiveLoopMax)));
+    to->append((QStringList() << pxc.TAG_I_ARG_IN_ONELOOP_INT
+                              << QString::number(from->info.argumentsInOneLoop)));
+    to->append((QStringList() << pxc.TAG_I_RECURSIVE_LOOPMAX_INT
+                              << QString::number(from->info.recursiveLoopMax)));
     to->append((QStringList() << pxc.TAG_I_PROFILE_BASEPATH << from->info.basefilepath));
 }
 
-void EditorCacheConverter::fromLocalCache(const EditorCache *from, QList<QStringList> *to)
+void EditorCacheConverter::fromLocalCache(const EditorCache *from
+                                          , QList<QStringList> *to)
 {
     to->append((QStringList() << pxc.TAG_TYPE << ft.getString(ft.TYPE::LOCAL)));
-    to->append((QStringList() << pxc.TAG_L_VARIANTCOUNT_INT << QString::number(from->local.variantData.count())));
+    to->append((QStringList() << pxc.TAG_L_VARIANTCOUNT_INT
+                              << QString::number(from->local.variantData.count())));
 
     for(VariantPair v : from->local.variantData){
-        to->append(QStringList() << pxc.TAG_L_VARIANT_HA1 << v.variant << pxc.ATTR_L_VALUE << v.value);
+        to->append(QStringList() << pxc.TAG_L_VARIANT_HA1 << v.variant
+                                 << pxc.ATTR_L_VALUE << v.value);
     }
 }
 
-void EditorCacheConverter::fromExecuteCache(const EditorCache *from, QList<QStringList> *to)
+void EditorCacheConverter::fromExecuteCache(const EditorCache *from
+                                            , QList<QStringList> *to)
 {
-    to->append((QStringList() << pxc.TAG_TYPE << ft.getString(ft.TYPE::EXECUTE) \
-                << pxc.ATTR_ONLY_SCHEDULER_BOOL << VariantConverter::boolToString(from->exec.schedulerOnly)));
-    to->append((QStringList() << pxc.TAG_E_TIMEOUT_BOOL_HA1 << VariantConverter::boolToString(from->exec.timeoutEnabled) \
-                << pxc.ATTR_TIMEOUT_INT << QString::number(from->exec.timeout)));
-    to->append((QStringList() << pxc.TAG_E_DETACH_BOOL << VariantConverter::boolToString(from->exec.detach)));
+    to->append((QStringList() << pxc.TAG_TYPE
+                              << ft.getString(ft.TYPE::EXECUTE)
+                              << pxc.ATTR_ONLY_SCHEDULER_BOOL
+                              << VariantConverter::boolToString(from->exec.schedulerOnly)));
+    to->append((QStringList() << pxc.TAG_E_TIMEOUT_BOOL_HA1
+                              << VariantConverter::boolToString(from->exec.timeoutEnabled)
+                              << pxc.ATTR_TIMEOUT_INT
+                              << QString::number(from->exec.timeout)));
+    to->append((QStringList() << pxc.TAG_E_DETACH_BOOL
+                              << VariantConverter::boolToString(from->exec.detach)));
 
     qsizetype commandCount = from->exec.command.count();
-    to->append((QStringList() << pxc.TAG_E_COMMANDCOUNT_INT << QString::number(commandCount)));
+    to->append((QStringList() << pxc.TAG_E_COMMANDCOUNT_INT
+                              << QString::number(commandCount)));
 
     for(int i = 0; i < commandCount; i++){
         to->append(QStringList() << pxc.TAG_E_CMD_HA1 << from->exec.command.at(i)
@@ -142,28 +162,40 @@ void EditorCacheConverter::fromExecuteCache(const EditorCache *from, QList<QStri
     }
 }
 
-void EditorCacheConverter::fromFileSearchCache(const EditorCache *from, QList<QStringList> *to)
+void EditorCacheConverter::fromFileSearchCache(const EditorCache *from
+                                               , QList<QStringList> *to)
 {
-    to->append((QStringList() << pxc.TAG_TYPE << ft.getString(ft.TYPE::FILESEARCH) \
-                << pxc.ATTR_ONLY_SCHEDULER_BOOL << VariantConverter::boolToString(from->filesearch.schedulerOnly)));
-    to->append((QStringList() << pxc.TAG_FS_NAME_HA1 << from->filesearch.name \
-                << pxc.ATTR_COMMAND_ID_INT << QString::number(from->filesearch.nameIndex)));
+    to->append((QStringList() << pxc.TAG_TYPE
+                              << ft.getString(ft.TYPE::FILESEARCH)
+                              << pxc.ATTR_ONLY_SCHEDULER_BOOL
+                              << VariantConverter::boolToString(from->filesearch.schedulerOnly)));
+    to->append((QStringList() << pxc.TAG_FS_NAME_HA1
+                              << from->filesearch.name
+                              << pxc.ATTR_COMMAND_ID_INT
+                              << QString::number(from->filesearch.nameIndex)));
     to->append((QStringList() << pxc.TAG_FS_SEPARATOR << from->filesearch.separator));
     to->append((QStringList() << pxc.TAG_FS_VARIANT << from->filesearch.variant));
-    to->append((QStringList() << pxc.TAG_FS_FILEPATH_HA1 << from->filesearch.filePath \
-                << pxc.ATTR_FS_OUTPUTOPTION_INT << QString::number(from->filesearch.outputOption)));
-    to->append((QStringList() << pxc.TAG_FS_WRITEOPTION_INT << QString::number(from->filesearch.writeOption)));
+    to->append((QStringList() << pxc.TAG_FS_FILEPATH_HA1
+                              << from->filesearch.filePath
+                              << pxc.ATTR_FS_OUTPUTOPTION_INT
+                              << QString::number(from->filesearch.outputOption)));
+    to->append((QStringList() << pxc.TAG_FS_WRITEOPTION_INT
+                              << QString::number(from->filesearch.writeOption)));
 }
 
-void EditorCacheConverter::fromPluginCache(const EditorCache *from, QList<QStringList> *to)
+void EditorCacheConverter::fromPluginCache(const EditorCache *from
+                                           , QList<QStringList> *to)
 {
-    to->append((QStringList() << pxc.TAG_TYPE << ft.getString(ft.TYPE::PLUGIN)
-                << pxc.ATTR_ONLY_SCHEDULER_BOOL << VariantConverter::boolToString(from->plugin.schedulerOnly)));
+    to->append((QStringList() << pxc.TAG_TYPE
+                              << ft.getString(ft.TYPE::PLUGIN)
+                              << pxc.ATTR_ONLY_SCHEDULER_BOOL
+                              << VariantConverter::boolToString(from->plugin.schedulerOnly)));
     to->append((QStringList() << pxc.TAG_P_NAME << from->plugin.name));
     to->append((QStringList() << pxc.TAG_P_FILEPATH << from->plugin.filePath));
 
     int commandCount = static_cast<int>(from->plugin.command.count());
-    to->append((QStringList() << pxc.TAG_P_COMMANDCOUNT_INT << QString::number(commandCount)));
+    to->append((QStringList() << pxc.TAG_P_COMMANDCOUNT_INT
+                              << QString::number(commandCount)));
 
     for(int i = 0; i < commandCount; i++){
         to->append(QStringList() << pxc.TAG_P_CMD_HA1 << from->plugin.command.at(i)
@@ -171,10 +203,13 @@ void EditorCacheConverter::fromPluginCache(const EditorCache *from, QList<QStrin
     }
 }
 
-void EditorCacheConverter::fromProfileLoadCache(const EditorCache *from, QList<QStringList> *to)
+void EditorCacheConverter::fromProfileLoadCache(const EditorCache *from
+                                                , QList<QStringList> *to)
 {
-    to->append((QStringList() << pxc.TAG_TYPE << ft.getString(ft.TYPE::PROFILELOAD) \
-                << pxc.ATTR_ONLY_SCHEDULER_BOOL << VariantConverter::boolToString(from->profileload.schedulerOnly)));
+    to->append((QStringList() << pxc.TAG_TYPE
+                              << ft.getString(ft.TYPE::PROFILELOAD)
+                              << pxc.ATTR_ONLY_SCHEDULER_BOOL
+                              << VariantConverter::boolToString(from->profileload.schedulerOnly)));
     to->append((QStringList() << pxc.TAG_PLOAD_FILEPATH << from->profileload.filePath));
 }
 
