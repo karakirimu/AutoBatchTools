@@ -103,7 +103,7 @@
          <bool>false</bool>
         </property>
         <property name="currentIndex">
-         <number>4</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="settinggeneral">
          <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -526,7 +526,7 @@
              <bool>true</bool>
             </property>
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::NoFrame</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
@@ -807,6 +807,8 @@
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../../../res/resources.qrc"/>
+  <include location="../../../res/resources.qrc"/>
   <include location="../../../res/resources.qrc"/>
   <include location="../../../res/resources.qrc"/>
   <include location="../../../res/resources.qrc"/>
