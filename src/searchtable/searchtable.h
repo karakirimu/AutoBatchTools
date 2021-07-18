@@ -13,6 +13,7 @@
 #include "../basictable/basictable.h"
 #include "../searchxmlbuilder/searchxmlbuilder.h"
 #include "../filesearchdialog/filesearchdialog.h"
+#include <../processxmllistgenerator/processxmllistgenerator.h>
 
 class SEARCHTABLESHARED_EXPORT SearchTable : public BasicTable
 {
@@ -25,15 +26,21 @@ public slots:
     void addAction() override;
     void editAction() override;
     void deleteAction() override;
-    void reloadAction();
     void copyAction() override;
     void upAction() override;
     void downAction() override;
+    void reloadAction();
+
+private slots:
+    void launchSearchSetting(int row, int col = 0);
 
 private:
-    void setPopupActionTop() override;
-    void setPopupActionBottom() override;
+    void setPopupActionTop();
+    void setPopupActionBottom();
     bool eventFilter(QObject *obj, QEvent *event) override;
+
+    void setTableItem(int row);
+    void setTableItem(int row, const QList<QStringList> *item);
 
     QAction *m_add;
     QAction *m_edit;
@@ -41,7 +48,7 @@ private:
     QAction *m_ref;
 
     SearchXmlBuilder *builder;
-    void setTableItem(int row);
+    ProcessXmlListGenerator xf;
 };
 
 #endif // SEARCHTABLE_H

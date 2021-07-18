@@ -10,40 +10,42 @@
 
 SearchTable::SearchTable(QWidget *)
 {
-    //disable edit
+    // disable edit
     setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    //popupAction
+    // popupAction
     setPopupActionTop();
-    setPopupActionDefault(getIcon(ACTION::COPY), \
-                          getIcon(ACTION::UP), \
-                          getIcon(ACTION::DOWN));
+    setPopupActionDefault(getIcon(ACTION::COPY)
+                          , getIcon(ACTION::UP)
+                          , getIcon(ACTION::DOWN));
     setPopupActionBottom();
 
-    //init table size
+    // init table size
     setColumnCount(3);
     setRowCount(0);
 
-    //adjust row
+    // adjust row
     resizeRowsToContents();
 
-    //remove row number
+    // remove row number
     verticalHeader()->setVisible(false);
 
-    //adjust column
+    // adjust column
     horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
-    //set header label
+    // set header label
     setHorizontalHeaderLabels((QStringList() << tr("Setting Name")
-                               << tr("Search Word") << tr("Directory")));
+                                             << tr("Search Word")
+                                             << tr("Directory")));
 
-    //set new xml builder
+    // set new xml builder
     builder = new SearchXmlBuilder();
 
-    //init table (reload read file.)
+    // init table (reload read file.)
     reloadAction();
 
-    //set doubleclick action
-    connect(this, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(editAction()));
+    // set edit action
+    connect(this, &QTableWidget::cellDoubleClicked
+            , this, &SearchTable::launchSearchSetting);
 }
 
 SearchTable::~SearchTable()
@@ -53,7 +55,7 @@ SearchTable::~SearchTable()
 
 void SearchTable::setPopupActionTop()
 {
-    //set basic items
+    // set basic items
     m_add = addTableAction(ACTION::ADD, Qt::CTRL, Qt::Key_Enter);
     m_delete = addTableAction(ACTION::REMOVE, Qt::Key_Delete);
     contextMenu->addSeparator();
@@ -61,7 +63,7 @@ void SearchTable::setPopupActionTop()
     m_edit = addTableAction(ACTION::EDIT, Qt::CTRL, Qt::Key_E);
     contextMenu->addSeparator();
 
-    //connect signals
+    // connect signals
     connect(m_add, &QAction::triggered, this, &SearchTable::addAction);
     connect(m_delete, &QAction::triggered, this, &SearchTable::deleteAction);
     connect(m_edit, &QAction::triggered, this, &SearchTable::editAction);
@@ -83,7 +85,6 @@ bool SearchTable::eventFilter(QObject *obj, QEvent *event)
        return static_cast<bool>(keyEvent->modifiers() & Qt::ControlModifier);
    };
 
-   //qDebug() << event->type();
    if (event->type() == QEvent::KeyPress) {
        keyEvent = static_cast<QKeyEvent *>(event);
        switch (keyEvent->key())
@@ -114,22 +115,27 @@ bool SearchTable::eventFilter(QObject *obj, QEvent *event)
           case Qt::Key_E:      if (mdCheck())  editAction();    break;
           case Qt::Key_R:      if (mdCheck())  reloadAction();  break;
 
-          default:
-            //qDebug("Ate key press %d", keyEvent->key());
-            break;
+          default:                                              break;
         }
        return true;
    }
+
    // standard event processing
    return QObject::eventFilter(obj, event);
 }
 
+/**
+ * @fn SearchTable::addAction
+ * @brief Launch search settings and display summary in table if accepted.
+ */
 void SearchTable::addAction()
 {
     FileSearchDialog *fs = new FileSearchDialog();
     fs->setStyleSheet(this->styleSheet());
-    fs->move(this->mapToGlobal(this->geometry().center()) - fs->rect().center());
+    fs->move(this->mapToGlobal(
+                 this->geometry().center()) - fs->rect().center());
     fs->setWindowTitle(tr("Editing - Untitled*"));
+
     if(fs->exec() == QDialog::Accepted){
         int index = this->rowCount();
         setRowCount(index + 1);
@@ -137,25 +143,21 @@ void SearchTable::addAction()
     }
 }
 
+/**
+ * @fn SearchTable::editAction
+ * @brief Launch search settings for the selected location.
+ */
 void SearchTable::editAction()
 {
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
-
-    FileSearchDialog *fs = new FileSearchDialog();
-    fs->setStyleSheet(this->styleSheet());
-    fs->move(this->mapToGlobal(this->geometry().center()) - fs->rect().center());
-    QList<QStringList> list;
-    int row = currentRow();
-    if(builder->readItem(row, &list)){
-        //set title
-        fs->loadSettingList(row, &list);
-    }
-    if(fs->exec() == QDialog::Accepted){
-        setTableItem(row);
-    }
+    launchSearchSetting(this->currentRow());
 }
 
+/**
+ * @fn SearchTable::deleteAction
+ * @brief Deletes the selected tableItem and xml elements synchronously.
+ */
 void SearchTable::deleteAction()
 {
     //if rowcount is zero.
@@ -164,14 +166,17 @@ void SearchTable::deleteAction()
     //check delete warning message
     if(deleteCheckMessage())
     {
-        //delete file item
-        builder->deleteItem(currentRow());
-
-        //reload
-        reloadAction();
+        deleteTableRecursive([&](int row){
+            //delete file item
+            builder->deleteItem(row);
+        });
     }
 }
 
+/**
+ * @fn SearchTable::copyAction
+ * @brief Duplicate the selected element.
+ */
 void SearchTable::copyAction()
 {
     //if rowcount is zero.
@@ -184,51 +189,111 @@ void SearchTable::copyAction()
     selectRow(this-> rowCount() - 1);
 }
 
+/**
+ * @fn SearchTable::upAction
+ * @brief Move up one selection line.
+ */
 void SearchTable::upAction()
 {
-    int current = this->currentRow();
-    if(current == 0) return;
-
-    builder->swapItem(current, current-1);
-
-    reloadAction();
-
-    selectRow(current - 1);
+    upSelected([&](int current) {
+        builder->swapItem(current, current - 1);
+        reloadAction();
+    });
 }
 
+/**
+ * @fn SearchTable::downAction
+ * @brief Move down one selection line.
+ */
 void SearchTable::downAction()
-{
-    int current = this->currentRow();
-    int counter = this->rowCount();
-
-    if((current + 1) == counter) return;
-
-    builder->swapItem(current, current+1);
-
-    reloadAction();
-
-    selectRow(current + 1);
+{   
+    downSelected([&](int current) {
+        builder->swapItem(current, current + 1);
+        reloadAction();
+    });
 }
 
+/**
+ * @fn SearchTable::reloadAction
+ * @brief Update all table items.
+ */
 void SearchTable::reloadAction()
 {
-    int count = builder->count();
-    //set tables
+    QList<QList<QStringList> *> item;
+    builder->readAll(&item);
+    int count = static_cast<int>(item.count());
+
+    // set tables
     setRowCount(count);
+
     for(int i = 0; i < count; i++){
-        setTableItem(i);
+        setTableItem(i, item.at(i));
     }
 }
 
+/**
+ * @fn SearchTable::launchSearchSetting
+ * @brief
+ * Open the search settings for the specified line
+ * so that it can be edited.
+ * @param row Selected row index.
+ * @param col Unused.
+ */
+void SearchTable::launchSearchSetting(int row, int col)
+{
+    Q_UNUSED(col)
+
+    FileSearchDialog *fs = new FileSearchDialog();
+    fs->setStyleSheet(this->styleSheet());
+    fs->move(this->mapToGlobal(
+                 this->geometry().center()) - fs->rect().center());
+
+    QList<QStringList> list;
+    if(!builder->readItem(row, &list)) return;
+
+    //set title
+    fs->loadSettingList(row, &list);
+
+    if(fs->exec() == QDialog::Accepted){
+        setTableItem(row);
+    }
+}
+
+/**
+ * @fn SearchTable::setTableItem
+ * @brief
+ * Set table elements for one row.
+ * This function reads the XML of the specified line directly,
+ * so it is slow if you call it frequently.
+ * @param row Row to set the table.
+ */
 void SearchTable::setTableItem(int row)
 {
-    //qDebug () << "setTableItem";
     QList<QStringList> *list = new QList<QStringList>();
     if(builder->readItem(row, list)){
-        //set tableitem
-        this->setItem(row,0,new QTableWidgetItem(builder->fetch(SEARCH_NAME,SEARCH_NONE, list)));
-        this->setItem(row,1,new QTableWidgetItem(builder->fetch(SEARCH_KEYWORD,SEARCH_NONE, list)));
-        this->setItem(row,2,new QTableWidgetItem(builder->fetch(SEARCH_DIR,SEARCH_NONE, list)));
+        setTableItem(row, list);
     }
     delete list;
+}
+
+/**
+ * @fn SearchTable::setTableItem
+ * @brief Set table elements for one row.
+ * @param row Row to set the table.
+ * @param item One line of data to retrieve from XML.
+ */
+void SearchTable::setTableItem(int row, const QList<QStringList> *item)
+{
+    //set tableitem
+    this->setItem(row
+                  , 0
+                  , new QTableWidgetItem(xf.fetch(item, SEARCH_NAME)));
+
+    this->setItem(row
+                  , 1
+                  , new QTableWidgetItem(xf.fetch(item, SEARCH_KEYWORD)));
+
+    this->setItem(row
+                  , 2
+                  , new QTableWidgetItem(xf.fetch(item, SEARCH_DIR)));
 }

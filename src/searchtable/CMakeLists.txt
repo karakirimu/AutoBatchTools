@@ -35,6 +35,7 @@ target_link_libraries(searchtable
     searchxmlbuilder
     variantconverter
     filesearchdialog
+    processxmllistgenerator
 )
 
 target_compile_definitions(searchtable PRIVATE SEARCHTABLE_LIBRARY)
