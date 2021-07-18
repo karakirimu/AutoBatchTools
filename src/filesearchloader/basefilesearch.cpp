@@ -1,8 +1,17 @@
+/*
+ * Released under the MIT License.
+ * See LICENSE text for license details.
+ *
+ * SPDX-FileCopyrightText: Copyright (c) 2021 karakirimu
+ * SPDX-License-Identifier: MIT
+ */
+
 #include "basefilesearch.h"
 
 #include <QDateTime>
 
-BaseFileSearch::BaseFileSearch(QObject *parent) : QObject(parent)
+BaseFileSearch::BaseFileSearch(QObject *parent)
+    : QObject(parent)
 {
 
 }
@@ -12,7 +21,8 @@ BaseFileSearch::~BaseFileSearch()
 
 }
 
-QStringList BaseFileSearch::listFiles(QString path, QStringList *searchword)
+QStringList BaseFileSearch::listFiles(QString path
+                                      , QStringList *searchword)
 {
     checkConditionData(searchword);
 
@@ -26,7 +36,8 @@ QStringList BaseFileSearch::listFiles(QString path, QStringList *searchword)
 
 }
 
-QStringList BaseFileSearch::listFilesRecursive(QString path, QStringList *searchword)
+QStringList BaseFileSearch::listFilesRecursive(QString path
+                                               , QStringList *searchword)
 {
     checkConditionData(searchword);
 
@@ -47,7 +58,7 @@ QStringList BaseFileSearch::listFilesRecursive(QString path, QStringList *search
  */
 void BaseFileSearch::setRegularExpressionCondition(QStringList *filelist, QString regexp)
 {
-    int filecount = filelist->count();
+    qsizetype filecount = filelist->count();
     QList<int> deleteddata;
 
     for(int i = 0; i < filecount; i++){
@@ -68,7 +79,7 @@ void BaseFileSearch::setRegularExpressionCondition(QStringList *filelist, QStrin
  */
 void BaseFileSearch::setCurrentTimeCondition(QStringList *filelist, qint64 limitedtime)
 {
-    int filecount = filelist->count();
+    qsizetype filecount = filelist->count();
     QList<int> deleteddata;
     QString file;
     QDateTime dtime = QDateTime::currentDateTime();
@@ -94,7 +105,7 @@ void BaseFileSearch::setCurrentTimeCondition(QStringList *filelist, qint64 limit
 
 void BaseFileSearch::setModifiedTimeCondition(QStringList *filelist, QDateTime basetime, int type)
 {
-    int filecount = filelist->count();
+    qsizetype filecount = filelist->count();
     QList<int> deleteddata;
     QString file;
 
@@ -110,7 +121,7 @@ void BaseFileSearch::setModifiedTimeCondition(QStringList *filelist, QDateTime b
 
 void BaseFileSearch::setCreatedTimeCondition(QStringList *filelist, QDateTime basetime, int type)
 {
-    int filecount = filelist->count();
+    qsizetype filecount = filelist->count();
     QList<int> deleteddata;
     QString file;
 
@@ -126,7 +137,7 @@ void BaseFileSearch::setCreatedTimeCondition(QStringList *filelist, QDateTime ba
 
 void BaseFileSearch::setFilesizeCondition(QStringList *filelist, long long basebytes, int type)
 {
-    int filecount = filelist->count();
+    qsizetype filecount = filelist->count();
     QList<int> deleteddata;
     QString file;
 
@@ -228,8 +239,8 @@ void BaseFileSearch::checkConditionData(QStringList *searchword)
 void BaseFileSearch::deleteLists(QList<int> *deletedindex, QStringList *filelist)
 {
     //delete lists
-    int count = deletedindex->count();
-    for(int i = count-1; i >= 0; i--){
+    qsizetype count = deletedindex->count();
+    for(qsizetype i = count - 1; i >= 0; i--){
         filelist->removeAt(deletedindex->at(i));
     }
 }
