@@ -25,6 +25,7 @@ public:
     ~EditorCacheList();
 
     void serialize(QList<QList<QStringList> *> *cache);
+    void serializeForExport(QList<QList<QStringList> *> *dest);
     void deSerialize(QList<QList<QStringList> *> *cache);
     FunctionType::TYPE loadType(int i);
 

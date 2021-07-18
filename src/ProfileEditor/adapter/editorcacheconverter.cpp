@@ -19,12 +19,12 @@ EditorCacheConverter::~EditorCacheConverter()
 }
 
 /**
- * @fn EditorCacheConverter::convertToEditorCache
+ * @fn EditorCacheConverter::convertToCacheList
  * @brief Convert XML to a cache for editor editing
  * @param source List from XML
  * @param dest Obtained data structure
  */
-void EditorCacheConverter::convertToEditorCache(
+void EditorCacheConverter::convertToCacheList(
                                         const QList<QList<QStringList> *> *source,
                                         QList<EditorCache> *dest)
 {
@@ -42,13 +42,24 @@ void EditorCacheConverter::convertToEditorCache(
  * @param source List from data structure
  * @param dest Obtained XML list
  */
-void EditorCacheConverter::convertToXml(const QList<EditorCache> *source,
-                                        QList<QList<QStringList> *> *dest)
+void EditorCacheConverter::convertToXml(const QList<EditorCache> *source
+                                        , QList<QList<QStringList> *> *dest)
 {
     dest->clear();
     for(auto& cache : *source){
         QList<QStringList> *one = new QList<QStringList>();
         convertFromCache(&cache, one);
+        dest->append(one);
+    }
+}
+
+void EditorCacheConverter::convertToExportXml(const QList<EditorCache> *source
+                                              , QList<QList<QStringList> *> *dest)
+{
+    dest->clear();
+    for(auto& cache : *source){
+        QList<QStringList> *one = new QList<QStringList>();
+        convertFromCacheForExport(&cache, one);
         dest->append(one);
     }
 }
@@ -258,7 +269,59 @@ void EditorCacheConverter::convertToCache(EditorCache *to, const QList<QStringLi
     }
 }
 
-void EditorCacheConverter::toInfomationCache(EditorCache *to, const QList<QStringList> *from)
+void EditorCacheConverter::convertFromCacheForExport(const EditorCache *from
+                                                     , QList<QStringList> *to)
+{
+    auto fromTabPosition = [&](){
+        TAB tabpos = static_cast<TAB>(from->functionSelect);
+
+        switch (tabpos) {
+        case TAB::EXECUTE:
+            fromExecuteCache(from, to);
+            break;
+        case TAB::FILESEARCH:
+            fromFileSearchCache(from, to);
+            break;
+        case TAB::PLUGINS:
+            fromPluginCache(from, to);
+            break;
+        case TAB::PROFILELOAD:
+            fromProfileLoadCache(from, to);
+            break;
+        default:
+            break;
+        }
+    };
+
+    switch (ft.getType(from->type)) {
+    case ft.TYPE::ALLINCLUDE:
+        fromTabPosition();
+        break;
+    case ft.TYPE::INFORMATION:
+        fromInfomationCache(from, to);
+        break;
+    case ft.TYPE::LOCAL:
+        fromLocalCache(from, to);
+        break;
+    case ft.TYPE::EXECUTE:
+        fromExecuteCache(from, to);
+        break;
+    case ft.TYPE::FILESEARCH:
+        fromFileSearchCache(from, to);
+        break;
+    case ft.TYPE::PLUGIN:
+        fromPluginCache(from, to);
+        break;
+    case ft.TYPE::PROFILELOAD:
+        fromProfileLoadCache(from, to);
+        break;
+    case ft.TYPE::INVALID:
+        break;
+    }
+}
+
+void EditorCacheConverter::toInfomationCache(EditorCache *to
+                                             , const QList<QStringList> *from)
 {
     to->info.name = fetch(pxc.TAG_I_NAME, from);
     to->info.version = fetch(pxc.TAG_I_VERSION, from);

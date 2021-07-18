@@ -73,8 +73,7 @@ void EditOperator::readAll(QList<EditorCache> *list)
 void EditOperator::addAction()
 {
     //need replace
-    AddCommand *com = new AddCommand(editorCache->count(), editorCache);
-    undostack->push(com);
+    undostack->push(new AddCommand(editorCache->count(), editorCache));
 }
 
 /**
@@ -85,8 +84,7 @@ void EditOperator::addAction()
  */
 void EditOperator::insertAction(int index, EditorCache *editorcache)
 {
-    InsertCommand *com = new InsertCommand(index, *editorcache, editorCache);
-    undostack->push(com);
+    undostack->push(new InsertCommand(index, *editorcache, editorCache));
 }
 
 /**
@@ -96,8 +94,7 @@ void EditOperator::insertAction(int index, EditorCache *editorcache)
  */
 void EditOperator::deleteAction(int id)
 {
-    DeleteCommand *com = new DeleteCommand(id, editorCache->at(id), editorCache);
-    undostack->push(com);
+    undostack->push(new DeleteCommand(id, editorCache->at(id), editorCache));
 }
 
 
@@ -111,9 +108,7 @@ void EditOperator::deleteAction(int id)
  */
 void EditOperator::editTabAction(int id, int newindex)
 {
-    EditTabCommand *com = new EditTabCommand(id, newindex, editorCache);
-
-    undostack->push(com);
+    undostack->push(new EditTabCommand(id, newindex, editorCache));
     emit editUpdate(id);
 }
 
@@ -125,9 +120,7 @@ void EditOperator::editTabAction(int id, int newindex)
  */
 void EditOperator::comboboxLocalValAction(int id, QString mnew)
 {
-    EditComboBoxCommand *com = new EditComboBoxCommand(id, mnew, editorCache);
-
-    undostack->push(com);
+    undostack->push(new EditComboBoxCommand(id, mnew, editorCache));
     emit editUpdate(id);
 }
 
@@ -144,9 +137,7 @@ void EditOperator::comboboxLocalValAction(int id, QString mnew)
 void EditOperator::comboboxSearchAction(int id, QString newstr, int newval)
 {
     //search combobox only
-    EditScomboBoxCommand *com = new EditScomboBoxCommand(id, newstr, newval, editorCache);
-
-    undostack->push(com);
+    undostack->push(new EditScomboBoxCommand(id, newstr, newval, editorCache));
     emit editUpdate(id);
 }
 
@@ -157,11 +148,11 @@ void EditOperator::comboboxSearchAction(int id, QString newstr, int newval)
  * @param newstr  New setting name
  * @param newfile New setting plugin file path
  */
-void EditOperator::comboboxPluginAction(int id, QString newstr, QString newfile)
+void EditOperator::comboboxPluginAction(int id
+                                        , QString newstr
+                                        , QString newfile)
 {
-    ComboPluginSelect *com = new ComboPluginSelect(id, newstr, newfile, editorCache);
-
-    undostack->push(com);
+    undostack->push(new ComboPluginSelect(id, newstr, newfile, editorCache));
     emit editUpdate(id);
 }
 
@@ -172,11 +163,11 @@ void EditOperator::comboboxPluginAction(int id, QString newstr, QString newfile)
  * @param newstr  New selected profile name
  * @param newfile New selected profile file path
  */
-void EditOperator::comboboxProfileAction(int id, QString newstr, QString newfile)
+void EditOperator::comboboxProfileAction(int id
+                                         , QString newstr
+                                         , QString newfile)
 {
-    ComboProfileSelect *com = new ComboProfileSelect(id, newstr, newfile, editorCache);
-
-    undostack->push(com);
+    undostack->push(new ComboProfileSelect(id, newstr, newfile, editorCache));
     emit editUpdate(id);
 }
 
@@ -192,9 +183,7 @@ void EditOperator::comboboxProfileAction(int id, QString newstr, QString newfile
  */
 void EditOperator::spinTimeoutAction(int id, int newvalue)
 {
-    EditTimeout *com = new EditTimeout(id, newvalue, editorCache);
-
-    undostack->push(com);
+    undostack->push(new EditTimeout(id, newvalue, editorCache));
     emit editUpdate(id);
 }
 
@@ -206,51 +195,49 @@ void EditOperator::spinTimeoutAction(int id, int newvalue)
  */
 void EditOperator::spinLoopMaxAction(int id, int newvalue)
 {
-    EditLoopMax *com = new EditLoopMax(id, newvalue, editorCache);
-
-    undostack->push(com);
+    undostack->push(new EditLoopMax(id, newvalue, editorCache));
     emit editUpdate(id);
 }
 
 /**
  * @fn EditOperator::spinLoopArgumentsAction
- * @brief The function of setting arguments in one process loop in spin box on the Information tab
+ * @brief
+ * The function of setting arguments in one process loop in
+ * spin box on the Information tab
  * @param id       Row number to read, starting from 0
  * @param newvalue Number of arguments used in one process loop
  */
 void EditOperator::spinLoopArgumentsAction(int id, int newvalue)
 {
-    EditLoopArguments *com = new EditLoopArguments(id, newvalue, editorCache);
-
-    undostack->push(com);
+    undostack->push(new EditLoopArguments(id, newvalue, editorCache));
     emit editUpdate(id);
 }
 
 /**
  * @fn EditOperator::spinLoopRecursiveAction
- * @brief The function of maximum recursive count value in the spin box on the Information tab
+ * @brief
+ * The function of maximum recursive count value in
+ * the spin box on the Information tab.
  * @param id       Row number to read, starting from 0
  * @param newvalue Maximum count in a recursive loop
  */
 void EditOperator::spinLoopRecursiveAction(int id, int newvalue)
 {
-    EditLoopRecursive *com = new EditLoopRecursive(id, newvalue, editorCache);
-
-    undostack->push(com);
+    undostack->push(new EditLoopRecursive(id, newvalue, editorCache));
     emit editUpdate(id);
 }
 
 /**
  * @fn EditOperator::radioSearchOutputAction
- * @brief The function that determines the output destination of search results on the FileSearch tab
+ * @brief
+ * The function that determines the output destination of
+ * search results on the FileSearch tab.
  * @param id       Row number to read, starting from 0
  * @param newvalue Variable : 0, External file : 1
  */
 void EditOperator::radioSearchOutputAction(int id, int newvalue)
 {
-    EditSearchOutput *com = new EditSearchOutput(id, newvalue, editorCache);
-
-    undostack->push(com);
+    undostack->push(new EditSearchOutput(id, newvalue, editorCache));
     emit editUpdate(id);
 }
 
@@ -263,9 +250,7 @@ void EditOperator::radioSearchOutputAction(int id, int newvalue)
  */
 void EditOperator::radioSearchFileOutputTypeAction(int id, int newvalue)
 {
-    EditSearchFileOutputType *com = new EditSearchFileOutputType(id, newvalue, editorCache);
-
-    undostack->push(com);
+    undostack->push(new EditSearchFileOutputType(id, newvalue, editorCache));
     emit editUpdate(id);
 }
 
@@ -281,9 +266,7 @@ void EditOperator::radioSearchFileOutputTypeAction(int id, int newvalue)
  */
 void EditOperator::tableSwapExecAction(int id, int beforeid, int afterid)
 {
-    SwapExecTable *com = new SwapExecTable(id, beforeid, afterid, editorCache);
-
-    undostack->push(com);
+    undostack->push(new SwapExecTable(id, beforeid, afterid, editorCache));
     emit editUpdate(id);
 }
 
@@ -296,9 +279,7 @@ void EditOperator::tableSwapExecAction(int id, int beforeid, int afterid)
  */
 void EditOperator::tableSwapPluginAction(int id, int beforeid, int afterid)
 {
-    SwapPluginTable *com = new SwapPluginTable(id, beforeid, afterid, editorCache);
-
-    undostack->push(com);
+    undostack->push(new SwapPluginTable(id, beforeid, afterid, editorCache));
     emit editUpdate(id);
 }
 
@@ -306,51 +287,45 @@ void EditOperator::tableSwapPluginAction(int id, int beforeid, int afterid)
 
 
 /**
- * @deprecated
- * @fn EditOperator::tableEditVariantAction
- * @brief The function to edit the argument at the specified position in the table on the Variant tree
- * @param id        Row number to read, starting from 0
- * @param tableid   The line number of the edited argument table in the Variant tree
- * @param variants  Variable and value pair
- * @param operation Operation defined in UiCommandMap
- */
-void EditOperator::tableEditVariantAction(int id, int tableid, QStringList variants, int operation)
-{
-    EditLocalVarTable *com = new EditLocalVarTable(id, tableid, variants.at(0), variants.at(1), operation, editorCache);
-
-    undostack->push(com);
-//    emit editUpdate(id);? no need to update
-}
-
-/**
  * @fn EditOperator::tableEditExecAction
- * @brief The function to edit the argument at the specified position in the table on the Execute tab
+ * @brief
+ * The function to edit the argument at the specified position
+ * in the table on the Execute tab.
  * @param id        Row number to read, starting from 0
  * @param tableid   The line number of the edited argument table in the Execute tab
  * @param newstr    Argument value
  * @param operation Operation defined in UiCommandMap
  */
-void EditOperator::tableEditExecAction(int id, int tableid, QString newstr, int operation)
+void EditOperator::tableEditExecAction(int id
+                                       , int tableid
+                                       , QString newstr
+                                       , int operation)
 {
-     EditExecTable *com = new EditExecTable(id, tableid, newstr, operation, editorCache);
-
-    undostack->push(com);
+    undostack->push(new EditExecTable(id
+                                      , tableid
+                                      , newstr
+                                      , operation
+                                      , editorCache));
     emit editUpdate(id);
 }
 
 /**
  * @fn EditOperator::tableEditPluginAction
- * @brief The function to edit the argument at the specified position in the table on the Plugin tab
+ * @brief
+ * The function to edit the argument at the specified position
+ * in the table on the Plugin tab.
  * @param id        Row number to read, starting from 0
  * @param tableid   The line number of the edited argument table in the Plugin tab
  * @param newstr    Argument value
  * @param operation Operation defined in UiCommandMap
  */
-void EditOperator::tableEditPluginAction(int id, int tableid, QString newstr, int operation)
+void EditOperator::tableEditPluginAction(int id
+                                         , int tableid
+                                         , QString newstr
+                                         , int operation)
 {
-    EditPluginTable *com = new EditPluginTable(id, tableid, newstr, operation, editorCache);
-
-    undostack->push(com);
+    undostack->push(
+        new EditPluginTable(id, tableid, newstr, operation, editorCache));
     emit editUpdate(id);
 }
 
@@ -361,11 +336,11 @@ void EditOperator::tableEditPluginAction(int id, int tableid, QString newstr, in
  * @param newstrlist Argument list edited on the Plugins tab
  * @param operation  Operation defined in UiCommandMap
  */
-void EditOperator::tableEditPluginAction(int id, QStringList newstrlist, int operation)
+void EditOperator::tableEditPluginAction(int id
+                                         , QStringList newstrlist
+                                         , int operation)
 {
-    EditPluginTable *com = new EditPluginTable(id, newstrlist, operation, editorCache);
-
-    undostack->push(com);
+    undostack->push(new EditPluginTable(id, newstrlist, operation, editorCache));
     emit editUpdate(id);
 }
 
@@ -376,11 +351,11 @@ void EditOperator::tableEditPluginAction(int id, QStringList newstrlist, int ope
  * @param beforeid The row of the source table in the argument list of selected id
  * @param afterid  The row of the destination table in the argument list of the selected id
  */
-void EditOperator::tableDragDropExecAction(int id, QList<int> beforeid, int afterid)
+void EditOperator::tableDragDropExecAction(int id
+                                           , QList<int> beforeid
+                                           , int afterid)
 {
-    DragDropExecTable *com = new DragDropExecTable(id, beforeid, afterid, editorCache);
-
-    undostack->push(com);
+    undostack->push(new DragDropExecTable(id, beforeid, afterid, editorCache));
     emit editUpdate(id);
 }
 
@@ -391,11 +366,11 @@ void EditOperator::tableDragDropExecAction(int id, QList<int> beforeid, int afte
  * @param beforeid The row of the source table in the argument list of selected id
  * @param afterid  The row of the destination table in the argument list of the selected id
  */
-void EditOperator::tableDragDropPluginAction(int id, QList<int> beforeid, int afterid)
+void EditOperator::tableDragDropPluginAction(int id
+                                             , QList<int> beforeid
+                                             , int afterid)
 {
-    DragDropPluginTable *com = new DragDropPluginTable(id, beforeid, afterid, editorCache);
-
-    undostack->push(com);
+    undostack->push(new DragDropPluginTable(id, beforeid, afterid, editorCache));
     emit editUpdate(id);
 }
 
@@ -406,10 +381,11 @@ void EditOperator::tableDragDropPluginAction(int id, QList<int> beforeid, int af
  * @param variants The list containing variable and value
  * @param operation Operation defined in UiCommandMap
  */
-void EditOperator::treeEditGVariantAction(int id, QStringList variants, int operation)
+void EditOperator::treeEditGVariantAction(int id
+                                          , QStringList variants
+                                          , int operation)
 {
-    EditGlobalVarTree *com = new EditGlobalVarTree(id, variants, operation);
-    undostack->push(com);
+    undostack->push(new EditGlobalVarTree(id, variants, operation));
 }
 
 /**
@@ -420,8 +396,7 @@ void EditOperator::treeEditGVariantAction(int id, QStringList variants, int oper
  */
 void EditOperator::treeSwapGVariantAction(int beforeid, int afterid)
 {
-    SwapGlobalVarTree *com = new SwapGlobalVarTree(beforeid, afterid);
-    undostack->push(com);
+    undostack->push(new SwapGlobalVarTree(beforeid, afterid));
 }
 
 /**
@@ -432,10 +407,18 @@ void EditOperator::treeSwapGVariantAction(int beforeid, int afterid)
  * @param operation  Operation defined in UiCommandMap
  * @param localindex Row number in Local variable (Current index: 1)
  */
-void EditOperator::treeEditLVariantAction(int id, QStringList variants, int operation, int localindex)
+void EditOperator::treeEditLVariantAction(int id
+                                          , QStringList variants
+                                          , int operation
+                                          , int localindex)
 {
-    EditLocalVariantTree *com = new EditLocalVariantTree(localindex, id, variants.at(0), variants.at(1), operation, editorCache);
-    undostack->push(com);
+    undostack->push(
+        new EditLocalVariantTree(localindex
+                                 , id
+                                 , variants.at(0)
+                                 , variants.at(1)
+                                 , operation
+                                 , editorCache));
 }
 
 /**
@@ -445,10 +428,12 @@ void EditOperator::treeEditLVariantAction(int id, QStringList variants, int oper
  * @param afterid    The row of the destination table in the argument list of the selected id
  * @param localindex Row number in Local variable (Current index: 1)
  */
-void EditOperator::treeSwapLVariantAction(int beforeid, int afterid, int localindex)
+void EditOperator::treeSwapLVariantAction(int beforeid
+                                          , int afterid
+                                          , int localindex)
 {
-    SwapLocalVariantTree *com = new SwapLocalVariantTree(localindex, beforeid, afterid, editorCache);
-    undostack->push(com);
+    undostack->push(
+        new SwapLocalVariantTree(localindex, beforeid, afterid, editorCache));
 }
 
 
@@ -463,9 +448,7 @@ void EditOperator::treeSwapLVariantAction(int beforeid, int afterid, int localin
  */
 void EditOperator::textFileOutputAction(int id, QString newstr)
 {
-    StringFileOutput *com = new StringFileOutput(id, newstr, editorCache);
-
-    undostack->push(com);
+    undostack->push(new StringFileOutput(id, newstr, editorCache));
     emit editUpdate(id);
 }
 
@@ -477,9 +460,7 @@ void EditOperator::textFileOutputAction(int id, QString newstr)
  */
 void EditOperator::textProjectAuthorAction(int id, QString newstr)
 {
-    StringProjectAuthor *com = new StringProjectAuthor(id, newstr, editorCache);
-
-    undostack->push(com);
+    undostack->push(new StringProjectAuthor(id, newstr, editorCache));
     emit editUpdate(id);
 }
 
@@ -491,9 +472,7 @@ void EditOperator::textProjectAuthorAction(int id, QString newstr)
  */
 void EditOperator::textProjectDescriptAction(int id, QString newstr)
 {
-    StringProjectDescription *com = new StringProjectDescription(id, newstr, editorCache);
-
-    undostack->push(com);
+    undostack->push(new StringProjectDescription(id, newstr, editorCache));
     emit editUpdate(id);
 }
 
@@ -505,9 +484,7 @@ void EditOperator::textProjectDescriptAction(int id, QString newstr)
  */
 void EditOperator::textProjectNameAction(int id, QString newstr)
 {
-    StringProjectName *com = new StringProjectName(id, newstr, editorCache);
-
-    undostack->push(com);
+    undostack->push(new StringProjectName(id, newstr, editorCache));
     emit editUpdate(id);
 }
 
@@ -519,9 +496,7 @@ void EditOperator::textProjectNameAction(int id, QString newstr)
  */
 void EditOperator::textProjectVerAction(int id, QString newstr)
 {
-    StringProjectVersion *com = new StringProjectVersion(id, newstr, editorCache);
-
-    undostack->push(com);
+    undostack->push(new StringProjectVersion(id, newstr, editorCache));
     emit editUpdate(id);
 }
 
@@ -534,9 +509,7 @@ void EditOperator::textProjectVerAction(int id, QString newstr)
  */
 void EditOperator::textSearchSeparateAction(int id, QString newstr)
 {
-    StringSearchSep *com = new StringSearchSep(id, newstr, editorCache);
-
-    undostack->push(com);
+    undostack->push(new StringSearchSep(id, newstr, editorCache));
     emit editUpdate(id);
 }
 
@@ -549,9 +522,7 @@ void EditOperator::textSearchSeparateAction(int id, QString newstr)
  */
 void EditOperator::textBasePathAction(int id, QString newstr)
 {
-    StringBasePath *com = new StringBasePath(id, newstr, editorCache);
-
-    undostack->push(com);
+    undostack->push(new StringBasePath(id, newstr, editorCache));
     emit editUpdate(id);
 }
 
@@ -563,9 +534,7 @@ void EditOperator::textBasePathAction(int id, QString newstr)
  */
 void EditOperator::checkAllowInputAction(int id, bool newcheck)
 {
-    CheckEditAllowInput *com = new CheckEditAllowInput(id, newcheck, editorCache);
-
-    undostack->push(com);
+    undostack->push(new CheckEditAllowInput(id, newcheck, editorCache));
     emit editUpdate(id);
 }
 
@@ -577,9 +546,7 @@ void EditOperator::checkAllowInputAction(int id, bool newcheck)
  */
 void EditOperator::checkLoopInfAction(int id, bool newcheck)
 {
-    CheckEditLoopInf *com = new CheckEditLoopInf(id, newcheck, editorCache);
-
-    undostack->push(com);
+    undostack->push(new CheckEditLoopInf(id, newcheck, editorCache));
     emit editUpdate(id);
 }
 
@@ -592,9 +559,7 @@ void EditOperator::checkLoopInfAction(int id, bool newcheck)
  */
 void EditOperator::checkSearchInputAction(int id, bool newcheck)
 {
-    CheckEditSearchInput *com = new CheckEditSearchInput(id, newcheck, editorCache);
-
-    undostack->push(com);
+    undostack->push(new CheckEditSearchInput(id, newcheck, editorCache));
     emit editUpdate(id);
 }
 
@@ -606,9 +571,7 @@ void EditOperator::checkSearchInputAction(int id, bool newcheck)
  */
 void EditOperator::checkTimeoutAction(int id, bool newcheck)
 {
-    CheckEditTimeout *com = new CheckEditTimeout(id, newcheck, editorCache);
-
-    undostack->push(com);
+    undostack->push(new CheckEditTimeout(id, newcheck, editorCache));
     emit editUpdate(id);
 }
 
@@ -621,65 +584,63 @@ void EditOperator::checkTimeoutAction(int id, bool newcheck)
  */
 void EditOperator::checkRunDetachAction(int id, bool newcheck)
 {
-    CheckEditRunDetach *com = new CheckEditRunDetach(id, newcheck, editorCache);
-
-    undostack->push(com);
+    undostack->push(new CheckEditRunDetach(id, newcheck, editorCache));
     emit editUpdate(id);
 }
 
 /**
  * @fn EditOperator::checkOnlyNormalAction
- * @brief The function to select whether to execute only when executed by AutoBatchScheduler
+ * @brief
+ * The function to select whether to execute only
+ * when executed by AutoBatchScheduler
  * @param id       Row number to read, starting from 0
  * @param newcheck True if enabled
  */
 void EditOperator::checkOnlyNormalAction(int id, bool newcheck)
 {
-    CheckOnlySchedulerNormal *com = new CheckOnlySchedulerNormal(id, newcheck, editorCache);
-
-    undostack->push(com);
+    undostack->push(new CheckOnlySchedulerNormal(id, newcheck, editorCache));
     emit editUpdate(id);
 }
 
 /**
  * @fn EditOperator::checkOnlySearchAction
- * @brief The function to select whether to execute only when executed by AutoBatchScheduler
+ * @brief
+ * The function to select whether to execute only
+ * when executed by AutoBatchScheduler.
  * @param id       Row number to read, starting from 0
  * @param newcheck True if enabled
  */
 void EditOperator::checkOnlySearchAction(int id, bool newcheck)
 {
-    CheckOnlySchedulerSearch *com = new CheckOnlySchedulerSearch(id, newcheck, editorCache);
-
-    undostack->push(com);
+    undostack->push(new CheckOnlySchedulerSearch(id, newcheck, editorCache));
     emit editUpdate(id);
 }
 
 /**
  * @fn EditOperator::checkOnlyPluginAction
- * @brief The function to select whether to execute only when executed by AutoBatchScheduler
+ * @brief
+ * The function to select whether to execute only
+ * when executed by AutoBatchScheduler.
  * @param id       Row number to read, starting from 0
  * @param newcheck True if enabled
  */
 void EditOperator::checkOnlyPluginAction(int id, bool newcheck)
 {
-    CheckOnlySchedulerPlugin *com = new CheckOnlySchedulerPlugin(id, newcheck, editorCache);
-
-    undostack->push(com);
+    undostack->push(new CheckOnlySchedulerPlugin(id, newcheck, editorCache));
     emit editUpdate(id);
 }
 
 /**
  * @fn EditOperator::checkOnlyOtherAction
- * @brief The function to select whether to execute only when executed by AutoBatchScheduler
+ * @brief
+ * The function to select whether to execute only
+ * when executed by AutoBatchScheduler.
  * @param id       Row number to read, starting from 0
  * @param newcheck True if enabled
  */
 void EditOperator::checkOnlyOtherAction(int id, bool newcheck)
 {
-    CheckOnlySchedulerOther *com = new CheckOnlySchedulerOther(id, newcheck, editorCache);
-
-    undostack->push(com);
+    undostack->push(new CheckOnlySchedulerOther(id, newcheck, editorCache));
     emit editUpdate(id);
 }
 
@@ -713,7 +674,8 @@ void EditOperator::copyAction(int id)
 void EditOperator::pasteAction(int id)
 {
     QClipboard *clipboard = QApplication::clipboard();
-    const ListMimeData *lmime = qobject_cast<const ListMimeData *>(clipboard->mimeData());
+    const ListMimeData *lmime
+        = qobject_cast<const ListMimeData *>(clipboard->mimeData());
     EditorCache clipdata = ListMimeData::getListData(lmime);
 
     insertAction(id, &clipdata);
@@ -745,12 +707,6 @@ void EditOperator::dragDropAction(QList<int> before, int after)
     DragDropCommand *com = new DragDropCommand(before, after, editorCache);
     undostack->push(com);
 }
-
-//bool EditOperator::elementDiffCheck()
-//{
-
-//    return false;
-//}
 
 void EditOperator::newAction()
 {
@@ -822,7 +778,7 @@ void EditOperator::openAction(QString filepath)
     // save recent files list (max: 10)
     QSettings settings( sc.OUTPUT_FILE, QSettings::IniFormat );
     QStringList list = settings.value(sc.ABE_RECENT_FILES).value<QStringList>();
-    int recentcount = list.count();
+    qsizetype recentcount = list.count();
 
     list.removeOne(loadfile);
     list.insert(0, loadfile);
@@ -861,31 +817,16 @@ void EditOperator::exportAction(QString filepath)
         QFile::remove(filepath);
     }
 
-    //fetch all cache data
-    //full update file
+    // get xml format from cache
     QList<QList<QStringList> *> *tempcache = new QList<QList<QStringList> *>;
-    ProcessXmlListGenerator *xgen = new ProcessXmlListGenerator();
+    editorCache->serializeForExport(tempcache);
 
-    ProcessXmlBuilder *updater = new ProcessXmlBuilder();
-    updater->setLoadPath(autosavefile);
-    updater->readAllItem(tempcache);
-
-    //optimize xml structure
-    int count = tempcache->count();
-
-    //avoid info, local list
-    for(int i = XML_MIN; i < count; i++){
-        xgen->createSeparateList(tempcache->at(i));
-    }
-
-    //full update file
+    // generate exported file
     ProcessXmlBuilder *mexport = new ProcessXmlBuilder();
     mexport->setLoadBlankPath(filepath);    
     mexport->writeAllItem(tempcache);
 
-    delete updater;
     delete mexport;
-    delete xgen;
     delete tempcache;
 
 }
@@ -925,7 +866,8 @@ void EditOperator::save()
     updater->writeAllItem(&dest);
 
 #ifdef QT_DEBUG
-    qDebug() << "[EditOperator::save] elapsed: " << time.elapsed() << "ms";
+    qDebug() << "[EditOperator::save] elapsed: "
+             << time.elapsed() << "ms";
 #endif
 
     delete updater;
@@ -957,7 +899,8 @@ void EditOperator::loadcache(int amount)
     editorCache->deSerialize(&cache);
 
 #ifdef QT_DEBUG
-    qDebug() << "[EditOperator::loadcache] elapsed: " << time.elapsed() << "ms";
+    qDebug() << "[EditOperator::loadcache] elapsed: "
+             << time.elapsed() << "ms";
 #endif
 
     delete updater;
@@ -992,7 +935,8 @@ int EditOperator::getCacheSize() const
 
 int EditOperator::getCurrentCommandType()
 {
-    qDebug() << "[EditOperator::getCurrentCommandType] stack : " << undostack->index();
+    qDebug() << "[EditOperator::getCurrentCommandType] stack : "
+             << undostack->index();
     return undostack->command(undostack->index())->id();
 }
 

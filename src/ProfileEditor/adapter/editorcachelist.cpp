@@ -30,6 +30,17 @@ void EditorCacheList::serialize(QList<QList<QStringList> *> *dest)
 }
 
 /**
+ * @fn EditorCacheList::serializeForExport
+ * @brief Convert to the Export type XML output structure
+ * @param dest Output destination
+ */
+void EditorCacheList::serializeForExport(QList<QList<QStringList> *> *dest)
+{
+    std::lock_guard<std::mutex> lock(mutex);
+    converter->convertToExportXml(&cache, dest);
+}
+
+/**
  * @fn EditorCacheList::deSerialize
  * @brief Populate this list from an XML structure
  * @param source Input source
@@ -37,7 +48,7 @@ void EditorCacheList::serialize(QList<QList<QStringList> *> *dest)
 void EditorCacheList::deSerialize(QList<QList<QStringList> *> *source)
 {
     std::lock_guard<std::mutex> lock(mutex);
-    converter->convertToEditorCache(source, &cache);
+    converter->convertToCacheList(source, &cache);
 }
 
 /**

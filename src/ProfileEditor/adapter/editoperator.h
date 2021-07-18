@@ -97,7 +97,7 @@ class EditOperator : public QObject
     Q_OBJECT
 public:
     explicit EditOperator(QObject *parent = nullptr);
-    ~EditOperator();
+    ~EditOperator() override;
 
     bool read(int id, EditorCache *list);
     void readAll(QList<EditorCache> *list);
@@ -183,7 +183,6 @@ public slots:
     //table operation
     void tableSwapExecAction(int id, int beforeid, int afterid);
     void tableSwapPluginAction(int id, int beforeid, int afterid);
-    [[deprecated]] void tableEditVariantAction(int id, int tableid, QStringList variants, int operation);
     void tableEditExecAction(int id, int tableid, QString newstr, int operation);
     void tableEditPluginAction(int id, int tableid, QString newstr, int operation);
     void tableEditPluginAction(int id, QStringList newstrlist, int operation);
@@ -194,7 +193,10 @@ public slots:
     void treeEditGVariantAction(int id, QStringList variants, int operation);
     void treeSwapGVariantAction(int beforeid, int afterid);
 
-    void treeEditLVariantAction(int id, QStringList variants, int operation, int localindex);
+    void treeEditLVariantAction(int id
+                                , QStringList variants
+                                , int operation
+                                , int localindex);
     void treeSwapLVariantAction(int beforeid, int afterid, int localindex = 1);
 
     //textedit lineedit operation
@@ -213,11 +215,8 @@ public slots:
     void swapAction(int before, int after);
     void dragDropAction(QList<int> before, int after);
 
-    //check difference
-//    bool elementDiffCheck();
-
 protected:
-    void timerEvent(QTimerEvent *event);
+    void timerEvent(QTimerEvent *event) override;
 
 private:
     void save();

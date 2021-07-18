@@ -18,13 +18,20 @@ public:
     explicit EditorCacheConverter();
     ~EditorCacheConverter();
 
-    void convertToEditorCache(const QList<QList<QStringList> *> *source, QList<EditorCache> *dest);
-    void convertToXml(const QList<EditorCache> *source, QList<QList<QStringList> *> *dest);
+    void convertToCacheList(const QList<QList<QStringList> *> *source
+                              , QList<EditorCache> *dest);
+
+    void convertToXml(const QList<EditorCache> *source
+                      , QList<QList<QStringList> *> *dest);
+
+    void convertToExportXml(const QList<EditorCache> *source
+                            , QList<QList<QStringList> *> *dest);
 
     void convertFromCache(const EditorCache *from, QList<QStringList> *to);
     void convertToCache(EditorCache *to, const QList<QStringList> *from);
 
 private:
+    void convertFromCacheForExport(const EditorCache *from, QList<QStringList> *to);
 
     void fromInfomationCache(const EditorCache *from, QList<QStringList> *to);
     void fromLocalCache(const EditorCache *from, QList<QStringList> *to);
@@ -39,7 +46,6 @@ private:
     void toFileSearchCache(EditorCache *to, const QList<QStringList> *from);
     void toPluginCache(EditorCache *to, const QList<QStringList> *from);
     void toProfileLoadCache(EditorCache *to, const QList<QStringList> *from);
-
 
     QString fetch(QString tag, const QList<QStringList> *loadbase);
     QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase);
