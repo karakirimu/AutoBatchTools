@@ -35,22 +35,28 @@ public:
     explicit ProfileXmlBuilder(QObject *parent = nullptr);
     virtual ~ProfileXmlBuilder() override;
 
+    bool readAll(QList<QList<QStringList> *> *itemlist);
+    bool writeAll(const QList<QList<QStringList> *> *itemlist);
+
     bool readItem(int itemid, QList<QStringList> *itemlist);
     bool addItem(const QList<QStringList> *itemlist);
+    bool insertItem(int itemid, QList<QStringList> *itemlist);
     bool deleteItem(int itemid);
     bool editItem(int itemid, const QList<QStringList> *itemlist);
     void swapItem(int beforeitemid, int afteritemid);
-    bool overwriteItem(int itemid, const QList<QStringList> *itemlist);
-    void createDocument();
+
     int count();
+    void createVarElement(QList<QStringList> *internal, QStringList *var);
 
-    enum {NAME, DESCRIPTON, FILE};
 private:
-
     void setSearchItemData(QString element, QList<QStringList> *list) override;
+    void createDocument();
+
     const QString ROOTELEMENT = "profilelist";
     const QString FIRSTLAYER = "item";
     const QString ATTR = "id";
+    const QString ATTRVERSION = "version";
+    const QString VERSION = "1.00";
 };
 
 #endif // PROFILEXMLBUILDER_H
