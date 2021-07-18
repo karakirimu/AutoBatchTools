@@ -11,33 +11,36 @@
 StartupTable::StartupTable(QWidget *parent)
     : BasicTable(parent)
 {
-    //disable edit
+    // disable edit
     setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    //popupAction
+    // popupAction
     setPopupActionTop();
     setPopupActionDefault();
     setPopupActionBottom();
 
-    //init table size
+    // init table size
     setColumnCount(3);
     setRowCount(0);
 
-    //adjust row
+    // adjust row
     resizeRowsToContents();
 
-    //adjust column
+    // adjust column
     horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
-    //set header label
-    setHorizontalHeaderLabels((QStringList() << tr("Setting Name") << tr("Profile") << tr("Status")));
+    // set header label
+    setHorizontalHeaderLabels((QStringList() << tr("Setting Name")
+                                             << tr("Profile")
+                                             << tr("Status")));
 
-    //set header style
+    // set header style
     QssPropertyConstant qpc;
     verticalHeader()->setProperty(qpc.VERTICAL_HEADER_STYLE \
                                     , qpc.VERTICAL_HEADER_ENABLE);
 
-    //set doubleclick action
-    connect(this, &QTableWidget::cellDoubleClicked, this, &StartupTable::editTableAction);
+    // set doubleclick action
+    connect(this, &QTableWidget::cellDoubleClicked
+            , this, &StartupTable::editTableAction);
 }
 
 StartupTable::~StartupTable()
@@ -47,8 +50,10 @@ StartupTable::~StartupTable()
 void StartupTable::setTaskSchedulerConnector(TaskSchedulerConnector *task)
 {
     taskc = task;
-    connect(taskc, &TaskSchedulerConnector::fileLoadCompleted, this, &StartupTable::reloadAction);
-    connect(taskc, &TaskSchedulerConnector::updateState, this, &StartupTable::stateChanged);
+    connect(taskc, &TaskSchedulerConnector::fileLoadCompleted
+            , this, &StartupTable::reloadAction);
+    connect(taskc, &TaskSchedulerConnector::updateState
+            , this, &StartupTable::stateChanged);
 }
 
 void StartupTable::setPopupActionTop()
@@ -141,6 +146,28 @@ bool StartupTable::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 
+void StartupTable::editTableAction(int row, int col)
+{
+    Q_UNUSED(col)
+    //if rowcount is zero.
+    if(this->rowCount() == 0) return;
+
+    StartupDialog *sd = new StartupDialog();
+    sd->setStyleSheet(this->styleSheet());
+    sd->move(this->window()->mapToGlobal(
+                 this->geometry().center()) - sd->rect().center());
+
+    sd->load(taskc->read(row));
+
+    if(sd->exec() == QDialog::Accepted) {
+        SchedulerCache result = sd->getSavedSetting();
+        taskc->replace(row, result);
+        setTableItem(row);
+    }
+
+    delete sd;
+}
+
 int StartupTable::getIndex(QString objectname)
 {
     //search valid data
@@ -155,41 +182,16 @@ int StartupTable::getIndex(QString objectname)
     return itemid;
 }
 
-void StartupTable::setTableItem(int row)
-{
-    SchedulerCache sc = taskc->read(row);
-    setTableItem(row, sc);
-
-}
-
-void StartupTable::setTableItem(int row, const SchedulerCache &sc)
-{
-    //set name
-    this->setItem(row,0,new QTableWidgetItem(sc.settingName));
-
-    //set profile
-    QFileInfo info(sc.profilePath);
-    this->setItem(row,1,new QTableWidgetItem(info.fileName()));
-
-    //set icon
-    QIcon icon = getIcon(sc.isScheduled ? ACTION::ENABLE : ACTION::DISABLE);
-    QString state = sc.isScheduled ? tr("Enabled") : tr("Disabled");
-    this->setItem(row,2,new QTableWidgetItem(QIcon(icon), state));
-}
-
-void StartupTable::replaceItem(int row)
-{
-    this->removeRow(row);
-    this->insertRow(row);
-    setTableItem(row);
-    this->selectRow(row);
-}
-
+/**
+ * @fn StartupTable::addAction
+ * @brief Launch startup settings and display summary in table if accepted.
+ */
 void StartupTable::addAction()
 {
     StartupDialog *sd = new StartupDialog();
     sd->setStyleSheet(this->styleSheet());
-    sd->move(this->window()->mapToGlobal(this->geometry().center()) - sd->rect().center());
+    sd->move(this->window()->mapToGlobal(
+                 this->geometry().center()) - sd->rect().center());
 
     if(sd->exec() == QDialog::Accepted){
         taskc->add(sd->getSavedSetting());
@@ -202,32 +204,19 @@ void StartupTable::addAction()
     delete sd;
 }
 
+/**
+ * @fn StartupTable::editAction
+ * @brief Launch startup settings for the selected location.
+ */
 void StartupTable::editAction()
 {
-    editTableAction(currentRow(), 0);
+    editTableAction(this->currentRow());
 }
 
-void StartupTable::editTableAction(int row, int col)
-{
-    Q_UNUSED(col)
-    //if rowcount is zero.
-    if(this->rowCount() == 0) return;
-
-    StartupDialog *sd = new StartupDialog();
-    sd->setStyleSheet(this->styleSheet());
-    sd->move(this->window()->mapToGlobal(this->geometry().center()) - sd->rect().center());
-
-    sd->load(taskc->read(row));
-
-    if(sd->exec() == QDialog::Accepted) {
-        SchedulerCache result = sd->getSavedSetting();
-        taskc->replace(row, result);
-        setTableItem(row);
-    }
-
-    delete sd;
-}
-
+/**
+ * @fn StartupTable::deleteAction
+ * @brief Deletes the selected tableItem and xml elements synchronously.
+ */
 void StartupTable::deleteAction()
 {
     //if rowcount is zero.
@@ -235,27 +224,124 @@ void StartupTable::deleteAction()
 
     //check delete warning message
     if(deleteCheckMessage()) {
-        taskc->remove(currentRow());
+        deleteTableRecursive([&](int row){
+            taskc->remove(row);
+        });
+
         reloadAction();
     }
 }
 
+/**
+ * @fn StartupTable::copyAction
+ * @brief Duplicate the selected element.
+ */
+void StartupTable::copyAction()
+{
+    //if rowcount is zero.
+    int count = rowCount();
+    if(count == 0) return;
+
+    taskc->duplicate(this->currentRow());
+
+    setRowCount(count + 1);
+    setTableItem(count);
+}
+
+/**
+ * @fn StartupTable::upAction
+ * @brief Move up one selection line.
+ */
+void StartupTable::upAction()
+{
+    upSelected([&](int current) {
+        taskc->move(current, current - 1);
+        reloadAction();
+    });
+}
+
+/**
+ * @fn StartupTable::downAction
+ * @brief Move down one selection line.
+ */
+void StartupTable::downAction()
+{
+    downSelected([&](int current) {
+        taskc->move(current, current + 1);
+        reloadAction();
+    });
+}
+
+void StartupTable::enableAction(){
+    int row = this->currentRow();
+
+    taskc->enableSchedule(row);
+    replaceItem(row);
+}
+
+void StartupTable::disableAction(){
+    int row = this->currentRow();
+
+    taskc->disableSchedule(row);
+    replaceItem(row);
+}
+
+/**
+ * @fn StartupTable::reloadAction
+ * @brief Update all table items.
+ */
 void StartupTable::reloadAction()
 {
     QList<SchedulerCache> list = taskc->readAll();
+    int count = static_cast<int>(list.count());
 
-    int count = list.count();
-    //set tables
+    // set tables
     setRowCount(count);
     for(int i = 0; i < count; i++){
         setTableItem(i, list.at(i));
     }
 }
 
-void StartupTable::stateChanged(int index, QString message, TaskSchedulerConnector::TABLE func)
+void StartupTable::setTableItem(int row)
 {
-    qDebug() << "[StartupTable::stateChanged] index : " << index << " action : " << func;
+    SchedulerCache sc = taskc->read(row);
+    setTableItem(row, sc);
+
+}
+
+void StartupTable::setTableItem(int row, const SchedulerCache &sc)
+{
+    //set name
+    this->setItem(row, 0, new QTableWidgetItem(sc.settingName));
+
+    //set profile
+    QFileInfo info(sc.profilePath);
+    this->setItem(row, 1, new QTableWidgetItem(info.fileName()));
+
+    //set icon
+    QIcon icon = getIcon(sc.isScheduled ? ACTION::ENABLE : ACTION::DISABLE);
+    QString state = sc.isScheduled ? tr("Enabled") : tr("Disabled");
+    this->setItem(row, 2, new QTableWidgetItem(QIcon(icon), state));
+}
+
+void StartupTable::replaceItem(int row)
+{
+    this->removeRow(row);
+    this->insertRow(row);
+    setTableItem(row);
+    this->selectRow(row);
+}
+
+void StartupTable::stateChanged(int index
+                                , QString message
+                                , TaskSchedulerConnector::TABLE func)
+{
     Q_UNUSED(message)
+
+    qDebug() << "[StartupTable::stateChanged] index :"
+             << index
+             << " action :"
+             << func;
 
     switch (func) {
     case TaskSchedulerConnector::TABLE::ADD:
@@ -271,54 +357,4 @@ void StartupTable::stateChanged(int index, QString message, TaskSchedulerConnect
     case TaskSchedulerConnector::TABLE::SWAP: break;
     case TaskSchedulerConnector::TABLE::MOVE: break;
     }
-}
-
-void StartupTable::copyAction()
-{
-    //if rowcount is zero.
-    int count = rowCount();
-    if(count == 0) return;
-
-    taskc->duplicate(this->currentRow());
-
-    setRowCount(count + 1);
-    setTableItem(count);
-}
-
-void StartupTable::upAction()
-{
-    int current = this->currentRow();
-    if(current == 0) return;
-
-    taskc->move(current, current - 1);
-
-    reloadAction();
-    selectRow(current - 1);
-}
-
-void StartupTable::downAction()
-{
-    int current = this->currentRow();
-    int counter = this->rowCount();
-
-    if((current + 1) == counter) return;
-
-    taskc->move(current, current + 1);
-
-    reloadAction();
-    selectRow(current + 1);
-}
-
-void StartupTable::enableAction(){
-    int row = this->currentRow();
-
-    taskc->enableSchedule(row);
-    replaceItem(row);
-}
-
-void StartupTable::disableAction(){
-    int row = this->currentRow();
-
-    taskc->disableSchedule(row);
-    replaceItem(row);
 }

@@ -23,19 +23,20 @@ class StartupTable : public BasicTable
     Q_OBJECT
 public:
     explicit StartupTable(QWidget *parent = nullptr);
-    ~StartupTable();
+    ~StartupTable() override;
     void setTaskSchedulerConnector(TaskSchedulerConnector *task);
 
 private slots:
-    void stateChanged(int index, QString message, TaskSchedulerConnector::TABLE func);
+    void stateChanged(int index
+                      , QString message
+                      , TaskSchedulerConnector::TABLE func);
 
-    void addAction();
-    void editTableAction(int row, int col);
-    void editAction();
-    void deleteAction();
-    void copyAction();
-    void upAction();
-    void downAction();
+    void addAction() override;
+    void editAction() override;
+    void deleteAction() override;
+    void copyAction() override;
+    void upAction() override;
+    void downAction() override;
     void enableAction();
     void disableAction();
     void reloadAction();
@@ -44,8 +45,15 @@ private:
     void setPopupActionTop();
     void setPopupActionDefault();
     void setPopupActionBottom();
-    bool eventFilter(QObject *obj, QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event) override;
+
+    void editTableAction(int row, int col = 0);
     int getIndex(QString objectname);
+
+    void setTableItem(int row);
+    void setTableItem(int row, const SchedulerCache &sc);
+
+    void replaceItem(int row);
 
     QAction *m_add;
     QAction *m_edit;
@@ -55,10 +63,6 @@ private:
     QAction *m_disable;
 
     TaskSchedulerConnector *taskc;
-    void setTableItem(int row);
-    void setTableItem(int row, const SchedulerCache &sc);
-
-    void replaceItem(int row);
 };
 
 #endif // STARTUPTABLE_H
