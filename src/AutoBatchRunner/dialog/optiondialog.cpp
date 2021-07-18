@@ -17,37 +17,57 @@ OptionDialog::OptionDialog(QWidget *parent) :
     ui->setupUi(this);
     setupItem();
 
-    //connect action
-    connect( ui->buttonBox, &QDialogButtonBox::accepted, this, &OptionDialog::onAccept);
+    // connect action
+    connect( ui->buttonBox, &QDialogButtonBox::accepted
+            , this, &OptionDialog::onAccept);
 
-    //project
-    connect(ui->pAddButton, &QPushButton::clicked, ui->profileTableWidget, &ProfileTable::addAction);
-    connect(ui->pDeleteButton, &QPushButton::clicked, ui->profileTableWidget, &ProfileTable::deleteAction);
-    connect(ui->pUpButton, &QPushButton::clicked, ui->profileTableWidget, &ProfileTable::upAction);
-    connect(ui->pDownButton, &QPushButton::clicked, ui->profileTableWidget, &ProfileTable::downAction);
-    connect(ui->pEditButton, &QPushButton::clicked, ui->profileTableWidget, &ProfileTable::editAction);
+    // project
+    connect(ui->pAddButton, &QPushButton::clicked
+            , ui->profileTableWidget, &ProfileTable::addAction);
+    connect(ui->pDeleteButton, &QPushButton::clicked
+            , ui->profileTableWidget, &ProfileTable::deleteAction);
+    connect(ui->pUpButton, &QPushButton::clicked
+            , ui->profileTableWidget, &ProfileTable::upAction);
+    connect(ui->pDownButton, &QPushButton::clicked
+            , ui->profileTableWidget, &ProfileTable::downAction);
+    connect(ui->pEditButton, &QPushButton::clicked
+            , ui->profileTableWidget, &ProfileTable::editAction);
 
-    //application variable
-    connect(ui->vAddButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::addAction);
-    connect(ui->vCopyButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::copyAction);
-    connect(ui->vDeleteButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::deleteAction);
-    connect(ui->vUpButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::upAction);
-    connect(ui->vDownButton, &QPushButton::clicked, ui->variantTableWidget, &StringTable::downAction);
+    // application variable
+    connect(ui->vAddButton, &QPushButton::clicked
+            , ui->variantTableWidget, &StringTable::addAction);
+    connect(ui->vCopyButton, &QPushButton::clicked
+            , ui->variantTableWidget, &StringTable::copyAction);
+    connect(ui->vDeleteButton, &QPushButton::clicked
+            , ui->variantTableWidget, &StringTable::deleteAction);
+    connect(ui->vUpButton, &QPushButton::clicked
+            , ui->variantTableWidget, &StringTable::upAction);
+    connect(ui->vDownButton, &QPushButton::clicked
+            , ui->variantTableWidget, &StringTable::downAction);
 
-    //search variable
-    connect(ui->sAddButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::addAction);
-    connect(ui->sCopyButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::copyAction);
-    connect(ui->sDeleteButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::deleteAction);
-    connect(ui->sDownButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::upAction);
-    connect(ui->sUpButton, &QPushButton::clicked, ui->searchTableWidget, &SearchTable::downAction);
+    // search variable
+    connect(ui->sAddButton, &QPushButton::clicked
+            , ui->searchTableWidget, &SearchTable::addAction);
+    connect(ui->sCopyButton, &QPushButton::clicked
+            , ui->searchTableWidget, &SearchTable::copyAction);
+    connect(ui->sDeleteButton, &QPushButton::clicked
+            , ui->searchTableWidget, &SearchTable::deleteAction);
+    connect(ui->sDownButton, &QPushButton::clicked
+            , ui->searchTableWidget, &SearchTable::downAction);
+    connect(ui->sUpButton, &QPushButton::clicked
+            , ui->searchTableWidget, &SearchTable::upAction);
 
-    //extend variable
-    connect(ui->eAddButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::addAction);
-    connect(ui->eDeleteButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::deleteAction);
-    connect(ui->eUpButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::upAction);
-    connect(ui->eDownButton, &QPushButton::clicked, ui->pluginsTreeWidget, &PluginsTree::downAction);
+    // plugin variable
+    connect(ui->eAddButton, &QPushButton::clicked
+            , ui->pluginsTreeWidget, &PluginsTree::addAction);
+    connect(ui->eDeleteButton, &QPushButton::clicked
+            , ui->pluginsTreeWidget, &PluginsTree::deleteAction);
+    connect(ui->eUpButton, &QPushButton::clicked
+            , ui->pluginsTreeWidget, &PluginsTree::upAction);
+    connect(ui->eDownButton, &QPushButton::clicked
+            , ui->pluginsTreeWidget, &PluginsTree::downAction);
 
-    //langcombobox
+    // langcombobox
     initLanguageSelection();
 }
 
@@ -88,12 +108,16 @@ void OptionDialog::setSettings()
 void OptionDialog::loadSettings()
 {
     QSettings settings( sc.OUTPUT_FILE_ABR, QSettings::IniFormat );
-
     settings.beginGroup(sc.GROUP_ABR);
-    ui->themeComboBox->setCurrentText(settings.value(sc.ABR_THEME, "Default").toString());
-    ui->windowFontComboBox->setCurrentFont(QFont(settings.value(sc.ABR_FONT, QApplication::font().toString()).toString()));
-    ui->windowFontSizeSpinBox->setValue(settings.value(sc.ABR_FONTSIZE, QApplication::font().pointSize()).toInt());
+
+    ui->themeComboBox->setCurrentText(
+        settings.value(sc.ABR_THEME, "Default").toString());
+    ui->windowFontComboBox->setCurrentFont(
+        QFont(settings.value(sc.ABR_FONT, QApplication::font().toString()).toString()));
+    ui->windowFontSizeSpinBox->setValue(
+        settings.value(sc.ABR_FONTSIZE, QApplication::font().pointSize()).toInt());
     loadLanguageSelection(&settings);
+
     settings.endGroup();
 }
 
@@ -131,8 +155,11 @@ void OptionDialog::storeLanguageSelection(QSettings *setting)
 void OptionDialog::loadLanguageSelection(QSettings *setting)
 {
     QLocale defloc;
-    QLocale locale(setting->value(sc.ABR_LANGUAGE, defloc.bcp47Name()).toString());
-    ui->languageComboBox->setCurrentText(QLocale::languageToString(locale.language()));
+    QLocale locale(
+        setting->value(sc.ABR_LANGUAGE, defloc.bcp47Name()).toString());
+
+    ui->languageComboBox->setCurrentText(
+        QLocale::languageToString(locale.language()));
 }
 
 //change list to stackedwidget

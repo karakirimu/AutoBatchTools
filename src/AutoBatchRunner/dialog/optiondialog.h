@@ -29,9 +29,7 @@ private slots:
     void on_listWidget_currentRowChanged(int currentRow);
     void onAccept();
 
-private:
-    Ui::OptionDialog *ui;
-
+private:   
     void showEvent(QShowEvent *event) override;
     void closeEvent(QCloseEvent *event) override;
 
@@ -44,6 +42,7 @@ private:
     void loadLanguageSelection(QSettings *setting);
 
     SettingConstant sc;
+    Ui::OptionDialog *ui;
 };
 
 #endif // OPTIONDIALOG_H
