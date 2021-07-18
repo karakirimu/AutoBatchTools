@@ -54,21 +54,29 @@ public:
    explicit SearchXmlBuilder(QObject *parent = nullptr);
    ~SearchXmlBuilder() override;
 
+   bool readAll(QList<QList<QStringList> *> *itemlist);
+   bool writeAll(const QList<QList<QStringList> *> *itemlist);
+
    bool readItem(int itemid, QList<QStringList> *itemlist);
    bool addItem(const QList<QStringList> *itemlist);
    bool deleteItem(int itemid);
    bool editItem(int itemid, const QList<QStringList> *itemlist);
    void swapItem(int beforeitemid, int afteritemid);
    void copyItem(int itemid);
-   void createDocument();
-   int count();
-   QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase);
-private:
 
+   int count();
+
+   QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase);
+
+private:
     void setSearchItemData(QString element, QList<QStringList> *list) override;
+    void createDocument();
+
     const QString ROOTELEMENT = "search";
     const QString FIRSTLAYER = "item";
     const QString ATTR = "id";
+    const QString ATTRVERSION = "version";
+    const QString VERSION = "1.00";
 };
 
 #endif // SEARCHXMLBUILDER_H

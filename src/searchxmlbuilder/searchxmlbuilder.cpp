@@ -26,14 +26,40 @@ SearchXmlBuilder::~SearchXmlBuilder()
 {
 }
 
+bool SearchXmlBuilder::readAll(QList<QList<QStringList> *> *itemlist)
+{
+    qDebug() << "[SearchXmlBuilder::readAll]";
+    return Xmlbuilder::readAllItem(FIRSTLAYER
+                                   , ATTR
+                                   , itemlist);
+}
+
+bool SearchXmlBuilder::writeAll(const QList<QList<QStringList> *> *itemlist)
+{
+    qDebug() << "[SearchXmlBuilder::writeAll]";
+    return Xmlbuilder::writeAllItem(ROOTELEMENT
+                                    , ATTRVERSION
+                                    , VERSION
+                                    , FIRSTLAYER
+                                    , ATTR
+                                    , itemlist);
+}
+
 bool SearchXmlBuilder::readItem(int itemid, QList<QStringList> *itemlist)
 {
-    return Xmlbuilder::readItem(itemid, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::readItem(itemid
+                                , FIRSTLAYER
+                                , ATTR
+                                , itemlist);
 }
 
 bool SearchXmlBuilder::addItem(const QList<QStringList> *itemlist)
 {
-    return Xmlbuilder::overwriteItem(count(), ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::overwriteItem(count()
+                                     , ROOTELEMENT
+                                     , FIRSTLAYER
+                                     , ATTR
+                                     , itemlist);
 }
 
 bool SearchXmlBuilder::deleteItem(int itemid)
@@ -43,12 +69,20 @@ bool SearchXmlBuilder::deleteItem(int itemid)
 
 bool SearchXmlBuilder::editItem(int itemid, const QList<QStringList> *itemlist)
 {
-    return Xmlbuilder::overwriteItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::overwriteItem(itemid
+                                     , ROOTELEMENT
+                                     , FIRSTLAYER
+                                     , ATTR
+                                     , itemlist);
 }
 
 void SearchXmlBuilder::swapItem(int beforeitemid, int afteritemid)
 {
-    Xmlbuilder::swapItem(beforeitemid, afteritemid, ROOTELEMENT, FIRSTLAYER, ATTR);
+    Xmlbuilder::swapItem(beforeitemid
+                         , afteritemid
+                         , ROOTELEMENT
+                         , FIRSTLAYER
+                         , ATTR);
 }
 
 // this function needs to call setrowcount
@@ -59,7 +93,7 @@ void SearchXmlBuilder::copyItem(int itemid)
 
 void SearchXmlBuilder::createDocument()
 {
-    createXmlBaseDocument(ROOTELEMENT);
+    createXmlBaseDocument(ROOTELEMENT, ATTRVERSION, VERSION);
 }
 
 int SearchXmlBuilder::count()
@@ -104,7 +138,8 @@ QString SearchXmlBuilder::fetch(QString tag,
  *
  * this functions getting set element child only.
  */
-void SearchXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
+void SearchXmlBuilder::setSearchItemData(QString element
+                                         , QList<QStringList> *list)
 {
     if(element == SEARCH_NAME
         || element == SEARCH_KEYWORD
