@@ -15,6 +15,13 @@ FileQueueTable::FileQueueTable(QWidget *parent)
     // disable edit
     setEditTriggers(QAbstractItemView::NoEditTriggers);
 
+    // set drop from outside
+    setDragEnabled(true);
+    setAcceptDrops(true);
+    setDropIndicatorShown(true);
+    setDefaultDropAction(Qt::CopyAction);
+    setDragDropMode(QAbstractItemView::DragDrop);
+
     //popupAction
     setPopupActionTop();
     setPopupActionDefault();
@@ -36,7 +43,10 @@ FileQueueTable::FileQueueTable(QWidget *parent)
                                   , qpc.VERTICAL_HEADER_ENABLE);
 
     //set header sort settings
-    connect(horizontalHeader(), &QHeaderView::sectionClicked, this, &FileQueueTable::horizontalHeaderClicked);
+    connect(horizontalHeader()
+            , &QHeaderView::sectionClicked
+            , this
+            , &FileQueueTable::horizontalHeaderClicked);
 
 }
 
@@ -46,18 +56,25 @@ FileQueueTable::~FileQueueTable()
 }
 
 void FileQueueTable::horizontalHeaderClicked(int column){
-    Qt::SortOrder order = horizontalHeader()->sortIndicatorOrder() ? Qt::DescendingOrder : Qt::AscendingOrder;
+    Qt::SortOrder order
+        = horizontalHeader()->sortIndicatorOrder()
+              ? Qt::DescendingOrder : Qt::AscendingOrder;
     sortItems(column, order);
 }
 
 void FileQueueTable::dropEvent(QDropEvent *event)
 {
     const QMimeData* mime = event->mimeData();
-    qDebug() << event->mimeData()->hasUrls();
+
+    qDebug() << "[FileQueueTable::dropEvent] hasUrls :"
+             << mime->hasUrls();
+
     if(mime->hasUrls()){
         addFiles(droppedFromOutside(event));
     }else {
-        insideDropRowsMove(event);
+        int droppedrow
+            = this->indexAt(event->position().toPoint()).row();
+        droppedFromInside(droppedrow);
     }
 }
 
@@ -67,8 +84,11 @@ void FileQueueTable::addFilesAction()
 
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::ExistingFiles);
-    selected = dialog.getOpenFileNames(this, tr("Open Files"),\
-                                       QDir::currentPath(), tr("Files (*.*)"));
+    selected
+        = dialog.getOpenFileNames(this
+                                  , tr("Open Files")
+                                  , QDir::currentPath()
+                                  , tr("Files (*.*)"));
     addFiles(selected);
 }
 
@@ -77,8 +97,9 @@ void FileQueueTable::addFolderAction()
     QString selected = selectFolder(QDir::currentPath());
 
     int rcount = this->rowCount();
-    this->setRowCount(rcount+1);
-    this->setItem(rcount,0,new QTableWidgetItem(selected));
+    this->setRowCount(rcount + 1);
+    QIcon folder = QFileIconProvider().icon(QAbstractFileIconProvider::Folder);
+    this->setItem(rcount, 0, new QTableWidgetItem(folder, selected));
 }
 
 void FileQueueTable::deleteAciton()
@@ -88,18 +109,21 @@ void FileQueueTable::deleteAciton()
 
 void FileQueueTable::clearAction()
 {
-    this->selectAll();
-    deleteTableRecursive();
+    this->clearContents();
+    this->setRowCount(0);
 }
 
 void FileQueueTable::propertyAction()
 {
-    if(this->rowCount() > 0){
-        FileInfoDialog *dialog = new FileInfoDialog();
-        dialog->setStyleSheet(this->styleSheet());
-        dialog->setFileInfo(this->selectedItems().at(0)->text());
-        dialog->show();
+    if(this->selectionModel()
+            ->selectedRows().count() != 1){
+        return;
     }
+
+    FileInfoDialog *dialog = new FileInfoDialog();
+    dialog->setStyleSheet(this->styleSheet());
+    dialog->setFileInfo(this->selectedItems().at(0)->text());
+    dialog->show();
 }
 
 void FileQueueTable::dragEnterEvent(QDragEnterEvent *event)
@@ -112,24 +136,41 @@ void FileQueueTable::dragEnterEvent(QDragEnterEvent *event)
 
 void FileQueueTable::addFiles(const QStringList &filenames)
 {
-    // check files
-    for (int i = 0; i < filenames.size(); ++i){
+    for(const auto &filename : filenames){
         // get current row count
         int rcount = this->rowCount();
         //open file
-        QFile cfile(filenames.at(i));
+        QFile cfile(filename);
         if (cfile.open(QIODevice::ReadOnly)){
             // append row
-            this->setRowCount(rcount+1);
+            this->setRowCount(rcount + 1);
 
             //Add imported information to table
-            QFileInfo file(filenames.at(i));
+            QFileInfo file(filename);
             QTableWidgetItem *newitem = new QTableWidgetItem();
             newitem->setData(Qt::DisplayRole, file.canonicalFilePath());
-            newitem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled \
-                              | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
 
-           this->setItem(rcount,0, newitem);
+
+#ifdef Q_OS_WINDOWS
+            QFileIconProvider provider;
+            QIcon icon = provider
+                           .icon(QAbstractFileIconProvider::File);
+#else
+            QFileIconProvider provider;
+                        QIcon icon = provider.icon(file);
+
+            if(icon.isNull()){
+            QIcon icon = provider
+                             .icon(QAbstractFileIconProvider::File);
+            }
+#endif
+            newitem->setIcon(icon);
+
+            newitem->setFlags(Qt::ItemIsSelectable
+                              | Qt::ItemIsEnabled
+                              | Qt::ItemIsDragEnabled
+                              | Qt::ItemIsDropEnabled);
+            this->setItem(rcount, 0, newitem);
         }
         cfile.close();
     }
@@ -138,7 +179,6 @@ void FileQueueTable::addFiles(const QStringList &filenames)
 void FileQueueTable::setPopupActionTop()
 {
     //init menu context
-//    contextMenu->setStyleSheet("border:1px;");
     m_addfile = addTableAction(ACTION::FILES);
     m_adddir = addTableAction(ACTION::FOLDER);
     m_deleteitems = addTableAction(ACTION::REMOVE, Qt::Key_Delete);
@@ -146,10 +186,14 @@ void FileQueueTable::setPopupActionTop()
     m_deleteAll = addTableAction(ACTION::CLEAR);
 
     //connect signals
-    connect(m_addfile, &QAction::triggered, this, &FileQueueTable::addFilesAction);
-    connect(m_adddir, &QAction::triggered, this, &FileQueueTable::addFolderAction);
-    connect(m_deleteitems, &QAction::triggered, this, &FileQueueTable::deleteAciton);
-    connect(m_deleteAll, &QAction::triggered, this, &FileQueueTable::clearAction);
+    connect(m_addfile, &QAction::triggered
+            , this, &FileQueueTable::addFilesAction);
+    connect(m_adddir, &QAction::triggered
+            , this, &FileQueueTable::addFolderAction);
+    connect(m_deleteitems, &QAction::triggered
+            , this, &FileQueueTable::deleteAciton);
+    connect(m_deleteAll, &QAction::triggered
+            , this, &FileQueueTable::clearAction);
 }
 
 void FileQueueTable::setPopupActionDefault()
@@ -168,5 +212,7 @@ void FileQueueTable::setPopupActionBottom()
 {
     contextMenu->addSeparator();
     m_property = addTableAction(ACTION::FILEINFO);
-    connect(m_property, &QAction::triggered, this, &FileQueueTable::propertyAction);
+
+    connect(m_property, &QAction::triggered
+            , this, &FileQueueTable::propertyAction);
 }

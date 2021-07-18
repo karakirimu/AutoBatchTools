@@ -13,13 +13,15 @@
 #include "../basictable/basictable.h"
 #include "../fileinfodialog/fileinfodialog.h"
 #include <../share/qss/qsspropertyconstant.h>
+#include <QFileIconProvider>
+#include <QFileSystemModel>
 
 class FILEQUEUETABLESHARED_EXPORT FileQueueTable : public BasicTable
 {
     Q_OBJECT
 public:
     explicit FileQueueTable(QWidget *parent = nullptr);
-    ~FileQueueTable();
+    ~FileQueueTable() override;
 
     void addFiles(const QStringList &filenames);
 
@@ -27,15 +29,16 @@ public:
     void addFolderAction();
 
 protected slots:
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
 
 private slots:
     void setPopupActionTop();
     void setPopupActionDefault();
     void setPopupActionBottom();
 
-    void horizontalHeaderClicked(int column);
+    void horizontalHeaderClicked(int column) override;
+
     void deleteAciton();
     void clearAction();
     void propertyAction();
