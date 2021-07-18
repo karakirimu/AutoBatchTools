@@ -8,7 +8,8 @@
 
 #include "profiletable.h"
 
-ProfileTable::ProfileTable(QWidget *)
+ProfileTable::ProfileTable(QWidget *parent)
+    : BasicTable(parent)
 {
     //disable edit
     setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -32,37 +33,25 @@ ProfileTable::ProfileTable(QWidget *)
                                     , qpc.VERTICAL_HEADER_ENABLE);
 
     //set header label
-    setHorizontalHeaderLabels((QStringList() << tr("Profile") << tr("Description") << tr("File")));
+    setHorizontalHeaderLabels((QStringList()
+                               << tr("Profile")
+                               << tr("Description")
+                               << tr("File")));
 
     //set new xml builder
     builder = new ProfileXmlBuilder();
-
-    //disable copy context
-    m_copy->setEnabled(false);
 
     //init table (reload read file.)
     reloadAction();
 
     //set doubleclick action
-    connect(this, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(editAction()));
+    connect(this, &ProfileTable::cellDoubleClicked
+            , this, &ProfileTable::launchEditor);
 }
 
 ProfileTable::~ProfileTable()
 {
     delete builder;
-}
-
-void ProfileTable::newAction()
-{
-    //run AutoBatchEditor.exe
-    QProcess process;
-    process.setProgram("./AutoBatchEditor.exe");
-#ifdef QT_DEBUG
-    bool result = process.startDetached();
-    if(!result) qDebug() << "AutoBatchEditor launch failed.";
-#else
-    process.startDetached();
-#endif
 }
 
 void ProfileTable::setPopupActionTop()
@@ -76,11 +65,11 @@ void ProfileTable::setPopupActionTop()
     m_edit = addTableAction(ACTION::EDIT, Qt::CTRL, Qt::Key_E);
     contextMenu->addSeparator();
 
-    m_copy = addTableAction(ACTION::COPY, Qt::CTRL, Qt::Key_C);
-    contextMenu->addSeparator();
-
     m_up = addTableAction(ACTION::UP, Qt::CTRL, Qt::Key_Up);
     m_down = addTableAction(ACTION::DOWN, Qt::CTRL, Qt::Key_Down);
+    contextMenu->addSeparator();
+
+    m_ref = addTableAction(ACTION::REFRESH, Qt::CTRL, Qt::Key_R);
 
     //connect signals
     connect(m_new, &QAction::triggered, this, &ProfileTable::newAction);
@@ -88,10 +77,10 @@ void ProfileTable::setPopupActionTop()
     connect(m_edit, &QAction::triggered, this, &ProfileTable::editAction);
     connect(m_delete, &QAction::triggered, this, &ProfileTable::deleteAction);
 
-    connect(m_copy, &QAction::triggered, this, &ProfileTable::copyAction);
-
     connect(m_up, &QAction::triggered, this, &ProfileTable::upAction);
     connect(m_down, &QAction::triggered, this, &ProfileTable::downAction);
+
+    connect(m_ref, &QAction::triggered, this, &ProfileTable::reloadAction);
 }
 
 bool ProfileTable::eventFilter(QObject *obj, QEvent *event)
@@ -129,13 +118,9 @@ bool ProfileTable::eventFilter(QObject *obj, QEvent *event)
             }
            break;
 
-          case Qt::Key_C:      if (mdCheck())  copyAction();    break;
           case Qt::Key_E:      if (mdCheck())  editAction();    break;
           case Qt::Key_R:      if (mdCheck())  reloadAction();  break;
-
-          default:
-            //qDebug("Ate key press %d", keyEvent->key());
-            break;
+          default:                                              break;
         }
        return true;
    }
@@ -143,7 +128,8 @@ bool ProfileTable::eventFilter(QObject *obj, QEvent *event)
    return QObject::eventFilter(obj, event);
 }
 
-void ProfileTable::createList(QString filename, QList<QStringList> *newlist)
+void ProfileTable::createListFromXml(QString filename
+                                     , QList<QStringList> *newlist)
 {
     QList<QStringList> item;
 
@@ -155,120 +141,203 @@ void ProfileTable::createList(QString filename, QList<QStringList> *newlist)
 
     //read item 0 (info)
     if(pbuilder->readItem(0, &item)){
-        //add name
-        newlist->append((QStringList() << "name" << item.at(1).at(1)));
+        QStringList vl = (QStringList()
+                          << xf.fetch(&item, pxc.TAG_I_NAME)
+                          << xf.fetch(&item, pxc.TAG_I_DESCRIPTION)
+                          << filename);
 
-        //add desc
-        newlist->append((QStringList() << "desc" << item.at(4).at(1)));
-
-        //add filepath
-        newlist->append((QStringList() << "file" << filename));
+        builder->createVarElement(newlist, &vl);
     }
     delete pbuilder;
 }
 
-void ProfileTable::setTableItem(int row)
+/**
+ * @fn ProfileTable::createList
+ * @brief Create a list from table data to be written to XML.
+ * @param row Selected line.
+ * @param newlist Conversion result.
+ */
+void ProfileTable::createList(int row
+                              , QList<QStringList> *newlist)
 {
-    QList<QStringList> *list = new QList<QStringList>();
-    if(builder->readItem(row, list)){
-        //set tableitem
-        this->setItem(row,0,new QTableWidgetItem(list->at(0).at(1)));
-        this->setItem(row,1,new QTableWidgetItem(list->at(1).at(1)));
-        QFileInfo info(list->at(2).at(1));
-        this->setItem(row,2,new QTableWidgetItem(info.fileName()));
+    int cols = this->columnCount();
+
+    QStringList rowdata;
+    for(int i = 0; i < cols; i++){
+        if(i == 2){
+            // need fullpath information
+            rowdata.append(this->model()->index(row, i)
+                               .data(Qt::UserRole).toString());
+        }else{
+            rowdata.append(this->model()->index(row, i)
+                               .data().toString());
+        }
     }
-    delete list;
+
+    builder->createVarElement(newlist, &rowdata);
 }
 
+/**
+ * @fn ProfileTable::newAction
+ * @brief Start AutoBatchEditor
+ */
+void ProfileTable::newAction()
+{
+    bool result = QProcess().startDetached("./AutoBatchEditor");
+
+    qDebug() << "[ProfileTable::newAction] AutoBatchEditor launched:"
+             << result;
+}
+
+/**
+ * @fn ProfileTable::addAction
+ * @brief Add a table and xml elements containing an empty string.
+ */
 void ProfileTable::addAction()
 {
     QString fileName =
-            QFileDialog::getOpenFileName(this, tr("Open Profile"),\
-                                         QDir::currentPath(),\
-                                         tr("Profile ") + "(*.xml *.apro)");
-    if (fileName.isEmpty())
-        return;
+            QFileDialog::getOpenFileName(this
+                                     , tr("Open Profile")
+                                     , QDir::currentPath()
+                                     , tr("Profile ") + "(*.xml *.apro)");
+    if (fileName.isEmpty()) return;
 
-    //add new item
+    // add new item
     QList<QStringList> list;
-    createList(fileName, &list);
+    createListFromXml(fileName, &list);
     builder->addItem(&list);
 
     reloadAction();
 }
 
+/**
+ * @fn ProfileTable::editAction
+ * @brief Launch AutoBatchEditor for the selected location.
+ */
 void ProfileTable::editAction()
 {
     //if rowcount is zero.
     if(this->rowCount() == 0) return;
-
-    QList<QStringList> *list = new QList<QStringList>();
-    if(builder->readItem(this->currentRow(), list)){
-
-        QProcess process;
-#ifdef QT_DEBUG
-        bool result = process.startDetached("./AutoBatchEditor.exe", \
-                        (QStringList() << list->at(2).at(1)));
-       if(!result) qDebug() << "AutoBatchEditor launch failed.";
-#else
-    #ifdef Q_OS_WIN
-        process.startDetached("./AutoBatchEditor.exe", QStringList() << list->at(2).at(1));
-    #else
-        process.startDetached("./AutoBatchEditor", QStringList() << list->at(2).at(1));
-    #endif
-#endif
-    }
-    delete list;
+    launchEditor(this->currentRow());
 }
 
+/**
+ * @fn ProfileTable::deleteAction
+ * @brief Deletes the selected tableItem and xml elements synchronously.
+ */
 void ProfileTable::deleteAction()
 {
-    //if rowcount is zero.
+    // if rowcount is zero.
     if(this->rowCount() == 0) return;
 
-    //check delete warning message
-    if(deleteCheckMessage())
-    {
-        //delete file item
-        builder->deleteItem(currentRow());
-
-        //reload
-        reloadAction();
+    // check delete warning message
+    if(deleteCheckMessage()) {
+        deleteTableRecursive();
+        updateXml();
     }
 }
 
+/**
+ * @fn ProfileTable::upAction
+ * @brief Move up one selection line.
+ */
 void ProfileTable::upAction()
 {
-    int current = this->currentRow();
-    if(current == 0) return;
-
-    builder->swapItem(current, current-1);
-
-    reloadAction();
-
-    selectRow(current - 1);
+    upSelected([&](int current) {
+        Q_UNUSED(current)
+        updateXml();
+    });
 }
 
+/**
+ * @fn ProfileTable::downAction
+ * @brief Move down one selection line.
+ */
 void ProfileTable::downAction()
 {
-    int current = this->currentRow();
-    int counter = this->rowCount();
-
-    if((current + 1) == counter) return;
-
-    builder->swapItem(current, current+1);
-
-    reloadAction();
-
-    selectRow(current + 1);
+    downSelected([&](int current) {
+        Q_UNUSED(current)
+        updateXml();
+    });
 }
 
+/**
+ * @fn ProfileTable::reloadAction
+ * @brief Update all table items.
+ */
 void ProfileTable::reloadAction()
 {
-    int count = builder->count();
-    //set tables
+    QList<QList<QStringList> *> item;
+    builder->readAll(&item);
+    int count = static_cast<int>(item.count());
+
+    // set tables
     setRowCount(count);
+
     for(int i = 0; i < count; i++){
-        setTableItem(i);
+        setTableItem(i, item.at(i));
     }
+}
+
+/**
+ * @fn ProfileTable::launchEditor
+ * @brief Load the selected file and start AutoBatchEditor.
+ * @param row selected row
+ * @param col selected column
+ */
+void ProfileTable::launchEditor(int row, int col)
+{
+    Q_UNUSED(col)
+
+    QString path = this->model()
+                       ->index(row, 2)
+                       .data(Qt::UserRole).toString();
+
+    bool result = QProcess().startDetached("./AutoBatchEditor"
+                                           , QStringList() << path);
+
+    qDebug() << "[ProfileTable::launchEditor] AutoBatchEditor launched:"
+             << result;
+}
+
+/**
+ * @fn ProfileTable::updateXml
+ * @brief It takes the data in the table and overwrites the XML file.
+ */
+void ProfileTable::updateXml()
+{
+    int datacount = this->rowCount();
+    QList<QList<QStringList> *> itemlist;
+
+    for(int i = 0; i < datacount; i++){
+        //add empty item
+        QList<QStringList> *list = new QList<QStringList>();
+        createList(i, list);
+        itemlist.append(list);
+    }
+
+    builder->writeAll(&itemlist);
+}
+
+/**
+ * @fn ProfileTable::setTableItem
+ * @brief
+ * Set data for a single row.
+ * The second column contains the file name
+ * in Qt::DisplayRole and the file path in Qt::UserRole.
+ *
+ * @param row Row to set the table.
+ * @param item One line of data to retrieve from XML.
+ */
+void ProfileTable::setTableItem(int row, const QList<QStringList> *item)
+{
+    // set item
+    this->setItem(row, 0, new QTableWidgetItem(item->at(0).at(1)));
+    this->setItem(row, 1, new QTableWidgetItem(item->at(1).at(1)));
+
+    // set display name and filepath for reload
+    QFileInfo info(item->at(2).at(1));
+    QTableWidgetItem *file = new QTableWidgetItem(info.fileName());
+    file->setData(Qt::UserRole, QVariant(item->at(2).at(1)));
+    this->setItem(row, 2, file);
 }

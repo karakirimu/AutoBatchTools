@@ -20,20 +20,28 @@ class ProfileTable : public BasicTable
     Q_OBJECT
 public:
     explicit ProfileTable(QWidget *parent = nullptr);
-    ~ProfileTable();
+    ~ProfileTable() override;
 
 public slots:
     void newAction();
-    void addAction();
-    void editAction();
-    void deleteAction();
-    void upAction();
-    void downAction();
+    void addAction()    override;
+    void editAction()   override;
+    void deleteAction() override;
+    void upAction()     override;
+    void downAction()   override;
     void reloadAction();
+
+private slots:
+    void launchEditor(int row, int col = 0);
+
 private:
     void setPopupActionTop();
-    bool eventFilter(QObject *obj, QEvent *event);
-    void createList(QString filename, QList<QStringList> *newlist);
+    bool eventFilter(QObject *obj, QEvent *event) override;
+    void createListFromXml(QString filename, QList<QStringList> *newlist);
+    void createList(int row, QList<QStringList> *newlist);
+
+    void updateXml();
+    void setTableItem(int row, const QList<QStringList> *item);
 
     QAction *m_new;
     QAction *m_add;
@@ -41,8 +49,9 @@ private:
     QAction *m_delete;
     QAction *m_ref;
 
+    ProcessXmlListGenerator xf;
+    ProcessXmlConstant pxc;
     ProfileXmlBuilder *builder;
-    void setTableItem(int row);
 };
 
 #endif // PROFILETABLE_H
