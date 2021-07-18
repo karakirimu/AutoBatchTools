@@ -11,7 +11,7 @@
 CommandTable::CommandTable(QWidget *parent)
     : BasicTable(parent)
 {
-    //popupAction
+    // popupAction
     setPopupActionTop();
     setPopupActionDefault();
 
@@ -20,25 +20,27 @@ CommandTable::CommandTable(QWidget *parent)
     setDropIndicatorShown(true);
     setDragDropMode(QAbstractItemView::InternalMove);
 
-    //init table size
+    // init table size
     setColumnCount(1);
     setRowCount(0);
 
-    //adjust row
+    // adjust row
     resizeRowsToContents();
 
-    //adjust column
+    // adjust column
     horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
 
-    //set vertical header style
+    // set vertical header style
     QssPropertyConstant qpc;
     verticalHeader()->setProperty(qpc.VERTICAL_HEADER_STYLE \
                                     , qpc.VERTICAL_HEADER_ENABLE);
 
-    //set header label
-    setHorizontalHeaderLabels((QStringList() << tr("Executable file / Arguments")));
+    // set header label
+    setHorizontalHeaderLabels((QStringList()
+                               << tr("Executable file / Arguments")));
 
-    connect(this,&CommandTable::cellChanged, this, &CommandTable::editedAction);
+    connect(this,&CommandTable::cellChanged
+            , this, &CommandTable::editedAction);
 }
 
 CommandTable::~CommandTable()
@@ -82,8 +84,16 @@ void CommandTable::swapItem(int before, int after)
     //swap item
     QString tmp = this->model()->index(before, 0).data().toString();
     this->blockSignals(true);
-    this->setItem(before, 0, new QTableWidgetItem(this->model()->index(after, 0).data().toString()));
-    this->setItem(after, 0, new QTableWidgetItem(tmp));
+    this->setItem(before
+                  , 0
+                  , new QTableWidgetItem(this
+                                           ->model()
+                                           ->index(after, 0)
+                                           .data()
+                                           .toString()));
+    this->setItem(after
+                  , 0
+                  , new QTableWidgetItem(tmp));
     this->blockSignals(false);
 
     this->clearSelection();
@@ -103,13 +113,19 @@ void CommandTable::moveItem(int before, int beforecount, int after)
 
     if(before < after){
         for (int i = 0; i < beforecount; i++) {
-            selectlist.insert(before + i, this->model()->index(before + i, 0).data().toString());
+            selectlist.insert(before + i
+                              , this->model()->index(before + i, 0)
+                                  .data()
+                                  .toString());
         }
 
     }else{
         int bc = before - beforecount + 1;
         for (int i = 0; i < beforecount; i++) {
-            selectlist.insert(bc + i, this->model()->index(bc + i, 0).data().toString());
+            selectlist.insert(bc + i
+                              , this->model()->index(bc + i, 0)
+                                  .data()
+                                  .toString());
         }
     }
 
@@ -155,7 +171,8 @@ void CommandTable::moveItem(int before, int beforecount, int after)
 
 void CommandTable::dragEnterEvent(QDragEnterEvent *event)
 {
-    qDebug() << "[CommandTable::dragEnterEvent] Object : " << event->source()->objectName();
+    qDebug() << "[CommandTable::dragEnterEvent] Object : "
+             << event->source()->objectName();
     if(event->source() != nullptr){
         event->acceptProposedAction();
     }
@@ -169,7 +186,7 @@ void CommandTable::dropEvent(QDropEvent *event)
     int droppedrow = this->indexAt(event->position().toPoint()).row();
 
     QList<int> beforeindex;
-    if(!BaseTable::insideDropRowsMove(event, &beforeindex)) return;
+    if(!BaseTable::droppedFromInside(droppedrow, &beforeindex)) return;
 
     qDebug() << "[CommandTable::dropEvent] droppedrow : " << droppedrow;
 
@@ -205,14 +222,18 @@ void CommandTable::deleteAction()
     //check delete warning message
     if(!deleteCheckMessage()) return;
 
-    QModelIndexList lists = this->selectedIndexes();
+//    QModelIndexList lists = this->selectedIndexes();
 
-    while(!lists.empty()){
-        this->removeRow(lists.at(0).row());
-        emit updateTable(lists.at(0).row(), "", UiCommandMap::E_DELETE_TABLE);
+//    while(!lists.empty()){
+//        this->removeRow(lists.at(0).row());
+//        emit updateTable(lists.at(0).row(), "", UiCommandMap::E_DELETE_TABLE);
 
-        lists = this->selectedIndexes();
-    }
+//        lists = this->selectedIndexes();
+//    }
+
+    deleteTableRecursive([&](int row){
+        emit updateTable(row, "", UiCommandMap::E_DELETE_TABLE);
+    });
 }
 
 /**
@@ -291,52 +312,12 @@ void CommandTable::pasteAction()
 
 void CommandTable::pasteSpaceAction()
 {
-    QClipboard *clipboard = QApplication::clipboard();
-    QStringList text = clipboard->text().split(QRegularExpression("\\t| "));
-
-    if(text.last() == "") text.removeLast();
-    if(text.first() == "") text.removeFirst();
-
-    qsizetype txcount = text.count();
-    int row = this->currentRow();
-    row = (row < 0) ? 0 : row;
-
-    for(int i = 0; i < txcount; i++){
-       insertRow(row);
-    }
-
-    for(int i = 0; i < txcount; i++){
-       this->blockSignals(true);
-       this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
-       this->blockSignals(false);
-       emit updateTable(row + i, text.at(i), UiCommandMap::E_PASTE_TABLE);
-    }
+    paste(QRegularExpression("\\t| "));
 }
 
 void CommandTable::pasteEnterAction()
 {
-    QClipboard *clipboard = QApplication::clipboard();
-
-    QStringList text = clipboard->text().split(QRegularExpression("\\t|\\n|\\r\\n"));
-
-    //last lests unknown ""
-    if(text.last() == "") text.removeLast();
-    if(text.first() == "") text.removeFirst();
-
-    qsizetype txcount = text.count();
-    int row = this->currentRow();
-    row = (row < 0) ? 0 : row;
-
-    for(int i = 0; i < txcount; i++){
-       insertRow(row);
-    }
-
-    for(int i = 0; i < txcount; i++){
-       this->blockSignals(true);
-       this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
-       this->blockSignals(false);
-       emit updateTable(row + i, text.at(i), UiCommandMap::E_PASTE_TABLE);
-    }
+    paste(QRegularExpression("\\t|\\n|\\r\\n"));
 }
 
 /**
@@ -389,8 +370,10 @@ void CommandTable::openDirectoryAction()
 
 void CommandTable::editedAction(int row, int column)
 {
-    qDebug() << "[CommandTable : editedAction]";
-    emit updateTable(row, this->item(row, column)->text(), UiCommandMap::E_EDIT_TABLE);
+    qDebug() << "[CommandTable : editedAction] row:" << row
+             << ", column:" << column;
+    QString text = this->item(row, column)->text();
+    emit updateTable(row, text, UiCommandMap::E_EDIT_TABLE);
 }
 
 /**
@@ -448,11 +431,36 @@ void CommandTable::setPopupActionDefault()
     connect(m_down, &QAction::triggered, this, &CommandTable::downAction);
 }
 
+void CommandTable::paste(const QRegularExpression &exp)
+{
+    QClipboard *clipboard = QApplication::clipboard();
+    QStringList text = clipboard->text().split(exp);
+
+    //last lests unknown ""
+    if(text.last() == "") text.removeLast();
+    if(text.first() == "") text.removeFirst();
+
+    qsizetype txcount = text.count();
+    int row = this->currentRow();
+    row = (row < 0) ? 0 : row;
+
+    for(int i = 0; i < txcount; i++){
+        insertRow(row);
+    }
+
+    for(int i = 0; i < txcount; i++){
+        this->blockSignals(true);
+        this->setItem(row + i, 0, new QTableWidgetItem(text.at(i)));
+        this->blockSignals(false);
+        emit updateTable(row + i, text.at(i), UiCommandMap::E_PASTE_TABLE);
+    }
+}
+
 bool CommandTable::eventFilter(QObject *obj, QEvent *event)
 {
     QKeyEvent *keyEvent;
 
-    auto mdCheck = [&keyEvent](){
+    auto altCheck = [&keyEvent](){
         return static_cast<bool>(keyEvent->modifiers() & Qt::AltModifier);
     };
 
@@ -461,12 +469,12 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
         switch (keyEvent->key())
          {
            case Qt::Key_Return:
-           case Qt::Key_Enter:  if (mdCheck()) addAction();    break;
-           case Qt::Key_Delete: if (mdCheck()) deleteAction(); break;
-           case Qt::Key_E:      if (mdCheck()) editAction();   break;
+           case Qt::Key_Enter:  if (altCheck()) addAction();    break;
+           case Qt::Key_Delete: if (altCheck()) deleteAction(); break;
+           case Qt::Key_E:      if (altCheck()) editAction();   break;
 
            case Qt::Key_Up:
-             if(mdCheck()){
+             if(altCheck()){
                  upAction();
              }else{
                  if(this->currentRow() != 0)
@@ -475,7 +483,7 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
              break;
 
            case Qt::Key_Down:
-             if(mdCheck()){
+             if(altCheck()){
                  downAction();
              }else{
                  if(this->rowCount() - 1 != this->currentRow())
@@ -483,10 +491,9 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
              }
             break;
 
-           case Qt::Key_X:  if(mdCheck()) cutAction();    break;
-           case Qt::Key_C:  if(mdCheck()) copyAction();   break;
-           case Qt::Key_V:  if(mdCheck()) pasteAction();  break;
-
+           case Qt::Key_X:  if(altCheck()) cutAction();    break;
+           case Qt::Key_C:  if(altCheck()) copyAction();   break;
+           case Qt::Key_V:  if(altCheck()) pasteAction();  break;
            default:
              //qDebug("Ate key press %d", keyEvent->key());
              break;
@@ -495,7 +502,7 @@ bool CommandTable::eventFilter(QObject *obj, QEvent *event)
     }
 
 //    qDebug() << "[CommandTable::eventFilter] Event type : " << event->type();
-
+//    qDebug() << "[CommandTable::eventFilter]" << event;
     // standard event processing
     return QObject::eventFilter(obj, event);
 }

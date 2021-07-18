@@ -20,7 +20,7 @@ class CommandTable : public BasicTable
     Q_OBJECT
 public:
     explicit CommandTable(QWidget *parent = nullptr);
-    ~CommandTable();
+    ~CommandTable() override;
 
     QString getText(int row);
 
@@ -37,11 +37,11 @@ signals:
     void dragDropTable(QList<int> before, int after);
 
 protected slots:
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    void dropEvent(QDropEvent *event) override;
 
-    virtual void addAction();
-    virtual void deleteAction();
+    virtual void addAction() override;
+    virtual void deleteAction() override;
     virtual void cutAction();
     virtual void pasteAction();
     virtual void pasteSpaceAction();
@@ -50,17 +50,19 @@ protected slots:
     virtual void editedAction(int row, int column);
 
 private slots:
-    void editAction();
-    void copyAction();
-    void upAction();
-    void downAction();
+    void editAction() override;
+    void copyAction() override;
+    void upAction() override;
+    void downAction() override;
     void openFileAction();
     void openDirectoryAction();
 
 private:
+    bool eventFilter(QObject *obj, QEvent *event) override;
+
     void setPopupActionTop();
     void setPopupActionDefault();
-    bool eventFilter(QObject *obj, QEvent *event);
+    void paste(const QRegularExpression &exp);
 
     QAction *m_file;
     QAction *m_dir;
