@@ -367,7 +367,7 @@ bool Executor::loadNormal(QList<QStringList> *list)
     //set args
     QString app;
     QStringList arguments;
-    int cmdfirst = xgen.fetchCmdFirstPos(pxc.TAG_E_CMD_HA1, list);
+    int cmdfirst = xgen.fetchCommandFirstPos(pxc.TAG_E_CMD_HA1, list);
 
     app = macroConvert(list->at(cmdfirst).at(1));
 
@@ -542,7 +542,7 @@ bool Executor::loadPlugins(QList<QStringList> *list)
     connect(ext, &ExtraPluginInterface::updateMessage, this, &Executor::sendPluginMessage);
 
     int cmdc = static_cast<QString>(xgen.fetch(pxc.TAG_P_COMMANDCOUNT_INT, list)).toInt();
-    int ecmdfirst = xgen.fetchCmdFirstPos(pxc.TAG_P_CMD_HA1, list);
+    int ecmdfirst = xgen.fetchCommandFirstPos(pxc.TAG_P_CMD_HA1, list);
 
     QStringList tmp;
     for(int i = 0; i < cmdc; i++){
