@@ -30,11 +30,16 @@ FileSearchDialog::FileSearchDialog(QWidget *parent) :
         new QRegularExpressionValidator(QRegularExpression("[0-9]*"), this));
 
     //connect action
-    connect( ui->buttonBox, &QDialogButtonBox::accepted, this, &FileSearchDialog::onAccept);
-    connect( ui->buttonBox, &QDialogButtonBox::rejected, this, &FileSearchDialog::onReject);
-    connect( ui->openToolButton, &QAbstractButton::clicked, this, &FileSearchDialog::openAction);
-    connect( ui->testSearchButton, &QAbstractButton::clicked, this, &FileSearchDialog::searchAction);
-    connect( ui->directoryLineEdit, SIGNAL(textChanged(QString)), this, SLOT(dirEditFinished(QString)));
+    connect( ui->buttonBox, &QDialogButtonBox::accepted
+            , this, &FileSearchDialog::onAccept);
+    connect( ui->buttonBox, &QDialogButtonBox::rejected
+            , this, &FileSearchDialog::onReject);
+    connect( ui->openToolButton, &QAbstractButton::clicked
+            , this, &FileSearchDialog::openAction);
+    connect( ui->testSearchButton, &QAbstractButton::clicked, this
+            , &FileSearchDialog::searchAction);
+    connect( ui->directoryLineEdit, SIGNAL(textChanged(QString))
+                                       , this, SLOT(dirEditFinished(QString)));
 
     //set current time
     QDateTime time = QDateTime::currentDateTime();
@@ -71,52 +76,74 @@ FileSearchDialog::~FileSearchDialog()
  * 8    :fsize_1  :text   :enabled:data   :combo   :data
  * 9    :fsize_2  :text   :enabled:data   :combo   :data
  */
-void FileSearchDialog::loadSettingList(int index, const QList<QStringList> *data)
+void FileSearchDialog::loadSettingList(int index
+                                       , const QList<QStringList> *data)
 {
-    //qDebug() << data->toVector();
-//    if(data->count() != 9) return;
-
     //window title
-    setWindowTitle(tr("Editing - ") + builder->fetch(SEARCH_NAME, SEARCH_NONE, data));
+    setWindowTitle(tr("Editing - ")
+                   + builder->fetch(SEARCH_NAME, SEARCH_NONE, data));
 
     //set edit flags
     editflag = true;
     //set edit index
     editindex = index;
 
-    //setting data
-    ui->nameLineEdit->setText(builder->fetch(SEARCH_NAME, SEARCH_NONE, data));
+    auto toBool = [](QString str){
+        return VariantConverter::stringToBool(str);
+    };
 
-//    ui->variantLineEdit->setText(data->at(1).at(1));
+    //set data
+    ui->nameLineEdit->setText(
+        builder->fetch(SEARCH_NAME, SEARCH_NONE, data));
 
-    ui->keywordLineEdit->setText(builder->fetch(SEARCH_KEYWORD, SEARCH_NONE, data));
+    ui->keywordLineEdit->setText(
+        builder->fetch(SEARCH_KEYWORD, SEARCH_NONE, data));
 
-    ui->regexLineEdit->setText(builder->fetch(SEARCH_REGEX, SEARCH_NONE, data));
-    ui->regexCheckBox->setChecked(VariantConverter::stringToBool(builder->fetch(SEARCH_RECURSIVE, SEARCH_NONE, data)));
+    ui->regexLineEdit->setText(
+        builder->fetch(SEARCH_REGEX, SEARCH_NONE, data));
+    ui->regexCheckBox->setChecked(toBool(
+        builder->fetch(SEARCH_RECURSIVE, SEARCH_NONE, data)));
 
-    ui->directoryLineEdit->setText(builder->fetch(SEARCH_DIR, SEARCH_NONE, data));
+    ui->directoryLineEdit->setText(
+        builder->fetch(SEARCH_DIR, SEARCH_NONE, data));
 
-    ui->recursiveCheckBox->setChecked(VariantConverter::stringToBool(builder->fetch(SEARCH_RECURSIVE, SEARCH_NONE, data)));
+    ui->recursiveCheckBox->setChecked(toBool(
+        builder->fetch(SEARCH_RECURSIVE, SEARCH_NONE, data)));
 
-    ui->secondsLineEdit->setText(secondsToTime(builder->fetch(SEARCH_SECONDS, SEARCH_NONE, data)));
-    ui->secondsCheckBox->setChecked(VariantConverter::stringToBool(builder->fetch(SEARCH_SECONDS, ENABLED, data)));
+    ui->secondsLineEdit->setText(secondsToTime(
+        builder->fetch(SEARCH_SECONDS, SEARCH_NONE, data)));
+    ui->secondsCheckBox->setChecked(toBool(
+        builder->fetch(SEARCH_SECONDS, ENABLED, data)));
 
-    QDateTime time = QDateTime::fromString(builder->fetch(SEARCH_CREATION, SEARCH_NONE, data), "yyyy/MM/dd HH:mm:ss");
+    QDateTime time
+        = QDateTime::fromString(builder->fetch(SEARCH_CREATION, SEARCH_NONE, data)
+                                    , "yyyy/MM/dd HH:mm:ss");
     ui->createDateTimeEdit->setDateTime(time);
-    ui->createCheckBox->setChecked(VariantConverter::stringToBool(builder->fetch(SEARCH_CREATION, ENABLED, data)));
-    ui->createComboBox->setCurrentIndex(builder->fetch(SEARCH_CREATION, COMBO, data).toInt());
+    ui->createCheckBox->setChecked(toBool(
+        builder->fetch(SEARCH_CREATION, ENABLED, data)));
+    ui->createComboBox->setCurrentIndex(
+        builder->fetch(SEARCH_CREATION, COMBO, data).toInt());
 
-    QDateTime time2 = QDateTime::fromString(builder->fetch(SEARCH_MODIFIED, SEARCH_NONE, data), "yyyy/MM/dd HH:mm:ss");
+    QDateTime time2
+        = QDateTime::fromString(builder->fetch(SEARCH_MODIFIED, SEARCH_NONE, data)
+                                    , "yyyy/MM/dd HH:mm:ss");
     ui->modifiedDateTimeEdit->setDateTime(time2);
-    ui->modifiedCheckBox->setChecked(VariantConverter::stringToBool(builder->fetch(SEARCH_MODIFIED, ENABLED, data)));
-    ui->modifiedComboBox->setCurrentIndex(builder->fetch(SEARCH_MODIFIED, COMBO, data).toInt());
+    ui->modifiedCheckBox->setChecked(toBool(
+        builder->fetch(SEARCH_MODIFIED, ENABLED, data)));
+    ui->modifiedComboBox->setCurrentIndex(
+        builder->fetch(SEARCH_MODIFIED, COMBO, data).toInt());
 
-    ui->fsizeLineEdit1->setText(decodeFromBytes(builder->fetch(SEARCH_FSIZE_1, SEARCH_NONE, data), 1));
-    ui->fsizeCheckBox->setChecked(VariantConverter::stringToBool(builder->fetch(SEARCH_FSIZE_1, ENABLED, data)));
-    ui->fsizeComboBox1->setCurrentIndex(builder->fetch(SEARCH_FSIZE_1, COMBO, data).toInt());
+    ui->fsizeLineEdit1->setText(decodeFromBytes(
+        builder->fetch(SEARCH_FSIZE_1, SEARCH_NONE, data), 1));
+    ui->fsizeCheckBox->setChecked(toBool(
+        builder->fetch(SEARCH_FSIZE_1, ENABLED, data)));
+    ui->fsizeComboBox1->setCurrentIndex(
+        builder->fetch(SEARCH_FSIZE_1, COMBO, data).toInt());
 
-    ui->fsizeLineEdit2->setText(decodeFromBytes(builder->fetch(SEARCH_FSIZE_2, SEARCH_NONE, data), 2));
-    ui->fsizeComboBox2->setCurrentIndex(builder->fetch(SEARCH_FSIZE_2, COMBO, data).toInt());
+    ui->fsizeLineEdit2->setText(decodeFromBytes(
+        builder->fetch(SEARCH_FSIZE_2, SEARCH_NONE, data), 2));
+    ui->fsizeComboBox2->setCurrentIndex(
+        builder->fetch(SEARCH_FSIZE_2, COMBO, data).toInt());
 
     // To reflect the theme setting
     ui->resultTableWidget->setStyleSheet(this->styleSheet());
@@ -142,7 +169,8 @@ void FileSearchDialog::openAction()
 {
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::Directory);
-    QString folder = dialog.getExistingDirectory(this, tr("Open Folder"), "./");
+    QString folder
+        = dialog.getExistingDirectory(this, tr("Open Folder"), "./");
     ui->directoryLineEdit->setText(folder);
 }
 
@@ -158,7 +186,7 @@ void FileSearchDialog::searchAction()
     delete loader;
 
     //for windows
-    int count = nlist.count();
+    int count = static_cast<int>(nlist.count());
     ui->resultTableWidget->setRowCount(count);
 
     for(int i = 0; i < count; i++){
@@ -174,7 +202,10 @@ void FileSearchDialog::dirEditFinished(QString text)
 void FileSearchDialog::closeEvent(QCloseEvent *event)
 {
     QMessageBox::StandardButton res = QMessageBox::question(\
-      this, tr("Alert"), tr("Save this setting?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
+        this
+        , tr("Alert")
+        , tr("Save this setting?")
+        , QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel );
 
     switch( res )
     {

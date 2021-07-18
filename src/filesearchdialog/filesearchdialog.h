@@ -20,23 +20,23 @@
 #include <QFileDialog>
 #include <QDebug>
 
-#define KB 1024
-#define MB 1048576
-#define GB 1073741824
-#define TB 1099511627776
+constexpr int    KB = 1024;
+constexpr int    MB = 1048576;
+constexpr int    GB = 1073741824;
+constexpr qint64 TB = 1099511627776;
 
 namespace Ui {
 class FileSearchDialog;
 }
 
-class FileSearchDialog : public QDialog
+class FILESEARCHDIALOGSHARED_EXPORT FileSearchDialog : public QDialog
 {
     Q_OBJECT
 public:
-    FILESEARCHDIALOGSHARED_EXPORT explicit FileSearchDialog(QWidget *parent = nullptr);
-    FILESEARCHDIALOGSHARED_EXPORT ~FileSearchDialog();
+    explicit FileSearchDialog(QWidget *parent = nullptr);
+    ~FileSearchDialog() override;
 
-    FILESEARCHDIALOGSHARED_EXPORT void loadSettingList(int index, const QList<QStringList> *data);
+    void loadSettingList(int index, const QList<QStringList> *data);
 protected slots:
     void onAccept();
     void onReject();
@@ -45,7 +45,7 @@ protected slots:
     void dirEditFinished(QString text);
 
 protected:
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     Ui::FileSearchDialog *ui;
