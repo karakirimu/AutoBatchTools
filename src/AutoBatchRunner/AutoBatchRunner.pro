@@ -73,9 +73,5 @@ LIBS += \
     -L$$LIBRARYPATH -lfilesearchloader \
     -L$$LIBRARYPATH -lconsolebase \
     -L$$LIBRARYPATH -lpluginstree \
-    -L$$LIBRARYPATH -lexecutor
-
-unix {
-    LIBS+= \
-        -L$$LIBRARYPATH -lprocessxmllistgenerator
-}
+    -L$$LIBRARYPATH -lexecutor \
+    -L$$LIBRARYPATH -lprocessxmllistgenerator
