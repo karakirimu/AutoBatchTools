@@ -556,7 +556,9 @@ void EditorTab::editTextAction(QString text)
     qDebug() << "EditorTab::edittextaction : " << objname;
 
     if(objname == SEARCH_COMBO){
-        editop->comboboxSearchAction(currentid, text, searchcombobox->currentIndex());
+        editop->comboboxSearchAction(currentid
+                                     , text
+                                     , searchcombobox->currentIndex());
 
     }else if(objname == "separatorLineEdit"){
         editop->textSearchSeparateAction(currentid, text);
@@ -568,10 +570,14 @@ void EditorTab::editTextAction(QString text)
         editop->comboboxLocalValAction(currentid, text);
 
     }else if(objname == "pluginComboBox"){
-        editop->comboboxPluginAction(currentid, text, plugincombobox->getCurrentExtraFile());
+        editop->comboboxPluginAction(currentid
+                                     , text
+                                     , plugincombobox->getCurrentExtraFile());
 
     }else if(objname == "profileComboBox"){
-        editop->comboboxProfileAction(currentid, text, profilecombobox->getCurrentFileName());
+        editop->comboboxProfileAction(currentid
+                                      , text
+                                      , profilecombobox->getCurrentFileName());
 
     }else if(objname == "timeoutLineEdit"){
         editop->spinTimeoutAction(currentid, text.toInt());
@@ -581,9 +587,15 @@ void EditorTab::editTextAction(QString text)
 void EditorTab::editTableAction(int index, QString str, int function)
 {
     QString objname = this->sender()->objectName();
-    qDebug() << "[EditorTab::edittableaction] object : " << objname;
+    qDebug() << "[EditorTab::editTableAction] object : " << objname;
 
     if(objname == "cmdTableWidget"){
+        qDebug() << "[EditorTab::editTableAction] currentid:"
+                 << currentid
+                 << " index: " << index
+                 << " str: " << str
+                 << " function: " << function;
+
         editop->tableEditExecAction(currentid, index, str, function);
 
     }else if(objname == "extrafuncTableWidget"){
