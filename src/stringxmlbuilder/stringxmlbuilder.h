@@ -30,6 +30,9 @@ public:
     explicit StringXmlBuilder(QObject *parent = nullptr);
     ~StringXmlBuilder() override;
 
+    bool readAll(QList<QList<QStringList> *> *itemlist);
+    bool writeAll(const QList<QList<QStringList> *> *itemlist);
+
     bool readItem(int itemid, QList<QStringList> *itemlist);
     bool addItem(const QList<QStringList> *itemlist);
     bool insertItem(int itemid, QList<QStringList> *itemlist);
@@ -47,6 +50,9 @@ private:
     const QString ROOTELEMENT = "string";
     const QString FIRSTLAYER = "item";
     const QString ATTR = "id";
+    const QString ATTRVERSION = "version";
+    const QString VERSION = "1.00";
+
 
     const QString STRING_VARIANT = "variant";
     const QString STRING_VALUE = "value";

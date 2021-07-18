@@ -26,6 +26,25 @@ StringXmlBuilder::~StringXmlBuilder()
 {
 }
 
+bool StringXmlBuilder::readAll(QList<QList<QStringList> *> *itemlist)
+{
+    qDebug() << "[StringXmlBuilder::readAll]";
+    return Xmlbuilder::readAllItem(FIRSTLAYER
+                                   , ATTR
+                                   , itemlist);
+}
+
+bool StringXmlBuilder::writeAll(const QList<QList<QStringList> *> *itemlist)
+{
+    qDebug() << "[ProcessXmlBuilder::writeAll]";
+    return Xmlbuilder::writeAllItem(ROOTELEMENT
+                                    , ATTRVERSION
+                                    , VERSION
+                                    , FIRSTLAYER
+                                    , ATTR
+                                    , itemlist);
+}
+
 bool StringXmlBuilder::readItem(int itemid, QList<QStringList> *itemlist)
 {
     return Xmlbuilder::readItem(itemid, FIRSTLAYER, ATTR, itemlist);
@@ -33,12 +52,20 @@ bool StringXmlBuilder::readItem(int itemid, QList<QStringList> *itemlist)
 
 bool StringXmlBuilder::addItem(const QList<QStringList> *itemlist)
 {
-    return Xmlbuilder::overwriteItem(count(), ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::overwriteItem(count()
+                                     , ROOTELEMENT
+                                     , FIRSTLAYER
+                                     , ATTR
+                                     , itemlist);
 }
 
 bool StringXmlBuilder::insertItem(int itemid, QList<QStringList> *itemlist)
 {
-    return Xmlbuilder::insertItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::insertItem(itemid
+                                  , ROOTELEMENT
+                                  , FIRSTLAYER
+                                  , ATTR
+                                  , itemlist);
 }
 
 bool StringXmlBuilder::deleteItem(int itemid)
@@ -48,17 +75,25 @@ bool StringXmlBuilder::deleteItem(int itemid)
 
 bool StringXmlBuilder::editItem(int itemid, const QList<QStringList> *itemlist)
 {
-    return Xmlbuilder::overwriteItem(itemid, ROOTELEMENT, FIRSTLAYER, ATTR, itemlist);
+    return Xmlbuilder::overwriteItem(itemid
+                                     , ROOTELEMENT
+                                     , FIRSTLAYER
+                                     , ATTR
+                                     , itemlist);
 }
 
 void StringXmlBuilder::swapItem(int beforeitemid, int afteritemid)
 {
-    Xmlbuilder::swapItem(beforeitemid, afteritemid, ROOTELEMENT, FIRSTLAYER, ATTR);
+    Xmlbuilder::swapItem(beforeitemid
+                         , afteritemid
+                         , ROOTELEMENT
+                         , FIRSTLAYER
+                         , ATTR);
 }
 
 void StringXmlBuilder::createDocument()
 {
-    createXmlBaseDocument(ROOTELEMENT);
+    createXmlBaseDocument(ROOTELEMENT, ATTRVERSION, VERSION);
 }
 
 int StringXmlBuilder::count()
@@ -66,7 +101,8 @@ int StringXmlBuilder::count()
     return getElementItemsCount(FIRSTLAYER);
 }
 
-void StringXmlBuilder::createVarElement(QList<QStringList> *internal, QStringList *var)
+void StringXmlBuilder::createVarElement(QList<QStringList> *internal
+                                        , QStringList *var)
 {
     if(internal->count() > 0){
         qDebug() << "[StringXmlBuilder::createVarElement] "
@@ -84,7 +120,8 @@ void StringXmlBuilder::createVarElement(QList<QStringList> *internal, QStringLis
     internal->append(QStringList() << STRING_VALUE   << var->at(1));
 }
 
-void StringXmlBuilder::setSearchItemData(QString element, QList<QStringList> *list)
+void StringXmlBuilder::setSearchItemData(QString element
+                                         , QList<QStringList> *list)
 {
     if(element == STRING_VARIANT
             || element == STRING_VALUE)
