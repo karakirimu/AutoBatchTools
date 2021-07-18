@@ -35,10 +35,9 @@ public:
     int id() const override;
     bool mergeWith(const QUndoCommand *other) override;
 
+private:
     QString newStr;
     QStringList newStrList;
-
-private:
     int index;
     int tableIndex;
     QString oldStr;

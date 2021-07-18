@@ -31,9 +31,8 @@ public:
 
     int operation() const;
 
-    QString newStr;
-
 private:
+    QString newStr;
     int index;
     int tableIndex;
     QString oldStr;

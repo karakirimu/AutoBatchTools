@@ -208,7 +208,9 @@ bool EditPluginTable::mergeWith(const QUndoCommand *other)
 {
     if (other->id() != id()) return false;
     const EditPluginTable *com = static_cast<const EditPluginTable *>(other);
-    if(tableOperation == UiCommandMap::PL_EDIT_TABLE){
+    if(tableOperation == UiCommandMap::PL_EDIT_TABLE
+        && index == com->index
+        && tableIndex == com->tableIndex){
         newStr = com->newStr;
     }else{
         return false;
