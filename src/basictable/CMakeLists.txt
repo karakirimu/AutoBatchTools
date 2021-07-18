@@ -22,6 +22,8 @@ add_library(basictable
     basictable.h
     basetable.cpp
     basetable.h
+    tablemimedata.h
+    tablemimedata.cpp
     ${PRODUCT_INFO}
 )
 

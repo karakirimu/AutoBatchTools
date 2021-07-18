@@ -26,13 +26,15 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs depr
 include($$PWD/../build_library_path.pri)
 
 SOURCES += \
-        basictable.cpp \
-    basetable.cpp
+    basictable.cpp \
+    basetable.cpp \
+    tablemimedata.cpp
 
 HEADERS += \
-        basictable.h \
-        basictable_global.h \
-    basetable.h
+    basictable.h \
+    basictable_global.h \
+    basetable.h \
+    tablemimedata.h
 
 unix {
     target.path = /usr/lib

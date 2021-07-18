@@ -11,6 +11,8 @@
 
 #include "basictable_global.h"
 #include "basetable.h"
+#include "tablemimedata.h"
+#include <QClipboard>
 #include <QHeaderView>
 #include <QMessageBox>
 
@@ -19,23 +21,30 @@ class BASICTABLESHARED_EXPORT BasicTable : public BaseTable
     Q_OBJECT
 public:
     explicit BasicTable(QWidget *parent = nullptr);
-    ~BasicTable();
+    virtual ~BasicTable() override;
 
 protected slots:
-    virtual void editAction();
-    virtual void addAction();
-    virtual void deleteAction();
-    virtual void copyAction();
+    virtual void editAction()   { return; }
+    virtual void addAction()    { return; }
+    virtual void deleteAction() { return; }
+    virtual void copyAction()   { return; }
     virtual void upAction();
     virtual void downAction();
 
-    void horizontalHeaderClicked(int cols);
+    virtual void horizontalHeaderClicked(int cols);
 
 protected:
-    virtual void setPopupActionTop();
-    virtual void setPopupActionBottom();
+    void installClipboardFilter(QObject *caller);
     void setPopupActionDefault(QIcon copy, QIcon up, QIcon down);
-    bool deleteCheckMessage();
+
+    void upSelected(std::function<void (int)> postup);
+    void downSelected(std::function<void(int)> postdown);
+
+    void copyToClipboard(QClipboard *clipboard);
+    const QList<QStringList> tableSelectionToList();
+
+    bool pasteFromClipboard(QClipboard *clipboard);
+    bool insertItemFromList(const QList<QStringList> &list);
 
     enum class ACTION{
                 NEWFILE, ADD, REMOVE, EDIT, CLEAR,
@@ -46,6 +55,10 @@ protected:
     QIcon getIcon(BasicTable::ACTION action);
     QString getActionText(BasicTable::ACTION action);
 
+    bool deleteCheckMessage();
+    QString selectFile(QString basedir);
+    QString selectFolder(QString basedir);
+
     QAction * addTableAction(BasicTable::ACTION action,
                             int keycode1 = 0,
                             int keycode2 = 0,
@@ -55,9 +68,7 @@ protected:
     QAction *m_copy;
     QAction *m_up;
     QAction *m_down;
-
-private:
-
+    QString mimetypeclass;
 };
 
 #endif // LIBBASICTABLE_H

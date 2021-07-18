@@ -15,7 +15,8 @@ BaseTable::BaseTable(QWidget *)
 
     //install custom context
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, &QWidget::customContextMenuRequested, this, &BaseTable::onCustomContextMenu);
+    connect(this, &QWidget::customContextMenuRequested
+            , [=](const QPoint &){ contextMenu->popup(QCursor::pos()); });
 
     //init menu context
     contextMenu = new QMenu(this);
@@ -25,15 +26,54 @@ BaseTable::~BaseTable(){
     delete contextMenu;
 }
 
-void BaseTable::dropEvent(QDropEvent *)
+void BaseTable::dropEvent(QDropEvent *event)
 {
-    return;
+    return QTableWidget::dropEvent(event);
 }
 
 void BaseTable::dragEnterEvent(QDragEnterEvent *event)
 {
     event->acceptProposedAction();
 }
+
+/**
+ * @fn BaseTable::eventFilter
+ * @brief grab key event
+ * @param obj
+ * @param event
+ * @return
+ */
+bool BaseTable::eventFilter(QObject *obj, QEvent *event)
+{
+    //qDebug() << event->type();
+    if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        switch (keyEvent->key())
+        {
+        case Qt::Key_Return:
+        case Qt::Key_Enter:
+            qDebug() << "Enter";
+            break;
+        case Qt::Key_Escape:
+            qDebug() << "Escape";
+            break;
+        case Qt::Key_Insert:
+            qDebug() << "Insert";
+            break;
+        case Qt::Key_Delete:
+            qDebug() << "Delete";
+            deleteTableRecursive();
+            break;
+        default:
+            qDebug("Ate key press %d", keyEvent->key());
+            break;
+        }
+        return true;
+    }
+    // standard event processing
+    return QObject::eventFilter(obj, event);
+}
+
 
 QStringList BaseTable::droppedFromOutside(QDropEvent *event)
 {
@@ -47,20 +87,14 @@ QStringList BaseTable::droppedFromOutside(QDropEvent *event)
     return droppeddata;
 }
 
-void BaseTable::insideDropRowMove(QDropEvent *event)
-{
-    insertTableRow(this->row(this->selectedItems().at(0))
-                       ,this->indexAt(event->position().toPoint()).row());
-}
-
 /**
  * @fn BaseTable::insideDropRowsMove
  * @brief
  * Move multiple rows when dropped action.
  * Allowed UI selects are single selection and multiple continuous ones.
  *
- * @param event    : dropEvent action argument.
- * @param selected : if you needed to get a rows list of before moved.
+ * @param event    dropEvent action argument.
+ * @param selected if you needed to get a rows list of before moved.
  *
  * @return operation success or falied.
  */
@@ -68,6 +102,23 @@ bool BaseTable::insideDropRowsMove(QDropEvent *event, QList<int> *selected)
 {   
     // Check dropped row
     int droppedrow = this->indexAt(event->position().toPoint()).row();
+    return droppedFromInside(droppedrow, selected);
+}
+
+/**
+ * @fn BaseTable::droppedFromInside
+ * @brief
+ * Move multiple rows when dropped action.
+ * Allowed UI selects are single selection and multiple continuous ones.
+ *
+ * @param droppedrow Dropped row index
+ * @param selected   if you needed to get a rows list of before moved.
+ *
+ * @return operation success or falied.
+ */
+bool BaseTable::droppedFromInside(int droppedrow, QList<int> *selected)
+{
+    // Check dropped row
     if(droppedrow == -1) return false;
 
     QModelIndexList mlist = this->selectedIndexes();
@@ -136,54 +187,34 @@ bool BaseTable::insideDropRowsMove(QDropEvent *event, QList<int> *selected)
         this->removeRow(deleterow);
         this->insertRow(droppedrow + updown);
         for(int j = 0; j < cols; j++){
-            this->setItem(droppedrow + updown, j, new QTableWidgetItem(beforedata.at(j)));
+            this->setItem(droppedrow + updown
+                          , j
+                          , new QTableWidgetItem(beforedata.at(j)));
         }
         this->blockSignals(false);
     }
 
-    qDebug() << "[BaseTable::insideDropRowsMove] droppedrow : " << droppedrow;
+    qDebug() << "[BaseTable::droppedFromInside] droppedrow : " << droppedrow;
 
     return true;
 }
 
+/**
+ * @fn BaseTable::swapTableRow
+ * @brief Swapping elements within two indexes.
+ *
+ * @param from The row index of the move source.
+ * @param dest Destination row index.
+ */
 void BaseTable::swapTableRow(int from, int dest)
 {
     QTableWidgetItem *temp;
-    for (int col = 0; col < this->columnCount(); col++){
+    int columncount = this->columnCount();
+
+    for (int col = 0; col < columncount; col++){
         temp = this->takeItem(from, col);
         this->setItem(from, col, this->takeItem(dest, col));
         this->setItem(dest, col, temp);
-    }
-}
-
-void BaseTable::insertTableRow(int from, int dest)
-{
-    int distance = dest - from;
-    QTableWidgetItem *temp;
-
-    this->insertRow(dest);
-
-    // + 1 means effect of insertrow
-    from = from + ((distance > 0)? 0 : 1);
-
-    for (int col = 0; col < this->columnCount(); col++){
-        temp = this->takeItem(from, col);
-        this->setItem(dest, col, temp);
-    }
-
-    this->removeRow(from);
-}
-
-void BaseTable::copyTable(int index){
-
-    this->setRowCount(this->rowCount() + 1);
-
-    for (int col = 0; col < this->columnCount(); col++){
-
-        for(int i = this->rowCount(); i > index; i--){
-            //copy action
-            this->setItem(i, col, this->takeItem(i-1, col));
-        }
     }
 }
 
@@ -193,62 +224,34 @@ void BaseTable::copyTable(int index){
  */
 void BaseTable::deleteTableRecursive()
 {
-    //すべての条件で消える
-    QModelIndexList lists = this->selectedIndexes();
-
-    while(!lists.empty()){
-        this->removeRow(lists.at(0).row());
-
-        //delete column index
-        for(int i = 0; i < lists.at(0).column(); i++){
-            lists.removeAt(0);
-        }
-        lists = this->selectedIndexes();
-    }
+    deleteTableRecursive([](int dummy){Q_UNUSED(dummy)});
 }
 
 /**
- * @fn BaseTable::eventFilter
- * @brief grab key event
- * @param obj
- * @param event
- * @return
+ * @fn BaseTable::deleteTableRecursive
+ * @brief Delete user-selected table items in UI.
+ *
+ * @param predelete
+ * Another process to do before deleting a table.
+ * The argument is the row number of the table to be deleted.
  */
-bool BaseTable::eventFilter(QObject *obj, QEvent *event)
+void BaseTable::deleteTableRecursive(std::function<void (int)> predelete)
 {
-    //qDebug() << event->type();
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        switch (keyEvent->key())
-         {
-           case Qt::Key_Return:
-           case Qt::Key_Enter:
-             qDebug() << "Enter";
-             break;
-           case Qt::Key_Escape:
-             qDebug() << "Escape";
-             break;
-           case Qt::Key_Insert:
-             qDebug() << "Insert";
-             break;
-           case Qt::Key_Delete:
-             qDebug() << "Delete";
-             deleteTableRecursive();
-             break;
-           default:
-             qDebug("Ate key press %d", keyEvent->key());
-             break;
-         }
-        return true;
+    QModelIndexList lists = this->selectionModel()->selectedRows();
+
+    while(!lists.empty()){
+        predelete(lists.last().row());
+        this->removeRow(lists.last().row());
+        lists.removeLast();
     }
-    // standard event processing
-    return QObject::eventFilter(obj, event);
 }
 
 /**
  * @fn BaseTable::checkRowContinuous
  * @brief Check if row selection is continuous.
+ *
  * @param indexes : List to judge.
+ *
  * @return True if continuous, false if discontinuous.
  */
 bool BaseTable::checkRowContinuous(QModelIndexList *indexes)
@@ -266,21 +269,4 @@ bool BaseTable::checkRowContinuous(QModelIndexList *indexes)
     }
 
     return true;
-}
-
-void BaseTable::onCustomContextMenu(const QPoint &point)
-{
-    contextMenu->popup(mapToGlobal(point));
-}
-
-QString BaseTable::selectFile(QString basedir){
-    QFileDialog dialog(this);
-    dialog.setFileMode(QFileDialog::ExistingFile);
-    return dialog.getOpenFileName(this, tr("Open File"), basedir, tr("File (*.*)"));
-}
-
-QString BaseTable::selectFolder(QString basedir){
-    QFileDialog dialog(this);
-    dialog.setFileMode(QFileDialog::Directory);
-    return dialog.getExistingDirectory(this, tr("Open Folder"), basedir);
 }

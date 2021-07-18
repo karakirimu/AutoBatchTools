@@ -25,25 +25,22 @@ class BASICTABLESHARED_EXPORT BaseTable : public QTableWidget
     Q_OBJECT
 public:
     explicit BaseTable(QWidget *parent = nullptr);
-    ~BaseTable();
-
-protected slots:
-    void onCustomContextMenu(const QPoint &point);
-    void deleteTableRecursive();
-    void copyTable(int index);
-
-    QString selectFile(QString basedir);
-    QString selectFolder(QString basedir);
+    virtual ~BaseTable() override;
 
 protected:
-    virtual void dropEvent(QDropEvent *event);
-    void dragEnterEvent(QDragEnterEvent *event);
-    QStringList droppedFromOutside(QDropEvent *event);
-    void insideDropRowMove(QDropEvent *event);
-    bool insideDropRowsMove(QDropEvent *event, QList<int> *selected = nullptr);
+    void dropEvent(QDropEvent *event) override;
+    void dragEnterEvent(QDragEnterEvent *event) override;
+    bool eventFilter(QObject *obj, QEvent *event) override;
+
+    void deleteTableRecursive();
+    void deleteTableRecursive(std::function<void(int)> predelete);
+
     void swapTableRow(int from, int dest);
-    void insertTableRow(int from, int dest);
-    virtual bool eventFilter(QObject *obj, QEvent *event);
+
+    QStringList droppedFromOutside(QDropEvent *event);
+    [[deprecated]] bool insideDropRowsMove(QDropEvent *event
+                                           , QList<int> *selected = nullptr);
+    bool droppedFromInside(int droppedrow, QList<int> *selected = nullptr);
 
     QMenu *contextMenu;
 

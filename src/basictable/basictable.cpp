@@ -13,19 +13,13 @@ BasicTable::BasicTable(QWidget *parent)
     : BaseTable(parent)
 {
     //set header sort settings
-    connect(horizontalHeader(), &QHeaderView::sectionClicked, this, &BasicTable::horizontalHeaderClicked);
+    connect(horizontalHeader()
+            , &QHeaderView::sectionClicked
+            , [=](int logicalIndex){ horizontalHeaderClicked(logicalIndex); });
 }
 
 BasicTable::~BasicTable(){
 
-}
-
-void BasicTable::setPopupActionTop(){
-    return;
-}
-
-void BasicTable::setPopupActionBottom(){
-    return;
 }
 
 void BasicTable::setPopupActionDefault(QIcon copy, QIcon up, QIcon down)
@@ -55,11 +49,33 @@ bool BasicTable::deleteCheckMessage()
         , tr("Do you want to delete selected item(s)?")
         , QMessageBox::Yes | QMessageBox::No );
 
-    if(res == QMessageBox::Yes){
-        return true;
-    }else{
-        return false;
-    }
+    return (res == QMessageBox::Yes);
+}
+
+/**
+ * @fn BasicTable::selectFile
+ * @brief Selects a file and returns a string.
+ * @param basedir Folder to display when a window is opened.
+ * @return Path of the selected file.
+ */
+QString BasicTable::selectFile(QString basedir){
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::ExistingFile);
+
+    return dialog.getOpenFileName(this, tr("Open File"), basedir, tr("File (*.*)"));
+}
+
+/**
+ * @fn BasicTable::selectFolder
+ * @brief Selects a folder and returns a string.
+ * @param basedir Folder to display when a window is opened.
+ * @return Path of the selected folder.
+ */
+QString BasicTable::selectFolder(QString basedir){
+    QFileDialog dialog(this);
+    dialog.setFileMode(QFileDialog::Directory);
+
+    return dialog.getExistingDirectory(this, tr("Open Folder"), basedir);
 }
 
 /**
@@ -83,7 +99,8 @@ QAction *BasicTable::addTableAction(ACTION action,
                                     int keycode3,
                                     int keycode4)
 {
-    QAction *res = contextMenu->addAction(getIcon(action), getActionText(action));
+    QAction *res
+        = contextMenu->addAction(getIcon(action), getActionText(action));
     if(keycode1 != 0){
         res->setShortcutVisibleInContextMenu(true);
         res->setShortcut(QKeySequence(keycode1,
@@ -97,11 +114,8 @@ QAction *BasicTable::addTableAction(ACTION action,
 
 /**
  * @fn BasicTable::getIcon
- *
  * @brief Default icon path definition
- *
  * @param action "enum ACTION" defined in this class
- *
  * @return QIcon with path assigned
  */
 QIcon BasicTable::getIcon(ACTION action)
@@ -138,11 +152,8 @@ QIcon BasicTable::getIcon(ACTION action)
 
 /**
  * @fn BasicTable::getActionText
- *
  * @brief Define default action text
- *
  * @param action "enum ACTION" defined in this class
- *
  * @return The text corresponding to the action
  */
 QString BasicTable::getActionText(ACTION action)
@@ -175,48 +186,143 @@ QString BasicTable::getActionText(ACTION action)
     return text;
 }
 
-void BasicTable::horizontalHeaderClicked(int)
-{
-    this->selectAll();
-}
-
-void BasicTable::editAction()
-{
-    return;
-}
-
-void BasicTable::addAction()
-{
-    return;
-}
-
-void BasicTable::deleteAction()
-{
-    return;
-}
-
-void BasicTable::copyAction()
-{
-    if(this->rowCount() == 0) return;
-    copyTable(currentRow());
-}
+//void BasicTable::copyAction()
+//{
+//    if(this->rowCount() == 0) return;
+//    copyTable(currentRow());
+//}
 
 void BasicTable::upAction()
 {
-    if(this->rowCount() == 0) return;
-    int row = this->row(this->selectedItems().at(0));
-
-    if(row-1 == -1) return;
-    swapTableRow(row,row-1);
-    selectRow(row-1);
+    upSelected([](int row){ Q_UNUSED(row) });
 }
 
 void BasicTable::downAction()
 {
-    if(this->rowCount() == 0) return;
+    downSelected([](int row){ Q_UNUSED(row) });
+}
+
+void BasicTable::horizontalHeaderClicked(int cols)
+{
+    Q_UNUSED(cols)
+    this->selectAll();
+}
+
+void BasicTable::installClipboardFilter(QObject *caller)
+{
+    mimetypeclass = QString(caller->metaObject()->className());
+    qDebug() << "[BasicTable::installClipboardFilter] classname : "
+             << mimetypeclass;
+}
+
+/**
+ * @fn BasicTable::upSelected
+ * @brief Moves the row of the selected table up one position.
+ * @param postup
+ * Processing after a successful "up" operation in a table.
+ * The argument will be the line number before the "up" operation.
+ */
+void BasicTable::upSelected(std::function<void (int)> postup)
+{
+    if(this->rowCount() == 0
+        || this->selectedItems().count() == 0) return;
+    int row = this->row(this->selectedItems().at(0));
+    if(row - 1 == -1) return;
+    swapTableRow(row,row - 1);
+    selectRow(row - 1);
+
+    postup(row);
+}
+
+/**
+ * @fn BasicTable::downSelected
+ * @brief Moves the row of the selected table down one position.
+ * @param postdown
+ * Processing after a successful "down" operation in a table.
+ * The argument will be the line number before the "down" operation.
+ */
+void BasicTable::downSelected(std::function<void (int)> postdown)
+{
+    if(this->rowCount() == 0
+        || this->selectedItems().count() == 0) return;
     int row = this->row(this->selectedItems().at(0));
 
-    if(row+1 == this->rowCount()) return;
-    swapTableRow(row,row+1);
-    selectRow(row+1);
+    if(row + 1 == this->rowCount()) return;
+    swapTableRow(row, row + 1);
+    selectRow(row + 1);
+
+    postdown(row);
+}
+
+void BasicTable::copyToClipboard(QClipboard *clipboard)
+{
+    if(mimetypeclass.isEmpty()) return;
+
+    TableMimeData *mime = new TableMimeData(mimetypeclass);
+    mime->setTableData(tableSelectionToList());
+    clipboard->setMimeData(mime);
+}
+
+const QList<QStringList> BasicTable::tableSelectionToList()
+{
+    QModelIndexList lists = this->selectionModel()->selectedRows();
+    int colcount = this->columnCount();
+
+    QList<QStringList> exprow;
+    for(const auto &rowitem : lists){
+        int rownum = rowitem.row();
+        QStringList packed;
+        for(int i = 0; i < colcount; i++){
+            packed.append(
+                rowitem.model()->index(rownum, i).data().toString());
+        }
+
+        exprow.append(packed);
+    }
+
+    return exprow;
+}
+
+/**
+ * @fn BasicTable::pasteFromClipboard
+ * @brief Paste from clipboard.
+ * @param clipboard QApplication's clipboard.
+ * @return True if pasted, false if not.
+ */
+bool BasicTable::pasteFromClipboard(QClipboard *clipboard)
+{
+    if(mimetypeclass.isEmpty()) return false;
+
+    const QMimeData *mimedata = clipboard->mimeData();
+    QString format = TableMimeData::getTableMimeType(mimetypeclass);
+    if(!mimedata->hasFormat(format)) return false;
+
+    const TableMimeData *mime
+        = qobject_cast<const TableMimeData *>(clipboard->mimeData());
+
+    QByteArray table = mime->data(format);
+
+    const QList<QStringList> copiedrows
+        = TableMimeData::getTableData(table);
+
+    return insertItemFromList(copiedrows);
+}
+
+bool BasicTable::insertItemFromList(const QList<QStringList> &list)
+{
+    int row = this->currentRow();
+    if(row < 0) return false;
+
+    int columncount = this->columnCount();
+
+    for(const auto &cols : list){
+        insertRow(row);
+
+        for(int i = 0; i < columncount; i++){
+            this->setItem(row, i, new QTableWidgetItem(cols.at(i)));
+        }
+        row = this->currentRow();
+    }
+
+    return true;
 }
