@@ -23,11 +23,10 @@ class PROFILECOMBOBOXSHARED_EXPORT ProfileComboBox : public QComboBox
     Q_OBJECT
 public:
     explicit ProfileComboBox(QObject *parent = nullptr);
-    ~ProfileComboBox();
+    virtual ~ProfileComboBox() override;
 
     QString getCurrentFileName();
     QString getCurrentFileName(int index);
-//    int getIndexFromFileName(QString filepath);
 
     void setIndex(QString filepath);
 
@@ -40,6 +39,8 @@ private:
     ProfileXmlBuilder *builder;
     ProcessXmlBuilder *pbuilder;
 
+    ProcessXmlListGenerator xf;
+    ProcessXmlConstant pxc;
 };
 
 #endif // PROFILECOMBOBOX_H

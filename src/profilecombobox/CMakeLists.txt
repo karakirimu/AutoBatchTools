@@ -35,6 +35,7 @@ target_link_libraries(profilecombobox
     xmlbuilder
     processxmlbuilder
     profilexmlbuilder
+    processxmllistgenerator
 )
 
 target_compile_definitions(profilecombobox PRIVATE PROFILECOMBOBOX_LIBRARY)

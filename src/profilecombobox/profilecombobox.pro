@@ -34,7 +34,8 @@ HEADERS += \
 LIBS += \
     -L$$DESTDIR -lxmlbuilder \
     -L$$DESTDIR -lprocessxmlbuilder \
-    -L$$DESTDIR -lprofilexmlbuilder
+    -L$$DESTDIR -lprofilexmlbuilder \
+    -L$$DESTDIR -lprocessxmllistgenerator \
 
 unix {
     target.path = /usr/lib

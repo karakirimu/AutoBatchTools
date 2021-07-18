@@ -36,7 +36,10 @@ QString ProfileComboBox::getCurrentFileName()
 
 /**
  * @fn ProfileComboBox::getCurrentFileName
- * @brief Returns the file name saved in the XML file according to the position of the combo box
+ * @brief
+ * Returns the file name saved in the XML file
+ * according to the position of the combo box
+ *
  * @param index The position of the combo box to retrieve.
  * @return filepath
  */
@@ -51,28 +54,6 @@ QString ProfileComboBox::getCurrentFileName(int index)
 
     return item.at(2).at(1);
 }
-
-/**
- * @deprecated
- * @fn ProfileComboBox::getIndexFromFileName
- * @brief Get combo box position from filepath.
- * @param filepath
- * @return Combo box position or -1.
- */
-//int ProfileComboBox::getIndexFromFileName(QString filepath)
-//{
-//    QList<QStringList> item;
-//    int count = builder->count();
-//    for(int i = 0; i < count; i++){
-//        item.clear();
-//        if(builder->readItem(i, &item)
-//                && item.at(2).at(1) == filepath){
-//            return i;
-//        }
-//    }
-
-//    return -1;
-//}
 
 /**
  * @fn ProfileComboBox::setIndex
@@ -112,31 +93,23 @@ void ProfileComboBox::setIndex(QString filepath)
 void ProfileComboBox::reloadComboBoxItem()
 {
     this->clear();
-    QList<QStringList> item;
     QFileInfo info;
-
-    int counter = builder->count();
 
     this->addItem(tr("Select profile ..."));
 
-    for(int i = 0; i < counter; i++){
+    QList<QList<QStringList> *> item;
+    builder->readAll(&item);
 
-        builder->readItem(i, &item);
-        info.setFile(item.at(ProfileXmlBuilder::FILE).at(1));
+    for(QList<QStringList> *index : item){
+        info.setFile(xf.fetch(index, PROFILE_FILE));
 
         if(info.exists()){
-            QString name = item.at(ProfileXmlBuilder::NAME).at(1);
+            QString name = xf.fetch(index, PROFILE_NAME);
             name = name == "" ? tr("(no name)") : name;
-            this->addItem(tr("%1 - %2").arg(name).arg(info.fileName()));
+            this->addItem(tr("%1 - %2").arg(name, info.fileName()));
         }else{
             this->addItem(tr("Unknown"));
-// multiple alert
-//            QMessageBox::warning( this, tr("Alert")
-//                        , tr("%1 is not exist.").arg(item.at(ProfileXmlBuilder::FILE).at(1))
-//                        , QMessageBox::Yes );
         }
-
-        item.clear();
     }
 }
 
@@ -155,7 +128,8 @@ void ProfileComboBox::addItemAction()
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::ExistingFile);
     QString file = dialog.getOpenFileName(this, tr("Add Profile")
-                                          , "./", tr("Profile ") + "(*.apro *.xml)");
+                                          , "./"
+                                          , tr("Profile ") + "(*.apro *.xml)");
 
     if(file == "") return;
 
@@ -163,10 +137,12 @@ void ProfileComboBox::addItemAction()
 
     //load info
     if(pbuilder->readItem(0, &item)){
-        list.append(QStringList() << "name" << item.at(1).at(1));
-        list.append(QStringList() << "desc" << item.at(4).at(1));
-        list.append(QStringList() << "file" << file);
+        QStringList vl = (QStringList()
+                          << xf.fetch(&item, pxc.TAG_I_NAME)
+                          << xf.fetch(&item, pxc.TAG_I_DESCRIPTION)
+                          << file);
 
+        builder->createVarElement(&list, &vl);
         builder->addItem(&list);
 
         //reload
@@ -184,7 +160,9 @@ void ProfileComboBox::addItemAction()
 
 /**
  * @fn ProfileComboBox::deleteItemAction
- * @brief Delete the combo box item and delete the corresponding data in the XML file.
+ * @brief
+ * Delete the combo box item and
+ * delete the corresponding data in the XML file.
  */
 void ProfileComboBox::deleteItemAction()
 {
