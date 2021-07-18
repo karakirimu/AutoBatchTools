@@ -97,9 +97,10 @@ target_compile_definitions(profilexmlbuilder PRIVATE PROFILEXMLBUILDER_LIBRARY)
 # ---
 
 # startupxmlbuilder
+set(StartupXmlBuilderTest ${CMAKE_CURRENT_LIST_DIR}/../AutoBatchScheduler)
 set(STARTUPXMLBUILDER
-    ${CMAKE_CURRENT_LIST_DIR}/../AutoBatchScheduler/settingcache/startupxmlbuilder.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/../AutoBatchScheduler/settingcache/startupxmlbuilder.h
+    ${StartupXmlBuilderTest}/settingcache/startupxmlbuilder.cpp
+    ${StartupXmlBuilderTest}/settingcache/startupxmlbuilder.h
 )
 # ---
 
@@ -170,11 +171,12 @@ target_link_libraries(processxmlbuilder
 target_compile_definitions(processxmlbuilder PRIVATE PROCESSXMLBUILDER_LIBRARY)
 
 # processxmllistgenerator
+set(ProcessXmlListGeneratorTest ${CMAKE_CURRENT_LIST_DIR}/../processxmllistgenerator)
 add_library(processxmllistgenerator
   SHARED
-    ${CMAKE_CURRENT_LIST_DIR}/../processxmllistgenerator/processxmllistgenerator_global.h
-    ${CMAKE_CURRENT_LIST_DIR}/../processxmllistgenerator/processxmllistgenerator.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/../processxmllistgenerator/processxmllistgenerator.h
+    ${ProcessXmlListGeneratorTest}/processxmllistgenerator_global.h
+    ${ProcessXmlListGeneratorTest}/processxmllistgenerator.cpp
+    ${ProcessXmlListGeneratorTest}/processxmllistgenerator.h
 )
 
 target_include_directories(processxmllistgenerator
@@ -183,42 +185,102 @@ target_include_directories(processxmllistgenerator
 )
 
 target_link_libraries(processxmllistgenerator PRIVATE Qt${QT_VERSION_MAJOR}::Core)
-
 target_compile_definitions(processxmllistgenerator PRIVATE PROCESSXMLLISTGENERATOR_LIBRARY)
 
+## ---
+
+# basictable
+set(BasicTableTest ${CMAKE_CURRENT_LIST_DIR}/../basictable)
+add_library(basictable
+  SHARED
+    ${BasicTableTest}/basictable_global.h
+    ${BasicTableTest}/basictable.cpp
+    ${BasicTableTest}/basictable.h
+    ${BasicTableTest}/basetable.cpp
+    ${BasicTableTest}/basetable.h
+    ${BasicTableTest}/tablemimedata.h
+    ${BasicTableTest}/tablemimedata.cpp
+)
+
+target_link_libraries(basictable PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_compile_definitions(basictable PRIVATE BASICTABLE_LIBRARY)
 # ---
 
-include_directories(
-    ${GTestIncludes}
-#    ${CMAKE_CURRENT_LIST_DIR}/../filesearchloader
+# stringtable
+set(StringTableTest ${CMAKE_CURRENT_LIST_DIR}/../stringtable)
+add_library(stringtable
+  SHARED
+    ${StringTableTest}/stringtable_global.h
+    ${StringTableTest}/stringtable.cpp
+    ${StringTableTest}/stringtable.h
+    ../../res/resources.qrc
+)
+
+target_link_libraries(stringtable PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(stringtable
+  PRIVATE
+    xmlbuilder
+    stringxmlbuilder
+    basictable
+)
+
+target_compile_definitions(stringtable PRIVATE STRINGTABLE_LIBRARY)
+# ---
+
+set (XmlBuilderTestIncludes
     ${CMAKE_CURRENT_LIST_DIR}/../xmlbuilder
     ${CMAKE_CURRENT_LIST_DIR}/../searchxmlbuilder
     ${CMAKE_CURRENT_LIST_DIR}/../profilexmlbuilder
     ${CMAKE_CURRENT_LIST_DIR}/../stringxmlbuilder
     ${CMAKE_CURRENT_LIST_DIR}/../pluginsxmlbuilder
     ${CMAKE_CURRENT_LIST_DIR}/../processxmlbuilder
-    ${CMAKE_CURRENT_LIST_DIR}/../processxmllistgenerator
-    ${CMAKE_CURRENT_LIST_DIR}/../AutoBatchScheduler
+    ${ProcessXmlListGeneratorTest}
+    ${StartupXmlBuilderTest}
+)
+
+set (TableTestIncludes
+    ${BasicTableTest}
+    ${StringTableTest}
+)
+
+include_directories(
+    ${GTestIncludes}
+#    ${CMAKE_CURRENT_LIST_DIR}/../filesearchloader
+#   xmlbuilder.test
+    ${XmlBuilderTestIncludes}
+    ${TableTestIncludes}
+#   ---
 )
 
 add_executable(unittest
     main.cpp
     xmlbuilder.test.h
+    xmllistgenerator.test.h
+    table.test.h
     ${STARTUPXMLBUILDER}
     ${GTestFiles}
 )
 add_test(NAME unittest COMMAND unittest)
 
-target_link_libraries(unittest
-    PRIVATE
+set (XmlBuilderLinkLibraries
     xmlbuilder
     searchxmlbuilder
     profilexmlbuilder
     stringxmlbuilder
     pluginsxmlbuilder
     processxmlbuilder
+)
+
+set (TableLinkLibraries
+    basictable
+)
+
+target_link_libraries(unittest
+    PRIVATE
+    Threads::Threads # pre defined
+    ${XmlBuilderLinkLibraries}
+    ${TableLinkLibraries}
+    processxmllistgenerator
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Core
 )
-target_link_libraries(unittest PRIVATE Threads::Threads)
-

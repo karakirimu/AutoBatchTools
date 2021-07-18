@@ -583,6 +583,34 @@ TEST_F(ProfileXmlBuilderTest, ReadItem){
     EXPECT_EQ(readlist, list);
 }
 
+TEST_F(ProfileXmlBuilderTest, CreateLists){
+
+    QList<QStringList> res;
+    QStringList list = QStringList() << "profiletest"
+                                     << "profiledesc"
+                                     << "./filetest";
+    builder->createVarElement(&res, &list);
+
+    QList<QStringList> expected;
+    expected.append(QStringList() << PROFILE_NAME << list.at(0));
+    expected.append(QStringList() << PROFILE_DESCRIPTION << list.at(1));
+    expected.append(QStringList() << PROFILE_FILE << list.at(2));
+    EXPECT_EQ(res, expected);
+
+    // Value is not set, this returns empty string.
+    res.clear();
+    QStringList empty;
+    builder->createVarElement(&res, &empty);
+    QList<QStringList> expected2;
+    EXPECT_EQ(res, expected2);
+
+    // This function will not append a value more than once.
+    QStringList list2 = QStringList() << "sfv" << "#fff";
+    builder->createVarElement(&res, &list);
+    builder->createVarElement(&res, &list2);
+    EXPECT_EQ(res, expected);
+}
+
 class SearchXmlBuilderTest : public ::testing::Test {
 protected:
     virtual void SetUp() override {
@@ -956,6 +984,26 @@ protected:
                        "\t</item>\r\n").arg(index);
     }
 
+    void EvaluateNestedStringList(QList<QStringList> *a
+                                  , QList<QStringList> *b){
+
+        // QList count check
+        ASSERT_EQ(a->count(), b->count());
+
+        int size = a->count();
+
+        // QStringList count check
+        for(int i = 0; i < size; i++){
+            ASSERT_EQ(a->at(i).count(), b->at(i).count());
+
+            int stringlistsize = a->at(i).count();
+            for(int j; j < stringlistsize; j++){
+                EXPECT_EQ(a->at(i).at(j).toStdString()
+                        , b->at(i).at(j).toStdString());
+            }
+        }
+    }
+
     MockXmlBuilder *builder;
 private:
     QFile testfile;
@@ -1130,19 +1178,24 @@ TEST_F(XmlBuilderTest, SwapItem){
         builder->addItem(&list);
     }
 
-    // Edit some elements which before delete.
+    // Edit element.
     QList<QStringList> res = GetEditTestElements();
     builder->editItem(0, &res);
-    builder->editItem(1, &res);
-    builder->editItem(count / 2, &res);
-    builder->editItem(count - 1, &res);
 
-    builder->swapItem(1, 7); // 1 -> 7
-    builder->swapItem(0, 1); // 0 -> 1
-    builder->swapItem(count - 1, count - 2); // last index -> last index - 1
-    builder->swapItem(count / 2, count / 2 + 1); // count / 2 -> count / 2 + 1
+    // moved check
+    for(int i = 1; i < count; i++){
+        builder->swapItem(i - 1, i);
 
-    // Check
+        QList<QStringList> original;
+        builder->readItem(i - 1, &original);
+        EvaluateNestedStringList(&list, &original);
+
+        QList<QStringList> edited;
+        builder->readItem(i, &edited);
+        EvaluateNestedStringList(&res, &edited);
+    }
+
+    // Check last
     OpenTestFile();
     QString all = ReadAllTestFile();
     QString correct = QString("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n"
@@ -1151,16 +1204,11 @@ TEST_F(XmlBuilderTest, SwapItem){
     for(int i = 0; i < count; i++){
         QString content = "";
 
-        if(i == 7
-            || i == 1
-            || i == (count - 2)
-            || i == (count / 2 + 1)){
+        if(i == (count - 1)){
             content = GetItemEditEvaluate(i);
-
         }else{
             content = GetItemEvaluate(i);
         }
-
         correct.append(content);
     }
 
