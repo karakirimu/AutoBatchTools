@@ -1,3 +1,11 @@
+/*
+ * Released under the MIT License.
+ * See LICENSE text for license details.
+ *
+ * SPDX-FileCopyrightText: Copyright (c) 2021 karakirimu
+ * SPDX-License-Identifier: MIT
+ */
+
 #ifndef FILESEARCHLOADER_GLOBAL_H
 #define FILESEARCHLOADER_GLOBAL_H
 
