@@ -295,7 +295,11 @@ bool Xmlbuilder::overwriteItem(int itemid,
     return true;
 }
 
-bool Xmlbuilder::insertItem(int itemid, QString rootelement, QString firstlayername, QString attr, const QList<QStringList> *itemlist)
+bool Xmlbuilder::insertItem(int itemid
+                            , QString rootelement
+                            , QString firstlayername
+                            , QString attr
+                            , const QList<QStringList> *itemlist)
 {
     return insertItemId(itemid, rootelement, firstlayername, attr, itemlist);
 }

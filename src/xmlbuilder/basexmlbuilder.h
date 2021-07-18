@@ -27,7 +27,7 @@ public:
     explicit BaseXmlBuilder(QObject *parent = nullptr);
     virtual ~BaseXmlBuilder() override;
 
-    void createXmlBaseDocument(QString rootelement
+    void createXmlBaseDocument(QString root
                                , QString rootattr = ""
                                , QString rootattrvalue = "");
 

@@ -48,11 +48,16 @@ void BaseXmlBuilder::setFileName(QString filename){
     }
 }
 
-void BaseXmlBuilder::createXmlBaseDocument(QString rootelement
+void BaseXmlBuilder::createXmlBaseDocument(QString root
                                            , QString rootattr
                                            , QString rootattrvalue)
 {
-    openFile(QIODevice::WriteOnly);
+    // text clear and create root
+    if(!openFile(QIODevice::WriteOnly)){
+        qDebug() << "[BaseXmlBuilder::createXmlBaseDocument] file open failed.";
+        return;
+    }
+
     //delete older characters
     clearFileText();
 
@@ -66,7 +71,7 @@ void BaseXmlBuilder::createXmlBaseDocument(QString rootelement
     wxml->setAutoFormattingIndent(-1);
 
     wxml->writeStartDocument();
-    wxml->writeStartElement(rootelement);
+    wxml->writeStartElement(root);
 
     if(rootattr.length() > 0){
         wxml->writeAttribute(rootattr, rootattrvalue);
@@ -92,7 +97,10 @@ void BaseXmlBuilder::createXmlBaseDocument(QString rootelement
  * @return True if the process was successful
  * @remarks if it can't get specified element, this function does nothing.
  */
-bool BaseXmlBuilder::deleteElementGroup(QString element, QString attr, int value, bool withparent)
+bool BaseXmlBuilder::deleteElementGroup(QString element
+                                        , QString attr
+                                        , int value
+                                        , bool withparent)
 {
     bool hasid = false;
     qint64 firstline = 0;
@@ -122,15 +130,14 @@ bool BaseXmlBuilder::deleteElementGroup(QString element, QString attr, int value
 
     }
 
-    qDebug() << "[BaseXmlBuilder::deleteElementGroup] firstline: " << firstline \
-             << " endline: " << endline;
+    qDebug() << "[BaseXmlBuilder::deleteElementGroup] deletedline: "
+             << firstline \
+             << "-" \
+             << endline;
 
-    //xml error check
-//    qDebug() << "BaseXmlBuilder: " << this->sender();
     checkXmlError();
 
-    //reset file
-    //? please load file readwritemode
+    // File seek to start position.
     file->reset();
     QTextStream del(file);
 
@@ -211,7 +218,9 @@ qint64 BaseXmlBuilder::getElementFirstLineNumber(QString element)
  * @return The first line of the tag block specified by element.
  *         If it does not have any elements, then returns -1.
  */
-qint64 BaseXmlBuilder::getElementFirstLineNumber(QString element, QString attr, QString attrvalue)
+qint64 BaseXmlBuilder::getElementFirstLineNumber(QString element
+                                                 , QString attr
+                                                 , QString attrvalue)
 {
     qint64 line = -1;
 
@@ -247,7 +256,9 @@ qint64 BaseXmlBuilder::getElementFirstLineNumber(QString element, QString attr, 
  *
  * @return The last line of the tag block specified by element.
  */
-qint64 BaseXmlBuilder::getElementEndLineNumber(QString element, QString attr, int value)
+qint64 BaseXmlBuilder::getElementEndLineNumber(QString element
+                                               , QString attr
+                                               , int value)
 {
     qint64 line = 0;
     bool flags = false;
@@ -302,8 +313,10 @@ int BaseXmlBuilder::getElementItemsCount(QString element)
     checkXmlError();
     closeFile();
 
-    qDebug() << "[BaseXmlBuilder::getElementItemsCount] element: " << element \
-             << " count: " << count;
+    qDebug() << "[BaseXmlBuilder::getElementItemsCount] element:" \
+             << element \
+             << "block count:" \
+             << count;
 
     return count;
 }
@@ -331,7 +344,8 @@ QString BaseXmlBuilder::appendTabIndent(int num)
  */
 void BaseXmlBuilder::checkXmlError(){
     if (rxml->hasError())
-        qDebug() << "[BaseXmlBuilder::checkXmlError] : XML read error: " << rxml->errorString();
+        qDebug() << "[BaseXmlBuilder::checkXmlError] XML read error:"
+                 << rxml->errorString();
 }
 
 /**
