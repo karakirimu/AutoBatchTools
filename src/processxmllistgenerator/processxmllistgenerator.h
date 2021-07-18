@@ -22,34 +22,45 @@
  * @brief The XmlListGenerator class
  * This class can create default list (to xml) and operate xml states.
  */
-class PROCESSXMLLISTGENERATORSHARED_EXPORT ProcessXmlListGenerator : public QObject
+class PROCESSXMLLISTGENERATORSHARED_EXPORT ProcessXmlListGenerator
 {
-    Q_OBJECT
 public:
-    explicit ProcessXmlListGenerator(QObject *parent = nullptr);
-    ~ProcessXmlListGenerator();
+    ProcessXmlListGenerator();
 
     //change combined structure to separated structure
-    void createSeparateList(QList<QStringList> *ctos);
+    [[deprecated]] void createSeparateList(QList<QStringList> *ctos);
 
-    int fetchCmdFirstPos(QString tag, const QList<QStringList> *loadbase);
+    int fetchCommandFirstPos(QString tag, const QList<QStringList> *loadbase);
 
     //take specific item string
-    QString fetch(QString tag, const QList<QStringList> *loadbase);
-    QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase);
-    QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase, int firstpos);
-    QString fetch(QString tag, QString value, QString attr,const QList<QStringList> *loadbase);
+    [[deprecated]] QString fetch(QString tag, const QList<QStringList> *loadbase);
+    [[deprecated]] QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase);
+    [[deprecated]] QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase, int firstpos);
+    [[deprecated]] QString fetch(QString tag, QString value, QString attr,const QList<QStringList> *loadbase);
+
+    const QString fetch(const QList<QStringList> *loadbase
+                        , QString tag
+                        , QString attr
+                        , int firstpos);
+
+//    const QString fetch(const QList<QStringList> *loadbase
+//                        , QString tag
+//                        , QString value
+//                        , QString attr);
+
+    const QString fetch(const QList<QStringList> *loadelements
+                  , QString tag
+                  , QString attr = ""
+                  , QString tagvalue = ""
+                  , int firstpos = 0);
 
 private:
-    int getType(QString type);
+    [[deprecated]] int getType(QString type);
 
     ProcessXmlConstant pxc;
     FunctionType fs;
 
-    // attribute define (index 2)
-    // all
-    const QString ATTR_NONE                  = "";
-
+    const QString EMPTY                  = "";
 };
 
 #endif // PROCESSXMLLISTGENERATOR_H

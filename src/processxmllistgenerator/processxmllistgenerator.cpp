@@ -8,13 +8,7 @@
 
 #include "processxmllistgenerator.h"
 
-ProcessXmlListGenerator::ProcessXmlListGenerator(QObject *parent)
-    : QObject (parent)
-{
-
-}
-
-ProcessXmlListGenerator::~ProcessXmlListGenerator()
+ProcessXmlListGenerator::ProcessXmlListGenerator()
 {
 
 }
@@ -23,7 +17,7 @@ ProcessXmlListGenerator::~ProcessXmlListGenerator()
 void ProcessXmlListGenerator::createSeparateList(QList<QStringList> *ctos)
 {
     //get selected index
-    int index = static_cast<QString>(fetch(pxc.TAG_FUNCTIONSELECT, ctos)).toInt();
+    int index = fetch(ctos, pxc.TAG_FUNCTIONSELECT).toInt();
 
     //remove till first header
     while(!ctos->empty()){
@@ -62,16 +56,17 @@ int ProcessXmlListGenerator::getType(QString type)
 }
 
 /**
- * @fn ProcessXmlListGenerator::fetchCmdFirstPos
+ * @fn ProcessXmlListGenerator::fetchCommandFirstPos
  * @brief Find the first position in the list that contains
  *        nformation about the table elements in the tab.
- * @param tag Tag name. (E_CMD or PL_CMD)
+ * @param tag Tag name. (TAG_E_CMD_HA1 or TAG_P_CMD_HA1)
  * @param loadbase List of elements selected in ProcessFlowTable.
  * @return The first position in the list of table elements, or -1 if not found.
  */
-int ProcessXmlListGenerator::fetchCmdFirstPos(QString tag, const QList<QStringList> *loadbase)
+int ProcessXmlListGenerator::fetchCommandFirstPos(QString tag
+                                              , const QList<QStringList> *loadbase)
 {
-    int count = loadbase->count();
+    qsizetype count = loadbase->count();
     int i = 0;
 
     if(tag == pxc.TAG_E_CMD_HA1)  tag = pxc.TAG_E_COMMANDCOUNT_INT;
@@ -88,54 +83,99 @@ int ProcessXmlListGenerator::fetchCmdFirstPos(QString tag, const QList<QStringLi
     return -1;
 }
 
-QString ProcessXmlListGenerator::fetch(QString tag, const QList<QStringList> *loadbase)
+QString ProcessXmlListGenerator::fetch(QString tag
+                                       , const QList<QStringList> *loadbase)
 {
-    return this->fetch(tag, ATTR_NONE, loadbase, 0);
+    return this->fetch(loadbase, tag);
 }
 
 // If there is no element of "attr", assign PROCESS_NONE to "attr"
-QString ProcessXmlListGenerator::fetch(QString tag, QString attr, const QList<QStringList> *loadbase)
+QString ProcessXmlListGenerator::fetch(QString tag
+                                       , QString attr
+                                       , const QList<QStringList> *loadbase)
 {
-    return this->fetch(tag, attr, loadbase, 0);
+    return this->fetch(loadbase, tag, attr);
 }
 
-QString ProcessXmlListGenerator::fetch(QString tag, QString attr, const QList<QStringList> *loadbase, int firstpos)
+QString ProcessXmlListGenerator::fetch(QString tag
+                                       , QString attr
+                                       , const QList<QStringList> *loadbase
+                                       , int firstpos)
 {
-    int count = loadbase->count();
+    return this->fetch(loadbase, tag, attr, "", firstpos);
+}
+
+QString ProcessXmlListGenerator::fetch(QString tag
+                                       , QString value
+                                       , QString attr
+                                       , const QList<QStringList> *loadbase)
+{
+    return this->fetch(loadbase, tag, attr, value);
+}
+
+const QString ProcessXmlListGenerator::fetch(const QList<QStringList> *loadbase
+                                             , QString tag
+                                             , QString attr
+                                             , int firstpos)
+{
+    return this->fetch(loadbase, tag, attr, "", firstpos);
+}
+
+//const QString ProcessXmlListGenerator::fetch(const QList<QStringList> *loadbase
+//                                             , QString tag
+//                                             , QString value
+//                                             , QString attr)
+//{
+//    return this->fetch(loadbase, tag, attr, value);
+//}
+
+/**
+ * @fn ProcessXmlListGenerator::fetch
+ * @brief
+ * This function gets the value from the selected XML tag, tag item, and attribute.
+ * It can be used to get a specific value from the read result of a class
+ * that inherits from XmlBuilder.
+ *
+ * @param loadelements Elements retrieved from XmlBuilder. (Required)
+ * @param tag          The name of the tag to retrieve. (Required)
+ * @param attr         The attribute to retrieve. (Optional)
+ * @param tagvalue     The value of the tag to retrieve. (Optional)
+ * @param firstpos     The first row number to search in loadelements. (Optional)
+ * @return Selected item or empty.
+ */
+const QString ProcessXmlListGenerator::fetch(const QList<QStringList> *loadelements
+                                       , QString tag
+                                       , QString attr
+                                       , QString tagvalue
+                                       , int firstpos)
+{
+    qsizetype count = loadelements->count();
+    qsizetype listnummax = 0;
+
+    auto valueCondition = [&](QString value, QString elementvalue){
+        return (value == EMPTY || value == elementvalue);
+    };
+
     int i = firstpos;
-    int listnummax = 0;
     while(i < count){
-        if(tag == loadbase->at(i).at(0)){
-            if(attr == ATTR_NONE) return loadbase->at(i).at(1);
+        if(tag == loadelements->at(i).first()
+            && valueCondition(tagvalue, loadelements->at(i).at(1))){
 
-            listnummax = loadbase->at(i).count();
-            if(listnummax > 3 && attr == loadbase->at(i).at(2)) return loadbase->at(i).at(3);
-            if(listnummax > 5 && attr == loadbase->at(i).at(4)) return loadbase->at(i).at(5);
+            if(attr == EMPTY){
+                return loadelements->at(i).at(1);
+            }
+
+            listnummax = loadelements->at(i).count();
+
+            for(int j = 3; j < listnummax; j += 2){
+                if(attr == loadelements->at(i).at(j-1)){
+                    return loadelements->at(i).at(j);
+                }
+            }
         }
         i++;
     }
 
     //cannot find
-    return ATTR_NONE;
-}
-
-QString ProcessXmlListGenerator::fetch(QString tag, QString value, QString attr, const QList<QStringList> *loadbase)
-{
-    int count = loadbase->count();
-    int i = 0;
-    int listnummax = 0;
-    while(i < count){
-        if(tag == loadbase->at(i).at(0)
-                && value == loadbase->at(i).at(1)){
-            if(attr == ATTR_NONE) return loadbase->at(i).at(1);
-
-            listnummax = loadbase->at(i).count();
-            if(listnummax > 3 && attr == loadbase->at(i).at(2)) return loadbase->at(i).at(3);
-            if(listnummax > 5 && attr == loadbase->at(i).at(4)) return loadbase->at(i).at(5);
-        }
-        i++;
-    }
-
-    //cannot find
-    return ATTR_NONE;
+    return EMPTY;
 }
