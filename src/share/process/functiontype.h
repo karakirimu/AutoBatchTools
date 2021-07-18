@@ -15,7 +15,7 @@
  * @brief The TAB enum
  *        Current function select tab position selection constant
  */
-enum class TAB {
+enum class TAB : int {
 
     //! -1
     INVALID = -1,
@@ -40,7 +40,7 @@ class FunctionType{
 public:
     explicit FunctionType(){}
 
-    enum TYPE{
+    enum TYPE : int {
         //! AllInclude list (This type contains EXECUTE,FILESEARCH,PLUGIN,PROFILELOAD)
         ALLINCLUDE,
 
