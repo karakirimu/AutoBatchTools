@@ -8,38 +8,45 @@
 
 #include "stringtable.h"
 
-StringTable::StringTable(QWidget *parent) : BasicTable(parent)
+StringTable::StringTable(QWidget *parent)
+    : BasicTable(parent)
 {
-    //popupAction
+    // popupAction
     setPopupActionTop();
     setPopupActionDefault();
     setPopupActionBottom();
 
-    //init table size
+    // init table size
     setColumnCount(2);
     setRowCount(0);
 
-    //adjust row
+    // adjust row
     resizeRowsToContents();
 
-    //adjust column
+    // adjust column
     horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
-    //set header label
-    setHorizontalHeaderLabels((QStringList() << tr("Variable") << tr("Value")));
+    // set header label
+    setHorizontalHeaderLabels((QStringList()
+                               << tr("Variable")
+                               << tr("Value")));
 
-    //set vertical header style
+    // set vertical header style
     QssPropertyConstant qpc;
     verticalHeader()->setProperty(qpc.VERTICAL_HEADER_STYLE \
                                     , qpc.VERTICAL_HEADER_ENABLE);
 
-    //set new xml builder
+    // set new xml builder
     builder = new StringXmlBuilder();
 
-    //init table (reload read file.)
+    // init table (reload read file.)
     reloadAction();
 
-    //set edit saving
-    connect(this, SIGNAL(cellChanged(int,int)), this, SLOT(saveAction(int)));
+    // set edit saving
+    connect(this, &StringTable::cellChanged
+            , this, &StringTable::saveCellChanged);
+
+    // install clipboard
+    installClipboardFilter(this);
 }
 
 StringTable::~StringTable()
@@ -100,7 +107,7 @@ void StringTable::setPopupActionBottom()
 
 bool StringTable::eventFilter(QObject *obj, QEvent *event)
 {
-     QKeyEvent *keyEvent;
+    QKeyEvent *keyEvent;
 
     auto mdCheck = [&keyEvent](){
         return static_cast<bool>(keyEvent->modifiers() & Qt::ControlModifier);
@@ -149,14 +156,10 @@ bool StringTable::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 
-void StringTable::createList(int row, QList<QStringList> *newlist)
-{
-    //add variant
-    newlist->append(QStringList() << "variant" << this->model()->index(row, 0).data().toString());
-    //add value
-    newlist->append(QStringList() << "value" << this->model()->index(row, 1).data().toString());
-}
-
+/**
+ * @fn StringTable::addAction
+ * @brief Add a table and xml elements containing an empty string.
+ */
 void StringTable::addAction()
 {
     int row = this->rowCount();
@@ -168,160 +171,100 @@ void StringTable::addAction()
     builder->addItem(&list);
 }
 
+/**
+ * @fn StringTable::editAction
+ * @brief Enable cursor input for the selected location.
+ */
 void StringTable::editAction()
 {
     this->edit(currentIndex());
-    return;
 }
 
+/**
+ * @fn StringTable::deleteAction
+ * @brief Deletes the selected tableItem and xml elements synchronously.
+ */
 void StringTable::deleteAction()
 {
-    //if rowcount is zero.
+    // if rowcount is zero.
     if(this->rowCount() == 0) return;
 
-    //check delete warning message
-    if(deleteCheckMessage())
-    {
-        QModelIndexList lists = this->selectedIndexes();
-        while(!lists.empty()){
-            this->removeRow(lists.at(0).row());
-            builder->deleteItem(lists.at(0).row());
-
-            //delete column index
-            for(int i = 0; i < lists.at(0).column(); i++){
-                lists.removeAt(0);
-            }
-            lists = this->selectedIndexes();
-        }
+    // check delete warning message
+    if(deleteCheckMessage()) {
+        deleteTableRecursive();
+        updateXml();
     }
 }
 
-void StringTable::reloadAction()
-{
-    int count = builder->count();
-    //set tables
-    setRowCount(count);
-    for(int i = 0; i < count; i++){
-        setTableItem(i);
-    }
-}
-
-//TODO: for fast
+/**
+ * @fn StringTable::cutAction
+ * @brief
+ * Deletes the selected tableItem and xml elements synchronously
+ * and saves them to the clipboard.
+ */
 void StringTable::cutAction()
 {
-    //if rowcount is zero.
+    // if rowcount is zero.
     if(this->rowCount() == 0) return;
 
     copyAction();
-
-    // modified delete table recursive
-    QModelIndexList lists = this->selectedIndexes();
-    while(!lists.empty()){
-        this->removeRow(lists.at(0).row());
-        builder->deleteItem(lists.at(0).row());
-
-        //delete column index
-        for(int i = 0; i < lists.at(0).column(); i++){
-            lists.removeAt(0);
-        }
-        lists = this->selectedIndexes();
-    }
+    deleteTableRecursive();
+    updateXml();
 }
 
+/**
+ * @fn StringTable::copyAction
+ * @brief Copy the selected row to clipboard.
+ */
 void StringTable::copyAction()
 {
-    //if rowcount is zero.
+    // if rowcount is zero.
     if(this->rowCount() == 0) return;
-
-    // copy from VariantTable::copyAction()
-    QString tmp;
-    QModelIndexList mlist = this->selectedIndexes();
-
-    // 2 column
-    int counter = static_cast<int>(mlist.count());
-    for(int i = 0; i < counter; i++){
-        int crow = mlist.at(i).row();
-
-        tmp.append(mlist.at(i).model()->index(crow, i%2).data().toString());
-
-        if(i%2 == 0){
-            tmp.append("\t");
-        }else{
-            tmp.append("\n");
-        }
-    }
-
-    QClipboard *clipboard = QApplication::clipboard();
-    clipboard->setText(tmp);
+    copyToClipboard(QApplication::clipboard());
 }
 
+/**
+ * @fn StringTable::pasteAction
+ * @brief
+ * Pastes the line copied to the clipboard one line above the selected line.
+ */
 void StringTable::pasteAction()
 {
-    //copy from CommandTable::pasteEnterAction()
-    QClipboard *clipboard = QApplication::clipboard();
-    QStringList text = clipboard->text().split(QRegularExpression("\\n|\\r\\n"));
-
-    //last lests unknown ""
-    if(text.count() > 1) text.removeLast();
-
-    int row = this->rowCount();
-    int txcount = static_cast<int>(text.count());
-
-    for(int i = 0; i < txcount; i++){
-       if(row > 0) row = this->currentRow();
-       insertRow(row);
-
-       // One row table
-       QStringList intext = (text.at(i)).split(QRegularExpression("\\t|,"));
-
-       int intxt = static_cast<int>(intext.count());
-       if(intxt > 0){
-           this->setItem(row, 0, new QTableWidgetItem(intext.at(0)));
-           if(intxt > 1){
-               this->setItem(row, 1, new QTableWidgetItem(intext.at(1)));
-           }
-       }
-
-       //update
-       resave();
+    if(pasteFromClipboard(QApplication::clipboard())){
+        updateXml();
     }
 }
 
+/**
+ * @fn StringTable::upAction
+ * @brief Move up one selection line.
+ */
 void StringTable::upAction()
 {
-    int current = this->currentRow();
-    if(current == 0) return;
-
-    builder->swapItem(current, current-1);
-
-    reloadAction();
-    selectRow(current - 1);
+    upSelected([&](int current) {
+        Q_UNUSED(current)
+        updateXml();
+    });
 }
 
+/**
+ * @fn StringTable::downAction
+ * @brief Move down one selection line.
+ */
 void StringTable::downAction()
 {
-    int current = this->currentRow();
-    int counter = this->rowCount();
-
-    if((current + 1) == counter) return;
-
-    builder->swapItem(current, current+1);
-
-    reloadAction();
-    selectRow(current + 1);
+    downSelected([&](int current) {
+        Q_UNUSED(current)
+        updateXml();
+    });
 }
 
-void StringTable::setTableItem(int row)
-{
-    QList<QStringList> *list = new QList<QStringList>();
-    if(builder->readItem(row, list)){
-        //set tableitem
-        this->setItem(row,0,new QTableWidgetItem(list->at(0).at(1)));
-        this->setItem(row,1,new QTableWidgetItem(list->at(1).at(1)));
-    }
-    delete list;
-}
-
+/**
+ * @fn StringTable::openFileAction
+ * @brief
+ * Select a file and paste the selected
+ * file path into the selected row.
+ */
 void StringTable::openFileAction()
 {
     int current = this->currentRow();
@@ -330,6 +273,12 @@ void StringTable::openFileAction()
     this->setItem(current, 1, new QTableWidgetItem(str));
 }
 
+/**
+ * @fn StringTable::openDirectoryAction
+ * @brief
+ * Select a directory and paste the selected
+ * folder path into the selected row.
+ */
 void StringTable::openDirectoryAction()
 {
     int current = this->currentRow();
@@ -338,29 +287,79 @@ void StringTable::openDirectoryAction()
     this->setItem(current, 1, new QTableWidgetItem(str));
 }
 
-void StringTable::saveAction(int row)
+/**
+ * @fn StringTable::reloadAction
+ * @brief Update all table items.
+ */
+void StringTable::reloadAction()
 {
+    QList<QList<QStringList> *> item;
+    builder->readAll(&item);
+    int count = static_cast<int>(item.count());
+
+    //set tables
+    setRowCount(count);
+
+    for(int i = 0; i < count; i++){
+        setTableItem(i, item.at(i));
+    }
+}
+
+/**
+ * @fn StringTable::updateXml
+ * @brief It takes the data in the table and overwrites the XML file.
+ */
+void StringTable::updateXml()
+{
+    int datacount = this->rowCount();
+    QList<QList<QStringList> *> itemlist;
+
+    for(int i = 0; i < datacount; i++){
+        // add empty item
+        QList<QStringList> *list = new QList<QStringList>();
+        createList(i, list);
+        itemlist.append(list);
+    }
+
+    builder->writeAll(&itemlist);
+}
+
+/**
+ * @fn StringTable::setTableItem
+ * @brief Set data for a single row.
+ * @param row Row to set the table.
+ * @param item One line of data to retrieve from XML.
+ */
+void StringTable::setTableItem(int row, const QList<QStringList> *item)
+{
+    // set tableitem
+    this->setItem(row,0,new QTableWidgetItem(item->at(0).at(1)));
+    this->setItem(row,1,new QTableWidgetItem(item->at(1).at(1)));
+}
+
+void StringTable::saveCellChanged(int row, int col)
+{
+    Q_UNUSED(col)
     //set item
     QList<QStringList> list;
     createList(row, &list);
     builder->editItem(row, &list);
 }
 
-//FIXME: not efficient method
-void StringTable::resave()
+/**
+ * @fn StringTable::createList
+ * @brief Generate data array to be stored in XML from table view.
+ * @param row Selected row number
+ * @param newlist Result data
+ */
+void StringTable::createList(int row, QList<QStringList> *newlist)
 {
-    //clear item
-    int datacount = builder->count();
-    for(int i = 0; i < datacount; i++) builder->deleteItem(0);
+    int cols = this->columnCount();
+    QStringList rowdata;
 
-    datacount = this->rowCount();
-
-    for(int i = 0; i < datacount; i++){
-        //add empty item
-        QList<QStringList> list;
-        createList(i, &list);
-        builder->addItem(&list);
-        //oversave item
-        saveAction(i);
+    for(int i = 0; i < cols; i++){
+        rowdata.append(this->model()->index(row, i).data().toString());
     }
+
+    builder->createVarElement(newlist, &rowdata);
 }

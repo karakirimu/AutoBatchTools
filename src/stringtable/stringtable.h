@@ -22,31 +22,33 @@ class STRINGTABLESHARED_EXPORT StringTable : public BasicTable
     Q_OBJECT
 public:
     explicit StringTable(QWidget *parent = nullptr);
-    ~StringTable();
+    ~StringTable() override;
 
 public slots:
-    void addAction();
-    void editAction();
-    void deleteAction();
-    void reloadAction();
+    void addAction()     override;
+    void editAction()    override;
+    void deleteAction()  override;
     void cutAction();
-    void copyAction();
+    void copyAction()    override;
     void pasteAction();
-    void upAction();
-    void downAction();
+    void upAction()      override;
+    void downAction()    override;
     void openFileAction();
     void openDirectoryAction();
+    void reloadAction();
 
-    void saveAction(int row);
-    void resave();
+private slots:
+    void saveCellChanged(int row, int col);
 
 private:
     void setPopupActionTop();
     void setPopupActionDefault();
     void setPopupActionBottom();
-    void setTableItem(int row);
-    bool eventFilter(QObject *obj, QEvent *event);
+
+    void updateXml();
+    void setTableItem(int row, const QList<QStringList> *item);
     void createList(int row, QList<QStringList> *newlist);
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
     QAction *m_file;
     QAction *m_dir;
