@@ -230,7 +230,7 @@ target_link_libraries(AutoBatchEditor
     searchxmlbuilder
     pluginsxmlbuilder
     processxmlbuilder
-    processxmllistgenerator
+    xmlresolver
     profilexmlbuilder
     profilecombobox
     basictable

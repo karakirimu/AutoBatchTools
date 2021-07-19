@@ -6,23 +6,23 @@
  * SPDX-License-Identifier: MIT
  */
 
-#include "processxmllistgenerator.h"
+#include "xmlresolver.h"
 
-ProcessXmlListGenerator::ProcessXmlListGenerator()
+XmlResolver::XmlResolver()
 {
 
 }
 
 /**
- * @fn ProcessXmlListGenerator::fetchCommandFirstPos
+ * @fn XmlResolver::fetchCommandFirstPos
  * @brief Find the first position in the list that contains
  *        nformation about the table elements in the tab.
  * @param tag Tag name. (TAG_E_CMD_HA1 or TAG_P_CMD_HA1)
  * @param loadbase List of elements selected in ProcessFlowTable.
  * @return The first position in the list of table elements, or -1 if not found.
  */
-int ProcessXmlListGenerator::fetchCommandFirstPos(QString tag
-                                              , const QList<QStringList> *loadbase)
+int XmlResolver::fetchCommandFirstPos(QString tag
+                                        , const QList<QStringList> *loadbase)
 {
     qsizetype count = loadbase->count();
     int i = 0;
@@ -41,7 +41,7 @@ int ProcessXmlListGenerator::fetchCommandFirstPos(QString tag
     return -1;
 }
 
-const QString ProcessXmlListGenerator::fetch(const QList<QStringList> *loadbase
+const QString XmlResolver::fetch(const QList<QStringList> *loadbase
                                              , QString tag
                                              , QString attr
                                              , int firstpos)
@@ -50,7 +50,7 @@ const QString ProcessXmlListGenerator::fetch(const QList<QStringList> *loadbase
 }
 
 /**
- * @fn ProcessXmlListGenerator::fetch
+ * @fn XmlResolver::fetch
  * @brief
  * This function gets the value from the selected XML tag, tag item, and attribute.
  * It can be used to get a specific value from the read result of a class
@@ -63,7 +63,7 @@ const QString ProcessXmlListGenerator::fetch(const QList<QStringList> *loadbase
  * @param firstpos     The first row number to search in loadelements. (Optional)
  * @return Selected item or empty.
  */
-const QString ProcessXmlListGenerator::fetch(const QList<QStringList> *loadelements
+const QString XmlResolver::fetch(const QList<QStringList> *loadelements
                                        , QString tag
                                        , QString attr
                                        , QString tagvalue

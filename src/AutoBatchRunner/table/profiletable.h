@@ -49,7 +49,7 @@ private:
     QAction *m_delete;
     QAction *m_ref;
 
-    ProcessXmlListGenerator xf;
+    XmlResolver xf;
     ProcessXmlConstant pxc;
     ProfileXmlBuilder *builder;
 };

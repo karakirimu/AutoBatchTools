@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(processxmllistgenerator LANGUAGES CXX VERSION "1.0.0")
+project(xmlresolver LANGUAGES CXX VERSION "1.0.0")
 
 if(NOT SUPPRESS_MULTIPLE_DEFINITIONS)
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -15,19 +15,19 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 include(${CMAKE_CURRENT_LIST_DIR}/../cmake/productinfo.cmake)
 create_product_info(PRODUCT_INFO)
 
-add_library(processxmllistgenerator
+add_library(xmlresolver
   SHARED
-    processxmllistgenerator_global.h
-    processxmllistgenerator.cpp
-    processxmllistgenerator.h
+    xmlresolver_global.h
+    xmlresolver.cpp
+    xmlresolver.h
     ${PRODUCT_INFO}
 )
 
-target_include_directories(processxmllistgenerator
+target_include_directories(xmlresolver
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../share/process
 )
 
-target_link_libraries(processxmllistgenerator PRIVATE Qt${QT_VERSION_MAJOR}::Core)
+target_link_libraries(xmlresolver PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 
-target_compile_definitions(processxmllistgenerator PRIVATE PROCESSXMLLISTGENERATOR_LIBRARY)
+target_compile_definitions(xmlresolver PRIVATE XMLRESOLVER_LIBRARY)

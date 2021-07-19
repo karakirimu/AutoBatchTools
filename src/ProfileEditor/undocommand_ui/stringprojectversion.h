@@ -11,7 +11,6 @@
 
 #include <QUndoCommand>
 #include <editorcachelist.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <uicommandmap.h>
 
 class StringProjectVersion : public QUndoCommand
@@ -39,7 +38,6 @@ private:
     QString oldStr;
 //    QList<QList<QStringList> *> *m_cache;
 //    QHash<int, int> posinfo;
-//    ProcessXmlListGenerator pxlg;
 
     EditorCacheList *ptrCache;
 };

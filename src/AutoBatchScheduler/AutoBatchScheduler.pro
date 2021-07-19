@@ -85,5 +85,5 @@ unix {
         -L$$LIBRARYPATH -lsearchxmlbuilder \
         -L$$LIBRARYPATH -lprocessxmlbuilder \
         -L$$LIBRARYPATH -lfilesearchloader \
-        -L$$LIBRARYPATH -lprocessxmllistgenerator
+        -L$$LIBRARYPATH -lxmlresolver
 }

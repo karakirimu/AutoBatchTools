@@ -198,7 +198,7 @@ LIBS += \
         -L$$LIBRARYPATH -lsearchxmlbuilder \
         -L$$LIBRARYPATH -lpluginsxmlbuilder \
         -L$$LIBRARYPATH -lprocessxmlbuilder \
-        -L$$LIBRARYPATH -lprocessxmllistgenerator \
+        -L$$LIBRARYPATH -lxmlresolver \
         -L$$LIBRARYPATH -lprofilexmlbuilder \
         -L$$LIBRARYPATH -lprofilecombobox \
         -L$$LIBRARYPATH -lbasictable \

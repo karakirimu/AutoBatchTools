@@ -165,27 +165,27 @@ target_link_libraries(processxmlbuilder PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(processxmlbuilder
   PRIVATE
     xmlbuilder
-    processxmllistgenerator
+    xmlresolver
 )
 
 target_compile_definitions(processxmlbuilder PRIVATE PROCESSXMLBUILDER_LIBRARY)
 
-# processxmllistgenerator
-set(ProcessXmlListGeneratorTest ${CMAKE_CURRENT_LIST_DIR}/../processxmllistgenerator)
-add_library(processxmllistgenerator
+# xmlresolver
+set(XmlResolverTest ${CMAKE_CURRENT_LIST_DIR}/../xmlresolver)
+add_library(xmlresolver
   SHARED
-    ${ProcessXmlListGeneratorTest}/processxmllistgenerator_global.h
-    ${ProcessXmlListGeneratorTest}/processxmllistgenerator.cpp
-    ${ProcessXmlListGeneratorTest}/processxmllistgenerator.h
+    ${XmlResolverTest}/xmlresolver_global.h
+    ${XmlResolverTest}/xmlresolver.cpp
+    ${XmlResolverTest}/xmlresolver.h
 )
 
-target_include_directories(processxmllistgenerator
+target_include_directories(xmlresolver
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../share/process
 )
 
-target_link_libraries(processxmllistgenerator PRIVATE Qt${QT_VERSION_MAJOR}::Core)
-target_compile_definitions(processxmllistgenerator PRIVATE PROCESSXMLLISTGENERATOR_LIBRARY)
+target_link_libraries(xmlresolver PRIVATE Qt${QT_VERSION_MAJOR}::Core)
+target_compile_definitions(xmlresolver PRIVATE XMLRESOLVER_LIBRARY)
 
 ## ---
 
@@ -234,7 +234,7 @@ set (XmlBuilderTestIncludes
     ${CMAKE_CURRENT_LIST_DIR}/../stringxmlbuilder
     ${CMAKE_CURRENT_LIST_DIR}/../pluginsxmlbuilder
     ${CMAKE_CURRENT_LIST_DIR}/../processxmlbuilder
-    ${ProcessXmlListGeneratorTest}
+    ${XmlResolverTest}
     ${StartupXmlBuilderTest}
 )
 
@@ -280,7 +280,7 @@ target_link_libraries(unittest
     Threads::Threads # pre defined
     ${XmlBuilderLinkLibraries}
     ${TableLinkLibraries}
-    processxmllistgenerator
+    xmlresolver
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Core
 )

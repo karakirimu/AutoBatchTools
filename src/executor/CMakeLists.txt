@@ -43,7 +43,7 @@ target_link_libraries(executor
     xmlbuilder
     stringxmlbuilder
     processxmlbuilder
-    processxmllistgenerator
+    xmlresolver
     filesearchloader
 )
 

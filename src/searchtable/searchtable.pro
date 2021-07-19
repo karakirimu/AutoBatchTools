@@ -39,7 +39,7 @@ LIBS += \
     -L$$DESTDIR -lbasictable \
     -L$$DESTDIR -lvariantconverter \
     -L$$DESTDIR -lsearchxmlbuilder \
-    -L$$DESTDIR -lprocessxmllistgenerator \
+    -L$$DESTDIR -lxmlresolver \
     -L$$DESTDIR -lfilesearchdialog
 
 unix {

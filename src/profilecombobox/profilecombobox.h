@@ -39,7 +39,7 @@ private:
     ProfileXmlBuilder *builder;
     ProcessXmlBuilder *pbuilder;
 
-    ProcessXmlListGenerator xf;
+    XmlResolver xf;
     ProcessXmlConstant pxc;
 };
 

@@ -6,10 +6,10 @@
 
 QT       -= gui
 
-TARGET = processxmllistgenerator
+TARGET = xmlresolver
 TEMPLATE = lib
 
-DEFINES += PROCESSXMLLISTGENERATOR_LIBRARY
+DEFINES += XMLRESOLVER_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -26,11 +26,11 @@ include($$PWD/../build_library_path.pri)
 include($$PWD/../share/share.pri)
 
 SOURCES += \
-        processxmllistgenerator.cpp
+        xmlresolver.cpp
 
 HEADERS += \
-        processxmllistgenerator.h \
-        processxmllistgenerator_global.h  
+        xmlresolver.h \
+        xmlresolver_global.h  
 
 unix {
     target.path = /usr/lib

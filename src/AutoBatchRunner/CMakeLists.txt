@@ -78,7 +78,7 @@ target_link_libraries(AutoBatchRunner
     searchxmlbuilder
     pluginsxmlbuilder
     processxmlbuilder
-    processxmllistgenerator
+    xmlresolver
     profilexmlbuilder
     profilecombobox
     basictable

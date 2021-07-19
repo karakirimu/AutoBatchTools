@@ -12,7 +12,7 @@
 #include "executor_global.h"
 #include <../stringxmlbuilder/stringxmlbuilder.h>
 #include <../processxmlbuilder/processxmlbuilder.h>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <../xmlresolver/xmlresolver.h>
 #include <../variantconverter/variantconverter.h>
 #include <../filesearchloader/filesearchloader.h>
 #include <../plugininterface/extraplugininterface.h>
@@ -182,7 +182,7 @@ private:
 
     //xml part
     ProcessXmlBuilder *pbuilder;
-    ProcessXmlListGenerator xgen;
+    XmlResolver xgen;
     ProcessXmlConstant pxc;
     bool profileloaded = false;
 

@@ -23,7 +23,6 @@
 #include <QDropEvent>
 
 #include <editoperator.h>
-//#include <../processxmllistgenerator/processxmllistgenerator.h>
 #include <../stringxmlbuilder/stringxmlbuilder.h>
 
 class VariantTree : public QTreeWidget {
@@ -99,7 +98,6 @@ private:
     void ignoreDataChangedSignal(bool valid);
 
     EditOperator *editop;
-//    ProcessXmlListGenerator xgen;
     StringXmlBuilder *builder;
 
     QAction *m_file;

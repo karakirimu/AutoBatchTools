@@ -488,7 +488,7 @@ QString EditorCacheConverter::fetch(QString tag,
 }
 
 /**
- * @fn ProcessXmlListGenerator::fetchCmdFirstPos
+ * @fn XmlResolver::fetchCmdFirstPos
  * @brief Find the first position in the list that contains
  *        nformation about the table elements in the tab.
  * @param tag Tag name. (E_CMD or PL_CMD)

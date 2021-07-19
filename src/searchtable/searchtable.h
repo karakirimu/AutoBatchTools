@@ -13,7 +13,7 @@
 #include "../basictable/basictable.h"
 #include "../searchxmlbuilder/searchxmlbuilder.h"
 #include "../filesearchdialog/filesearchdialog.h"
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <../xmlresolver/xmlresolver.h>
 
 class SEARCHTABLESHARED_EXPORT SearchTable : public BasicTable
 {
@@ -48,7 +48,7 @@ private:
     QAction *m_ref;
 
     SearchXmlBuilder *builder;
-    ProcessXmlListGenerator xf;
+    XmlResolver xf;
 };
 
 #endif // SEARCHTABLE_H

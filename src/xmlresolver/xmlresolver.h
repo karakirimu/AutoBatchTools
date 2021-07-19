@@ -6,10 +6,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-#ifndef PROCESSXMLLISTGENERATOR_H
-#define PROCESSXMLLISTGENERATOR_H
+#ifndef XMLRESOLVER_H
+#define XMLRESOLVER_H
 
-#include "processxmllistgenerator_global.h"
+#include "xmlresolver_global.h"
 #include <QObject>
 #include <QHash>
 #include <QDateTime>
@@ -22,14 +22,14 @@
  * @brief The XmlListGenerator class
  * This class can create default list (to xml) and operate xml states.
  */
-class PROCESSXMLLISTGENERATORSHARED_EXPORT ProcessXmlListGenerator
+class XMLRESOLVERSHARED_EXPORT XmlResolver
 {
 public:
-    ProcessXmlListGenerator();
+    XmlResolver();
 
     int fetchCommandFirstPos(QString tag, const QList<QStringList> *loadbase);
 
-    // take specific item string
+    //take specific item string
     const QString fetch(const QList<QStringList> *loadbase
                         , QString tag
                         , QString attr
@@ -47,4 +47,4 @@ private:
     const QString EMPTY                  = "";
 };
 
-#endif // PROCESSXMLLISTGENERATOR_H
+#endif // XMLRESOLVER_H

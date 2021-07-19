@@ -35,7 +35,7 @@ LIBS += \
     -L$$DESTDIR -lxmlbuilder \
     -L$$DESTDIR -lprocessxmlbuilder \
     -L$$DESTDIR -lprofilexmlbuilder \
-    -L$$DESTDIR -lprocessxmllistgenerator \
+    -L$$DESTDIR -lxmlresolver \
 
 unix {
     target.path = /usr/lib

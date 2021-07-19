@@ -679,7 +679,7 @@ void ProcessFlowTable::setProfileLoadItem(EditorCache *list, TableOption *option
     if(profile.exists()){
         //read file
         ProcessXmlBuilder tpxb;
-        ProcessXmlListGenerator pxlg;
+        XmlResolver pxlg;
         QList<QStringList> tlist;
         tpxb.setLoadPath(curdata);
 

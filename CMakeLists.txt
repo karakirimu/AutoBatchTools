@@ -63,7 +63,7 @@ add_subdirectory(${SOURCE_DIRECTORY}/profilexmlbuilder)
 add_subdirectory(${SOURCE_DIRECTORY}/searchxmlbuilder)
 add_subdirectory(${SOURCE_DIRECTORY}/stringxmlbuilder)
 add_subdirectory(${SOURCE_DIRECTORY}/pluginsxmlbuilder)
-add_subdirectory(${SOURCE_DIRECTORY}/processxmllistgenerator)
+add_subdirectory(${SOURCE_DIRECTORY}/xmlresolver)
 add_subdirectory(${SOURCE_DIRECTORY}/processxmlbuilder)
 
 # 2

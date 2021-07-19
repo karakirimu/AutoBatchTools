@@ -114,6 +114,6 @@ target_link_libraries(AutoBatchScheduler
     searchxmlbuilder
     processxmlbuilder
     filesearchloader
-    processxmllistgenerator
+    xmlresolver
 )
 endif()

@@ -74,4 +74,4 @@ LIBS += \
     -L$$LIBRARYPATH -lconsolebase \
     -L$$LIBRARYPATH -lpluginstree \
     -L$$LIBRARYPATH -lexecutor \
-    -L$$LIBRARYPATH -lprocessxmllistgenerator
+    -L$$LIBRARYPATH -lxmlresolver

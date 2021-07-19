@@ -29,7 +29,7 @@ SUBDIRS += \
 #1
           $$PWD/src/xmlbuilder \
           $$PWD/src/searchxmlbuilder \
-          $$PWD/src/processxmllistgenerator \
+          $$PWD/src/xmlresolver \
           $$PWD/src/processxmlbuilder \
           $$PWD/src/stringxmlbuilder \
           $$PWD/src/pluginsxmlbuilder \

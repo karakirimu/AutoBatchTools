@@ -12,12 +12,12 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 
-#include <processxmllistgenerator.h>
+#include <xmlresolver.h>
 #include <../share/process/processxmlconstant.h>
 
 using namespace testing;
 
-class ProcessXmlListGeneratorTest : public ::testing::Test {
+class XmlResolverTest : public ::testing::Test {
 protected:
     virtual void SetUp() override {
         resetTestItems();
@@ -62,20 +62,20 @@ protected:
         }
     }
 
-    ProcessXmlListGenerator pxc;
+    XmlResolver pxc;
     QList<QStringList> test;
     static constexpr int rows = 10;
     static constexpr int cols = 10;
 };
 
-TEST_F(ProcessXmlListGeneratorTest, fetchTag){
+TEST_F(XmlResolverTest, fetchTag){
     for(const QStringList &ql : test){
         QString val = pxc.fetch(&test, ql.first());
         EXPECT_EQ(ql.at(1), val);
     }
 }
 
-TEST_F(ProcessXmlListGeneratorTest, fetchAttribute){
+TEST_F(XmlResolverTest, fetchAttribute){
     for(const QStringList &ql : test){
         for(int i = 2; i < cols; i += 2){
             QString val = pxc.fetch(&test, ql.first(), ql.at(i));
@@ -84,14 +84,14 @@ TEST_F(ProcessXmlListGeneratorTest, fetchAttribute){
     }
 }
 
-TEST_F(ProcessXmlListGeneratorTest, fetchTagValue){
+TEST_F(XmlResolverTest, fetchTagValue){
     for(const QStringList &ql : test){
         QString val = pxc.fetch(&test, ql.first(), "", ql.at(1));
         EXPECT_EQ(ql.at(1).toStdString(), val.toStdString());
     }
 }
 
-TEST_F(ProcessXmlListGeneratorTest, fetchTagValueAttribute){
+TEST_F(XmlResolverTest, fetchTagValueAttribute){
     // same candidate with different value.
     createSameTestItems();
     for(const QStringList &ql : test){
@@ -102,7 +102,7 @@ TEST_F(ProcessXmlListGeneratorTest, fetchTagValueAttribute){
     }
 }
 
-TEST_F(ProcessXmlListGeneratorTest, fetchTagFirstPosition){
+TEST_F(XmlResolverTest, fetchTagFirstPosition){
     int half = static_cast<int>(test.count()) / 2;
 
     for(int i = 0; i < rows; i++){
@@ -116,7 +116,7 @@ TEST_F(ProcessXmlListGeneratorTest, fetchTagFirstPosition){
     }
 }
 
-TEST_F(ProcessXmlListGeneratorTest, fetchCommandFirstPos){
+TEST_F(XmlResolverTest, fetchCommandFirstPos){
     int res = pxc.fetchCommandFirstPos("invalid", &test);
     EXPECT_EQ(-1, res);
 

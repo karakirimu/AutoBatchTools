@@ -11,7 +11,7 @@
 
 #include "processxmlbuilder_global.h"
 #include <../xmlbuilder/xmlbuilder.h>
-#include <../processxmllistgenerator/processxmllistgenerator.h>
+#include <../xmlresolver/xmlresolver.h>
 #include <../share/process/processxmlconstant.h>
 #include <../share/process/functiontype.h>
 

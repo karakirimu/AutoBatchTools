@@ -83,7 +83,7 @@ private:
     void loadPluginInstance(QString plfile);
 
     EditOperator *editop;
-    ProcessXmlListGenerator xgen;
+    XmlResolver xgen;
 
     //current xml id
     int currentid = -1;
