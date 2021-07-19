@@ -27,26 +27,13 @@ class PROCESSXMLLISTGENERATORSHARED_EXPORT ProcessXmlListGenerator
 public:
     ProcessXmlListGenerator();
 
-    //change combined structure to separated structure
-    [[deprecated]] void createSeparateList(QList<QStringList> *ctos);
-
     int fetchCommandFirstPos(QString tag, const QList<QStringList> *loadbase);
 
-    //take specific item string
-    [[deprecated]] QString fetch(QString tag, const QList<QStringList> *loadbase);
-    [[deprecated]] QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase);
-    [[deprecated]] QString fetch(QString tag, QString attr, const QList<QStringList> *loadbase, int firstpos);
-    [[deprecated]] QString fetch(QString tag, QString value, QString attr,const QList<QStringList> *loadbase);
-
+    // take specific item string
     const QString fetch(const QList<QStringList> *loadbase
                         , QString tag
                         , QString attr
                         , int firstpos);
-
-//    const QString fetch(const QList<QStringList> *loadbase
-//                        , QString tag
-//                        , QString value
-//                        , QString attr);
 
     const QString fetch(const QList<QStringList> *loadelements
                   , QString tag
@@ -55,10 +42,7 @@ public:
                   , int firstpos = 0);
 
 private:
-    [[deprecated]] int getType(QString type);
-
     ProcessXmlConstant pxc;
-    FunctionType fs;
 
     const QString EMPTY                  = "";
 };

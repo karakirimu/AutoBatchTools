@@ -13,48 +13,6 @@ ProcessXmlListGenerator::ProcessXmlListGenerator()
 
 }
 
-///DEPENDS_XML
-void ProcessXmlListGenerator::createSeparateList(QList<QStringList> *ctos)
-{
-    //get selected index
-    int index = fetch(ctos, pxc.TAG_FUNCTIONSELECT).toInt();
-
-    //remove till first header
-    while(!ctos->empty()){
-        if(getType(ctos->first().at(1)) == index){
-            break;
-        }else{
-            ctos->removeFirst();
-        }
-    }
-
-    int i = 1;
-    bool rem = false;
-    while(i < ctos->count()){
-        if(getType(ctos->at(i).at(1)) == -1 && !rem){
-            i++;
-        }else{
-            rem = true;
-            ctos->removeAt(i);
-        }
-    }
-}
-
-/**
- * @fn ProcessXmlListGenerator::getType
- * @brief Returns the GUI correspondence corresponding to the XML tag.
- * @param type XML tag.
- * @return The type of the corresponding tab UI.
- */
-int ProcessXmlListGenerator::getType(QString type)
-{
-    if(type == fs.getString(fs.TYPE::EXECUTE))     return static_cast<int>(TAB::EXECUTE);
-    if(type == fs.getString(fs.TYPE::FILESEARCH))  return static_cast<int>(TAB::FILESEARCH);
-    if(type == fs.getString(fs.TYPE::PLUGIN))      return static_cast<int>(TAB::PLUGINS);
-    if(type == fs.getString(fs.TYPE::PROFILELOAD)) return static_cast<int>(TAB::PROFILELOAD);
-    return static_cast<int>(TAB::INVALID);
-}
-
 /**
  * @fn ProcessXmlListGenerator::fetchCommandFirstPos
  * @brief Find the first position in the list that contains
@@ -83,36 +41,6 @@ int ProcessXmlListGenerator::fetchCommandFirstPos(QString tag
     return -1;
 }
 
-QString ProcessXmlListGenerator::fetch(QString tag
-                                       , const QList<QStringList> *loadbase)
-{
-    return this->fetch(loadbase, tag);
-}
-
-// If there is no element of "attr", assign PROCESS_NONE to "attr"
-QString ProcessXmlListGenerator::fetch(QString tag
-                                       , QString attr
-                                       , const QList<QStringList> *loadbase)
-{
-    return this->fetch(loadbase, tag, attr);
-}
-
-QString ProcessXmlListGenerator::fetch(QString tag
-                                       , QString attr
-                                       , const QList<QStringList> *loadbase
-                                       , int firstpos)
-{
-    return this->fetch(loadbase, tag, attr, "", firstpos);
-}
-
-QString ProcessXmlListGenerator::fetch(QString tag
-                                       , QString value
-                                       , QString attr
-                                       , const QList<QStringList> *loadbase)
-{
-    return this->fetch(loadbase, tag, attr, value);
-}
-
 const QString ProcessXmlListGenerator::fetch(const QList<QStringList> *loadbase
                                              , QString tag
                                              , QString attr
@@ -120,14 +48,6 @@ const QString ProcessXmlListGenerator::fetch(const QList<QStringList> *loadbase
 {
     return this->fetch(loadbase, tag, attr, "", firstpos);
 }
-
-//const QString ProcessXmlListGenerator::fetch(const QList<QStringList> *loadbase
-//                                             , QString tag
-//                                             , QString value
-//                                             , QString attr)
-//{
-//    return this->fetch(loadbase, tag, attr, value);
-//}
 
 /**
  * @fn ProcessXmlListGenerator::fetch
