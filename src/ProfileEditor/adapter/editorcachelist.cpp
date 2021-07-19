@@ -134,7 +134,7 @@ int EditorCacheList::count()
     int result = 0;
     {
         std::lock_guard<std::mutex> lock(mutex);
-        result = cache.count();
+        result = static_cast<int>(cache.count());
     }
     return result;
 }

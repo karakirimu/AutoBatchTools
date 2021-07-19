@@ -685,7 +685,7 @@ void ProcessFlowTable::setProfileLoadItem(EditorCache *list, TableOption *option
 
         if(tpxb.readItem(0, &tlist)){
             ProcessXmlConstant pxc;
-            curdata = pxlg.fetch(pxc.TAG_I_NAME, &tlist);
+            curdata = pxlg.fetch(&tlist, pxc.TAG_I_NAME);
             curdata.append(" - ");
             curdata.append(profile.baseName());
         }

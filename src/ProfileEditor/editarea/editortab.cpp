@@ -415,7 +415,7 @@ void EditorTab::setProfileLoadDataList(EditorCache *list)
 
         if(tpxb.readItem(0, &tlist)){
             ProcessXmlConstant pxc;
-            curdata = xgen.fetch(pxc.TAG_I_NAME, &tlist);
+            curdata = xgen.fetch(&tlist, pxc.TAG_I_NAME);
         }
 
     }else{
