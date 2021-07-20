@@ -41,10 +41,10 @@ class ProfileEditor : public QMainWindow
 public:
     explicit ProfileEditor(QWidget *parent = nullptr);
     explicit ProfileEditor(QStringList loadfile, QWidget *parent = nullptr);
-    ~ProfileEditor();
+    ~ProfileEditor() override;
 
-    void showEvent(QShowEvent *event);
-    void closeEvent(QCloseEvent *event);
+    void showEvent(QShowEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
 
 signals:
     void statusLabelChanged(QString);

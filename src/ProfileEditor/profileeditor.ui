@@ -1564,7 +1564,7 @@
      <x>0</x>
      <y>0</y>
      <width>1024</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -1882,13 +1882,16 @@ selection-color: rgb(0, 0, 0);</string>
            <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed</set>
           </property>
           <property name="dragEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="dragDropOverwriteMode">
            <bool>false</bool>
           </property>
           <property name="dragDropMode">
-           <enum>QAbstractItemView::DragDrop</enum>
+           <enum>QAbstractItemView::InternalMove</enum>
           </property>
           <property name="defaultDropAction">
-           <enum>Qt::LinkAction</enum>
+           <enum>Qt::MoveAction</enum>
           </property>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
@@ -2520,6 +2523,9 @@ border: none;</string>
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
+  <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
   <include location="../../res/resources.qrc"/>
