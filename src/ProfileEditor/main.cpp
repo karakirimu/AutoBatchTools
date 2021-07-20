@@ -23,32 +23,37 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    // set default text codec
-//    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
-
     // Load language setting
     QSettings settings( SettingConstant().OUTPUT_FILE, QSettings::IniFormat );
     settings.beginGroup( SettingConstant().GROUP_ABE );
     QLocale locale;
-    QString lang = settings.value(SettingConstant().ABE_LANGUAGE, locale.bcp47Name()).toString();
+    QString lang
+        = settings.value(SettingConstant().ABE_LANGUAGE
+                         , locale.bcp47Name()).toString();
     settings.endGroup();
 
     // Load tranlation
     QTranslator translator;
     if(!translator.load(TR_PATH + lang)){
-        qDebug() << "Translation file load failed. " << " Path : " << QDir::currentPath() << lang;
+        qDebug() << "Translation file load failed. "
+                 << " Path : " << QDir::currentPath() << lang;
     }
     a.installTranslator(&translator);
 
     // Load plugin translation
-    QDirIterator dit(PL_TR_PATH, QStringList() << ("*_" + lang + ".qm"), QDir::Files);
+    QDirIterator dit(PL_TR_PATH
+                     , QStringList() << ("*_" + lang + ".qm")
+                     , QDir::Files);
+
     QList<QTranslator *> translatorlist;
+
     while (dit.hasNext()){
         QTranslator *trans = new QTranslator();
         QString path = dit.next();
-        trans->load(path);
-        a.installTranslator(trans);
-        translatorlist.append(trans);
+        if(trans->load(path)){
+            a.installTranslator(trans);
+            translatorlist.append(trans);
+        }
     }
 
     // Show main window
