@@ -1,4 +1,4 @@
-# AutoBatchRunner
+# AutoBatchTools
 
 This application allows you to edit and execute a series of command line processes. It was created to easy the following processes.
 
