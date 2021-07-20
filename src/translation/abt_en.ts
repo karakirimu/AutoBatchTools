@@ -192,141 +192,138 @@ To recover files, select the following list and press [OK].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/autosaveselectiondialog.cpp" line="37"/>
+        <location filename="../ProfileEditor/autosaveselectiondialog.cpp" line="29"/>
         <source>Last Modified</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>BaseTable</name>
-    <message>
-        <location filename="../basictable/basetable.cpp" line="287"/>
-        <source>Open File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basictable/basetable.cpp" line="287"/>
-        <source>File (*.*)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../basictable/basetable.cpp" line="293"/>
-        <source>Open Folder</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>BasicTable</name>
     <message>
-        <location filename="../basictable/basictable.cpp" line="42"/>
-        <location filename="../basictable/basictable.cpp" line="173"/>
+        <location filename="../basictable/basictable.cpp" line="28"/>
+        <location filename="../basictable/basictable.cpp" line="176"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="45"/>
-        <location filename="../basictable/basictable.cpp" line="177"/>
+        <location filename="../basictable/basictable.cpp" line="31"/>
+        <location filename="../basictable/basictable.cpp" line="180"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="48"/>
-        <location filename="../basictable/basictable.cpp" line="178"/>
+        <location filename="../basictable/basictable.cpp" line="34"/>
+        <location filename="../basictable/basictable.cpp" line="181"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="62"/>
+        <location filename="../basictable/basictable.cpp" line="48"/>
         <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="63"/>
+        <location filename="../basictable/basictable.cpp" line="49"/>
         <source>Do you want to delete selected item(s)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="161"/>
-        <source>New</source>
+        <location filename="../basictable/basictable.cpp" line="65"/>
+        <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="162"/>
-        <source>Add</source>
+        <location filename="../basictable/basictable.cpp" line="65"/>
+        <source>File (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="163"/>
-        <source>Delete</source>
+        <location filename="../basictable/basictable.cpp" line="78"/>
+        <source>Open Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="164"/>
-        <source>Edit</source>
+        <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="165"/>
-        <source>Enable</source>
+        <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="166"/>
-        <source>Disable</source>
+        <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="167"/>
-        <source>Clear</source>
+        <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="168"/>
-        <source>Add File</source>
+        <source>Enable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="169"/>
-        <source>Add Files</source>
+        <source>Disable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="170"/>
-        <source>Add Folder</source>
+        <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="171"/>
-        <source>File Info</source>
+        <source>Add File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="172"/>
-        <source>Cut</source>
+        <source>Add Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basictable/basictable.cpp" line="173"/>
+        <source>Add Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="174"/>
-        <source>Paste</source>
+        <source>File Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../basictable/basictable.cpp" line="175"/>
+        <source>Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basictable/basictable.cpp" line="177"/>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../basictable/basictable.cpp" line="178"/>
         <source>Paste (space separated)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="176"/>
+        <location filename="../basictable/basictable.cpp" line="179"/>
         <source>Paste (newline separated)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="179"/>
+        <location filename="../basictable/basictable.cpp" line="182"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../basictable/basictable.cpp" line="180"/>
+        <location filename="../basictable/basictable.cpp" line="183"/>
         <source>Property</source>
         <translation type="unfinished"></translation>
     </message>
@@ -371,7 +368,7 @@ To recover files, select the following list and press [OK].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/statusarea/cellinfowidget.cpp" line="156"/>
+        <location filename="../AutoBatchScheduler/statusarea/cellinfowidget.cpp" line="148"/>
         <source>To turn off task, need to stop the current task.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -379,7 +376,7 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>CommandTable</name>
     <message>
-        <location filename="../ProfileEditor/editarea/commandtable.cpp" line="47"/>
+        <location filename="../ProfileEditor/editarea/commandtable.cpp" line="40"/>
         <source>Executable file / Arguments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -387,53 +384,53 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>ConsoleBase</name>
     <message>
-        <location filename="../consolebase/consolebase.cpp" line="48"/>
+        <location filename="../consolebase/consolebase.cpp" line="40"/>
         <source># -- PROCESS STARTED -- 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../consolebase/consolebase.cpp" line="52"/>
+        <location filename="../consolebase/consolebase.cpp" line="44"/>
         <source># -- SCHEDULER PROCESS STARTED -- 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../consolebase/consolebase.cpp" line="65"/>
+        <location filename="../consolebase/consolebase.cpp" line="57"/>
         <source># -- PROCESS PAUSED -- 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../consolebase/consolebase.cpp" line="72"/>
+        <location filename="../consolebase/consolebase.cpp" line="64"/>
         <source># -- PROCESS STOPPED -- 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../consolebase/consolebase.cpp" line="81"/>
+        <location filename="../consolebase/consolebase.cpp" line="73"/>
         <source># -- PROCESS COMPLETED -- 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../consolebase/consolebase.cpp" line="85"/>
+        <location filename="../consolebase/consolebase.cpp" line="77"/>
         <source># -- SCHEDULER PROCESS COMPLETED -- 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../consolebase/consolebase.cpp" line="154"/>
+        <location filename="../consolebase/consolebase.cpp" line="146"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../consolebase/consolebase.cpp" line="155"/>
+        <location filename="../consolebase/consolebase.cpp" line="147"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../consolebase/consolebase.cpp" line="157"/>
+        <location filename="../consolebase/consolebase.cpp" line="149"/>
         <source>Clear Console Output</source>
         <translation type="unfinished"></translation>
     </message>
@@ -441,12 +438,12 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>EditorTab</name>
     <message>
-        <location filename="../ProfileEditor/editarea/editortab.cpp" line="430"/>
+        <location filename="../ProfileEditor/editarea/editortab.cpp" line="422"/>
         <source>(no file)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/editortab.cpp" line="672"/>
+        <location filename="../ProfileEditor/editarea/editortab.cpp" line="676"/>
         <source>Save FileSearch Result</source>
         <translation type="unfinished"></translation>
     </message>
@@ -454,119 +451,119 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>Executor</name>
     <message>
-        <location filename="../executor/executor.cpp" line="70"/>
+        <location filename="../executor/executor.cpp" line="62"/>
         <source>Process killed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="191"/>
+        <location filename="../executor/executor.cpp" line="183"/>
         <source>## [Fatal] The selected profile cannot be loaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="336"/>
-        <location filename="../executor/executor.cpp" line="354"/>
+        <location filename="../executor/executor.cpp" line="328"/>
+        <location filename="../executor/executor.cpp" line="346"/>
         <source>``` 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="341"/>
-        <location filename="../executor/executor.cpp" line="346"/>
-        <location filename="../executor/executor.cpp" line="351"/>
+        <location filename="../executor/executor.cpp" line="333"/>
+        <location filename="../executor/executor.cpp" line="338"/>
+        <location filename="../executor/executor.cpp" line="343"/>
         <source> 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="341"/>
+        <location filename="../executor/executor.cpp" line="333"/>
         <source>Profile : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="346"/>
+        <location filename="../executor/executor.cpp" line="338"/>
         <source>Version : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="351"/>
+        <location filename="../executor/executor.cpp" line="343"/>
         <source>Created : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="371"/>
+        <location filename="../executor/executor.cpp" line="367"/>
         <source>## [Execution] No execution command, it skips.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="392"/>
-        <location filename="../executor/executor.cpp" line="394"/>
+        <location filename="../executor/executor.cpp" line="388"/>
+        <location filename="../executor/executor.cpp" line="390"/>
         <source>## [</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="392"/>
-        <location filename="../executor/executor.cpp" line="394"/>
+        <location filename="../executor/executor.cpp" line="388"/>
+        <location filename="../executor/executor.cpp" line="390"/>
         <source>] 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="438"/>
+        <location filename="../executor/executor.cpp" line="444"/>
         <source>## [FileSearch : %1] 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="439"/>
+        <location filename="../executor/executor.cpp" line="447"/>
         <source> files found.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="473"/>
+        <location filename="../executor/executor.cpp" line="486"/>
         <source>## [FileSearch] The selected variable cannot be found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="568"/>
+        <location filename="../executor/executor.cpp" line="590"/>
         <source>## [Plugin] %1 started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="572"/>
+        <location filename="../executor/executor.cpp" line="594"/>
         <source>successfully completed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="574"/>
-        <location filename="../executor/executor.cpp" line="580"/>
+        <location filename="../executor/executor.cpp" line="596"/>
+        <location filename="../executor/executor.cpp" line="602"/>
         <source>## [Plugin] %1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="578"/>
+        <location filename="../executor/executor.cpp" line="600"/>
         <source>failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="599"/>
+        <location filename="../executor/executor.cpp" line="626"/>
         <source>## [ProfileLoad] %1 cannot be loaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="625"/>
+        <location filename="../executor/executor.cpp" line="652"/>
         <source>## [ProfileLoad] %1 (loop %2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="758"/>
+        <location filename="../executor/executor.cpp" line="785"/>
         <source>No. %1 does not exist. 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../executor/executor.cpp" line="783"/>
+        <location filename="../executor/executor.cpp" line="812"/>
         <source>Input : %1 files.
 </source>
         <translation type="unfinished"></translation>
@@ -613,17 +610,17 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>FileQueueTable</name>
     <message>
-        <location filename="../filequeuetable/filequeuetable.cpp" line="36"/>
+        <location filename="../filequeuetable/filequeuetable.cpp" line="35"/>
         <source>File / Folder Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filequeuetable/filequeuetable.cpp" line="78"/>
+        <location filename="../filequeuetable/filequeuetable.cpp" line="89"/>
         <source>Open Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filequeuetable/filequeuetable.cpp" line="79"/>
+        <location filename="../filequeuetable/filequeuetable.cpp" line="91"/>
         <source>Files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -806,22 +803,22 @@ To recover files, select the following list and press [OK].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filesearchdialog/filesearchdialog.cpp" line="88"/>
+        <location filename="../filesearchdialog/filesearchdialog.cpp" line="83"/>
         <source>Editing - </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filesearchdialog/filesearchdialog.cpp" line="153"/>
+        <location filename="../filesearchdialog/filesearchdialog.cpp" line="173"/>
         <source>Open Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filesearchdialog/filesearchdialog.cpp" line="185"/>
+        <location filename="../filesearchdialog/filesearchdialog.cpp" line="206"/>
         <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../filesearchdialog/filesearchdialog.cpp" line="185"/>
+        <location filename="../filesearchdialog/filesearchdialog.cpp" line="207"/>
         <source>Save this setting?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -829,7 +826,7 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>InfoStacked</name>
     <message>
-        <location filename="../ProfileEditor/editarea/infostacked.cpp" line="77"/>
+        <location filename="../ProfileEditor/editarea/infostacked.cpp" line="69"/>
         <source>Open Path</source>
         <translation type="unfinished"></translation>
     </message>
@@ -971,7 +968,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../AutoBatchRunner/dialog/optiondialog.ui" line="141"/>
-        <location filename="../AutoBatchRunner/dialog/optiondialog.cpp" line="68"/>
+        <location filename="../AutoBatchRunner/dialog/optiondialog.cpp" line="80"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1049,22 +1046,22 @@ To recover files, select the following list and press [OK].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/dialog/optiondialog.cpp" line="69"/>
+        <location filename="../AutoBatchRunner/dialog/optiondialog.cpp" line="81"/>
         <source>Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/dialog/optiondialog.cpp" line="70"/>
+        <location filename="../AutoBatchRunner/dialog/optiondialog.cpp" line="82"/>
         <source>Global Variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/dialog/optiondialog.cpp" line="71"/>
+        <location filename="../AutoBatchRunner/dialog/optiondialog.cpp" line="83"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/dialog/optiondialog.cpp" line="72"/>
+        <location filename="../AutoBatchRunner/dialog/optiondialog.cpp" line="84"/>
         <source>Plugins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1072,32 +1069,32 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>PluginsComboBox</name>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="54"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="46"/>
         <source>Select plugin ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="119"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="111"/>
         <source>Add Plugin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="120"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="112"/>
         <source>Plugin </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="144"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="136"/>
         <source>This file cannot be applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="159"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="151"/>
         <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="160"/>
+        <location filename="../ProfileEditor/editarea/pluginscombobox.cpp" line="152"/>
         <source>Do you want to exclude the selected item from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1183,86 +1180,86 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>ProcessFlowTable</name>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="38"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="30"/>
         <source>Resource</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="38"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="30"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="581"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="573"/>
         <source>(no name)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="591"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="583"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="598"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="599"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="590"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="591"/>
         <source>(no command)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="616"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="608"/>
         <source>Executable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="623"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="642"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="615"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="634"/>
         <source>(no selection) </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="627"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="636"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="619"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="628"/>
         <source>(none) </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="665"/>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="705"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="657"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="697"/>
         <source>(no selection)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="629"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="621"/>
         <source>Separator: %1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="638"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="630"/>
         <source>Output Variable: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="644"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="636"/>
         <source>Output path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="655"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="647"/>
         <source>FileSearch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="679"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="671"/>
         <source>Plugin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="702"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="694"/>
         <source>(file is not exist)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="715"/>
+        <location filename="../ProfileEditor/graphicsarea/processflowtable.cpp" line="707"/>
         <source>ProfileLoad</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1270,12 +1267,12 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>ProcessShowTable</name>
     <message>
-        <location filename="../AutoBatchScheduler/statusarea/processshowtable.cpp" line="142"/>
+        <location filename="../AutoBatchScheduler/statusarea/processshowtable.cpp" line="134"/>
         <source>yyyy/MM/dd HH:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/statusarea/processshowtable.cpp" line="156"/>
+        <location filename="../AutoBatchScheduler/statusarea/processshowtable.cpp" line="148"/>
         <source> It is already passed the starting time.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1283,48 +1280,48 @@ To recover files, select the following list and press [OK].</source>
 <context>
     <name>ProfileComboBox</name>
     <message>
-        <location filename="../profilecombobox/profilecombobox.cpp" line="128"/>
+        <location filename="../profilecombobox/profilecombobox.cpp" line="98"/>
         <source>Select profile ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../profilecombobox/profilecombobox.cpp" line="137"/>
+        <location filename="../profilecombobox/profilecombobox.cpp" line="108"/>
         <source>(no name)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../profilecombobox/profilecombobox.cpp" line="138"/>
+        <location filename="../profilecombobox/profilecombobox.cpp" line="109"/>
         <source>%1 - %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../profilecombobox/profilecombobox.cpp" line="140"/>
+        <location filename="../profilecombobox/profilecombobox.cpp" line="111"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../profilecombobox/profilecombobox.cpp" line="165"/>
+        <location filename="../profilecombobox/profilecombobox.cpp" line="130"/>
         <source>Add Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../profilecombobox/profilecombobox.cpp" line="166"/>
+        <location filename="../profilecombobox/profilecombobox.cpp" line="132"/>
         <source>Profile </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../profilecombobox/profilecombobox.cpp" line="186"/>
-        <location filename="../profilecombobox/profilecombobox.cpp" line="205"/>
+        <location filename="../profilecombobox/profilecombobox.cpp" line="154"/>
+        <location filename="../profilecombobox/profilecombobox.cpp" line="175"/>
         <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../profilecombobox/profilecombobox.cpp" line="187"/>
+        <location filename="../profilecombobox/profilecombobox.cpp" line="155"/>
         <source>File is not existed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../profilecombobox/profilecombobox.cpp" line="206"/>
+        <location filename="../profilecombobox/profilecombobox.cpp" line="176"/>
         <source>Do you want to exclude the selected item from the list?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1676,7 +1673,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="2167"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="503"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="495"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1732,7 +1729,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="2253"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="576"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="568"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1822,71 +1819,71 @@ To recover files, select the following list and press [OK].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="281"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="273"/>
         <source>Open Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="325"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="489"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="317"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="481"/>
         <source>Save Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="516"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="508"/>
         <source>Untitled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="559"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="551"/>
         <source>No. %1 selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="584"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="576"/>
         <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="585"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="577"/>
         <source>Test Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="605"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="597"/>
         <source>Test Range</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="612"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="604"/>
         <source>Enter the process test range here...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="613"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="605"/>
         <source>Specify the process test range.
 Example: 0-7 0, 1, 2, 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="755"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="747"/>
         <source>Undo %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="766"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="758"/>
         <source>Redo %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="778"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="893"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="770"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="885"/>
         <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="779"/>
-        <location filename="../ProfileEditor/profileeditor.cpp" line="894"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="771"/>
+        <location filename="../ProfileEditor/profileeditor.cpp" line="886"/>
         <source>Profile was edited.
 Do you want to save this?</source>
         <translation type="unfinished"></translation>
@@ -1895,27 +1892,27 @@ Do you want to save this?</source>
 <context>
     <name>ProfileTable</name>
     <message>
-        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="43"/>
+        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="37"/>
         <source>Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="43"/>
+        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="38"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="43"/>
+        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="39"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="194"/>
+        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="200"/>
         <source>Open Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="196"/>
+        <location filename="../AutoBatchRunner/table/profiletable.cpp" line="202"/>
         <source>Profile </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1923,386 +1920,386 @@ Do you want to save this?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/checkeditloopinf.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/checkeditloopinf.cpp" line="47"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkeditloopinf.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkeditloopinf.cpp" line="39"/>
         <source>Process all entered files: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/checkeditrundetach.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/checkeditrundetach.cpp" line="47"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkeditrundetach.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkeditrundetach.cpp" line="39"/>
         <source>Wait for execution to end: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/checkeditsearchinput.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/checkeditsearchinput.cpp" line="47"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkeditsearchinput.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkeditsearchinput.cpp" line="39"/>
         <source>File input by search: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/combopluginselect.cpp" line="44"/>
-        <location filename="../ProfileEditor/undocommand_ui/combopluginselect.cpp" line="56"/>
+        <location filename="../ProfileEditor/undocommand_ui/combopluginselect.cpp" line="36"/>
+        <location filename="../ProfileEditor/undocommand_ui/combopluginselect.cpp" line="48"/>
         <source>Plugin &apos;%1&apos; selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/comboprofileselect.cpp" line="41"/>
-        <location filename="../ProfileEditor/undocommand_ui/comboprofileselect.cpp" line="51"/>
+        <location filename="../ProfileEditor/undocommand_ui/comboprofileselect.cpp" line="33"/>
+        <location filename="../ProfileEditor/undocommand_ui/comboprofileselect.cpp" line="43"/>
         <source>ProfileLoad &apos;%1&apos; selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/dragdropplugintable.cpp" line="97"/>
-        <location filename="../ProfileEditor/undocommand_ui/dragdropplugintable.cpp" line="159"/>
+        <location filename="../ProfileEditor/undocommand_ui/dragdropplugintable.cpp" line="89"/>
+        <location filename="../ProfileEditor/undocommand_ui/dragdropplugintable.cpp" line="151"/>
         <source>Move plugin argument to row &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editcomboboxcommand.cpp" line="38"/>
-        <location filename="../ProfileEditor/undocommand_ui/editcomboboxcommand.cpp" line="48"/>
+        <location filename="../ProfileEditor/undocommand_ui/editcomboboxcommand.cpp" line="30"/>
+        <location filename="../ProfileEditor/undocommand_ui/editcomboboxcommand.cpp" line="40"/>
         <source>Set the return variable of No.%1 to &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="51"/>
-        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="106"/>
+        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="43"/>
+        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="98"/>
         <source>Add the execution argument to row %1 of No. %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="58"/>
-        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="114"/>
+        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="50"/>
+        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="106"/>
         <source>Edit the execution argument &apos;%1&apos; on row %2 of No. %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="68"/>
-        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="125"/>
+        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="60"/>
+        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="117"/>
         <source>Paste the execution argument &apos;%1&apos; on row %2 of No. %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="70"/>
-        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="127"/>
+        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="62"/>
+        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="119"/>
         <source>Insert the execution argument &apos;%1&apos; on row %2 of No. %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="81"/>
-        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="138"/>
+        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="73"/>
+        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="130"/>
         <source>Cut the execution argument of row %1 of No. %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="83"/>
-        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="140"/>
+        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="75"/>
+        <location filename="../ProfileEditor/undocommand_ui/editexectable.cpp" line="132"/>
         <source>Delete the execution argument of row %1 of No. %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="51"/>
-        <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="96"/>
+        <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="43"/>
+        <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="88"/>
         <source>Add the global variable to row %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="60"/>
-        <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="104"/>
+        <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="52"/>
+        <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="96"/>
         <source>Edit the global variable &apos;%1&apos; on row %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="59"/>
+        <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="104"/>
+        <source>Insert the global variable &apos;%1&apos; on row %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="67"/>
         <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="112"/>
-        <source>Insert the global variable &apos;%1&apos; on row %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="75"/>
-        <location filename="../ProfileEditor/undocommand_ui/editglobalvartree.cpp" line="120"/>
         <source>Delete the global variable of row %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="53"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="100"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="54"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="102"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="45"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="92"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="46"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="94"/>
         <source>Add the local variable to row %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="61"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="107"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="62"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="109"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="53"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="99"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="54"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="101"/>
         <source>Edit the local variable &apos;%1&apos; on row %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="69"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="114"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="71"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="115"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="61"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="106"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="63"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="107"/>
         <source>Insert the local variable &apos;%1&apos; on row %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="77"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="121"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="78"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="121"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="69"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvarianttree.cpp" line="113"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="70"/>
+        <location filename="../ProfileEditor/undocommand_ui/editlocalvartable.cpp" line="113"/>
         <source>Delete the local variable of row %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ProfileEditor/undocommand_ui/editlooparguments.cpp" line="28"/>
         <location filename="../ProfileEditor/undocommand_ui/editlooparguments.cpp" line="36"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlooparguments.cpp" line="44"/>
         <source>Number of File Input in one loop: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editloopmax.cpp" line="39"/>
-        <location filename="../ProfileEditor/undocommand_ui/editloopmax.cpp" line="49"/>
+        <location filename="../ProfileEditor/undocommand_ui/editloopmax.cpp" line="31"/>
+        <location filename="../ProfileEditor/undocommand_ui/editloopmax.cpp" line="41"/>
         <source>Maximum number of loops: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ProfileEditor/undocommand_ui/editlooprecursive.cpp" line="28"/>
         <location filename="../ProfileEditor/undocommand_ui/editlooprecursive.cpp" line="36"/>
-        <location filename="../ProfileEditor/undocommand_ui/editlooprecursive.cpp" line="44"/>
         <source>Number of recursive loops: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="80"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="153"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="72"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="145"/>
         <source>Add the plugin argument to row %1 of No. %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="87"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="160"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="79"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="152"/>
         <source>Edit the plugin argument &apos;%1&apos; on row %2 of No. %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="98"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="170"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="90"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="162"/>
         <source>Paste the plugin argument &apos;%1&apos; on row %2 of No. %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="100"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="172"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="92"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="164"/>
         <source>Insert the plugin argument &apos;%1&apos; on row %2 of No. %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="112"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="183"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="104"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="175"/>
         <source>Cut the plugin argument for row %1 of No. %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="114"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="185"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="106"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="177"/>
         <source>Delete the plugin argument for row %1 of No. %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="130"/>
-        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="201"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="122"/>
+        <location filename="../ProfileEditor/undocommand_ui/editplugintable.cpp" line="193"/>
         <source>Update plugin settings at No. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ProfileEditor/undocommand_ui/editsearchfileoutputtype.cpp" line="28"/>
         <location filename="../ProfileEditor/undocommand_ui/editsearchfileoutputtype.cpp" line="36"/>
-        <location filename="../ProfileEditor/undocommand_ui/editsearchfileoutputtype.cpp" line="44"/>
         <source>Save mode changed at No. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ProfileEditor/undocommand_ui/editsearchoutput.cpp" line="28"/>
         <location filename="../ProfileEditor/undocommand_ui/editsearchoutput.cpp" line="36"/>
-        <location filename="../ProfileEditor/undocommand_ui/editsearchoutput.cpp" line="44"/>
         <source>Output method of filesearch changed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/edittimeout.cpp" line="38"/>
-        <location filename="../ProfileEditor/undocommand_ui/edittimeout.cpp" line="48"/>
+        <location filename="../ProfileEditor/undocommand_ui/edittimeout.cpp" line="30"/>
+        <location filename="../ProfileEditor/undocommand_ui/edittimeout.cpp" line="40"/>
         <source>No. %1 timeout changed to %2 ms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/stringprojectauthor.cpp" line="36"/>
-        <location filename="../ProfileEditor/undocommand_ui/stringprojectauthor.cpp" line="45"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringprojectauthor.cpp" line="28"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringprojectauthor.cpp" line="37"/>
         <source>Author changed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/stringprojectdescription.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/stringprojectdescription.cpp" line="47"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringprojectdescription.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringprojectdescription.cpp" line="39"/>
         <source>Description changed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/stringprojectname.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/stringprojectname.cpp" line="47"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringprojectname.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringprojectname.cpp" line="39"/>
         <source>Profile name changed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/stringprojectversion.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/stringprojectversion.cpp" line="47"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringprojectversion.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringprojectversion.cpp" line="39"/>
         <source>Version changed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand/addcommand.cpp" line="33"/>
-        <location filename="../ProfileEditor/undocommand/addcommand.cpp" line="47"/>
+        <location filename="../ProfileEditor/undocommand/addcommand.cpp" line="25"/>
+        <location filename="../ProfileEditor/undocommand/addcommand.cpp" line="39"/>
         <source>Add item at No. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand/deletecommand.cpp" line="34"/>
-        <location filename="../ProfileEditor/undocommand/deletecommand.cpp" line="43"/>
+        <location filename="../ProfileEditor/undocommand/deletecommand.cpp" line="26"/>
+        <location filename="../ProfileEditor/undocommand/deletecommand.cpp" line="35"/>
         <source>Remove item at No. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand/dragdropcommand.cpp" line="84"/>
-        <location filename="../ProfileEditor/undocommand/dragdropcommand.cpp" line="138"/>
+        <location filename="../ProfileEditor/undocommand/dragdropcommand.cpp" line="76"/>
+        <location filename="../ProfileEditor/undocommand/dragdropcommand.cpp" line="130"/>
         <source>Move item at No. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../ProfileEditor/undocommand/insertcommand.cpp" line="27"/>
         <location filename="../ProfileEditor/undocommand/insertcommand.cpp" line="35"/>
-        <location filename="../ProfileEditor/undocommand/insertcommand.cpp" line="43"/>
         <source>Insert item at No. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulernormal.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulernormal.cpp" line="47"/>
-        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulerother.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulerother.cpp" line="47"/>
-        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulerplugin.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulerplugin.cpp" line="47"/>
-        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulersearch.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulersearch.cpp" line="47"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulernormal.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulernormal.cpp" line="39"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulerother.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulerother.cpp" line="39"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulerplugin.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulerplugin.cpp" line="39"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulersearch.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkonlyschedulersearch.cpp" line="39"/>
         <source>Scheduler only: %1 at No. %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/stringsearchsep.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/stringsearchsep.cpp" line="47"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringsearchsep.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringsearchsep.cpp" line="39"/>
         <source>Search delimiter changed to &apos;%1&apos; at No. %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/swapexectable.cpp" line="66"/>
+        <location filename="../ProfileEditor/undocommand_ui/swapexectable.cpp" line="58"/>
         <source>Move execution argument &apos;%1&apos;: Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/swapexectable.cpp" line="71"/>
+        <location filename="../ProfileEditor/undocommand_ui/swapexectable.cpp" line="63"/>
         <source>Move execution argument &apos;%1&apos;: Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/swapexectable.cpp" line="76"/>
+        <location filename="../ProfileEditor/undocommand_ui/swapexectable.cpp" line="68"/>
         <source>Swap execution argument &apos;%1&apos; and &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/dragdropexectable.cpp" line="95"/>
-        <location filename="../ProfileEditor/undocommand_ui/dragdropexectable.cpp" line="157"/>
+        <location filename="../ProfileEditor/undocommand_ui/dragdropexectable.cpp" line="87"/>
+        <location filename="../ProfileEditor/undocommand_ui/dragdropexectable.cpp" line="149"/>
         <source>Move execution argument to row &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/swapplugintable.cpp" line="66"/>
+        <location filename="../ProfileEditor/undocommand_ui/swapplugintable.cpp" line="58"/>
         <source>Move plugin argument &apos;%1&apos;: Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/swapplugintable.cpp" line="71"/>
+        <location filename="../ProfileEditor/undocommand_ui/swapplugintable.cpp" line="63"/>
         <source>Move plugin argument &apos;%1&apos;: Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/swapplugintable.cpp" line="76"/>
+        <location filename="../ProfileEditor/undocommand_ui/swapplugintable.cpp" line="68"/>
         <source>Swap plugin argument &apos;%1&apos; and &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/swapglobalvartree.cpp" line="61"/>
+        <location filename="../ProfileEditor/undocommand_ui/swapglobalvartree.cpp" line="53"/>
         <source>Move the global variable &apos;%1&apos;: Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/swapglobalvartree.cpp" line="66"/>
+        <location filename="../ProfileEditor/undocommand_ui/swapglobalvartree.cpp" line="58"/>
         <source>Move the global variable &apos;%1&apos;: Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/swapglobalvartree.cpp" line="71"/>
+        <location filename="../ProfileEditor/undocommand_ui/swapglobalvartree.cpp" line="63"/>
         <source>Swap the global variable &apos;%1&apos; and &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/swaplocalvarianttree.cpp" line="66"/>
+        <location filename="../ProfileEditor/undocommand_ui/swaplocalvarianttree.cpp" line="58"/>
         <source>Move local variable &apos;%1&apos;: Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/swaplocalvarianttree.cpp" line="71"/>
+        <location filename="../ProfileEditor/undocommand_ui/swaplocalvarianttree.cpp" line="63"/>
         <source>Move local variable &apos;%1&apos;: Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/swaplocalvarianttree.cpp" line="76"/>
+        <location filename="../ProfileEditor/undocommand_ui/swaplocalvarianttree.cpp" line="68"/>
         <source>Swap local variable &apos;%1&apos; and &apos;%2&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/checkedittimeout.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/checkedittimeout.cpp" line="47"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkedittimeout.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkedittimeout.cpp" line="39"/>
         <source>Timeout option at No. %1: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/checkeditallowinput.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/checkeditallowinput.cpp" line="47"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkeditallowinput.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/checkeditallowinput.cpp" line="39"/>
         <source>Allow file input: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editscomboboxcommand.cpp" line="82"/>
+        <location filename="../ProfileEditor/undocommand_ui/editscomboboxcommand.cpp" line="74"/>
         <source>Change input filesearch condition to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/editscomboboxcommand.cpp" line="89"/>
+        <location filename="../ProfileEditor/undocommand_ui/editscomboboxcommand.cpp" line="81"/>
         <source>Change filesearch condition to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/stringfileoutput.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/stringfileoutput.cpp" line="47"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringfileoutput.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringfileoutput.cpp" line="39"/>
         <source>Change filesearch output at No. %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/edittabcommand.cpp" line="40"/>
-        <location filename="../ProfileEditor/undocommand_ui/edittabcommand.cpp" line="54"/>
+        <location filename="../ProfileEditor/undocommand_ui/edittabcommand.cpp" line="32"/>
+        <location filename="../ProfileEditor/undocommand_ui/edittabcommand.cpp" line="46"/>
         <source>Change No. %1 execution type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/undocommand_ui/stringbasepath.cpp" line="37"/>
-        <location filename="../ProfileEditor/undocommand_ui/stringbasepath.cpp" line="47"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringbasepath.cpp" line="29"/>
+        <location filename="../ProfileEditor/undocommand_ui/stringbasepath.cpp" line="39"/>
         <source>Change the working directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2333,7 +2330,7 @@ Do you want to save this?</source>
 <context>
     <name>SearchDialogTable</name>
     <message>
-        <location filename="../filesearchdialog/searchdialogtable.cpp" line="31"/>
+        <location filename="../filesearchdialog/searchdialogtable.cpp" line="23"/>
         <source>Search Result</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2341,22 +2338,22 @@ Do you want to save this?</source>
 <context>
     <name>SearchTable</name>
     <message>
-        <location filename="../searchtable/searchtable.cpp" line="44"/>
+        <location filename="../searchtable/searchtable.cpp" line="36"/>
         <source>Setting Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../searchtable/searchtable.cpp" line="45"/>
+        <location filename="../searchtable/searchtable.cpp" line="37"/>
         <source>Search Word</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../searchtable/searchtable.cpp" line="45"/>
+        <location filename="../searchtable/searchtable.cpp" line="38"/>
         <source>Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../searchtable/searchtable.cpp" line="140"/>
+        <location filename="../searchtable/searchtable.cpp" line="137"/>
         <source>Editing - Untitled*</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2370,7 +2367,7 @@ Do you want to save this?</source>
     </message>
     <message>
         <location filename="../ProfileEditor/settingdialog/settingdialog.ui" line="123"/>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="150"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="142"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2519,22 +2516,22 @@ Do you want to save this?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="151"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="143"/>
         <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="152"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="144"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="153"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="145"/>
         <source>Plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="379"/>
+        <location filename="../ProfileEditor/settingdialog/settingdialog.cpp" line="371"/>
         <source>Open Folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2648,22 +2645,22 @@ Do you want to save this?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="50"/>
+        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="42"/>
         <source>Editing - Untitled*</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="73"/>
+        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="65"/>
         <source>Editing - </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="123"/>
+        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="115"/>
         <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="123"/>
+        <location filename="../AutoBatchScheduler/startupdialog.cpp" line="115"/>
         <source>Save this setting?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2671,27 +2668,27 @@ Do you want to save this?</source>
 <context>
     <name>StartupTable</name>
     <message>
-        <location filename="../AutoBatchScheduler/startuptable.cpp" line="40"/>
+        <location filename="../AutoBatchScheduler/startuptable.cpp" line="32"/>
         <source>Setting Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startuptable.cpp" line="40"/>
+        <location filename="../AutoBatchScheduler/startuptable.cpp" line="33"/>
         <source>Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startuptable.cpp" line="40"/>
+        <location filename="../AutoBatchScheduler/startuptable.cpp" line="34"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startuptable.cpp" line="184"/>
+        <location filename="../AutoBatchScheduler/startuptable.cpp" line="323"/>
         <source>Enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/startuptable.cpp" line="184"/>
+        <location filename="../AutoBatchScheduler/startuptable.cpp" line="323"/>
         <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2717,12 +2714,12 @@ Do you want to save this?</source>
 <context>
     <name>StringTable</name>
     <message>
-        <location filename="../stringtable/stringtable.cpp" line="36"/>
+        <location filename="../stringtable/stringtable.cpp" line="30"/>
         <source>Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../stringtable/stringtable.cpp" line="36"/>
+        <location filename="../stringtable/stringtable.cpp" line="31"/>
         <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2730,113 +2727,113 @@ Do you want to save this?</source>
 <context>
     <name>SystemTray</name>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="94"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="86"/>
         <source>AutoBatchScheduler is running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="95"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="87"/>
         <source>To completely exit the program, right-click the icon in the task tray and choose Quit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="120"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="112"/>
         <source>yyyy/MM/dd HH:mm:ss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="124"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="116"/>
         <source>Timer started</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="143"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="135"/>
         <source>Timer has ended</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="154"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="146"/>
         <source>The set time has already passed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="175"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="167"/>
         <source>Task started</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="187"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="179"/>
         <source>The specified task is paused</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="196"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="188"/>
         <source>Task stopped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="209"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="201"/>
         <source>Task ended normally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="225"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="217"/>
         <source>Task canceled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="235"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="227"/>
         <source>The profile to be executed could not be loaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="237"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="229"/>
         <source><byte value="xd"/>
 In order to execute this schedule, please reset the execution profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="265"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="257"/>
         <source>Open Setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="268"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="260"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="308"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="300"/>
         <source>Monday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="309"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="301"/>
         <source>Tuesday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="310"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="302"/>
         <source>Wednesday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="311"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="303"/>
         <source>Thursday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="312"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="304"/>
         <source>Friday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="313"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="305"/>
         <source>Saturday</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="314"/>
+        <location filename="../AutoBatchScheduler/systemtray/systemtray.cpp" line="306"/>
         <source>Sunday</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2844,102 +2841,102 @@ In order to execute this schedule, please reset the execution profile</source>
 <context>
     <name>VariantTree</name>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="38"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="30"/>
         <source>Value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="38"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="30"/>
         <source>Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="139"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="131"/>
         <source>Global</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="143"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="135"/>
         <source>Local</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="343"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="335"/>
         <source>Open File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="343"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="335"/>
         <source>File (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="357"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="349"/>
         <source>Open Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="580"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="572"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="582"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="574"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="585"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="577"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="588"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="580"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="589"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="581"/>
         <source>Select Dir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="605"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="597"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="608"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="600"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="611"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="603"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="616"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="608"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="619"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="611"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="633"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="625"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="895"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="887"/>
         <source>Alert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="895"/>
+        <location filename="../ProfileEditor/variantarea/varianttree.cpp" line="887"/>
         <source>Do you want to delete selected variables?</source>
         <translation type="unfinished"></translation>
     </message>
