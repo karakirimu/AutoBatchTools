@@ -53,7 +53,6 @@ else()
 endif()
 
 # 0 No dependent library
-add_subdirectory(${SOURCE_DIRECTORY}/variantconverter)
 add_subdirectory(${SOURCE_DIRECTORY}/xmlbuilder)
 
 add_subdirectory(${SOURCE_DIRECTORY}/basictable)
@@ -63,7 +62,6 @@ add_subdirectory(${SOURCE_DIRECTORY}/profilexmlbuilder)
 add_subdirectory(${SOURCE_DIRECTORY}/searchxmlbuilder)
 add_subdirectory(${SOURCE_DIRECTORY}/stringxmlbuilder)
 add_subdirectory(${SOURCE_DIRECTORY}/pluginsxmlbuilder)
-add_subdirectory(${SOURCE_DIRECTORY}/xmlresolver)
 add_subdirectory(${SOURCE_DIRECTORY}/processxmlbuilder)
 
 # 2

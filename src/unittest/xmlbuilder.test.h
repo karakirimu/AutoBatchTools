@@ -492,7 +492,7 @@ protected:
         QList<QStringList> res;
 
         res.append(QStringList() << sxc.TAG_NAME << "from->settingName");
-        res.append(QStringList() << sxc.TAG_PROFILE << "./setting\/");
+        res.append(QStringList() << sxc.TAG_PROFILE << "./setting\\/");
         res.append(QStringList() << sxc.TAG_SCHEDULED \
                                 << "true");
         res.append(QStringList() << sxc.TAG_SCHEDULETYPE \
@@ -634,7 +634,7 @@ protected:
         res.append(QStringList() << SEARCH_KEYWORD << "*.*");
 
         //add regex
-        tmp << SEARCH_REGEX << "([A-Z])\w+"/*string*/
+        tmp << SEARCH_REGEX << "([A-Z])\\w+"/*string*/
             << ENABLED << "true"/*bool*/;
         res.append(tmp);
         tmp.clear();

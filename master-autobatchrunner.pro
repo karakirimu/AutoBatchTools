@@ -25,11 +25,9 @@ TRANSLATIONS += \
     src/translation/abt_ja.ts
 
 SUBDIRS += \
-          $$PWD/src/variantconverter \
 #1
           $$PWD/src/xmlbuilder \
           $$PWD/src/searchxmlbuilder \
-          $$PWD/src/xmlresolver \
           $$PWD/src/processxmlbuilder \
           $$PWD/src/stringxmlbuilder \
           $$PWD/src/pluginsxmlbuilder \

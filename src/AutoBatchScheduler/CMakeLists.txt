@@ -98,7 +98,6 @@ target_include_directories(AutoBatchScheduler
 target_link_libraries(AutoBatchScheduler PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(AutoBatchScheduler
   PRIVATE
-    variantconverter
     xmlbuilder
     basictable
     profilexmlbuilder
@@ -114,6 +113,5 @@ target_link_libraries(AutoBatchScheduler
     searchxmlbuilder
     processxmlbuilder
     filesearchloader
-    xmlresolver
 )
 endif()

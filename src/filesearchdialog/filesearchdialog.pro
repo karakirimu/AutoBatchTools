@@ -39,7 +39,6 @@ RESOURCES += \
     ../../res/resources.qrc
 
 LIBS += \
-    -L$$DESTDIR -lvariantconverter \
     -L$$DESTDIR -lxmlbuilder \
     -L$$DESTDIR -lsearchxmlbuilder \
     -L$$DESTDIR -lbasictable \

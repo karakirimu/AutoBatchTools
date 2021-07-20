@@ -12,8 +12,8 @@
 #include "filesearchdialog_global.h"
 
 #include "../filesearchloader/filesearchloader.h"
-#include "../variantconverter/variantconverter.h"
 #include "../searchxmlbuilder/searchxmlbuilder.h"
+#include <../share/variantconverter.h>
 #include <QDialog>
 #include <QMessageBox>
 #include <QMouseEvent>

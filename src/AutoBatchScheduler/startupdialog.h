@@ -16,7 +16,7 @@
 #include <QDebug>
 
 #include <settingcache/schedulercache.h>
-#include <../variantconverter/variantconverter.h>
+#include <../share/variantconverter.h>
 
 namespace Ui {
 class StartupDialog;

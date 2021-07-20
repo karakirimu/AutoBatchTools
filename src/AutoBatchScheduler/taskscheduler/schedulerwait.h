@@ -14,7 +14,7 @@
 #include <QThread>
 #include <QDateTime>
 #include <QDebug>
-#include <../variantconverter/variantconverter.h>
+#include <../share/variantconverter.h>
 #include <settingcache/schedulercache.h>
 
 class SchedulerWait : public QObject

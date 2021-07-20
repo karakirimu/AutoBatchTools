@@ -192,13 +192,11 @@ include($$PWD/../plugininterface/plugininterface.pri)
 include($$PWD/../share/share.pri)
 
 LIBS += \
-        -L$$LIBRARYPATH -lvariantconverter \
         -L$$LIBRARYPATH -lxmlbuilder \
         -L$$LIBRARYPATH -lstringxmlbuilder \
         -L$$LIBRARYPATH -lsearchxmlbuilder \
         -L$$LIBRARYPATH -lpluginsxmlbuilder \
         -L$$LIBRARYPATH -lprocessxmlbuilder \
-        -L$$LIBRARYPATH -lxmlresolver \
         -L$$LIBRARYPATH -lprofilexmlbuilder \
         -L$$LIBRARYPATH -lprofilecombobox \
         -L$$LIBRARYPATH -lbasictable \

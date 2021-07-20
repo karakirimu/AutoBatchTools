@@ -17,12 +17,18 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 include(${CMAKE_CURRENT_LIST_DIR}/../cmake/productinfo.cmake)
 create_product_info(PRODUCT_INFO)
 
+set(XMLRESOLVER
+    ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.h
+)
+
 add_library(searchtable
   SHARED
     searchtable_global.h
     searchtable.cpp
     searchtable.h
     ../../res/resources.qrc
+    ${XMLRESOLVER}
     ${PRODUCT_INFO}
 )
 
@@ -31,11 +37,8 @@ target_link_libraries(searchtable
   PRIVATE
     xmlbuilder
     basictable
-    variantconverter
     searchxmlbuilder
-    variantconverter
     filesearchdialog
-    xmlresolver
 )
 
 target_compile_definitions(searchtable PRIVATE SEARCHTABLE_LIBRARY)

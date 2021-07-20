@@ -71,7 +71,6 @@ include(statusarea/statusarea.pri)
 include(settingcache/settingcache.pri)
 
 LIBS += \
-    -L$$LIBRARYPATH -lvariantconverter \
     -L$$LIBRARYPATH -lxmlbuilder \
     -L$$LIBRARYPATH -lbasictable \
     -L$$LIBRARYPATH -lprofilexmlbuilder \

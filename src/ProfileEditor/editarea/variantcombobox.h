@@ -15,7 +15,7 @@
 #include <editoperator.h>
 #include <../processxmlbuilder/processxmlbuilder.h>
 //#include <../stringxmlbuilder.h>
-#include <../variantconverter/variantconverter.h>
+#include <../share/variantconverter.h>
 
 class VariantComboBox : public QComboBox
 {

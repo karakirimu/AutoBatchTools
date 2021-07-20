@@ -13,7 +13,7 @@
 #include "../basictable/basictable.h"
 #include "../searchxmlbuilder/searchxmlbuilder.h"
 #include "../filesearchdialog/filesearchdialog.h"
-#include <../xmlresolver/xmlresolver.h>
+#include <../share/xmlresolver.h>
 
 class SEARCHTABLESHARED_EXPORT SearchTable : public BasicTable
 {

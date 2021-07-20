@@ -15,11 +15,17 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 include(${CMAKE_CURRENT_LIST_DIR}/../cmake/productinfo.cmake)
 create_product_info(PRODUCT_INFO)
 
+set(XMLRESOLVER
+    ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.h
+)
+
 add_library(profilecombobox
   SHARED
     profilecombobox_global.h
     profilecombobox.cpp
     profilecombobox.h
+    ${XMLRESOLVER}
     ${PRODUCT_INFO}
 )
 
@@ -35,7 +41,6 @@ target_link_libraries(profilecombobox
     xmlbuilder
     processxmlbuilder
     profilexmlbuilder
-    xmlresolver
 )
 
 target_compile_definitions(profilecombobox PRIVATE PROFILECOMBOBOX_LIBRARY)

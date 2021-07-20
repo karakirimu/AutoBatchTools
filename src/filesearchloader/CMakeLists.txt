@@ -28,7 +28,6 @@ add_library(filesearchloader
 target_link_libraries(filesearchloader PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(filesearchloader
   PRIVATE
-    variantconverter
     xmlbuilder
     searchxmlbuilder
 )

@@ -32,7 +32,6 @@ target_link_libraries(processxmlbuilder PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(processxmlbuilder
   PRIVATE
     xmlbuilder
-    xmlresolver
 )
 
 target_compile_definitions(processxmlbuilder PRIVATE PROCESSXMLBUILDER_LIBRARY)

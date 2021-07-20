@@ -33,7 +33,6 @@ add_library(filesearchdialog
 target_link_libraries(filesearchdialog PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(filesearchdialog
   PRIVATE
-    variantconverter
     xmlbuilder
     searchxmlbuilder
     basictable

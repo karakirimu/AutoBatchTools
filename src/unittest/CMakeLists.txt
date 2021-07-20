@@ -165,29 +165,9 @@ target_link_libraries(processxmlbuilder PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(processxmlbuilder
   PRIVATE
     xmlbuilder
-    xmlresolver
 )
 
 target_compile_definitions(processxmlbuilder PRIVATE PROCESSXMLBUILDER_LIBRARY)
-
-# xmlresolver
-set(XmlResolverTest ${CMAKE_CURRENT_LIST_DIR}/../xmlresolver)
-add_library(xmlresolver
-  SHARED
-    ${XmlResolverTest}/xmlresolver_global.h
-    ${XmlResolverTest}/xmlresolver.cpp
-    ${XmlResolverTest}/xmlresolver.h
-)
-
-target_include_directories(xmlresolver
-  PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/../share/process
-)
-
-target_link_libraries(xmlresolver PRIVATE Qt${QT_VERSION_MAJOR}::Core)
-target_compile_definitions(xmlresolver PRIVATE XMLRESOLVER_LIBRARY)
-
-## ---
 
 # basictable
 set(BasicTableTest ${CMAKE_CURRENT_LIST_DIR}/../basictable)
@@ -228,6 +208,7 @@ target_compile_definitions(stringtable PRIVATE STRINGTABLE_LIBRARY)
 # ---
 
 set (XmlBuilderTestIncludes
+    ${CMAKE_CURRENT_SOURCE_DIR}/../share
     ${CMAKE_CURRENT_LIST_DIR}/../xmlbuilder
     ${CMAKE_CURRENT_LIST_DIR}/../searchxmlbuilder
     ${CMAKE_CURRENT_LIST_DIR}/../profilexmlbuilder
@@ -252,12 +233,18 @@ include_directories(
 #   ---
 )
 
+set(XmlResolver
+    ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.h
+)
+
 add_executable(unittest
     main.cpp
     xmlbuilder.test.h
     xmllistgenerator.test.h
     table.test.h
     ${STARTUPXMLBUILDER}
+    ${XmlResolver}
     ${GTestFiles}
 )
 add_test(NAME unittest COMMAND unittest)
@@ -280,7 +267,6 @@ target_link_libraries(unittest
     Threads::Threads # pre defined
     ${XmlBuilderLinkLibraries}
     ${TableLinkLibraries}
-    xmlresolver
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Core
 )

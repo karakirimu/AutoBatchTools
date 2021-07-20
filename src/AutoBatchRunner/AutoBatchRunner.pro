@@ -51,12 +51,12 @@ FORMS    += \
 RESOURCES += \
     ../../res/resources.qrc
 
+include($$PWD/../share/share.pri)
 include(table/table.pri)
 include(textedit/textedit.pri)
 include(dialog/dialog.pri)
 
 LIBS += \
-    -L$$LIBRARYPATH -lvariantconverter \
     -L$$LIBRARYPATH -lxmlbuilder \
     -L$$LIBRARYPATH -lstringxmlbuilder \
     -L$$LIBRARYPATH -lsearchxmlbuilder \
@@ -73,5 +73,4 @@ LIBS += \
     -L$$LIBRARYPATH -lfilesearchloader \
     -L$$LIBRARYPATH -lconsolebase \
     -L$$LIBRARYPATH -lpluginstree \
-    -L$$LIBRARYPATH -lexecutor \
-    -L$$LIBRARYPATH -lxmlresolver
+    -L$$LIBRARYPATH -lexecutor

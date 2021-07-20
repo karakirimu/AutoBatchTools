@@ -13,7 +13,7 @@
 #include <QDateTime>
 #include "basefilesearch.h"
 #include <../searchxmlbuilder/searchxmlbuilder.h>
-#include <../variantconverter/variantconverter.h>
+#include <../share/variantconverter.h>
 
 
 class FILESEARCHLOADERSHARED_EXPORT FileSearchLoader : public BaseFileSearch

@@ -4,3 +4,11 @@ INCLUDEPATH += $$PWD
 
 include($$PWD/process/process.pri)
 include($$PWD/qss/qss.pri))
+
+SOURCES += \
+    $$PWD/variantconverter.cpp \
+    $$PWD/xmlresolver.cpp
+
+HEADERS += \
+    $$PWD/variantconverter.h \
+    $$PWD/xmlresolver.h

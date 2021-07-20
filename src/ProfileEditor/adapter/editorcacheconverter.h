@@ -10,7 +10,7 @@
 #define EDITORCACHECONVERTER_H
 
 #include "editorcache.h"
-#include "../variantconverter/variantconverter.h"
+#include <../share/variantconverter.h>
 #include <processxmlconstant.h>
 
 class EditorCacheConverter {

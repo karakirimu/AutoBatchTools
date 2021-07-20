@@ -9,14 +9,13 @@
 #ifndef VARIANTCONVERTER_H
 #define VARIANTCONVERTER_H
 
-#include "variantconverter_global.h"
 #include <QString>
 
-class VARIANTCONVERTERSHARED_EXPORT VariantConverter
+class VariantConverter
 {
 public:
     VariantConverter();
-    ~VariantConverter();
+    virtual ~VariantConverter();
 
     /**
      * @fn VariantConverter::stringToBool

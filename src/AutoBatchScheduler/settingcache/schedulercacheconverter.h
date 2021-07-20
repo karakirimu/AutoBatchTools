@@ -10,8 +10,8 @@
 #define SCHEDULERCACHECONVERTER_H
 
 #include "schedulercache.h"
-#include "SchedulerXmlConstant.h"
-#include "../variantconverter/variantconverter.h"
+#include "schedulerxmlconstant.h"
+#include <../share/variantconverter.h>
 
 class SchedulerCacheConverter
 {

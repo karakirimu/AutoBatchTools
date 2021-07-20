@@ -30,7 +30,7 @@
 #include <QScrollArea>
 #include <QStackedWidget>
 
-#include <../variantconverter/variantconverter.h>
+#include <../share/variantconverter.h>
 #include <../plugininterface/extraplugininterface.h>
 
 //ui object strings

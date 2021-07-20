@@ -20,6 +20,11 @@ include(${CMAKE_CURRENT_LIST_DIR}/../cmake/productinfo.cmake)
 create_product_info(PRODUCT_INFO)
 set_app_icon("../../res/app_icons/app_pe.ico" ICON_RES)
 
+set(XMLRESOLVER
+    ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.h
+)
+
 set(UNDOCOMMAND
     undocommand/swapcommand.h
     undocommand/swapcommand.cpp
@@ -195,6 +200,7 @@ add_executable(AutoBatchEditor
     aboutabe.ui
     autosaveselectiondialog.ui
     ../../res/resources.qrc
+    ${XMLRESOLVER}
     ${ADAPTER}
     ${CONSOLE}
     ${EDITAREA}
@@ -224,13 +230,11 @@ target_include_directories(AutoBatchEditor
 target_link_libraries(AutoBatchEditor PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(AutoBatchEditor
   PRIVATE
-    variantconverter
     xmlbuilder
     stringxmlbuilder
     searchxmlbuilder
     pluginsxmlbuilder
     processxmlbuilder
-    xmlresolver
     profilexmlbuilder
     profilecombobox
     basictable

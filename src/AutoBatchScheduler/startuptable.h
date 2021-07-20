@@ -11,7 +11,7 @@
 
 #include <../basictable/basictable.h>
 #include <settingcache/startupxmlbuilder.h>
-#include <../variantconverter/variantconverter.h>
+#include <../share/variantconverter.h>
 #include "startupdialog.h"
 #include "taskschedulerconnector.h"
 #include <../share/qss/qsspropertyconstant.h>

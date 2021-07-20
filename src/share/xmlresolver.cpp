@@ -13,6 +13,11 @@ XmlResolver::XmlResolver()
 
 }
 
+XmlResolver::~XmlResolver()
+{
+
+}
+
 /**
  * @fn XmlResolver::fetchCommandFirstPos
  * @brief Find the first position in the list that contains

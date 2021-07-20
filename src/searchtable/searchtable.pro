@@ -23,6 +23,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 include($$PWD/../build_library_path.pri)
+include($$PWD/../share/share.pri)
 
 SOURCES += \
         searchtable.cpp
@@ -37,9 +38,7 @@ RESOURCES += \
 LIBS += \
     -L$$DESTDIR -lxmlbuilder \
     -L$$DESTDIR -lbasictable \
-    -L$$DESTDIR -lvariantconverter \
     -L$$DESTDIR -lsearchxmlbuilder \
-    -L$$DESTDIR -lxmlresolver \
     -L$$DESTDIR -lfilesearchdialog
 
 unix {

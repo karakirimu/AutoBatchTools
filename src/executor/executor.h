@@ -12,8 +12,8 @@
 #include "executor_global.h"
 #include <../stringxmlbuilder/stringxmlbuilder.h>
 #include <../processxmlbuilder/processxmlbuilder.h>
-#include <../xmlresolver/xmlresolver.h>
-#include <../variantconverter/variantconverter.h>
+#include <../share/xmlresolver.h>
+#include <../share/variantconverter.h>
 #include <../filesearchloader/filesearchloader.h>
 #include <../plugininterface/extraplugininterface.h>
 #include "../share/process/processxmlconstant.h"

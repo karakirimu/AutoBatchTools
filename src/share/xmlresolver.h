@@ -9,23 +9,23 @@
 #ifndef XMLRESOLVER_H
 #define XMLRESOLVER_H
 
-#include "xmlresolver_global.h"
 #include <QObject>
 #include <QHash>
 #include <QDateTime>
 
 #include <QDebug>
-#include <../share/process/processxmlconstant.h>
-#include <../share/process/functiontype.h>
+#include "../share/process/processxmlconstant.h"
+#include "../share/process/functiontype.h"
 
 /**
  * @brief The XmlListGenerator class
  * This class can create default list (to xml) and operate xml states.
  */
-class XMLRESOLVERSHARED_EXPORT XmlResolver
+class XmlResolver
 {
 public:
     XmlResolver();
+    virtual ~XmlResolver();
 
     int fetchCommandFirstPos(QString tag, const QList<QStringList> *loadbase);
 

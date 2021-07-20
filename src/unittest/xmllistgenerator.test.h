@@ -12,8 +12,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 
-#include <xmlresolver.h>
-#include <../share/process/processxmlconstant.h>
+#include "../share/xmlresolver.h"
+#include "../share/process/processxmlconstant.h"
 
 using namespace testing;
 

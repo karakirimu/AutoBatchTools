@@ -20,6 +20,11 @@ include(${CMAKE_CURRENT_LIST_DIR}/../cmake/productinfo.cmake)
 create_product_info(PRODUCT_INFO)
 set_app_icon("../../res/app_icons/app_abr.ico" ICON_RES)
 
+set(XMLRESOLVER
+    ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.h
+)
+
 set(TABLE
     ${CMAKE_CURRENT_SOURCE_DIR}/table/profiletable.h
     ${CMAKE_CURRENT_SOURCE_DIR}/table/profiletable.cpp
@@ -54,6 +59,7 @@ add_executable(AutoBatchRunner
     main.cpp
     autobatchrunner.ui
     ../../res/resources.qrc
+    ${XMLRESOLVER}
     ${TABLE}
     ${TEXTEDIT}
     ${DIALOG}
@@ -72,13 +78,11 @@ target_include_directories(AutoBatchRunner
 target_link_libraries(AutoBatchRunner PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(AutoBatchRunner
   PRIVATE
-    variantconverter
     xmlbuilder
     stringxmlbuilder
     searchxmlbuilder
     pluginsxmlbuilder
     processxmlbuilder
-    xmlresolver
     profilexmlbuilder
     profilecombobox
     basictable

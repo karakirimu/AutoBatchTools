@@ -21,12 +21,18 @@ set(PLUGIN_INTERFACE
     ${CMAKE_CURRENT_SOURCE_DIR}/../plugininterface/InnerFunctions.h
 )
 
+set(XMLRESOLVER
+    ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.h
+)
+
 add_library(executor
   SHARED
     executor_global.h
     executor.cpp
     executor.h
     ${PLUGIN_INTERFACE}
+    ${XMLRESOLVER}
     ${PRODUCT_INFO}
 )
 
@@ -39,11 +45,9 @@ target_include_directories(executor
 target_link_libraries(executor PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(executor
   PRIVATE
-    variantconverter
     xmlbuilder
     stringxmlbuilder
     processxmlbuilder
-    xmlresolver
     filesearchloader
 )
 

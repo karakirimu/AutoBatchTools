@@ -39,12 +39,10 @@ HEADERS += \
         executor_global.h 
 
 LIBS += \
-    -L$$DESTDIR -lvariantconverter \
     -L$$DESTDIR -lfilesearchloader \
     -L$$DESTDIR -lxmlbuilder \
     -L$$DESTDIR -lstringxmlbuilder \
-    -L$$DESTDIR -lprocessxmlbuilder \
-    -L$$DESTDIR -lxmlresolver
+    -L$$DESTDIR -lprocessxmlbuilder
 
 unix {
     target.path = /usr/lib
