@@ -665,7 +665,7 @@ void ProcessFlowTable::setPluginItem(EditorCache *list, TableOption *option)
     setColorSetting(sc.ABE_PLUGIN_BACKGROUND
                     , sc.ABE_PLUGIN_BACKGROUND_DEFAULT
                     , sc.ABE_PLUGIN_TEXTCOLOR
-                    , sc.ABE_PROFILE_BACKGROUND_DEFAULT
+                    , sc.ABE_PLUGIN_TEXTCOLOR_DEFAULT
                     , option);
 
     setSecondColumn(PLUGIN_PIXMAP, tr("Plugin"), option);
