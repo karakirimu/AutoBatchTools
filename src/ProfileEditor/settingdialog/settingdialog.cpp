@@ -287,7 +287,7 @@ void SettingDialog::loadSettings()
 void SettingDialog::initLanguageSelection()
 {
 #ifdef QT_DEBUG
-    QDirIterator dit("../../src/translation", QStringList() << "*.qm", QDir::Files);
+    QDirIterator dit("../src/translation", QStringList() << "*.qm", QDir::Files);
 #else
     QDirIterator dit("translation", QStringList() << "*.qm", QDir::Files);
 #endif

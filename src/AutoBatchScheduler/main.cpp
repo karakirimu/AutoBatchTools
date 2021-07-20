@@ -15,8 +15,8 @@
 int main(int argc, char *argv[])
 {
 #ifdef QT_DEBUG
-    constexpr const char *TR_PATH = "../../src/translation/abt_";
-    constexpr const char *PL_TR_PATH = "../../src/translation/plugin";
+    constexpr const char *TR_PATH = "../src/translation/abt_";
+    constexpr const char *PL_TR_PATH = "../src/translation/plugin";
 #else
     constexpr const char *TR_PATH = "translation/abt_";
     constexpr const char *PL_TR_PATH = "translation/plugin";

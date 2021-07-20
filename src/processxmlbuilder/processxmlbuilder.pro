@@ -32,8 +32,8 @@ HEADERS += \
         processxmlbuilder.h \
         processxmlbuilder_global.h 
 
-LIBS += -L$$DESTDIR -lxmlbuilder \
-        -L$$DESTDIR -lxmlresolver
+LIBS += \
+    -L$$DESTDIR -lxmlbuilder
 
 unix {
     target.path = /usr/lib
