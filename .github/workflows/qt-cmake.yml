@@ -52,8 +52,13 @@ jobs:
         # Destination directory, will be added to PATH
 #         destination: # optional, default is ninja-build
         
-    - name: Configure MSVC Environment
-      run: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1
+#       with:
+        # Folder location of where vswhere.exe is located if a self-hosted agent
+#         vswhere-path: # optional
+        # Version of Visual Studio to search; defaults to latest if not specified
+#         vs-version: # optional
         
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
