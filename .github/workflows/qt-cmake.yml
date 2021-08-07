@@ -8,7 +8,7 @@ on:
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
+  BUILD_TYPE: MinSizeRel
 
 jobs:
   build:
@@ -28,9 +28,9 @@ jobs:
         host: 'windows'
         target: 'desktop'
         arch: 'win64_msvc2019_64'
-        dir: '${{ github.workspace }}/depend/'
+        dir: '${{ github.workspace }}/Qt/'
         install-deps: 'true'
-        modules: 'qtcharts qtwebengine'
+#         modules: 'none'
         cached: 'false'
         setup-python: 'true'
         tools: 'tools_ifw,4.0,qt.tools.ifw.40 tools_qtcreator,4.14.2-0,qt.tools.qtcreator'
@@ -43,11 +43,17 @@ jobs:
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      run: cmake -B ${{github.workspace}}/build`
+        -GNinja`
+        -DCMAKE_BUILD_TYPE:String=${{env.BUILD_TYPE}}`
+        -DQT_QMAKE_EXECUTABLE:STRING=%{Qt:qmakeExecutable}`
+        -DCMAKE_PREFIX_PATH:STRING=%{Qt:QT_INSTALL_PREFIX}`
+        -DCMAKE_C_COMPILER:STRING=%{Compiler:Executable:C}`
+        -DCMAKE_CXX_COMPILER:STRING=%{Compiler:Executable:Cxx}`
 
     - name: Build
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --target all --config ${{env.BUILD_TYPE}}
+      run: cmake --build ${{github.workspace}}/build --target all
 
 #     - name: Test
 #       working-directory: ${{github.workspace}}/build
