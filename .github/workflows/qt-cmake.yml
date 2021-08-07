@@ -46,10 +46,6 @@ jobs:
       run: cmake -B ${{github.workspace}}/build
         -GNinja
         -DCMAKE_BUILD_TYPE:String=${{env.BUILD_TYPE}}
-        -DQT_QMAKE_EXECUTABLE:STRING=%{Qt:qmakeExecutable}
-        -DCMAKE_PREFIX_PATH:STRING=%{Qt:QT_INSTALL_PREFIX}
-        -DCMAKE_C_COMPILER:STRING=%{Compiler:Executable:C}
-        -DCMAKE_CXX_COMPILER:STRING=%{Compiler:Executable:Cxx}
 
     - name: Build
       # Build your program with the given configuration
