@@ -58,6 +58,8 @@ jobs:
       run: cmake -B ${{github.workspace}}/build
         -GNinja
         -DCMAKE_BUILD_TYPE:String=${{env.BUILD_TYPE}}
+        -DCMAKE_CXX_COMPILER=cl
+        -DCMAKE_C_COMPILER=cl
 
     - name: Build
       # Build your program with the given configuration
