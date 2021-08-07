@@ -66,8 +66,8 @@ jobs:
       run: cmake -B ${{github.workspace}}/build
         -GNinja
         -DCMAKE_BUILD_TYPE:String=${{env.BUILD_TYPE}}
-        -DCMAKE_CXX_COMPILER=cl
-        -DCMAKE_C_COMPILER=cl
+        -DCMAKE_CXX_COMPILER:String="C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
+        -DCMAKE_C_COMPILER:String="C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
 
     - name: Build
       # Build your program with the given configuration
