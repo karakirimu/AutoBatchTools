@@ -997,7 +997,7 @@ protected:
             ASSERT_EQ(a->at(i).count(), b->at(i).count());
 
             int stringlistsize = a->at(i).count();
-            for(int j; j < stringlistsize; j++){
+            for(int j = 0; j < stringlistsize; j++){
                 EXPECT_EQ(a->at(i).at(j).toStdString()
                         , b->at(i).at(j).toStdString());
             }
