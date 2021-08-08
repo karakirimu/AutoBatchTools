@@ -20,18 +20,51 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
+    
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+      with:
+        version: '6.1.2'
+        host: 'linux'
+        target: 'desktop'
+#         arch: ''
+        dir: '${{ github.workspace }}/Qt/'
+        install-deps: 'true'
+#         modules: 'none'
+        cached: 'false'
+        setup-python: 'true'
+        tools: 'tools_ifw,4.0,qt.tools.ifw.40 tools_qtcreator,4.14.2-0,qt.tools.qtcreator'
+        set-env: 'true'
+        tools-only: 'false'
+        aqtversion: '==1.1.3'
+        py7zrversion: '==0.14.0'
+        extra: '--external 7z'
+        
+    - name: Install ninja-build tool
+      # You may pin to the exact commit or the version.
+      # uses: seanmiddleditch/gha-setup-ninja@16b940825621068d98711680b6c3ff92201f8fc0
+      uses: seanmiddleditch/gha-setup-ninja@v3
+      with:
+        # Version of ninja-build to install
+#         version: # default is 1.10.0
+        # Override default platform with one of [win, mac, linux]
+        platform: 'linux'
+        # Destination directory, will be added to PATH
+#         destination: # optional, default is ninja-build
+    
     - name: Configure CMake
+      working-directory: ${{github.workspace}}/src/unittest
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
+      working-directory: ${{github.workspace}}/src/unittest
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
     - name: Test
-      working-directory: ${{github.workspace}}/build
+      working-directory: ${{github.workspace}}/src/unittest
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest -C ${{env.BUILD_TYPE}}
