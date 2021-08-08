@@ -17,14 +17,30 @@ find_package(Threads REQUIRED)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets REQUIRED)
 
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG        master
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+FetchContent_GetProperties(googletest)
+if(NOT googletest_POPULATED)
+  FetchContent_Populate(googletest)
+endif()
+
 if ($ENV{GOOGLETEST_DIR})
     set(GOOGLETEST_DIR $ENV{GOOGLETEST_DIR})
 else ()
     if (NOT "" STREQUAL "")
         message(WARNING "Using googletest src dir specified at Qt Creator wizard")
     endif ()
-    set(GOOGLETEST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../../googletest")
+    set(GOOGLETEST_DIR "${googletest_SOURCE_DIR}")
 endif ()
+
 if (EXISTS ${GOOGLETEST_DIR})
     set(GTestSrc ${GOOGLETEST_DIR}/googletest)
     set(GMockSrc ${GOOGLETEST_DIR}/googlemock)
@@ -40,6 +56,7 @@ endif ()
 
 set(GTestFiles ${GTestSrc}/src/gtest-all.cc)
 set(GTestIncludes ${GTestSrc} ${GTestSrc}/include)
+
 if (NOT ${GMockSrc} STREQUAL "")
     list(APPEND GTestFiles ${GMockSrc}/src/gmock-all.cc)
     list(APPEND GTestIncludes ${GMockSrc} ${GMockSrc}/include)
@@ -226,17 +243,17 @@ set (TableTestIncludes
 
 include_directories(
     ${GTestIncludes}
-#    ${CMAKE_CURRENT_LIST_DIR}/../filesearchloader
-#   xmlbuilder.test
     ${XmlBuilderTestIncludes}
     ${TableTestIncludes}
-#   ---
 )
+#   ---
 
 set(XmlResolver
     ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../share/xmlresolver.h
 )
+
+enable_testing()
 
 add_executable(unittest
     main.cpp
