@@ -1027,7 +1027,7 @@ TEST_F(XmlBuilderTest, CreateInitialDocument)
 #else
         /* LF */
         QString correctu = correct.replace("\r\n","\n");
-        EXPECT_EQ(all.toStdString(), correctu.toStdString()));
+        EXPECT_EQ(all.toStdString(), correctu.toStdString());
 #endif
 }
 
@@ -1048,7 +1048,7 @@ TEST_F(XmlBuilderTest, WriteItem){
 #else
     /* LF */
     QString correctu = correct.replace("\r\n","\n");
-    EXPECT_EQ(all.toStdString(), correctu.toStdString()));
+    EXPECT_EQ(all.toStdString(), correctu.toStdString());
 #endif
 }
 
@@ -1074,7 +1074,7 @@ TEST_F(XmlBuilderTest, WriteItemMultiTimes){
 #else
     /* LF */
     QString correctu = correct.replace("\r\n","\n");
-    EXPECT_EQ(all, correctu));
+    EXPECT_EQ(all, correctu);
 #endif
 }
 
@@ -1110,7 +1110,7 @@ TEST_F(XmlBuilderTest, EditItem){
 #else
     /* LF */
     QString correctu = correct.replace("\r\n","\n");
-    EXPECT_EQ(all, correctu));
+    EXPECT_EQ(all, correctu);
 #endif
 }
 
@@ -1165,7 +1165,7 @@ TEST_F(XmlBuilderTest, DeleteItem){
 #else
     /* LF */
     QString correctu = correct.replace("\r\n","\n");
-    EXPECT_EQ(all, correctu));
+    EXPECT_EQ(all, correctu);
 #endif
 }
 
@@ -1225,7 +1225,7 @@ TEST_F(XmlBuilderTest, SwapItem){
 #else
     /* LF */
     QString correctu = correct.replace("\r\n","\n");
-    EXPECT_EQ(all, correctu));
+    EXPECT_EQ(all, correctu);
 #endif
 }
 
@@ -1265,7 +1265,7 @@ TEST_F(XmlBuilderTest, WriteAll){
 #else
     /* LF */
     QString correctu = correct.replace("\r\n","\n");
-    EXPECT_EQ(all.toStdString(), correctu.toStdString()));
+    EXPECT_EQ(all.toStdString(), correctu.toStdString());
 #endif
 }
 
