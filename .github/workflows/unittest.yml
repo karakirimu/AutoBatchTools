@@ -65,7 +65,7 @@ jobs:
 
     - name: Install Missing Library
       working-directory: ${{github.workspace}}/build
-      run: sudo apt install libxcb-icccm4 libxcb-image libxcb-keysyms libxcb-randr libxcb-render-util
+      run: sudo apt install libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0
 
 #       Used when it cannot be executed
 #     - name: Dependency Check
