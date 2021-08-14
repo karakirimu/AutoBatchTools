@@ -68,16 +68,16 @@ jobs:
       run: sudo apt install libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0
 
 #       Used when it cannot be executed
-#     - name: Dependency Check
-#       working-directory: ${{github.workspace}}/build
-#       run: ldd /home/runner/work/AutoBatchTools/AutoBatchTools/Qt/Qt/6.1.2/gcc_64/plugins/platforms/libqxcb.so
+    - name: Dependency Check
+      working-directory: ${{github.workspace}}/build
+      run: ldd /home/runner/work/AutoBatchTools/AutoBatchTools/Qt/Qt/6.1.2/gcc_64/plugins/platforms/libqxcb.so
 
 #       Used when it cannot be executed.
-#     - name: Missing Library Check (Ubuntu)
-#       working-directory: ${{github.workspace}}/build
-#       run: QT_DEBUG_PLUGINS=1 ./unittest 2>&1
-
-    - name: Run
+    - name: Missing Library Check (Ubuntu)
       working-directory: ${{github.workspace}}/build
-      run: ./unittest
+      run: QT_DEBUG_PLUGINS=1 ./unittest 2>&1
+
+#     - name: Run
+#       working-directory: ${{github.workspace}}/build
+#       run: ./unittest
       
