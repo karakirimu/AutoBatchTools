@@ -78,5 +78,5 @@ jobs:
       
     - name: Run Test 3
       working-directory: ${{github.workspace}}/build
-      run: QT_DEBUG_PLUGINS=1 ./unittest 2>&1 |grep loaded
+      run: QT_DEBUG_PLUGINS=1 ./unittest 2>&1
       
