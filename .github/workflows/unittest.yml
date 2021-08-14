@@ -83,7 +83,7 @@ jobs:
       uses: GabrielBB/xvfb-action@v1.5
       with:
         # Command to execute using xvfb
-        run: QT_DEBUG_PLUGINS=1 ./unittest 2>&1
+        run: ./unittest
         # Directory to execute command on, defaults to ./
         working-directory: ${{github.workspace}}/build
         # XServer options
