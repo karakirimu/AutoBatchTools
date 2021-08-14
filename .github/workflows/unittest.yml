@@ -76,3 +76,7 @@ jobs:
       working-directory: ${{github.workspace}}/build
       run: ldd ./unittest
       
+    - name: Run Test 3
+      working-directory: ${{github.workspace}}/build
+      run: ./unittest
+      
