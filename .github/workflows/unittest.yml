@@ -72,3 +72,6 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: find /usr | grep "qxcb"
       
+    - name: Run Test 2
+      run: ldd /usr/local/lib/android/sdk/emulator/lib64/qt/plugins/platforms/libqxcb.so
+      
