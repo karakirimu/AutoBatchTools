@@ -9,6 +9,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  QT_VERSION: '6.1.2'
 
 jobs:
   build:
@@ -21,17 +22,27 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - name: Cache
+      id: cache-qt
+      uses: actions/cache@v2.1.6
+      with:
+        # A list of files, directories, and wildcard patterns to cache and restore
+        path: |
+          '${{ github.workspace }}/Qt/'
+        # An explicit key for restoring and saving the cache
+        key: ubuntu-${{env.QT_VERSION}}-Qt
+    
     - name: Install Qt
       uses: jurplel/install-qt-action@v2
       with:
-        version: '6.1.2'
+        version: ${{env.QT_VERSION}}
         host: 'linux'
         target: 'desktop'
 #         arch: ''
         dir: '${{ github.workspace }}/Qt/'
         install-deps: 'true'
 #         modules: 'none'
-        cached: 'false'
+        cached: ${{ steps.cache-qt.outputs.cache-hit }}
         setup-python: 'true'
         tools: 'tools_ifw,4.0,qt.tools.ifw.40 tools_qtcreator,4.14.2-0,qt.tools.qtcreator'
         set-env: 'true'
