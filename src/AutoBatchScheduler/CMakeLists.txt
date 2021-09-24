@@ -87,6 +87,10 @@ add_executable(AutoBatchScheduler
     ${ICON_RES}
 )
 
+if(WIN32)
+    set_property(TARGET AutoBatchScheduler PROPERTY WIN32_EXECUTABLE true)
+endif()
+
 target_include_directories(AutoBatchScheduler
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/taskscheduler
