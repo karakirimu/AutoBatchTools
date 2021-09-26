@@ -1,15 +1,13 @@
 name: Build
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  workflow_dispatch:
+    branches: [ main ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
-  QT_VERSION: '6.1.2'
+  BUILD_TYPE: MinSizeRel
+  QT_VERSION: '6.1.3'
 
 jobs:
   build:
@@ -18,8 +16,8 @@ jobs:
     strategy:
       matrix:
         config:
-        - { name: "Windows Latest x64", artifact: "Windows-x64.zip", os: windows-latest, host: windows, platform: win, environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat" }
-        - { name: "Windows Latest x86", artifact: "Windows-x86.zip", os: windows-latest, host: windows, platform: win, environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars32.bat" }
+        - { name: "Windows Latest x64", artifact: "Windows-x64.zip", os: windows-latest, host: windows, platform: win, environment_script: "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat" }
+        - { name: "Windows Latest x86", artifact: "Windows-x86.zip", os: windows-latest, host: windows, platform: win, environment_script: "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat" }
         - { name: "Linux Latest x64",   artifact: "Linux-x64.zip",   os: ubuntu-latest, host: linux, platform: linux }
 #         - { name: "macOS Latest x64",   artifact: "macOS-x64.zip",   os: macos-latest, host: mac, platform: mac }
     # The CMake configure and build commands are platform agnostic and should work equally
@@ -31,7 +29,7 @@ jobs:
     
     - name: Cache
       id: cache-qt
-      uses: actions/cache@v2.1.6
+      uses: actions/cache@v1.2.0
       with:
         # A list of files, directories, and wildcard patterns to cache and restore
         path: |
@@ -51,7 +49,7 @@ jobs:
 #         modules: 'none'
         cached: ${{ steps.cache-qt.outputs.cache-hit }}
         setup-python: 'true'
-        tools: 'tools_ifw,4.0,qt.tools.ifw.40 tools_qtcreator,4.14.2-0,qt.tools.qtcreator'
+        tools: 'tools_ifw,4.0,qt.tools.ifw.40 tools_qtcreator,5.0.1-0-202109140334,qt.tools.qtcreator'
         set-env: 'true'
         tools-only: 'false'
         aqtversion: '==1.1.3'
