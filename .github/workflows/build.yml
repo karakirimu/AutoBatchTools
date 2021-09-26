@@ -1,8 +1,6 @@
 name: Build
 
-on:
-  workflow_dispatch:
-    branches: [ main ]
+on: [ workflow_dispatch ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
