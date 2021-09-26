@@ -67,6 +67,10 @@ add_executable(AutoBatchRunner
     ${ICON_RES}
 )
 
+if(WIN32)
+    set_property(TARGET AutoBatchRunner PROPERTY WIN32_EXECUTABLE true)
+endif()
+
 target_include_directories(AutoBatchRunner
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/table

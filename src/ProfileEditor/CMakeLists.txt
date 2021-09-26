@@ -215,6 +215,10 @@ add_executable(AutoBatchEditor
     ${ICON_RES}
 )
 
+if(WIN32)
+    set_property(TARGET AutoBatchEditor PROPERTY WIN32_EXECUTABLE true)
+endif()
+
 target_include_directories(AutoBatchEditor
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/processlistarea

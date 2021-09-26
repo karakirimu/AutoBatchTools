@@ -13,6 +13,11 @@ if(SUPPRESS_MULTIPLE_DEFINITIONS)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif()
 
+# Set debug output
+if(CMAKE_BUILD_TYPE STREQUAL "MinSizeRel" )
+    add_definitions(-DQT_NO_DEBUG_OUTPUT)
+endif()
+
 # Set build output directory
 string(
     REPLACE

@@ -3,14 +3,14 @@
 
 #include <QWidget>
 #include <multitaskp.h>
-#include <../ConsoleBase/consolebase.h>
+#include <../consolebase/consolebase.h>
 
 class ConsoleView : public ConsoleBase
 {
     Q_OBJECT
 public:
     explicit ConsoleView(QWidget *parent = nullptr);
-    ~ConsoleView();
+    ~ConsoleView() override;
 
     //ui settings
     void setMultiTask(MultiTaskP *task);    
