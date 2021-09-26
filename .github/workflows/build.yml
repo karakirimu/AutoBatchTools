@@ -76,9 +76,9 @@ jobs:
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
       
-    - name: Run Deploy Script
-      working-directory: ${{github.workspace}}
-      run: ${{ matrix.config.deploy_script }}
+#     - name: Run Deploy Script
+#       working-directory: ${{github.workspace}}
+#       run: ${{ matrix.config.deploy_script }}
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.4
