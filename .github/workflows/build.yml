@@ -14,8 +14,8 @@ jobs:
     strategy:
       matrix:
         config:
-        - { name: "Windows Latest x64", artifact: "Windows-x64.zip", os: windows-latest, host: windows, platform: win, environment_script: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvars64.bat", deploy_script: "./deploy_windows.bat" }
-        - { name: "Ubuntu Latest x64",   artifact: "Ubuntu-x64.zip",   os: ubuntu-latest, host: linux, platform: linux, deploy_script: "./deploy_ubuntu.sh" }
+        - { name: "Windows Latest x64", os: windows-latest, host: windows, platform: win, environment_script: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvars64.bat", deploy_script: "./deploy_windows.bat" }
+        - { name: "Ubuntu Latest x64", os: ubuntu-latest, host: linux, platform: linux, deploy_script: "./deploy_ubuntu.sh" }
 #         - { name: "macOS Latest x64",   artifact: "macOS-x64.zip",   os: macos-latest, host: mac, platform: mac }
     # The CMake configure and build commands are platform agnostic and should work equally
     # well on Windows or Mac.  You can convert this to a matrix build if you need
@@ -69,12 +69,12 @@ jobs:
       working-directory: ${{github.workspace}}
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      run: cmake -B ${{github.workspace}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
       working-directory: ${{github.workspace}}
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      run: cmake --build ${{github.workspace}} --config ${{env.BUILD_TYPE}}
       
 #     - name: Run Deploy Script
 #       working-directory: ${{github.workspace}}
@@ -83,10 +83,11 @@ jobs:
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.4
       with:
+        working-directory: ${{github.workspace}}
         # Artifact name
         name: ${{ matrix.config.name }}
         # A file, directory or wildcard pattern that describes what to upload
-        path: ${{ matrix.config.artifact }}
+        path: ${{github.workspace}}/build
         # The desired behavior if no files are found using the provided path.
         if-no-files-found: warn # optional, default is warn
         # Duration after which artifact will expire in days. 0 means using default retention.
