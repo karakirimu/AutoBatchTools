@@ -78,7 +78,7 @@ jobs:
       
     - name: Run Deploy Script
       working-directory: ${{github.workspace}}
-      run: ${{ matrix.config.deploy_script }} ${{env.QT_VERSION}} "${{ github.workspace }}/Qt-${{ matrix.config.os }}/"
+      run: ${{ matrix.config.deploy_script }} ${{env.QT_VERSION}} "${{ github.workspace }}/Qt-${{ matrix.config.os }}"
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.4

@@ -5,7 +5,7 @@
 set DEPLOYDIR="autobatchtools-win-x64"
 set QTVERSION=%~dp1
 set BUILDTYPE=MinSizeRel
-set QTDIR=%~dp2
+set QTDIR=%~dp2\Qt\%QTVERSION%\msvc2019_64\bin
 
 mkdir %DEPLOYDIR%
 cd %DEPLOYDIR%
