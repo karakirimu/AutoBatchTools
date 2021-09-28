@@ -14,8 +14,8 @@ jobs:
     strategy:
       matrix:
         config:
-        - { name: "Windows Latest x64", os: windows-latest, host: windows, platform: win, environment_script: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvars64.bat", deploy_script: "./deploy_windows.bat" }
-        - { name: "Ubuntu Latest x64", os: ubuntu-latest, host: linux, platform: linux, deploy_script: "./deploy_ubuntu.sh" }
+        - { name: "Windows Latest x64", os: windows-latest, host: windows, platform: win, environment_script: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvars64.bat", deploy_script: "./res/deploy/github_windows.bat", deploy_folder: "autobatchtools-windows-x64"}
+        - { name: "Ubuntu Latest x64", os: ubuntu-latest, host: linux, platform: linux, deploy_script: "./res/deploy/github_ubuntu.sh", deploy_folder: "autobatchtools-ubuntu-x64"}
 #         - { name: "macOS Latest x64",   artifact: "macOS-x64.zip",   os: macos-latest, host: mac, platform: mac }
     # The CMake configure and build commands are platform agnostic and should work equally
     # well on Windows or Mac.  You can convert this to a matrix build if you need
@@ -76,9 +76,9 @@ jobs:
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}} --config ${{env.BUILD_TYPE}}
       
-#     - name: Run Deploy Script
-#       working-directory: ${{github.workspace}}
-#       run: ${{ matrix.config.deploy_script }}
+    - name: Run Deploy Script
+      working-directory: ${{github.workspace}}
+      run: ${{ matrix.config.deploy_script }} ${{env.QT_VERSION}} "${{ github.workspace }}/Qt-${{ matrix.config.os }}/"
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.4
