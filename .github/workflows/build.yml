@@ -78,9 +78,6 @@ jobs:
 
     - name: Test
       run: ls -l "${{ github.workspace }}/Qt-${{ matrix.config.os }}"
-    
-    - name: Test2
-      run: ls -l "D:\a\AutoBatchTools\AutoBatchTools\\Qt\6.1.3\msvc2019_64\bin"
 
     - name: Run Deploy Script
       working-directory: ${{github.workspace}}
