@@ -1,11 +1,11 @@
 :: Available when built with cmake.
 :: %1 : Qt installed version
-:: %dp2 : Qt installed directory
+:: %2 : Qt installed directory
 
 set DEPLOYDIR="autobatchtools-win-x64"
 set QTVERSION=%1
 set BUILDTYPE=MinSizeRel
-set QTDIR=%~dp2\Qt\%QTVERSION%\msvc2019_64\bin
+set QTDIR=%~2\Qt\%QTVERSION%\msvc2019_64\bin
 
 mkdir %DEPLOYDIR%
 cd %DEPLOYDIR%
