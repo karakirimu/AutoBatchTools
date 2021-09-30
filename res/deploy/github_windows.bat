@@ -33,4 +33,4 @@ copy /b ..\res\thirdparty\LICENSE-QT .\LICENSE-QT.txt
 mkdir "plugins"
 
 :: Deploy Qt files
-.\%QTDIR%\windeployqt.exe .\ --no-translations
+..\%QTDIR%\windeployqt.exe .\ --no-translations
