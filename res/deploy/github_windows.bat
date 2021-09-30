@@ -2,7 +2,7 @@
 :: %1 : Qt installed version
 :: %2 : Qt installed directory
 
-set DEPLOYDIR="autobatchtools-win-x64"
+set DEPLOYDIR="autobatchtools-windows-x64"
 set QTVERSION=%1
 set BUILDTYPE=MinSizeRel
 set QTDIR=%~2\Qt\%QTVERSION%\msvc2019_64\bin
@@ -20,7 +20,7 @@ copy /b ..\build\%BUILDTYPE%\*.dll .\
 mkdir "translation"
 pushd "translation"
 for %%f in (..\..\src\translation\abt_*.ts) do (
-  %QTDIR%\lrelease.exe %%f
+  ..\..\%QTDIR%\lrelease.exe %%f
 )
 copy /b ..\..\src\translation\abt_*.qm .\
 popd .
