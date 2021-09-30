@@ -76,22 +76,21 @@ jobs:
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}} --config ${{env.BUILD_TYPE}}
       
-    - name: Test2
-      working-directory: ${{github.workspace}}
-      run: tree /f
-      
     - name: Run Deploy Script
       working-directory: ${{github.workspace}}
       run: ${{ matrix.config.deploy_script }} ${{env.QT_VERSION}} "Qt-${{ matrix.config.os }}"
 
+    - name: Tree
+      working-directory: ${{github.workspace}}
+      run: tree /f
+
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.4
       with:
-        working-directory: ${{github.workspace}}
         # Artifact name
         name: ${{ matrix.config.name }}
         # A file, directory or wildcard pattern that describes what to upload
-        path: ${{github.workspace}}/build
+        path: ${{github.workspace}}/${{ matrix.config.deploy_folder }}
         # The desired behavior if no files are found using the provided path.
         if-no-files-found: warn # optional, default is warn
         # Duration after which artifact will expire in days. 0 means using default retention.
