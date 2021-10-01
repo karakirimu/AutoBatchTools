@@ -75,7 +75,11 @@ jobs:
       working-directory: ${{github.workspace}}
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}} --config ${{env.BUILD_TYPE}}
-      
+
+    - name: TreeTest
+      working-directory: ${{github.workspace}}
+      run: tree
+
     - name: Run Deploy Script
       working-directory: ${{github.workspace}}
       run: ${{ matrix.config.deploy_script }} ${{env.QT_VERSION}} "Qt-${{ matrix.config.os }}"
