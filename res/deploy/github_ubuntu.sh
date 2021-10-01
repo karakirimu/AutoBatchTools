@@ -14,10 +14,10 @@ QTDIR=${2//\"/}/Qt/${QTVERSION}/gcc_64
 mkdir ${DEPLOYDIR}
 
 # Binaries
-cp ../../../build/AutoBatchRunner ${DEPLOYDIR}
-cp ../../../build/AutoBatchScheduler ${DEPLOYDIR}
-cp ../../../build/AutoBatchEditor ${DEPLOYDIR}
-cp ../../../build/lib/*.so ${DEPLOYDIR}
+cp ./build/AutoBatchRunner ${DEPLOYDIR}
+cp ./build/AutoBatchScheduler ${DEPLOYDIR}
+cp ./build/AutoBatchEditor ${DEPLOYDIR}
+cp ./build/lib/*.so ${DEPLOYDIR}
 
 # Translations
 mkdir "${DEPLOYDIR}/translation"
@@ -53,19 +53,19 @@ chmod +x ${DEPLOYDIR}/launch.sh
 mkdir "${DEPLOYDIR}/plugins"
 
 # Copy Qt libraries
-cp ../../../${QTDIR}/lib/libQt6Core.so.${QTVERSION} ${DEPLOYDIR}/libQt6Core.so.${QTVERSION_MAJOR}
-cp ../../../${QTDIR}/lib/libQt6Gui.so.${QTVERSION} ${DEPLOYDIR}/libQt6Gui.so.${QTVERSION_MAJOR}
-cp ../../../${QTDIR}/lib/libQt6Svg.so.${QTVERSION} ${DEPLOYDIR}/libQt6Svg.so.${QTVERSION_MAJOR}
-cp ../../../${QTDIR}/lib/libQt6Widgets.so.${QTVERSION} ${DEPLOYDIR}/libQt6Widgets.so.${QTVERSION_MAJOR}
-cp ../../../${QTDIR}/lib/libQt6DBus.so.${QTVERSION} ${DEPLOYDIR}/libQt6DBus.so.${QTVERSION_MAJOR}
+cp ../${QTDIR}/lib/libQt6Core.so.${QTVERSION} ${DEPLOYDIR}/libQt6Core.so.${QTVERSION_MAJOR}
+cp ../${QTDIR}/lib/libQt6Gui.so.${QTVERSION} ${DEPLOYDIR}/libQt6Gui.so.${QTVERSION_MAJOR}
+cp ../${QTDIR}/lib/libQt6Svg.so.${QTVERSION} ${DEPLOYDIR}/libQt6Svg.so.${QTVERSION_MAJOR}
+cp ../${QTDIR}/lib/libQt6Widgets.so.${QTVERSION} ${DEPLOYDIR}/libQt6Widgets.so.${QTVERSION_MAJOR}
+cp ../${QTDIR}/lib/libQt6DBus.so.${QTVERSION} ${DEPLOYDIR}/libQt6DBus.so.${QTVERSION_MAJOR}
 
 # Copy Window manager files
-cp ../../../${QTDIR}/lib/libQt6XcbQpa.so.${QTVERSION} ${DEPLOYDIR}/libQt6XcbQpa.so.${QTVERSION_MAJOR}
-cp ../../../${QTDIR}/lib/libQt6OpenGL.so.${QTVERSION} ${DEPLOYDIR}/libQt6OpenGL.so.${QTVERSION_MAJOR}
-cp -a ../../../${QTDIR}/plugins/platforms ${DEPLOYDIR}/platforms
-cp -a ../../../${QTDIR}/plugins/imageformats ${DEPLOYDIR}/imageformats
+cp ../${QTDIR}/lib/libQt6XcbQpa.so.${QTVERSION} ${DEPLOYDIR}/libQt6XcbQpa.so.${QTVERSION_MAJOR}
+cp ../${QTDIR}/lib/libQt6OpenGL.so.${QTVERSION} ${DEPLOYDIR}/libQt6OpenGL.so.${QTVERSION_MAJOR}
+cp -a ../${QTDIR}/plugins/platforms ${DEPLOYDIR}/platforms
+cp -a ../${QTDIR}/plugins/imageformats ${DEPLOYDIR}/imageformats
 
 # Copy libicu libraries
-cp ../../../${QTDIR}/lib/libicui18n.so.${ICUVERSION} ${DEPLOYDIR}/libicui18n.so.${ICUVERSION_MAJOR}
-cp ../../../${QTDIR}/lib/libicuuc.so.${ICUVERSION} ${DEPLOYDIR}/libicuuc.so.${ICUVERSION_MAJOR}
-cp ../../../${QTDIR}/lib/libicudata.so.${ICUVERSION} ${DEPLOYDIR}/libicudata.so.${ICUVERSION_MAJOR}
+cp ../${QTDIR}/lib/libicui18n.so.${ICUVERSION} ${DEPLOYDIR}/libicui18n.so.${ICUVERSION_MAJOR}
+cp ../${QTDIR}/lib/libicuuc.so.${ICUVERSION} ${DEPLOYDIR}/libicuuc.so.${ICUVERSION_MAJOR}
+cp ../${QTDIR}/lib/libicudata.so.${ICUVERSION} ${DEPLOYDIR}/libicudata.so.${ICUVERSION_MAJOR}
