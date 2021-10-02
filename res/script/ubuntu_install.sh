@@ -33,7 +33,6 @@ make_shortcut () {
     {
         echo "#!/usr/bin/env xdg-open"
         echo "[Desktop Entry]"
-        echo "Encoding=UTF-8"
         echo "Version=1.0"
         echo "Type=Application"
         echo "Name=$1"
@@ -51,3 +50,10 @@ make_shortcut ${RUNNERNAME} ${RUNNERICON}
 popd
 
 echo "Copying the shortcut was completed."
+
+chmod +x ./AutoBatchRunner
+chmod +x ./AutoBatchEditor
+chmod +x ./AutoBatchScheduler
+chmod +x ./launch.sh
+
+echo "Changed the file to be executable."
