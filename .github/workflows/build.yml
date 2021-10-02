@@ -14,9 +14,8 @@ jobs:
     strategy:
       matrix:
         config:
-        # - { name: "Windows Latest x64", os: windows-latest, host: windows, platform: win, environment_script: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvars64.bat", deploy_script: "./res/deploy/github_windows.bat", deploy_folder: "autobatchtools-windows-x64"}
-        - { name: "Ubuntu Latest x64", os: ubuntu-latest, host: linux, platform: linux, deploy_script: "./res/deploy/github_ubuntu.sh", deploy_folder: "autobatchtools-ubuntu-x64"}
-#         - { name: "macOS Latest x64",   artifact: "macOS-x64.zip",   os: macos-latest, host: mac, platform: mac }
+        - { name: "autobatchtools-windows-x64", os: windows-latest, host: windows, platform: win, environment_script: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\VC\\Auxiliary\\Build\\vcvars64.bat", deploy_script: "./res/deploy/github_windows.bat", deploy_folder: "autobatchtools-windows-x64"}
+        - { name: "autobatchtools-ubuntu-x64", os: ubuntu-latest, host: linux, platform: linux, deploy_script: "./res/deploy/github_ubuntu.sh", deploy_folder: "autobatchtools-ubuntu-x64"}
     # The CMake configure and build commands are platform agnostic and should work equally
     # well on Windows or Mac.  You can convert this to a matrix build if you need
     # cross-platform coverage.
@@ -43,14 +42,10 @@ jobs:
 #         arch: '' Windows w/ Qt >= 5.15: win64_msvc2019_64
         dir: '${{ github.workspace }}/Qt-${{ matrix.config.os }}/'
         install-deps: 'true'
-#         modules: 'none'
         cached: ${{ steps.cache-qt.outputs.cache-hit }}
         setup-python: 'true'
-#         tools: 'tools_ifw,4.0,qt.tools.ifw.40 tools_qtcreator,5.0.1-0-202109140334,qt.tools.qtcreator'
         set-env: 'true'
         tools-only: 'false'
-#         aqtversion: '==1.1.3'
-#         py7zrversion: '==0.14.0'
         extra: '--external 7z'
         
     - name: Install ninja-build tool
