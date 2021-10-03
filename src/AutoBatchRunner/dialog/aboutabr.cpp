@@ -15,8 +15,7 @@ AboutABR::AboutABR(QWidget *parent) :
 {
     setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
-    QIcon icons(":/app_icons/app_abr.ico");
-    ui->icon->setPixmap(icons.pixmap(128,128));
+    ui->icon->setPixmap(QIcon(":/app_icons/app_abr.ico").pixmap(128,128));
     ui->version->setText(QString("Version %1").arg(CURRENT_VERSION));
 
 }

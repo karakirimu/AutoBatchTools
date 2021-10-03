@@ -9,29 +9,29 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/aboutabe.ui" line="104"/>
-        <source>Info</source>
-        <translation>情報</translation>
-    </message>
-    <message>
-        <location filename="../ProfileEditor/aboutabe.ui" line="167"/>
+        <location filename="../ProfileEditor/aboutabe.ui" line="111"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This is an editor of AutoBatchRunner or AutoBatchScheduler. &lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;AutoBatchEditor can create an execution list of other projects.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;AutoBatchEditor can create an execution list of other projects.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Repository&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/karakirimu/AutoBatchTools&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/karakirimu/AutoBatchTools&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#007af4;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This software uses Qt under the LGPLv3 license.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;AutoBatchRunner,AutoBatchSchedulerのエディタです。&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;これらのアプリケーションへのプロファイル作成が可能です。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../ProfileEditor/aboutabe.ui" line="180"/>
-        <source>Changelog</source>
-        <translation>変更履歴</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;AutoBatchRunnerとAutoBatchSchedulerで実行するプロファイルを作成するエディタです。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;AutoBatchEditorは、他のプロジェクトの実行リストを作成することができます。&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;リポジトリ&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/karakirimu/AutoBatchTools&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/karakirimu/AutoBatchTools&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#007af4;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;本ソフトウェアはQtをLGPLv3ライセンスで使用しています。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -42,27 +42,27 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/dialog/aboutabr.ui" line="104"/>
-        <source>Info</source>
-        <translation>情報</translation>
-    </message>
-    <message>
-        <location filename="../AutoBatchRunner/dialog/aboutabr.ui" line="167"/>
+        <location filename="../AutoBatchRunner/dialog/aboutabr.ui" line="111"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Run the profile created in the AutoBatchEditor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Run the profile created in the AutoBatchEditor.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Repository&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/karakirimu/AutoBatchTools&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/karakirimu/AutoBatchTools&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#007af4;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This software uses Qt under the LGPLv3 license.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;AutoBatchEditorで作成されたプロファイルを実行します。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../AutoBatchRunner/dialog/aboutabr.ui" line="179"/>
-        <source>Changelog</source>
-        <translation>変更履歴</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;AutoBatchEditorで作成したプロファイルを実行します。&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;リポジトリ&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/karakirimu/AutoBatchTools&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/karakirimu/AutoBatchTools&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#007af4;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;本ソフトウェアはQtをLGPLv3ライセンスで使用しています。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -73,27 +73,27 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/aboutabs.ui" line="104"/>
-        <source>Info</source>
-        <translation>情報</translation>
-    </message>
-    <message>
-        <location filename="../AutoBatchScheduler/aboutabs.ui" line="167"/>
+        <location filename="../AutoBatchScheduler/aboutabs.ui" line="111"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Schedule execution of profile created by AutoBatchEditor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Schedule execution of profile created by AutoBatchEditor.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Repository&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/karakirimu/AutoBatchTools&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/karakirimu/AutoBatchTools&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#007af4;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This software uses Qt under the LGPLv3 license.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;AutoBatchEditorによって作成されたプロファイルの実行をスケジュールします。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../AutoBatchScheduler/aboutabs.ui" line="179"/>
-        <source>Changelog</source>
-        <translation>変更履歴</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;AutoBatchEditorで作成したプロファイルの実行をスケジューリングします。&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;リポジトリ&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/karakirimu/AutoBatchTools&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/karakirimu/AutoBatchTools&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#007af4;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;本ソフトウェアはQtをLGPLv3ライセンスで使用しています。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -209,21 +209,6 @@ To recover files, select the following list and press [OK].</source>
         <location filename="../ProfileEditor/autosaveselectiondialog.cpp" line="29"/>
         <source>Last Modified</source>
         <translation>更新日時</translation>
-    </message>
-</context>
-<context>
-    <name>BaseTable</name>
-    <message>
-        <source>Open File</source>
-        <translation type="vanished">ファイルを開く</translation>
-    </message>
-    <message>
-        <source>File (*.*)</source>
-        <translation type="vanished">ファイル (*.*)</translation>
-    </message>
-    <message>
-        <source>Open Folder</source>
-        <translation type="vanished">フォルダを開く</translation>
     </message>
 </context>
 <context>
@@ -1534,7 +1519,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="1259"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2181"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2184"/>
         <source>Settings</source>
         <translation>設定</translation>
     </message>
@@ -1555,7 +1540,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="1605"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2431"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2434"/>
         <source>Edit</source>
         <translation>編集</translation>
     </message>
@@ -1582,75 +1567,75 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="1711"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2354"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2357"/>
         <source>Process</source>
         <translation>処理</translation>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="1812"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2387"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2390"/>
         <source>Input File</source>
         <translation>入力ファイル</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1906"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2365"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1909"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2368"/>
         <source>Console</source>
         <translation>コンソール</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2398"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2401"/>
         <source>Variable</source>
         <translation>変数</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2108"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2111"/>
         <source>Save As</source>
         <translation>名前を付けて保存</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2111"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2114"/>
         <source>Ctrl+Shift+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2116"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2119"/>
         <source>Quit</source>
         <translation>終了</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2119"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2314"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2122"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2317"/>
         <source>Ctrl+X</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2128"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2131"/>
         <source>Open</source>
         <translation>開く</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2131"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2134"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2140"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2143"/>
         <source>New</source>
         <translation>新規</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2143"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2146"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2155"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2158"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2439"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2442"/>
         <source>Hide Description</source>
         <translation>テキストを隠す</translation>
     </message>
@@ -1690,169 +1675,169 @@ To recover files, select the following list and press [OK].</source>
         <translation>変数に格納</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2017"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2020"/>
         <source> &gt; </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2044"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2047"/>
         <source>Press Ctrl + Enter to send command ...</source>
         <translation>Ctrl + Enterでコマンドを送信...</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2062"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2065"/>
         <source>Variables</source>
         <translation>変数</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2158"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2161"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2167"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2170"/>
         <location filename="../ProfileEditor/profileeditor.cpp" line="495"/>
         <source>Export</source>
         <translation>エクスポート</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2172"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2175"/>
         <source>About</source>
         <translation>このソフトウェアについて</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2184"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2187"/>
         <source>Alt+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2193"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2196"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2196"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2199"/>
         <source>Ctrl+Enter</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2208"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2211"/>
         <source>Delete</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2211"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2214"/>
         <source>Del</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2223"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2226"/>
         <source>Up</source>
         <translation>上へ</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2226"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2229"/>
         <source>Ctrl+Up</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2238"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2241"/>
         <source>Down</source>
         <translation>下へ</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2241"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2244"/>
         <source>Ctrl+Down</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2253"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2256"/>
         <location filename="../ProfileEditor/profileeditor.cpp" line="568"/>
         <source>Run</source>
         <translation>実行</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2256"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2259"/>
         <source>F5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2268"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2271"/>
         <source>Pause</source>
         <translation>一時停止</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2280"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2283"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2288"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2291"/>
         <source>Undo</source>
         <translation>戻る</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2291"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2294"/>
         <source>Ctrl+Z</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2299"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2302"/>
         <source>Redo</source>
         <translation>進む</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2302"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2305"/>
         <source>Ctrl+Y</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2311"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2314"/>
         <source>Cut</source>
         <translation>切り取り</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2323"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2326"/>
         <source>Copy</source>
         <translation>コピー</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2326"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2329"/>
         <source>Ctrl+C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2335"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2338"/>
         <source>Paste</source>
         <translation>貼り付け</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2338"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2341"/>
         <source>Ctrl+V</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2343"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2346"/>
         <source>About Qt ...</source>
         <translation>Qtについて ...</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2376"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2379"/>
         <source>Hide Title Bar</source>
         <translation>タイトルバーを隠す</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2407"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2410"/>
         <source>Reload</source>
         <translation>更新</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2415"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2418"/>
         <source>Clear History</source>
         <translation>履歴をクリア</translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2420"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2423"/>
         <source>Open Last Opened File</source>
         <translation>最後に開いたファイルを開く</translation>
     </message>

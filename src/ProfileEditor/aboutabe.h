@@ -10,6 +10,7 @@
 #define ABOUTPE_H
 
 #include <QWidget>
+#include <QIcon>
 
 namespace Ui {
 class AboutABE;
@@ -21,7 +22,7 @@ class AboutABE : public QWidget
 
 public:
     explicit AboutABE(QWidget *parent = nullptr);
-    ~AboutABE();
+    ~AboutABE() override;
 
 private:
     Ui::AboutABE *ui;

@@ -9,23 +9,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/aboutabe.ui" line="104"/>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ProfileEditor/aboutabe.ui" line="167"/>
+        <location filename="../ProfileEditor/aboutabe.ui" line="111"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This is an editor of AutoBatchRunner or AutoBatchScheduler. &lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;AutoBatchEditor can create an execution list of other projects.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ProfileEditor/aboutabe.ui" line="180"/>
-        <source>Changelog</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;AutoBatchEditor can create an execution list of other projects.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Repository&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/karakirimu/AutoBatchTools&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/karakirimu/AutoBatchTools&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#007af4;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This software uses Qt under the LGPLv3 license.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -37,22 +32,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchRunner/dialog/aboutabr.ui" line="104"/>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../AutoBatchRunner/dialog/aboutabr.ui" line="167"/>
+        <location filename="../AutoBatchRunner/dialog/aboutabr.ui" line="111"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Run the profile created in the AutoBatchEditor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../AutoBatchRunner/dialog/aboutabr.ui" line="179"/>
-        <source>Changelog</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Run the profile created in the AutoBatchEditor.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Repository&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/karakirimu/AutoBatchTools&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/karakirimu/AutoBatchTools&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#007af4;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This software uses Qt under the LGPLv3 license.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -64,22 +54,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../AutoBatchScheduler/aboutabs.ui" line="104"/>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../AutoBatchScheduler/aboutabs.ui" line="167"/>
+        <location filename="../AutoBatchScheduler/aboutabs.ui" line="111"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Arial&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Schedule execution of profile created by AutoBatchEditor.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../AutoBatchScheduler/aboutabs.ui" line="179"/>
-        <source>Changelog</source>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Schedule execution of profile created by AutoBatchEditor.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Repository&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/karakirimu/AutoBatchTools&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;https://github.com/karakirimu/AutoBatchTools&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#007af4;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This software uses Qt under the LGPLv3 license.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1501,7 +1486,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="1259"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2181"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2184"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1522,7 +1507,7 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="1605"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2431"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2434"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1549,75 +1534,75 @@ To recover files, select the following list and press [OK].</source>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="1711"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2354"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2357"/>
         <source>Process</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ProfileEditor/profileeditor.ui" line="1812"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2387"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2390"/>
         <source>Input File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="1906"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2365"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="1909"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2368"/>
         <source>Console</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2398"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2401"/>
         <source>Variable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2108"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2111"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2111"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2114"/>
         <source>Ctrl+Shift+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2116"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2119"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2119"/>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2314"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2122"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2317"/>
         <source>Ctrl+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2128"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2131"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2131"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2134"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2140"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2143"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2143"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2146"/>
         <source>Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2155"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2158"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2439"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2442"/>
         <source>Hide Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1652,169 +1637,169 @@ To recover files, select the following list and press [OK].</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2017"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2020"/>
         <source> &gt; </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2044"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2047"/>
         <source>Press Ctrl + Enter to send command ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2062"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2065"/>
         <source>Variables</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2158"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2161"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2167"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2170"/>
         <location filename="../ProfileEditor/profileeditor.cpp" line="495"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2172"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2175"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2184"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2187"/>
         <source>Alt+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2193"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2196"/>
         <source>Add</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2196"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2199"/>
         <source>Ctrl+Enter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2208"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2211"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2211"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2214"/>
         <source>Del</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2223"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2226"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2226"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2229"/>
         <source>Ctrl+Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2238"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2241"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2241"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2244"/>
         <source>Ctrl+Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2253"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2256"/>
         <location filename="../ProfileEditor/profileeditor.cpp" line="568"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2256"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2259"/>
         <source>F5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2268"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2271"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2280"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2283"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2288"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2291"/>
         <source>Undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2291"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2294"/>
         <source>Ctrl+Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2299"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2302"/>
         <source>Redo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2302"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2305"/>
         <source>Ctrl+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2311"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2314"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2323"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2326"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2326"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2329"/>
         <source>Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2335"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2338"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2338"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2341"/>
         <source>Ctrl+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2343"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2346"/>
         <source>About Qt ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2376"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2379"/>
         <source>Hide Title Bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2407"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2410"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2415"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2418"/>
         <source>Clear History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ProfileEditor/profileeditor.ui" line="2420"/>
+        <location filename="../ProfileEditor/profileeditor.ui" line="2423"/>
         <source>Open Last Opened File</source>
         <translation type="unfinished"></translation>
     </message>

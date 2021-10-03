@@ -10,6 +10,7 @@
 #define ABOUTPR_H
 
 #include <QWidget>
+#include <QIcon>
 
 namespace Ui {
 class AboutABR;
@@ -21,7 +22,7 @@ class AboutABR : public QWidget
 
 public:
     explicit AboutABR(QWidget *parent = nullptr);
-    ~AboutABR();
+    ~AboutABR() override;
 
 private:
     Ui::AboutABR *ui;

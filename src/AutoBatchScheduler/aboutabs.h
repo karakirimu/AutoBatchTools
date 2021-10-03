@@ -10,6 +10,7 @@
 #define ABOUTABS_H
 
 #include <QWidget>
+#include <QIcon>
 
 namespace Ui {
 class AboutABS;
@@ -21,7 +22,7 @@ class AboutABS : public QWidget
 
 public:
     explicit AboutABS(QWidget *parent = nullptr);
-    ~AboutABS();
+    ~AboutABS() override;
 
 private:
     Ui::AboutABS *ui;
