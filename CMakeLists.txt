@@ -39,7 +39,7 @@ if (NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
 endif()
 
 # Set source directory
-set(SOURCE_DIRECTORY ${CMAKE_SOURCE_DIR}/src)
+set(SOURCE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 # Create Language files
 find_package(QT NAMES Qt6 Qt5 COMPONENTS LinguistTools REQUIRED)
