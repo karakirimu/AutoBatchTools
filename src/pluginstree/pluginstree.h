@@ -93,7 +93,9 @@ private:
     QMenu *contextMenu;
 
     // order of root element
-    enum{TREE_AUTO,TREE_MANUAL};
+    enum{TREE_INVALID = -1,
+         TREE_AUTO,
+         TREE_MANUAL};
 
     // An order of QStringList for ui
     enum{NAME_UI,VERSION_UI,VENDOR_UI,PATH_UI,DESC_UI};

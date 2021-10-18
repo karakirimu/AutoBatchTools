@@ -68,6 +68,11 @@ void PluginsTree::addAction()
     QTreeWidgetItem *top = itemFromIndex(index);
     int rootindex = index.row();
 
+    if(rootindex == TREE_INVALID){
+        top = topLevelItem(TREE_MANUAL);
+        this->setCurrentItem(top);
+    }
+
     if(rootindex == TREE_AUTO){
         QModelIndex neighbor = index.siblingAtRow(TREE_MANUAL);
         top = itemFromIndex(neighbor);
