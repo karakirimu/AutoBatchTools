@@ -16,7 +16,11 @@ PluginsComboBox::PluginsComboBox(QObject *)
             this, SLOT(pluginCheckAction(int)));
 
     searchsettings.append(QStringList() << "name" << "autoplug");
+#ifdef Q_OS_WIN
     searchsettings.append(QStringList() << "keyword" << "*.dll");
+#else
+    searchsettings.append(QStringList() << "keyword" << "*.so");
+#endif
     searchsettings.append(QStringList() << "dir" << "./plugins");
 
     autodetectcounter = 0;
@@ -105,7 +109,7 @@ void PluginsComboBox::addItemAction()
 #ifdef Q_OS_WIN
     QString extension = "(*.dll)";
 #else
-    QString extension = "(*.*)";
+    QString extension = "(*.so)";
 #endif
     QString file
         = dialog.getOpenFileName(this, tr("Add Plugin"), \

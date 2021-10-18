@@ -343,7 +343,11 @@ bool PluginsTree::setAutoDetectPlugins(QTreeWidgetItem *parent)
     // file search settings
     QList<QStringList> searchitem;
     searchitem.append(QStringList() << "name" << "autoplug");
+#ifdef Q_OS_WIN
     searchitem.append(QStringList() << "keyword" << "*.dll");
+#else
+    searchitem.append(QStringList() << "keyword" << "*.so");
+#endif
     searchitem.append(QStringList() << "dir" << "./plugins");
 
     QStringList list;
@@ -352,9 +356,9 @@ bool PluginsTree::setAutoDetectPlugins(QTreeWidgetItem *parent)
     FileSearchLoader fsload;
     list = fsload.searchFromStrList(&searchitem);
 
-    int count = list.count();
+    qsizetype count = list.count();
 
-    for(int i = 0; i < count; i++){
+    for(qsizetype i = 0; i < count; i++){
         QTreeWidgetItem *item = new QTreeWidgetItem(parent);
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsUserCheckable \
                        | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable);
@@ -532,7 +536,7 @@ QStringList PluginsTree::selectFiles(QString basedir)
 #ifdef Q_OS_WIN
     QString extension = "(*.dll)";
 #else
-    QString extension = "(*.*)";
+    QString extension = "(*.so)";
 #endif
     return dialog.getOpenFileNames(this, tr("Add Plugins"), basedir, tr("Plugin ") + extension);
 }
