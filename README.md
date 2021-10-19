@@ -372,7 +372,7 @@ When you select Add, the following search settings window will appear.
   
 
 - Recursive (Folder)
- 
+
   Searches all folders in a selected folder.
 
   
@@ -581,37 +581,14 @@ Task
 
 ## Supported operating systems
 
-So for now, works on Windows 10 x64 (20H2), confirmed build on Ubuntu 20.04.
+| OS                    | Status              |
+| --------------------- | -------------------- |
+| Windows 10 x64 (21H1) | Confirmation of some operations |
+| Ubuntu 21.04          | Checking the build and startup |
 
 
 
 ## License
 
-This software under the MIT license.
-
-```
-/*
- * MIT License
- * 
- * Copyright (c) 2021 karakirimu
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-```
+This software is licensed under the MIT license. Check the LICENSE file in the main repo.
 
