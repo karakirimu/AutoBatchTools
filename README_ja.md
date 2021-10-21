@@ -1,5 +1,7 @@
 # AutoBatchTools
 
+[![UnitTest](https://github.com/karakirimu/AutoBatchTools/actions/workflows/unittest.yml/badge.svg)](https://github.com/karakirimu/AutoBatchTools/actions/workflows/unittest.yml)
+
 コマンドライン処理の連続実行を編集し、実行できるアプリケーションです。以下の処理を容易にする目的で作成されました。
 
 - スクリプトの再編集
